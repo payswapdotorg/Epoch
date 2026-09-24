@@ -4,7 +4,9 @@ Depends On: W009,W011,W012
 Worker Count: 1
 
 ## Owned write surfaces
-- `apps/web/*`
+- `apps/web/app/*`
+- `apps/web/src/shell/*`
+- `apps/web/src/shared/*`
 
 ## Objective
 Implement Web App Shell exactly within frozen Epoch E1.0/X1.0 contracts. Consume upstream interfaces; do not redefine their authority.
