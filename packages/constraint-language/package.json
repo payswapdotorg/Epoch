@@ -1,0 +1,32 @@
+{
+  "name": "@epoch/constraint-language",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Constraint Language (ECL) kernel: authored constraint AST, deterministic compiler, compiled evaluation contract, and reference evaluator (W004).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint . && eslint ../../contracts/constraints/v1",
+    "test": "vitest run",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
