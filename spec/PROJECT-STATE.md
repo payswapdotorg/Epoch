@@ -32,4 +32,23 @@ Material review lessons (W001):
 - next build (15.5.x) rewrites apps/web/next-env.d.ts; handled via committed canonical pre-build file + typecheck sequenced after build.
 - Known non-blocking: boundary source-scan is regex-based (stdlib-only), triple-reinforced; .gitignore left untouched (governance) so build-artifact churn stays untracked noise.
 
+## Approved architecture change — ACR-001
+Approved 2026-09-24.
+
+Target additions:
+- SolutionPackage/Version + DeliveryRecord
+- Program of Work synchronized with the BOQ/solution schedule
+- procurement, execution, actualization, variance and forecast
+- outcome learning/calibration
+- low-friction partial observations with confidence/provenance/freshness
+- fine-grained access projections
+- delivery supervision and alerts
+- optional provider-neutral external event bridge, with Aurum Chat as a reference adapter only
+
+ACR-001 is not effective for new implementation yet. The currently authorized W008/W009/W011 wave remains on E1.0/X1.0. After that wave is stabilized, the Architect/Tech Lead must record the lock transition and frontier update before dispatching W036.
+
+W036-W044 are defined and dependency-gated; none is currently authorized.
+
+Current main head at the time of this architecture amendment: c7430b6478213b0fe9e97f4c159ff9608be77b32.
+
 Every merge must update this file before advancing.

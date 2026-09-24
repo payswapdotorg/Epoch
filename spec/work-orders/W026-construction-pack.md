@@ -1,6 +1,6 @@
 # W026 — Construction Pack
 Status: READY_AFTER_DEPENDENCIES
-Depends On: W002,W004,W006,W007,W011,W013
+Depends On: W002,W004,W006,W007,W011,W013,W036
 Worker Count: 1
 
 ## Owned write surfaces
@@ -8,6 +8,9 @@ Worker Count: 1
 
 ## Objective
 Implement Construction Pack inside the frozen architecture, using upstream contracts rather than recreating authorities.
+
+## Delivery integration
+The pack must render the universal Solution Delivery model; for construction this includes the synchronized Program of Work and interactive BOQ.
 
 ## Acceptance
 1. Scope is limited to this Work Order.

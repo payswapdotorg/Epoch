@@ -1,6 +1,6 @@
 # W027 — Software/Infrastructure Pack
 Status: READY_AFTER_DEPENDENCIES
-Depends On: W002,W003,W006,W007,W011,W013
+Depends On: W002,W003,W006,W007,W011,W013,W036
 Worker Count: 1
 
 ## Owned write surfaces
@@ -8,6 +8,9 @@ Worker Count: 1
 
 ## Objective
 Implement Software/Infrastructure Pack inside the frozen architecture, using upstream contracts rather than recreating authorities.
+
+## Delivery integration
+The pack must use the universal Solution Delivery model for work packages, schedule, actualization and outcomes rather than defining a parallel lifecycle.
 
 ## Acceptance
 1. Scope is limited to this Work Order.
