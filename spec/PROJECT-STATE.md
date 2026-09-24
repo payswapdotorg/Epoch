@@ -1,6 +1,6 @@
 # Epoch Project State
 
-Architecture: E1.0 / X1.0 (ACR-001 + ACR-002 target pending lock transition)
+Architecture: E1.0 / X1.0 (ACR-001 + ACR-002 + ACR-003 targets pending lock transition)
 Work Order schema: WO1.0
 Default branch: main
 Max concurrent workers: 3
@@ -23,6 +23,7 @@ Current frontier:
 - PR #21 merged (squash b2bebc38): ACR-001 approved architecture target and W036-W044 delivery program added
 - Foundation maintenance COMPLETE (PR #24, squash 803a1989): post-W008 pnpm-lock.yaml reconcile
 - Architect architecture PR #27 MERGED (squash 8bfd14a7): universal lifecycle + Solution Navigator + domain-pack contract + delivery Work Order reconciliation
+- Architect architecture PR #29 MERGED (squash e09f5309): Capability Foundation Policy + upstream integration/fork governance
 
 Verification baseline after W008 (6314365): battery 54/54 tasks --force, 0 cached (18 typecheck + 15 lint + 16 test + 3 build + governance + boundary), across 17 kernel packages + web app; governance selftest 6/6. pnpm@10.34.5 / Node 22 / TS 5.9.3 / eslint 10.11.0 + typescript-eslint 8.70.1 / vitest 5.0.1 / Next 15.5.26 / React 19.3.0 / zod 4.6.5 / turbo 2.11.3 — frozen catalog in pnpm-workspace.yaml; policy in scripts/DEPENDENCY-BASELINE.md; CI battery: governance boundary typecheck lint test build.
 
@@ -36,7 +37,7 @@ Material review lessons (W001):
 - next build (15.5.x) rewrites apps/web/next-env.d.ts; handled via committed canonical pre-build file + typecheck sequenced after build.
 - Known non-blocking: boundary source-scan is regex-based (stdlib-only), triple-reinforced; .gitignore left untouched (governance) so build-artifact churn stays untracked noise.
 
-## Approved architecture change — ACR-001 + ACR-002
+## Approved architecture change — ACR-001 + ACR-002 + ACR-003
 Approved 2026-09-24.
 
 Target additions:
@@ -49,11 +50,11 @@ Target additions:
 - delivery supervision and alerts
 - optional provider-neutral external event bridge, with Aurum Chat as a reference adapter only
 
-ACR-001/ACR-002 are not effective for new implementation yet. The currently authorized W008/W009/W011 wave remains on E1.0/X1.0. After that wave is stabilized, the Architect/Tech Lead must record the lock transition and frontier update before dispatching W036.
+ACR-001/ACR-002/ACR-003 are not effective for new implementation yet. The currently authorized W008/W009/W011 wave remains on E1.0/X1.0. After that wave is stabilized, the Architect/Tech Lead must record the lock transition and frontier update before dispatching W036. ACR-003 is binding capability-foundation policy at that same transition.
 
 W036-W044 are defined and dependency-gated; none is currently authorized.
 
-Current main head: e7c87d3e3657867e03044ad349fdce1327968951.
+Current main head: e09f530926e4fa2c0e7de317a86d6d13013559f8.
 
 Every merge must update this file before advancing.
 
