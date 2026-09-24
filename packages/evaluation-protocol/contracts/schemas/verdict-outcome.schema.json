@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/VerdictOutcome",
+  "$defs": {
+    "VerdictOutcome": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PassFailVerdict"
+        },
+        {
+          "$ref": "#/$defs/ScoredVerdict"
+        }
+      ],
+      "title": "VerdictOutcome",
+      "description": "Exhaustive verdict union: pass-fail or scored on a declared scale."
+    },
+    "PassFailVerdict": {
+      "type": "object",
+      "properties": {
+        "verdictForm": {
+          "type": "string",
+          "const": "pass-fail"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        }
+      },
+      "required": [
+        "verdictForm",
+        "outcome"
+      ],
+      "additionalProperties": false,
+      "title": "PassFailVerdict",
+      "description": "Binary verdict: pass or fail."
+    },
+    "ScoredVerdict": {
+      "type": "object",
+      "properties": {
+        "verdictForm": {
+          "type": "string",
+          "const": "scored"
+        },
+        "score": {
+          "type": "number"
+        },
+        "scale": {
+          "type": "object",
+          "properties": {
+            "minimum": {
+              "type": "number"
+            },
+            "maximum": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "minimum",
+            "maximum"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "verdictForm",
+        "score",
+        "scale"
+      ],
+      "additionalProperties": false,
+      "title": "ScoredVerdict",
+      "description": "Scored verdict on a declared finite scale (minimum < maximum; score within)."
+    }
+  }
+}

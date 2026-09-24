@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EvaluationVerdict",
+  "$defs": {
+    "EvaluationVerdict": {
+      "type": "object",
+      "properties": {
+        "protocolVersion": {
+          "$ref": "#/$defs/EvaluationProtocolVersion"
+        },
+        "messageKind": {
+          "type": "string",
+          "const": "evaluation.verdict"
+        },
+        "verdictId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "request": {
+          "$ref": "#/$defs/EvaluationRequestReference"
+        },
+        "evaluator": {
+          "$ref": "#/$defs/EvaluatorReference"
+        },
+        "subject": {
+          "$ref": "#/$defs/EvaluationSubject"
+        },
+        "outcome": {
+          "$ref": "#/$defs/VerdictOutcome"
+        },
+        "justification": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JustificationReference"
+          }
+        },
+        "deterministic": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "protocolVersion",
+        "messageKind",
+        "verdictId",
+        "request",
+        "evaluator",
+        "subject",
+        "outcome",
+        "justification",
+        "deterministic"
+      ],
+      "additionalProperties": false,
+      "title": "EvaluationVerdict",
+      "description": "Evaluation verdict message: exact-revision request/evaluator bindings, subject echo, structured outcome, and referenced justifications."
+    },
+    "EvaluationProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "EvaluationProtocolVersion",
+      "description": "Exact evaluation-protocol version admitted by this release (\"1.0.0\")."
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    },
+    "EvaluationRequestReference": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "requestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "requestId",
+        "requestDigest"
+      ],
+      "additionalProperties": false,
+      "title": "EvaluationRequestReference",
+      "description": "Exact-revision evaluation request reference: request id plus the SHA-256 digest of the request canonical JSON."
+    },
+    "EvaluatorReference": {
+      "type": "object",
+      "properties": {
+        "evaluatorId": {
+          "$ref": "#/$defs/EvaluatorId"
+        },
+        "registrationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "evaluatorId",
+        "registrationDigest"
+      ],
+      "additionalProperties": false,
+      "title": "EvaluatorReference",
+      "description": "Exact-revision evaluator reference: id plus the SHA-256 digest of the registration canonical JSON."
+    },
+    "EvaluatorId": {
+      "type": "string",
+      "pattern": "^evaluator:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "EvaluatorId",
+      "description": "Registered evaluator identifier: \"evaluator:\" followed by a lowercase slug."
+    },
+    "EvaluationSubject": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/EvaluationSubjectKind"
+        },
+        "subjectId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "subjectDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "kind",
+        "subjectId",
+        "subjectDigest"
+      ],
+      "additionalProperties": false,
+      "title": "EvaluationSubject",
+      "description": "Exact-revision reference to the judged document: kind, subject id, and canonical digest."
+    },
+    "EvaluationSubjectKind": {
+      "type": "string",
+      "enum": [
+        "simulation-result",
+        "world-outcome"
+      ],
+      "title": "EvaluationSubjectKind",
+      "description": "What an evaluator judges: a simulation result or a world outcome."
+    },
+    "VerdictOutcome": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PassFailVerdict"
+        },
+        {
+          "$ref": "#/$defs/ScoredVerdict"
+        }
+      ],
+      "title": "VerdictOutcome",
+      "description": "Exhaustive verdict union: pass-fail or scored on a declared scale."
+    },
+    "PassFailVerdict": {
+      "type": "object",
+      "properties": {
+        "verdictForm": {
+          "type": "string",
+          "const": "pass-fail"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        }
+      },
+      "required": [
+        "verdictForm",
+        "outcome"
+      ],
+      "additionalProperties": false,
+      "title": "PassFailVerdict",
+      "description": "Binary verdict: pass or fail."
+    },
+    "ScoredVerdict": {
+      "type": "object",
+      "properties": {
+        "verdictForm": {
+          "type": "string",
+          "const": "scored"
+        },
+        "score": {
+          "type": "number"
+        },
+        "scale": {
+          "type": "object",
+          "properties": {
+            "minimum": {
+              "type": "number"
+            },
+            "maximum": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "minimum",
+            "maximum"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "verdictForm",
+        "score",
+        "scale"
+      ],
+      "additionalProperties": false,
+      "title": "ScoredVerdict",
+      "description": "Scored verdict on a declared finite scale (minimum < maximum; score within)."
+    },
+    "JustificationReference": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/JustificationKind"
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "kind",
+        "reference",
+        "statement"
+      ],
+      "additionalProperties": false,
+      "title": "JustificationReference",
+      "description": "A machine-referenceable verdict justification: kind, target reference, and an auditable statement."
+    },
+    "JustificationKind": {
+      "type": "string",
+      "enum": [
+        "criterion",
+        "subject-output",
+        "subject-failure",
+        "assumption",
+        "method"
+      ],
+      "title": "JustificationKind",
+      "description": "What a verdict justification references: criterion, subject output, subject failure, assumption, or method."
+    }
+  }
+}

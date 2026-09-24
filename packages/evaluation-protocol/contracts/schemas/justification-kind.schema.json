@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/JustificationKind",
+  "$defs": {
+    "JustificationKind": {
+      "type": "string",
+      "enum": [
+        "criterion",
+        "subject-output",
+        "subject-failure",
+        "assumption",
+        "method"
+      ],
+      "title": "JustificationKind",
+      "description": "What a verdict justification references: criterion, subject output, subject failure, assumption, or method."
+    }
+  }
+}

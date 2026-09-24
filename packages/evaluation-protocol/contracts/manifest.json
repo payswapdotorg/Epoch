@@ -1,0 +1,119 @@
+{
+  "contract": "epoch/evaluation",
+  "contractVersion": "1.0.0",
+  "protocolVersion": "1.0.0",
+  "description": "Typed, versioned, provider-neutral Evaluation Protocol contract surface (W005): evaluator registration, evaluation request, and verdict messages with justification references. Published in-package (W005 owns no repository-root contracts directory). TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "dataTypes": [
+    "EvaluationMessageKind",
+    "EvaluationProtocolVersion",
+    "EvaluationRequest",
+    "EvaluationRequestReference",
+    "EvaluationSubject",
+    "EvaluationSubjectKind",
+    "EvaluationVerdict",
+    "EvaluatorId",
+    "EvaluatorReference",
+    "EvaluatorRegistration",
+    "JudgmentBasis",
+    "JustificationKind",
+    "JustificationReference",
+    "PassFailVerdict",
+    "ScoredVerdict",
+    "VerdictForm",
+    "VerdictOutcome"
+  ],
+  "messageKinds": [
+    "evaluation.registration",
+    "evaluation.request",
+    "evaluation.verdict"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/evaluation-protocol and are not represented in the JSON Schema files",
+  "emittedBy": "renderEvaluationContractFiles() in @epoch/evaluation-protocol (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "EvaluationMessageKind",
+      "file": "schemas/evaluation-message-kind.schema.json",
+      "sha256": "8f4dc1bd52145796f258321995e7be757782ff956338f9d9e5156936512653f8"
+    },
+    {
+      "type": "EvaluationProtocolVersion",
+      "file": "schemas/evaluation-protocol-version.schema.json",
+      "sha256": "a731d3734277d037e18d20893044d726ac475621dc9cd51dff53b8a19c81de97"
+    },
+    {
+      "type": "EvaluationRequest",
+      "file": "schemas/evaluation-request.schema.json",
+      "sha256": "deb47e1037cb4dd2ade398309baa69678a06e3ca167d3dda8651a5a88761eb60"
+    },
+    {
+      "type": "EvaluationRequestReference",
+      "file": "schemas/evaluation-request-reference.schema.json",
+      "sha256": "8d2da7d5e3fae6f2179395ffd188322bcfbacc6957b93e97f521f833120e226b"
+    },
+    {
+      "type": "EvaluationSubject",
+      "file": "schemas/evaluation-subject.schema.json",
+      "sha256": "39082e0db0c6b456056845ac2112f597e1fd160507740d6d22183cb6f466c58d"
+    },
+    {
+      "type": "EvaluationSubjectKind",
+      "file": "schemas/evaluation-subject-kind.schema.json",
+      "sha256": "d8a6e9ab12bd61b61f24f51208095bf65a8454f8bc2a9df578a23b227c861075"
+    },
+    {
+      "type": "EvaluationVerdict",
+      "file": "schemas/evaluation-verdict.schema.json",
+      "sha256": "519c18845334aff6aa4161870321789fc124bfc16247d1f60d052bd718448983"
+    },
+    {
+      "type": "EvaluatorId",
+      "file": "schemas/evaluator-id.schema.json",
+      "sha256": "38a8bbeebb3b34be21bdfa6738feaf3da6aaa0174c9b59a2ecbd9122c00a9d9f"
+    },
+    {
+      "type": "EvaluatorReference",
+      "file": "schemas/evaluator-reference.schema.json",
+      "sha256": "41e04546c8709c452524d82ed468c5a7c7a79d9713fca2b2daefa371bddcc6fc"
+    },
+    {
+      "type": "EvaluatorRegistration",
+      "file": "schemas/evaluator-registration.schema.json",
+      "sha256": "6227f00a8d4c9c0fa07c6e41c69b2a9eb558142edfa5e5c2e12da22f81c0b954"
+    },
+    {
+      "type": "JudgmentBasis",
+      "file": "schemas/judgment-basis.schema.json",
+      "sha256": "5d12b80496a737ce20e2d279f9a34eacf9e56aff5a8f9581ade9696d06286ea6"
+    },
+    {
+      "type": "JustificationKind",
+      "file": "schemas/justification-kind.schema.json",
+      "sha256": "48703231f8783b8acb5f908b85302de244dcabff14082f3ef4218f4604bd4047"
+    },
+    {
+      "type": "JustificationReference",
+      "file": "schemas/justification-reference.schema.json",
+      "sha256": "a16f223c44c2e9505e04aa4002b920b28c6a7393179c09135fe0d3f7d807bca8"
+    },
+    {
+      "type": "PassFailVerdict",
+      "file": "schemas/pass-fail-verdict.schema.json",
+      "sha256": "5aa70dfe378e48cae4408980be23a96c0fb82bc64ff80be2674d4096b68a72a1"
+    },
+    {
+      "type": "ScoredVerdict",
+      "file": "schemas/scored-verdict.schema.json",
+      "sha256": "543aace5adbce568e8b8aa50a361021604179d06da18bd134b8397f7dd0bfeb7"
+    },
+    {
+      "type": "VerdictForm",
+      "file": "schemas/verdict-form.schema.json",
+      "sha256": "2214d4f8549f827577e7ced774a14e41ae19b47c01eb4decd0070062a2d46c2c"
+    },
+    {
+      "type": "VerdictOutcome",
+      "file": "schemas/verdict-outcome.schema.json",
+      "sha256": "452a3befc0e4ce478fa768d90c49bdbc9f15766f0e48c05feb4ea1c8c18151cd"
+    }
+  ]
+}

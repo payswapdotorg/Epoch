@@ -1,0 +1,30 @@
+{
+  "name": "@epoch/simulation-protocol",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Simulation Protocol v1 — provider-neutral simulator registration, invocation request/result messages, reproducibility contracts, and a reference-grade deterministic simulator (kernel layer, Work Order W005).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ReproducibilityProfile",
+  "$defs": {
+    "ReproducibilityProfile": {
+      "type": "object",
+      "properties": {
+        "deterministic": {
+          "type": "boolean"
+        },
+        "seedPolicy": {
+          "$ref": "#/$defs/SeedPolicy"
+        }
+      },
+      "required": [
+        "deterministic",
+        "seedPolicy"
+      ],
+      "additionalProperties": false,
+      "title": "ReproducibilityProfile",
+      "description": "Reproducibility declaration: the determinism (digest-stability) claim plus the seed policy."
+    },
+    "SeedPolicy": {
+      "type": "string",
+      "enum": [
+        "not-applicable",
+        "external-seed",
+        "internal-seed"
+      ],
+      "title": "SeedPolicy",
+      "description": "How the simulator handles seeds: not-applicable (no seeding), external-seed (callers supply a seed), or internal-seed (the simulator derives a fixed seed itself)."
+    }
+  }
+}

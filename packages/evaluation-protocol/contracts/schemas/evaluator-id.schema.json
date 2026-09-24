@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EvaluatorId",
+  "$defs": {
+    "EvaluatorId": {
+      "type": "string",
+      "pattern": "^evaluator:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "EvaluatorId",
+      "description": "Registered evaluator identifier: \"evaluator:\" followed by a lowercase slug."
+    }
+  }
+}

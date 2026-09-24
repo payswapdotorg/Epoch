@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SimulationMessageKind",
+  "$defs": {
+    "SimulationMessageKind": {
+      "type": "string",
+      "enum": [
+        "simulation.registration",
+        "simulation.invocation-request",
+        "simulation.result"
+      ],
+      "title": "SimulationMessageKind",
+      "description": "Discriminating message kind for simulation-protocol messages."
+    }
+  }
+}

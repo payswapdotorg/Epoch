@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EvaluationSubject",
+  "$defs": {
+    "EvaluationSubject": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/EvaluationSubjectKind"
+        },
+        "subjectId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "subjectDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "kind",
+        "subjectId",
+        "subjectDigest"
+      ],
+      "additionalProperties": false,
+      "title": "EvaluationSubject",
+      "description": "Exact-revision reference to the judged document: kind, subject id, and canonical digest."
+    },
+    "EvaluationSubjectKind": {
+      "type": "string",
+      "enum": [
+        "simulation-result",
+        "world-outcome"
+      ],
+      "title": "EvaluationSubjectKind",
+      "description": "What an evaluator judges: a simulation result or a world outcome."
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    }
+  }
+}

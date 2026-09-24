@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ScoredVerdict",
+  "$defs": {
+    "ScoredVerdict": {
+      "type": "object",
+      "properties": {
+        "verdictForm": {
+          "type": "string",
+          "const": "scored"
+        },
+        "score": {
+          "type": "number"
+        },
+        "scale": {
+          "type": "object",
+          "properties": {
+            "minimum": {
+              "type": "number"
+            },
+            "maximum": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "minimum",
+            "maximum"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "verdictForm",
+        "score",
+        "scale"
+      ],
+      "additionalProperties": false,
+      "title": "ScoredVerdict",
+      "description": "Scored verdict on a declared finite scale (minimum < maximum; score within)."
+    }
+  }
+}

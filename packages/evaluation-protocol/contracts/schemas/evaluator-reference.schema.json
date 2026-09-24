@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EvaluatorReference",
+  "$defs": {
+    "EvaluatorReference": {
+      "type": "object",
+      "properties": {
+        "evaluatorId": {
+          "$ref": "#/$defs/EvaluatorId"
+        },
+        "registrationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "evaluatorId",
+        "registrationDigest"
+      ],
+      "additionalProperties": false,
+      "title": "EvaluatorReference",
+      "description": "Exact-revision evaluator reference: id plus the SHA-256 digest of the registration canonical JSON."
+    },
+    "EvaluatorId": {
+      "type": "string",
+      "pattern": "^evaluator:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "EvaluatorId",
+      "description": "Registered evaluator identifier: \"evaluator:\" followed by a lowercase slug."
+    }
+  }
+}

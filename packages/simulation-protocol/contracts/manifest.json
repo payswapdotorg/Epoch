@@ -1,0 +1,125 @@
+{
+  "contract": "epoch/simulation",
+  "contractVersion": "1.0.0",
+  "protocolVersion": "1.0.0",
+  "description": "Typed, versioned, provider-neutral Simulation Protocol contract surface (W005): simulator registration, invocation request, and result messages. Published in-package (W005 owns no repository-root contracts directory). TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "dataTypes": [
+    "CompletedSimulationResult",
+    "FailedSimulationResult",
+    "FidelityProfile",
+    "InvocationReference",
+    "ReproducibilityProfile",
+    "SeedPolicy",
+    "SimulationFailure",
+    "SimulationFailureCode",
+    "SimulationInvocationRequest",
+    "SimulationMessageKind",
+    "SimulationOutcome",
+    "SimulationProtocolVersion",
+    "SimulationResult",
+    "SimulationResultStatus",
+    "SimulatorId",
+    "SimulatorReference",
+    "SimulatorRegistration",
+    "ValidityDomain"
+  ],
+  "messageKinds": [
+    "simulation.registration",
+    "simulation.invocation-request",
+    "simulation.result"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/simulation-protocol and are not represented in the JSON Schema files",
+  "emittedBy": "renderSimulationContractFiles() in @epoch/simulation-protocol (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "CompletedSimulationResult",
+      "file": "schemas/completed-simulation-result.schema.json",
+      "sha256": "f3d968c60f63a572da26c96d453b6ab576dd655a10819b613888fb665f69baa3"
+    },
+    {
+      "type": "FailedSimulationResult",
+      "file": "schemas/failed-simulation-result.schema.json",
+      "sha256": "bf9067080733eee26b423e15380350c846849e5fa7bf47d331ce1d8f45b03a53"
+    },
+    {
+      "type": "FidelityProfile",
+      "file": "schemas/fidelity-profile.schema.json",
+      "sha256": "d0c3b24ff8164481d8a99d9f684c9acde7053006a91ce3d1801387679e52767c"
+    },
+    {
+      "type": "InvocationReference",
+      "file": "schemas/invocation-reference.schema.json",
+      "sha256": "a87c5fec0ed8dfe560516d462220e402c1035a337cb3da98f54a84f37d1aaae0"
+    },
+    {
+      "type": "ReproducibilityProfile",
+      "file": "schemas/reproducibility-profile.schema.json",
+      "sha256": "600e7657e5fa5345e9a5f26366787d0b889dfc1f5bd447f41278bbc5b254a83c"
+    },
+    {
+      "type": "SeedPolicy",
+      "file": "schemas/seed-policy.schema.json",
+      "sha256": "45e8c879d59943df4f1d80dc436e38bcb2a1a435a5c10865f3fbc86c38de93cc"
+    },
+    {
+      "type": "SimulationFailure",
+      "file": "schemas/simulation-failure.schema.json",
+      "sha256": "28cd3a03a6174f866367a51fb4a726269c8866dc4ada6be71e3b537b5ef0a038"
+    },
+    {
+      "type": "SimulationFailureCode",
+      "file": "schemas/simulation-failure-code.schema.json",
+      "sha256": "6d71a8c5ad0527368e5d37702c9ddf258ca24dea4f348e207470d57deb37148a"
+    },
+    {
+      "type": "SimulationInvocationRequest",
+      "file": "schemas/simulation-invocation-request.schema.json",
+      "sha256": "bda63ed390eb828e28b77652e9b12f7840c79292f1dafcf12fb23266c38f8e60"
+    },
+    {
+      "type": "SimulationMessageKind",
+      "file": "schemas/simulation-message-kind.schema.json",
+      "sha256": "91415a0d94bd4c4d4febacfd46af908871df8e613eb998db85e86f588ebdbfb9"
+    },
+    {
+      "type": "SimulationOutcome",
+      "file": "schemas/simulation-outcome.schema.json",
+      "sha256": "074a40ea7d42b4e3346e6ce1dd929e7eaa3f9b1cd5d7f74ef6bb57ed0d5ba5f6"
+    },
+    {
+      "type": "SimulationProtocolVersion",
+      "file": "schemas/simulation-protocol-version.schema.json",
+      "sha256": "cfad1a7c90cd222970112d03e6d5fc0b9463cfea9ab987ac0cd4b88ad012ad6e"
+    },
+    {
+      "type": "SimulationResult",
+      "file": "schemas/simulation-result.schema.json",
+      "sha256": "a964057684a0db78565eb28ff9f079621d2acfc043a1b4324d1fa424df8f20b5"
+    },
+    {
+      "type": "SimulationResultStatus",
+      "file": "schemas/simulation-result-status.schema.json",
+      "sha256": "e01e62175ce0cb83ff7113ff9ee6af4f99db03632ae9e25eaf9ee664e305629e"
+    },
+    {
+      "type": "SimulatorId",
+      "file": "schemas/simulator-id.schema.json",
+      "sha256": "4d2d3a38b17e82790bc46b0d966b4c510c075da4a7dc75208e846cfc48f73cc8"
+    },
+    {
+      "type": "SimulatorReference",
+      "file": "schemas/simulator-reference.schema.json",
+      "sha256": "3cf0fab7b1a359a3758292e59ecf24a9b628348eb5abb459c41f0ccecae805f5"
+    },
+    {
+      "type": "SimulatorRegistration",
+      "file": "schemas/simulator-registration.schema.json",
+      "sha256": "7435c90f87f91db67e39ea14bd4699abaad219a70baaa65c9aee4c98259e4913"
+    },
+    {
+      "type": "ValidityDomain",
+      "file": "schemas/validity-domain.schema.json",
+      "sha256": "7caf6cb9e60224979d9035576535f46be7d2da601e0afe15006722aa2b46d98b"
+    }
+  ]
+}

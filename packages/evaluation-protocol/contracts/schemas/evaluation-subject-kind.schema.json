@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EvaluationSubjectKind",
+  "$defs": {
+    "EvaluationSubjectKind": {
+      "type": "string",
+      "enum": [
+        "simulation-result",
+        "world-outcome"
+      ],
+      "title": "EvaluationSubjectKind",
+      "description": "What an evaluator judges: a simulation result or a world outcome."
+    }
+  }
+}
