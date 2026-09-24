@@ -12,6 +12,7 @@ Current:
 - PR #21 merged: ACR-001 target architecture and W036-W044 delivery program recorded
 - PR #22 merged: W008 Extension SDK + Wasm
 - PR #24 merged: post-W008 lockfile reconciliation
+- PR #27 merged: universal Solution Navigator, lifecycle and domain-pack architecture
 
 Approved architecture change:
 - ACR-001 + ACR-002 approved 2026-09-24.
