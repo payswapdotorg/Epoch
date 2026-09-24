@@ -16,7 +16,10 @@ Implements exactly one Work Order. Stay inside declared ownership surfaces, neve
 No-rebase default: concurrent Work Orders have disjoint write surfaces; no shared root manifest/lockfile writes in parallel; shared contracts are completed in earlier waves; dependency additions that touch shared files are serial Tech Lead changes; integration changes belong to explicit integration Work Orders.
 
 ## Authority
-World Model = semantic truth. Agents = reasoning/planning participants, not authority. Action Gateway = execution authority. Constraint Engine = constraint authority. Simulation = prediction. Evaluation = judgment. Verification/Evidence = proof. Experience Runtime = presentation/interaction, not authority. External providers remain authoritative for their own systems.
+World Model = semantic truth. Agents = reasoning/planning participants, not authority. SolutionPackage/SolutionVersion = approved solution intent and baseline; DeliveryRecord = live delivery facts; ProgramOfWork = authoritative schedule dimension. Action Gateway = execution authority. Constraint Engine = constraint authority. Simulation = prediction. Evaluation = judgment. Verification/Evidence = proof. Experience Runtime/Solution Navigator = presentation/interaction, not authority. External providers remain authoritative for their own systems.
+
+## Domain adaptation
+The universal lifecycle is Understand -> Decide -> Plan -> Acquire -> Realize -> Observe/Actualize -> Verify -> Forecast -> Close -> Learn. Domain packs map this spine into domain vocabulary such as BOQ/procurement/execution or BOM/deployment/commissioning. Packs must not create competing lifecycle or data authorities. See `spec/domain-pack-contract.md`.
 
 ## Security
 Identity, tenancy, authorization, and policy are separate. Public extensions are capability-scoped and sandboxed. Secrets are never committed. Durable state is authoritative only in designated stores.
