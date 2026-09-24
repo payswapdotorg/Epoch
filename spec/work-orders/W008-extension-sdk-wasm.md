@@ -1,5 +1,5 @@
 # W008 — Extension SDK + Wasm
-Status: AUTHORIZED (wave 4; dispatch base recorded in the live dispatch issue)
+Status: COMPLETE (PR #22, squash 24eb076c; reviewed against CI run 69; 146 files in owned trees; 284 new tests reported)
 Depends On: W003,W007
 Worker Count: 1
 

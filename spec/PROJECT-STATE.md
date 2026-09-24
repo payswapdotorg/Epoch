@@ -17,9 +17,11 @@ Current frontier:
 - Foundation maintenance COMPLETE (PR #14, squash 46f00917: wave-2 lockfile reconcile, +152/-0, 5 new importers)
 - W007 COMPLETE (PR #16, squash 000fcdd7; reviewed head 01b59838; 270 new tests: 135 capability-registry + 135 adapter-sdk; 95 files, 100% in owned trees; 7/7 review gates + independent battery reproduction)
 - Foundation maintenance COMPLETE (PR #17, squash 5a5a1e24: wave-3 lockfile reconcile, +71/-0, 2 new importers)
-- W008/W009/W011 AUTHORIZED — wave 4, three workers, pairwise-disjoint surfaces (W008 extension-sdk/extension-runtime/runtimes-wasm; W009 tenancy/identity/authorization; W011 experience-protocol + contracts/experience)
+- W008 COMPLETE (PR #22, squash 24eb076c; reviewed head fd1ba567; CI run 69 success; 146 files in owned trees; 284 new tests reported)
+- W009/W011 ACTIVE — wave 4, two workers remaining; W010 waits on W009; W012/W013 wait on W011
 - W010 WAITING_ON_DEPENDENCIES (needs W009); all others WAITING_ON_DEPENDENCIES
 - PR #21 merged (squash b2bebc38): ACR-001 approved architecture target and W036-W044 delivery program added
+- Foundation maintenance COMPLETE (PR #24, squash 803a1989): post-W008 pnpm-lock.yaml reconcile
 
 Verification baseline after wave-3 (5a5a1e24): battery 48/48 tasks --force, 0 cached (16 typecheck + 13 lint + 14 test + 3 build + governance + boundary), across 15 kernel packages + web app; governance selftest 6/6. pnpm@10.34.5 / Node 22 / TS 5.9.3 / eslint 10.11.0 + typescript-eslint 8.70.1 / vitest 5.0.1 / Next 15.5.26 / React 19.3.0 / zod 4.6.5 / turbo 2.11.3 — frozen catalog in pnpm-workspace.yaml; policy in scripts/DEPENDENCY-BASELINE.md; CI battery: governance boundary typecheck lint test build.
 
@@ -50,6 +52,6 @@ ACR-001 is not effective for new implementation yet. The currently authorized W0
 
 W036-W044 are defined and dependency-gated; none is currently authorized.
 
-Current main head: b2bebc38d4b87b9a67ad238c8be02eb041c79aa4.
+Current main head: 803a1989f839c2690a7e58db9dc0651e4e1ce87d.
 
 Every merge must update this file before advancing.

@@ -5,7 +5,6 @@
   "defaultBranch": "main",
   "maxConcurrentWorkers": 3,
   "active": [
-    "W008",
     "W009",
     "W011"
   ],
@@ -16,8 +15,9 @@
     "W004",
     "W005",
     "W006",
-    "W007"
+    "W007",
+    "W008"
   ],
   "blocked": [],
-  "lastMergeSha": "5a5a1e24915b51a4b49ce7ef3036d10af6ae558b"
+  "lastMergeSha": "803a1989f839c2690a7e58db9dc0651e4e1ce87d"
 }
