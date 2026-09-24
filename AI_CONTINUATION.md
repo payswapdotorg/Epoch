@@ -8,7 +8,8 @@ Current:
 - work-order schema: WO1.0
 - maximum concurrent workers: 3
 - current authorized items: W008 + W009 + W011
-- current main head at this handoff branch base: c7430b6478213b0fe9e97f4c159ff9608be77b32
+- current main head: b2bebc38d4b87b9a67ad238c8be02eb041c79aa4
+- PR #21 merged: ACR-001 target architecture and W036-W044 delivery program recorded
 
 Approved architecture change:
 - ACR-001 approved 2026-09-24.
