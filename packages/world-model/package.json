@@ -1,0 +1,29 @@
+{
+  "name": "@epoch/world-model",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Canonical World Model — the Epoch semantic authority: a typed property/relationship graph of assertions with provenance, confidence, validity and full temporal history (kernel layer, Work Order W002).",
+  "type": "module",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
