@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ResourceDomain",
+  "$defs": {
+    "ResourceDomain": {
+      "type": "string",
+      "enum": [
+        "world",
+        "evidence",
+        "storage",
+        "capability"
+      ],
+      "title": "ResourceDomain",
+      "description": "Resource domain a sandboxed extension can touch: world, evidence, storage, or capability."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:resource-domain:1.0.0"
+}

@@ -1,0 +1,44 @@
+{
+  "title": "LayoutSection",
+  "description": "Canonical layout section: kebab name, kind (adapter/core-module/custom), byte size, and the SHA-256 content digest of the section bytes.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "name",
+      "description": "Kebab-case section name; sections are sorted by name.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$"
+    },
+    "kind": {
+      "title": "WasmSectionKind",
+      "description": "Canonical Wasm section kind: adapter, core-module, or custom.",
+      "type": "string",
+      "enum": [
+        "adapter",
+        "core-module",
+        "custom"
+      ]
+    },
+    "byteSize": {
+      "title": "byteSize",
+      "description": "Section byte size (non-negative integer).",
+      "type": "integer",
+      "minimum": 0
+    },
+    "contentDigest": {
+      "title": "contentDigest",
+      "description": "Lowercase hex SHA-256 of the section bytes (64 characters).",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "name",
+    "kind",
+    "byteSize",
+    "contentDigest"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:epoch:wasm-layout:layout-section:1.0.0"
+}

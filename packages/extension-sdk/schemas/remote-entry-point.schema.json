@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RemoteEntryPoint",
+  "$defs": {
+    "RemoteEntryPoint": {
+      "readOnly": true,
+      "title": "RemoteEntryPoint",
+      "description": "Remote entry point: embeds one remote-service descriptor (typed shape only).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "remote"
+        },
+        "name": {
+          "$ref": "#/$defs/EntryPointName"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "service": {
+          "$ref": "#/$defs/RemoteServiceDescriptor"
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "title",
+        "service"
+      ],
+      "additionalProperties": false
+    },
+    "EntryPointName": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$",
+      "title": "EntryPointName",
+      "description": "Entry-point name: a lowercase kebab slug, unique and sorted within a manifest."
+    },
+    "RemoteServiceDescriptor": {
+      "readOnly": true,
+      "title": "RemoteServiceDescriptor",
+      "description": "Remote-service descriptor: opaque service id, transport kind, the versioned contract it honors, and its operation surface. Endpoint binding is deployment configuration (W029), never contract content.",
+      "type": "object",
+      "properties": {
+        "serviceId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "transport": {
+          "$ref": "#/$defs/RemoteTransportKind"
+        },
+        "contract": {
+          "$ref": "#/$defs/CapabilityContractReference"
+        },
+        "operations": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RemoteOperationDeclaration"
+          }
+        }
+      },
+      "required": [
+        "serviceId",
+        "transport",
+        "contract",
+        "operations"
+      ],
+      "additionalProperties": false
+    },
+    "RemoteTransportKind": {
+      "type": "string",
+      "enum": [
+        "custom",
+        "grpc",
+        "http",
+        "mcp"
+      ],
+      "title": "RemoteTransportKind",
+      "description": "Remote-service transport kind: custom, grpc, http, or mcp (protocol roles, never vendors; no endpoint in the contract)."
+    },
+    "CapabilityContractReference": {
+      "readOnly": true,
+      "title": "CapabilityContractReference",
+      "description": "Reference to a versioned contract a capability honors: qualified contract id plus semver core version.",
+      "type": "object",
+      "properties": {
+        "contractId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "contractVersion": {
+          "$ref": "#/$defs/SemverCore"
+        }
+      },
+      "required": [
+        "contractId",
+        "contractVersion"
+      ],
+      "additionalProperties": false
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "RemoteOperationDeclaration": {
+      "readOnly": true,
+      "title": "RemoteOperationDeclaration",
+      "description": "One declared remote operation: kebab name plus typed inputs/outputs (shared ParameterSpec shape).",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "inputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        },
+        "outputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "inputs",
+        "outputs"
+      ],
+      "additionalProperties": false
+    },
+    "ParameterSpec": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/ParameterKind"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "enumValues": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "required",
+        "description"
+      ],
+      "additionalProperties": false,
+      "title": "ParameterSpec",
+      "description": "Named capability parameter with value kind, optionality, and description."
+    },
+    "ParameterKind": {
+      "type": "string",
+      "enum": [
+        "integer",
+        "number",
+        "string",
+        "boolean",
+        "enum",
+        "entity-reference",
+        "json"
+      ],
+      "title": "ParameterKind",
+      "description": "Value kind of a capability parameter."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:remote-entry-point:1.0.0"
+}

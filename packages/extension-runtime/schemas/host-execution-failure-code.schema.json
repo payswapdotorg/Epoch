@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/HostExecutionFailureCode",
+  "$defs": {
+    "HostExecutionFailureCode": {
+      "type": "string",
+      "enum": [
+        "handler-error",
+        "handler-unavailable"
+      ],
+      "title": "HostExecutionFailureCode",
+      "description": "Neutral host-execution failure code: handler-error or handler-unavailable (invocation outcomes, never boundary errors)."
+    }
+  },
+  "$id": "urn:epoch:extension-runtime:host-execution-failure-code:1.0.0"
+}

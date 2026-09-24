@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/UiSurfaceKind",
+  "$defs": {
+    "UiSurfaceKind": {
+      "type": "string",
+      "enum": [
+        "inspector",
+        "overlay",
+        "panel"
+      ],
+      "title": "UiSurfaceKind",
+      "description": "Abstract render-surface kind of a ui entry point: inspector, overlay, or panel."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:ui-surface-kind:1.0.0"
+}

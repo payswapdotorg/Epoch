@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SandboxSurfaceDescriptionVersion",
+  "$defs": {
+    "SandboxSurfaceDescriptionVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "SandboxSurfaceDescriptionVersion",
+      "description": "Version discriminator on sandbox surface descriptions (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:extension-runtime:sandbox-surface-description-version:1.0.0"
+}

@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/HostInvocationEnvelope",
+  "$defs": {
+    "HostInvocationEnvelope": {
+      "readOnly": true,
+      "title": "HostInvocationEnvelope",
+      "description": "One typed host invocation envelope: session identity, capability scope, host function, and JSON payload (validated against the per-function request contract before dispatch).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/InvocationEnvelopeVersion"
+        },
+        "envelopeId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "extensionId": {
+          "$ref": "#/$defs/ExtensionIdView"
+        },
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "hostFunction": {
+          "$ref": "#/$defs/HostFunctionIdView"
+        },
+        "payload": {
+          "$ref": "#/$defs/JsonValue"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "envelopeId",
+        "extensionId",
+        "capabilityId",
+        "hostFunction",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "InvocationEnvelopeVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "InvocationEnvelopeVersion",
+      "description": "Version discriminator on invocation envelopes (currently 1)."
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    },
+    "ExtensionIdView": {
+      "type": "string",
+      "pattern": "^extension:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ExtensionIdView",
+      "description": "Mirrored extension identity: \"extension:\" + lowercase kebab slug."
+    },
+    "HostFunctionIdView": {
+      "type": "string",
+      "enum": [
+        "capability.invoke",
+        "clock.read",
+        "evidence.append",
+        "log.write",
+        "storage.read",
+        "storage.write",
+        "world.read"
+      ],
+      "title": "HostFunctionIdView",
+      "description": "Mirrored host function id (the narrow closed set)."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:extension-runtime:host-invocation-envelope:1.0.0"
+}

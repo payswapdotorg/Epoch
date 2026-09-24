@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/HostFunctionId",
+  "$defs": {
+    "HostFunctionId": {
+      "type": "string",
+      "enum": [
+        "capability.invoke",
+        "clock.read",
+        "evidence.append",
+        "log.write",
+        "storage.read",
+        "storage.write",
+        "world.read"
+      ],
+      "title": "HostFunctionId",
+      "description": "Host function id: capability.invoke, clock.read, evidence.append, log.write, storage.read, storage.write, or world.read."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:host-function-id:1.0.0"
+}

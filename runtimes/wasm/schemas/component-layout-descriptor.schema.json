@@ -1,0 +1,315 @@
+{
+  "title": "ComponentLayoutDescriptor",
+  "description": "Canonical Wasm Component Model layout descriptor (host side): component identity, WIT world (imports/exports), and the canonical section layout with per-section digests. Sections/interfaces/functions/params are sorted ascending; at least one export and one section. Host machinery: runtimes/wasm (W008); author-side surface: @epoch/extension-sdk.",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "title": "schemaVersion",
+      "description": "Version discriminator (currently 1).",
+      "type": "integer",
+      "const": 1
+    },
+    "componentId": {
+      "title": "componentId",
+      "description": "Dot-namespaced qualified component identity.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+    },
+    "componentVersion": {
+      "title": "componentVersion",
+      "description": "Semantic-version core (major.minor.patch).",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "worldName": {
+      "title": "worldName",
+      "description": "Kebab-case WIT world name.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$"
+    },
+    "imports": {
+      "title": "imports",
+      "description": "Host-provided interfaces, sorted by name.",
+      "type": "array",
+      "items": {
+        "title": "ComponentInterfaceDeclaration",
+        "description": "One import/export interface of a Wasm component world: WIT-style name (kebab or ns:kebab) and its sorted, duplicate-free function surface.",
+        "type": "object",
+        "properties": {
+          "interfaceName": {
+            "title": "interfaceName",
+            "description": "WIT-style interface name (kebab or ns:kebab).",
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{0,62}(:[a-z][a-z0-9-]{0,62}(\\/[a-z][a-z0-9-]{0,62})?)?$"
+          },
+          "functions": {
+            "title": "functions",
+            "description": "Sorted, duplicate-free functions.",
+            "type": "array",
+            "items": {
+              "title": "ComponentFunctionDeclaration",
+              "description": "One function of a Wasm component interface: kebab name, sorted parameters, optional result type.",
+              "type": "object",
+              "properties": {
+                "functionName": {
+                  "title": "functionName",
+                  "description": "Kebab-case function name.",
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9-]{0,63}$"
+                },
+                "params": {
+                  "title": "params",
+                  "description": "Sorted, duplicate-free parameters.",
+                  "type": "array",
+                  "items": {
+                    "title": "WasmParamDeclaration",
+                    "description": "Wasm component parameter: kebab name plus WIT primitive type.",
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "title": "name",
+                        "description": "Kebab-case parameter name.",
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9-]{0,63}$"
+                      },
+                      "type": {
+                        "title": "WasmValueType",
+                        "description": "WIT primitive value type: bool, char, f32, f64, s8..s64, string, or u8..u64.",
+                        "type": "string",
+                        "enum": [
+                          "bool",
+                          "char",
+                          "f32",
+                          "f64",
+                          "s16",
+                          "s32",
+                          "s64",
+                          "s8",
+                          "string",
+                          "u16",
+                          "u32",
+                          "u64",
+                          "u8"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "type"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 0
+                },
+                "result": {
+                  "title": "WasmValueType",
+                  "description": "WIT primitive value type: bool, char, f32, f64, s8..s64, string, or u8..u64.",
+                  "type": "string",
+                  "enum": [
+                    "bool",
+                    "char",
+                    "f32",
+                    "f64",
+                    "s16",
+                    "s32",
+                    "s64",
+                    "s8",
+                    "string",
+                    "u16",
+                    "u32",
+                    "u64",
+                    "u8"
+                  ]
+                }
+              },
+              "required": [
+                "functionName",
+                "params"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "interfaceName",
+          "functions"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "exports": {
+      "title": "exports",
+      "description": "Component-provided interfaces, sorted by name (at least one).",
+      "type": "array",
+      "items": {
+        "title": "ComponentInterfaceDeclaration",
+        "description": "One import/export interface of a Wasm component world: WIT-style name (kebab or ns:kebab) and its sorted, duplicate-free function surface.",
+        "type": "object",
+        "properties": {
+          "interfaceName": {
+            "title": "interfaceName",
+            "description": "WIT-style interface name (kebab or ns:kebab).",
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{0,62}(:[a-z][a-z0-9-]{0,62}(\\/[a-z][a-z0-9-]{0,62})?)?$"
+          },
+          "functions": {
+            "title": "functions",
+            "description": "Sorted, duplicate-free functions.",
+            "type": "array",
+            "items": {
+              "title": "ComponentFunctionDeclaration",
+              "description": "One function of a Wasm component interface: kebab name, sorted parameters, optional result type.",
+              "type": "object",
+              "properties": {
+                "functionName": {
+                  "title": "functionName",
+                  "description": "Kebab-case function name.",
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9-]{0,63}$"
+                },
+                "params": {
+                  "title": "params",
+                  "description": "Sorted, duplicate-free parameters.",
+                  "type": "array",
+                  "items": {
+                    "title": "WasmParamDeclaration",
+                    "description": "Wasm component parameter: kebab name plus WIT primitive type.",
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "title": "name",
+                        "description": "Kebab-case parameter name.",
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9-]{0,63}$"
+                      },
+                      "type": {
+                        "title": "WasmValueType",
+                        "description": "WIT primitive value type: bool, char, f32, f64, s8..s64, string, or u8..u64.",
+                        "type": "string",
+                        "enum": [
+                          "bool",
+                          "char",
+                          "f32",
+                          "f64",
+                          "s16",
+                          "s32",
+                          "s64",
+                          "s8",
+                          "string",
+                          "u16",
+                          "u32",
+                          "u64",
+                          "u8"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "type"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 0
+                },
+                "result": {
+                  "title": "WasmValueType",
+                  "description": "WIT primitive value type: bool, char, f32, f64, s8..s64, string, or u8..u64.",
+                  "type": "string",
+                  "enum": [
+                    "bool",
+                    "char",
+                    "f32",
+                    "f64",
+                    "s16",
+                    "s32",
+                    "s64",
+                    "s8",
+                    "string",
+                    "u16",
+                    "u32",
+                    "u64",
+                    "u8"
+                  ]
+                }
+              },
+              "required": [
+                "functionName",
+                "params"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "interfaceName",
+          "functions"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "sections": {
+      "title": "sections",
+      "description": "Canonical sections, sorted by name (at least one).",
+      "type": "array",
+      "items": {
+        "title": "LayoutSection",
+        "description": "Canonical layout section: kebab name, kind (adapter/core-module/custom), byte size, and the SHA-256 content digest of the section bytes.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "name",
+            "description": "Kebab-case section name; sections are sorted by name.",
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{0,63}$"
+          },
+          "kind": {
+            "title": "WasmSectionKind",
+            "description": "Canonical Wasm section kind: adapter, core-module, or custom.",
+            "type": "string",
+            "enum": [
+              "adapter",
+              "core-module",
+              "custom"
+            ]
+          },
+          "byteSize": {
+            "title": "byteSize",
+            "description": "Section byte size (non-negative integer).",
+            "type": "integer",
+            "minimum": 0
+          },
+          "contentDigest": {
+            "title": "contentDigest",
+            "description": "Lowercase hex SHA-256 of the section bytes (64 characters).",
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "name",
+          "kind",
+          "byteSize",
+          "contentDigest"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "componentId",
+    "componentVersion",
+    "worldName",
+    "imports",
+    "exports",
+    "sections"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:epoch:wasm-layout:component-layout-descriptor:1.0.0"
+}

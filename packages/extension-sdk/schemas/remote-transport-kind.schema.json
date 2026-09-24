@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RemoteTransportKind",
+  "$defs": {
+    "RemoteTransportKind": {
+      "type": "string",
+      "enum": [
+        "custom",
+        "grpc",
+        "http",
+        "mcp"
+      ],
+      "title": "RemoteTransportKind",
+      "description": "Remote-service transport kind: custom, grpc, http, or mcp (protocol roles, never vendors; no endpoint in the contract)."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:remote-transport-kind:1.0.0"
+}

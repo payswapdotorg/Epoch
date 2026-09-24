@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "paths": {
+      "vitest": ["./node_modules/vitest/dist/index.d.ts"]
+    }
+  },
+  "include": [
+    "../../runtimes/wasm/src",
+    "../../runtimes/wasm/test"
+  ]
+}

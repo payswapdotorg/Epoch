@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExtensionDataHandling",
+  "$defs": {
+    "ExtensionDataHandling": {
+      "readOnly": true,
+      "title": "ExtensionDataHandling",
+      "description": "Data-handling declaration: sandbox-only, tenant-scoped, or external-transfer (external-transfer requires the remote flavor).",
+      "type": "object",
+      "properties": {
+        "classification": {
+          "$ref": "#/$defs/DataHandlingClassification"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "classification"
+      ],
+      "additionalProperties": false
+    },
+    "DataHandlingClassification": {
+      "type": "string",
+      "enum": [
+        "sandbox-only",
+        "tenant-scoped",
+        "external-transfer"
+      ],
+      "title": "DataHandlingClassification",
+      "description": "Data-handling classification: sandbox-only, tenant-scoped, or external-transfer."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:extension-data-handling:1.0.0"
+}

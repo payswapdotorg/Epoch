@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/StorageReadResponse",
+  "$defs": {
+    "StorageReadResponse": {
+      "readOnly": true,
+      "title": "StorageReadResponse",
+      "description": "storage.read response: the stored value (null = absent).",
+      "type": "object",
+      "properties": {
+        "value": {
+          "$ref": "#/$defs/JsonValue"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:storage-read-response:1.0.0"
+}

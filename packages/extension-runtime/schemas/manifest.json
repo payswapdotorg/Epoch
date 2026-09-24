@@ -1,0 +1,72 @@
+{
+  "contract": "epoch/extension-runtime",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Extension Runtime contract surface (W008): invocation envelopes, execution outcomes, resolved binding pins, grant descriptions, admitted records, audit records, and deterministic sandbox surface descriptions. JSON Schema projection under schemas/; runtime validators in @epoch/extension-runtime. The manifest mirror is internal admission machinery, parity-pinned against @epoch/extension-sdk (devDependency tests) and deliberately not re-emitted here — the SDK owns that contract emission. Wasm host-side layout machinery: runtimes/wasm.",
+  "dataTypes": [
+    "AdmittedExtensionRecord",
+    "GrantDescription",
+    "HostExecutionFailureCode",
+    "HostInvocationEnvelope",
+    "HostInvocationOutcome",
+    "InvocationAuditRecord",
+    "InvocationEnvelopeVersion",
+    "ResolvedCapabilityBinding",
+    "SandboxSurfaceDescription",
+    "SandboxSurfaceDescriptionVersion"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (sorted-set semantics) are enforced by the runtime validators in @epoch/extension-runtime and are not represented in the JSON Schema files",
+  "emittedBy": "renderExtensionRuntimeContractFiles() in @epoch/extension-runtime (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "AdmittedExtensionRecord",
+      "file": "admitted-extension-record.schema.json",
+      "sha256": "c8039b4028ede71c5100306d5a282db9fee8a556f5917b71f7d9b7d48107abeb"
+    },
+    {
+      "type": "GrantDescription",
+      "file": "grant-description.schema.json",
+      "sha256": "f4608fa8e02ec21a7a7df4727d5c260c9e20c521ae42eb96afd4cdeb5c6451e2"
+    },
+    {
+      "type": "HostExecutionFailureCode",
+      "file": "host-execution-failure-code.schema.json",
+      "sha256": "6661364275e894d13e1bbc11385897866b10d46623aa4542c4e3e67c48e5a246"
+    },
+    {
+      "type": "HostInvocationEnvelope",
+      "file": "host-invocation-envelope.schema.json",
+      "sha256": "85e2e0350d54d64f4d5eba50a6550401f97e42ee98d936ee1e501de0b1374e7e"
+    },
+    {
+      "type": "HostInvocationOutcome",
+      "file": "host-invocation-outcome.schema.json",
+      "sha256": "f95d08ef3df21a29ece14df721d3ae98daa035de21c861704423afa980e44388"
+    },
+    {
+      "type": "InvocationAuditRecord",
+      "file": "invocation-audit-record.schema.json",
+      "sha256": "bb58a1b82c5f7bff9bdec94c219c12cb9545fd2fa5c88939d7b3d033f3c41bd7"
+    },
+    {
+      "type": "InvocationEnvelopeVersion",
+      "file": "invocation-envelope-version.schema.json",
+      "sha256": "97e3512689f6d1fcce2a380ab4dcda54c85753c0469ab0241c50032db5e8f3d9"
+    },
+    {
+      "type": "ResolvedCapabilityBinding",
+      "file": "resolved-capability-binding.schema.json",
+      "sha256": "c8b3e8bfce1d40dbb176c07fa0f7ae447ea3ce23bb331b63696af9f8d8552971"
+    },
+    {
+      "type": "SandboxSurfaceDescription",
+      "file": "sandbox-surface-description.schema.json",
+      "sha256": "1be3e6c8490b6740d468251e41afafd1cc901a3f14b8a32fe672f9367b6cec31"
+    },
+    {
+      "type": "SandboxSurfaceDescriptionVersion",
+      "file": "sandbox-surface-description-version.schema.json",
+      "sha256": "c54f26305be3ec21d04b080a9b98392530fbff4491b9e51bae3bbaf13ccfd350"
+    }
+  ]
+}

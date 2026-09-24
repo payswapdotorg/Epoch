@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SideEffectKind",
+  "$defs": {
+    "SideEffectKind": {
+      "type": "string",
+      "enum": [
+        "action-proposal",
+        "evidence-append",
+        "external-effect",
+        "sandbox-state-write"
+      ],
+      "title": "SideEffectKind",
+      "description": "Side-effect kind: action-proposal, evidence-append, external-effect, or sandbox-state-write."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:side-effect-kind:1.0.0"
+}

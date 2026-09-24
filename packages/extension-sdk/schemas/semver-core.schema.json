@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SemverCore",
+  "$defs": {
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:semver-core:1.0.0"
+}

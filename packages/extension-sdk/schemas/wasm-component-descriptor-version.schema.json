@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WasmComponentDescriptorVersion",
+  "$defs": {
+    "WasmComponentDescriptorVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "WasmComponentDescriptorVersion",
+      "description": "Version discriminator carried by every serialized Wasm component descriptor (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:wasm-component-descriptor-version:1.0.0"
+}

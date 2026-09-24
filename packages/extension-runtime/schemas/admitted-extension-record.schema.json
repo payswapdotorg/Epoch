@@ -1,0 +1,932 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AdmittedExtensionRecord",
+  "$defs": {
+    "AdmittedExtensionRecord": {
+      "readOnly": true,
+      "title": "AdmittedExtensionRecord",
+      "description": "The admitted extension record: the frozen manifest copy, lifecycle state, content digest, and resolved binding pins.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "manifest": {
+          "$ref": "#/$defs/ExtensionManifestView"
+        },
+        "lifecycle": {
+          "type": "string",
+          "enum": [
+            "registered",
+            "deprecated",
+            "retired"
+          ]
+        },
+        "manifestDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        },
+        "bindings": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResolvedCapabilityBinding"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "manifest",
+        "lifecycle",
+        "manifestDigest",
+        "bindings"
+      ],
+      "additionalProperties": false
+    },
+    "ExtensionManifestView": {
+      "readOnly": true,
+      "title": "ExtensionManifestView",
+      "description": "The runtime’s full structural view of an extension manifest (parity-pinned mirror of @epoch/extension-sdk; strict, sorted-set, trust-ceiling, flavor-match refinements).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "extensionId": {
+          "$ref": "#/$defs/ExtensionIdView"
+        },
+        "version": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "flavor": {
+          "type": "string",
+          "enum": [
+            "declarative",
+            "ui",
+            "wasm",
+            "remote"
+          ]
+        },
+        "capabilityBindings": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityBindView"
+          }
+        },
+        "grants": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionGrantView"
+          }
+        },
+        "entryPoints": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EntryPointView"
+          }
+        },
+        "contracts": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityContractReference"
+          }
+        },
+        "trustClass": {
+          "type": "string",
+          "enum": [
+            "t0",
+            "t1",
+            "t2",
+            "t3",
+            "t4"
+          ]
+        },
+        "license": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9.+-]{0,63}$"
+        },
+        "dataHandling": {
+          "$ref": "#/$defs/ExtensionDataHandlingView"
+        },
+        "sideEffects": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionSideEffectView"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "extensionId",
+        "version",
+        "displayName",
+        "flavor",
+        "capabilityBindings",
+        "grants",
+        "entryPoints",
+        "contracts",
+        "trustClass",
+        "license",
+        "dataHandling",
+        "sideEffects"
+      ],
+      "additionalProperties": false
+    },
+    "ExtensionIdView": {
+      "type": "string",
+      "pattern": "^extension:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ExtensionIdView",
+      "description": "Mirrored extension identity: \"extension:\" + lowercase kebab slug."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "CapabilityBindView": {
+      "readOnly": true,
+      "title": "CapabilityBindView",
+      "description": "Mirrored capability binding (opaque id + version range).",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionRange": {
+          "$ref": "#/$defs/VersionConstraint"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "versionRange"
+      ],
+      "additionalProperties": false
+    },
+    "VersionConstraint": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "exact"
+            },
+            "version": {
+              "$ref": "#/$defs/SemverCore"
+            }
+          },
+          "required": [
+            "kind",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "caret"
+            },
+            "version": {
+              "$ref": "#/$defs/SemverCore"
+            }
+          },
+          "required": [
+            "kind",
+            "version"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "VersionConstraint",
+      "description": "Version constraint: an exact pin, or caret major-version compatibility (npm-caret semantics incl. the 0.x carve-outs)."
+    },
+    "ExtensionGrantView": {
+      "readOnly": true,
+      "title": "ExtensionGrantView",
+      "description": "Mirrored declared permission grant (the allow-list unit).",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "hostFunctions": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HostFunctionIdView"
+          }
+        },
+        "resourceScopes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResourceScopeMirror"
+          }
+        }
+      },
+      "required": [
+        "capabilityId",
+        "hostFunctions",
+        "resourceScopes"
+      ],
+      "additionalProperties": false
+    },
+    "HostFunctionIdView": {
+      "type": "string",
+      "enum": [
+        "capability.invoke",
+        "clock.read",
+        "evidence.append",
+        "log.write",
+        "storage.read",
+        "storage.write",
+        "world.read"
+      ],
+      "title": "HostFunctionIdView",
+      "description": "Mirrored host function id (the narrow closed set)."
+    },
+    "ResourceScopeMirror": {
+      "readOnly": true,
+      "title": "ResourceScopeMirror",
+      "description": "Mirrored typed resource scope (legal domain/access pairs only).",
+      "type": "object",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "enum": [
+            "world",
+            "evidence",
+            "storage",
+            "capability"
+          ]
+        },
+        "access": {
+          "type": "string",
+          "enum": [
+            "read",
+            "append",
+            "write",
+            "invoke"
+          ]
+        }
+      },
+      "required": [
+        "resource",
+        "access"
+      ],
+      "additionalProperties": false
+    },
+    "EntryPointView": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/DeclarativeEntryPointView"
+        },
+        {
+          "$ref": "#/$defs/UiEntryPointView"
+        },
+        {
+          "$ref": "#/$defs/WasmEntryPointView"
+        },
+        {
+          "$ref": "#/$defs/RemoteEntryPointView"
+        }
+      ],
+      "title": "EntryPointView",
+      "description": "Mirrored entry-point declaration (discriminated on kind)."
+    },
+    "DeclarativeEntryPointView": {
+      "readOnly": true,
+      "title": "DeclarativeEntryPointView",
+      "description": "Mirrored declarative entry point.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "declarative"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "contributions": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "agent",
+              "animation",
+              "constraint",
+              "connector",
+              "evaluator",
+              "interaction",
+              "mapping",
+              "reconstruction",
+              "simulator",
+              "verification-method",
+              "visualization",
+              "workflow",
+              "world-type"
+            ]
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "title",
+        "contributions"
+      ],
+      "additionalProperties": false
+    },
+    "UiEntryPointView": {
+      "readOnly": true,
+      "title": "UiEntryPointView",
+      "description": "Mirrored ui entry point (abstract typed declaration).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "ui"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "surface": {
+          "type": "string",
+          "enum": [
+            "inspector",
+            "overlay",
+            "panel"
+          ]
+        },
+        "inputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        },
+        "outputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "title",
+        "surface",
+        "inputs",
+        "outputs"
+      ],
+      "additionalProperties": false
+    },
+    "ParameterSpec": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/ParameterKind"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "enumValues": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "required",
+        "description"
+      ],
+      "additionalProperties": false,
+      "title": "ParameterSpec",
+      "description": "Named capability parameter with value kind, optionality, and description."
+    },
+    "ParameterKind": {
+      "type": "string",
+      "enum": [
+        "integer",
+        "number",
+        "string",
+        "boolean",
+        "enum",
+        "entity-reference",
+        "json"
+      ],
+      "title": "ParameterKind",
+      "description": "Value kind of a capability parameter."
+    },
+    "WasmEntryPointView": {
+      "readOnly": true,
+      "title": "WasmEntryPointView",
+      "description": "Mirrored wasm entry point.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "wasm"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "component": {
+          "$ref": "#/$defs/WasmComponentDescriptorView"
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "title",
+        "component"
+      ],
+      "additionalProperties": false
+    },
+    "WasmComponentDescriptorView": {
+      "readOnly": true,
+      "title": "WasmComponentDescriptorView",
+      "description": "Mirrored Wasm component descriptor (host-side view).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "componentId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "componentVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "worldName": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "imports": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ComponentInterfaceView"
+          }
+        },
+        "exports": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ComponentInterfaceView"
+          }
+        },
+        "sections": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LayoutSectionView"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "componentId",
+        "componentVersion",
+        "worldName",
+        "imports",
+        "exports",
+        "sections"
+      ],
+      "additionalProperties": false
+    },
+    "ComponentInterfaceView": {
+      "readOnly": true,
+      "title": "ComponentInterfaceView",
+      "description": "Mirrored component interface declaration.",
+      "type": "object",
+      "properties": {
+        "interfaceName": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,62}(:[a-z][a-z0-9-]{0,62}(\\/[a-z][a-z0-9-]{0,62})?)?$"
+        },
+        "functions": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ComponentFunctionView"
+          }
+        }
+      },
+      "required": [
+        "interfaceName",
+        "functions"
+      ],
+      "additionalProperties": false
+    },
+    "ComponentFunctionView": {
+      "readOnly": true,
+      "title": "ComponentFunctionView",
+      "description": "Mirrored component function declaration.",
+      "type": "object",
+      "properties": {
+        "functionName": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "params": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WasmParamView"
+          }
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "bool",
+            "char",
+            "f32",
+            "f64",
+            "s16",
+            "s32",
+            "s64",
+            "s8",
+            "string",
+            "u16",
+            "u32",
+            "u64",
+            "u8"
+          ]
+        }
+      },
+      "required": [
+        "functionName",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "WasmParamView": {
+      "readOnly": true,
+      "title": "WasmParamView",
+      "description": "Mirrored Wasm component parameter.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "bool",
+            "char",
+            "f32",
+            "f64",
+            "s16",
+            "s32",
+            "s64",
+            "s8",
+            "string",
+            "u16",
+            "u32",
+            "u64",
+            "u8"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "LayoutSectionView": {
+      "readOnly": true,
+      "title": "LayoutSectionView",
+      "description": "Mirrored canonical layout section.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "adapter",
+            "core-module",
+            "custom"
+          ]
+        },
+        "byteSize": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "byteSize",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "RemoteEntryPointView": {
+      "readOnly": true,
+      "title": "RemoteEntryPointView",
+      "description": "Mirrored remote entry point.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "remote"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "service": {
+          "$ref": "#/$defs/RemoteServiceDescriptorView"
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "title",
+        "service"
+      ],
+      "additionalProperties": false
+    },
+    "RemoteServiceDescriptorView": {
+      "readOnly": true,
+      "title": "RemoteServiceDescriptorView",
+      "description": "Mirrored remote service descriptor.",
+      "type": "object",
+      "properties": {
+        "serviceId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "transport": {
+          "type": "string",
+          "enum": [
+            "custom",
+            "grpc",
+            "http",
+            "mcp"
+          ]
+        },
+        "contract": {
+          "$ref": "#/$defs/CapabilityContractReference"
+        },
+        "operations": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RemoteOperationView"
+          }
+        }
+      },
+      "required": [
+        "serviceId",
+        "transport",
+        "contract",
+        "operations"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityContractReference": {
+      "readOnly": true,
+      "title": "CapabilityContractReference",
+      "description": "Reference to a versioned contract a capability honors: qualified contract id plus semver core version.",
+      "type": "object",
+      "properties": {
+        "contractId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "contractVersion": {
+          "$ref": "#/$defs/SemverCore"
+        }
+      },
+      "required": [
+        "contractId",
+        "contractVersion"
+      ],
+      "additionalProperties": false
+    },
+    "RemoteOperationView": {
+      "readOnly": true,
+      "title": "RemoteOperationView",
+      "description": "Mirrored remote operation declaration.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "inputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        },
+        "outputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "inputs",
+        "outputs"
+      ],
+      "additionalProperties": false
+    },
+    "ExtensionDataHandlingView": {
+      "readOnly": true,
+      "title": "ExtensionDataHandlingView",
+      "description": "Mirrored data-handling declaration.",
+      "type": "object",
+      "properties": {
+        "classification": {
+          "type": "string",
+          "enum": [
+            "sandbox-only",
+            "tenant-scoped",
+            "external-transfer"
+          ]
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "classification"
+      ],
+      "additionalProperties": false
+    },
+    "ExtensionSideEffectView": {
+      "readOnly": true,
+      "title": "ExtensionSideEffectView",
+      "description": "Mirrored side-effect declaration.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "action-proposal",
+            "evidence-append",
+            "external-effect",
+            "sandbox-state-write"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "kind",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "ResolvedCapabilityBinding": {
+      "readOnly": true,
+      "title": "ResolvedCapabilityBinding",
+      "description": "A binding pin resolved at admission: capability id + version + manifest digest + the declared constraint.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "capabilityVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "capabilityManifestDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        },
+        "bindingConstraint": {
+          "$ref": "#/$defs/VersionConstraint"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "capabilityVersion",
+        "capabilityManifestDigest",
+        "bindingConstraint"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:extension-runtime:admitted-extension-record:1.0.0"
+}

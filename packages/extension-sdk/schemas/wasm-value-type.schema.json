@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WasmValueType",
+  "$defs": {
+    "WasmValueType": {
+      "type": "string",
+      "enum": [
+        "bool",
+        "char",
+        "f32",
+        "f64",
+        "s16",
+        "s32",
+        "s64",
+        "s8",
+        "string",
+        "u16",
+        "u32",
+        "u64",
+        "u8"
+      ],
+      "title": "WasmValueType",
+      "description": "WIT primitive value type: bool, char, f32, f64, s8..s64, string, or u8..u64."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:wasm-value-type:1.0.0"
+}

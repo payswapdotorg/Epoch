@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldReadResponse",
+  "$defs": {
+    "WorldReadResponse": {
+      "readOnly": true,
+      "title": "WorldReadResponse",
+      "description": "world.read response: one read-only projection snapshot per requested ref (null when unknown).",
+      "type": "object",
+      "properties": {
+        "snapshots": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "snapshots"
+      ],
+      "additionalProperties": false
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:world-read-response:1.0.0"
+}

@@ -1,0 +1,324 @@
+{
+  "contract": "epoch/extension-sdk",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Extension SDK contract surface (W008): declarative extension manifests across the four flavors (declarative, ui, wasm, remote), capability-scoped permission grants with trust-class ceilings, the narrow typed host-function contract surface, and deterministic content-addressed serialization. JSON Schema projection under schemas/; runtime validators in @epoch/extension-sdk. Host-side sandbox machinery: @epoch/extension-runtime; Wasm layout machinery: runtimes/wasm.",
+  "dataTypes": [
+    "CapabilityBinding",
+    "CapabilityInvokeRequest",
+    "CapabilityInvokeResponse",
+    "ClockReadRequest",
+    "ClockReadResponse",
+    "ComponentFunctionDeclaration",
+    "ComponentInterfaceDeclaration",
+    "ContributionKind",
+    "DataHandlingClassification",
+    "DeclarativeEntryPoint",
+    "EntryPointDeclaration",
+    "EntryPointName",
+    "EvidenceAppendRequest",
+    "EvidenceAppendResponse",
+    "ExtensionDataHandling",
+    "ExtensionFlavor",
+    "ExtensionGrant",
+    "ExtensionId",
+    "ExtensionManifest",
+    "ExtensionManifestVersion",
+    "ExtensionRegistration",
+    "ExtensionSideEffect",
+    "ExtensionTrustClass",
+    "HostFunctionDeclaration",
+    "HostFunctionId",
+    "HostLogLevel",
+    "LayoutSection",
+    "LogWriteRequest",
+    "LogWriteResponse",
+    "RemoteEntryPoint",
+    "RemoteOperationDeclaration",
+    "RemoteServiceDescriptor",
+    "RemoteTransportKind",
+    "ResourceAccess",
+    "ResourceDomain",
+    "ResourceScope",
+    "SemverCore",
+    "SideEffectKind",
+    "StorageReadRequest",
+    "StorageReadResponse",
+    "StorageWriteRequest",
+    "StorageWriteResponse",
+    "TrustClassGrantCeiling",
+    "UiEntryPoint",
+    "UiSurfaceKind",
+    "WasmComponentDescriptor",
+    "WasmComponentDescriptorVersion",
+    "WasmParamDeclaration",
+    "WasmSectionKind",
+    "WasmValueType",
+    "WorldReadRequest",
+    "WorldReadResponse"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (sorted-set semantics, grants-subset-bindings, trust-class ceilings, flavor match, legal resource scopes, external-transfer gating) are enforced by the runtime validators in @epoch/extension-sdk and are not represented in the JSON Schema files",
+  "emittedBy": "renderExtensionSdkContractFiles() in @epoch/extension-sdk (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "CapabilityBinding",
+      "file": "capability-binding.schema.json",
+      "sha256": "6dd42e2ca59a1d7c7d5ed6f4d5b36b855c25fd06f6ee2a6dffd9256b59d8928f"
+    },
+    {
+      "type": "CapabilityInvokeRequest",
+      "file": "capability-invoke-request.schema.json",
+      "sha256": "7f9c5911092029376c6688d4e00bec9c2cc96195d90ae253fbd1f9d8bd3ca76b"
+    },
+    {
+      "type": "CapabilityInvokeResponse",
+      "file": "capability-invoke-response.schema.json",
+      "sha256": "0cd7b4e667b1e016c72713dc6fd4bac7054af159627365a02053cc50eeaab53f"
+    },
+    {
+      "type": "ClockReadRequest",
+      "file": "clock-read-request.schema.json",
+      "sha256": "a747f4f2a91a0f726f9f6402564a74c0a6803bb449d657d8fd65a5f19ff7023c"
+    },
+    {
+      "type": "ClockReadResponse",
+      "file": "clock-read-response.schema.json",
+      "sha256": "1548088225efa4306b6bc0ecf81aba0e1a3744b9d3a85340f42e6e9d1aad9620"
+    },
+    {
+      "type": "ComponentFunctionDeclaration",
+      "file": "component-function-declaration.schema.json",
+      "sha256": "10a98295baae0cad79e5b17185ee73c981d866f70877d84187e43bbc7334b4e0"
+    },
+    {
+      "type": "ComponentInterfaceDeclaration",
+      "file": "component-interface-declaration.schema.json",
+      "sha256": "799e31587fcafb5d69ccf95f4a4e60220baa90a18a56c4f0e2fb9bf1959f9b5a"
+    },
+    {
+      "type": "ContributionKind",
+      "file": "contribution-kind.schema.json",
+      "sha256": "7a345d5a944e7b1ce2e22a18ce42a97083a4d51a4a1c5a09933fd846f52549a7"
+    },
+    {
+      "type": "DataHandlingClassification",
+      "file": "data-handling-classification.schema.json",
+      "sha256": "ab086c3b79884d4db3c600e992e906f855f94b9257177e40b833375be8d0dfa5"
+    },
+    {
+      "type": "DeclarativeEntryPoint",
+      "file": "declarative-entry-point.schema.json",
+      "sha256": "0f7a47e58a79531e0e005085d3352ac47bb10cf9445aaf7501afd341eeaf1320"
+    },
+    {
+      "type": "EntryPointDeclaration",
+      "file": "entry-point-declaration.schema.json",
+      "sha256": "10e96e83b45ba8a3e1256aa21dd8ae17d756aa6745d028c19879124ce26356f6"
+    },
+    {
+      "type": "EntryPointName",
+      "file": "entry-point-name.schema.json",
+      "sha256": "b7913c1bac890b91583088f5cf1b5176c22b18f9e375ceac028760218a623aac"
+    },
+    {
+      "type": "EvidenceAppendRequest",
+      "file": "evidence-append-request.schema.json",
+      "sha256": "966de659f233c2bf929f3d4deccb0364fed42328ecd5108659a5875a2cb7057f"
+    },
+    {
+      "type": "EvidenceAppendResponse",
+      "file": "evidence-append-response.schema.json",
+      "sha256": "e0d84fb9ac70267275ad48a5103abfdc13885df011a2f3669e22723c2b74f8ec"
+    },
+    {
+      "type": "ExtensionDataHandling",
+      "file": "extension-data-handling.schema.json",
+      "sha256": "8b9288ba09e8cdf0561bab520c41ab26446387ae7c2a565fba109857d8ec7f20"
+    },
+    {
+      "type": "ExtensionFlavor",
+      "file": "extension-flavor.schema.json",
+      "sha256": "9b4620e36cf2717dcf7b50cacbf1a8ee80aa92db0b1e59df8939909ec9b806d6"
+    },
+    {
+      "type": "ExtensionGrant",
+      "file": "extension-grant.schema.json",
+      "sha256": "0b2943ef4b24ee3fe54386e07dc3e9575b2b44b42f59a34ec155800645b094ed"
+    },
+    {
+      "type": "ExtensionId",
+      "file": "extension-id.schema.json",
+      "sha256": "ce0a472f2bf5c9265a494d93118c210edb24401627e80b41fee35b895bedeca4"
+    },
+    {
+      "type": "ExtensionManifest",
+      "file": "extension-manifest.schema.json",
+      "sha256": "a8e2866fe591805160012f30023d3ddc332656b82d7b4db02df5778f938ed5f4"
+    },
+    {
+      "type": "ExtensionManifestVersion",
+      "file": "extension-manifest-version.schema.json",
+      "sha256": "27f4d28bd7498fd2794aa37f3afaa22c7c4b20b709d2859bd44cc72eb99d1e8c"
+    },
+    {
+      "type": "ExtensionRegistration",
+      "file": "extension-registration.schema.json",
+      "sha256": "38b2613367ceb273432759c4640d21c71d5c3a776f7d0efa379cd403bdf49499"
+    },
+    {
+      "type": "ExtensionSideEffect",
+      "file": "extension-side-effect.schema.json",
+      "sha256": "42f00a53e7a694c3482a15eb935815e85e6d99e706ec85cd2e987a5cfdb530f5"
+    },
+    {
+      "type": "ExtensionTrustClass",
+      "file": "extension-trust-class.schema.json",
+      "sha256": "a89eec6e1577d7439de76caa87e4a73c9bdc92d2ea63b847d901ed7bea57154d"
+    },
+    {
+      "type": "HostFunctionDeclaration",
+      "file": "host-function-declaration.schema.json",
+      "sha256": "609f7ee1aeb29f42b3344ba26505a7a5a6b060bd10fb6cb1df0a4e9ecf12f989"
+    },
+    {
+      "type": "HostFunctionId",
+      "file": "host-function-id.schema.json",
+      "sha256": "914cc0509f0ae7141e7f4e52736289612e5d1971f8de9fad8e3f327ce37c5b6e"
+    },
+    {
+      "type": "HostLogLevel",
+      "file": "host-log-level.schema.json",
+      "sha256": "30c40b0e487e0398fb3f71f3dc93cd71a31aeb2cfc84bab19f4518890ca2b946"
+    },
+    {
+      "type": "LayoutSection",
+      "file": "layout-section.schema.json",
+      "sha256": "59520109d64971d704e1c4ffe8cc95bee83902ac11ef1daa621f65f0b3a12bbc"
+    },
+    {
+      "type": "LogWriteRequest",
+      "file": "log-write-request.schema.json",
+      "sha256": "1b15bda5f6ca40db9b04e65487fdff2c8568302e0835072279322c09e8f74f4c"
+    },
+    {
+      "type": "LogWriteResponse",
+      "file": "log-write-response.schema.json",
+      "sha256": "58e295c05b609e117448a6dc595c969b0b760bd5cfc1fb44269692a97e8c0d44"
+    },
+    {
+      "type": "RemoteEntryPoint",
+      "file": "remote-entry-point.schema.json",
+      "sha256": "8cb6177c67586892f86ec82c6255cc7dacc8dc58eeda4ef36012add85019b4bf"
+    },
+    {
+      "type": "RemoteOperationDeclaration",
+      "file": "remote-operation-declaration.schema.json",
+      "sha256": "36cc5678e6affcdbfcc862dca66b7b8ac2ff07db610c38915359f02206cb0dd0"
+    },
+    {
+      "type": "RemoteServiceDescriptor",
+      "file": "remote-service-descriptor.schema.json",
+      "sha256": "183ff16303ddcd665e3cc261a604cb18bbc5ab6dc77992e94e13dc87f11f8173"
+    },
+    {
+      "type": "RemoteTransportKind",
+      "file": "remote-transport-kind.schema.json",
+      "sha256": "55d3634b67c39949a47a07dde28d4d678b46e04423c457945e39e02bd5dde21e"
+    },
+    {
+      "type": "ResourceAccess",
+      "file": "resource-access.schema.json",
+      "sha256": "80a5991070a96abc5db70316e055a99409f6b6b513a4388798111d20845e9d20"
+    },
+    {
+      "type": "ResourceDomain",
+      "file": "resource-domain.schema.json",
+      "sha256": "8ab0ef15604090ba3899280661c720c3476dd7e932bfaa490c2eccd2feec4908"
+    },
+    {
+      "type": "ResourceScope",
+      "file": "resource-scope.schema.json",
+      "sha256": "b48bb972866b3f9ca83b267f27d000ef7de1cc5dfe20a4fce009526d3a9d23a4"
+    },
+    {
+      "type": "SemverCore",
+      "file": "semver-core.schema.json",
+      "sha256": "8664c6721d62f964d1b4b56de6043d8da933b5cf0fd1dde9a039af26a15cefd8"
+    },
+    {
+      "type": "SideEffectKind",
+      "file": "side-effect-kind.schema.json",
+      "sha256": "4a9f9e510b0ce3c1854588a3d427a7fedd9ceec0cef22fc14d4784db3ef8a7cc"
+    },
+    {
+      "type": "StorageReadRequest",
+      "file": "storage-read-request.schema.json",
+      "sha256": "87ec0dc7942f0f8b9f91ecabdd963ff6fe5916a448cccc6623f23ea16782a5f3"
+    },
+    {
+      "type": "StorageReadResponse",
+      "file": "storage-read-response.schema.json",
+      "sha256": "1e13c83f4518a993d69a4eeb7a62f3d5a22b3c7089895068567f64933cfe4a5e"
+    },
+    {
+      "type": "StorageWriteRequest",
+      "file": "storage-write-request.schema.json",
+      "sha256": "5cab8f89523a3dd33ab82a2de990c384834eeb9ccd85a6ab4e092c4e01dddc2e"
+    },
+    {
+      "type": "StorageWriteResponse",
+      "file": "storage-write-response.schema.json",
+      "sha256": "c1bcbb66dbdcbb32d4fbc621b464881f1b0d6454d4223a740b41f016b7062a72"
+    },
+    {
+      "type": "TrustClassGrantCeiling",
+      "file": "trust-class-grant-ceiling.schema.json",
+      "sha256": "77f2527986e8e99ec5351361516b8486c17216a8cb8d60900244e779b647512e"
+    },
+    {
+      "type": "UiEntryPoint",
+      "file": "ui-entry-point.schema.json",
+      "sha256": "d3b5bc49a7d96c80968c7348aa3b1f0bcb6f376cd2412e4e2ee7d5e6c6b58da3"
+    },
+    {
+      "type": "UiSurfaceKind",
+      "file": "ui-surface-kind.schema.json",
+      "sha256": "8965ac2adb993e71bd1c98c476ebd801a9b3151907e8e2d06d78da9400ae5de2"
+    },
+    {
+      "type": "WasmComponentDescriptor",
+      "file": "wasm-component-descriptor.schema.json",
+      "sha256": "0e21ea01d385663a36be3e07138be98332b60524d48c4c24b58b76b14f8ff7fd"
+    },
+    {
+      "type": "WasmComponentDescriptorVersion",
+      "file": "wasm-component-descriptor-version.schema.json",
+      "sha256": "30d5a2b8f4d6961e690c67eb7da1e0112769d2dec3cc0de955341e997d481b3c"
+    },
+    {
+      "type": "WasmParamDeclaration",
+      "file": "wasm-param-declaration.schema.json",
+      "sha256": "00e25f051960a69888c4ed99d488c8466940e40fdc87dbfa89a88085c11e1fb0"
+    },
+    {
+      "type": "WasmSectionKind",
+      "file": "wasm-section-kind.schema.json",
+      "sha256": "bbf8f78660b916c5ab98083003f6e0202904a6d9674a8ba02f7853d303fc061d"
+    },
+    {
+      "type": "WasmValueType",
+      "file": "wasm-value-type.schema.json",
+      "sha256": "b39f31fe4b6164125d46aa4613af1317391161d0dad4dcb9021eb5d28f29e795"
+    },
+    {
+      "type": "WorldReadRequest",
+      "file": "world-read-request.schema.json",
+      "sha256": "bb900eff65040a6a840eaca684a4260eb3eefa0040e1b462bd33d968914c49ab"
+    },
+    {
+      "type": "WorldReadResponse",
+      "file": "world-read-response.schema.json",
+      "sha256": "717383faa8a173c1a89962318e826d167bf3eb6b72d594f36195b56ff9e89bc7"
+    }
+  ]
+}

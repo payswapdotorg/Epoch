@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldReadRequest",
+  "$defs": {
+    "WorldReadRequest": {
+      "readOnly": true,
+      "title": "WorldReadRequest",
+      "description": "world.read request: entity references to project (bounded: 1..64).",
+      "type": "object",
+      "properties": {
+        "entityRefs": {
+          "readOnly": true,
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        }
+      },
+      "required": [
+        "entityRefs"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:world-read-request:1.0.0"
+}

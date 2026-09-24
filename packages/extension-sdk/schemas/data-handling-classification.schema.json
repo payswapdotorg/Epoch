@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DataHandlingClassification",
+  "$defs": {
+    "DataHandlingClassification": {
+      "type": "string",
+      "enum": [
+        "sandbox-only",
+        "tenant-scoped",
+        "external-transfer"
+      ],
+      "title": "DataHandlingClassification",
+      "description": "Data-handling classification: sandbox-only, tenant-scoped, or external-transfer."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:data-handling-classification:1.0.0"
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@epoch/extension-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Extension Runtime kernel — the sandboxed HOST machinery model for capability-scoped extension hosting (W008): admission with digest verification and capability-registry binding resolution, permission enforcement at the boundary (grant checks on every host call, typed denials with precise paths), typed invocation envelopes, in-memory reference host state, and deterministic execution-surface descriptions. No persistence, no UI, no workflow engine.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.wasm.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/extension-sdk": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/GrantDescription",
+  "$defs": {
+    "GrantDescription": {
+      "readOnly": true,
+      "title": "GrantDescription",
+      "description": "One frozen grant in the sandbox surface description: capability-scoped host functions and resource scopes.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "hostFunctions": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HostFunctionIdView"
+          }
+        },
+        "resourceScopes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResourceScopeMirror"
+          }
+        }
+      },
+      "required": [
+        "capabilityId",
+        "hostFunctions",
+        "resourceScopes"
+      ],
+      "additionalProperties": false
+    },
+    "HostFunctionIdView": {
+      "type": "string",
+      "enum": [
+        "capability.invoke",
+        "clock.read",
+        "evidence.append",
+        "log.write",
+        "storage.read",
+        "storage.write",
+        "world.read"
+      ],
+      "title": "HostFunctionIdView",
+      "description": "Mirrored host function id (the narrow closed set)."
+    },
+    "ResourceScopeMirror": {
+      "readOnly": true,
+      "title": "ResourceScopeMirror",
+      "description": "Mirrored typed resource scope (legal domain/access pairs only).",
+      "type": "object",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "enum": [
+            "world",
+            "evidence",
+            "storage",
+            "capability"
+          ]
+        },
+        "access": {
+          "type": "string",
+          "enum": [
+            "read",
+            "append",
+            "write",
+            "invoke"
+          ]
+        }
+      },
+      "required": [
+        "resource",
+        "access"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:extension-runtime:grant-description:1.0.0"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/InvocationEnvelopeVersion",
+  "$defs": {
+    "InvocationEnvelopeVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "InvocationEnvelopeVersion",
+      "description": "Version discriminator on invocation envelopes (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:extension-runtime:invocation-envelope-version:1.0.0"
+}

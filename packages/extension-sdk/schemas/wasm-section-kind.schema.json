@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WasmSectionKind",
+  "$defs": {
+    "WasmSectionKind": {
+      "type": "string",
+      "enum": [
+        "adapter",
+        "core-module",
+        "custom"
+      ],
+      "title": "WasmSectionKind",
+      "description": "Canonical Wasm section kind: adapter, core-module, or custom."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:wasm-section-kind:1.0.0"
+}

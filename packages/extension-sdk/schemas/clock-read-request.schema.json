@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ClockReadRequest",
+  "$defs": {
+    "ClockReadRequest": {
+      "readOnly": true,
+      "title": "ClockReadRequest",
+      "description": "clock.read request (marker form; no parameters).",
+      "type": "object",
+      "properties": {
+        "instant": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "instant"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:clock-read-request:1.0.0"
+}

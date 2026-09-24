@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/InvocationAuditRecord",
+  "$defs": {
+    "InvocationAuditRecord": {
+      "readOnly": true,
+      "title": "InvocationAuditRecord",
+      "description": "One session-local audit record (deterministic sequence; explicitly NOT the W010 event log).",
+      "type": "object",
+      "properties": {
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "envelopeId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "hostFunction": {
+          "$ref": "#/$defs/HostFunctionIdView"
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "denied",
+            "permitted"
+          ]
+        },
+        "denialCode": {
+          "type": "string",
+          "enum": [
+            "validation",
+            "unknown-capability",
+            "version-unsatisfied",
+            "lifecycle-conflict",
+            "digest-mismatch",
+            "permission-denied",
+            "sandbox-violation"
+          ]
+        }
+      },
+      "required": [
+        "sequence",
+        "envelopeId",
+        "capabilityId",
+        "hostFunction",
+        "decision"
+      ],
+      "additionalProperties": false
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    },
+    "HostFunctionIdView": {
+      "type": "string",
+      "enum": [
+        "capability.invoke",
+        "clock.read",
+        "evidence.append",
+        "log.write",
+        "storage.read",
+        "storage.write",
+        "world.read"
+      ],
+      "title": "HostFunctionIdView",
+      "description": "Mirrored host function id (the narrow closed set)."
+    }
+  },
+  "$id": "urn:epoch:extension-runtime:invocation-audit-record:1.0.0"
+}

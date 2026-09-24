@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ComponentFunctionDeclaration",
+  "$defs": {
+    "ComponentFunctionDeclaration": {
+      "readOnly": true,
+      "title": "ComponentFunctionDeclaration",
+      "description": "One function of a Wasm component interface: kebab name, sorted parameters, optional result type.",
+      "type": "object",
+      "properties": {
+        "functionName": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "params": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WasmParamDeclaration"
+          }
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "bool",
+            "char",
+            "f32",
+            "f64",
+            "s16",
+            "s32",
+            "s64",
+            "s8",
+            "string",
+            "u16",
+            "u32",
+            "u64",
+            "u8"
+          ]
+        }
+      },
+      "required": [
+        "functionName",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "WasmParamDeclaration": {
+      "readOnly": true,
+      "title": "WasmParamDeclaration",
+      "description": "Wasm component parameter: kebab name plus WIT primitive type.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "bool",
+            "char",
+            "f32",
+            "f64",
+            "s16",
+            "s32",
+            "s64",
+            "s8",
+            "string",
+            "u16",
+            "u32",
+            "u64",
+            "u8"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:component-function-declaration:1.0.0"
+}

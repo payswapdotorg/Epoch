@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ResourceAccess",
+  "$defs": {
+    "ResourceAccess": {
+      "type": "string",
+      "enum": [
+        "read",
+        "append",
+        "write",
+        "invoke"
+      ],
+      "title": "ResourceAccess",
+      "description": "Kind of access over a resource domain: read, append, write, or invoke."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:resource-access:1.0.0"
+}

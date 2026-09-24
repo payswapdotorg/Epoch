@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WasmComponentDescriptor",
+  "$defs": {
+    "WasmComponentDescriptor": {
+      "readOnly": true,
+      "title": "WasmComponentDescriptor",
+      "description": "Wasm Component Model descriptor: component identity, WIT world (imports/exports), and the canonical section layout with per-section digests. Zero vendored toolchains, zero binaries.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/WasmComponentDescriptorVersion"
+        },
+        "componentId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "componentVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "worldName": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "imports": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ComponentInterfaceDeclaration"
+          }
+        },
+        "exports": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ComponentInterfaceDeclaration"
+          }
+        },
+        "sections": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LayoutSection"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "componentId",
+        "componentVersion",
+        "worldName",
+        "imports",
+        "exports",
+        "sections"
+      ],
+      "additionalProperties": false
+    },
+    "WasmComponentDescriptorVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "WasmComponentDescriptorVersion",
+      "description": "Version discriminator carried by every serialized Wasm component descriptor (currently 1)."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "ComponentInterfaceDeclaration": {
+      "readOnly": true,
+      "title": "ComponentInterfaceDeclaration",
+      "description": "One import/export interface of a Wasm component world: WIT-style name (kebab or ns:kebab) and its sorted, duplicate-free function surface.",
+      "type": "object",
+      "properties": {
+        "interfaceName": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,62}(:[a-z][a-z0-9-]{0,62}(\\/[a-z][a-z0-9-]{0,62})?)?$"
+        },
+        "functions": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ComponentFunctionDeclaration"
+          }
+        }
+      },
+      "required": [
+        "interfaceName",
+        "functions"
+      ],
+      "additionalProperties": false
+    },
+    "ComponentFunctionDeclaration": {
+      "readOnly": true,
+      "title": "ComponentFunctionDeclaration",
+      "description": "One function of a Wasm component interface: kebab name, sorted parameters, optional result type.",
+      "type": "object",
+      "properties": {
+        "functionName": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "params": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WasmParamDeclaration"
+          }
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "bool",
+            "char",
+            "f32",
+            "f64",
+            "s16",
+            "s32",
+            "s64",
+            "s8",
+            "string",
+            "u16",
+            "u32",
+            "u64",
+            "u8"
+          ]
+        }
+      },
+      "required": [
+        "functionName",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "WasmParamDeclaration": {
+      "readOnly": true,
+      "title": "WasmParamDeclaration",
+      "description": "Wasm component parameter: kebab name plus WIT primitive type.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "bool",
+            "char",
+            "f32",
+            "f64",
+            "s16",
+            "s32",
+            "s64",
+            "s8",
+            "string",
+            "u16",
+            "u32",
+            "u64",
+            "u8"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "LayoutSection": {
+      "readOnly": true,
+      "title": "LayoutSection",
+      "description": "Canonical layout section: kebab name, kind (adapter/core-module/custom), byte size, and the SHA-256 content digest of the section bytes.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/WasmSectionKind"
+        },
+        "byteSize": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "byteSize",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "WasmSectionKind": {
+      "type": "string",
+      "enum": [
+        "adapter",
+        "core-module",
+        "custom"
+      ],
+      "title": "WasmSectionKind",
+      "description": "Canonical Wasm section kind: adapter, core-module, or custom."
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:wasm-component-descriptor:1.0.0"
+}

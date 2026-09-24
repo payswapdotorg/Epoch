@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExtensionFlavor",
+  "$defs": {
+    "ExtensionFlavor": {
+      "type": "string",
+      "enum": [
+        "declarative",
+        "ui",
+        "wasm",
+        "remote"
+      ],
+      "title": "ExtensionFlavor",
+      "description": "Extension flavor: declarative manifest/schema, TypeScript/React UI (abstract typed declarations), Wasm Component Model, or remote service adapter."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:extension-flavor:1.0.0"
+}

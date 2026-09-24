@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityInvokeRequest",
+  "$defs": {
+    "CapabilityInvokeRequest": {
+      "readOnly": true,
+      "title": "CapabilityInvokeRequest",
+      "description": "capability.invoke request: the bound capability plus named inputs (parameter-name keys).",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "inputs": {
+          "readOnly": true,
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "capabilityId",
+        "inputs"
+      ],
+      "additionalProperties": false
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:capability-invoke-request:1.0.0"
+}

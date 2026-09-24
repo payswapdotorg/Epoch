@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TrustClassGrantCeiling",
+  "$defs": {
+    "TrustClassGrantCeiling": {
+      "readOnly": true,
+      "title": "TrustClassGrantCeiling",
+      "description": "Maximum host functions and resource scopes a manifest of a given trust class may declare; anything above the ceiling is invalid by declaration (least privilege, R24).",
+      "type": "object",
+      "properties": {
+        "trustClass": {
+          "$ref": "#/$defs/ExtensionTrustClass"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "hostFunctions": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HostFunctionId"
+          }
+        },
+        "resourceScopes": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResourceScope"
+          }
+        }
+      },
+      "required": [
+        "trustClass",
+        "title",
+        "description",
+        "hostFunctions",
+        "resourceScopes"
+      ],
+      "additionalProperties": false
+    },
+    "ExtensionTrustClass": {
+      "type": "string",
+      "enum": [
+        "t0",
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "title": "ExtensionTrustClass",
+      "description": "Extension trust class: t0 untrusted/read-only, t1 provisional model population, t2 validated simulation/evaluation, t3 trusted reversible execution, t4 certified controlled autonomy."
+    },
+    "HostFunctionId": {
+      "type": "string",
+      "enum": [
+        "capability.invoke",
+        "clock.read",
+        "evidence.append",
+        "log.write",
+        "storage.read",
+        "storage.write",
+        "world.read"
+      ],
+      "title": "HostFunctionId",
+      "description": "Host function id: capability.invoke, clock.read, evidence.append, log.write, storage.read, storage.write, or world.read."
+    },
+    "ResourceScope": {
+      "readOnly": true,
+      "title": "ResourceScope",
+      "description": "Typed resource scope: a legal (domain, access) pair a grant carries for host calls to be permitted. The v1 host surface offers no direct world mutation.",
+      "type": "object",
+      "properties": {
+        "resource": {
+          "$ref": "#/$defs/ResourceDomain"
+        },
+        "access": {
+          "$ref": "#/$defs/ResourceAccess"
+        }
+      },
+      "required": [
+        "resource",
+        "access"
+      ],
+      "additionalProperties": false
+    },
+    "ResourceDomain": {
+      "type": "string",
+      "enum": [
+        "world",
+        "evidence",
+        "storage",
+        "capability"
+      ],
+      "title": "ResourceDomain",
+      "description": "Resource domain a sandboxed extension can touch: world, evidence, storage, or capability."
+    },
+    "ResourceAccess": {
+      "type": "string",
+      "enum": [
+        "read",
+        "append",
+        "write",
+        "invoke"
+      ],
+      "title": "ResourceAccess",
+      "description": "Kind of access over a resource domain: read, append, write, or invoke."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:trust-class-grant-ceiling:1.0.0"
+}
