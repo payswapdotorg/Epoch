@@ -22,6 +22,7 @@ Current frontier:
 - W010 WAITING_ON_DEPENDENCIES (needs W009); all others WAITING_ON_DEPENDENCIES
 - PR #21 merged (squash b2bebc38): ACR-001 approved architecture target and W036-W044 delivery program added
 - Foundation maintenance COMPLETE (PR #24, squash 803a1989): post-W008 pnpm-lock.yaml reconcile
+- Architect architecture PR #27 MERGED (squash 8bfd14a7): universal lifecycle + Solution Navigator + domain-pack contract + delivery Work Order reconciliation
 
 Verification baseline after W008 (6314365): battery 54/54 tasks --force, 0 cached (18 typecheck + 15 lint + 16 test + 3 build + governance + boundary), across 17 kernel packages + web app; governance selftest 6/6. pnpm@10.34.5 / Node 22 / TS 5.9.3 / eslint 10.11.0 + typescript-eslint 8.70.1 / vitest 5.0.1 / Next 15.5.26 / React 19.3.0 / zod 4.6.5 / turbo 2.11.3 — frozen catalog in pnpm-workspace.yaml; policy in scripts/DEPENDENCY-BASELINE.md; CI battery: governance boundary typecheck lint test build.
 
