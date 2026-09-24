@@ -5,7 +5,7 @@ Worker Count: 1
 Owned surfaces: packages/learning-calibration/*, services/learning-calibration/*, contracts/learning-calibration/*
 
 ## Objective
-Turn validated delivery outcomes into governed calibration/training records for future prediction improvement.
+Turn validated delivery outcomes into governed calibration/training records for future prediction improvement across domain packs and universal lifecycle realizations.
 
 ## Must provide
 - prediction-to-outcome datasets;
@@ -19,3 +19,6 @@ Turn validated delivery outcomes into governed calibration/training records for 
 
 ## Acceptance
 Fixtures prove only validated actual/outcome records can enter calibration datasets and that model revisions retain lineage to the observations that changed them.
+
+
+Learning records must preserve domain-pack context without creating domain-specific history stores. See `spec/domain-pack-contract.md`.
