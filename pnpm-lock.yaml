@@ -299,6 +299,71 @@ importers:
         specifier: 'catalog:'
         version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
 
+
+  packages/extension-runtime:
+    dependencies:
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../agent-protocol
+      '@epoch/capability-registry':
+        specifier: workspace:*
+        version: link:../capability-registry
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@epoch/extension-sdk':
+        specifier: workspace:*
+        version: link:../extension-sdk
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
+
+  packages/extension-sdk:
+    dependencies:
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../agent-protocol
+      '@epoch/capability-registry':
+        specifier: workspace:*
+        version: link:../capability-registry
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
   packages/evidence:
     dependencies:
       '@epoch/agent-protocol':
