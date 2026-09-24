@@ -31,15 +31,29 @@ Requirement -> Claim -> Method -> Run -> Evidence -> Result -> Approval. Verific
 ## Solution Delivery
 An approved solution may instantiate a DeliveryRecord that follows acquisition, realization, verification, payment and outcome. The baseline remains immutable; live actuals, commitments and forecasts are separate records. The universal schedule is the Program of Work. Construction renders quantities/cost/work relationships as an interactive BOQ; other domains render equivalent solution schedules.
 
-The canonical universal lifecycle and domain adaptation rules are defined in `spec/universal-solution-lifecycle.md`, `spec/domain-pack-contract.md`, and `spec/solution-navigator-architecture.md`.
+The canonical universal lifecycle and domain adaptation rules are defined in spec/universal-solution-lifecycle.md, spec/domain-pack-contract.md, and spec/solution-navigator-architecture.md.
 
 Detailed contracts are defined by the approved ACR-001 target architecture. That target is not effective for new implementation until the architecture lock transition is recorded.
 
 ## Domain Packs
-Domain packs teach Epoch how a domain expresses the universal lifecycle. They may add terminology, measurements, calculations, simulations, verification methods and projections, but may not define a competing lifecycle, baseline ledger, delivery ledger or authority. See `spec/domain-pack-contract.md`.
+Domain packs teach Epoch how a domain expresses the universal lifecycle. They may add terminology, measurements, calculations, simulations, verification methods and projections, but may not define a competing lifecycle, baseline ledger, delivery ledger or authority. See spec/domain-pack-contract.md.
 
 ## Capability Fabric
 Registered adapter categories: source, semantic, reconstruction, visualization, simulation, evaluator, action, verification. Sources include first-party, community, external software, and provisional document-derived mappings.
+
+Mature open-source engineering systems are capabilities behind this fabric, not kernel authorities. The canonical policy is spec/capability-foundation-policy.md and ACR-003. Prefer the narrowest viable boundary:
+library/API -> provider-neutral adapter -> sandboxed extension/plugin -> optional client surface -> fork.
+
+Examples include:
+- FreeCAD / BRL-CAD / OpenSCAD for precision or scripted geometry;
+- Blender for DCC, scene processing and rendering;
+- O3DE / Godot for interactive world/runtime capabilities;
+- SALOME / ParaView for specialized simulation and result visualization;
+- Three.js / Babylon.js / CesiumJS for web/spatial visualization;
+- Theia / Monaco / LSP / Git integrations for software engineering workspaces;
+- Assimp and format-specific adapters for asset ingestion.
+
+Provider-native files, scene graphs, repositories, solver state and workspaces are linked artifacts, not Epoch semantic authority. Forks require an approved Architecture Change Request and an explicit license, dependency, isolation, divergence and upstream/reconciliation plan.
 
 ## Experience Runtime
 Consumes world/task/agent/evidence/device/capability state and produces Experience Graphs for 2D, 3D, animation, narrative, timeline/replay, presence and controls. It is never semantic authority. The Solution Navigator presents synchronized Design, Program of Work, BOQ, Procurement, Execution, Verification, Forecast, Outcome and Learning projections.
@@ -58,6 +72,8 @@ External systems can provide authorized normalized observations/events and recei
 
 ## Clients
 Web canonical. Tauri 2 desktop/mobile clients share semantic contracts; mobile is optimized for field capture/review/approval.
+
+Desktop may expose optional foundation-backed authoring surfaces, but their native timelines/documents/projects remain projections and working artifacts. The web experience stays web-native and canonical.
 
 ## Marketplace
 Epoch owns listings, trust metadata, versions, entitlements, usage accounting, and developer revenue records. Payment processors are adapters.
