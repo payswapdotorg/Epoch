@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Epoch policy document (typed contract; distinct from constraint semantics).",
+  "properties": {
+    "applicability": {
+      "additionalProperties": false,
+      "description": "Applicability scope. Every present matcher must match; an empty scope applies universally (platform-wide defaults).",
+      "properties": {
+        "actionKinds": {
+          "description": "Target actionKind must be one of these.",
+          "items": {
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 64,
+          "minItems": 1,
+          "type": "array"
+        },
+        "projectId": {
+          "description": "Exact project match.",
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        },
+        "resourceTypes": {
+          "description": "Target resourceType must be one of these.",
+          "items": {
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 64,
+          "minItems": 1,
+          "type": "array"
+        },
+        "tags": {
+          "additionalProperties": false,
+          "description": "Tag matcher: allOf must all be present; anyOf at least one.",
+          "properties": {
+            "allOf": {
+              "items": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 64,
+              "minItems": 1,
+              "type": "array"
+            },
+            "anyOf": {
+              "items": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 64,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "tenantId": {
+          "description": "Exact tenant match.",
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        },
+        "workspaceId": {
+          "description": "Exact workspace match.",
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "bindings": {
+      "description": "Constraints this policy applies in its scope.",
+      "items": {
+        "additionalProperties": false,
+        "description": "Reference from a policy to a constraint.",
+        "properties": {
+          "constraintId": {
+            "description": "Bound compiled constraint id.",
+            "pattern": "^[a-z][a-z0-9-]{0,127}$",
+            "type": "string"
+          },
+          "constraintVersion": {
+            "description": "Optional exact constraint version pin.",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "constraintId"
+        ],
+        "type": "object"
+      },
+      "maxItems": 256,
+      "minItems": 1,
+      "type": "array"
+    },
+    "composition": {
+      "description": "additive: union bindings with other applicable policies. override: replace all lower-precedence applicable bindings.",
+      "enum": [
+        "additive",
+        "override"
+      ],
+      "type": "string"
+    },
+    "description": {
+      "description": "Longer human description.",
+      "maxLength": 4096,
+      "minLength": 1,
+      "type": "string"
+    },
+    "enabled": {
+      "description": "Disabled policies are ignored during resolution (fail-closed: they apply nothing).",
+      "type": "boolean"
+    },
+    "id": {
+      "description": "Stable policy identifier (lowercase kebab-case).",
+      "pattern": "^[a-z][a-z0-9-]{0,127}$",
+      "type": "string"
+    },
+    "languageVersion": {
+      "const": "1.0.0",
+      "description": "Policy language version gate.",
+      "type": "string"
+    },
+    "name": {
+      "description": "Human-readable policy name.",
+      "maxLength": 256,
+      "minLength": 1,
+      "type": "string"
+    },
+    "precedence": {
+      "additionalProperties": false,
+      "description": "Precedence: tier first, then rank, then id (deterministic total order).",
+      "properties": {
+        "rank": {
+          "description": "Fine-grained rank within the tier; higher wins.",
+          "maximum": 1000000000,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "tier": {
+          "description": "Coarse precedence tier.",
+          "enum": [
+            "platform",
+            "tenant",
+            "workspace",
+            "project"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "tier",
+        "rank"
+      ],
+      "type": "object"
+    },
+    "version": {
+      "description": "Version of this policy document.",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "languageVersion",
+    "id",
+    "version",
+    "name",
+    "enabled",
+    "applicability",
+    "bindings",
+    "precedence",
+    "composition"
+  ],
+  "type": "object"
+}

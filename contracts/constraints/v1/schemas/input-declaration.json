@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Declared evaluation-context input slot.",
+  "properties": {
+    "description": {
+      "description": "Longer human description.",
+      "maxLength": 4096,
+      "minLength": 1,
+      "type": "string"
+    },
+    "name": {
+      "description": "Declared input name referenced by `input` expression nodes.",
+      "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$",
+      "type": "string"
+    },
+    "type": {
+      "description": "Declared input slot type: number | string | boolean | enum (finite string set) | record (string -> number, e.g. evidence counts) | list (string[], e.g. granted permissions).",
+      "enum": [
+        "number",
+        "string",
+        "boolean",
+        "enum",
+        "record",
+        "list"
+      ],
+      "type": "string"
+    },
+    "values": {
+      "description": "Required iff type is \"enum\": the finite set of allowed strings.",
+      "items": {
+        "maxLength": 128,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "type": "object"
+}
