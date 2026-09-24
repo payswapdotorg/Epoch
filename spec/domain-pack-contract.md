@@ -6,7 +6,7 @@ A domain pack teaches Epoch how a domain expresses the universal lifecycle. It d
 
 ## Required relationship
 
-`Domain Pack → Universal Contracts → Domain-specific capabilities`
+Domain Pack → Universal Contracts → Domain-specific capabilities
 
 A pack may specialize:
 - terminology;
@@ -52,7 +52,8 @@ A domain pack must not:
 - write directly to authoritative stores outside approved contracts;
 - make a provider or LLM the domain semantic authority;
 - fork the core frontend into a vertical-specific application;
-- require an external provider for basic lifecycle progression.
+- require an external provider for basic lifecycle progression;
+- promote a provider-native project, scene, repository, editor timeline or solver state to Epoch semantic authority.
 
 ## Projection rule
 
@@ -68,6 +69,22 @@ These are synchronized projections over the same SolutionPackage, SolutionVersio
 
 Domain-specific computation is exposed through the Capability Registry and Adapter/Extension fabric. A pack may request specialized engines, but provider-specific behavior remains behind adapters.
 
+Reference capability classes include:
+- precision engineering geometry/CAD;
+- DCC and scene/asset processing;
+- interactive world/runtime;
+- CAE/simulation and scientific visualization;
+- web 3D/spatial visualization;
+- software engineering workspaces;
+- asset import/interchange.
+
+Mature open-source systems such as Blender, FreeCAD, O3DE, Godot, SALOME, ParaView, Three.js, Babylon.js, CesiumJS, Theia/Monaco, BRL-CAD, OpenSCAD and Assimp may serve these roles. This is an integration catalog, not a semantic dependency or allow-list.
+
+The integration preference is:
+library/API → provider-neutral adapter → sandboxed extension/plugin → optional client surface → fork.
+
+A fork, source-level embedding or distribution topology that materially changes licensing/security/maintenance posture requires an approved Architecture Change Request under spec/architecture-change-requests/ACR-003-capability-foundations.md.
+
 ## Evidence rule
 
 Domain calculations must retain:
@@ -79,6 +96,8 @@ Domain calculations must retain:
 - uncertainty;
 - confidence;
 - exact version/revision when reproducibility matters.
+
+Capability outputs become canonical facts only after the applicable Epoch validation/verification contract accepts them.
 
 ## Evolution
 
@@ -94,4 +113,6 @@ A domain pack is conformant when:
 5. its realization path uses the universal Realize contract;
 6. its evidence is addressable and reproducible;
 7. its authorizations use Epoch authorization/projection contracts;
-8. disabling the pack does not corrupt core semantic state.
+8. capability integrations are provider-neutral and replaceable;
+9. provider version/license/provenance data is retained where required;
+10. disabling the pack does not corrupt core semantic state.
