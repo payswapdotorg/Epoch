@@ -1,0 +1,20 @@
+{
+  "name": "@epoch/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared ESLint flat config with Epoch layer-boundary import restrictions (tooling layer).",
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "epoch": {
+    "layer": "tooling"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
+  }
+}

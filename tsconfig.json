@@ -1,0 +1,7 @@
+{
+  "extends": "@epoch/tsconfig/base.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "files": []
+}

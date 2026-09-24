@@ -4,3 +4,25 @@ packages:
   - "services/*"
   - "packs/*"
   - "adapters/*"
+
+# Epoch dependency baseline freeze (W001).
+#
+# Exact pins only — no ranges. Workspace packages MUST reference these via
+# the "catalog:" protocol (never version literals) so W002-W004 branches can
+# add packages without touching root manifests or the lockfile.
+# Policy: scripts/DEPENDENCY-BASELINE.md
+catalog:
+  "@eslint/js": "10.0.1"
+  "@types/node": "22.20.4"
+  "@types/react": "19.3.0"
+  "@types/react-dom": "19.3.0"
+  "@vitest/coverage-v8": "5.0.1"
+  eslint: "10.11.0"
+  next: "15.5.26"
+  react: "19.3.0"
+  react-dom: "19.3.0"
+  turbo: "2.11.3"
+  typescript: "5.9.3"
+  typescript-eslint: "8.70.1"
+  vitest: "5.0.1"
+  zod: "4.6.5"
