@@ -29,7 +29,7 @@ Fine-grained access produces authorized projections of the same semantic state f
 The complete target is in spec/solution-delivery-architecture.md; the universal lifecycle is in spec/universal-solution-lifecycle.md; the domain-pack boundary is in spec/domain-pack-contract.md; Navigator behavior is in spec/solution-navigator-architecture.md; the Aurum boundary is in spec/aurum-chat-integration.md; formal approval is in ACR-001 and the ACR-002 clarification.
 
 ## Current lock / transition rule
-Current main is 6314365e74dff912b453ca3cbbeac0af351472a3 after W008 (PR #22) and the post-W008 lockfile reconcile/governance reconciliation (PR #24/#25).
+Current main is e7c87d3e3657867e03044ad349fdce1327968951 after W008 (PR #22) and the post-W008 lockfile reconcile/governance reconciliation (PR #24/#25).
 The current remaining authorized W009/W011 wave is governed by E1.0/X1.0. ACR-001/ACR-002 are approved but not effective for new implementation until that wave is stabilized and the lock transition plus frontier update are committed. W008 is complete. W009/W011 remain on the original E1.0/X1.0 contract obligations; ACR-001 does not reinterpret their work.
 
 ## Universal engineering lifecycle and domain packs
