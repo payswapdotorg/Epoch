@@ -1,5 +1,5 @@
 # W005 — Simulation + Evaluation
-Status: READY_AFTER_DEPENDENCIES
+Status: AUTHORIZED (wave 2; dispatch base recorded in the live dispatch issue)
 Depends On: W002
 Worker Count: 1
 

@@ -1,5 +1,5 @@
 # W006 — Verification/Evidence/Provenance
-Status: READY_AFTER_DEPENDENCIES
+Status: AUTHORIZED (wave 2; dispatch base recorded in the live dispatch issue)
 Depends On: W002
 Worker Count: 1
 
