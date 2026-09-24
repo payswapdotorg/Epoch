@@ -141,5 +141,17 @@ export function layerRestrictions({ layer, root = findWorkspaceRoot() }) {
       });
     }
   }
-  return { rules: paths.length > 0 ? { 'no-restricted-imports': ['error', { paths }] } : {} };
+  // ESLint 10: `group` is a `patterns` entry key, NOT a `paths` entry key
+  // (paths entries take `name`). Emitting group-shaped entries under
+  // `paths` makes ESLint reject the config for any layer with actual
+  // restrictions (kernel/contracts/pack). Same restriction semantics via
+  // the supported `patterns` form. (Foundation fix for the latent W001
+  // defect reported by the W004 worker — PR #7 architecture question 1.)
+  return {
+    rules: paths.length > 0
+      ? {
+          'no-restricted-imports': ['error', { patterns: paths }],
+        }
+      : {},
+  };
 }
