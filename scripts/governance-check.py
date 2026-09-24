@@ -53,6 +53,9 @@ REQUIRED_FILES = [
     "spec/work-items.md",
     "spec/dependency-graph.md",
     "spec/worker-runbook.md",
+    "spec/universal-solution-lifecycle.md",
+    "spec/domain-pack-contract.md",
+    "spec/solution-navigator-architecture.md",
     "spec/development-state/program-state.json",
     "spec/development-state/frontier-state.json",
     "spec/development-state/dependency-state.json",
@@ -169,6 +172,14 @@ def run_checks(root: pathlib.Path) -> list:
     if not set(in_flight).issubset({str(x) for x in state.get("active", [])}):
         failures.append("inFlight must be a subset of active")
 
+    # Frontier consistency: eligible/inFlight work orders cannot simultaneously be blocked.
+    frontier_eligible = {str(x) for x in frontier.get("eligible", [])}
+    frontier_in_flight = {str(x) for x in frontier.get("inFlight", [])}
+    frontier_blocked = {str(x) for x in frontier.get("blocked", [])}
+    overlap = sorted((frontier_eligible | frontier_in_flight) & frontier_blocked)
+    if overlap:
+        failures.append("work orders are both eligible/inFlight and blocked: " + ", ".join(overlap))
+
     authorized = authorized_ids(root)
     for wo, wo_path in sorted(wo_files.items()):
         declared = worker_count_of(wo_path)
@@ -227,6 +238,9 @@ FIXTURE_FILES = {
     "spec/requirements.md": "# fixture requirements\n",
     "spec/dependency-graph.md": "# fixture dependency graph\n",
     "spec/worker-runbook.md": "# fixture runbook\n",
+    "spec/universal-solution-lifecycle.md": "# fixture universal lifecycle\n",
+    "spec/domain-pack-contract.md": "# fixture domain pack contract\n",
+    "spec/solution-navigator-architecture.md": "# fixture solution navigator\n",
     "spec/work-items.md": (
         "# Fixture work items\n\n"
         "One Work Order = one branch = one PR. Worker count = 1.\n\n"
