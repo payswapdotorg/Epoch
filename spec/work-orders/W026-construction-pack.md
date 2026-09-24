@@ -10,7 +10,7 @@ Worker Count: 1
 Implement Construction Pack inside the frozen architecture, using upstream contracts rather than recreating authorities.
 
 ## Delivery integration
-The pack must render the universal Solution Delivery model; for construction this includes the synchronized Program of Work and interactive BOQ.
+The pack must render the universal Solution Delivery model and conform to `spec/domain-pack-contract.md`. For construction this includes the synchronized Program of Work and interactive BOQ, with BOQ/procurement/execution presented as projections of universal Plan/Acquire/Realize concepts.
 
 ## Acceptance
 1. Scope is limited to this Work Order.
@@ -23,3 +23,6 @@ The pack must render the universal Solution Delivery model; for construction thi
 
 ## Dispatch
 Ready only after every dependency is COMPLETE and no active ownership overlaps. One branch and one PR; no routine rebase.
+
+
+The pack must not introduce a construction-specific lifecycle authority or ledger.
