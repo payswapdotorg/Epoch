@@ -6,7 +6,8 @@
   "description": "Shared ESLint flat config with Epoch layer-boundary import restrictions (tooling layer).",
   "main": "./index.mjs",
   "exports": {
-    ".": "./index.mjs"
+    ".": "./index.mjs",
+    "./boundary.mjs": "./boundary.mjs"
   },
   "epoch": {
     "layer": "tooling"
