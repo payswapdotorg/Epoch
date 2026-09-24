@@ -56,3 +56,7 @@ W039|W041|W043
 
 ## No-rebase invariant
 Shared contracts are sequenced before consumers. Concurrent workers never edit the same owned path. Root manifests/lockfiles are serial-owned by W001 and later Tech Lead dependency-intake changes.
+
+
+## Universal domain-pack rule
+W026/W027 and every future domain pack depend on W036 for the universal lifecycle contracts. They may not proceed with a local lifecycle authority. Domain specialization is validated against `spec/domain-pack-contract.md`.

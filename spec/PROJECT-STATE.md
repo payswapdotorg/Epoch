@@ -1,6 +1,6 @@
 # Epoch Project State
 
-Architecture: E1.0 / X1.0
+Architecture: E1.0 / X1.0 (ACR-001 + ACR-002 target pending lock transition)
 Work Order schema: WO1.0
 Default branch: main
 Max concurrent workers: 3
@@ -35,7 +35,7 @@ Material review lessons (W001):
 - next build (15.5.x) rewrites apps/web/next-env.d.ts; handled via committed canonical pre-build file + typecheck sequenced after build.
 - Known non-blocking: boundary source-scan is regex-based (stdlib-only), triple-reinforced; .gitignore left untouched (governance) so build-artifact churn stays untracked noise.
 
-## Approved architecture change — ACR-001
+## Approved architecture change — ACR-001 + ACR-002
 Approved 2026-09-24.
 
 Target additions:
@@ -48,10 +48,13 @@ Target additions:
 - delivery supervision and alerts
 - optional provider-neutral external event bridge, with Aurum Chat as a reference adapter only
 
-ACR-001 is not effective for new implementation yet. The currently authorized W008/W009/W011 wave remains on E1.0/X1.0. After that wave is stabilized, the Architect/Tech Lead must record the lock transition and frontier update before dispatching W036.
+ACR-001/ACR-002 are not effective for new implementation yet. The currently authorized W008/W009/W011 wave remains on E1.0/X1.0. After that wave is stabilized, the Architect/Tech Lead must record the lock transition and frontier update before dispatching W036.
 
 W036-W044 are defined and dependency-gated; none is currently authorized.
 
-Current main head: 803a1989f839c2690a7e58db9dc0651e4e1ce87d.
+Current main head: e7c87d3e3657867e03044ad349fdce1327968951.
 
 Every merge must update this file before advancing.
+
+
+Target clarification: the universal lifecycle is Understand -> Decide -> Plan -> Acquire -> Realize -> Observe/Actualize -> Verify -> Forecast -> Close -> Learn. Domain packs and the Solution Navigator are projections over the shared semantic graph; they must not create competing lifecycle or ledger authorities. Canonical references: `spec/universal-solution-lifecycle.md`, `spec/domain-pack-contract.md`, `spec/solution-navigator-architecture.md`.

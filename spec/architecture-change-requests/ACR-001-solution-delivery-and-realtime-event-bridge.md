@@ -47,3 +47,8 @@ Add a Program of Work as a first-class schedule dimension of the universal Solut
 ## Required implementation sequence
 
 W036-W044 below operationalize this approved architecture. No item may start until its dependencies and the lock transition are satisfied.
+
+
+## Clarification
+
+ACR-002 is approved as a compatibility clarification of this target. It introduces no additional semantic authority or dependency and must become effective with the same architecture-lock transition.

@@ -4,11 +4,13 @@
 
 Solution Delivery turns an approved Epoch solution into a living project record that can be procured, executed, observed, verified, forecast, compared with its original prediction and used to improve future solutions.
 
-It is universal. Construction renders it as an Interactive BOQ + Program of Work; other domains render equivalent solution schedules and execution plans.
+It is universal. Construction renders it as an Interactive BOQ + Program of Work; other domains render equivalent solution schedules and realization plans. Procurement is one Acquire implementation and execution is one Realize presentation.
 
 ## Canonical lifecycle
 
-`Reconstruct → Generate → Constrain → Simulate → Evaluate → Verify → Approve → Baseline → Plan → Procure → Execute → Observe → Actualize → Verify → Forecast → Close → Learn`
+`Understand → Decide → Plan → Acquire → Realize → Observe → Actualize → Verify → Forecast → Close → Learn`
+
+`Observe/Reconstruct → Decision Sufficiency/Information Acquisition → Generate/Constrain/Simulate/Evaluate/Verify/Approve → Baseline/Program of Work → Acquire resources and prerequisites → Realize solution → Observe/Actualize → Verify → Forecast → Close → Learn`
 
 The lifecycle may branch, pause, resume and repeat. A provider or channel is never required for core progression.
 
@@ -273,21 +275,25 @@ Agent may see only the fields needed for its authorized task.
 
 ## UX modes
 
-The Solution Navigator exposes synchronized modes:
+The Solution Navigator exposes synchronized universal modes:
 
-- Design
-- Approval
-- Program of Work
-- BOQ
-- Procurement
-- Execution
-- Verification
+- Understand
+- Decide
+- Plan / Program of Work
+- Acquire
+- Realize
+- Observe / Actualize
+- Verify
 - Forecast
-- Outcomes
-- Learning
+- Close / Outcomes
+- Learn
 
-Selecting a row, activity, event or 3D object preserves the same semantic identity and can navigate across modes.
+Domain packs may expose familiar projections such as BOQ, procurement, execution, roadmap, BOM or commissioning schedule. Selecting a row, activity, event or 3D object preserves the same semantic identity and can navigate across modes.
 
 ## Adoption rule
 
 The minimum interaction path must remain useful with partial data. Capture methods should prefer reuse/extraction of already-produced artifacts and one-tap confirmations over form-heavy entry.
+
+## Universal adaptation
+
+The canonical lifecycle, domain-pack contract and Navigator rules are defined in `spec/universal-solution-lifecycle.md`, `spec/domain-pack-contract.md`, and `spec/solution-navigator-architecture.md`. New domains must adapt the universal concepts rather than create a parallel lifecycle.

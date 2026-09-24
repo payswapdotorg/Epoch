@@ -17,9 +17,11 @@
 15. PostgreSQL is durable authoritative state for v1.
 16. One responsibility has one authority.
 
-## Approved but not-yet-effective ACR-001
+## Approved but not-yet-effective architecture targets
 
-ACR-001 was approved on 2026-09-24. It adds Solution Delivery, Program of Work, Procurement, Execution/Actualization, Outcome Learning, Fine-Grained Access Projections, Supervision/Alerts and an optional provider-neutral External Event Bridge with an Aurum Chat reference adapter.
+ACR-001 was approved on 2026-09-24. It adds Solution Delivery, Program of Work, Resource Acquisition/Procurement, Realization/Execution, Actualization, Outcome Learning, Fine-Grained Access Projections, Supervision/Alerts and an optional provider-neutral External Event Bridge with an Aurum Chat reference adapter.
+
+ACR-002 clarifies the same target as a universal engineering lifecycle and Solution Navigator with domain packs as projections of the canonical lifecycle. It does not introduce a second authority or new parallel runtime.
 
 This architecture lock remains E1.0/X1.0 for the currently authorized W008/W009/W011 wave. The ACR-001 target becomes effective only when the Tech Lead/Architect records the lock transition and corresponding frontier update after the current wave is stabilized.
 
@@ -33,3 +35,11 @@ Forbidden without an Architecture Change Request:
 - silent new domains/subsystems.
 
 An Architecture Change Request requires impact analysis, revised acceptance criteria, version/lock update, and frontier update before implementation.
+
+
+## Universal-domain invariants
+
+- The lifecycle spine is Understand → Decide → Plan → Acquire → Realize → Observe/Actualize → Verify → Forecast → Close → Learn.
+- Acquire and Realize are universal concepts; procurement and execution are domain/profession projections.
+- Domain packs may specialize representation and capability use, but may not define competing lifecycle, schedule, baseline, delivery, actualization, verification or learning authorities.
+- The Solution Navigator is a synchronized projection, not a new semantic store.

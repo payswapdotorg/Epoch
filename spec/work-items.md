@@ -42,9 +42,9 @@ The Tech Lead derives the live frontier from dependencies. Up to three READY ite
 | W033 | Production deployment | W032 | deploy/*, ops/*, docs/operations/* |
 | W034 | Performance + scale | W032,W033 | packages/performance/*, tests/performance/*, docs/performance/* |
 | W035 | Release/SDK docs/marketplace readiness | W033,W034 | docs/release/*, docs/sdk/*, docs/marketplace-readiness/*, examples/sdk/*, release/*, .github/workflows/* |
-| W036 | Solution Delivery Core: SolutionPackage, DeliveryRecord, Program of Work, lifecycle/external-event contracts | W002,W003,W004,W006,W009,W010,W011 | packages/solution-delivery/*, contracts/solution-delivery/*, docs/solution-delivery/* |
-| W037 | Procurement + supplier delivery tracking | W036,W007,W009 | packages/procurement/*, services/procurement/*, contracts/procurement/* |
-| W038 | Execution tracking + low-friction field observation | W036,W006,W007,W010 | packages/execution-tracking/*, services/execution-tracking/*, contracts/execution/* |
+| W036 | Solution Delivery Core: universal lifecycle, SolutionPackage, DeliveryRecord, Program of Work, acquisition/realization/external-event contracts | W002,W003,W004,W006,W009,W010,W011 | packages/solution-delivery/*, contracts/solution-delivery/*, docs/solution-delivery/* |
+| W037 | Resource acquisition + supplier delivery tracking (procurement projection) | W036,W007,W009 | packages/procurement/*, services/procurement/*, contracts/procurement/* |
+| W038 | Realization tracking + low-friction field observation (execution projection) | W036,W006,W007,W010 | packages/execution-tracking/*, services/execution-tracking/*, contracts/execution/* |
 | W039 | Actualization + variance + forecast | W037,W038 | packages/actualization/*, services/actualization/*, packages/variance/*, contracts/actualization/* |
 | W040 | Outcome learning + prediction calibration | W039,W005,W006 | packages/learning-calibration/*, services/learning-calibration/*, contracts/learning-calibration/* |
 | W041 | Fine-grained authorization + authorized projections | W009,W011,W036 | packages/access-projection/*, services/access-projection/*, contracts/access-projection/* |
@@ -54,7 +54,7 @@ The Tech Lead derives the live frontier from dependencies. Up to three READY ite
 
 ## Approved successor architecture program
 
-ACR-001 (approved 2026-09-24) adds the Solution Delivery architecture in spec/solution-delivery-architecture.md and the optional Aurum bridge in spec/aurum-chat-integration.md.
+ACR-001 (approved 2026-09-24) adds the Solution Delivery architecture in spec/solution-delivery-architecture.md and the optional Aurum bridge in spec/aurum-chat-integration.md. ACR-002 clarifies the universal lifecycle and domain-pack/Navigator rules in spec/universal-solution-lifecycle.md, spec/domain-pack-contract.md, and spec/solution-navigator-architecture.md.
 
 W036-W044 remain READY_AFTER_DEPENDENCIES until the ACR-001 lock transition is made effective. The currently authorized W008/W009/W011 wave remains pinned to the existing E1.0/X1.0 contract surface and is not redefined by ACR-001.
 
@@ -73,3 +73,6 @@ No static group overrides dependencies.
 
 ## Universal acceptance
 Every item must stay inside owned surfaces, add evidence for acceptance, preserve authority boundaries, avoid shared root-manifest/lockfile changes during parallel work, and document exact verification and final head SHA.
+
+## Domain-pack acceptance
+Every domain pack must conform to `spec/domain-pack-contract.md`, bind to the universal lifecycle, and implement domain schedules as ProgramOfWork projections. A pack may specialize vocabulary/capabilities but may not create a competing lifecycle authority.

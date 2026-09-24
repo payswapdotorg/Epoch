@@ -53,6 +53,9 @@ REQUIRED_FILES = [
     "spec/work-items.md",
     "spec/dependency-graph.md",
     "spec/worker-runbook.md",
+    "spec/universal-solution-lifecycle.md",
+    "spec/domain-pack-contract.md",
+    "spec/solution-navigator-architecture.md",
     "spec/development-state/program-state.json",
     "spec/development-state/frontier-state.json",
     "spec/development-state/dependency-state.json",
@@ -227,6 +230,9 @@ FIXTURE_FILES = {
     "spec/requirements.md": "# fixture requirements\n",
     "spec/dependency-graph.md": "# fixture dependency graph\n",
     "spec/worker-runbook.md": "# fixture runbook\n",
+    "spec/universal-solution-lifecycle.md": "# fixture universal lifecycle\n",
+    "spec/domain-pack-contract.md": "# fixture domain pack contract\n",
+    "spec/solution-navigator-architecture.md": "# fixture solution navigator\n",
     "spec/work-items.md": (
         "# Fixture work items\n\n"
         "One Work Order = one branch = one PR. Worker count = 1.\n\n"
