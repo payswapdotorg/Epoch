@@ -1,0 +1,35 @@
+{
+  "name": "@epoch/adapter-sdk",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Adapter SDK kernel — typed, per-category adapter contracts over the Capability Fabric, capability binding with bind-time version negotiation, a typed error taxonomy, and deterministic descriptor serialization (W007). Ships zero concrete adapters.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evaluation-protocol": "workspace:*",
+    "@epoch/simulation-protocol": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

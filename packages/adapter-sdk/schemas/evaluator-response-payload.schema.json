@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EvaluatorResponsePayload",
+  "$defs": {
+    "EvaluatorResponsePayload": {
+      "type": "object",
+      "properties": {
+        "verdict": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "verdictForm": {
+                  "type": "string",
+                  "const": "pass-fail"
+                },
+                "outcome": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail"
+                  ]
+                }
+              },
+              "required": [
+                "verdictForm",
+                "outcome"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "verdictForm": {
+                  "type": "string",
+                  "const": "scored"
+                },
+                "score": {
+                  "type": "number"
+                },
+                "scale": {
+                  "type": "object",
+                  "properties": {
+                    "minimum": {
+                      "type": "number"
+                    },
+                    "maximum": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "minimum",
+                    "maximum"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "verdictForm",
+                "score",
+                "scale"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "justification": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "criterion",
+                  "subject-output",
+                  "subject-failure",
+                  "assumption",
+                  "method"
+                ]
+              },
+              "reference": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "statement": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              }
+            },
+            "required": [
+              "kind",
+              "reference",
+              "statement"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "verdict",
+        "justification"
+      ],
+      "additionalProperties": false,
+      "title": "EvaluatorResponsePayload",
+      "description": "Evaluator adapter response: a structured verdict (pass-fail or scored) plus at least one machine-referenceable justification (W005-aligned shapes)."
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:evaluator-response-payload:1.0.0"
+}

@@ -1,0 +1,641 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AdapterResponse",
+  "$defs": {
+    "AdapterResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/AdapterResponse-source"
+        },
+        {
+          "$ref": "#/$defs/AdapterResponse-semantic"
+        },
+        {
+          "$ref": "#/$defs/AdapterResponse-reconstruction"
+        },
+        {
+          "$ref": "#/$defs/AdapterResponse-visualization"
+        },
+        {
+          "$ref": "#/$defs/AdapterResponse-simulation"
+        },
+        {
+          "$ref": "#/$defs/AdapterResponse-evaluator"
+        },
+        {
+          "$ref": "#/$defs/AdapterResponse-action"
+        },
+        {
+          "$ref": "#/$defs/AdapterResponse-verification"
+        }
+      ],
+      "title": "AdapterResponse",
+      "description": "Typed adapter response envelope, discriminated by category: version discriminator, negotiated binding pin, and the per-category payload."
+    },
+    "AdapterResponse-source": {
+      "readOnly": true,
+      "title": "AdapterResponse (source)",
+      "description": "Response envelope for source-category adapters: version discriminator, negotiated binding pin, and the typed source payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "source"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/NeutralResponsePayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "AdapterEnvelopeVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AdapterEnvelopeVersion",
+      "description": "Version discriminator carried by every serialized adapter request/response envelope (currently 1)."
+    },
+    "BindingPin": {
+      "readOnly": true,
+      "title": "BindingPin",
+      "description": "Negotiated binding: capability id + version + manifest digest, adapter id + descriptor digest — both sides content-addressed.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "capabilityVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "manifestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "adapterId": {
+          "$ref": "#/$defs/AdapterId"
+        },
+        "adapterDescriptorDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "capabilityVersion",
+        "manifestDigest",
+        "adapterId",
+        "adapterDescriptorDigest"
+      ],
+      "additionalProperties": false
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "AdapterId": {
+      "type": "string",
+      "pattern": "^adapter:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AdapterId",
+      "description": "Registered adapter identifier: \"adapter:\" followed by a lowercase kebab slug."
+    },
+    "NeutralResponsePayload": {
+      "type": "object",
+      "properties": {
+        "outputs": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "outputs"
+      ],
+      "additionalProperties": false,
+      "title": "NeutralResponsePayload",
+      "description": "Neutral response payload: a named JSON output record (parameter-name keys)."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "AdapterResponse-semantic": {
+      "readOnly": true,
+      "title": "AdapterResponse (semantic)",
+      "description": "Response envelope for semantic-category adapters: version discriminator, negotiated binding pin, and the typed semantic payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "semantic"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/NeutralResponsePayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "AdapterResponse-reconstruction": {
+      "readOnly": true,
+      "title": "AdapterResponse (reconstruction)",
+      "description": "Response envelope for reconstruction-category adapters: version discriminator, negotiated binding pin, and the typed reconstruction payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "reconstruction"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/NeutralResponsePayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "AdapterResponse-visualization": {
+      "readOnly": true,
+      "title": "AdapterResponse (visualization)",
+      "description": "Response envelope for visualization-category adapters: version discriminator, negotiated binding pin, and the typed visualization payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "visualization"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/NeutralResponsePayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "AdapterResponse-simulation": {
+      "readOnly": true,
+      "title": "AdapterResponse (simulation)",
+      "description": "Response envelope for simulation-category adapters: version discriminator, negotiated binding pin, and the typed simulation payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "simulation"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/SimulationResponsePayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "SimulationResponsePayload": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "completed"
+            },
+            "outputs": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/JsonValue"
+              }
+            }
+          },
+          "required": [
+            "status",
+            "outputs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "failed"
+            },
+            "failure": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "$ref": "#/$defs/SimulationFailureCode"
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "status",
+            "failure"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "SimulationResponsePayload",
+      "description": "Simulation adapter response: completed (at least one named output) or failed (machine-readable code + reason) — the W005 outcome union."
+    },
+    "SimulationFailureCode": {
+      "type": "string",
+      "enum": [
+        "input-out-of-domain",
+        "numerical-divergence",
+        "resource-limit-exceeded",
+        "internal-error"
+      ],
+      "title": "SimulationFailureCode",
+      "description": "Machine-readable failure code carried by failed simulation outcomes (W005 vocabulary)."
+    },
+    "AdapterResponse-evaluator": {
+      "readOnly": true,
+      "title": "AdapterResponse (evaluator)",
+      "description": "Response envelope for evaluator-category adapters: version discriminator, negotiated binding pin, and the typed evaluator payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "evaluator"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/EvaluatorResponsePayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "EvaluatorResponsePayload": {
+      "type": "object",
+      "properties": {
+        "verdict": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "verdictForm": {
+                  "type": "string",
+                  "const": "pass-fail"
+                },
+                "outcome": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail"
+                  ]
+                }
+              },
+              "required": [
+                "verdictForm",
+                "outcome"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "verdictForm": {
+                  "type": "string",
+                  "const": "scored"
+                },
+                "score": {
+                  "type": "number"
+                },
+                "scale": {
+                  "type": "object",
+                  "properties": {
+                    "minimum": {
+                      "type": "number"
+                    },
+                    "maximum": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "minimum",
+                    "maximum"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "verdictForm",
+                "score",
+                "scale"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "justification": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "criterion",
+                  "subject-output",
+                  "subject-failure",
+                  "assumption",
+                  "method"
+                ]
+              },
+              "reference": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "statement": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              }
+            },
+            "required": [
+              "kind",
+              "reference",
+              "statement"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "verdict",
+        "justification"
+      ],
+      "additionalProperties": false,
+      "title": "EvaluatorResponsePayload",
+      "description": "Evaluator adapter response: a structured verdict (pass-fail or scored) plus at least one machine-referenceable justification (W005-aligned shapes)."
+    },
+    "AdapterResponse-action": {
+      "readOnly": true,
+      "title": "AdapterResponse (action)",
+      "description": "Response envelope for action-category adapters: version discriminator, negotiated binding pin, and the typed action payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "action"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/ActionResponsePayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "ActionResponsePayload": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "executed"
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "failed"
+            },
+            "failure": {
+              "$ref": "#/$defs/ActionFailure"
+            }
+          },
+          "required": [
+            "status",
+            "failure"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ActionResponsePayload",
+      "description": "Action adapter response: executed, or failed with a machine-readable code and required reason."
+    },
+    "ActionFailure": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "precondition-not-met",
+            "target-unavailable",
+            "execution-rejected",
+            "internal-error"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "ActionFailure",
+      "description": "A failed action execution: machine-readable code plus a human-auditable reason."
+    },
+    "AdapterResponse-verification": {
+      "readOnly": true,
+      "title": "AdapterResponse (verification)",
+      "description": "Response envelope for verification-category adapters: version discriminator, negotiated binding pin, and the typed verification payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "verification"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/VerificationResponsePayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "VerificationResponsePayload": {
+      "type": "object",
+      "properties": {
+        "runStatus": {
+          "$ref": "#/$defs/RunStatus"
+        },
+        "producedEvidence": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      },
+      "required": [
+        "runStatus",
+        "producedEvidence"
+      ],
+      "additionalProperties": false,
+      "title": "VerificationResponsePayload",
+      "description": "Verification adapter response: the run status (W006 vocabulary) and the content-addressed evidence digests the run produced."
+    },
+    "RunStatus": {
+      "type": "string",
+      "enum": [
+        "completed",
+        "failed",
+        "aborted"
+      ],
+      "title": "RunStatus",
+      "description": "Execution status of a verification run (W006 vocabulary): completed, failed, or aborted."
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:adapter-response:1.0.0"
+}

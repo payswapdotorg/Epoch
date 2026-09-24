@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/VersionConstraint",
+  "$defs": {
+    "VersionConstraint": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "exact"
+            },
+            "version": {
+              "$ref": "#/$defs/SemverCore"
+            }
+          },
+          "required": [
+            "kind",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "caret"
+            },
+            "version": {
+              "$ref": "#/$defs/SemverCore"
+            }
+          },
+          "required": [
+            "kind",
+            "version"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "VersionConstraint",
+      "description": "Version range an adapter declares it serves: an exact pin, or caret major-version compatibility (npm-caret semantics incl. the 0.x carve-outs)."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:version-constraint:1.0.0"
+}

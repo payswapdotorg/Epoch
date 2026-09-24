@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityId",
+  "$defs": {
+    "CapabilityId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+      "title": "CapabilityId",
+      "description": "Opaque, stable capability identity: dot-namespaced qualified name; the extension scoping unit (lock rule 9)."
+    }
+  },
+  "$id": "urn:epoch:capability-registry:capability-id:1.0.0"
+}

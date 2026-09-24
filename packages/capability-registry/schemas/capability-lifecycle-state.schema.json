@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityLifecycleState",
+  "$defs": {
+    "CapabilityLifecycleState": {
+      "type": "string",
+      "enum": [
+        "registered",
+        "deprecated",
+        "retired"
+      ],
+      "title": "CapabilityLifecycleState",
+      "description": "Capability lifecycle: registered, deprecated (advisory — still resolves), or retired (terminal — does not resolve for new bindings)."
+    }
+  },
+  "$id": "urn:epoch:capability-registry:capability-lifecycle-state:1.0.0"
+}

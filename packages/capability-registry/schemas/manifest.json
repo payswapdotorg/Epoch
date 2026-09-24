@@ -1,0 +1,84 @@
+{
+  "contract": "epoch/capability-registry",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Capability Registry contract surface (W007): content-addressed capability manifests across the eight Capability Fabric adapter categories, with typed lifecycle and version-constrained resolution. JSON Schema projection under schemas/; runtime validators in @epoch/capability-registry.",
+  "dataTypes": [
+    "CapabilityCategory",
+    "CapabilityContractReference",
+    "CapabilityDescriptor",
+    "CapabilityId",
+    "CapabilityLifecycleState",
+    "CapabilityManifest",
+    "CapabilityManifestVersion",
+    "CapabilityOrigin",
+    "CapabilityRecord",
+    "CapabilityTrust",
+    "SemverCore",
+    "VersionConstraint"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/capability-registry and are not represented in the JSON Schema files",
+  "emittedBy": "renderCapabilityRegistryContractFiles() in @epoch/capability-registry (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "CapabilityCategory",
+      "file": "capability-category.schema.json",
+      "sha256": "214ac030035082a89bc2a32613c824f9606ec8502d4fb1da0a838014518cb069"
+    },
+    {
+      "type": "CapabilityContractReference",
+      "file": "capability-contract-reference.schema.json",
+      "sha256": "4fb38652e1aa0254a564b2318ae4a89624adc48f3a06c8c43f5bb3dcf650090d"
+    },
+    {
+      "type": "CapabilityDescriptor",
+      "file": "capability-descriptor.schema.json",
+      "sha256": "3ad3da378da173687d8c8ac9e17f831f9d6074440e51184b3c2a27f4f929db1d"
+    },
+    {
+      "type": "CapabilityId",
+      "file": "capability-id.schema.json",
+      "sha256": "4969da09378d5da63688c6cced39383b19e91186e71ca353ef7d1efd563fea40"
+    },
+    {
+      "type": "CapabilityLifecycleState",
+      "file": "capability-lifecycle-state.schema.json",
+      "sha256": "506dc7970cd0db2bc251fb6d15add3efa3a49bce0cfe5faab658f678d23a52bd"
+    },
+    {
+      "type": "CapabilityManifest",
+      "file": "capability-manifest.schema.json",
+      "sha256": "d3c0eac424e37402b90aa3b41322e3263fb0af01af67f433f219d1e7fe8e56cf"
+    },
+    {
+      "type": "CapabilityManifestVersion",
+      "file": "capability-manifest-version.schema.json",
+      "sha256": "eff584aa6e08d23901fedc595d652a01a29614946665f44c6a994ee6f676db56"
+    },
+    {
+      "type": "CapabilityOrigin",
+      "file": "capability-origin.schema.json",
+      "sha256": "d2e4b6d7dcf74bf043203afec766efd54b15654623f9644c8467ecd763aaef62"
+    },
+    {
+      "type": "CapabilityRecord",
+      "file": "capability-record.schema.json",
+      "sha256": "52b327848779f89862d0428bde04ba3fea26864f0cd6d18dd965d05c984a8d6e"
+    },
+    {
+      "type": "CapabilityTrust",
+      "file": "capability-trust.schema.json",
+      "sha256": "7fe9a1bfaaa13314f8fcf7691e3c417c7b17566a5a636352380602e46ec99d98"
+    },
+    {
+      "type": "SemverCore",
+      "file": "semver-core.schema.json",
+      "sha256": "bb26d0bbcb3acc8db1b18bd1d61eb451c9038f9e365862af32e8a986989e769a"
+    },
+    {
+      "type": "VersionConstraint",
+      "file": "version-constraint.schema.json",
+      "sha256": "6aec57128cf298697217b0188913bf8d9912b3606ffa207a62a489de77ae2a59"
+    }
+  ]
+}

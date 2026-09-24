@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/VerificationResponsePayload",
+  "$defs": {
+    "VerificationResponsePayload": {
+      "type": "object",
+      "properties": {
+        "runStatus": {
+          "$ref": "#/$defs/RunStatus"
+        },
+        "producedEvidence": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      },
+      "required": [
+        "runStatus",
+        "producedEvidence"
+      ],
+      "additionalProperties": false,
+      "title": "VerificationResponsePayload",
+      "description": "Verification adapter response: the run status (W006 vocabulary) and the content-addressed evidence digests the run produced."
+    },
+    "RunStatus": {
+      "type": "string",
+      "enum": [
+        "completed",
+        "failed",
+        "aborted"
+      ],
+      "title": "RunStatus",
+      "description": "Execution status of a verification run (W006 vocabulary): completed, failed, or aborted."
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:verification-response-payload:1.0.0"
+}

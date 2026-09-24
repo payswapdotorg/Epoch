@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ActionResponsePayload",
+  "$defs": {
+    "ActionResponsePayload": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "executed"
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "failed"
+            },
+            "failure": {
+              "$ref": "#/$defs/ActionFailure"
+            }
+          },
+          "required": [
+            "status",
+            "failure"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ActionResponsePayload",
+      "description": "Action adapter response: executed, or failed with a machine-readable code and required reason."
+    },
+    "ActionFailure": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "precondition-not-met",
+            "target-unavailable",
+            "execution-rejected",
+            "internal-error"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "ActionFailure",
+      "description": "A failed action execution: machine-readable code plus a human-auditable reason."
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:action-response-payload:1.0.0"
+}

@@ -1,0 +1,151 @@
+{
+  "contract": "epoch/adapter-sdk",
+  "contractVersion": "1.0.0",
+  "descriptorVersion": 1,
+  "envelopeVersion": 1,
+  "description": "Typed, versioned, provider-neutral Adapter SDK contract surface (W007): per-category request/response payloads (W003/W005/W006-aligned where they meet), capability bindings, binding pins, and content-addressed adapter descriptors. Zero concrete adapters. JSON Schema projection under schemas/; runtime validators in @epoch/adapter-sdk.",
+  "dataTypes": [
+    "ActionRequestPayload",
+    "ActionResponsePayload",
+    "AdapterDescriptor",
+    "AdapterDescriptorVersion",
+    "AdapterEnvelopeVersion",
+    "AdapterId",
+    "AdapterRequest",
+    "AdapterResponse",
+    "BindableCapability",
+    "BindingPin",
+    "CapabilityBinding",
+    "CapabilityCategory",
+    "CapabilityLifecycleState",
+    "EvaluatorRequestPayload",
+    "EvaluatorResponsePayload",
+    "NeutralRequestPayload",
+    "NeutralResponsePayload",
+    "SemverCore",
+    "SimulationRequestPayload",
+    "SimulationResponsePayload",
+    "VerificationRequestPayload",
+    "VerificationResponsePayload",
+    "VersionConstraint"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/adapter-sdk and are not represented in the JSON Schema files",
+  "emittedBy": "renderAdapterSdkContractFiles() in @epoch/adapter-sdk (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "ActionRequestPayload",
+      "file": "action-request-payload.schema.json",
+      "sha256": "c9329185b04e5666ca9bd264cc7c1f97dcf43bc0ecdbc92dba1649806c836cbe"
+    },
+    {
+      "type": "ActionResponsePayload",
+      "file": "action-response-payload.schema.json",
+      "sha256": "7a553313f28671bd20a6dd6812d8e3b18563a97d23551a0a64039d9ee29ee07a"
+    },
+    {
+      "type": "AdapterDescriptor",
+      "file": "adapter-descriptor.schema.json",
+      "sha256": "6789b8d5cf2707fbe8661aad5cfa5b54dec9f7b8679411761ae4aade40d01753"
+    },
+    {
+      "type": "AdapterDescriptorVersion",
+      "file": "adapter-descriptor-version.schema.json",
+      "sha256": "a19572b29c0ab85e38f13743653c6f493f5f1019cb7867cb05f9dd05ea16ad55"
+    },
+    {
+      "type": "AdapterEnvelopeVersion",
+      "file": "adapter-envelope-version.schema.json",
+      "sha256": "00f7c353d41f611cdea3c961f07e2cd28179327b6f8e140ac27e4ae2c90116c4"
+    },
+    {
+      "type": "AdapterId",
+      "file": "adapter-id.schema.json",
+      "sha256": "8b3ae53e7dc14c8eb36d59663952bf2140e72ab351f8927eeb6f892b4b77c65b"
+    },
+    {
+      "type": "AdapterRequest",
+      "file": "adapter-request.schema.json",
+      "sha256": "76cd3ef2602134228d1cb2e53066433fe25fd956afdb6465c61820926ba9e751"
+    },
+    {
+      "type": "AdapterResponse",
+      "file": "adapter-response.schema.json",
+      "sha256": "de681aff8ef739fa5792b9e46e0f0425f7ef00320484b34d768dac207da85afd"
+    },
+    {
+      "type": "BindableCapability",
+      "file": "bindable-capability.schema.json",
+      "sha256": "e39d3bc8cf55c85398c66a5d1fb76081401024ec8a3849398d515eec7a4ac528"
+    },
+    {
+      "type": "BindingPin",
+      "file": "binding-pin.schema.json",
+      "sha256": "a4e002062882eb5cc1bf42aa1933a944eb05254890de657bdb1cfa266e87dfe8"
+    },
+    {
+      "type": "CapabilityBinding",
+      "file": "capability-binding.schema.json",
+      "sha256": "054621a50764aa38d90d05e3443bfd1938c7aa7dbc933085088db001872b79f2"
+    },
+    {
+      "type": "CapabilityCategory",
+      "file": "capability-category.schema.json",
+      "sha256": "8bd236ebd0a4f9cb00c11ed04096a64263d67b58f2b852e95d8c0d796bc70bae"
+    },
+    {
+      "type": "CapabilityLifecycleState",
+      "file": "capability-lifecycle-state.schema.json",
+      "sha256": "eebc9e90d3f332d2ab6a2efec322c44261a27863537d3fa12c1b44447ea3a497"
+    },
+    {
+      "type": "EvaluatorRequestPayload",
+      "file": "evaluator-request-payload.schema.json",
+      "sha256": "cc8d0b7043abc058c82c8c12c432e015f96b00c0634291ca6c798a7a3b11a192"
+    },
+    {
+      "type": "EvaluatorResponsePayload",
+      "file": "evaluator-response-payload.schema.json",
+      "sha256": "77365cd3b86fb61a1f31e9e3023e0378a75df3951892c68f3f7758e65b88fcfe"
+    },
+    {
+      "type": "NeutralRequestPayload",
+      "file": "neutral-request-payload.schema.json",
+      "sha256": "8c250e3e45a6328a8f8f8ff713c5c702688d74be1f8899e32c3670c1ea24c8e2"
+    },
+    {
+      "type": "NeutralResponsePayload",
+      "file": "neutral-response-payload.schema.json",
+      "sha256": "2f46c62aa0894396554d449b09e39c0fa891da300f569c463be66c13df4d1d27"
+    },
+    {
+      "type": "SemverCore",
+      "file": "semver-core.schema.json",
+      "sha256": "2a47abdd67c86b5aebcae3a6684e442073abb19f0b6ccbaa02d140fb33eb2d62"
+    },
+    {
+      "type": "SimulationRequestPayload",
+      "file": "simulation-request-payload.schema.json",
+      "sha256": "bafafe181ba899a1937463c89ee6b411c58a2197b5baba1d4a8b5c2a79815546"
+    },
+    {
+      "type": "SimulationResponsePayload",
+      "file": "simulation-response-payload.schema.json",
+      "sha256": "f064cf5bc904385e4ce80518c36315c61bce459468665be7f90a7df913d2cfe7"
+    },
+    {
+      "type": "VerificationRequestPayload",
+      "file": "verification-request-payload.schema.json",
+      "sha256": "a5c8c78eb79c662c660b57378d35421da1e53bea0df8e1317be744eff45f2fd3"
+    },
+    {
+      "type": "VerificationResponsePayload",
+      "file": "verification-response-payload.schema.json",
+      "sha256": "f2bc34f137bb02f649bcd57f819c2fa3f185835cd4a155fbef1ef4f6cd6f3bb3"
+    },
+    {
+      "type": "VersionConstraint",
+      "file": "version-constraint.schema.json",
+      "sha256": "dedfc2163325377359ff8a5f2bb9fb9fd098074a5fb798e3b8496a43ee048a3c"
+    }
+  ]
+}

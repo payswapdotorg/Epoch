@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/VerificationRequestPayload",
+  "$defs": {
+    "VerificationRequestPayload": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "#/$defs/VerificationMethodReference"
+        },
+        "inputs": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "method",
+        "inputs"
+      ],
+      "additionalProperties": false,
+      "title": "VerificationRequestPayload",
+      "description": "Verification adapter request: the method/claim/stage reference (W006 vocabulary) and named run inputs."
+    },
+    "VerificationMethodReference": {
+      "type": "object",
+      "properties": {
+        "methodId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "claimId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "stage": {
+          "$ref": "#/$defs/VerificationStage"
+        }
+      },
+      "required": [
+        "methodId",
+        "claimId",
+        "stage"
+      ],
+      "additionalProperties": false,
+      "title": "VerificationMethodReference",
+      "description": "Reference to the W006 method being executed: method id, claim id, and stage."
+    },
+    "VerificationStage": {
+      "type": "string",
+      "enum": [
+        "verification",
+        "validation"
+      ],
+      "title": "VerificationStage",
+      "description": "The two distinct stages (W006 vocabulary): verification (\"was the work done to spec\") vs validation (\"is the spec right\")."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:verification-request-payload:1.0.0"
+}
