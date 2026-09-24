@@ -1,5 +1,5 @@
 # W008 — Extension SDK + Wasm
-Status: READY_AFTER_DEPENDENCIES
+Status: AUTHORIZED (wave 4; dispatch base recorded in the live dispatch issue)
 Depends On: W003,W007
 Worker Count: 1
 

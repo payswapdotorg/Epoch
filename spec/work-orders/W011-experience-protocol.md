@@ -1,5 +1,5 @@
 # W011 — Experience Protocol
-Status: READY_AFTER_DEPENDENCIES
+Status: AUTHORIZED (wave 4; dispatch base recorded in the live dispatch issue)
 Depends On: W002,W003,W006,W007
 Worker Count: 1
 
