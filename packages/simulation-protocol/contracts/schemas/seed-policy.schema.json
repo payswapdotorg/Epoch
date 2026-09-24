@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SeedPolicy",
+  "$defs": {
+    "SeedPolicy": {
+      "type": "string",
+      "enum": [
+        "not-applicable",
+        "external-seed",
+        "internal-seed"
+      ],
+      "title": "SeedPolicy",
+      "description": "How the simulator handles seeds: not-applicable (no seeding), external-seed (callers supply a seed), or internal-seed (the simulator derives a fixed seed itself)."
+    }
+  }
+}

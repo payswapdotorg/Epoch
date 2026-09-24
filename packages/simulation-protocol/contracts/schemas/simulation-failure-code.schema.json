@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SimulationFailureCode",
+  "$defs": {
+    "SimulationFailureCode": {
+      "type": "string",
+      "enum": [
+        "input-out-of-domain",
+        "numerical-divergence",
+        "resource-limit-exceeded",
+        "internal-error"
+      ],
+      "title": "SimulationFailureCode",
+      "description": "Machine-readable failure code carried by failed simulation results."
+    }
+  }
+}

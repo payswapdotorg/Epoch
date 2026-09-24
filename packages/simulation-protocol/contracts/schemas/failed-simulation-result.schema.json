@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/FailedSimulationResult",
+  "$defs": {
+    "FailedSimulationResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "const": "failed"
+        },
+        "failure": {
+          "$ref": "#/$defs/SimulationFailure"
+        }
+      },
+      "required": [
+        "status",
+        "failure"
+      ],
+      "additionalProperties": false,
+      "title": "FailedSimulationResult",
+      "description": "Failed simulation outcome: machine-readable failure code and reason."
+    },
+    "SimulationFailure": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/SimulationFailureCode"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "SimulationFailure",
+      "description": "A simulation failure: machine-readable code plus a human-auditable reason."
+    },
+    "SimulationFailureCode": {
+      "type": "string",
+      "enum": [
+        "input-out-of-domain",
+        "numerical-divergence",
+        "resource-limit-exceeded",
+        "internal-error"
+      ],
+      "title": "SimulationFailureCode",
+      "description": "Machine-readable failure code carried by failed simulation results."
+    }
+  }
+}

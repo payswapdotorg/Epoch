@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/simulation-protocol": ["./src/index.ts"]
+    }
+  },
+  "include": ["contracts/index.d.ts", "contracts/parity.ts"]
+}

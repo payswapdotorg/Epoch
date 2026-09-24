@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SimulationResult",
+  "$defs": {
+    "SimulationResult": {
+      "type": "object",
+      "properties": {
+        "protocolVersion": {
+          "$ref": "#/$defs/SimulationProtocolVersion"
+        },
+        "messageKind": {
+          "type": "string",
+          "const": "simulation.result"
+        },
+        "resultId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "request": {
+          "$ref": "#/$defs/InvocationReference"
+        },
+        "simulator": {
+          "$ref": "#/$defs/SimulatorReference"
+        },
+        "outcome": {
+          "$ref": "#/$defs/SimulationOutcome"
+        },
+        "deterministic": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "protocolVersion",
+        "messageKind",
+        "resultId",
+        "request",
+        "simulator",
+        "outcome",
+        "deterministic"
+      ],
+      "additionalProperties": false,
+      "title": "SimulationResult",
+      "description": "Simulation result message: exact-revision request and simulator bindings, completed/failed outcome, and the determinism claim."
+    },
+    "SimulationProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "SimulationProtocolVersion",
+      "description": "Exact simulation-protocol version admitted by this release (\"1.0.0\")."
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    },
+    "InvocationReference": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "requestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "requestId",
+        "requestDigest"
+      ],
+      "additionalProperties": false,
+      "title": "InvocationReference",
+      "description": "Exact-revision invocation reference: request id plus the SHA-256 digest of the request canonical JSON."
+    },
+    "SimulatorReference": {
+      "type": "object",
+      "properties": {
+        "simulatorId": {
+          "$ref": "#/$defs/SimulatorId"
+        },
+        "registrationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "simulatorId",
+        "registrationDigest"
+      ],
+      "additionalProperties": false,
+      "title": "SimulatorReference",
+      "description": "Exact-revision simulator reference: id plus the SHA-256 digest of the registration canonical JSON."
+    },
+    "SimulatorId": {
+      "type": "string",
+      "pattern": "^simulator:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SimulatorId",
+      "description": "Registered simulator identifier: \"simulator:\" followed by a lowercase slug."
+    },
+    "SimulationOutcome": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CompletedSimulationResult"
+        },
+        {
+          "$ref": "#/$defs/FailedSimulationResult"
+        }
+      ],
+      "title": "SimulationOutcome",
+      "description": "Exhaustive simulation outcome union: completed (with outputs) or failed (with a failure)."
+    },
+    "CompletedSimulationResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "const": "completed"
+        },
+        "outputs": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "outputs"
+      ],
+      "additionalProperties": false,
+      "title": "CompletedSimulationResult",
+      "description": "Completed simulation outcome: at least one named output value."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "FailedSimulationResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "const": "failed"
+        },
+        "failure": {
+          "$ref": "#/$defs/SimulationFailure"
+        }
+      },
+      "required": [
+        "status",
+        "failure"
+      ],
+      "additionalProperties": false,
+      "title": "FailedSimulationResult",
+      "description": "Failed simulation outcome: machine-readable failure code and reason."
+    },
+    "SimulationFailure": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/SimulationFailureCode"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "SimulationFailure",
+      "description": "A simulation failure: machine-readable code plus a human-auditable reason."
+    },
+    "SimulationFailureCode": {
+      "type": "string",
+      "enum": [
+        "input-out-of-domain",
+        "numerical-divergence",
+        "resource-limit-exceeded",
+        "internal-error"
+      ],
+      "title": "SimulationFailureCode",
+      "description": "Machine-readable failure code carried by failed simulation results."
+    }
+  }
+}

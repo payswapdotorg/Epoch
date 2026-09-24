@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PassFailVerdict",
+  "$defs": {
+    "PassFailVerdict": {
+      "type": "object",
+      "properties": {
+        "verdictForm": {
+          "type": "string",
+          "const": "pass-fail"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        }
+      },
+      "required": [
+        "verdictForm",
+        "outcome"
+      ],
+      "additionalProperties": false,
+      "title": "PassFailVerdict",
+      "description": "Binary verdict: pass or fail."
+    }
+  }
+}

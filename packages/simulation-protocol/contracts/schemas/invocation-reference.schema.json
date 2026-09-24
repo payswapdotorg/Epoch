@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/InvocationReference",
+  "$defs": {
+    "InvocationReference": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "requestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "requestId",
+        "requestDigest"
+      ],
+      "additionalProperties": false,
+      "title": "InvocationReference",
+      "description": "Exact-revision invocation reference: request id plus the SHA-256 digest of the request canonical JSON."
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    }
+  }
+}

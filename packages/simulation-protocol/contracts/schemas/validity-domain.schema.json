@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ValidityDomain",
+  "$defs": {
+    "ValidityDomain": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "includes": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        },
+        "excludes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        }
+      },
+      "required": [
+        "summary",
+        "includes",
+        "excludes"
+      ],
+      "additionalProperties": false,
+      "title": "ValidityDomain",
+      "description": "Declared validity domain: summary, at least one included scope, and explicitly excluded regimes."
+    }
+  }
+}

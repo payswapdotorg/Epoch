@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/VerdictForm",
+  "$defs": {
+    "VerdictForm": {
+      "type": "string",
+      "enum": [
+        "pass-fail",
+        "scored"
+      ],
+      "title": "VerdictForm",
+      "description": "Verdict form an evaluator produces: pass-fail or scored."
+    }
+  }
+}

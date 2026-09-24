@@ -1,0 +1,31 @@
+{
+  "name": "@epoch/evaluation-protocol",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Evaluation Protocol v1 — provider-neutral evaluator registration, evaluation request/verdict messages with justification references, and a reference-grade threshold evaluator (kernel layer, Work Order W005).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/simulation-protocol": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

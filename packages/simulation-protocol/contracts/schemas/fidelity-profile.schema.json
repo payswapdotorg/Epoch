@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/FidelityProfile",
+  "$defs": {
+    "FidelityProfile": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "knownDeviations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        }
+      },
+      "required": [
+        "summary",
+        "knownDeviations"
+      ],
+      "additionalProperties": false,
+      "title": "FidelityProfile",
+      "description": "Declared fidelity: a summary of the fidelity level plus the list of known systematic deviations (possibly empty)."
+    }
+  }
+}
