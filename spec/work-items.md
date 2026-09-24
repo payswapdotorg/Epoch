@@ -1,6 +1,6 @@
 # Epoch Work Items WO1.0
 
-One Work Order = one branch = one PR. Worker count = 1. Concurrent items must have pairwise-disjoint write surfaces. Only W001 is currently AUTHORIZED.
+One Work Order = one branch = one PR. Worker count = 1. Concurrent items must have pairwise-disjoint write surfaces. Only currently authorized items are recorded by live Work Order state.
 
 ## Dispatch contract
 The Tech Lead derives the live frontier from dependencies. Up to three READY items may be active at once. A static wave never overrides a dependency edge. If four+ items are READY, select any three whose declared write surfaces are pairwise disjoint.
@@ -38,14 +38,28 @@ The Tech Lead derives the live frontier from dependencies. Up to three READY ite
 | W029 | External Adapter Reference Set (Git/IFC/MCP/FMI) | W007,W013,W021,W022 | adapters/github/*, adapters/ifc/*, adapters/mcp/*, adapters/fmi/* |
 | W030 | Security/Isolation/Observability | W008,W009,W020,W021,W022,W023 | services/security/*, packages/observability/*, tests/security/*, docs/security/* |
 | W031 | Reference E2E slices | W014,W015,W016,W020,W021,W022,W026,W027,W028,W029 | examples/e2e/*, tests/e2e/*, docs/e2e/* |
-| W032 | Cross-domain integration harness | W026,W027,W028,W029,W031 | packages/test-harness/*, tests/contracts/*, tests/integration/* |
+| W032 | Cross-domain integration harness | W026,W027,W028,W031 | packages/test-harness/*, tests/contracts/*, tests/integration/* |
 | W033 | Production deployment | W032 | deploy/*, ops/*, docs/operations/* |
 | W034 | Performance + scale | W032,W033 | packages/performance/*, tests/performance/*, docs/performance/* |
 | W035 | Release/SDK docs/marketplace readiness | W033,W034 | docs/release/*, docs/sdk/*, docs/marketplace-readiness/*, examples/sdk/*, release/*, .github/workflows/* |
+| W036 | Solution Delivery Core: SolutionPackage, DeliveryRecord, Program of Work, lifecycle/external-event contracts | W002,W003,W004,W006,W009,W010,W011 | packages/solution-delivery/*, contracts/solution-delivery/*, docs/solution-delivery/* |
+| W037 | Procurement + supplier delivery tracking | W036,W007,W009 | packages/procurement/*, services/procurement/*, contracts/procurement/* |
+| W038 | Execution tracking + low-friction field observation | W036,W006,W007,W010 | packages/execution-tracking/*, services/execution-tracking/*, contracts/execution/* |
+| W039 | Actualization + variance + forecast | W037,W038 | packages/actualization/*, services/actualization/*, packages/variance/*, contracts/actualization/* |
+| W040 | Outcome learning + prediction calibration | W039,W005,W006 | packages/learning-calibration/*, services/learning-calibration/*, contracts/learning-calibration/* |
+| W041 | Fine-grained authorization + authorized projections | W009,W011,W036 | packages/access-projection/*, services/access-projection/*, contracts/access-projection/* |
+| W042 | Provider-neutral external event bridge + optional Aurum Chat adapter | W007,W010,W036,W041 | packages/external-event-bridge/*, adapters/aurum-chat/*, contracts/external-event-bridge/*, docs/integrations/aurum-chat/* |
+| W043 | Delivery supervision + alerts | W020,W022,W036,W038 | packages/supervision/*, services/supervision/*, packages/alerts/*, contracts/supervision/* |
+| W044 | Delivery-to-learning construction E2E fixture | W026,W031,W037,W038,W039,W040,W041,W042,W043 | examples/delivery-e2e/*, tests/delivery-e2e/*, docs/delivery-e2e/* |
+
+## Approved successor architecture program
+
+ACR-001 (approved 2026-09-24) adds the Solution Delivery architecture in spec/solution-delivery-architecture.md and the optional Aurum bridge in spec/aurum-chat-integration.md.
+
+W036-W044 remain READY_AFTER_DEPENDENCIES until the ACR-001 lock transition is made effective. The currently authorized W008/W009/W011 wave remains pinned to the existing E1.0/X1.0 contract surface and is not redefined by ACR-001.
 
 ## Verified parallelism design
-
-The dependency graph is authoritative; these are safe high-value concurrent groups when their prerequisites are complete:
+The dependency graph is authoritative. Safe examples are:
 - W002 + W003 + W004
 - W005 + W006
 - W008 + W009
@@ -53,23 +67,9 @@ The dependency graph is authoritative; these are safe high-value concurrent grou
 - W012 + W013
 - W014 + W015 + W016
 - W017 + W018 + W019
-- later: select any 3 among currently READY items such as W020/W026/W027/W028, then continue dynamically.
-
-No same-group pair shares a write surface. Dependencies that touch shared contracts are intentionally sequenced.
+- after W036: W037 + W038 + W041, subject to max 3 and exact ownership checks.
+- after W036 and W041: W037 + W038 + W042, subject to max 3 and exact ownership checks.
+No static group overrides dependencies.
 
 ## Universal acceptance
-Every item must:
-- stay inside owned surfaces;
-- add evidence for acceptance;
-- preserve authority boundaries;
-- avoid shared root-manifest/lockfile changes during parallel work;
-- document exact verification and final head SHA.
-
-## W001 acceptance
-1. Fresh checkout installs and runs standard checks/build/test/typecheck entrypoints.
-2. Workspace boundaries match IMPLEMENTATION.md.
-3. CI invokes governance/typecheck/lint/test.
-4. Governance checker detects invalid worker count, missing canonical files, and overlapping active Work Order ownership.
-5. Package boundary checks prevent kernel -> UI imports.
-6. Dependency baseline needed by W002-W004 is frozen so those branches need no root-manifest/lockfile edits.
-7. No domain feature behavior is introduced.
+Every item must stay inside owned surfaces, add evidence for acceptance, preserve authority boundaries, avoid shared root-manifest/lockfile changes during parallel work, and document exact verification and final head SHA.
