@@ -4,7 +4,7 @@ Wave: W0
 Depends On: none
 Worker Count: 1
 Dispatch branch: work/W001-repository-runtime-foundation
-Dispatch base: ad76c5c5cdb92cd4ff72b90b663bdce26bb9b3ce
+Dispatch base: determined from main at dispatch; record the exact SHA in the live GitHub issue and PR.
 
 ## Objective
 Establish the buildable monorepo, CI/governance runtime, and package-boundary checks every later Work Order consumes.
