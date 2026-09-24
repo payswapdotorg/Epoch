@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 22
 
-      - name: Enable pnpm (packageManager: pnpm@10)
+      - name: Enable pnpm via corepack
         run: corepack enable pnpm
 
       # Dependency-baseline guard (see scripts/DEPENDENCY-BASELINE.md):
