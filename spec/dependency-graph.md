@@ -27,20 +27,20 @@ W008/W009/W020/W021/W022/W023 -> W030
 W014/W015/W016/W020/W021/W022/W026/W027/W028/W029 -> W031
 W026/W027/W028/W029/W031 -> W032
 W032 -> W033
-W032/W033 -> W034/W035
+W032/W033 -> W034
+W033/W034 -> W035
 
-Parallel waves:
-W1: W002 | W003 | W004
-W2: W005 | W006 | W007
-W3: W008 | W009 | W010
-W4: W011 | W012 | W013
-W5: W014 | W015 | W016
-W6: W017 | W018 | W019
-W7: W020 | W021 | W022
-W8: W023 | W024 | W025
-W9: W026 | W027 | W028
-W10: W029 | W030 | W031
-W11: W032
-W12: W033 | W034 | W035
+## Safe concurrent groups
+These are examples, not replacement dependencies:
+W002|W003|W004
+W005|W006
+W008|W009
+W010|W011
+W012|W013
+W014|W015|W016
+W017|W018|W019
 
-No parallel Work Orders share a declared write surface. Root manifests/lockfiles are serial-owned by W001/dependency-intake changes.
+After W019 and as later dependencies resolve, the Tech Lead selects up to three READY items dynamically. No concurrent set may violate a dependency or owned-surface rule.
+
+## No-rebase invariant
+Shared contracts are sequenced before consumers. Concurrent workers never edit the same owned path. Root manifests/lockfiles are serial-owned by W001 and later Tech Lead dependency-intake changes.
