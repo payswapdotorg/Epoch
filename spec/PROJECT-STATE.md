@@ -52,7 +52,7 @@ ACR-001/ACR-002 are not effective for new implementation yet. The currently auth
 
 W036-W044 are defined and dependency-gated; none is currently authorized.
 
-Current main head: 6314365e74dff912b453ca3cbbeac0af351472a3.
+Current main head: e7c87d3e3657867e03044ad349fdce1327968951.
 
 Every merge must update this file before advancing.
 
