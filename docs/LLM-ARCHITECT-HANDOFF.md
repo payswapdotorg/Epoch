@@ -26,11 +26,14 @@ An optional provider-neutral External Event Bridge allows systems such as Aurum 
 
 Fine-grained access produces authorized projections of the same semantic state for clients, engineers, contractors, procurement users and agents.
 
-The complete target is in spec/solution-delivery-architecture.md; the Aurum boundary is in spec/aurum-chat-integration.md; formal approval is in spec/architecture-change-requests/ACR-001-solution-delivery-and-realtime-event-bridge.md.
+The complete target is in spec/solution-delivery-architecture.md; the universal lifecycle is in spec/universal-solution-lifecycle.md; the domain-pack boundary is in spec/domain-pack-contract.md; Navigator behavior is in spec/solution-navigator-architecture.md; the Aurum boundary is in spec/aurum-chat-integration.md; formal approval is in ACR-001 and the ACR-002 clarification.
 
 ## Current lock / transition rule
-Current main is 803a1989f839c2690a7e58db9dc0651e4e1ce87d after W008 (PR #22) and the post-W008 lockfile reconcile (PR #24).
-The current remaining authorized W009/W011 wave is governed by E1.0/X1.0. ACR-001 is approved but not effective for new implementation until that wave is stabilized and the lock transition plus frontier update are committed. W008 is complete. W009/W011 remain on the original E1.0/X1.0 contract obligations; ACR-001 does not reinterpret their work.
+Current main is 6314365e74dff912b453ca3cbbeac0af351472a3 after W008 (PR #22) and the post-W008 lockfile reconcile/governance reconciliation (PR #24/#25).
+The current remaining authorized W009/W011 wave is governed by E1.0/X1.0. ACR-001/ACR-002 are approved but not effective for new implementation until that wave is stabilized and the lock transition plus frontier update are committed. W008 is complete. W009/W011 remain on the original E1.0/X1.0 contract obligations; ACR-001 does not reinterpret their work.
+
+## Universal engineering lifecycle and domain packs
+The approved target uses `Understand → Decide → Plan → Acquire → Realize → Observe/Actualize → Verify → Forecast → Close → Learn`. Procurement and execution are domain projections of Acquire and Realize. The Solution Navigator is a synchronized projection, never a new authority. Domain packs must conform to `spec/domain-pack-contract.md` and consume W036 universal contracts. Canonical documents: `spec/universal-solution-lifecycle.md`, `spec/domain-pack-contract.md`, `spec/solution-navigator-architecture.md`.
 
 ## Successor work orders
 - W036 Solution Delivery Core
@@ -50,3 +53,6 @@ Humans and agents operate on the same semantic world. The UI turns structured wo
 
 ## Completion
 Every merge updates spec/PROJECT-STATE.md, development-state files, and this handoff with exact merge SHA, verification baseline, next frontier and review lessons.
+
+
+ACR-002 is an approved clarification of ACR-001, not a second lifecycle authority. It becomes effective at the same explicit architecture lock transition.
