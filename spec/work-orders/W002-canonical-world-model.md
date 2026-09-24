@@ -1,5 +1,5 @@
 # W002 — Canonical World Model
-Status: READY_AFTER_DEPENDENCIES
+Status: AUTHORIZED (wave 1; dispatch base 1b0d8d240f01de95cc6e269d4ae86471a934f717 post-W001-merge state commit; record exact SHA in the live dispatch issue)
 Depends On: W001
 Worker Count: 1
 

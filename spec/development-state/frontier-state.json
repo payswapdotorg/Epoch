@@ -1,1 +1,1 @@
-{"eligible":["W001"],"inFlight":[],"blocked":[],"maxConcurrentWorkers":3}
+{"eligible": ["W002", "W003", "W004"], "inFlight": ["W002", "W003", "W004"], "blocked": [], "maxConcurrentWorkers": 3}

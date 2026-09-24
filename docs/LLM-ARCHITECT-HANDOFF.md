@@ -28,7 +28,7 @@ Extensions may contribute ontology, visual ontology, assets, animation, interact
 Marketplace supports free, one-time, subscription, seat/workspace, usage, hybrid and enterprise licensing. Billing providers are adapters; Epoch owns entitlement semantics and developer accounting records.
 
 ## Execution
-W001 is the only authorized implementation Work Order. After a successful merge, the Tech Lead may activate the next ready wave automatically, up to three workers, provided ownership surfaces are disjoint.
+W001 is COMPLETE (PR #2, squash 1b0d8d240f01de95cc6e269d4ae86471a934f717; independent verification green). The first concurrent wave W002 (Canonical World Model), W003 (Agent + Action Protocols), W004 (Constraint & Policy Language) is AUTHORIZED with pairwise-disjoint surfaces. The Tech Lead may activate the next ready wave automatically after merges, up to three workers, provided ownership surfaces are disjoint.
 
 ## Completion
 Every merge updates spec/PROJECT-STATE.md, development-state files, and this handoff with exact merge SHA, verification baseline, next frontier, and review lessons.
