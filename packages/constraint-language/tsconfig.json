@@ -1,0 +1,14 @@
+{
+  "extends": "@epoch/tsconfig/library.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/contracts-constraints": ["../../contracts/constraints/v1/index.ts"]
+    }
+  },
+  "include": [
+    "src",
+    "test",
+    "vitest.config.mts",
+    "../../contracts/constraints/v1"
+  ]
+}

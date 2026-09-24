@@ -1,0 +1,976 @@
+{
+  "$defs": {
+    "__schema0": {
+      "description": "Compiled (type-annotated, constant-folded) ECL expression node.",
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "node": {
+              "const": "lit",
+              "type": "string"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            },
+            "type": {
+              "enum": [
+                "number",
+                "string",
+                "boolean"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "type": [
+                "number",
+                "string",
+                "boolean"
+              ]
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "type",
+            "value"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "node": {
+              "const": "input",
+              "type": "string"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "name"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "lt",
+              "type": "string"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "le",
+              "type": "string"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "gt",
+              "type": "string"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "ge",
+              "type": "string"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "eq",
+              "type": "string"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "ne",
+              "type": "string"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "node": {
+              "const": "and",
+              "type": "string"
+            },
+            "operands": {
+              "items": {
+                "$ref": "#/$defs/__schema0"
+              },
+              "minItems": 2,
+              "type": "array"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "operands"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "node": {
+              "const": "or",
+              "type": "string"
+            },
+            "operands": {
+              "items": {
+                "$ref": "#/$defs/__schema0"
+              },
+              "minItems": 2,
+              "type": "array"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "operands"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "node": {
+              "const": "not",
+              "type": "string"
+            },
+            "operand": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "operand"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "antecedent": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "consequent": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "implies",
+              "type": "string"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "antecedent",
+            "consequent"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "node": {
+              "const": "add",
+              "type": "string"
+            },
+            "operands": {
+              "items": {
+                "$ref": "#/$defs/__schema0"
+              },
+              "minItems": 2,
+              "type": "array"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "operands"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "node": {
+              "const": "mul",
+              "type": "string"
+            },
+            "operands": {
+              "items": {
+                "$ref": "#/$defs/__schema0"
+              },
+              "minItems": 2,
+              "type": "array"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "operands"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "sub",
+              "type": "string"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "div",
+              "type": "string"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "key": {
+              "description": "Record key (e.g. an evidence kind).",
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            "node": {
+              "const": "has",
+              "type": "string"
+            },
+            "record": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "record",
+            "key"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "fallback": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "key": {
+              "description": "Record key (e.g. an evidence kind).",
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            "node": {
+              "const": "get",
+              "type": "string"
+            },
+            "record": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "record",
+            "key",
+            "fallback"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "list": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "count",
+              "type": "string"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "list"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "list": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "contains",
+              "type": "string"
+            },
+            "resultType": {
+              "enum": [
+                "number",
+                "string",
+                "boolean",
+                "record",
+                "list"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "resultType",
+            "list",
+            "value"
+          ],
+          "type": "object"
+        }
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Compiled deterministic evaluation contract: pure, side-effect-free and total over its declared input types.",
+  "properties": {
+    "appliesWhen": {
+      "$ref": "#/$defs/__schema0"
+    },
+    "compiledDigest": {
+      "description": "FNV-1a digest over the canonical JSON of the compiled constraint (digest excluded).",
+      "pattern": "^[0-9a-f]{8}$",
+      "type": "string"
+    },
+    "compiler": {
+      "additionalProperties": false,
+      "description": "Compiler identity stamp.",
+      "properties": {
+        "name": {
+          "const": "epoch-ecl-compiler",
+          "type": "string"
+        },
+        "version": {
+          "const": "1.0.0",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "type": "object"
+    },
+    "description": {
+      "description": "Longer human description.",
+      "maxLength": 4096,
+      "minLength": 1,
+      "type": "string"
+    },
+    "id": {
+      "description": "Stable, human-readable constraint identifier (lowercase kebab-case).",
+      "pattern": "^[a-z][a-z0-9-]{0,127}$",
+      "type": "string"
+    },
+    "inputs": {
+      "items": {
+        "additionalProperties": false,
+        "description": "Declared evaluation-context input slot.",
+        "properties": {
+          "description": {
+            "description": "Longer human description.",
+            "maxLength": 4096,
+            "minLength": 1,
+            "type": "string"
+          },
+          "name": {
+            "description": "Declared input name referenced by `input` expression nodes.",
+            "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$",
+            "type": "string"
+          },
+          "type": {
+            "description": "Declared input slot type: number | string | boolean | enum (finite string set) | record (string -> number, e.g. evidence counts) | list (string[], e.g. granted permissions).",
+            "enum": [
+              "number",
+              "string",
+              "boolean",
+              "enum",
+              "record",
+              "list"
+            ],
+            "type": "string"
+          },
+          "values": {
+            "description": "Required iff type is \"enum\": the finite set of allowed strings.",
+            "items": {
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 64,
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "languageVersion": {
+      "const": "1.0.0",
+      "type": "string"
+    },
+    "payload": {
+      "description": "Class-specific compiled payload used to enrich evaluation results.",
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "class": {
+              "const": "hard",
+              "type": "string"
+            }
+          },
+          "required": [
+            "class"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "class": {
+              "const": "soft",
+              "type": "string"
+            },
+            "weight": {
+              "exclusiveMinimum": 0,
+              "maximum": 1000000000,
+              "type": "number"
+            }
+          },
+          "required": [
+            "class",
+            "weight"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "class": {
+              "const": "resource",
+              "type": "string"
+            },
+            "limit": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "unit": {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            "usage": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "class",
+            "usage",
+            "limit",
+            "unit"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "class": {
+              "const": "safety",
+              "type": "string"
+            },
+            "regulations": {
+              "items": {
+                "maxLength": 128,
+                "minLength": 1,
+                "type": "string"
+              },
+              "maxItems": 32,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "class",
+            "regulations"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "class": {
+              "const": "epistemic",
+              "type": "string"
+            },
+            "confidence": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "evidenceInput": {
+              "description": "Declared input name referenced by `input` expression nodes.",
+              "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$",
+              "type": "string"
+            },
+            "requiredEvidence": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "minCount": {
+                    "maximum": 9007199254740991,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "minCount"
+                ],
+                "type": "object"
+              },
+              "maxItems": 64,
+              "type": "array"
+            },
+            "threshold": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "class",
+            "confidence",
+            "threshold"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "allOf": {
+              "items": {
+                "description": "Permission identifier, e.g. \"action:execute\".",
+                "pattern": "^[a-z0-9][a-z0-9:_-]{0,127}$",
+                "type": "string"
+              },
+              "maxItems": 64,
+              "type": "array"
+            },
+            "anyOf": {
+              "items": {
+                "description": "Permission identifier, e.g. \"action:execute\".",
+                "pattern": "^[a-z0-9][a-z0-9:_-]{0,127}$",
+                "type": "string"
+              },
+              "maxItems": 64,
+              "type": "array"
+            },
+            "class": {
+              "const": "authority",
+              "type": "string"
+            },
+            "permissionsInput": {
+              "description": "Declared input name referenced by `input` expression nodes.",
+              "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "class",
+            "permissionsInput",
+            "allOf",
+            "anyOf"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "root": {
+      "$ref": "#/$defs/__schema0",
+      "description": "Boolean violation expression: 'true' means the constraint is violated."
+    },
+    "severity": {
+      "description": "Optional severity metadata, echoed in evaluation results.",
+      "enum": [
+        "critical",
+        "major",
+        "minor"
+      ],
+      "type": "string"
+    },
+    "tags": {
+      "description": "Free-form classification tags.",
+      "items": {
+        "maxLength": 64,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 32,
+      "type": "array"
+    },
+    "title": {
+      "description": "Short human title.",
+      "maxLength": 256,
+      "minLength": 1,
+      "type": "string"
+    },
+    "version": {
+      "description": "Semantic version of the constraint or policy document itself.",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "languageVersion",
+    "id",
+    "version",
+    "inputs",
+    "root",
+    "payload",
+    "compiler",
+    "compiledDigest"
+  ],
+  "type": "object"
+}

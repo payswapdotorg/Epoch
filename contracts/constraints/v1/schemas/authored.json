@@ -1,0 +1,1286 @@
+{
+  "$defs": {
+    "__schema0": {
+      "$ref": "#/$defs/__schema1"
+    },
+    "__schema1": {
+      "description": "ECL expression AST node.",
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "node": {
+              "const": "lit",
+              "type": "string"
+            },
+            "type": {
+              "description": "Static type of the literal.",
+              "enum": [
+                "number",
+                "string",
+                "boolean"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "description": "Literal value.",
+              "type": [
+                "number",
+                "string",
+                "boolean"
+              ]
+            }
+          },
+          "required": [
+            "node",
+            "type",
+            "value"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "description": "Reference to a declared input.",
+              "type": "string"
+            },
+            "node": {
+              "const": "input",
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "name"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "lt",
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "le",
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "gt",
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "ge",
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "eq",
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "ne",
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "node": {
+              "const": "and",
+              "type": "string"
+            },
+            "operands": {
+              "items": {
+                "$ref": "#/$defs/__schema0"
+              },
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "node",
+            "operands"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "node": {
+              "const": "or",
+              "type": "string"
+            },
+            "operands": {
+              "items": {
+                "$ref": "#/$defs/__schema0"
+              },
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "node",
+            "operands"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "node": {
+              "const": "not",
+              "type": "string"
+            },
+            "operand": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "operand"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "antecedent": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "consequent": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "implies",
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "antecedent",
+            "consequent"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "node": {
+              "const": "add",
+              "type": "string"
+            },
+            "operands": {
+              "items": {
+                "$ref": "#/$defs/__schema0"
+              },
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "node",
+            "operands"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "node": {
+              "const": "mul",
+              "type": "string"
+            },
+            "operands": {
+              "items": {
+                "$ref": "#/$defs/__schema0"
+              },
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "node",
+            "operands"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "sub",
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "div",
+              "type": "string"
+            },
+            "right": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "left",
+            "right"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "key": {
+              "description": "Record key (e.g. an evidence kind).",
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            "node": {
+              "const": "has",
+              "type": "string"
+            },
+            "record": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "record",
+            "key"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "fallback": {
+              "$ref": "#/$defs/__schema0",
+              "description": "Total-lookup default when the key is absent."
+            },
+            "key": {
+              "description": "Record key (e.g. an evidence kind).",
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            "node": {
+              "const": "get",
+              "type": "string"
+            },
+            "record": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "required": [
+            "node",
+            "record",
+            "key",
+            "fallback"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "list": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "count",
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "list"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "list": {
+              "$ref": "#/$defs/__schema0"
+            },
+            "node": {
+              "const": "contains",
+              "type": "string"
+            },
+            "value": {
+              "description": "List member to test for.",
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "node",
+            "list",
+            "value"
+          ],
+          "type": "object"
+        }
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Authored ECL constraint (structured, human-editable, serializable).",
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "description": "Hard constraint: violation blocks.",
+      "properties": {
+        "appliesWhen": {
+          "$ref": "#/$defs/__schema0",
+          "description": "Optional boolean applicability guard; when it evaluates to false the constraint outcome is 'not-applicable'."
+        },
+        "class": {
+          "const": "hard",
+          "description": "Must hold; violation blocks.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Longer human description.",
+          "maxLength": 4096,
+          "minLength": 1,
+          "type": "string"
+        },
+        "id": {
+          "description": "Stable, human-readable constraint identifier (lowercase kebab-case).",
+          "pattern": "^[a-z][a-z0-9-]{0,127}$",
+          "type": "string"
+        },
+        "inputs": {
+          "description": "Declared evaluation-context input slots.",
+          "items": {
+            "additionalProperties": false,
+            "description": "Declared evaluation-context input slot.",
+            "properties": {
+              "description": {
+                "description": "Longer human description.",
+                "maxLength": 4096,
+                "minLength": 1,
+                "type": "string"
+              },
+              "name": {
+                "description": "Declared input name referenced by `input` expression nodes.",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$",
+                "type": "string"
+              },
+              "type": {
+                "description": "Declared input slot type: number | string | boolean | enum (finite string set) | record (string -> number, e.g. evidence counts) | list (string[], e.g. granted permissions).",
+                "enum": [
+                  "number",
+                  "string",
+                  "boolean",
+                  "enum",
+                  "record",
+                  "list"
+                ],
+                "type": "string"
+              },
+              "values": {
+                "description": "Required iff type is \"enum\": the finite set of allowed strings.",
+                "items": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "maxItems": 64,
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "languageVersion": {
+          "const": "1.0.0",
+          "description": "ECL language version gate.",
+          "type": "string"
+        },
+        "predicate": {
+          "$ref": "#/$defs/__schema0",
+          "description": "Boolean expression that must hold."
+        },
+        "severity": {
+          "description": "Optional severity metadata, echoed in evaluation results.",
+          "enum": [
+            "critical",
+            "major",
+            "minor"
+          ],
+          "type": "string"
+        },
+        "tags": {
+          "description": "Free-form classification tags.",
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 32,
+          "type": "array"
+        },
+        "title": {
+          "description": "Short human title.",
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        },
+        "version": {
+          "description": "Version of this constraint document.",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "languageVersion",
+        "id",
+        "version",
+        "inputs",
+        "class",
+        "predicate"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "description": "Soft constraint: violation penalizes (never blocks on its own).",
+      "properties": {
+        "appliesWhen": {
+          "$ref": "#/$defs/__schema0",
+          "description": "Optional boolean applicability guard; when it evaluates to false the constraint outcome is 'not-applicable'."
+        },
+        "class": {
+          "const": "soft",
+          "description": "Preference; violation scores/penalizes.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Longer human description.",
+          "maxLength": 4096,
+          "minLength": 1,
+          "type": "string"
+        },
+        "id": {
+          "description": "Stable, human-readable constraint identifier (lowercase kebab-case).",
+          "pattern": "^[a-z][a-z0-9-]{0,127}$",
+          "type": "string"
+        },
+        "inputs": {
+          "description": "Declared evaluation-context input slots.",
+          "items": {
+            "additionalProperties": false,
+            "description": "Declared evaluation-context input slot.",
+            "properties": {
+              "description": {
+                "description": "Longer human description.",
+                "maxLength": 4096,
+                "minLength": 1,
+                "type": "string"
+              },
+              "name": {
+                "description": "Declared input name referenced by `input` expression nodes.",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$",
+                "type": "string"
+              },
+              "type": {
+                "description": "Declared input slot type: number | string | boolean | enum (finite string set) | record (string -> number, e.g. evidence counts) | list (string[], e.g. granted permissions).",
+                "enum": [
+                  "number",
+                  "string",
+                  "boolean",
+                  "enum",
+                  "record",
+                  "list"
+                ],
+                "type": "string"
+              },
+              "values": {
+                "description": "Required iff type is \"enum\": the finite set of allowed strings.",
+                "items": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "maxItems": 64,
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "languageVersion": {
+          "const": "1.0.0",
+          "description": "ECL language version gate.",
+          "type": "string"
+        },
+        "predicate": {
+          "$ref": "#/$defs/__schema0",
+          "description": "Boolean expression that should hold."
+        },
+        "severity": {
+          "description": "Optional severity metadata, echoed in evaluation results.",
+          "enum": [
+            "critical",
+            "major",
+            "minor"
+          ],
+          "type": "string"
+        },
+        "tags": {
+          "description": "Free-form classification tags.",
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 32,
+          "type": "array"
+        },
+        "title": {
+          "description": "Short human title.",
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        },
+        "version": {
+          "description": "Version of this constraint document.",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "type": "string"
+        },
+        "weight": {
+          "description": "Penalty applied when the predicate is violated.",
+          "exclusiveMinimum": 0,
+          "maximum": 1000000000,
+          "type": "number"
+        }
+      },
+      "required": [
+        "languageVersion",
+        "id",
+        "version",
+        "inputs",
+        "class",
+        "predicate",
+        "weight"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "description": "Resource constraint: violated iff usage exceeds limit.",
+      "properties": {
+        "appliesWhen": {
+          "$ref": "#/$defs/__schema0",
+          "description": "Optional boolean applicability guard; when it evaluates to false the constraint outcome is 'not-applicable'."
+        },
+        "class": {
+          "const": "resource",
+          "description": "Measurable budget; overage blocks.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Longer human description.",
+          "maxLength": 4096,
+          "minLength": 1,
+          "type": "string"
+        },
+        "id": {
+          "description": "Stable, human-readable constraint identifier (lowercase kebab-case).",
+          "pattern": "^[a-z][a-z0-9-]{0,127}$",
+          "type": "string"
+        },
+        "inputs": {
+          "description": "Declared evaluation-context input slots.",
+          "items": {
+            "additionalProperties": false,
+            "description": "Declared evaluation-context input slot.",
+            "properties": {
+              "description": {
+                "description": "Longer human description.",
+                "maxLength": 4096,
+                "minLength": 1,
+                "type": "string"
+              },
+              "name": {
+                "description": "Declared input name referenced by `input` expression nodes.",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$",
+                "type": "string"
+              },
+              "type": {
+                "description": "Declared input slot type: number | string | boolean | enum (finite string set) | record (string -> number, e.g. evidence counts) | list (string[], e.g. granted permissions).",
+                "enum": [
+                  "number",
+                  "string",
+                  "boolean",
+                  "enum",
+                  "record",
+                  "list"
+                ],
+                "type": "string"
+              },
+              "values": {
+                "description": "Required iff type is \"enum\": the finite set of allowed strings.",
+                "items": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "maxItems": 64,
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "languageVersion": {
+          "const": "1.0.0",
+          "description": "ECL language version gate.",
+          "type": "string"
+        },
+        "limit": {
+          "$ref": "#/$defs/__schema0",
+          "description": "Number expression: allowed budget."
+        },
+        "severity": {
+          "description": "Optional severity metadata, echoed in evaluation results.",
+          "enum": [
+            "critical",
+            "major",
+            "minor"
+          ],
+          "type": "string"
+        },
+        "tags": {
+          "description": "Free-form classification tags.",
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 32,
+          "type": "array"
+        },
+        "title": {
+          "description": "Short human title.",
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        },
+        "unit": {
+          "description": "Measurement unit, echoed in results.",
+          "maxLength": 64,
+          "minLength": 1,
+          "type": "string"
+        },
+        "usage": {
+          "$ref": "#/$defs/__schema0",
+          "description": "Number expression: measured consumption."
+        },
+        "version": {
+          "description": "Version of this constraint document.",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "languageVersion",
+        "id",
+        "version",
+        "inputs",
+        "class",
+        "usage",
+        "limit",
+        "unit"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "description": "Safety/regulatory constraint: violation blocks with regulation references.",
+      "properties": {
+        "appliesWhen": {
+          "$ref": "#/$defs/__schema0",
+          "description": "Optional boolean applicability guard; when it evaluates to false the constraint outcome is 'not-applicable'."
+        },
+        "class": {
+          "const": "safety",
+          "description": "Safety/regulatory; violation blocks.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Longer human description.",
+          "maxLength": 4096,
+          "minLength": 1,
+          "type": "string"
+        },
+        "id": {
+          "description": "Stable, human-readable constraint identifier (lowercase kebab-case).",
+          "pattern": "^[a-z][a-z0-9-]{0,127}$",
+          "type": "string"
+        },
+        "inputs": {
+          "description": "Declared evaluation-context input slots.",
+          "items": {
+            "additionalProperties": false,
+            "description": "Declared evaluation-context input slot.",
+            "properties": {
+              "description": {
+                "description": "Longer human description.",
+                "maxLength": 4096,
+                "minLength": 1,
+                "type": "string"
+              },
+              "name": {
+                "description": "Declared input name referenced by `input` expression nodes.",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$",
+                "type": "string"
+              },
+              "type": {
+                "description": "Declared input slot type: number | string | boolean | enum (finite string set) | record (string -> number, e.g. evidence counts) | list (string[], e.g. granted permissions).",
+                "enum": [
+                  "number",
+                  "string",
+                  "boolean",
+                  "enum",
+                  "record",
+                  "list"
+                ],
+                "type": "string"
+              },
+              "values": {
+                "description": "Required iff type is \"enum\": the finite set of allowed strings.",
+                "items": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "maxItems": 64,
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "languageVersion": {
+          "const": "1.0.0",
+          "description": "ECL language version gate.",
+          "type": "string"
+        },
+        "predicate": {
+          "$ref": "#/$defs/__schema0",
+          "description": "Boolean expression that must hold."
+        },
+        "regulations": {
+          "description": "Regulation/clause references echoed in results for audit.",
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "type": "array"
+        },
+        "severity": {
+          "description": "Optional severity metadata, echoed in evaluation results.",
+          "enum": [
+            "critical",
+            "major",
+            "minor"
+          ],
+          "type": "string"
+        },
+        "tags": {
+          "description": "Free-form classification tags.",
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 32,
+          "type": "array"
+        },
+        "title": {
+          "description": "Short human title.",
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        },
+        "version": {
+          "description": "Version of this constraint document.",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "languageVersion",
+        "id",
+        "version",
+        "inputs",
+        "class",
+        "predicate",
+        "regulations"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "description": "Epistemic constraint: violated below the confidence threshold or with insufficient evidence.",
+      "properties": {
+        "appliesWhen": {
+          "$ref": "#/$defs/__schema0",
+          "description": "Optional boolean applicability guard; when it evaluates to false the constraint outcome is 'not-applicable'."
+        },
+        "class": {
+          "const": "epistemic",
+          "description": "Evidence/uncertainty threshold.",
+          "type": "string"
+        },
+        "confidence": {
+          "$ref": "#/$defs/__schema0",
+          "description": "Number expression: computed confidence."
+        },
+        "description": {
+          "description": "Longer human description.",
+          "maxLength": 4096,
+          "minLength": 1,
+          "type": "string"
+        },
+        "evidenceInput": {
+          "description": "Name of a record input holding evidence counts (required when requiredEvidence is set).",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$",
+          "type": "string"
+        },
+        "id": {
+          "description": "Stable, human-readable constraint identifier (lowercase kebab-case).",
+          "pattern": "^[a-z][a-z0-9-]{0,127}$",
+          "type": "string"
+        },
+        "inputs": {
+          "description": "Declared evaluation-context input slots.",
+          "items": {
+            "additionalProperties": false,
+            "description": "Declared evaluation-context input slot.",
+            "properties": {
+              "description": {
+                "description": "Longer human description.",
+                "maxLength": 4096,
+                "minLength": 1,
+                "type": "string"
+              },
+              "name": {
+                "description": "Declared input name referenced by `input` expression nodes.",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$",
+                "type": "string"
+              },
+              "type": {
+                "description": "Declared input slot type: number | string | boolean | enum (finite string set) | record (string -> number, e.g. evidence counts) | list (string[], e.g. granted permissions).",
+                "enum": [
+                  "number",
+                  "string",
+                  "boolean",
+                  "enum",
+                  "record",
+                  "list"
+                ],
+                "type": "string"
+              },
+              "values": {
+                "description": "Required iff type is \"enum\": the finite set of allowed strings.",
+                "items": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "maxItems": 64,
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "languageVersion": {
+          "const": "1.0.0",
+          "description": "ECL language version gate.",
+          "type": "string"
+        },
+        "requiredEvidence": {
+          "description": "Evidence kinds that must be present with minimum counts.",
+          "items": {
+            "additionalProperties": false,
+            "description": "Required evidence for epistemic constraints.",
+            "properties": {
+              "kind": {
+                "description": "Evidence kind (a key of the evidence record input).",
+                "maxLength": 128,
+                "minLength": 1,
+                "type": "string"
+              },
+              "minCount": {
+                "description": "Minimum number of evidence items of this kind.",
+                "maximum": 9007199254740991,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "kind",
+              "minCount"
+            ],
+            "type": "object"
+          },
+          "maxItems": 64,
+          "type": "array"
+        },
+        "severity": {
+          "description": "Optional severity metadata, echoed in evaluation results.",
+          "enum": [
+            "critical",
+            "major",
+            "minor"
+          ],
+          "type": "string"
+        },
+        "tags": {
+          "description": "Free-form classification tags.",
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 32,
+          "type": "array"
+        },
+        "threshold": {
+          "$ref": "#/$defs/__schema0",
+          "description": "Number expression: required confidence floor."
+        },
+        "title": {
+          "description": "Short human title.",
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        },
+        "version": {
+          "description": "Version of this constraint document.",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "languageVersion",
+        "id",
+        "version",
+        "inputs",
+        "class",
+        "confidence",
+        "threshold"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "description": "Authority constraint: satisfied iff every allOf permission is granted and (when anyOf is non-empty) at least one anyOf permission is granted.",
+      "properties": {
+        "allOf": {
+          "description": "Permissions that must ALL be granted (may be empty).",
+          "items": {
+            "description": "Permission identifier, e.g. \"action:execute\".",
+            "pattern": "^[a-z0-9][a-z0-9:_-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 64,
+          "type": "array"
+        },
+        "anyOf": {
+          "description": "Permissions of which at least ONE must be granted (may be empty).",
+          "items": {
+            "description": "Permission identifier, e.g. \"action:execute\".",
+            "pattern": "^[a-z0-9][a-z0-9:_-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 64,
+          "type": "array"
+        },
+        "appliesWhen": {
+          "$ref": "#/$defs/__schema0",
+          "description": "Optional boolean applicability guard; when it evaluates to false the constraint outcome is 'not-applicable'."
+        },
+        "class": {
+          "const": "authority",
+          "description": "Permission assertion; denial blocks.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Longer human description.",
+          "maxLength": 4096,
+          "minLength": 1,
+          "type": "string"
+        },
+        "id": {
+          "description": "Stable, human-readable constraint identifier (lowercase kebab-case).",
+          "pattern": "^[a-z][a-z0-9-]{0,127}$",
+          "type": "string"
+        },
+        "inputs": {
+          "description": "Declared evaluation-context input slots.",
+          "items": {
+            "additionalProperties": false,
+            "description": "Declared evaluation-context input slot.",
+            "properties": {
+              "description": {
+                "description": "Longer human description.",
+                "maxLength": 4096,
+                "minLength": 1,
+                "type": "string"
+              },
+              "name": {
+                "description": "Declared input name referenced by `input` expression nodes.",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$",
+                "type": "string"
+              },
+              "type": {
+                "description": "Declared input slot type: number | string | boolean | enum (finite string set) | record (string -> number, e.g. evidence counts) | list (string[], e.g. granted permissions).",
+                "enum": [
+                  "number",
+                  "string",
+                  "boolean",
+                  "enum",
+                  "record",
+                  "list"
+                ],
+                "type": "string"
+              },
+              "values": {
+                "description": "Required iff type is \"enum\": the finite set of allowed strings.",
+                "items": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "maxItems": 64,
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "languageVersion": {
+          "const": "1.0.0",
+          "description": "ECL language version gate.",
+          "type": "string"
+        },
+        "permissionsInput": {
+          "description": "Name of a list input holding granted permissions.",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$",
+          "type": "string"
+        },
+        "severity": {
+          "description": "Optional severity metadata, echoed in evaluation results.",
+          "enum": [
+            "critical",
+            "major",
+            "minor"
+          ],
+          "type": "string"
+        },
+        "tags": {
+          "description": "Free-form classification tags.",
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 32,
+          "type": "array"
+        },
+        "title": {
+          "description": "Short human title.",
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        },
+        "version": {
+          "description": "Version of this constraint document.",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "languageVersion",
+        "id",
+        "version",
+        "inputs",
+        "class",
+        "permissionsInput",
+        "allOf",
+        "anyOf"
+      ],
+      "type": "object"
+    }
+  ]
+}

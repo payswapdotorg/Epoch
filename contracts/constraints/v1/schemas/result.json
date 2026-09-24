@@ -1,0 +1,275 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Deterministic, serializable evaluation result for one compiled constraint.",
+  "properties": {
+    "constraintClass": {
+      "description": "Constraint class (R3): determines violation semantics in results.",
+      "enum": [
+        "hard",
+        "soft",
+        "resource",
+        "safety",
+        "epistemic",
+        "authority"
+      ],
+      "type": "string"
+    },
+    "constraintId": {
+      "type": "string"
+    },
+    "constraintVersion": {
+      "type": "string"
+    },
+    "details": {
+      "description": "Class-specific evaluation details.",
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "class": {
+              "const": "hard",
+              "type": "string"
+            },
+            "severity": {
+              "enum": [
+                "critical",
+                "major",
+                "minor"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "class"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "class": {
+              "const": "soft",
+              "type": "string"
+            },
+            "weight": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "class",
+            "weight"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "class": {
+              "const": "resource",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Computed number, or null when the computation was non-finite (NaN/±Infinity) or was skipped because the constraint is 'not-applicable'.",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "remaining": {
+              "description": "Computed number, or null when the computation was non-finite (NaN/±Infinity) or was skipped because the constraint is 'not-applicable'.",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "unit": {
+              "type": "string"
+            },
+            "usage": {
+              "description": "Computed number, or null when the computation was non-finite (NaN/±Infinity) or was skipped because the constraint is 'not-applicable'.",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "class",
+            "unit",
+            "usage",
+            "limit",
+            "remaining"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "class": {
+              "const": "safety",
+              "type": "string"
+            },
+            "regulations": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "class",
+            "regulations"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "class": {
+              "const": "epistemic",
+              "type": "string"
+            },
+            "confidence": {
+              "description": "Computed number, or null when the computation was non-finite (NaN/±Infinity) or was skipped because the constraint is 'not-applicable'.",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "evidence": {
+              "description": "Per-required-evidence-kind check results (empty when none required).",
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual": {
+                    "type": "number"
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "required": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "required",
+                  "actual"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "threshold": {
+              "description": "Computed number, or null when the computation was non-finite (NaN/±Infinity) or was skipped because the constraint is 'not-applicable'.",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "class",
+            "confidence",
+            "threshold",
+            "evidence"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "allOf": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "anyOf": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "class": {
+              "const": "authority",
+              "type": "string"
+            },
+            "matchedAnyOf": {
+              "description": "The anyOf permission that was matched, or null.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "missing": {
+              "description": "Required permissions not granted.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "class",
+            "allOf",
+            "anyOf",
+            "missing",
+            "matchedAnyOf"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "effect": {
+      "description": "Deterministic effect derived from class + outcome: violated hard/safety/resource/epistemic/authority constraints block; violated soft constraints penalize; everything else has no effect.",
+      "enum": [
+        "block",
+        "penalize",
+        "none"
+      ],
+      "type": "string"
+    },
+    "evaluationDigest": {
+      "description": "FNV-1a digest over the canonical JSON of this result (digest excluded): identical constraint + context always yields an identical result digest.",
+      "pattern": "^[0-9a-f]{8}$",
+      "type": "string"
+    },
+    "message": {
+      "description": "Deterministic human-readable summary.",
+      "type": "string"
+    },
+    "outcome": {
+      "description": "Outcome of evaluating a compiled constraint. 'not-applicable' is produced when the authored appliesWhen guard evaluates to false.",
+      "enum": [
+        "satisfied",
+        "violated",
+        "not-applicable"
+      ],
+      "type": "string"
+    },
+    "penalty": {
+      "description": "Penalty applied by this result: the soft weight when violated, otherwise 0.",
+      "type": "number"
+    },
+    "violated": {
+      "description": "Convenience flag: outcome === \"violated\".",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "constraintId",
+    "constraintVersion",
+    "constraintClass",
+    "outcome",
+    "effect",
+    "violated",
+    "penalty",
+    "message",
+    "details",
+    "evaluationDigest"
+  ],
+  "type": "object"
+}
