@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ResolvedCapabilityBinding",
+  "$defs": {
+    "ResolvedCapabilityBinding": {
+      "readOnly": true,
+      "title": "ResolvedCapabilityBinding",
+      "description": "A binding pin resolved at admission: capability id + version + manifest digest + the declared constraint.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "capabilityVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "capabilityManifestDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        },
+        "bindingConstraint": {
+          "$ref": "#/$defs/VersionConstraint"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "capabilityVersion",
+        "capabilityManifestDigest",
+        "bindingConstraint"
+      ],
+      "additionalProperties": false
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "VersionConstraint": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "exact"
+            },
+            "version": {
+              "$ref": "#/$defs/SemverCore"
+            }
+          },
+          "required": [
+            "kind",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "caret"
+            },
+            "version": {
+              "$ref": "#/$defs/SemverCore"
+            }
+          },
+          "required": [
+            "kind",
+            "version"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "VersionConstraint",
+      "description": "Version constraint: an exact pin, or caret major-version compatibility (npm-caret semantics incl. the 0.x carve-outs)."
+    }
+  },
+  "$id": "urn:epoch:extension-runtime:resolved-capability-binding:1.0.0"
+}

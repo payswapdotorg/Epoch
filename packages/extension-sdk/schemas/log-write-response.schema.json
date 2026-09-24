@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LogWriteResponse",
+  "$defs": {
+    "LogWriteResponse": {
+      "readOnly": true,
+      "title": "LogWriteResponse",
+      "description": "log.write response (acknowledgement marker).",
+      "type": "object",
+      "properties": {
+        "logged": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "logged"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:log-write-response:1.0.0"
+}

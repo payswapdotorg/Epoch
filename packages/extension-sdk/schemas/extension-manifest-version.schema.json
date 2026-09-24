@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExtensionManifestVersion",
+  "$defs": {
+    "ExtensionManifestVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "ExtensionManifestVersion",
+      "description": "Version discriminator carried by every serialized extension manifest and registration (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:extension-manifest-version:1.0.0"
+}

@@ -1,0 +1,943 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExtensionRegistration",
+  "$defs": {
+    "ExtensionRegistration": {
+      "readOnly": true,
+      "title": "ExtensionRegistration",
+      "description": "Registration envelope: the manifest plus the digest claimed for its content; the host recomputes and rejects mismatches (tamper detection).",
+      "type": "object",
+      "properties": {
+        "manifest": {
+          "$ref": "#/$defs/ExtensionManifest"
+        },
+        "digest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "manifest",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "ExtensionManifest": {
+      "readOnly": true,
+      "title": "ExtensionManifest",
+      "description": "Immutable, content-addressed extension manifest: identity, version, flavor, capability bindings, permission grants, entry points, honored contracts, trust class, license, data handling, and declared side effects.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/ExtensionManifestVersion"
+        },
+        "extensionId": {
+          "$ref": "#/$defs/ExtensionId"
+        },
+        "version": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "flavor": {
+          "$ref": "#/$defs/ExtensionFlavor"
+        },
+        "capabilityBindings": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityBinding"
+          }
+        },
+        "grants": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionGrant"
+          }
+        },
+        "entryPoints": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EntryPointDeclaration"
+          }
+        },
+        "contracts": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityContractReference"
+          }
+        },
+        "trustClass": {
+          "$ref": "#/$defs/ExtensionTrustClass"
+        },
+        "license": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9.+-]{0,63}$"
+        },
+        "dataHandling": {
+          "$ref": "#/$defs/ExtensionDataHandling"
+        },
+        "sideEffects": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionSideEffect"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "extensionId",
+        "version",
+        "displayName",
+        "flavor",
+        "capabilityBindings",
+        "grants",
+        "entryPoints",
+        "contracts",
+        "trustClass",
+        "license",
+        "dataHandling",
+        "sideEffects"
+      ],
+      "additionalProperties": false
+    },
+    "ExtensionManifestVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "ExtensionManifestVersion",
+      "description": "Version discriminator carried by every serialized extension manifest and registration (currently 1)."
+    },
+    "ExtensionId": {
+      "type": "string",
+      "pattern": "^extension:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ExtensionId",
+      "description": "Opaque, stable extension identity: \"extension:\" followed by a lowercase kebab slug."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "ExtensionFlavor": {
+      "type": "string",
+      "enum": [
+        "declarative",
+        "ui",
+        "wasm",
+        "remote"
+      ],
+      "title": "ExtensionFlavor",
+      "description": "Extension flavor: declarative manifest/schema, TypeScript/React UI (abstract typed declarations), Wasm Component Model, or remote service adapter."
+    },
+    "CapabilityBinding": {
+      "readOnly": true,
+      "title": "CapabilityBinding",
+      "description": "Capability binding: the opaque capability id and the version range this extension binds to (R18 — never a floating reference; the host resolves the concrete version).",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionRange": {
+          "$ref": "#/$defs/VersionConstraint"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "versionRange"
+      ],
+      "additionalProperties": false
+    },
+    "VersionConstraint": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "exact"
+            },
+            "version": {
+              "$ref": "#/$defs/SemverCore"
+            }
+          },
+          "required": [
+            "kind",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "caret"
+            },
+            "version": {
+              "$ref": "#/$defs/SemverCore"
+            }
+          },
+          "required": [
+            "kind",
+            "version"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "VersionConstraint",
+      "description": "Version constraint: an exact pin, or caret major-version compatibility (npm-caret semantics incl. the 0.x carve-outs)."
+    },
+    "ExtensionGrant": {
+      "readOnly": true,
+      "title": "ExtensionGrant",
+      "description": "Declared permission grant: capability-scoped host-function allow-list plus resource scopes; enforcement denies anything not explicitly granted.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "hostFunctions": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HostFunctionId"
+          }
+        },
+        "resourceScopes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResourceScope"
+          }
+        }
+      },
+      "required": [
+        "capabilityId",
+        "hostFunctions",
+        "resourceScopes"
+      ],
+      "additionalProperties": false
+    },
+    "HostFunctionId": {
+      "type": "string",
+      "enum": [
+        "capability.invoke",
+        "clock.read",
+        "evidence.append",
+        "log.write",
+        "storage.read",
+        "storage.write",
+        "world.read"
+      ],
+      "title": "HostFunctionId",
+      "description": "Host function id: capability.invoke, clock.read, evidence.append, log.write, storage.read, storage.write, or world.read."
+    },
+    "ResourceScope": {
+      "readOnly": true,
+      "title": "ResourceScope",
+      "description": "Typed resource scope: a legal (domain, access) pair a grant carries for host calls to be permitted. The v1 host surface offers no direct world mutation.",
+      "type": "object",
+      "properties": {
+        "resource": {
+          "$ref": "#/$defs/ResourceDomain"
+        },
+        "access": {
+          "$ref": "#/$defs/ResourceAccess"
+        }
+      },
+      "required": [
+        "resource",
+        "access"
+      ],
+      "additionalProperties": false
+    },
+    "ResourceDomain": {
+      "type": "string",
+      "enum": [
+        "world",
+        "evidence",
+        "storage",
+        "capability"
+      ],
+      "title": "ResourceDomain",
+      "description": "Resource domain a sandboxed extension can touch: world, evidence, storage, or capability."
+    },
+    "ResourceAccess": {
+      "type": "string",
+      "enum": [
+        "read",
+        "append",
+        "write",
+        "invoke"
+      ],
+      "title": "ResourceAccess",
+      "description": "Kind of access over a resource domain: read, append, write, or invoke."
+    },
+    "EntryPointDeclaration": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/DeclarativeEntryPoint"
+        },
+        {
+          "$ref": "#/$defs/UiEntryPoint"
+        },
+        {
+          "$ref": "#/$defs/WasmEntryPoint"
+        },
+        {
+          "$ref": "#/$defs/RemoteEntryPoint"
+        }
+      ],
+      "title": "EntryPointDeclaration",
+      "description": "One declared extension entry point: declarative, ui, wasm, or remote. The kind must match the manifest flavor (refinement-enforced)."
+    },
+    "DeclarativeEntryPoint": {
+      "readOnly": true,
+      "title": "DeclarativeEntryPoint",
+      "description": "Declarative entry point: a typed contribution declaration (world types, mappings, constraints, ...) with no executable content.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "declarative"
+        },
+        "name": {
+          "$ref": "#/$defs/EntryPointName"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "contributions": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ContributionKind"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "title",
+        "contributions"
+      ],
+      "additionalProperties": false
+    },
+    "EntryPointName": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$",
+      "title": "EntryPointName",
+      "description": "Entry-point name: a lowercase kebab slug, unique and sorted within a manifest."
+    },
+    "ContributionKind": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "animation",
+        "constraint",
+        "connector",
+        "evaluator",
+        "interaction",
+        "mapping",
+        "reconstruction",
+        "simulator",
+        "verification-method",
+        "visualization",
+        "workflow",
+        "world-type"
+      ],
+      "title": "ContributionKind",
+      "description": "Declarative contribution kind: world types, mappings, reconstructions, visualizations, animations, interactions, agents, constraints, simulators, evaluators, verification methods, workflows, connectors."
+    },
+    "UiEntryPoint": {
+      "readOnly": true,
+      "title": "UiEntryPoint",
+      "description": "UI entry point: abstract typed declaration of one render surface (kind + parameter specs). Rendering is the app layer (W014+); React is not a dependency here.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "ui"
+        },
+        "name": {
+          "$ref": "#/$defs/EntryPointName"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "surface": {
+          "$ref": "#/$defs/UiSurfaceKind"
+        },
+        "inputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        },
+        "outputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "title",
+        "surface",
+        "inputs",
+        "outputs"
+      ],
+      "additionalProperties": false
+    },
+    "UiSurfaceKind": {
+      "type": "string",
+      "enum": [
+        "inspector",
+        "overlay",
+        "panel"
+      ],
+      "title": "UiSurfaceKind",
+      "description": "Abstract render-surface kind of a ui entry point: inspector, overlay, or panel."
+    },
+    "ParameterSpec": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/ParameterKind"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "enumValues": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "required",
+        "description"
+      ],
+      "additionalProperties": false,
+      "title": "ParameterSpec",
+      "description": "Named capability parameter with value kind, optionality, and description."
+    },
+    "ParameterKind": {
+      "type": "string",
+      "enum": [
+        "integer",
+        "number",
+        "string",
+        "boolean",
+        "enum",
+        "entity-reference",
+        "json"
+      ],
+      "title": "ParameterKind",
+      "description": "Value kind of a capability parameter."
+    },
+    "WasmEntryPoint": {
+      "readOnly": true,
+      "title": "WasmEntryPoint",
+      "description": "Wasm entry point: embeds one Wasm Component Model descriptor (host-side machinery in runtimes/wasm).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "wasm"
+        },
+        "name": {
+          "$ref": "#/$defs/EntryPointName"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "component": {
+          "$ref": "#/$defs/WasmComponentDescriptor"
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "title",
+        "component"
+      ],
+      "additionalProperties": false
+    },
+    "WasmComponentDescriptor": {
+      "readOnly": true,
+      "title": "WasmComponentDescriptor",
+      "description": "Wasm Component Model descriptor: component identity, WIT world (imports/exports), and the canonical section layout with per-section digests. Zero vendored toolchains, zero binaries.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/WasmComponentDescriptorVersion"
+        },
+        "componentId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "componentVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "worldName": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "imports": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ComponentInterfaceDeclaration"
+          }
+        },
+        "exports": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ComponentInterfaceDeclaration"
+          }
+        },
+        "sections": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LayoutSection"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "componentId",
+        "componentVersion",
+        "worldName",
+        "imports",
+        "exports",
+        "sections"
+      ],
+      "additionalProperties": false
+    },
+    "WasmComponentDescriptorVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "WasmComponentDescriptorVersion",
+      "description": "Version discriminator carried by every serialized Wasm component descriptor (currently 1)."
+    },
+    "ComponentInterfaceDeclaration": {
+      "readOnly": true,
+      "title": "ComponentInterfaceDeclaration",
+      "description": "One import/export interface of a Wasm component world: WIT-style name (kebab or ns:kebab) and its sorted, duplicate-free function surface.",
+      "type": "object",
+      "properties": {
+        "interfaceName": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,62}(:[a-z][a-z0-9-]{0,62}(\\/[a-z][a-z0-9-]{0,62})?)?$"
+        },
+        "functions": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ComponentFunctionDeclaration"
+          }
+        }
+      },
+      "required": [
+        "interfaceName",
+        "functions"
+      ],
+      "additionalProperties": false
+    },
+    "ComponentFunctionDeclaration": {
+      "readOnly": true,
+      "title": "ComponentFunctionDeclaration",
+      "description": "One function of a Wasm component interface: kebab name, sorted parameters, optional result type.",
+      "type": "object",
+      "properties": {
+        "functionName": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "params": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WasmParamDeclaration"
+          }
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "bool",
+            "char",
+            "f32",
+            "f64",
+            "s16",
+            "s32",
+            "s64",
+            "s8",
+            "string",
+            "u16",
+            "u32",
+            "u64",
+            "u8"
+          ]
+        }
+      },
+      "required": [
+        "functionName",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "WasmParamDeclaration": {
+      "readOnly": true,
+      "title": "WasmParamDeclaration",
+      "description": "Wasm component parameter: kebab name plus WIT primitive type.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "bool",
+            "char",
+            "f32",
+            "f64",
+            "s16",
+            "s32",
+            "s64",
+            "s8",
+            "string",
+            "u16",
+            "u32",
+            "u64",
+            "u8"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "LayoutSection": {
+      "readOnly": true,
+      "title": "LayoutSection",
+      "description": "Canonical layout section: kebab name, kind (adapter/core-module/custom), byte size, and the SHA-256 content digest of the section bytes.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/WasmSectionKind"
+        },
+        "byteSize": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "byteSize",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "WasmSectionKind": {
+      "type": "string",
+      "enum": [
+        "adapter",
+        "core-module",
+        "custom"
+      ],
+      "title": "WasmSectionKind",
+      "description": "Canonical Wasm section kind: adapter, core-module, or custom."
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "RemoteEntryPoint": {
+      "readOnly": true,
+      "title": "RemoteEntryPoint",
+      "description": "Remote entry point: embeds one remote-service descriptor (typed shape only).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "remote"
+        },
+        "name": {
+          "$ref": "#/$defs/EntryPointName"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "service": {
+          "$ref": "#/$defs/RemoteServiceDescriptor"
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "title",
+        "service"
+      ],
+      "additionalProperties": false
+    },
+    "RemoteServiceDescriptor": {
+      "readOnly": true,
+      "title": "RemoteServiceDescriptor",
+      "description": "Remote-service descriptor: opaque service id, transport kind, the versioned contract it honors, and its operation surface. Endpoint binding is deployment configuration (W029), never contract content.",
+      "type": "object",
+      "properties": {
+        "serviceId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "transport": {
+          "$ref": "#/$defs/RemoteTransportKind"
+        },
+        "contract": {
+          "$ref": "#/$defs/CapabilityContractReference"
+        },
+        "operations": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RemoteOperationDeclaration"
+          }
+        }
+      },
+      "required": [
+        "serviceId",
+        "transport",
+        "contract",
+        "operations"
+      ],
+      "additionalProperties": false
+    },
+    "RemoteTransportKind": {
+      "type": "string",
+      "enum": [
+        "custom",
+        "grpc",
+        "http",
+        "mcp"
+      ],
+      "title": "RemoteTransportKind",
+      "description": "Remote-service transport kind: custom, grpc, http, or mcp (protocol roles, never vendors; no endpoint in the contract)."
+    },
+    "CapabilityContractReference": {
+      "readOnly": true,
+      "title": "CapabilityContractReference",
+      "description": "Reference to a versioned contract a capability honors: qualified contract id plus semver core version.",
+      "type": "object",
+      "properties": {
+        "contractId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "contractVersion": {
+          "$ref": "#/$defs/SemverCore"
+        }
+      },
+      "required": [
+        "contractId",
+        "contractVersion"
+      ],
+      "additionalProperties": false
+    },
+    "RemoteOperationDeclaration": {
+      "readOnly": true,
+      "title": "RemoteOperationDeclaration",
+      "description": "One declared remote operation: kebab name plus typed inputs/outputs (shared ParameterSpec shape).",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "inputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        },
+        "outputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "inputs",
+        "outputs"
+      ],
+      "additionalProperties": false
+    },
+    "ExtensionTrustClass": {
+      "type": "string",
+      "enum": [
+        "t0",
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "title": "ExtensionTrustClass",
+      "description": "Extension trust class: t0 untrusted/read-only, t1 provisional model population, t2 validated simulation/evaluation, t3 trusted reversible execution, t4 certified controlled autonomy."
+    },
+    "ExtensionDataHandling": {
+      "readOnly": true,
+      "title": "ExtensionDataHandling",
+      "description": "Data-handling declaration: sandbox-only, tenant-scoped, or external-transfer (external-transfer requires the remote flavor).",
+      "type": "object",
+      "properties": {
+        "classification": {
+          "$ref": "#/$defs/DataHandlingClassification"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "classification"
+      ],
+      "additionalProperties": false
+    },
+    "DataHandlingClassification": {
+      "type": "string",
+      "enum": [
+        "sandbox-only",
+        "tenant-scoped",
+        "external-transfer"
+      ],
+      "title": "DataHandlingClassification",
+      "description": "Data-handling classification: sandbox-only, tenant-scoped, or external-transfer."
+    },
+    "ExtensionSideEffect": {
+      "readOnly": true,
+      "title": "ExtensionSideEffect",
+      "description": "One declared side effect: kind plus description (empty list = declared purity).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/SideEffectKind"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "kind",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "SideEffectKind": {
+      "type": "string",
+      "enum": [
+        "action-proposal",
+        "evidence-append",
+        "external-effect",
+        "sandbox-state-write"
+      ],
+      "title": "SideEffectKind",
+      "description": "Side-effect kind: action-proposal, evidence-append, external-effect, or sandbox-state-write."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:extension-registration:1.0.0"
+}

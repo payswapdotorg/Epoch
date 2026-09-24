@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/StorageWriteResponse",
+  "$defs": {
+    "StorageWriteResponse": {
+      "readOnly": true,
+      "title": "StorageWriteResponse",
+      "description": "storage.write response (acknowledgement marker).",
+      "type": "object",
+      "properties": {
+        "written": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "written"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:storage-write-response:1.0.0"
+}

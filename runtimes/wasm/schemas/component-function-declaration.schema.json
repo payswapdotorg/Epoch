@@ -1,0 +1,84 @@
+{
+  "title": "ComponentFunctionDeclaration",
+  "description": "One function of a Wasm component interface: kebab name, sorted parameters, optional result type.",
+  "type": "object",
+  "properties": {
+    "functionName": {
+      "title": "functionName",
+      "description": "Kebab-case function name.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$"
+    },
+    "params": {
+      "title": "params",
+      "description": "Sorted, duplicate-free parameters.",
+      "type": "array",
+      "items": {
+        "title": "WasmParamDeclaration",
+        "description": "Wasm component parameter: kebab name plus WIT primitive type.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "name",
+            "description": "Kebab-case parameter name.",
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{0,63}$"
+          },
+          "type": {
+            "title": "WasmValueType",
+            "description": "WIT primitive value type: bool, char, f32, f64, s8..s64, string, or u8..u64.",
+            "type": "string",
+            "enum": [
+              "bool",
+              "char",
+              "f32",
+              "f64",
+              "s16",
+              "s32",
+              "s64",
+              "s8",
+              "string",
+              "u16",
+              "u32",
+              "u64",
+              "u8"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "result": {
+      "title": "WasmValueType",
+      "description": "WIT primitive value type: bool, char, f32, f64, s8..s64, string, or u8..u64.",
+      "type": "string",
+      "enum": [
+        "bool",
+        "char",
+        "f32",
+        "f64",
+        "s16",
+        "s32",
+        "s64",
+        "s8",
+        "string",
+        "u16",
+        "u32",
+        "u64",
+        "u8"
+      ]
+    }
+  },
+  "required": [
+    "functionName",
+    "params"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:epoch:wasm-layout:component-function-declaration:1.0.0"
+}

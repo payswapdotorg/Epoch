@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SandboxSurfaceDescription",
+  "$defs": {
+    "SandboxSurfaceDescription": {
+      "readOnly": true,
+      "title": "SandboxSurfaceDescription",
+      "description": "Deterministic execution-surface description: exactly what the admitted extension may do — its content address, resolved binding pins, and frozen grants (sorted everywhere).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/SandboxSurfaceDescriptionVersion"
+        },
+        "extensionId": {
+          "$ref": "#/$defs/ExtensionIdView"
+        },
+        "extensionVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "extensionManifestDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        },
+        "flavor": {
+          "type": "string",
+          "enum": [
+            "declarative",
+            "ui",
+            "wasm",
+            "remote"
+          ]
+        },
+        "trustClass": {
+          "type": "string",
+          "enum": [
+            "t0",
+            "t1",
+            "t2",
+            "t3",
+            "t4"
+          ]
+        },
+        "bindings": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResolvedCapabilityBinding"
+          }
+        },
+        "grants": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GrantDescription"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "extensionId",
+        "extensionVersion",
+        "extensionManifestDigest",
+        "flavor",
+        "trustClass",
+        "bindings",
+        "grants"
+      ],
+      "additionalProperties": false
+    },
+    "SandboxSurfaceDescriptionVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "SandboxSurfaceDescriptionVersion",
+      "description": "Version discriminator on sandbox surface descriptions (currently 1)."
+    },
+    "ExtensionIdView": {
+      "type": "string",
+      "pattern": "^extension:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ExtensionIdView",
+      "description": "Mirrored extension identity: \"extension:\" + lowercase kebab slug."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "ResolvedCapabilityBinding": {
+      "readOnly": true,
+      "title": "ResolvedCapabilityBinding",
+      "description": "A binding pin resolved at admission: capability id + version + manifest digest + the declared constraint.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "capabilityVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "capabilityManifestDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        },
+        "bindingConstraint": {
+          "$ref": "#/$defs/VersionConstraint"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "capabilityVersion",
+        "capabilityManifestDigest",
+        "bindingConstraint"
+      ],
+      "additionalProperties": false
+    },
+    "VersionConstraint": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "exact"
+            },
+            "version": {
+              "$ref": "#/$defs/SemverCore"
+            }
+          },
+          "required": [
+            "kind",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "caret"
+            },
+            "version": {
+              "$ref": "#/$defs/SemverCore"
+            }
+          },
+          "required": [
+            "kind",
+            "version"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "VersionConstraint",
+      "description": "Version constraint: an exact pin, or caret major-version compatibility (npm-caret semantics incl. the 0.x carve-outs)."
+    },
+    "GrantDescription": {
+      "readOnly": true,
+      "title": "GrantDescription",
+      "description": "One frozen grant in the sandbox surface description: capability-scoped host functions and resource scopes.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "hostFunctions": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HostFunctionIdView"
+          }
+        },
+        "resourceScopes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResourceScopeMirror"
+          }
+        }
+      },
+      "required": [
+        "capabilityId",
+        "hostFunctions",
+        "resourceScopes"
+      ],
+      "additionalProperties": false
+    },
+    "HostFunctionIdView": {
+      "type": "string",
+      "enum": [
+        "capability.invoke",
+        "clock.read",
+        "evidence.append",
+        "log.write",
+        "storage.read",
+        "storage.write",
+        "world.read"
+      ],
+      "title": "HostFunctionIdView",
+      "description": "Mirrored host function id (the narrow closed set)."
+    },
+    "ResourceScopeMirror": {
+      "readOnly": true,
+      "title": "ResourceScopeMirror",
+      "description": "Mirrored typed resource scope (legal domain/access pairs only).",
+      "type": "object",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "enum": [
+            "world",
+            "evidence",
+            "storage",
+            "capability"
+          ]
+        },
+        "access": {
+          "type": "string",
+          "enum": [
+            "read",
+            "append",
+            "write",
+            "invoke"
+          ]
+        }
+      },
+      "required": [
+        "resource",
+        "access"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:extension-runtime:sandbox-surface-description:1.0.0"
+}

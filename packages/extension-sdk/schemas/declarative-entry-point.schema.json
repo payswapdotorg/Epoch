@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DeclarativeEntryPoint",
+  "$defs": {
+    "DeclarativeEntryPoint": {
+      "readOnly": true,
+      "title": "DeclarativeEntryPoint",
+      "description": "Declarative entry point: a typed contribution declaration (world types, mappings, constraints, ...) with no executable content.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "declarative"
+        },
+        "name": {
+          "$ref": "#/$defs/EntryPointName"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "contributions": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ContributionKind"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "title",
+        "contributions"
+      ],
+      "additionalProperties": false
+    },
+    "EntryPointName": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$",
+      "title": "EntryPointName",
+      "description": "Entry-point name: a lowercase kebab slug, unique and sorted within a manifest."
+    },
+    "ContributionKind": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "animation",
+        "constraint",
+        "connector",
+        "evaluator",
+        "interaction",
+        "mapping",
+        "reconstruction",
+        "simulator",
+        "verification-method",
+        "visualization",
+        "workflow",
+        "world-type"
+      ],
+      "title": "ContributionKind",
+      "description": "Declarative contribution kind: world types, mappings, reconstructions, visualizations, animations, interactions, agents, constraints, simulators, evaluators, verification methods, workflows, connectors."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:declarative-entry-point:1.0.0"
+}

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/HostInvocationOutcome",
+  "$defs": {
+    "HostInvocationOutcome": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "completed"
+            },
+            "response": {
+              "$ref": "#/$defs/JsonValue"
+            }
+          },
+          "required": [
+            "status",
+            "response"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "failed"
+            },
+            "code": {
+              "$ref": "#/$defs/HostExecutionFailureCode"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            }
+          },
+          "required": [
+            "status",
+            "code",
+            "message"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "HostInvocationOutcome",
+      "description": "The outcome of one permitted host call: a completed JSON response, or a failed execution with a neutral failure code (invocation outcomes, never boundary errors)."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "HostExecutionFailureCode": {
+      "type": "string",
+      "enum": [
+        "handler-error",
+        "handler-unavailable"
+      ],
+      "title": "HostExecutionFailureCode",
+      "description": "Neutral host-execution failure code: handler-error or handler-unavailable (invocation outcomes, never boundary errors)."
+    }
+  },
+  "$id": "urn:epoch:extension-runtime:host-invocation-outcome:1.0.0"
+}

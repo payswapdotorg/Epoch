@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExtensionId",
+  "$defs": {
+    "ExtensionId": {
+      "type": "string",
+      "pattern": "^extension:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ExtensionId",
+      "description": "Opaque, stable extension identity: \"extension:\" followed by a lowercase kebab slug."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:extension-id:1.0.0"
+}

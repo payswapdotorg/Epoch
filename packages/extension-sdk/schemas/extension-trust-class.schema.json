@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExtensionTrustClass",
+  "$defs": {
+    "ExtensionTrustClass": {
+      "type": "string",
+      "enum": [
+        "t0",
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "title": "ExtensionTrustClass",
+      "description": "Extension trust class: t0 untrusted/read-only, t1 provisional model population, t2 validated simulation/evaluation, t3 trusted reversible execution, t4 certified controlled autonomy."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:extension-trust-class:1.0.0"
+}

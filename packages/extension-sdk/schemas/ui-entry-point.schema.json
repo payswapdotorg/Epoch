@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/UiEntryPoint",
+  "$defs": {
+    "UiEntryPoint": {
+      "readOnly": true,
+      "title": "UiEntryPoint",
+      "description": "UI entry point: abstract typed declaration of one render surface (kind + parameter specs). Rendering is the app layer (W014+); React is not a dependency here.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "ui"
+        },
+        "name": {
+          "$ref": "#/$defs/EntryPointName"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "surface": {
+          "$ref": "#/$defs/UiSurfaceKind"
+        },
+        "inputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        },
+        "outputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "title",
+        "surface",
+        "inputs",
+        "outputs"
+      ],
+      "additionalProperties": false
+    },
+    "EntryPointName": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$",
+      "title": "EntryPointName",
+      "description": "Entry-point name: a lowercase kebab slug, unique and sorted within a manifest."
+    },
+    "UiSurfaceKind": {
+      "type": "string",
+      "enum": [
+        "inspector",
+        "overlay",
+        "panel"
+      ],
+      "title": "UiSurfaceKind",
+      "description": "Abstract render-surface kind of a ui entry point: inspector, overlay, or panel."
+    },
+    "ParameterSpec": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/ParameterKind"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "enumValues": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "required",
+        "description"
+      ],
+      "additionalProperties": false,
+      "title": "ParameterSpec",
+      "description": "Named capability parameter with value kind, optionality, and description."
+    },
+    "ParameterKind": {
+      "type": "string",
+      "enum": [
+        "integer",
+        "number",
+        "string",
+        "boolean",
+        "enum",
+        "entity-reference",
+        "json"
+      ],
+      "title": "ParameterKind",
+      "description": "Value kind of a capability parameter."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:ui-entry-point:1.0.0"
+}

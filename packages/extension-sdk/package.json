@@ -1,0 +1,31 @@
+{
+  "name": "@epoch/extension-sdk",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Extension SDK kernel — typed, provider-neutral authoring contracts for Epoch extensions: declarative manifests across the four extension flavors (declarative, ui, wasm, remote), capability-scoped permission grants with trust-class ceilings, the typed host-function contract surface, extension lifecycle vocabulary, a typed error taxonomy, and deterministic content-addressed serialization (W008).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

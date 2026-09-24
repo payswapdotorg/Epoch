@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExtensionSideEffect",
+  "$defs": {
+    "ExtensionSideEffect": {
+      "readOnly": true,
+      "title": "ExtensionSideEffect",
+      "description": "One declared side effect: kind plus description (empty list = declared purity).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/SideEffectKind"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "kind",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "SideEffectKind": {
+      "type": "string",
+      "enum": [
+        "action-proposal",
+        "evidence-append",
+        "external-effect",
+        "sandbox-state-write"
+      ],
+      "title": "SideEffectKind",
+      "description": "Side-effect kind: action-proposal, evidence-append, external-effect, or sandbox-state-write."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:extension-side-effect:1.0.0"
+}

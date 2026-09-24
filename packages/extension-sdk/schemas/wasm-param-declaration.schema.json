@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WasmParamDeclaration",
+  "$defs": {
+    "WasmParamDeclaration": {
+      "readOnly": true,
+      "title": "WasmParamDeclaration",
+      "description": "Wasm component parameter: kebab name plus WIT primitive type.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "bool",
+            "char",
+            "f32",
+            "f64",
+            "s16",
+            "s32",
+            "s64",
+            "s8",
+            "string",
+            "u16",
+            "u32",
+            "u64",
+            "u8"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:wasm-param-declaration:1.0.0"
+}

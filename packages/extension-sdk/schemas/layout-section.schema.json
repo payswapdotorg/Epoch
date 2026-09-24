@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LayoutSection",
+  "$defs": {
+    "LayoutSection": {
+      "readOnly": true,
+      "title": "LayoutSection",
+      "description": "Canonical layout section: kebab name, kind (adapter/core-module/custom), byte size, and the SHA-256 content digest of the section bytes.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/WasmSectionKind"
+        },
+        "byteSize": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "byteSize",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "WasmSectionKind": {
+      "type": "string",
+      "enum": [
+        "adapter",
+        "core-module",
+        "custom"
+      ],
+      "title": "WasmSectionKind",
+      "description": "Canonical Wasm section kind: adapter, core-module, or custom."
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:layout-section:1.0.0"
+}

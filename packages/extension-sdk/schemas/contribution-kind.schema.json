@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ContributionKind",
+  "$defs": {
+    "ContributionKind": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "animation",
+        "constraint",
+        "connector",
+        "evaluator",
+        "interaction",
+        "mapping",
+        "reconstruction",
+        "simulator",
+        "verification-method",
+        "visualization",
+        "workflow",
+        "world-type"
+      ],
+      "title": "ContributionKind",
+      "description": "Declarative contribution kind: world types, mappings, reconstructions, visualizations, animations, interactions, agents, constraints, simulators, evaluators, verification methods, workflows, connectors."
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:contribution-kind:1.0.0"
+}

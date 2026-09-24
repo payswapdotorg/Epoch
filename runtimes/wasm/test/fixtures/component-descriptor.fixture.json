@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "componentId": "engineering.stress-visualizer",
+  "componentVersion": "1.0.0",
+  "worldName": "stress-view",
+  "imports": [
+    {
+      "interfaceName": "epoch:world/reader",
+      "functions": [
+        {
+          "functionName": "read-entity",
+          "params": [
+            {
+              "name": "entity-ref",
+              "type": "string"
+            }
+          ],
+          "result": "string"
+        }
+      ]
+    }
+  ],
+  "exports": [
+    {
+      "interfaceName": "epoch:view/renderer",
+      "functions": [
+        {
+          "functionName": "render-frame",
+          "params": [],
+          "result": "string"
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "name": "adapter-locale",
+      "kind": "adapter",
+      "byteSize": 512,
+      "contentDigest": "f82f30f8148bb5fa89b71fa574264ecce142701fb161e90600eeab570728b876"
+    },
+    {
+      "name": "core-module-main",
+      "kind": "core-module",
+      "byteSize": 4096,
+      "contentDigest": "855059e1ccdaf6e3caba823bb74d60edf2b64d52d8decc0d8a3cb7ec35e16915"
+    },
+    {
+      "name": "custom-metadata",
+      "kind": "custom",
+      "byteSize": 96,
+      "contentDigest": "e1c2f2ce75c949b9814302da6b575b8282a9f874d83d6a62ca907984edc9ec84"
+    }
+  ]
+}

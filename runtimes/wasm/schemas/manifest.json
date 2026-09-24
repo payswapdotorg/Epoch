@@ -1,0 +1,54 @@
+{
+  "contract": "epoch/wasm-layout",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Wasm Component Model HOST-side layout contract surface (W008): canonical component layout descriptor, interface/function/parameter declarations, and canonical sections with content digests. JSON Schema projection under schemas/; runtime validation machinery in runtimes/wasm (self-contained, zero imports). Author-side surface: @epoch/extension-sdk; shape compatibility pinned by the shared committed fixture under runtimes/wasm/test/fixtures/.",
+  "dataTypes": [
+    "ComponentFunctionDeclaration",
+    "ComponentInterfaceDeclaration",
+    "ComponentLayoutDescriptor",
+    "LayoutSection",
+    "WasmParamDeclaration",
+    "WasmSectionKind",
+    "WasmValueType"
+  ],
+  "jsonSchemaFidelity": "structural-only: the canonical-ordering semantic layer (sorted + duplicate-free arrays) is enforced by the runtime validator in runtimes/wasm/src/validate.ts and is not represented in the JSON Schema files",
+  "emittedBy": "renderWasmLayoutContractFiles() in runtimes/wasm (rule-table render, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "ComponentFunctionDeclaration",
+      "file": "component-function-declaration.schema.json",
+      "sha256": "f0d30379bcfaa69c24c9f7e100b00a4b00b617be1a95afcfd71a69f842a4f47e"
+    },
+    {
+      "type": "ComponentInterfaceDeclaration",
+      "file": "component-interface-declaration.schema.json",
+      "sha256": "00218d8afdaf12008b5ed90de314f51868a17dd76c4a6110c600d38191b231f2"
+    },
+    {
+      "type": "ComponentLayoutDescriptor",
+      "file": "component-layout-descriptor.schema.json",
+      "sha256": "44c86cd30436584d2dfabc3eab66ce37062c9881ccce6769c4abb5edaad4b6a3"
+    },
+    {
+      "type": "LayoutSection",
+      "file": "layout-section.schema.json",
+      "sha256": "805a289fd7108cb603edc1721abbd6a1df8f919d80d04385c31ac384276fc08f"
+    },
+    {
+      "type": "WasmParamDeclaration",
+      "file": "wasm-param-declaration.schema.json",
+      "sha256": "405142cc6210f95960e4d851077d7a8a85984fb80b2849d272509c6ad4edf3e6"
+    },
+    {
+      "type": "WasmSectionKind",
+      "file": "wasm-section-kind.schema.json",
+      "sha256": "f67fb807941f99697285013b4961d25df35cb867eae8c80f12f9118f109ad298"
+    },
+    {
+      "type": "WasmValueType",
+      "file": "wasm-value-type.schema.json",
+      "sha256": "bf947a90ea4f82336379190bb53a2f0e2865f489e0e14309aa75e75076830ffe"
+    }
+  ]
+}

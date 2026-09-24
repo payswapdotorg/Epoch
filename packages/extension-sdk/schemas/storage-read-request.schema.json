@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/StorageReadRequest",
+  "$defs": {
+    "StorageReadRequest": {
+      "readOnly": true,
+      "title": "StorageReadRequest",
+      "description": "storage.read request: the extension-scoped storage key.",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:extension-sdk:storage-read-request:1.0.0"
+}
