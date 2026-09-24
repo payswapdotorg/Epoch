@@ -1,5 +1,5 @@
 # W007 — Capability Registry + Adapter SDK
-Status: READY_AFTER_DEPENDENCIES
+Status: AUTHORIZED (wave 3; dispatch base recorded in the live dispatch issue)
 Depends On: W003,W005,W006
 Worker Count: 1
 

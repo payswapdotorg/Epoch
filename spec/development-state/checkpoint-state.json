@@ -1,1 +1,5 @@
-{"baselineSha": "63a7469f125f79dc5125061f0166ae466d411b78", "status": "W002_W003_W004_COMPLETE", "next": "W005/W006 concurrent wave (W007 unlocks after both)"}
+{
+ "baselineSha": "46f0091713ac688eb8294a45358098f0846f10ae",
+ "status": "W005_W006_COMPLETE",
+ "next": "W007 single-worker wave 3 (W008/W009/W010/W011 unlock after W007)"
+}
