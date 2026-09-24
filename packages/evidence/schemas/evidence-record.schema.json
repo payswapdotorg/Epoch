@@ -1,0 +1,324 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:evidence:evidence-record",
+  "$defs": {
+    "urn:epoch:evidence:evidence-record": {
+      "readOnly": true,
+      "title": "EvidenceRecord",
+      "description": "Exact-revision, content-addressed evidence record with producer reference and confidence/uncertainty.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:evidence:record-version"
+        },
+        "kind": {
+          "$ref": "#/$defs/urn:epoch:evidence:evidence-kind"
+        },
+        "subject": {
+          "$ref": "#/$defs/urn:epoch:evidence:exact-revision-ref"
+        },
+        "producedBy": {
+          "$ref": "#/$defs/urn:epoch:evidence:evidence-production"
+        },
+        "observedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "content": {
+          "$ref": "#/$defs/urn:epoch:evidence:evidence-payload"
+        },
+        "confidence": {
+          "$ref": "#/$defs/urn:epoch:evidence:confidence"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "kind",
+        "subject",
+        "producedBy",
+        "observedAt",
+        "content",
+        "confidence"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:evidence:record-version": {
+      "type": "number",
+      "const": 1,
+      "title": "EvidenceRecordVersion",
+      "description": "Version discriminator carried by every serialized evidence record (currently 1)."
+    },
+    "urn:epoch:evidence:evidence-kind": {
+      "type": "string",
+      "enum": [
+        "document",
+        "measurement",
+        "observation",
+        "computation",
+        "assertion",
+        "external",
+        "other"
+      ],
+      "title": "EvidenceKind",
+      "description": "Kind of evidence: document, measurement, observation, computation, assertion, external, other."
+    },
+    "urn:epoch:evidence:exact-revision-ref": {
+      "readOnly": true,
+      "title": "ExactRevisionRef",
+      "description": "Reference to the exact artifact revision: opaque artifact id, revision label, and SHA-256 content digest.",
+      "type": "object",
+      "properties": {
+        "artifactId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "digest": {
+          "$ref": "#/$defs/urn:epoch:evidence:sha256-digest"
+        }
+      },
+      "required": [
+        "artifactId",
+        "revision",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:evidence:sha256-digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "urn:epoch:evidence:evidence-production": {
+      "readOnly": true,
+      "title": "EvidenceProduction",
+      "description": "Opaque identifiers of the run, executing actor, and (optional) method that produced the evidence.",
+      "type": "object",
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actorId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "methodId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "runId",
+        "actorId"
+      ],
+      "additionalProperties": false
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "urn:epoch:evidence:evidence-payload": {
+      "readOnly": true,
+      "title": "EvidencePayload",
+      "description": "JSON-representable payload plus media type and optional out-of-band locator.",
+      "type": "object",
+      "properties": {
+        "mediaType": {
+          "type": "string",
+          "maxLength": 255,
+          "pattern": "^[a-z0-9][a-z0-9!#$&^_.+-]{0,126}\\/[a-z0-9][a-z0-9!#$&^_.+-]{0,126}$"
+        },
+        "data": {
+          "$ref": "#/$defs/JsonValue"
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "mediaType",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "urn:epoch:evidence:confidence": {
+      "readOnly": true,
+      "title": "Confidence",
+      "description": "Uncertainty attached to an evidence record: distribution, acquisition method, rationale.",
+      "type": "object",
+      "properties": {
+        "distribution": {
+          "$ref": "#/$defs/urn:epoch:evidence:confidence-distribution"
+        },
+        "method": {
+          "$ref": "#/$defs/urn:epoch:evidence:confidence-method"
+        },
+        "rationale": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "distribution"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:evidence:confidence-distribution": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "point"
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "interval"
+            },
+            "lower": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "upper": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "bias": {
+              "$ref": "#/$defs/urn:epoch:evidence:interval-bias"
+            }
+          },
+          "required": [
+            "kind",
+            "lower",
+            "upper"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "set"
+            },
+            "values": {
+              "readOnly": true,
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "weights": {
+              "readOnly": true,
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "values"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ConfidenceDistribution",
+      "description": "Bounded [0,1] uncertainty distribution: point, interval, or weighted set (W002-aligned)."
+    },
+    "urn:epoch:evidence:interval-bias": {
+      "type": "string",
+      "enum": [
+        "none",
+        "low",
+        "high"
+      ],
+      "title": "IntervalBias",
+      "description": "Directional bias admitted for interval confidence estimates: none, low, high."
+    },
+    "urn:epoch:evidence:confidence-method": {
+      "type": "string",
+      "enum": [
+        "stated",
+        "measured",
+        "estimated",
+        "derived",
+        "imported"
+      ],
+      "title": "ConfidenceMethod",
+      "description": "How a confidence figure was obtained: stated, measured, estimated, derived, imported."
+    }
+  },
+  "$id": "urn:epoch:evidence:evidence-record:1.0.0"
+}

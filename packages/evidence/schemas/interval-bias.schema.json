@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:evidence:interval-bias",
+  "$defs": {
+    "urn:epoch:evidence:interval-bias": {
+      "type": "string",
+      "enum": [
+        "none",
+        "low",
+        "high"
+      ],
+      "title": "IntervalBias",
+      "description": "Directional bias admitted for interval confidence estimates: none, low, high."
+    }
+  },
+  "$id": "urn:epoch:evidence:interval-bias:1.0.0"
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:evidence:exact-revision-ref",
+  "$defs": {
+    "urn:epoch:evidence:exact-revision-ref": {
+      "readOnly": true,
+      "title": "ExactRevisionRef",
+      "description": "Reference to the exact artifact revision: opaque artifact id, revision label, and SHA-256 content digest.",
+      "type": "object",
+      "properties": {
+        "artifactId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "digest": {
+          "$ref": "#/$defs/urn:epoch:evidence:sha256-digest"
+        }
+      },
+      "required": [
+        "artifactId",
+        "revision",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:evidence:sha256-digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:evidence:exact-revision-ref:1.0.0"
+}

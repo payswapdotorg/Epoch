@@ -1,0 +1,78 @@
+{
+  "contract": "epoch/evidence",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Evidence contract surface (W006): exact-revision, content-addressed evidence records with W002-aligned confidence. JSON Schema projection under schemas/; runtime validators in @epoch/evidence.",
+  "dataTypes": [
+    "Confidence",
+    "ConfidenceDistribution",
+    "ConfidenceMethod",
+    "EvidenceKind",
+    "EvidencePayload",
+    "EvidenceProduction",
+    "EvidenceRecord",
+    "EvidenceRecordVersion",
+    "ExactRevisionRef",
+    "IntervalBias",
+    "Sha256Digest"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/evidence and are not represented in the JSON Schema files",
+  "emittedBy": "renderEvidenceContractFiles() in @epoch/evidence (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "Confidence",
+      "file": "confidence.schema.json",
+      "sha256": "4dec4e186281777d43ea2c6a263eda1ed80514367a39f6ae2da5a9a9b3ef8728"
+    },
+    {
+      "type": "ConfidenceDistribution",
+      "file": "confidence-distribution.schema.json",
+      "sha256": "02d9c50cc8aa21cea84733209969308917c4537dc35424fe1fc1ad4b3b129456"
+    },
+    {
+      "type": "ConfidenceMethod",
+      "file": "confidence-method.schema.json",
+      "sha256": "28d39b27e4fa81e2c8ee7d6ea2cc9eab1a785facf380607101d56880f310d4be"
+    },
+    {
+      "type": "EvidenceKind",
+      "file": "evidence-kind.schema.json",
+      "sha256": "84eb85303ed76dbfb150d28284576a04c04d058030c4844283a4b1ffbc7f75f3"
+    },
+    {
+      "type": "EvidencePayload",
+      "file": "evidence-payload.schema.json",
+      "sha256": "9bda2fb1e1907ba08cb8a9e285247987123c4e3731845951da3fc9429db1f159"
+    },
+    {
+      "type": "EvidenceProduction",
+      "file": "evidence-production.schema.json",
+      "sha256": "4cb908bc898be740e45dfedd82e06e3e7067179f198f858113dcdb865887f663"
+    },
+    {
+      "type": "EvidenceRecord",
+      "file": "evidence-record.schema.json",
+      "sha256": "c6798765699357f89d01278252900ee5c3c1e919aa5de58f3d8b37ed7488f1fb"
+    },
+    {
+      "type": "EvidenceRecordVersion",
+      "file": "evidence-record-version.schema.json",
+      "sha256": "19be0d8b49364f9b3e662b705c3c7b553c7bcd1dc0392956bc494f907f316caa"
+    },
+    {
+      "type": "ExactRevisionRef",
+      "file": "exact-revision-ref.schema.json",
+      "sha256": "1901bcab738f5a49660afebe2e068b72b41ac9e8f66980f3faa1bcd1a38684c4"
+    },
+    {
+      "type": "IntervalBias",
+      "file": "interval-bias.schema.json",
+      "sha256": "a337e2b487342298c859c45eba393ea26bebfb9c97b72344dfe86eb0873f2b30"
+    },
+    {
+      "type": "Sha256Digest",
+      "file": "sha256-digest.schema.json",
+      "sha256": "6658abf49eec3fb7bed7a040f4f1c2abab495fe45e0189865f22a1b22107b6b1"
+    }
+  ]
+}

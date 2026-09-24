@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:evidence:evidence-kind",
+  "$defs": {
+    "urn:epoch:evidence:evidence-kind": {
+      "type": "string",
+      "enum": [
+        "document",
+        "measurement",
+        "observation",
+        "computation",
+        "assertion",
+        "external",
+        "other"
+      ],
+      "title": "EvidenceKind",
+      "description": "Kind of evidence: document, measurement, observation, computation, assertion, external, other."
+    }
+  },
+  "$id": "urn:epoch:evidence:evidence-kind:1.0.0"
+}

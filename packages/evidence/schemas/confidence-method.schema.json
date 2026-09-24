@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:evidence:confidence-method",
+  "$defs": {
+    "urn:epoch:evidence:confidence-method": {
+      "type": "string",
+      "enum": [
+        "stated",
+        "measured",
+        "estimated",
+        "derived",
+        "imported"
+      ],
+      "title": "ConfidenceMethod",
+      "description": "How a confidence figure was obtained: stated, measured, estimated, derived, imported."
+    }
+  },
+  "$id": "urn:epoch:evidence:confidence-method:1.0.0"
+}
