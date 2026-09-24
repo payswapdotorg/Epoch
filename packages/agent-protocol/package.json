@@ -1,0 +1,29 @@
+{
+  "name": "@epoch/agent-protocol",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Agent Protocol v1 — provider-neutral agent registration, capability/tool declarations, and shared protocol primitives (kernel layer).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

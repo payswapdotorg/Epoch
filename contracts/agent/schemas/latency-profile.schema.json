@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LatencyProfile",
+  "$defs": {
+    "LatencyProfile": {
+      "type": "object",
+      "properties": {
+        "p50Milliseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "p95Milliseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "p50Milliseconds",
+        "p95Milliseconds"
+      ],
+      "additionalProperties": false,
+      "title": "LatencyProfile",
+      "description": "Whole-millisecond latency profile with p50/p95 percentiles (p95 >= p50)."
+    }
+  }
+}

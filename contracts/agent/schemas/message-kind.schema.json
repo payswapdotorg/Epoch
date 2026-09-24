@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/MessageKind",
+  "$defs": {
+    "MessageKind": {
+      "type": "string",
+      "enum": [
+        "agent.registration"
+      ],
+      "title": "MessageKind",
+      "description": "Discriminating message kind for agent-protocol messages."
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ReversibilityClassification",
+  "$defs": {
+    "ReversibilityClassification": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "reversible"
+            },
+            "via": {
+              "type": "string",
+              "enum": [
+                "automatic",
+                "manual",
+                "compensating-action"
+              ]
+            },
+            "notes": {
+              "type": "string",
+              "maxLength": 2000
+            }
+          },
+          "required": [
+            "kind",
+            "via"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "partially-reversible"
+            },
+            "notes": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            }
+          },
+          "required": [
+            "kind",
+            "notes"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "irreversible"
+            },
+            "notes": {
+              "type": "string",
+              "maxLength": 2000
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ReversibilityClassification",
+      "description": "Exhaustive reversibility classification: reversible (via automatic/manual/compensating action), partially reversible, or irreversible."
+    }
+  }
+}

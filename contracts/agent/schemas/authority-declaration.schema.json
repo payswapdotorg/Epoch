@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuthorityDeclaration",
+  "$defs": {
+    "AuthorityDeclaration": {
+      "type": "object",
+      "properties": {
+        "executionAuthority": {
+          "type": "string",
+          "const": "none"
+        },
+        "proposableActionTypes": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/QualifiedTypeReference"
+          }
+        },
+        "requiresHumanCosign": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "executionAuthority",
+        "proposableActionTypes",
+        "requiresHumanCosign"
+      ],
+      "additionalProperties": false,
+      "title": "AuthorityDeclaration",
+      "description": "Proposal-scoped authority: action types the agent may propose. Execution authority is structurally \"none\" — only the Action Gateway authorizes execution."
+    },
+    "QualifiedTypeReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "QualifiedTypeReference",
+      "description": "Reference to a versioned, protocol-defined type: dot-namespaced id plus semver core version."
+    }
+  }
+}

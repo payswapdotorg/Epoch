@@ -1,0 +1,123 @@
+{
+  "contract": "epoch/agent",
+  "contractVersion": "1.0.0",
+  "protocolVersion": "1.0.0",
+  "description": "Typed, versioned, provider-neutral Agent Protocol contract surface (W003). TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "dataTypes": [
+    "AgentId",
+    "AgentRegistration",
+    "AuthorityDeclaration",
+    "CapabilityDeclaration",
+    "CostProfile",
+    "EvidenceRequirements",
+    "Executor",
+    "ExecutorKind",
+    "JsonValue",
+    "LatencyProfile",
+    "MessageId",
+    "MessageKind",
+    "ParameterKind",
+    "ParameterSpec",
+    "ProtocolVersion",
+    "QualifiedTypeReference",
+    "Timestamp",
+    "ToolDeclaration"
+  ],
+  "messageKinds": [
+    "agent.registration"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/agent-protocol and are not represented in the JSON Schema files",
+  "emittedBy": "renderAgentContractFiles() in @epoch/agent-protocol (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "AgentId",
+      "file": "schemas/agent-id.schema.json",
+      "sha256": "3c290278c0be0b9241055a566ff15b65ba35d3856ac0b94409a4a6403ed8fb15"
+    },
+    {
+      "type": "AgentRegistration",
+      "file": "schemas/agent-registration.schema.json",
+      "sha256": "2f6fca259e8b23c4097bc8426ec9551aca2995dca87b6e75eaccaf1a793c4972"
+    },
+    {
+      "type": "AuthorityDeclaration",
+      "file": "schemas/authority-declaration.schema.json",
+      "sha256": "1023266ac5875bf51219e39aa69aebd4190be63b4e7ca56359ac554b56b4663e"
+    },
+    {
+      "type": "CapabilityDeclaration",
+      "file": "schemas/capability-declaration.schema.json",
+      "sha256": "09ba0dcbeeed7e269670891b294af5d7b54626e0ec406d63416d8a681284168e"
+    },
+    {
+      "type": "CostProfile",
+      "file": "schemas/cost-profile.schema.json",
+      "sha256": "e6395c3a419a2db3632b6241b4f909aa1177e68d3ab8b9621e23183179fc0837"
+    },
+    {
+      "type": "EvidenceRequirements",
+      "file": "schemas/evidence-requirements.schema.json",
+      "sha256": "2fd13e5fb29bcf51369e7368f5b293321e91b87d0079fd2b549a4b71797f0177"
+    },
+    {
+      "type": "Executor",
+      "file": "schemas/executor.schema.json",
+      "sha256": "f6587b76492b5bfcd34f0e3e10c2fcefa1c266a5d4ef5b6360ccee8ad322077f"
+    },
+    {
+      "type": "ExecutorKind",
+      "file": "schemas/executor-kind.schema.json",
+      "sha256": "ce5b06cccd537fd3113b39cc648f8804e57fbf5228367e6625b3810b076bd68c"
+    },
+    {
+      "type": "JsonValue",
+      "file": "schemas/json-value.schema.json",
+      "sha256": "e86b542ab6661915fe8468e70a075c2797e34a62fcdbdcb2ef6ffb8b7225a41e"
+    },
+    {
+      "type": "LatencyProfile",
+      "file": "schemas/latency-profile.schema.json",
+      "sha256": "d3698bdcde9830b8bbb04b088c84a354a5f3f17174d48366d061afa33f6b4b8a"
+    },
+    {
+      "type": "MessageId",
+      "file": "schemas/message-id.schema.json",
+      "sha256": "a75bd140b71ad4947c9e0d5f3c7fa59d9bfe9dc6dd275ebdded77c4059c0e09b"
+    },
+    {
+      "type": "MessageKind",
+      "file": "schemas/message-kind.schema.json",
+      "sha256": "b4498c043f7ba4bfb61a5d7297e50d9b04edc2eaa0ec934141ca612dcb7a3ad0"
+    },
+    {
+      "type": "ParameterKind",
+      "file": "schemas/parameter-kind.schema.json",
+      "sha256": "1579bd661bccaa4c075b312c4f0e40579c4dfdfa6036baf545b37bab5a0d7244"
+    },
+    {
+      "type": "ParameterSpec",
+      "file": "schemas/parameter-spec.schema.json",
+      "sha256": "4b3b9ab44b84cd4046381dd6a2cb7769626eef50f24a1e6c65ac6a314946a89c"
+    },
+    {
+      "type": "ProtocolVersion",
+      "file": "schemas/protocol-version.schema.json",
+      "sha256": "493cf963ebddf6b9f4bb7a028613b3409166eae45bc9f810fdf3c8f2642a7a36"
+    },
+    {
+      "type": "QualifiedTypeReference",
+      "file": "schemas/qualified-type-reference.schema.json",
+      "sha256": "a012687855d87b2766c38d510350601d08b19a54e21acb594433fb92b5ee5a57"
+    },
+    {
+      "type": "Timestamp",
+      "file": "schemas/timestamp.schema.json",
+      "sha256": "ca855e30e8ed041ea25bd542c8bd3955844f0b5c0d1c877393bf66a4fac20beb"
+    },
+    {
+      "type": "ToolDeclaration",
+      "file": "schemas/tool-declaration.schema.json",
+      "sha256": "33b48a99172e90ba1788aa2b671b9840169abedeff8f82f0b650e0bffb272e56"
+    }
+  ]
+}

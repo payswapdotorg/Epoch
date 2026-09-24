@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ActionTargetKind",
+  "$defs": {
+    "ActionTargetKind": {
+      "type": "string",
+      "enum": [
+        "world-entity",
+        "world-relation",
+        "world-assertion",
+        "external-resource"
+      ],
+      "title": "ActionTargetKind",
+      "description": "What a proposed intervention acts upon (world model objects or external resources)."
+    }
+  }
+}

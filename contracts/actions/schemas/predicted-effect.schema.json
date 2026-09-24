@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PredictedEffect",
+  "$defs": {
+    "PredictedEffect": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "targetRef": {
+          "$ref": "#/$defs/ActionTarget"
+        },
+        "confidence": {
+          "$ref": "#/$defs/EffectConfidence"
+        }
+      },
+      "required": [
+        "description",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "title": "PredictedEffect",
+      "description": "A predicted primary effect with an exhaustive confidence classification."
+    },
+    "ActionTarget": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/ActionTargetKind"
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "additionalProperties": false,
+      "title": "ActionTarget",
+      "description": "What a proposed intervention acts upon: a world entity/relation/assertion or an external resource."
+    },
+    "ActionTargetKind": {
+      "type": "string",
+      "enum": [
+        "world-entity",
+        "world-relation",
+        "world-assertion",
+        "external-resource"
+      ],
+      "title": "ActionTargetKind",
+      "description": "What a proposed intervention acts upon (world model objects or external resources)."
+    },
+    "EffectConfidence": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "deterministic"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "quantified"
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "qualitative"
+            },
+            "level": {
+              "type": "string",
+              "enum": [
+                "high",
+                "medium",
+                "low"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "level"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "EffectConfidence",
+      "description": "Deterministic, quantified [0,1], or qualitative confidence in a predicted effect."
+    }
+  }
+}

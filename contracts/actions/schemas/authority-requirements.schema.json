@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuthorityRequirements",
+  "$defs": {
+    "AuthorityRequirements": {
+      "type": "object",
+      "properties": {
+        "requiredScopes": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AuthorityScope"
+          }
+        },
+        "requiresHumanApproval": {
+          "type": "boolean"
+        },
+        "approvalQuorum": {
+          "$ref": "#/$defs/ApprovalQuorum"
+        }
+      },
+      "required": [
+        "requiredScopes",
+        "requiresHumanApproval"
+      ],
+      "additionalProperties": false,
+      "title": "AuthorityRequirements",
+      "description": "Required authority scopes and human-approval requirements, evaluated by the Action Gateway (W022)."
+    },
+    "AuthorityScope": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+(:[a-z0-9-]+)+$",
+      "title": "AuthorityScope",
+      "description": "Colon-namespaced authority scope, e.g. \"world:write\" or \"external:git:write\"."
+    },
+    "ApprovalQuorum": {
+      "type": "object",
+      "properties": {
+        "approvals": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "roles": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        }
+      },
+      "required": [
+        "approvals",
+        "roles"
+      ],
+      "additionalProperties": false,
+      "title": "ApprovalQuorum",
+      "description": "How many approvals from which opaque roles are required."
+    }
+  }
+}

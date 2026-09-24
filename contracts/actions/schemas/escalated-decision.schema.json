@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EscalatedDecision",
+  "$defs": {
+    "EscalatedDecision": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "escalated"
+        },
+        "escalatedTo": {
+          "$ref": "#/$defs/AuthorizerReference"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10000
+        }
+      },
+      "required": [
+        "kind",
+        "escalatedTo",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "title": "EscalatedDecision",
+      "description": "Escalation of the decision to another authorizer (gateway role or human approver)."
+    },
+    "AuthorizerReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "role": {
+          "$ref": "#/$defs/AuthorizerRole"
+        }
+      },
+      "required": [
+        "id",
+        "role"
+      ],
+      "additionalProperties": false,
+      "title": "AuthorizerReference",
+      "description": "Who issued an authorization decision: the Action Gateway or a human approver. Agents are structurally excluded."
+    },
+    "AuthorizerRole": {
+      "type": "string",
+      "enum": [
+        "action-gateway",
+        "human-approver"
+      ],
+      "title": "AuthorizerRole",
+      "description": "Roles that may issue an authorization decision: action-gateway or human-approver. Agents are structurally excluded."
+    }
+  }
+}

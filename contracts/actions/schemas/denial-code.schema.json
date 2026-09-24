@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DenialCode",
+  "$defs": {
+    "DenialCode": {
+      "type": "string",
+      "enum": [
+        "missing-authority",
+        "policy-violation",
+        "precondition-unmet",
+        "insufficient-evidence",
+        "proposal-expired",
+        "out-of-scope",
+        "other"
+      ],
+      "title": "DenialCode",
+      "description": "Machine-readable denial code carried by denied authorization decisions."
+    }
+  }
+}

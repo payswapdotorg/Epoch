@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExecutorKind",
+  "$defs": {
+    "ExecutorKind": {
+      "type": "string",
+      "enum": [
+        "human",
+        "program",
+        "model",
+        "hybrid"
+      ],
+      "title": "ExecutorKind",
+      "description": "Neutral executor nature: human, program (incl. solvers/robots), model (model-backed), or hybrid."
+    }
+  }
+}

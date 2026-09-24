@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/Precondition",
+  "$defs": {
+    "Precondition": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "constraintRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "targetRef": {
+          "$ref": "#/$defs/ActionTarget"
+        }
+      },
+      "required": [
+        "description"
+      ],
+      "additionalProperties": false,
+      "title": "Precondition",
+      "description": "A condition that must hold before execution; optionally bound to a compiled constraint (W004) or a world target."
+    },
+    "ActionTarget": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/ActionTargetKind"
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "additionalProperties": false,
+      "title": "ActionTarget",
+      "description": "What a proposed intervention acts upon: a world entity/relation/assertion or an external resource."
+    },
+    "ActionTargetKind": {
+      "type": "string",
+      "enum": [
+        "world-entity",
+        "world-relation",
+        "world-assertion",
+        "external-resource"
+      ],
+      "title": "ActionTargetKind",
+      "description": "What a proposed intervention acts upon (world model objects or external resources)."
+    }
+  }
+}

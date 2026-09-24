@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuthorityScope",
+  "$defs": {
+    "AuthorityScope": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+(:[a-z0-9-]+)+$",
+      "title": "AuthorityScope",
+      "description": "Colon-namespaced authority scope, e.g. \"world:write\" or \"external:git:write\"."
+    }
+  }
+}

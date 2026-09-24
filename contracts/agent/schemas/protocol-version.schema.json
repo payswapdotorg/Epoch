@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProtocolVersion",
+  "$defs": {
+    "ProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "ProtocolVersion",
+      "description": "Exact agent-protocol version admitted by this release (\"1.0.0\")."
+    }
+  }
+}
