@@ -1,0 +1,1 @@
+{"name":"epoch","private":true,"version":"0.0.0","packageManager":"pnpm@10","scripts":{"check:governance":"python3 scripts/governance-check.py","check":"pnpm check:governance"}}
