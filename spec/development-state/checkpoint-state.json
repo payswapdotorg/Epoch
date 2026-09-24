@@ -1,5 +1,5 @@
 {
- "baselineSha": "5a5a1e24915b51a4b49ce7ef3036d10af6ae558b",
- "status": "W007_COMPLETE",
- "next": "Wave 4: W008 + W009 + W011 (pairwise-disjoint, 3 workers). W010 unlocks when W009 lands; W012/W013 unlock when W011 lands."
+  "baselineSha": "803a1989f839c2690a7e58db9dc0651e4e1ce87d",
+  "status": "W008_COMPLETE",
+  "next": "Current wave: W009 + W011 (W010 unlocks when W009 lands; W012/W013 unlock when W011 lands). W036 remains gated behind ACR-001 lock transition after the current wave."
 }
