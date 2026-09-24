@@ -1,5 +1,5 @@
 {
- "baselineSha": "46f0091713ac688eb8294a45358098f0846f10ae",
- "status": "W005_W006_COMPLETE",
- "next": "W007 single-worker wave 3 (W008/W009/W010/W011 unlock after W007)"
+ "baselineSha": "5a5a1e24915b51a4b49ce7ef3036d10af6ae558b",
+ "status": "W007_COMPLETE",
+ "next": "Wave 4: W008 + W009 + W011 (pairwise-disjoint, 3 workers). W010 unlocks when W009 lands; W012/W013 unlock when W011 lands."
 }

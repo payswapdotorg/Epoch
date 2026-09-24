@@ -1,5 +1,5 @@
 # W007 — Capability Registry + Adapter SDK
-Status: AUTHORIZED (wave 3; dispatch base recorded in the live dispatch issue)
+Status: COMPLETE (PR #16, squash 000fcdd7; reviewed head 01b59838; 270 new tests; 95 files in owned trees)
 Depends On: W003,W005,W006
 Worker Count: 1
 
