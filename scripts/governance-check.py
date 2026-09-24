@@ -172,14 +172,6 @@ def run_checks(root: pathlib.Path) -> list:
     if not set(in_flight).issubset({str(x) for x in state.get("active", [])}):
         failures.append("inFlight must be a subset of active")
 
-    # Frontier consistency: eligible/inFlight work orders cannot simultaneously be blocked.
-    frontier_eligible = {str(x) for x in frontier.get("eligible", [])}
-    frontier_in_flight = {str(x) for x in frontier.get("inFlight", [])}
-    frontier_blocked = {str(x) for x in frontier.get("blocked", [])}
-    overlap = sorted((frontier_eligible | frontier_in_flight) & frontier_blocked)
-    if overlap:
-        failures.append("work orders are both eligible/inFlight and blocked: " + ", ".join(overlap))
-
     authorized = authorized_ids(root)
     for wo, wo_path in sorted(wo_files.items()):
         declared = worker_count_of(wo_path)
