@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ParameterKind",
+  "$defs": {
+    "ParameterKind": {
+      "type": "string",
+      "enum": [
+        "integer",
+        "number",
+        "string",
+        "boolean",
+        "enum",
+        "entity-reference",
+        "json"
+      ],
+      "title": "ParameterKind",
+      "description": "Value kind of a capability parameter."
+    }
+  }
+}

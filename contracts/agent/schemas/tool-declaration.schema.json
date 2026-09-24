@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ToolDeclaration",
+  "$defs": {
+    "ToolDeclaration": {
+      "type": "object",
+      "properties": {
+        "toolId": {
+          "type": "string",
+          "pattern": "^tool:[a-z0-9][a-z0-9.-]{0,80}$"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "source",
+            "semantic",
+            "reconstruction",
+            "visualization",
+            "simulation",
+            "evaluator",
+            "action",
+            "verification"
+          ]
+        },
+        "capabilityRef": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        }
+      },
+      "required": [
+        "toolId",
+        "summary",
+        "category"
+      ],
+      "additionalProperties": false,
+      "title": "ToolDeclaration",
+      "description": "Neutral declaration of a tool an agent can use, categorized by Capability Fabric adapter category."
+    }
+  }
+}

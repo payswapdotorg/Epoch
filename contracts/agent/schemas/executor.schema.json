@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/Executor",
+  "$defs": {
+    "Executor": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/ExecutorKind"
+        },
+        "deterministic": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "deterministic"
+      ],
+      "additionalProperties": false,
+      "title": "Executor",
+      "description": "What implements the agent, neutrally: kind plus a determinism flag."
+    },
+    "ExecutorKind": {
+      "type": "string",
+      "enum": [
+        "human",
+        "program",
+        "model",
+        "hybrid"
+      ],
+      "title": "ExecutorKind",
+      "description": "Neutral executor nature: human, program (incl. solvers/robots), model (model-backed), or hybrid."
+    }
+  }
+}

@@ -1,0 +1,471 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AgentRegistration",
+  "$defs": {
+    "AgentRegistration": {
+      "type": "object",
+      "properties": {
+        "protocolVersion": {
+          "$ref": "#/$defs/ProtocolVersion"
+        },
+        "messageKind": {
+          "type": "string",
+          "const": "agent.registration"
+        },
+        "messageId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "executor": {
+          "$ref": "#/$defs/Executor"
+        },
+        "capabilities": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityDeclaration"
+          }
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ToolDeclaration"
+          }
+        },
+        "authority": {
+          "$ref": "#/$defs/AuthorityDeclaration"
+        },
+        "costProfile": {
+          "$ref": "#/$defs/CostProfile"
+        },
+        "latencyProfile": {
+          "$ref": "#/$defs/LatencyProfile"
+        },
+        "evidenceRequirements": {
+          "$ref": "#/$defs/EvidenceRequirements"
+        }
+      },
+      "required": [
+        "protocolVersion",
+        "messageKind",
+        "messageId",
+        "createdAt",
+        "agentId",
+        "displayName",
+        "executor",
+        "capabilities",
+        "tools",
+        "authority",
+        "costProfile",
+        "latencyProfile",
+        "evidenceRequirements"
+      ],
+      "additionalProperties": false,
+      "title": "AgentRegistration",
+      "description": "Agent protocol registration message: executor, capabilities, tools, proposal authority, cost/latency, and evidence requirements."
+    },
+    "ProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "ProtocolVersion",
+      "description": "Exact agent-protocol version admitted by this release (\"1.0.0\")."
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "Executor": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/ExecutorKind"
+        },
+        "deterministic": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "deterministic"
+      ],
+      "additionalProperties": false,
+      "title": "Executor",
+      "description": "What implements the agent, neutrally: kind plus a determinism flag."
+    },
+    "ExecutorKind": {
+      "type": "string",
+      "enum": [
+        "human",
+        "program",
+        "model",
+        "hybrid"
+      ],
+      "title": "ExecutorKind",
+      "description": "Neutral executor nature: human, program (incl. solvers/robots), model (model-backed), or hybrid."
+    },
+    "CapabilityDeclaration": {
+      "type": "object",
+      "properties": {
+        "protocolVersion": {
+          "$ref": "#/$defs/ProtocolVersion"
+        },
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "domain": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        }
+      },
+      "required": [
+        "protocolVersion",
+        "capabilityId",
+        "summary",
+        "domain",
+        "inputs",
+        "outputs",
+        "assumptions"
+      ],
+      "additionalProperties": false,
+      "title": "CapabilityDeclaration",
+      "description": "Provider-neutral declaration of a capability: namespaced id, domain, parameter specs, and stated assumptions."
+    },
+    "ParameterSpec": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/ParameterKind"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "enumValues": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "required",
+        "description"
+      ],
+      "additionalProperties": false,
+      "title": "ParameterSpec",
+      "description": "Named capability parameter with value kind, optionality, and description."
+    },
+    "ParameterKind": {
+      "type": "string",
+      "enum": [
+        "integer",
+        "number",
+        "string",
+        "boolean",
+        "enum",
+        "entity-reference",
+        "json"
+      ],
+      "title": "ParameterKind",
+      "description": "Value kind of a capability parameter."
+    },
+    "ToolDeclaration": {
+      "type": "object",
+      "properties": {
+        "toolId": {
+          "type": "string",
+          "pattern": "^tool:[a-z0-9][a-z0-9.-]{0,80}$"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "source",
+            "semantic",
+            "reconstruction",
+            "visualization",
+            "simulation",
+            "evaluator",
+            "action",
+            "verification"
+          ]
+        },
+        "capabilityRef": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        }
+      },
+      "required": [
+        "toolId",
+        "summary",
+        "category"
+      ],
+      "additionalProperties": false,
+      "title": "ToolDeclaration",
+      "description": "Neutral declaration of a tool an agent can use, categorized by Capability Fabric adapter category."
+    },
+    "AuthorityDeclaration": {
+      "type": "object",
+      "properties": {
+        "executionAuthority": {
+          "type": "string",
+          "const": "none"
+        },
+        "proposableActionTypes": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/QualifiedTypeReference"
+          }
+        },
+        "requiresHumanCosign": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "executionAuthority",
+        "proposableActionTypes",
+        "requiresHumanCosign"
+      ],
+      "additionalProperties": false,
+      "title": "AuthorityDeclaration",
+      "description": "Proposal-scoped authority: action types the agent may propose. Execution authority is structurally \"none\" — only the Action Gateway authorizes execution."
+    },
+    "QualifiedTypeReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "QualifiedTypeReference",
+      "description": "Reference to a versioned, protocol-defined type: dot-namespaced id plus semver core version."
+    },
+    "CostProfile": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "basis": {
+              "type": "string",
+              "const": "none"
+            }
+          },
+          "required": [
+            "basis"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "basis": {
+              "type": "string",
+              "const": "per-proposal"
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            }
+          },
+          "required": [
+            "basis",
+            "currency",
+            "amount"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "basis": {
+              "type": "string",
+              "const": "per-session"
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            }
+          },
+          "required": [
+            "basis",
+            "currency",
+            "amount"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "basis": {
+              "type": "string",
+              "const": "per-hour"
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            }
+          },
+          "required": [
+            "basis",
+            "currency",
+            "amount"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "CostProfile",
+      "description": "Neutral cost declaration; amounts are non-negative decimal strings with ISO 4217 currency codes."
+    },
+    "LatencyProfile": {
+      "type": "object",
+      "properties": {
+        "p50Milliseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "p95Milliseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "p50Milliseconds",
+        "p95Milliseconds"
+      ],
+      "additionalProperties": false,
+      "title": "LatencyProfile",
+      "description": "Whole-millisecond latency profile with p50/p95 percentiles (p95 >= p50)."
+    },
+    "EvidenceRequirements": {
+      "type": "object",
+      "properties": {
+        "requiresRationale": {
+          "type": "boolean"
+        },
+        "requiresPredictedEffects": {
+          "type": "boolean"
+        },
+        "requiresEvidenceRefs": {
+          "type": "boolean"
+        },
+        "requiredArtifactKinds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{0,63}$"
+          }
+        }
+      },
+      "required": [
+        "requiresRationale",
+        "requiresPredictedEffects",
+        "requiresEvidenceRefs",
+        "requiredArtifactKinds"
+      ],
+      "additionalProperties": false,
+      "title": "EvidenceRequirements",
+      "description": "What evidence an agent must attach to action proposals (rationale, predicted effects, references, artifact kinds)."
+    }
+  }
+}

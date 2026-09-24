@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/agent-protocol": ["./src/index.ts"]
+    }
+  },
+  "include": [
+    "../../contracts/agent/index.d.ts",
+    "../../contracts/agent/parity.ts"
+  ]
+}
