@@ -1,0 +1,9 @@
+{
+  "name": "@epoch/desktop",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Reserved placeholder for the Tauri 2 desktop shell (W017). No runtime code before W017 dispatch.",
+  "epoch": {
+    "layer": "app"
+  }
+}

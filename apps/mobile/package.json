@@ -1,0 +1,9 @@
+{
+  "name": "@epoch/mobile",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Reserved placeholder for the Tauri 2 mobile field-client shell (W018). No runtime code before W018 dispatch.",
+  "epoch": {
+    "layer": "app"
+  }
+}
