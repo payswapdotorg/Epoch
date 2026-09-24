@@ -32,8 +32,8 @@ The Tech Lead derives the live frontier from dependencies. Up to three READY ite
 | W023 | Marketplace | W007,W008,W009 | services/marketplace/*, packages/marketplace/*, apps/web/src/features/marketplace/* |
 | W024 | Billing + Entitlements | W009,W023 | services/billing/*, packages/entitlements/* |
 | W025 | Developer Portal/Publishing | W008,W023,W024 | services/developer-portal/*, apps/web/src/features/developers/* |
-| W026 | Construction Pack | W002,W004,W006,W007,W011,W013 | packs/construction/* |
-| W027 | Software/Infrastructure Pack | W002,W003,W006,W007,W011,W013 | packs/software/* |
+| W026 | Construction Pack | W002,W004,W006,W007,W011,W013,W036 | packs/construction/* |
+| W027 | Software/Infrastructure Pack | W002,W003,W006,W007,W011,W013,W036 | packs/software/* |
 | W028 | Document-to-Adapter | W002,W004,W006,W007,W008 | services/document-adapter/*, packages/document-adapter/* |
 | W029 | External Adapter Reference Set (Git/IFC/MCP/FMI) | W007,W013,W021,W022 | adapters/github/*, adapters/ifc/*, adapters/mcp/*, adapters/fmi/* |
 | W030 | Security/Isolation/Observability | W008,W009,W020,W021,W022,W023 | services/security/*, packages/observability/*, tests/security/*, docs/security/* |
