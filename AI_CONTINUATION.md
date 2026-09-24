@@ -8,7 +8,7 @@ Current:
 - work-order schema: WO1.0
 - maximum concurrent workers: 3
 - current authorized items: W009 + W011
-- current main head: 6314365e74dff912b453ca3cbbeac0af351472a3
+- current main head: e7c87d3e3657867e03044ad349fdce1327968951
 - PR #21 merged: ACR-001 target architecture and W036-W044 delivery program recorded
 - PR #22 merged: W008 Extension SDK + Wasm
 - PR #24 merged: post-W008 lockfile reconciliation
