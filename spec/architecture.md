@@ -3,7 +3,9 @@
 ## Core model
 Problem = (World, Agents, Constraints, Actions, Evaluators, Verification, Feedback)
 
-Runtime: Observe -> Reconstruct -> assess Decision Sufficiency -> Acquire Information -> Generate -> Constrain -> Simulate -> Evaluate -> Verify -> Approve -> Baseline -> Plan -> Procure -> Execute -> Observe -> Actualize -> Verify -> Forecast -> Close -> Learn.
+Runtime: Observe -> Reconstruct -> assess Decision Sufficiency -> Acquire Information -> Generate -> Constrain -> Simulate -> Evaluate -> Verify -> Approve -> Baseline -> Plan -> Acquire -> Realize -> Observe -> Actualize -> Verify -> Forecast -> Close -> Learn.
+
+Universal lifecycle: Understand -> Decide -> Plan -> Acquire -> Realize -> Observe/Actualize -> Verify -> Forecast -> Close -> Learn. Procurement is an Acquire projection; execution is a Realize projection.
 
 ## World Model
 Typed property/relationship graph with entities, relations, assertions, state, behavior, temporal history, actors, resources, evidence, uncertainty, models and events. Assertions retain source, timestamp, provenance, confidence and validity. External standards map into the model.
@@ -27,9 +29,14 @@ Simulation predicts; evaluation judges. Simulator contracts declare inputs, outp
 Requirement -> Claim -> Method -> Run -> Evidence -> Result -> Approval. Verification and validation are distinct. Evidence is exact-revision addressable.
 
 ## Solution Delivery
-An approved solution may instantiate a DeliveryRecord that follows procurement, execution, verification, payment and outcome. The baseline remains immutable; live actuals, commitments and forecasts are separate records. The universal schedule is the Program of Work; Construction renders the synchronized quantity/cost schedule as an interactive BOQ.
+An approved solution may instantiate a DeliveryRecord that follows acquisition, realization, verification, payment and outcome. The baseline remains immutable; live actuals, commitments and forecasts are separate records. The universal schedule is the Program of Work. Construction renders quantities/cost/work relationships as an interactive BOQ; other domains render equivalent solution schedules.
+
+The canonical universal lifecycle and domain adaptation rules are defined in `spec/universal-solution-lifecycle.md`, `spec/domain-pack-contract.md`, and `spec/solution-navigator-architecture.md`.
 
 Detailed contracts are defined by the approved ACR-001 target architecture. That target is not effective for new implementation until the architecture lock transition is recorded.
+
+## Domain Packs
+Domain packs teach Epoch how a domain expresses the universal lifecycle. They may add terminology, measurements, calculations, simulations, verification methods and projections, but may not define a competing lifecycle, baseline ledger, delivery ledger or authority. See `spec/domain-pack-contract.md`.
 
 ## Capability Fabric
 Registered adapter categories: source, semantic, reconstruction, visualization, simulation, evaluator, action, verification. Sources include first-party, community, external software, and provisional document-derived mappings.
