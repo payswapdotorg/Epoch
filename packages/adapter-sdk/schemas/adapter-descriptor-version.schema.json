@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AdapterDescriptorVersion",
+  "$defs": {
+    "AdapterDescriptorVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AdapterDescriptorVersion",
+      "description": "Version discriminator carried by every serialized adapter descriptor (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:adapter-descriptor-version:1.0.0"
+}

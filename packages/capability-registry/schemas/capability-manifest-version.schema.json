@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityManifestVersion",
+  "$defs": {
+    "CapabilityManifestVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "CapabilityManifestVersion",
+      "description": "Version discriminator carried by every serialized capability manifest and record (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:capability-registry:capability-manifest-version:1.0.0"
+}

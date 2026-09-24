@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BindingPin",
+  "$defs": {
+    "BindingPin": {
+      "readOnly": true,
+      "title": "BindingPin",
+      "description": "Negotiated binding: capability id + version + manifest digest, adapter id + descriptor digest — both sides content-addressed.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "capabilityVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "manifestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "adapterId": {
+          "$ref": "#/$defs/AdapterId"
+        },
+        "adapterDescriptorDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "capabilityVersion",
+        "manifestDigest",
+        "adapterId",
+        "adapterDescriptorDigest"
+      ],
+      "additionalProperties": false
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "AdapterId": {
+      "type": "string",
+      "pattern": "^adapter:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AdapterId",
+      "description": "Registered adapter identifier: \"adapter:\" followed by a lowercase kebab slug."
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:binding-pin:1.0.0"
+}

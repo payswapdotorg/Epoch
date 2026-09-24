@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityCategory",
+  "$defs": {
+    "CapabilityCategory": {
+      "type": "string",
+      "enum": [
+        "source",
+        "semantic",
+        "reconstruction",
+        "visualization",
+        "simulation",
+        "evaluator",
+        "action",
+        "verification"
+      ],
+      "title": "CapabilityCategory",
+      "description": "Capability Fabric adapter category: source, semantic, reconstruction, visualization, simulation, evaluator, action, or verification."
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:capability-category:1.0.0"
+}

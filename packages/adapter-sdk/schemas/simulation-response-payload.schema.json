@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SimulationResponsePayload",
+  "$defs": {
+    "SimulationResponsePayload": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "completed"
+            },
+            "outputs": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/JsonValue"
+              }
+            }
+          },
+          "required": [
+            "status",
+            "outputs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "failed"
+            },
+            "failure": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "$ref": "#/$defs/SimulationFailureCode"
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "status",
+            "failure"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "SimulationResponsePayload",
+      "description": "Simulation adapter response: completed (at least one named output) or failed (machine-readable code + reason) — the W005 outcome union."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "SimulationFailureCode": {
+      "type": "string",
+      "enum": [
+        "input-out-of-domain",
+        "numerical-divergence",
+        "resource-limit-exceeded",
+        "internal-error"
+      ],
+      "title": "SimulationFailureCode",
+      "description": "Machine-readable failure code carried by failed simulation outcomes (W005 vocabulary)."
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:simulation-response-payload:1.0.0"
+}

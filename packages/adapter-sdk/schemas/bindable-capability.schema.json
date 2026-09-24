@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BindableCapability",
+  "$defs": {
+    "BindableCapability": {
+      "readOnly": true,
+      "title": "BindableCapability",
+      "description": "Minimal structural view of a capability-registry record the SDK binds against (no runtime dependency on the registry).",
+      "type": "object",
+      "properties": {
+        "manifest": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "capabilityId": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+            },
+            "category": {
+              "$ref": "#/$defs/CapabilityCategory"
+            },
+            "version": {
+              "$ref": "#/$defs/SemverCore"
+            }
+          },
+          "required": [
+            "capabilityId",
+            "category",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        "lifecycle": {
+          "$ref": "#/$defs/CapabilityLifecycleState"
+        },
+        "manifestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "manifest",
+        "lifecycle",
+        "manifestDigest"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityCategory": {
+      "type": "string",
+      "enum": [
+        "source",
+        "semantic",
+        "reconstruction",
+        "visualization",
+        "simulation",
+        "evaluator",
+        "action",
+        "verification"
+      ],
+      "title": "CapabilityCategory",
+      "description": "Capability Fabric adapter category: source, semantic, reconstruction, visualization, simulation, evaluator, action, or verification."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "CapabilityLifecycleState": {
+      "type": "string",
+      "enum": [
+        "registered",
+        "deprecated",
+        "retired"
+      ],
+      "title": "CapabilityLifecycleState",
+      "description": "Capability lifecycle: registered, deprecated (advisory — still bindable), or retired (terminal — no new bindings)."
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:bindable-capability:1.0.0"
+}

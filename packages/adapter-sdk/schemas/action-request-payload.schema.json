@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ActionRequestPayload",
+  "$defs": {
+    "ActionRequestPayload": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "$ref": "#/$defs/ActionTargetKind"
+            },
+            "ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "kind",
+            "ref"
+          ],
+          "additionalProperties": false
+        },
+        "parameters": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "target",
+        "parameters"
+      ],
+      "additionalProperties": false,
+      "title": "ActionRequestPayload",
+      "description": "Action adapter request: the target (kind + opaque ref) and named parameters (W003-aligned shapes). Authorization belongs to the Action Gateway, never here."
+    },
+    "ActionTargetKind": {
+      "type": "string",
+      "enum": [
+        "world-entity",
+        "world-relation",
+        "world-assertion",
+        "external-resource"
+      ],
+      "title": "ActionTargetKind",
+      "description": "What an executed intervention acts upon (W003 vocabulary)."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:action-request-payload:1.0.0"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AdapterId",
+  "$defs": {
+    "AdapterId": {
+      "type": "string",
+      "pattern": "^adapter:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AdapterId",
+      "description": "Registered adapter identifier: \"adapter:\" followed by a lowercase kebab slug."
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:adapter-id:1.0.0"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AdapterEnvelopeVersion",
+  "$defs": {
+    "AdapterEnvelopeVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AdapterEnvelopeVersion",
+      "description": "Version discriminator carried by every serialized adapter request/response envelope (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:adapter-envelope-version:1.0.0"
+}

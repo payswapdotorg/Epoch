@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EvaluatorRequestPayload",
+  "$defs": {
+    "EvaluatorRequestPayload": {
+      "type": "object",
+      "properties": {
+        "subject": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "$ref": "#/$defs/EvaluationSubjectKind"
+            },
+            "subjectId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+            },
+            "subjectDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "kind",
+            "subjectId",
+            "subjectDigest"
+          ],
+          "additionalProperties": false
+        },
+        "criteria": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "subject",
+        "criteria"
+      ],
+      "additionalProperties": false,
+      "title": "EvaluatorRequestPayload",
+      "description": "Evaluator adapter request: the judged subject (kind, id, canonical digest) and named criteria (W005-aligned shapes)."
+    },
+    "EvaluationSubjectKind": {
+      "type": "string",
+      "enum": [
+        "simulation-result",
+        "world-outcome"
+      ],
+      "title": "EvaluationSubjectKind",
+      "description": "What an evaluator judges: a simulation result or a world outcome (W005 vocabulary)."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:evaluator-request-payload:1.0.0"
+}

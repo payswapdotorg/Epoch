@@ -1,0 +1,30 @@
+{
+  "name": "@epoch/capability-registry",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Capability Registry kernel — versioned, content-addressed capability manifests across the eight Capability Fabric adapter categories, with typed lifecycle governance, digest-checked registration, and deterministic version-constrained resolution (W007).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

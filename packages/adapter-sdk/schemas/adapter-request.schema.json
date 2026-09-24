@@ -1,0 +1,561 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AdapterRequest",
+  "$defs": {
+    "AdapterRequest": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/AdapterRequest-source"
+        },
+        {
+          "$ref": "#/$defs/AdapterRequest-semantic"
+        },
+        {
+          "$ref": "#/$defs/AdapterRequest-reconstruction"
+        },
+        {
+          "$ref": "#/$defs/AdapterRequest-visualization"
+        },
+        {
+          "$ref": "#/$defs/AdapterRequest-simulation"
+        },
+        {
+          "$ref": "#/$defs/AdapterRequest-evaluator"
+        },
+        {
+          "$ref": "#/$defs/AdapterRequest-action"
+        },
+        {
+          "$ref": "#/$defs/AdapterRequest-verification"
+        }
+      ],
+      "title": "AdapterRequest",
+      "description": "Typed adapter invocation envelope, discriminated by category: version discriminator, negotiated binding pin, and the per-category payload."
+    },
+    "AdapterRequest-source": {
+      "readOnly": true,
+      "title": "AdapterRequest (source)",
+      "description": "Invocation envelope for source-category adapters: version discriminator, negotiated binding pin, and the typed source payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "source"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/NeutralRequestPayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "AdapterEnvelopeVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AdapterEnvelopeVersion",
+      "description": "Version discriminator carried by every serialized adapter request/response envelope (currently 1)."
+    },
+    "BindingPin": {
+      "readOnly": true,
+      "title": "BindingPin",
+      "description": "Negotiated binding: capability id + version + manifest digest, adapter id + descriptor digest — both sides content-addressed.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "capabilityVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "manifestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "adapterId": {
+          "$ref": "#/$defs/AdapterId"
+        },
+        "adapterDescriptorDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "capabilityVersion",
+        "manifestDigest",
+        "adapterId",
+        "adapterDescriptorDigest"
+      ],
+      "additionalProperties": false
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "AdapterId": {
+      "type": "string",
+      "pattern": "^adapter:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AdapterId",
+      "description": "Registered adapter identifier: \"adapter:\" followed by a lowercase kebab slug."
+    },
+    "NeutralRequestPayload": {
+      "type": "object",
+      "properties": {
+        "inputs": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "inputs"
+      ],
+      "additionalProperties": false,
+      "title": "NeutralRequestPayload",
+      "description": "Neutral invocation payload: a named JSON input record (parameter-name keys)."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "AdapterRequest-semantic": {
+      "readOnly": true,
+      "title": "AdapterRequest (semantic)",
+      "description": "Invocation envelope for semantic-category adapters: version discriminator, negotiated binding pin, and the typed semantic payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "semantic"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/NeutralRequestPayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "AdapterRequest-reconstruction": {
+      "readOnly": true,
+      "title": "AdapterRequest (reconstruction)",
+      "description": "Invocation envelope for reconstruction-category adapters: version discriminator, negotiated binding pin, and the typed reconstruction payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "reconstruction"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/NeutralRequestPayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "AdapterRequest-visualization": {
+      "readOnly": true,
+      "title": "AdapterRequest (visualization)",
+      "description": "Invocation envelope for visualization-category adapters: version discriminator, negotiated binding pin, and the typed visualization payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "visualization"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/NeutralRequestPayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "AdapterRequest-simulation": {
+      "readOnly": true,
+      "title": "AdapterRequest (simulation)",
+      "description": "Invocation envelope for simulation-category adapters: version discriminator, negotiated binding pin, and the typed simulation payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "simulation"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/SimulationRequestPayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "SimulationRequestPayload": {
+      "type": "object",
+      "properties": {
+        "inputs": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "inputs"
+      ],
+      "additionalProperties": false,
+      "title": "SimulationRequestPayload",
+      "description": "Simulation adapter request: named inputs, optional seed, optional notes (W005-aligned shapes)."
+    },
+    "AdapterRequest-evaluator": {
+      "readOnly": true,
+      "title": "AdapterRequest (evaluator)",
+      "description": "Invocation envelope for evaluator-category adapters: version discriminator, negotiated binding pin, and the typed evaluator payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "evaluator"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/EvaluatorRequestPayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "EvaluatorRequestPayload": {
+      "type": "object",
+      "properties": {
+        "subject": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "$ref": "#/$defs/EvaluationSubjectKind"
+            },
+            "subjectId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+            },
+            "subjectDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "kind",
+            "subjectId",
+            "subjectDigest"
+          ],
+          "additionalProperties": false
+        },
+        "criteria": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "subject",
+        "criteria"
+      ],
+      "additionalProperties": false,
+      "title": "EvaluatorRequestPayload",
+      "description": "Evaluator adapter request: the judged subject (kind, id, canonical digest) and named criteria (W005-aligned shapes)."
+    },
+    "EvaluationSubjectKind": {
+      "type": "string",
+      "enum": [
+        "simulation-result",
+        "world-outcome"
+      ],
+      "title": "EvaluationSubjectKind",
+      "description": "What an evaluator judges: a simulation result or a world outcome (W005 vocabulary)."
+    },
+    "AdapterRequest-action": {
+      "readOnly": true,
+      "title": "AdapterRequest (action)",
+      "description": "Invocation envelope for action-category adapters: version discriminator, negotiated binding pin, and the typed action payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "action"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/ActionRequestPayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "ActionRequestPayload": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "$ref": "#/$defs/ActionTargetKind"
+            },
+            "ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "kind",
+            "ref"
+          ],
+          "additionalProperties": false
+        },
+        "parameters": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "target",
+        "parameters"
+      ],
+      "additionalProperties": false,
+      "title": "ActionRequestPayload",
+      "description": "Action adapter request: the target (kind + opaque ref) and named parameters (W003-aligned shapes). Authorization belongs to the Action Gateway, never here."
+    },
+    "ActionTargetKind": {
+      "type": "string",
+      "enum": [
+        "world-entity",
+        "world-relation",
+        "world-assertion",
+        "external-resource"
+      ],
+      "title": "ActionTargetKind",
+      "description": "What an executed intervention acts upon (W003 vocabulary)."
+    },
+    "AdapterRequest-verification": {
+      "readOnly": true,
+      "title": "AdapterRequest (verification)",
+      "description": "Invocation envelope for verification-category adapters: version discriminator, negotiated binding pin, and the typed verification payload.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterEnvelopeVersion"
+        },
+        "category": {
+          "type": "string",
+          "const": "verification"
+        },
+        "binding": {
+          "$ref": "#/$defs/BindingPin"
+        },
+        "payload": {
+          "$ref": "#/$defs/VerificationRequestPayload"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "category",
+        "binding",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "VerificationRequestPayload": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "#/$defs/VerificationMethodReference"
+        },
+        "inputs": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "method",
+        "inputs"
+      ],
+      "additionalProperties": false,
+      "title": "VerificationRequestPayload",
+      "description": "Verification adapter request: the method/claim/stage reference (W006 vocabulary) and named run inputs."
+    },
+    "VerificationMethodReference": {
+      "type": "object",
+      "properties": {
+        "methodId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "claimId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "stage": {
+          "$ref": "#/$defs/VerificationStage"
+        }
+      },
+      "required": [
+        "methodId",
+        "claimId",
+        "stage"
+      ],
+      "additionalProperties": false,
+      "title": "VerificationMethodReference",
+      "description": "Reference to the W006 method being executed: method id, claim id, and stage."
+    },
+    "VerificationStage": {
+      "type": "string",
+      "enum": [
+        "verification",
+        "validation"
+      ],
+      "title": "VerificationStage",
+      "description": "The two distinct stages (W006 vocabulary): verification (\"was the work done to spec\") vs validation (\"is the spec right\")."
+    }
+  },
+  "$id": "urn:epoch:adapter-sdk:adapter-request:1.0.0"
+}

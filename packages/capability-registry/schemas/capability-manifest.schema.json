@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityManifest",
+  "$defs": {
+    "CapabilityManifest": {
+      "readOnly": true,
+      "title": "CapabilityManifest",
+      "description": "Immutable, content-addressed capability registration document: id, category, version, descriptor, honored contracts, and trust surface.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/CapabilityManifestVersion"
+        },
+        "capabilityId": {
+          "$ref": "#/$defs/CapabilityId"
+        },
+        "category": {
+          "$ref": "#/$defs/CapabilityCategory"
+        },
+        "version": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "descriptor": {
+          "$ref": "#/$defs/CapabilityDescriptor"
+        },
+        "contracts": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityContractReference"
+          }
+        },
+        "trust": {
+          "$ref": "#/$defs/CapabilityTrust"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "capabilityId",
+        "category",
+        "version",
+        "descriptor",
+        "contracts",
+        "trust"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityManifestVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "CapabilityManifestVersion",
+      "description": "Version discriminator carried by every serialized capability manifest and record (currently 1)."
+    },
+    "CapabilityId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+      "title": "CapabilityId",
+      "description": "Opaque, stable capability identity: dot-namespaced qualified name; the extension scoping unit (lock rule 9)."
+    },
+    "CapabilityCategory": {
+      "type": "string",
+      "enum": [
+        "source",
+        "semantic",
+        "reconstruction",
+        "visualization",
+        "simulation",
+        "evaluator",
+        "action",
+        "verification"
+      ],
+      "title": "CapabilityCategory",
+      "description": "Capability Fabric adapter category: source, semantic, reconstruction, visualization, simulation, evaluator, action, or verification."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "CapabilityDescriptor": {
+      "readOnly": true,
+      "title": "CapabilityDescriptor",
+      "description": "Provider-neutral capability descriptor: display name, inputs, outputs, and stated assumptions (shared ParameterSpec shape).",
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "inputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        },
+        "outputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        },
+        "assumptions": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        }
+      },
+      "required": [
+        "displayName",
+        "inputs",
+        "outputs",
+        "assumptions"
+      ],
+      "additionalProperties": false
+    },
+    "ParameterSpec": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/ParameterKind"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "enumValues": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "required",
+        "description"
+      ],
+      "additionalProperties": false,
+      "title": "ParameterSpec",
+      "description": "Named capability parameter with value kind, optionality, and description."
+    },
+    "ParameterKind": {
+      "type": "string",
+      "enum": [
+        "integer",
+        "number",
+        "string",
+        "boolean",
+        "enum",
+        "entity-reference",
+        "json"
+      ],
+      "title": "ParameterKind",
+      "description": "Value kind of a capability parameter."
+    },
+    "CapabilityContractReference": {
+      "readOnly": true,
+      "title": "CapabilityContractReference",
+      "description": "Reference to a versioned contract a capability honors: qualified contract id plus semver core version.",
+      "type": "object",
+      "properties": {
+        "contractId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "contractVersion": {
+          "$ref": "#/$defs/SemverCore"
+        }
+      },
+      "required": [
+        "contractId",
+        "contractVersion"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityTrust": {
+      "readOnly": true,
+      "title": "CapabilityTrust",
+      "description": "Provider-neutral trust surface: origin class, optional opaque curator, optional attestation digest.",
+      "type": "object",
+      "properties": {
+        "origin": {
+          "$ref": "#/$defs/CapabilityOrigin"
+        },
+        "curator": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "attestationDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "origin"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityOrigin": {
+      "type": "string",
+      "enum": [
+        "first-party",
+        "community",
+        "external-software",
+        "provisional-document-derived"
+      ],
+      "title": "CapabilityOrigin",
+      "description": "Where a registered capability originates: first-party, community, external software, or provisional document-derived."
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:capability-registry:capability-manifest:1.0.0"
+}
