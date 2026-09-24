@@ -18,3 +18,6 @@ Implement a provider-neutral external event/request bridge and a reference Aurum
 
 ## Acceptance
 A mocked Aurum provider and a second generic provider can both satisfy the same contract. Core project flows remain functional with no bridge installed.
+
+
+The bridge is lifecycle-neutral: it may acquire information or relay supervision for any domain pack. Aurum remains an optional adapter, never a lifecycle authority.
