@@ -20,7 +20,7 @@ The Tech Lead derives the live frontier from dependencies. Up to three READY ite
 | W011 | Experience Protocol | W002,W003,W006,W007 | packages/experience-protocol/*, contracts/experience/* |
 | W012 | Experience Compiler | W011 | packages/experience-compiler/*, contracts/experience-compiler/* |
 | W013 | Renderer Runtime | W011 | packages/experience-runtime/*, packages/renderer-runtime/*, contracts/renderers/* |
-| W014 | Web App Shell | W009,W011,W012 | apps/web/* |
+| W014 | Web App Shell | W009,W011,W012 | apps/web/app/*, apps/web/src/shell/*, apps/web/src/shared/* |
 | W015 | AI Collaboration UX | W010,W011,W012 | packages/ai-experience/*, apps/web/src/features/agents/* |
 | W016 | Interactive World UX | W012,W013 | packages/world-experience/*, apps/web/src/features/world/* |
 | W017 | Desktop Client | W014,W015,W016 | apps/desktop/* |
