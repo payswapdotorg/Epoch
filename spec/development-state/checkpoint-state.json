@@ -1,5 +1,5 @@
 {
- "baselineSha": "6314365e74dff912b453ca3cbbeac0af351472a3",
- "status": "W008_COMPLETE",
- "next": "W009 + W011 in flight (dispatch under platform-capacity recovery). W010 unlocks after W009; W012/W013 after W011. ACR-001 delivery program (W036-W044) tracked; W036 unlocks after W009+W010+W011."
+  "baselineSha": "6314365e74dff912b453ca3cbbeac0af351472a3",
+  "status": "W008_COMPLETE",
+  "next": "W009 + W011 in flight (W010 unlocks when W009 lands; W012/W013 unlock when W011 lands). ACR-001 + ACR-002 target architecture is documented; lock transition is required before W036. Universal lifecycle/domain-pack/Navigator contracts are repository-canonical."
 }
