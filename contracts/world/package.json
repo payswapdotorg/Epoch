@@ -1,0 +1,13 @@
+{
+  "name": "@epoch/world-contracts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Epoch Canonical World Model published contracts (W002). Versioned TypeScript declaration surface + JSON Schema documents for the core world types. NOT a pnpm workspace package: consumed via tsconfig path mappings and re-exported by @epoch/world-model (see README.md).",
+  "types": "./src/index.ts",
+  "epoch": {
+    "layer": "contracts",
+    "workOrder": "W002",
+    "published": true,
+    "consumption": "tsconfig-paths + kernel re-export; not a pnpm workspace member"
+  }
+}

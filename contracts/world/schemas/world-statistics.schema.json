@@ -1,0 +1,88 @@
+{
+  "$id": "urn:epoch:contracts:world:world-statistics:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:contracts:world:world-statistics",
+  "$defs": {
+    "urn:epoch:contracts:world:world-statistics": {
+      "readOnly": true,
+      "title": "WorldStatistics",
+      "type": "object",
+      "properties": {
+        "sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "entityCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "relationCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "assertionCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "liveAssertionCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "supersededAssertionCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "retractedAssertionCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "eventCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "entityTypeCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "relationTypeCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "externalMappingCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "contractsVersion": {
+          "type": "string",
+          "const": "1.0.0"
+        }
+      },
+      "required": [
+        "sequence",
+        "entityCount",
+        "relationCount",
+        "assertionCount",
+        "liveAssertionCount",
+        "supersededAssertionCount",
+        "retractedAssertionCount",
+        "eventCount",
+        "entityTypeCount",
+        "relationTypeCount",
+        "externalMappingCount",
+        "contractsVersion"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

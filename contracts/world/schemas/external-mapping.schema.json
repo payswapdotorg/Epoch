@@ -1,0 +1,129 @@
+{
+  "$id": "urn:epoch:contracts:world:external-mapping:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:contracts:world:external-mapping",
+  "$defs": {
+    "urn:epoch:contracts:world:external-mapping": {
+      "readOnly": true,
+      "title": "ExternalMapping",
+      "description": "Declared-external mapping of an external standard into registered Epoch types; pure data, never executed.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "standard": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "standardVersion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "entityTypes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:contracts:world:external-entity-type-mapping"
+          }
+        },
+        "relationTypes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:contracts:world:external-relation-type-mapping"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "standard",
+        "entityTypes",
+        "relationTypes"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:external-entity-type-mapping": {
+      "readOnly": true,
+      "title": "ExternalEntityTypeMapping",
+      "type": "object",
+      "properties": {
+        "external": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:type-key"
+        },
+        "propertyMap": {
+          "readOnly": true,
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        }
+      },
+      "required": [
+        "external",
+        "target"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:type-key": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*:[a-z][a-z0-9-]*$",
+      "title": "TypeKey",
+      "description": "Namespaced type key (namespace:name). The 'core' namespace is reserved for the kernel vocabulary."
+    },
+    "urn:epoch:contracts:world:external-relation-type-mapping": {
+      "readOnly": true,
+      "title": "ExternalRelationTypeMapping",
+      "type": "object",
+      "properties": {
+        "external": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:type-key"
+        },
+        "propertyMap": {
+          "readOnly": true,
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        }
+      },
+      "required": [
+        "external",
+        "target"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

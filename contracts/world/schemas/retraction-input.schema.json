@@ -1,0 +1,162 @@
+{
+  "$id": "urn:epoch:contracts:world:retraction-input:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:contracts:world:retraction-input",
+  "$defs": {
+    "urn:epoch:contracts:world:retraction-input": {
+      "readOnly": true,
+      "title": "RetractionInput",
+      "description": "Tombstone write input; history is retained, never deleted.",
+      "type": "object",
+      "properties": {
+        "assertionId": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:assertion-id"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "provenance": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:provenance"
+        },
+        "at": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:instant"
+        }
+      },
+      "required": [
+        "assertionId",
+        "reason",
+        "provenance"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:assertion-id": {
+      "type": "string",
+      "pattern": "^ass-[0-9]+$",
+      "title": "AssertionId"
+    },
+    "urn:epoch:contracts:world:provenance": {
+      "readOnly": true,
+      "title": "Provenance",
+      "type": "object",
+      "properties": {
+        "actor": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:actor-ref"
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "evidence": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:contracts:world:evidence-ref"
+          }
+        },
+        "derivedFrom": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:contracts:world:assertion-id"
+          }
+        },
+        "recordedVia": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "actor",
+        "method",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:actor-ref": {
+      "readOnly": true,
+      "title": "ActorRef",
+      "description": "Opaque, provider-neutral actor reference.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "human",
+            "agent",
+            "system",
+            "external-provider",
+            "sensor",
+            "importer"
+          ]
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "id",
+        "role"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:evidence-ref": {
+      "readOnly": true,
+      "title": "EvidenceRef",
+      "description": "Addressable evidence reference (opaque id); evidence bytes are never embedded.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "document",
+            "measurement",
+            "observation",
+            "computation",
+            "assertion",
+            "external",
+            "other"
+          ]
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16,128}$"
+        },
+        "locator": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "id",
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:instant": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+      "title": "Instant",
+      "description": "RFC 3339 UTC instant with Z suffix (e.g. 2026-02-05T12:00:00.000Z)."
+    }
+  }
+}

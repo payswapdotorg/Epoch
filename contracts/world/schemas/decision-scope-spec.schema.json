@@ -1,0 +1,43 @@
+{
+  "$id": "urn:epoch:contracts:world:decision-scope-spec:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:contracts:world:decision-scope-spec",
+  "$defs": {
+    "urn:epoch:contracts:world:decision-scope-spec": {
+      "readOnly": true,
+      "title": "DecisionScopeSpec",
+      "type": "object",
+      "properties": {
+        "entities": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+          }
+        },
+        "relationDepth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16
+        },
+        "requiredConfidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "entities"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:entity-id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "EntityId",
+      "description": "Opaque entity identity (graph node), caller-assigned."
+    }
+  }
+}

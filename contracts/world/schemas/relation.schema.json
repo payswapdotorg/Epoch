@@ -1,0 +1,121 @@
+{
+  "$id": "urn:epoch:contracts:world:relation:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:contracts:world:relation",
+  "$defs": {
+    "urn:epoch:contracts:world:relation": {
+      "readOnly": true,
+      "title": "Relation",
+      "description": "Materialized relation view (immutable value object) resolved from the live assertion of its (type, source, target) key.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^rel-[0-9a-f]{64}$"
+        },
+        "type": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:type-key"
+        },
+        "source": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+        },
+        "target": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+        },
+        "properties": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:property-bag"
+        },
+        "assertionId": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:assertion-id"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:instant"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:instant"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "source",
+        "target",
+        "properties",
+        "assertionId",
+        "createdAt",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:type-key": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*:[a-z][a-z0-9-]*$",
+      "title": "TypeKey",
+      "description": "Namespaced type key (namespace:name). The 'core' namespace is reserved for the kernel vocabulary."
+    },
+    "urn:epoch:contracts:world:entity-id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "EntityId",
+      "description": "Opaque entity identity (graph node), caller-assigned."
+    },
+    "urn:epoch:contracts:world:property-bag": {
+      "readOnly": true,
+      "title": "PropertyBag",
+      "description": "Property values keyed by name; declared names are type-checked, unlisted names are open-world.",
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/__schema0"
+      }
+    },
+    "__schema0": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/__schema0"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/__schema0"
+          }
+        }
+      ]
+    },
+    "urn:epoch:contracts:world:assertion-id": {
+      "type": "string",
+      "pattern": "^ass-[0-9]+$",
+      "title": "AssertionId"
+    },
+    "urn:epoch:contracts:world:instant": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+      "title": "Instant",
+      "description": "RFC 3339 UTC instant with Z suffix (e.g. 2026-02-05T12:00:00.000Z)."
+    }
+  }
+}

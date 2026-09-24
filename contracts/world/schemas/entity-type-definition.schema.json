@@ -1,0 +1,81 @@
+{
+  "$id": "urn:epoch:contracts:world:entity-type-definition:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:contracts:world:entity-type-definition",
+  "$defs": {
+    "urn:epoch:contracts:world:entity-type-definition": {
+      "readOnly": true,
+      "title": "EntityTypeDefinition",
+      "type": "object",
+      "properties": {
+        "key": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:type-key"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "extends": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:type-key"
+        },
+        "origin": {
+          "type": "string",
+          "enum": [
+            "core",
+            "extension"
+          ]
+        },
+        "properties": {
+          "readOnly": true,
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/urn:epoch:contracts:world:property-spec"
+          }
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:type-key": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*:[a-z][a-z0-9-]*$",
+      "title": "TypeKey",
+      "description": "Namespaced type key (namespace:name). The 'core' namespace is reserved for the kernel vocabulary."
+    },
+    "urn:epoch:contracts:world:property-spec": {
+      "readOnly": true,
+      "title": "PropertySpec",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "string",
+            "number",
+            "integer",
+            "boolean",
+            "json"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "required": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
