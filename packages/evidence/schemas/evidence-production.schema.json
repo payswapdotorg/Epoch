@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:evidence:evidence-production",
+  "$defs": {
+    "urn:epoch:evidence:evidence-production": {
+      "readOnly": true,
+      "title": "EvidenceProduction",
+      "description": "Opaque identifiers of the run, executing actor, and (optional) method that produced the evidence.",
+      "type": "object",
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actorId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "methodId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "runId",
+        "actorId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:evidence:evidence-production:1.0.0"
+}

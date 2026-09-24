@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:verification:stage",
+  "$defs": {
+    "urn:epoch:verification:stage": {
+      "type": "string",
+      "enum": [
+        "verification",
+        "validation"
+      ],
+      "title": "VerificationStage",
+      "description": "Distinct chain stages: verification (\"was the work done to spec\") vs validation (\"is the spec right\")."
+    }
+  },
+  "$id": "urn:epoch:verification:verification-stage:1.0.0"
+}

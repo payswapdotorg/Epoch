@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:verification:result-outcome",
+  "$defs": {
+    "urn:epoch:verification:result-outcome": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "inconclusive"
+      ],
+      "title": "ResultOutcome",
+      "description": "Judgment produced by a run about its claim: pass, fail, or inconclusive."
+    }
+  },
+  "$id": "urn:epoch:verification:result-outcome:1.0.0"
+}

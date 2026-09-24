@@ -1,0 +1,31 @@
+{
+  "name": "@epoch/evidence",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Evidence kernel — exact-revision, content-addressed evidence records carrying SHA-256 artifact digests and W002-aligned confidence/uncertainty (W006).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

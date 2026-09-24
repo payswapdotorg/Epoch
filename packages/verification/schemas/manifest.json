@@ -1,0 +1,84 @@
+{
+  "contract": "epoch/verification",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Verification contract surface (W006): the Requirement -> Claim -> Method -> Run -> Evidence -> Result -> Approval chain with distinct verification/validation stages and approval-as-authority. JSON Schema projection under schemas/; runtime validators in @epoch/verification.",
+  "dataTypes": [
+    "Approval",
+    "ApprovalDecision",
+    "Claim",
+    "Method",
+    "Requirement",
+    "Result",
+    "ResultOutcome",
+    "Run",
+    "RunStatus",
+    "VerificationChain",
+    "VerificationChainVersion",
+    "VerificationStage"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/verification and are not represented in the JSON Schema files",
+  "emittedBy": "renderVerificationContractFiles() in @epoch/verification (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "Approval",
+      "file": "approval.schema.json",
+      "sha256": "0bb5898d0d078decb642d68622289b0f91e4065174a84858879d188895f1e78b"
+    },
+    {
+      "type": "ApprovalDecision",
+      "file": "approval-decision.schema.json",
+      "sha256": "c63215c4da75f44deaa5dac11323453557f957ef8140acdf5215e6ef6c916123"
+    },
+    {
+      "type": "Claim",
+      "file": "claim.schema.json",
+      "sha256": "fe61231b2de493559e66f909c7a401518f42e9c61d057fa9a57bc390a9203b76"
+    },
+    {
+      "type": "Method",
+      "file": "method.schema.json",
+      "sha256": "8940ed0adf2dafd61a8dd379cec8feaac7060a7ca323ea0919513a1b7005239b"
+    },
+    {
+      "type": "Requirement",
+      "file": "requirement.schema.json",
+      "sha256": "afcdceeef38e593ce464654c089e15fea89249974994263b0a9ee1447061022a"
+    },
+    {
+      "type": "Result",
+      "file": "result.schema.json",
+      "sha256": "9a809227e02ffb381eaf2a45e6163e7c3c8cde09fce1ff934a5f4261c8b335c7"
+    },
+    {
+      "type": "ResultOutcome",
+      "file": "result-outcome.schema.json",
+      "sha256": "d13f6decde9caac317dcc059adc93d09999db4e2a33ab35c8452e7d716dade05"
+    },
+    {
+      "type": "Run",
+      "file": "run.schema.json",
+      "sha256": "789b9ed456e15bc0f2224fba1d1d5ddfde9985adb8eed08051dbb73901a09cc1"
+    },
+    {
+      "type": "RunStatus",
+      "file": "run-status.schema.json",
+      "sha256": "d14b9f88151d77ee2d47762642ae94472daef22aa3fbe4411f56190248298ce5"
+    },
+    {
+      "type": "VerificationChain",
+      "file": "verification-chain.schema.json",
+      "sha256": "f13c7fffcf7421bf9151ae65fc4b8c9d34dada0e26b907aec441bbd38d485ae3"
+    },
+    {
+      "type": "VerificationChainVersion",
+      "file": "verification-chain-version.schema.json",
+      "sha256": "c3f8890e0ba54a8d6c18324c1aa6cd95556e95923ab50d166f1e3309149e32e2"
+    },
+    {
+      "type": "VerificationStage",
+      "file": "verification-stage.schema.json",
+      "sha256": "4f636be41fef300416222d498347eb2ced7d0fe70d21e60c118abc8df54a5556"
+    }
+  ]
+}

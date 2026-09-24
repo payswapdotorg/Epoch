@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:verification:requirement",
+  "$defs": {
+    "urn:epoch:verification:requirement": {
+      "readOnly": true,
+      "title": "Requirement",
+      "description": "The Requirement stage: what must hold (authored outside this kernel).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:verification:chain-version"
+        },
+        "requirementId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "requirementId",
+        "statement"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:verification:chain-version": {
+      "type": "number",
+      "const": 1,
+      "title": "VerificationChainVersion",
+      "description": "Version discriminator carried by every serialized verification chain (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:verification:requirement:1.0.0"
+}

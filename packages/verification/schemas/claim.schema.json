@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:verification:claim",
+  "$defs": {
+    "urn:epoch:verification:claim": {
+      "readOnly": true,
+      "title": "Claim",
+      "description": "The Claim stage: a testable assertion that a requirement can be verified or validated against.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:verification:chain-version"
+        },
+        "claimId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "requirementId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "stage": {
+          "$ref": "#/$defs/urn:epoch:verification:stage"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "claimId",
+        "requirementId",
+        "statement",
+        "stage"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:verification:chain-version": {
+      "type": "number",
+      "const": 1,
+      "title": "VerificationChainVersion",
+      "description": "Version discriminator carried by every serialized verification chain (currently 1)."
+    },
+    "urn:epoch:verification:stage": {
+      "type": "string",
+      "enum": [
+        "verification",
+        "validation"
+      ],
+      "title": "VerificationStage",
+      "description": "Distinct chain stages: verification (\"was the work done to spec\") vs validation (\"is the spec right\")."
+    }
+  },
+  "$id": "urn:epoch:verification:claim:1.0.0"
+}

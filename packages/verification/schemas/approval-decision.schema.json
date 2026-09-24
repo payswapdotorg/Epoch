@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:verification:approval-decision",
+  "$defs": {
+    "urn:epoch:verification:approval-decision": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "rejected"
+      ],
+      "title": "ApprovalDecision",
+      "description": "Authority act over a result: approved or rejected."
+    }
+  },
+  "$id": "urn:epoch:verification:approval-decision:1.0.0"
+}

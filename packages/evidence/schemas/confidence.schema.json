@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:evidence:confidence",
+  "$defs": {
+    "urn:epoch:evidence:confidence": {
+      "readOnly": true,
+      "title": "Confidence",
+      "description": "Uncertainty attached to an evidence record: distribution, acquisition method, rationale.",
+      "type": "object",
+      "properties": {
+        "distribution": {
+          "$ref": "#/$defs/urn:epoch:evidence:confidence-distribution"
+        },
+        "method": {
+          "$ref": "#/$defs/urn:epoch:evidence:confidence-method"
+        },
+        "rationale": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "distribution"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:evidence:confidence-distribution": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "point"
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "interval"
+            },
+            "lower": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "upper": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "bias": {
+              "$ref": "#/$defs/urn:epoch:evidence:interval-bias"
+            }
+          },
+          "required": [
+            "kind",
+            "lower",
+            "upper"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "set"
+            },
+            "values": {
+              "readOnly": true,
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "weights": {
+              "readOnly": true,
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "values"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ConfidenceDistribution",
+      "description": "Bounded [0,1] uncertainty distribution: point, interval, or weighted set (W002-aligned)."
+    },
+    "urn:epoch:evidence:interval-bias": {
+      "type": "string",
+      "enum": [
+        "none",
+        "low",
+        "high"
+      ],
+      "title": "IntervalBias",
+      "description": "Directional bias admitted for interval confidence estimates: none, low, high."
+    },
+    "urn:epoch:evidence:confidence-method": {
+      "type": "string",
+      "enum": [
+        "stated",
+        "measured",
+        "estimated",
+        "derived",
+        "imported"
+      ],
+      "title": "ConfidenceMethod",
+      "description": "How a confidence figure was obtained: stated, measured, estimated, derived, imported."
+    }
+  },
+  "$id": "urn:epoch:evidence:confidence:1.0.0"
+}

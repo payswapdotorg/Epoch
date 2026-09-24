@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:verification:chain-version",
+  "$defs": {
+    "urn:epoch:verification:chain-version": {
+      "type": "number",
+      "const": 1,
+      "title": "VerificationChainVersion",
+      "description": "Version discriminator carried by every serialized verification chain (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:verification:verification-chain-version:1.0.0"
+}

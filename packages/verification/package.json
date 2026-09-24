@@ -1,0 +1,32 @@
+{
+  "name": "@epoch/verification",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Verification kernel — the typed Requirement -> Claim -> Method -> Run -> Evidence -> Result -> Approval chain with reference chain validation, distinct verification/validation stages, and approval-as-authority (W006).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/provenance": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

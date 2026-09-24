@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:provenance:agent",
+  "$defs": {
+    "urn:epoch:provenance:agent": {
+      "readOnly": true,
+      "title": "ProvenanceAgent",
+      "description": "A person, organization, software agent, hardware device, or system that acts.",
+      "type": "object",
+      "properties": {
+        "agentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "agentKind": {
+          "$ref": "#/$defs/urn:epoch:provenance:agent-kind"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "agentId",
+        "agentKind"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:provenance:agent-kind": {
+      "type": "string",
+      "enum": [
+        "person",
+        "organization",
+        "software",
+        "hardware",
+        "system"
+      ],
+      "title": "ProvenanceAgentKind",
+      "description": "Kind of acting thing: person, organization, software, hardware, or system."
+    }
+  },
+  "$id": "urn:epoch:provenance:provenance-agent:1.0.0"
+}

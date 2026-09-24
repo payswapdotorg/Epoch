@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:provenance:relation",
+  "$defs": {
+    "urn:epoch:provenance:relation": {
+      "type": "string",
+      "enum": [
+        "was-generated-by",
+        "used",
+        "was-associated-with",
+        "was-attributed-to",
+        "was-derived-from",
+        "acted-on-behalf-of"
+      ],
+      "title": "ProvenanceRelation",
+      "description": "Core PROV-DM relations adapted: was-generated-by, used, was-associated-with, was-attributed-to, was-derived-from, acted-on-behalf-of."
+    }
+  },
+  "$id": "urn:epoch:provenance:provenance-relation:1.0.0"
+}

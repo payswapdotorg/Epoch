@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:evidence:record-version",
+  "$defs": {
+    "urn:epoch:evidence:record-version": {
+      "type": "number",
+      "const": 1,
+      "title": "EvidenceRecordVersion",
+      "description": "Version discriminator carried by every serialized evidence record (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:evidence:evidence-record-version:1.0.0"
+}
