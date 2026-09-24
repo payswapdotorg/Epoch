@@ -1,0 +1,706 @@
+{
+  "$id": "urn:epoch:contracts:world:task-sufficient-world:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:contracts:world:task-sufficient-world",
+  "$defs": {
+    "urn:epoch:contracts:world:task-sufficient-world": {
+      "readOnly": true,
+      "title": "TaskSufficientWorld",
+      "description": "Reconstructed sub-world for a decision scope with its live resolutions and information gaps.",
+      "type": "object",
+      "properties": {
+        "at": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:instant"
+        },
+        "entities": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:contracts:world:entity"
+          }
+        },
+        "relations": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:contracts:world:relation"
+          }
+        },
+        "resolutions": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:contracts:world:resolved-assertion"
+          }
+        },
+        "gaps": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:contracts:world:information-gap"
+          }
+        }
+      },
+      "required": [
+        "at",
+        "entities",
+        "relations",
+        "resolutions",
+        "gaps"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:instant": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+      "title": "Instant",
+      "description": "RFC 3339 UTC instant with Z suffix (e.g. 2026-02-05T12:00:00.000Z)."
+    },
+    "urn:epoch:contracts:world:entity": {
+      "readOnly": true,
+      "title": "Entity",
+      "description": "Materialized entity view (immutable value object) resolved from live assertions.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+        },
+        "type": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:type-key"
+        },
+        "properties": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:property-bag"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:instant"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:instant"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "properties",
+        "createdAt",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:entity-id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "EntityId",
+      "description": "Opaque entity identity (graph node), caller-assigned."
+    },
+    "urn:epoch:contracts:world:type-key": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*:[a-z][a-z0-9-]*$",
+      "title": "TypeKey",
+      "description": "Namespaced type key (namespace:name). The 'core' namespace is reserved for the kernel vocabulary."
+    },
+    "urn:epoch:contracts:world:property-bag": {
+      "readOnly": true,
+      "title": "PropertyBag",
+      "description": "Property values keyed by name; declared names are type-checked, unlisted names are open-world.",
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/__schema0"
+      }
+    },
+    "__schema0": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/__schema0"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/__schema0"
+          }
+        }
+      ]
+    },
+    "urn:epoch:contracts:world:relation": {
+      "readOnly": true,
+      "title": "Relation",
+      "description": "Materialized relation view (immutable value object) resolved from the live assertion of its (type, source, target) key.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^rel-[0-9a-f]{64}$"
+        },
+        "type": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:type-key"
+        },
+        "source": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+        },
+        "target": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+        },
+        "properties": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:property-bag"
+        },
+        "assertionId": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:assertion-id"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:instant"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:instant"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "source",
+        "target",
+        "properties",
+        "assertionId",
+        "createdAt",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:assertion-id": {
+      "type": "string",
+      "pattern": "^ass-[0-9]+$",
+      "title": "AssertionId"
+    },
+    "urn:epoch:contracts:world:resolved-assertion": {
+      "readOnly": true,
+      "title": "ResolvedAssertion",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "assertion": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:assertion"
+        }
+      },
+      "required": [
+        "key",
+        "assertion"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:assertion": {
+      "readOnly": true,
+      "title": "Assertion",
+      "description": "The unit of stated truth; retains provenance, confidence, validity and full lifecycle history.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:assertion-id"
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "statement": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:assertion-statement"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "live",
+            "superseded",
+            "retracted"
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "assertedAt": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:instant"
+        },
+        "provenance": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:provenance"
+        },
+        "confidence": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:confidence"
+        },
+        "validity": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:validity"
+        },
+        "supersedes": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:assertion-id"
+        },
+        "supersededBy": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:assertion-id"
+        },
+        "retractedAt": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:instant"
+        },
+        "retractionReason": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "id",
+        "key",
+        "statement",
+        "status",
+        "sequence",
+        "assertedAt",
+        "provenance",
+        "confidence"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:assertion-statement": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "entity"
+            },
+            "entityId": {
+              "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+            },
+            "entityType": {
+              "$ref": "#/$defs/urn:epoch:contracts:world:type-key"
+            },
+            "properties": {
+              "$ref": "#/$defs/urn:epoch:contracts:world:property-bag"
+            }
+          },
+          "required": [
+            "kind",
+            "entityId",
+            "entityType"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "entity-property"
+            },
+            "entityId": {
+              "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+            },
+            "property": {
+              "$ref": "#/$defs/urn:epoch:contracts:world:property-name"
+            },
+            "value": {
+              "$ref": "#/$defs/__schema1"
+            }
+          },
+          "required": [
+            "kind",
+            "entityId",
+            "property",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "relation"
+            },
+            "relationType": {
+              "$ref": "#/$defs/urn:epoch:contracts:world:type-key"
+            },
+            "source": {
+              "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+            },
+            "target": {
+              "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+            },
+            "properties": {
+              "$ref": "#/$defs/urn:epoch:contracts:world:property-bag"
+            }
+          },
+          "required": [
+            "kind",
+            "relationType",
+            "source",
+            "target"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "AssertionStatement"
+    },
+    "urn:epoch:contracts:world:property-name": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,127}$",
+      "title": "PropertyName"
+    },
+    "__schema1": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/__schema1"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/__schema1"
+          }
+        }
+      ]
+    },
+    "urn:epoch:contracts:world:provenance": {
+      "readOnly": true,
+      "title": "Provenance",
+      "type": "object",
+      "properties": {
+        "actor": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:actor-ref"
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "evidence": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:contracts:world:evidence-ref"
+          }
+        },
+        "derivedFrom": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:contracts:world:assertion-id"
+          }
+        },
+        "recordedVia": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "actor",
+        "method",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:actor-ref": {
+      "readOnly": true,
+      "title": "ActorRef",
+      "description": "Opaque, provider-neutral actor reference.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "human",
+            "agent",
+            "system",
+            "external-provider",
+            "sensor",
+            "importer"
+          ]
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "id",
+        "role"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:evidence-ref": {
+      "readOnly": true,
+      "title": "EvidenceRef",
+      "description": "Addressable evidence reference (opaque id); evidence bytes are never embedded.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "document",
+            "measurement",
+            "observation",
+            "computation",
+            "assertion",
+            "external",
+            "other"
+          ]
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16,128}$"
+        },
+        "locator": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "id",
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:confidence": {
+      "readOnly": true,
+      "title": "Confidence",
+      "type": "object",
+      "properties": {
+        "distribution": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:confidence-distribution"
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "stated",
+            "measured",
+            "estimated",
+            "derived",
+            "imported"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "distribution"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:confidence-distribution": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "point"
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "interval"
+            },
+            "lower": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "upper": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "bias": {
+              "type": "string",
+              "enum": [
+                "none",
+                "low",
+                "high"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "lower",
+            "upper"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "set"
+            },
+            "values": {
+              "readOnly": true,
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "weights": {
+              "readOnly": true,
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "values"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ConfidenceDistribution"
+    },
+    "urn:epoch:contracts:world:validity": {
+      "readOnly": true,
+      "title": "Validity",
+      "description": "Temporal validity interval; from is inclusive, to is exclusive.",
+      "type": "object",
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:instant"
+        },
+        "to": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:instant"
+        }
+      },
+      "additionalProperties": false
+    },
+    "urn:epoch:contracts:world:information-gap": {
+      "readOnly": true,
+      "title": "InformationGap",
+      "description": "Identified way missing information or uncertainty could change a decision; a hook for acquisition, not acquisition itself.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "absent-entity",
+            "low-confidence",
+            "missing-property",
+            "unsupported-claim"
+          ]
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "detail": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "observedConfidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "requiredConfidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "couldChangeDecision": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "kind",
+        "subject",
+        "detail",
+        "couldChangeDecision"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
