@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: governance / boundary / typecheck / lint / test / build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable pnpm via corepack
+        run: corepack enable pnpm
+
+      # Dependency-baseline guard (see scripts/DEPENDENCY-BASELINE.md):
+      # non-foundation branches must not modify the frozen root manifests or
+      # lockfile. Root-level paths only — nested package manifests belong to
+      # the owning Work Order.
+      - name: Guard dependency baseline
+        if: ${{ !startsWith(github.head_ref || github.ref_name, 'work/W001-') && !startsWith(github.head_ref || github.ref_name, 'work/foundation-') }}
+        run: |
+          set -euo pipefail
+          if ! git rev-parse --verify origin/main >/dev/null 2>&1; then
+            echo "origin/main unavailable; skipping baseline guard."
+            exit 0
+          fi
+          CHANGED="$(git diff --name-only origin/main...HEAD || true)"
+          PROTECTED="$(printf '%s\n' "$CHANGED" | grep -E '^(package\.json|pnpm-lock\.yaml|pnpm-workspace\.yaml|turbo\.json|tsconfig[^/]*\.json)$' || true)"
+          if [ -n "$PROTECTED" ]; then
+            echo "::error::Non-foundation branch modified frozen dependency-baseline manifests:"
+            printf '%s\n' "$PROTECTED"
+            echo "Baseline changes are serialized through Tech-Lead foundation branches (work/W001-* or work/foundation-*); see scripts/DEPENDENCY-BASELINE.md."
+            exit 1
+          fi
+          echo "Baseline guard: no protected manifest changes."
+
+      # Frozen install on main and on foundation branches (the lockfile is the
+      # committed frozen baseline). Non-foundation work branches never commit
+      # lockfile changes — CI regenerates the lockfile for the run only.
+      - name: Install dependencies (frozen baseline)
+        if: ${{ (github.event_name == 'push' && github.ref_name == 'main') || startsWith(github.head_ref || github.ref_name, 'work/W001-') || startsWith(github.head_ref || github.ref_name, 'work/foundation-') }}
+        run: pnpm install --frozen-lockfile
+
+      - name: Install dependencies (lockfile regenerated for this run only)
+        if: ${{ !((github.event_name == 'push' && github.ref_name == 'main') || startsWith(github.head_ref || github.ref_name, 'work/W001-') || startsWith(github.head_ref || github.ref_name, 'work/foundation-')) }}
+        run: pnpm install --no-frozen-lockfile
+
+      # Standardized entrypoints (scripts/README.md): governance (python3,
+      # preinstalled on ubuntu-latest) + boundary root tasks, then the turbo
+      # tasks across all workspace packages.
+      - name: Verify
+        run: pnpm turbo run governance boundary typecheck lint test build

@@ -1,1 +1,21 @@
-{"name":"epoch","private":true,"version":"0.0.0","packageManager":"pnpm@10","scripts":{"check:governance":"python3 scripts/governance-check.py","check":"pnpm check:governance"}}
+{
+  "name": "epoch",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.34.5",
+  "scripts": {
+    "check:governance": "python3 scripts/governance-check.py",
+    "check:boundary": "node scripts/boundary-check.mjs",
+    "governance": "python3 scripts/governance-check.py",
+    "boundary": "node scripts/boundary-check.mjs",
+    "check": "pnpm run check:governance && pnpm run check:boundary",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "build": "turbo run build"
+  },
+  "devDependencies": {
+    "@epoch/tsconfig": "workspace:*",
+    "turbo": "catalog:"
+  }
+}

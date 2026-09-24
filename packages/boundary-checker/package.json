@@ -1,0 +1,15 @@
+{
+  "name": "@epoch/boundary-checker",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Test kit for the Epoch checkers: boundary fixtures (valid + violating) and governance negative self-tests (tooling layer).",
+  "epoch": {
+    "layer": "tooling"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "catalog:"
+  }
+}
