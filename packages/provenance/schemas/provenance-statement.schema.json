@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:provenance:statement",
+  "$defs": {
+    "urn:epoch:provenance:statement": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "relation": {
+              "type": "string",
+              "const": "was-generated-by"
+            },
+            "entityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "activityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "time": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "role": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "relation",
+            "entityId",
+            "activityId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "relation": {
+              "type": "string",
+              "const": "used"
+            },
+            "activityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "entityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "time": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "role": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "relation",
+            "activityId",
+            "entityId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "relation": {
+              "type": "string",
+              "const": "was-associated-with"
+            },
+            "activityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "agentId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "role": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "relation",
+            "activityId",
+            "agentId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "relation": {
+              "type": "string",
+              "const": "was-attributed-to"
+            },
+            "entityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "agentId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "relation",
+            "entityId",
+            "agentId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "relation": {
+              "type": "string",
+              "const": "was-derived-from"
+            },
+            "generatedEntityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "usedEntityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "activityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "relation",
+            "generatedEntityId",
+            "usedEntityId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "relation": {
+              "type": "string",
+              "const": "acted-on-behalf-of"
+            },
+            "subordinateAgentId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "responsibleAgentId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "activityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "relation",
+            "subordinateAgentId",
+            "responsibleAgentId"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ProvenanceStatement",
+      "description": "One typed PROV-DM relation statement referencing nodes declared in the same graph."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    }
+  },
+  "$id": "urn:epoch:provenance:provenance-statement:1.0.0"
+}

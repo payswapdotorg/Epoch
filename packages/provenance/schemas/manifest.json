@@ -1,0 +1,60 @@
+{
+  "contract": "epoch/provenance",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Provenance contract surface (W006): PROV-DM-adapted agents, activities, entities, and the six core relation statements. JSON Schema projection under schemas/; runtime validators in @epoch/provenance.",
+  "dataTypes": [
+    "ProvenanceActivity",
+    "ProvenanceAgent",
+    "ProvenanceAgentKind",
+    "ProvenanceEntity",
+    "ProvenanceGraph",
+    "ProvenanceGraphVersion",
+    "ProvenanceRelation",
+    "ProvenanceStatement"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/provenance and are not represented in the JSON Schema files",
+  "emittedBy": "renderProvenanceContractFiles() in @epoch/provenance (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "ProvenanceActivity",
+      "file": "provenance-activity.schema.json",
+      "sha256": "39cfc028e06047ec8229fc384e84105829111d662190174e9265c8ef351e6f3d"
+    },
+    {
+      "type": "ProvenanceAgent",
+      "file": "provenance-agent.schema.json",
+      "sha256": "f6d1e704369dbef2bb01b743d95177c4db29ffffda92352bb9db036e9b67ad10"
+    },
+    {
+      "type": "ProvenanceAgentKind",
+      "file": "provenance-agent-kind.schema.json",
+      "sha256": "7da4c76cd4d81868e63463533185c6b8f6fb6354098df3b3ee1771cd4337c787"
+    },
+    {
+      "type": "ProvenanceEntity",
+      "file": "provenance-entity.schema.json",
+      "sha256": "aa9664aa9340b876c269e81bbeb55622187cca35d67c223f955336e9d64c106c"
+    },
+    {
+      "type": "ProvenanceGraph",
+      "file": "provenance-graph.schema.json",
+      "sha256": "979fc3d9965e7f1946ff543c9c5578b33dd740b467c74f738c3a7996b035b58f"
+    },
+    {
+      "type": "ProvenanceGraphVersion",
+      "file": "provenance-graph-version.schema.json",
+      "sha256": "849268de4274bc44e8e8ee9e42892e4ba6999e13f7b7f32f1bacee6d32665675"
+    },
+    {
+      "type": "ProvenanceRelation",
+      "file": "provenance-relation.schema.json",
+      "sha256": "b59bd60ac2be94e72e441747d5b792391ecd729dc59bc225a6833e205344e071"
+    },
+    {
+      "type": "ProvenanceStatement",
+      "file": "provenance-statement.schema.json",
+      "sha256": "831386170ca82b8efe1202a57b562e972ceb45b3ca7ffd961a42a9c5be743150"
+    }
+  ]
+}

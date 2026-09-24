@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:provenance:agent-kind",
+  "$defs": {
+    "urn:epoch:provenance:agent-kind": {
+      "type": "string",
+      "enum": [
+        "person",
+        "organization",
+        "software",
+        "hardware",
+        "system"
+      ],
+      "title": "ProvenanceAgentKind",
+      "description": "Kind of acting thing: person, organization, software, hardware, or system."
+    }
+  },
+  "$id": "urn:epoch:provenance:provenance-agent-kind:1.0.0"
+}

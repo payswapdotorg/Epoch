@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:provenance:graph-version",
+  "$defs": {
+    "urn:epoch:provenance:graph-version": {
+      "type": "number",
+      "const": 1,
+      "title": "ProvenanceGraphVersion",
+      "description": "Version discriminator carried by every serialized provenance graph (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:provenance:provenance-graph-version:1.0.0"
+}
