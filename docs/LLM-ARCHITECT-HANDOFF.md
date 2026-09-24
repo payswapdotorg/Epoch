@@ -29,7 +29,7 @@ Fine-grained access produces authorized projections of the same semantic state f
 The complete target is in spec/solution-delivery-architecture.md; the Aurum boundary is in spec/aurum-chat-integration.md; formal approval is in spec/architecture-change-requests/ACR-001-solution-delivery-and-realtime-event-bridge.md.
 
 ## Current lock / transition rule
-Current main is c7430b6478213b0fe9e97f4c159ff9608be77b32.
+Current main is b2bebc38d4b87b9a67ad238c8be02eb041c79aa4 after PR #21.
 The current authorized W008/W009/W011 wave remains governed by E1.0/X1.0. ACR-001 is approved but not effective for new implementation until that wave is stabilized and the lock transition plus frontier update are committed. No worker is to reinterpret W008/W009/W011 from ACR-001.
 
 ## Successor work orders
