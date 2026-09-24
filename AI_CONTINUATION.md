@@ -7,9 +7,11 @@ Current:
 - architecture lock: E1.0 / X1.0
 - work-order schema: WO1.0
 - maximum concurrent workers: 3
-- current authorized items: W008 + W009 + W011
-- current main head: b2bebc38d4b87b9a67ad238c8be02eb041c79aa4
+- current authorized items: W009 + W011
+- current main head: 803a1989f839c2690a7e58db9dc0651e4e1ce87d
 - PR #21 merged: ACR-001 target architecture and W036-W044 delivery program recorded
+- PR #22 merged: W008 Extension SDK + Wasm
+- PR #24 merged: post-W008 lockfile reconciliation
 
 Approved architecture change:
 - ACR-001 approved 2026-09-24.
