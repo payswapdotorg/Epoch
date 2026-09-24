@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/action-protocol": ["./src/index.ts"]
+    }
+  },
+  "include": [
+    "../../contracts/actions/index.d.ts",
+    "../../contracts/actions/parity.ts"
+  ]
+}

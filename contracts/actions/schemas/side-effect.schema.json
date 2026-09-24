@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SideEffect",
+  "$defs": {
+    "SideEffect": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "targetRef": {
+          "$ref": "#/$defs/ActionTarget"
+        },
+        "reversible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "description",
+        "reversible"
+      ],
+      "additionalProperties": false,
+      "title": "SideEffect",
+      "description": "A secondary effect outside the primary intent, with per-effect reversibility."
+    },
+    "ActionTarget": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/ActionTargetKind"
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "additionalProperties": false,
+      "title": "ActionTarget",
+      "description": "What a proposed intervention acts upon: a world entity/relation/assertion or an external resource."
+    },
+    "ActionTargetKind": {
+      "type": "string",
+      "enum": [
+        "world-entity",
+        "world-relation",
+        "world-assertion",
+        "external-resource"
+      ],
+      "title": "ActionTargetKind",
+      "description": "What a proposed intervention acts upon (world model objects or external resources)."
+    }
+  }
+}

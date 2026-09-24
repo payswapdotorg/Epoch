@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ActionMessageKind",
+  "$defs": {
+    "ActionMessageKind": {
+      "type": "string",
+      "enum": [
+        "action.proposal",
+        "action.authorization-request",
+        "action.authorization-decision"
+      ],
+      "title": "ActionMessageKind",
+      "description": "Discriminating message kind for action-protocol messages."
+    }
+  }
+}

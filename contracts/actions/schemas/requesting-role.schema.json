@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RequestingRole",
+  "$defs": {
+    "RequestingRole": {
+      "type": "string",
+      "enum": [
+        "action-gateway",
+        "agent-runtime",
+        "human"
+      ],
+      "title": "RequestingRole",
+      "description": "Roles that may request an authorization decision: action-gateway, agent-runtime, or human."
+    }
+  }
+}

@@ -1,0 +1,469 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ActionProposal",
+  "$defs": {
+    "ActionProposal": {
+      "type": "object",
+      "properties": {
+        "protocolVersion": {
+          "$ref": "#/$defs/ActionProtocolVersion"
+        },
+        "messageKind": {
+          "type": "string",
+          "const": "action.proposal"
+        },
+        "messageId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "proposalId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "proposedBy": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "actionType": {
+          "$ref": "#/$defs/ActionTypeReference"
+        },
+        "target": {
+          "$ref": "#/$defs/ActionTarget"
+        },
+        "parameters": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        "preconditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Precondition"
+          }
+        },
+        "predictedEffects": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PredictedEffect"
+          }
+        },
+        "sideEffects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SideEffect"
+          }
+        },
+        "reversibility": {
+          "$ref": "#/$defs/ReversibilityClassification"
+        },
+        "authorityRequirements": {
+          "$ref": "#/$defs/AuthorityRequirements"
+        },
+        "rationale": {
+          "type": "string",
+          "maxLength": 10000
+        },
+        "evidenceRefs": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "expiresAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "protocolVersion",
+        "messageKind",
+        "messageId",
+        "createdAt",
+        "proposalId",
+        "proposedBy",
+        "actionType",
+        "target",
+        "parameters",
+        "preconditions",
+        "predictedEffects",
+        "sideEffects",
+        "reversibility",
+        "authorityRequirements"
+      ],
+      "additionalProperties": false,
+      "title": "ActionProposal",
+      "description": "Typed intervention proposal: target, parameters, preconditions, predicted effects, side effects, reversibility, and authority requirements."
+    },
+    "ActionProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "ActionProtocolVersion",
+      "description": "Exact action-protocol version admitted by this release (\"1.0.0\")."
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "ActionTypeReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "ActionTypeReference",
+      "description": "Reference to a versioned action type: dot-namespaced id plus semver core version."
+    },
+    "ActionTarget": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/ActionTargetKind"
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "additionalProperties": false,
+      "title": "ActionTarget",
+      "description": "What a proposed intervention acts upon: a world entity/relation/assertion or an external resource."
+    },
+    "ActionTargetKind": {
+      "type": "string",
+      "enum": [
+        "world-entity",
+        "world-relation",
+        "world-assertion",
+        "external-resource"
+      ],
+      "title": "ActionTargetKind",
+      "description": "What a proposed intervention acts upon (world model objects or external resources)."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "Precondition": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "constraintRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "targetRef": {
+          "$ref": "#/$defs/ActionTarget"
+        }
+      },
+      "required": [
+        "description"
+      ],
+      "additionalProperties": false,
+      "title": "Precondition",
+      "description": "A condition that must hold before execution; optionally bound to a compiled constraint (W004) or a world target."
+    },
+    "PredictedEffect": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "targetRef": {
+          "$ref": "#/$defs/ActionTarget"
+        },
+        "confidence": {
+          "$ref": "#/$defs/EffectConfidence"
+        }
+      },
+      "required": [
+        "description",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "title": "PredictedEffect",
+      "description": "A predicted primary effect with an exhaustive confidence classification."
+    },
+    "EffectConfidence": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "deterministic"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "quantified"
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "qualitative"
+            },
+            "level": {
+              "type": "string",
+              "enum": [
+                "high",
+                "medium",
+                "low"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "level"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "EffectConfidence",
+      "description": "Deterministic, quantified [0,1], or qualitative confidence in a predicted effect."
+    },
+    "SideEffect": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "targetRef": {
+          "$ref": "#/$defs/ActionTarget"
+        },
+        "reversible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "description",
+        "reversible"
+      ],
+      "additionalProperties": false,
+      "title": "SideEffect",
+      "description": "A secondary effect outside the primary intent, with per-effect reversibility."
+    },
+    "ReversibilityClassification": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "reversible"
+            },
+            "via": {
+              "type": "string",
+              "enum": [
+                "automatic",
+                "manual",
+                "compensating-action"
+              ]
+            },
+            "notes": {
+              "type": "string",
+              "maxLength": 2000
+            }
+          },
+          "required": [
+            "kind",
+            "via"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "partially-reversible"
+            },
+            "notes": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            }
+          },
+          "required": [
+            "kind",
+            "notes"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "irreversible"
+            },
+            "notes": {
+              "type": "string",
+              "maxLength": 2000
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ReversibilityClassification",
+      "description": "Exhaustive reversibility classification: reversible (via automatic/manual/compensating action), partially reversible, or irreversible."
+    },
+    "AuthorityRequirements": {
+      "type": "object",
+      "properties": {
+        "requiredScopes": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AuthorityScope"
+          }
+        },
+        "requiresHumanApproval": {
+          "type": "boolean"
+        },
+        "approvalQuorum": {
+          "$ref": "#/$defs/ApprovalQuorum"
+        }
+      },
+      "required": [
+        "requiredScopes",
+        "requiresHumanApproval"
+      ],
+      "additionalProperties": false,
+      "title": "AuthorityRequirements",
+      "description": "Required authority scopes and human-approval requirements, evaluated by the Action Gateway (W022)."
+    },
+    "AuthorityScope": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+(:[a-z0-9-]+)+$",
+      "title": "AuthorityScope",
+      "description": "Colon-namespaced authority scope, e.g. \"world:write\" or \"external:git:write\"."
+    },
+    "ApprovalQuorum": {
+      "type": "object",
+      "properties": {
+        "approvals": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "roles": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        }
+      },
+      "required": [
+        "approvals",
+        "roles"
+      ],
+      "additionalProperties": false,
+      "title": "ApprovalQuorum",
+      "description": "How many approvals from which opaque roles are required."
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DeniedDecision",
+  "$defs": {
+    "DeniedDecision": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "denied"
+        },
+        "code": {
+          "$ref": "#/$defs/DenialCode"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10000
+        }
+      },
+      "required": [
+        "kind",
+        "code",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "title": "DeniedDecision",
+      "description": "Denial with a machine-readable code and a required human-auditable reason."
+    },
+    "DenialCode": {
+      "type": "string",
+      "enum": [
+        "missing-authority",
+        "policy-violation",
+        "precondition-unmet",
+        "insufficient-evidence",
+        "proposal-expired",
+        "out-of-scope",
+        "other"
+      ],
+      "title": "DenialCode",
+      "description": "Machine-readable denial code carried by denied authorization decisions."
+    }
+  }
+}

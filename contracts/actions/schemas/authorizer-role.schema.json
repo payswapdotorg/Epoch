@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuthorizerRole",
+  "$defs": {
+    "AuthorizerRole": {
+      "type": "string",
+      "enum": [
+        "action-gateway",
+        "human-approver"
+      ],
+      "title": "AuthorizerRole",
+      "description": "Roles that may issue an authorization decision: action-gateway or human-approver. Agents are structurally excluded."
+    }
+  }
+}

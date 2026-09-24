@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PrincipalReference",
+  "$defs": {
+    "PrincipalReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "role": {
+          "$ref": "#/$defs/RequestingRole"
+        }
+      },
+      "required": [
+        "id",
+        "role"
+      ],
+      "additionalProperties": false,
+      "title": "PrincipalReference",
+      "description": "Who requested an authorization decision: action-gateway, agent-runtime, or human."
+    },
+    "RequestingRole": {
+      "type": "string",
+      "enum": [
+        "action-gateway",
+        "agent-runtime",
+        "human"
+      ],
+      "title": "RequestingRole",
+      "description": "Roles that may request an authorization decision: action-gateway, agent-runtime, or human."
+    }
+  }
+}

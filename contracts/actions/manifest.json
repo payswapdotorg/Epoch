@@ -1,0 +1,185 @@
+{
+  "contract": "epoch/actions",
+  "contractVersion": "1.0.0",
+  "protocolVersion": "1.0.0",
+  "description": "Typed, versioned Action Protocol contract surface (W003): proposals and authorization request/decision messages. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "dataTypes": [
+    "ActionMessageKind",
+    "ActionProtocolMessage",
+    "ActionProtocolVersion",
+    "ActionProposal",
+    "ActionTarget",
+    "ActionTargetKind",
+    "ActionTypeReference",
+    "ApprovalQuorum",
+    "AuthorizationCondition",
+    "AuthorizationDecision",
+    "AuthorizationRequest",
+    "AuthorityRequirements",
+    "AuthorityScope",
+    "AuthorizerReference",
+    "AuthorizerRole",
+    "AuthorizedDecision",
+    "Decision",
+    "DenialCode",
+    "DeniedDecision",
+    "EffectConfidence",
+    "EscalatedDecision",
+    "Precondition",
+    "PredictedEffect",
+    "PrincipalReference",
+    "ProposalReference",
+    "RequestingRole",
+    "ReversibilityClassification",
+    "SideEffect"
+  ],
+  "messageKinds": [
+    "action.proposal",
+    "action.authorization-request",
+    "action.authorization-decision"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/action-protocol and are not represented in the JSON Schema files",
+  "emittedBy": "renderActionContractFiles() in @epoch/action-protocol (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "ActionMessageKind",
+      "file": "schemas/action-message-kind.schema.json",
+      "sha256": "d1834666c6c1f69baea07863de4408828539fa938f0046aba42735a846e4f441"
+    },
+    {
+      "type": "ActionProtocolMessage",
+      "file": "schemas/action-protocol-message.schema.json",
+      "sha256": "5976ad70cdb7c7ef00bc8ad8590120c93831885b629b4cfcf64483910f41d766"
+    },
+    {
+      "type": "ActionProtocolVersion",
+      "file": "schemas/action-protocol-version.schema.json",
+      "sha256": "49974bfcb55ecd66ce1d298d4e9458ac0335bf16b53015e78aa14bb01635a074"
+    },
+    {
+      "type": "ActionProposal",
+      "file": "schemas/action-proposal.schema.json",
+      "sha256": "a81f45eeda0229ddf4615210fd8309eef073adf2f8d208f7c88e9850c6ed7f05"
+    },
+    {
+      "type": "ActionTarget",
+      "file": "schemas/action-target.schema.json",
+      "sha256": "d13618d4ba816c1dc082ed42228eae96db86821774fcb77a6a9d5ec6759d4114"
+    },
+    {
+      "type": "ActionTargetKind",
+      "file": "schemas/action-target-kind.schema.json",
+      "sha256": "59865e2e4e9cef2c0d4900cfcd5d348565f752df6501ae92cce9023d0f0aeb97"
+    },
+    {
+      "type": "ActionTypeReference",
+      "file": "schemas/action-type-reference.schema.json",
+      "sha256": "5e28f5e845bd928a093354f789a23f5d148eeaf577a49f5e9be3b21d36364de2"
+    },
+    {
+      "type": "ApprovalQuorum",
+      "file": "schemas/approval-quorum.schema.json",
+      "sha256": "4f0e989228b52af1221bfbc9045b691133d726b027f06f8f882e82b5f06354a7"
+    },
+    {
+      "type": "AuthorizationCondition",
+      "file": "schemas/authorization-condition.schema.json",
+      "sha256": "0858a5b359d549a8c8cd879257c967fb6a17fb6391a4017c730ddae14806d68e"
+    },
+    {
+      "type": "AuthorizationDecision",
+      "file": "schemas/authorization-decision.schema.json",
+      "sha256": "b81ecf523eb777a55336a3de33bbf43e12b87d7dc87035e8455e72035f161287"
+    },
+    {
+      "type": "AuthorizationRequest",
+      "file": "schemas/authorization-request.schema.json",
+      "sha256": "f81bc53e6be4961cf8df8625c4e5d0fd4a4b1fce3b5daaeda04da74923e173be"
+    },
+    {
+      "type": "AuthorityRequirements",
+      "file": "schemas/authority-requirements.schema.json",
+      "sha256": "5c2a3223dde82657a1d9aa5ea80ebdf06e8533a009c828546abbdd8811833105"
+    },
+    {
+      "type": "AuthorityScope",
+      "file": "schemas/authority-scope.schema.json",
+      "sha256": "bad8556730e043711063e9586e03e918dd7477c9ea4ed18eee56bd307ac162bd"
+    },
+    {
+      "type": "AuthorizerReference",
+      "file": "schemas/authorizer-reference.schema.json",
+      "sha256": "91f953db17ca3cfcd6c2114d08142aaa40736dc7e6f9f115618fe21fe5951899"
+    },
+    {
+      "type": "AuthorizerRole",
+      "file": "schemas/authorizer-role.schema.json",
+      "sha256": "763d51b2b37f85baf62e131f9859b517e1a7fc5cd3a99d090437d005a4bea2ad"
+    },
+    {
+      "type": "AuthorizedDecision",
+      "file": "schemas/authorized-decision.schema.json",
+      "sha256": "daf73ee354f6d2f471bf6881b7026aca0e6a454cc5dcb94ad0e6ab97b52ce047"
+    },
+    {
+      "type": "Decision",
+      "file": "schemas/decision.schema.json",
+      "sha256": "21371fe80e43b3d6163101f59c65d741d920e000d89362e024875502493dbfcf"
+    },
+    {
+      "type": "DenialCode",
+      "file": "schemas/denial-code.schema.json",
+      "sha256": "b3134ce30e4a57a9a1fac3eddec0ced5e90fe469115e12c1f9d1eed75d8bbf45"
+    },
+    {
+      "type": "DeniedDecision",
+      "file": "schemas/denied-decision.schema.json",
+      "sha256": "8d52371027bcc286f26d3cc4d293cc789c39e7f1a06b9a734f421aba51792530"
+    },
+    {
+      "type": "EffectConfidence",
+      "file": "schemas/effect-confidence.schema.json",
+      "sha256": "6475f9ef9b705577e01385a09c0f05bdf4969248035e44f5b185ef0ce0aaa20f"
+    },
+    {
+      "type": "EscalatedDecision",
+      "file": "schemas/escalated-decision.schema.json",
+      "sha256": "33760c3e72b39bf4f4b82620f08304e2333e1f9e074d30c5d923efee219acd29"
+    },
+    {
+      "type": "Precondition",
+      "file": "schemas/precondition.schema.json",
+      "sha256": "5fc2d6345bab1abecd813765c8db0e542f17c780d8899dc61667765cccb4d1aa"
+    },
+    {
+      "type": "PredictedEffect",
+      "file": "schemas/predicted-effect.schema.json",
+      "sha256": "8bcdf0f74d3fb9f0887ca9fcce011d77b240591c40a8ecd90594e4352d0729af"
+    },
+    {
+      "type": "PrincipalReference",
+      "file": "schemas/principal-reference.schema.json",
+      "sha256": "96e6cce6cf6289699be2fefd7e524f0c0547bcead6da6eabf611d977327dcfe0"
+    },
+    {
+      "type": "ProposalReference",
+      "file": "schemas/proposal-reference.schema.json",
+      "sha256": "3e51cedb9a6360329198fa51e7304ff771e9e10e32aaaed1cddfedd3c2c150ee"
+    },
+    {
+      "type": "RequestingRole",
+      "file": "schemas/requesting-role.schema.json",
+      "sha256": "1e43dc244dbf90e9c4d73b36b66c5808459c754d7e01725787b7461716731e44"
+    },
+    {
+      "type": "ReversibilityClassification",
+      "file": "schemas/reversibility-classification.schema.json",
+      "sha256": "2b9199212d5fb83526dc32301fde5f376bd94263b35d699b4e4fe749f3ee7d53"
+    },
+    {
+      "type": "SideEffect",
+      "file": "schemas/side-effect.schema.json",
+      "sha256": "0c64448423f5641183dfdf8896ca08f47e4df013aa6184781b602ca66b41dc7f"
+    }
+  ]
+}
