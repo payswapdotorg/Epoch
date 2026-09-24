@@ -10,7 +10,7 @@ Worker Count: 1
 Implement Software/Infrastructure Pack inside the frozen architecture, using upstream contracts rather than recreating authorities.
 
 ## Delivery integration
-The pack must use the universal Solution Delivery model for work packages, schedule, actualization and outcomes rather than defining a parallel lifecycle.
+The pack must use the universal Solution Delivery model for work packages, schedule, acquisition, realization, actualization and outcomes rather than defining a parallel lifecycle. It must conform to `spec/domain-pack-contract.md`.
 
 ## Acceptance
 1. Scope is limited to this Work Order.
@@ -23,3 +23,6 @@ The pack must use the universal Solution Delivery model for work packages, sched
 
 ## Dispatch
 Ready only after every dependency is COMPLETE and no active ownership overlaps. One branch and one PR; no routine rebase.
+
+
+Software roadmap/issue/deployment views are projections of ProgramOfWork and DeliveryRecord, not replacement authorities.
