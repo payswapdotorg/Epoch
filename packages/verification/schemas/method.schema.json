@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:verification:method",
+  "$defs": {
+    "urn:epoch:verification:method": {
+      "readOnly": true,
+      "title": "Method",
+      "description": "The Method stage: how a claim will be verified or validated (every claim needs at least one).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:verification:chain-version"
+        },
+        "methodId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "claimId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "stage": {
+          "$ref": "#/$defs/urn:epoch:verification:stage"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "deterministic": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "methodId",
+        "claimId",
+        "stage",
+        "description",
+        "deterministic"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:verification:chain-version": {
+      "type": "number",
+      "const": 1,
+      "title": "VerificationChainVersion",
+      "description": "Version discriminator carried by every serialized verification chain (currently 1)."
+    },
+    "urn:epoch:verification:stage": {
+      "type": "string",
+      "enum": [
+        "verification",
+        "validation"
+      ],
+      "title": "VerificationStage",
+      "description": "Distinct chain stages: verification (\"was the work done to spec\") vs validation (\"is the spec right\")."
+    }
+  },
+  "$id": "urn:epoch:verification:method:1.0.0"
+}

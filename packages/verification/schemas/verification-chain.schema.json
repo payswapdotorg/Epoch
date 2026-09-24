@@ -1,0 +1,1078 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:verification:chain",
+  "$defs": {
+    "urn:epoch:verification:chain": {
+      "readOnly": true,
+      "title": "VerificationChain",
+      "description": "The closed chain of Requirement, Claim, Method, Run, Evidence, Result, and Approval records plus attached provenance.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:verification:chain-version"
+        },
+        "requirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:verification:requirement"
+          }
+        },
+        "claims": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:verification:claim"
+          }
+        },
+        "methods": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:verification:method"
+          }
+        },
+        "runs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:verification:run"
+          }
+        },
+        "evidence": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:evidence:evidence-record"
+          }
+        },
+        "results": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:verification:result"
+          }
+        },
+        "approvals": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:verification:approval"
+          }
+        },
+        "provenance": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:provenance:graph"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "requirements",
+        "claims",
+        "methods",
+        "runs",
+        "evidence",
+        "results",
+        "approvals"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:verification:chain-version": {
+      "type": "number",
+      "const": 1,
+      "title": "VerificationChainVersion",
+      "description": "Version discriminator carried by every serialized verification chain (currently 1)."
+    },
+    "urn:epoch:verification:requirement": {
+      "readOnly": true,
+      "title": "Requirement",
+      "description": "The Requirement stage: what must hold (authored outside this kernel).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:verification:chain-version"
+        },
+        "requirementId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "requirementId",
+        "statement"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:verification:claim": {
+      "readOnly": true,
+      "title": "Claim",
+      "description": "The Claim stage: a testable assertion that a requirement can be verified or validated against.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:verification:chain-version"
+        },
+        "claimId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "requirementId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "stage": {
+          "$ref": "#/$defs/urn:epoch:verification:stage"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "claimId",
+        "requirementId",
+        "statement",
+        "stage"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:verification:stage": {
+      "type": "string",
+      "enum": [
+        "verification",
+        "validation"
+      ],
+      "title": "VerificationStage",
+      "description": "Distinct chain stages: verification (\"was the work done to spec\") vs validation (\"is the spec right\")."
+    },
+    "urn:epoch:verification:method": {
+      "readOnly": true,
+      "title": "Method",
+      "description": "The Method stage: how a claim will be verified or validated (every claim needs at least one).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:verification:chain-version"
+        },
+        "methodId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "claimId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "stage": {
+          "$ref": "#/$defs/urn:epoch:verification:stage"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "deterministic": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "methodId",
+        "claimId",
+        "stage",
+        "description",
+        "deterministic"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:verification:run": {
+      "readOnly": true,
+      "title": "Run",
+      "description": "The Run stage: one execution of a method by an actor, producing content-addressed evidence.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:verification:chain-version"
+        },
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "methodId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "stage": {
+          "$ref": "#/$defs/urn:epoch:verification:stage"
+        },
+        "executedBy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "executedByKind": {
+          "$ref": "#/$defs/urn:epoch:provenance:agent-kind"
+        },
+        "startedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "endedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "status": {
+          "$ref": "#/$defs/urn:epoch:verification:run-status"
+        },
+        "producedEvidence": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:evidence:sha256-digest"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "runId",
+        "methodId",
+        "stage",
+        "executedBy",
+        "executedByKind",
+        "startedAt",
+        "endedAt",
+        "status",
+        "producedEvidence"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:provenance:agent-kind": {
+      "type": "string",
+      "enum": [
+        "person",
+        "organization",
+        "software",
+        "hardware",
+        "system"
+      ],
+      "title": "ProvenanceAgentKind",
+      "description": "Kind of acting thing: person, organization, software, hardware, or system."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "urn:epoch:verification:run-status": {
+      "type": "string",
+      "enum": [
+        "completed",
+        "failed",
+        "aborted"
+      ],
+      "title": "RunStatus",
+      "description": "Execution status of a run: completed, failed, or aborted."
+    },
+    "urn:epoch:evidence:sha256-digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "urn:epoch:evidence:evidence-record": {
+      "readOnly": true,
+      "title": "EvidenceRecord",
+      "description": "Exact-revision, content-addressed evidence record with producer reference and confidence/uncertainty.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:evidence:record-version"
+        },
+        "kind": {
+          "$ref": "#/$defs/urn:epoch:evidence:evidence-kind"
+        },
+        "subject": {
+          "$ref": "#/$defs/urn:epoch:evidence:exact-revision-ref"
+        },
+        "producedBy": {
+          "$ref": "#/$defs/urn:epoch:evidence:evidence-production"
+        },
+        "observedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "content": {
+          "$ref": "#/$defs/urn:epoch:evidence:evidence-payload"
+        },
+        "confidence": {
+          "$ref": "#/$defs/urn:epoch:evidence:confidence"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "kind",
+        "subject",
+        "producedBy",
+        "observedAt",
+        "content",
+        "confidence"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:evidence:record-version": {
+      "type": "number",
+      "const": 1,
+      "title": "EvidenceRecordVersion",
+      "description": "Version discriminator carried by every serialized evidence record (currently 1)."
+    },
+    "urn:epoch:evidence:evidence-kind": {
+      "type": "string",
+      "enum": [
+        "document",
+        "measurement",
+        "observation",
+        "computation",
+        "assertion",
+        "external",
+        "other"
+      ],
+      "title": "EvidenceKind",
+      "description": "Kind of evidence: document, measurement, observation, computation, assertion, external, other."
+    },
+    "urn:epoch:evidence:exact-revision-ref": {
+      "readOnly": true,
+      "title": "ExactRevisionRef",
+      "description": "Reference to the exact artifact revision: opaque artifact id, revision label, and SHA-256 content digest.",
+      "type": "object",
+      "properties": {
+        "artifactId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "digest": {
+          "$ref": "#/$defs/urn:epoch:evidence:sha256-digest"
+        }
+      },
+      "required": [
+        "artifactId",
+        "revision",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:evidence:evidence-production": {
+      "readOnly": true,
+      "title": "EvidenceProduction",
+      "description": "Opaque identifiers of the run, executing actor, and (optional) method that produced the evidence.",
+      "type": "object",
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actorId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "methodId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "runId",
+        "actorId"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:evidence:evidence-payload": {
+      "readOnly": true,
+      "title": "EvidencePayload",
+      "description": "JSON-representable payload plus media type and optional out-of-band locator.",
+      "type": "object",
+      "properties": {
+        "mediaType": {
+          "type": "string",
+          "maxLength": 255,
+          "pattern": "^[a-z0-9][a-z0-9!#$&^_.+-]{0,126}\\/[a-z0-9][a-z0-9!#$&^_.+-]{0,126}$"
+        },
+        "data": {
+          "$ref": "#/$defs/JsonValue"
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "mediaType",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "urn:epoch:evidence:confidence": {
+      "readOnly": true,
+      "title": "Confidence",
+      "description": "Uncertainty attached to an evidence record: distribution, acquisition method, rationale.",
+      "type": "object",
+      "properties": {
+        "distribution": {
+          "$ref": "#/$defs/urn:epoch:evidence:confidence-distribution"
+        },
+        "method": {
+          "$ref": "#/$defs/urn:epoch:evidence:confidence-method"
+        },
+        "rationale": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "distribution"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:evidence:confidence-distribution": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "point"
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "interval"
+            },
+            "lower": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "upper": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "bias": {
+              "$ref": "#/$defs/urn:epoch:evidence:interval-bias"
+            }
+          },
+          "required": [
+            "kind",
+            "lower",
+            "upper"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "set"
+            },
+            "values": {
+              "readOnly": true,
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "weights": {
+              "readOnly": true,
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "values"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ConfidenceDistribution",
+      "description": "Bounded [0,1] uncertainty distribution: point, interval, or weighted set (W002-aligned)."
+    },
+    "urn:epoch:evidence:interval-bias": {
+      "type": "string",
+      "enum": [
+        "none",
+        "low",
+        "high"
+      ],
+      "title": "IntervalBias",
+      "description": "Directional bias admitted for interval confidence estimates: none, low, high."
+    },
+    "urn:epoch:evidence:confidence-method": {
+      "type": "string",
+      "enum": [
+        "stated",
+        "measured",
+        "estimated",
+        "derived",
+        "imported"
+      ],
+      "title": "ConfidenceMethod",
+      "description": "How a confidence figure was obtained: stated, measured, estimated, derived, imported."
+    },
+    "urn:epoch:verification:result": {
+      "readOnly": true,
+      "title": "Result",
+      "description": "The Result stage: the judgment a run produced about its claim, grounded in exact-revision evidence.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:verification:chain-version"
+        },
+        "resultId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "claimId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "stage": {
+          "$ref": "#/$defs/urn:epoch:verification:stage"
+        },
+        "outcome": {
+          "$ref": "#/$defs/urn:epoch:verification:result-outcome"
+        },
+        "evidenceDigests": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:evidence:sha256-digest"
+          }
+        },
+        "confidence": {
+          "$ref": "#/$defs/urn:epoch:evidence:confidence"
+        },
+        "decidedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "resultId",
+        "claimId",
+        "runId",
+        "stage",
+        "outcome",
+        "evidenceDigests",
+        "confidence",
+        "decidedAt"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:verification:result-outcome": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "inconclusive"
+      ],
+      "title": "ResultOutcome",
+      "description": "Judgment produced by a run about its claim: pass, fail, or inconclusive."
+    },
+    "urn:epoch:verification:approval": {
+      "readOnly": true,
+      "title": "Approval",
+      "description": "The Approval stage: a distinct authority act — results do not self-approve; the approver must differ from the run executor.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:verification:chain-version"
+        },
+        "approvalId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "resultId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "approverId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "approverKind": {
+          "$ref": "#/$defs/urn:epoch:provenance:agent-kind"
+        },
+        "decision": {
+          "$ref": "#/$defs/urn:epoch:verification:approval-decision"
+        },
+        "decidedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "approvalId",
+        "resultId",
+        "approverId",
+        "approverKind",
+        "decision",
+        "decidedAt"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:verification:approval-decision": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "rejected"
+      ],
+      "title": "ApprovalDecision",
+      "description": "Authority act over a result: approved or rejected."
+    },
+    "urn:epoch:provenance:graph": {
+      "readOnly": true,
+      "title": "ProvenanceGraph",
+      "description": "A bundle of agents, activities, entities, and the six core relation statements connecting them.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:provenance:graph-version"
+        },
+        "agents": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:provenance:agent"
+          }
+        },
+        "activities": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:provenance:activity"
+          }
+        },
+        "entities": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:provenance:entity"
+          }
+        },
+        "statements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:provenance:statement"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "agents",
+        "activities",
+        "entities",
+        "statements"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:provenance:graph-version": {
+      "type": "number",
+      "const": 1,
+      "title": "ProvenanceGraphVersion",
+      "description": "Version discriminator carried by every serialized provenance graph (currently 1)."
+    },
+    "urn:epoch:provenance:agent": {
+      "readOnly": true,
+      "title": "ProvenanceAgent",
+      "description": "A person, organization, software agent, hardware device, or system that acts.",
+      "type": "object",
+      "properties": {
+        "agentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "agentKind": {
+          "$ref": "#/$defs/urn:epoch:provenance:agent-kind"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "agentId",
+        "agentKind"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:provenance:activity": {
+      "readOnly": true,
+      "title": "ProvenanceActivity",
+      "description": "A process or action performed over a period of time; kind is an open kebab-case slug.",
+      "type": "object",
+      "properties": {
+        "activityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "activityKind": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "startedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "endedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "activityId",
+        "activityKind"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:provenance:entity": {
+      "readOnly": true,
+      "title": "ProvenanceEntity",
+      "description": "A durable thing an activity used or generated; carries an exact content digest when content-addressed.",
+      "type": "object",
+      "properties": {
+        "entityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "entityKind": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "digest": {
+          "$ref": "#/$defs/urn:epoch:provenance:sha256-digest"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "entityId",
+        "entityKind"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:provenance:sha256-digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "urn:epoch:provenance:statement": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "relation": {
+              "type": "string",
+              "const": "was-generated-by"
+            },
+            "entityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "activityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "time": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "role": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "relation",
+            "entityId",
+            "activityId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "relation": {
+              "type": "string",
+              "const": "used"
+            },
+            "activityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "entityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "time": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "role": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "relation",
+            "activityId",
+            "entityId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "relation": {
+              "type": "string",
+              "const": "was-associated-with"
+            },
+            "activityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "agentId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "role": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "relation",
+            "activityId",
+            "agentId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "relation": {
+              "type": "string",
+              "const": "was-attributed-to"
+            },
+            "entityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "agentId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "relation",
+            "entityId",
+            "agentId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "relation": {
+              "type": "string",
+              "const": "was-derived-from"
+            },
+            "generatedEntityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "usedEntityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "activityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "relation",
+            "generatedEntityId",
+            "usedEntityId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "relation": {
+              "type": "string",
+              "const": "acted-on-behalf-of"
+            },
+            "subordinateAgentId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "responsibleAgentId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "activityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "relation",
+            "subordinateAgentId",
+            "responsibleAgentId"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ProvenanceStatement",
+      "description": "One typed PROV-DM relation statement referencing nodes declared in the same graph."
+    }
+  },
+  "$id": "urn:epoch:verification:verification-chain:1.0.0"
+}
