@@ -38,7 +38,7 @@ The Tech Lead derives the live frontier from dependencies. Up to three READY ite
 | W029 | External Adapter Reference Set (Git/IFC/MCP/FMI) | W007,W013,W021,W022 | adapters/github/*, adapters/ifc/*, adapters/mcp/*, adapters/fmi/* |
 | W030 | Security/Isolation/Observability | W008,W009,W020,W021,W022,W023 | services/security/*, packages/observability/*, tests/security/*, docs/security/* |
 | W031 | Reference E2E slices | W014,W015,W016,W020,W021,W022,W026,W027,W028,W029 | examples/e2e/*, tests/e2e/*, docs/e2e/* |
-| W032 | Cross-domain integration harness | W026,W027,W028,W031 | packages/test-harness/*, tests/contracts/*, tests/integration/* |
+| W032 | Cross-domain integration harness | W026,W027,W028,W029,W031 | packages/test-harness/*, tests/contracts/*, tests/integration/* |
 | W033 | Production deployment | W032 | deploy/*, ops/*, docs/operations/* |
 | W034 | Performance + scale | W032,W033 | packages/performance/*, tests/performance/*, docs/performance/* |
 | W035 | Release/SDK docs/marketplace readiness | W033,W034 | docs/release/*, docs/sdk/*, docs/marketplace-readiness/*, examples/sdk/*, release/*, .github/workflows/* |
