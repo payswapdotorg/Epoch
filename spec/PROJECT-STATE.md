@@ -19,6 +19,7 @@ Current frontier:
 - Foundation maintenance COMPLETE (PR #17, squash 5a5a1e24: wave-3 lockfile reconcile, +71/-0, 2 new importers)
 - W008/W009/W011 AUTHORIZED — wave 4, three workers, pairwise-disjoint surfaces (W008 extension-sdk/extension-runtime/runtimes-wasm; W009 tenancy/identity/authorization; W011 experience-protocol + contracts/experience)
 - W010 WAITING_ON_DEPENDENCIES (needs W009); all others WAITING_ON_DEPENDENCIES
+- PR #21 merged (squash b2bebc38): ACR-001 approved architecture target and W036-W044 delivery program added
 
 Verification baseline after wave-3 (5a5a1e24): battery 48/48 tasks --force, 0 cached (16 typecheck + 13 lint + 14 test + 3 build + governance + boundary), across 15 kernel packages + web app; governance selftest 6/6. pnpm@10.34.5 / Node 22 / TS 5.9.3 / eslint 10.11.0 + typescript-eslint 8.70.1 / vitest 5.0.1 / Next 15.5.26 / React 19.3.0 / zod 4.6.5 / turbo 2.11.3 — frozen catalog in pnpm-workspace.yaml; policy in scripts/DEPENDENCY-BASELINE.md; CI battery: governance boundary typecheck lint test build.
 
@@ -49,6 +50,6 @@ ACR-001 is not effective for new implementation yet. The currently authorized W0
 
 W036-W044 are defined and dependency-gated; none is currently authorized.
 
-Current main head at the time of this architecture amendment: c7430b6478213b0fe9e97f4c159ff9608be77b32.
+Current main head: b2bebc38d4b87b9a67ad238c8be02eb041c79aa4.
 
 Every merge must update this file before advancing.
