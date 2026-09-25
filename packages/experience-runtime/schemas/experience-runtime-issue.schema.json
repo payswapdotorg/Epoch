@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExperienceRuntimeIssue",
+  "$defs": {
+    "ExperienceRuntimeIssue": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "ExperienceRuntimeIssue",
+      "description": "One flattened validation issue: dotted path (\"$\" = root) plus message."
+    }
+  }
+}

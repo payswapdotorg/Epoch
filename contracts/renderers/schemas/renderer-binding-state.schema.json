@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererBindingState",
+  "$defs": {
+    "RendererBindingState": {
+      "type": "string",
+      "enum": [
+        "closed",
+        "open"
+      ],
+      "title": "RendererBindingState",
+      "description": "Lifecycle state of a renderer session binding: open (admits invocations) or closed (terminal)."
+    }
+  }
+}

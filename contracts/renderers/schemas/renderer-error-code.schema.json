@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererErrorCode",
+  "$defs": {
+    "RendererErrorCode": {
+      "type": "string",
+      "enum": [
+        "budget-exceeded",
+        "capability-denied",
+        "cross-tenant-denied",
+        "digest-mismatch",
+        "invalid-invocation",
+        "malformed-invocation",
+        "malformed-record",
+        "session-closed",
+        "unknown-session",
+        "version-unsupported"
+      ],
+      "title": "RendererErrorCode",
+      "description": "Typed renderer-error code of the renderer hosting surface."
+    }
+  }
+}

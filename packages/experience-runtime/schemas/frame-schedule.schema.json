@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/FrameSchedule",
+  "$defs": {
+    "FrameSchedule": {
+      "type": "object",
+      "properties": {
+        "scheduleVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "frameDurationMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60000
+        },
+        "tickCadence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        }
+      },
+      "required": [
+        "scheduleVersion",
+        "frameDurationMs",
+        "tickCadence"
+      ],
+      "additionalProperties": false,
+      "title": "FrameSchedule",
+      "description": "Deterministic virtual-time frame/tick schedule: integer frame duration plus integer tick cadence (frames per tick)."
+    }
+  }
+}

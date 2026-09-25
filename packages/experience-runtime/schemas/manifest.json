@@ -1,0 +1,142 @@
+{
+  "contract": "epoch/experience-runtime",
+  "contractVersion": "1.0.0",
+  "protocolVersion": "1.0.0",
+  "description": "Typed, versioned, provider-neutral Experience Runtime host-model contract surface (W013): tenant-scoped device sessions over the W011 device vocabulary, deterministic virtual-time frame/tick schedules, typed runtime events, and a typed session-error taxonomy. JSON Schema projection under schemas/; runtime validators in @epoch/experience-runtime.",
+  "dataTypes": [
+    "DeviceDescriptor",
+    "DeviceSessionContent",
+    "DeviceSessionId",
+    "DeviceSessionRecord",
+    "DeviceSessionState",
+    "EventSequence",
+    "ExperienceRuntimeError",
+    "ExperienceRuntimeErrorCode",
+    "ExperienceRuntimeIssue",
+    "ExperienceRuntimeProtocolVersion",
+    "FrameIndex",
+    "FrameSchedule",
+    "JsonValue",
+    "RuntimeEvent",
+    "RuntimeEventKind",
+    "RuntimeEventTrace",
+    "RuntimeEventTraceContent",
+    "Sha256Hex",
+    "TenantScope",
+    "TickIndex",
+    "VirtualTimeMs"
+  ],
+  "documentKinds": [
+    "experience-runtime.device-session",
+    "experience-runtime.event-trace"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (derived-index consistency, lifecycle replay, trace contiguity) are enforced by the runtime validators in @epoch/experience-runtime and are not represented in the JSON Schema files",
+  "emittedBy": "renderExperienceRuntimeContractFiles() in @epoch/experience-runtime (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "DeviceDescriptor",
+      "file": "device-descriptor.schema.json",
+      "sha256": "6fbbb2246da307e8936ed0554b399dfff9eaca80b63c6916fe80ca25013df4e4"
+    },
+    {
+      "type": "DeviceSessionContent",
+      "file": "device-session-content.schema.json",
+      "sha256": "73c325118e5b13fd77d0912726bb2b1e69c6ed26e7d3e5fd2c7dda9522e0a4f3"
+    },
+    {
+      "type": "DeviceSessionId",
+      "file": "device-session-id.schema.json",
+      "sha256": "c0c127bede6248da9b3c6f71e4cbac32fb45128d57eae5e11c23dc1adcfab8d6"
+    },
+    {
+      "type": "DeviceSessionRecord",
+      "file": "device-session-record.schema.json",
+      "sha256": "ee2195346ea3a3ac663ee1f8c043d882641b4f4adde3b56ebfd31736546e119c"
+    },
+    {
+      "type": "DeviceSessionState",
+      "file": "device-session-state.schema.json",
+      "sha256": "c4edfd04bbfb23bd48611474b087c05f9faea605ebc7cd04b075e711504d9964"
+    },
+    {
+      "type": "EventSequence",
+      "file": "event-sequence.schema.json",
+      "sha256": "7a06bbbe318c5fc66ff78396b077454a618f1cc17f459198203ca0da064f2f34"
+    },
+    {
+      "type": "ExperienceRuntimeError",
+      "file": "experience-runtime-error.schema.json",
+      "sha256": "c9962ca6a5fed6a044fed6c8b9ca91883057992d9573b2f8c97ea430613ea076"
+    },
+    {
+      "type": "ExperienceRuntimeErrorCode",
+      "file": "experience-runtime-error-code.schema.json",
+      "sha256": "c6b5e21203c0e95f38b791bde2c125c94b40f88d47e42006ff3fd462a5c124e0"
+    },
+    {
+      "type": "ExperienceRuntimeIssue",
+      "file": "experience-runtime-issue.schema.json",
+      "sha256": "fa638365f1ae3fdb8758c5cdc5821f06d951792386a21749531f0b0b044f7e88"
+    },
+    {
+      "type": "ExperienceRuntimeProtocolVersion",
+      "file": "experience-runtime-protocol-version.schema.json",
+      "sha256": "ba6394ee7eee839ffa35f89142b81c5d5e8d3f144b3097ea367e8e6f9d45b0e8"
+    },
+    {
+      "type": "FrameIndex",
+      "file": "frame-index.schema.json",
+      "sha256": "6ff4372fd50259467cb34ee14d555b6326bae6460cedb83f1cb29f81afafab12"
+    },
+    {
+      "type": "FrameSchedule",
+      "file": "frame-schedule.schema.json",
+      "sha256": "53b4b4a588d6e779b92cfe85c2ae92425cf8d342aff2bd54b885e0cb2f014fbb"
+    },
+    {
+      "type": "JsonValue",
+      "file": "json-value.schema.json",
+      "sha256": "e86b542ab6661915fe8468e70a075c2797e34a62fcdbdcb2ef6ffb8b7225a41e"
+    },
+    {
+      "type": "RuntimeEvent",
+      "file": "runtime-event.schema.json",
+      "sha256": "d119d257791b894dfb931466b24b814d5880451e8608a376804eacf3a23833a7"
+    },
+    {
+      "type": "RuntimeEventKind",
+      "file": "runtime-event-kind.schema.json",
+      "sha256": "aacab64884fc06d6d920d91c50e355c91aca0c75f59e77aca7e5dcdcbd312bc6"
+    },
+    {
+      "type": "RuntimeEventTrace",
+      "file": "runtime-event-trace.schema.json",
+      "sha256": "fbd09617a765123fb591c45ff37f1233d93fec25488da3d52aa110bbfb7b019f"
+    },
+    {
+      "type": "RuntimeEventTraceContent",
+      "file": "runtime-event-trace-content.schema.json",
+      "sha256": "542819b753c5ecd92eddd2c0f4a9c4697825cde77ddf2fb406e11cf3927178a3"
+    },
+    {
+      "type": "Sha256Hex",
+      "file": "sha256-hex.schema.json",
+      "sha256": "dd3c16f00f5118626c3edfd9fb6bfe17d46a88af26fef35ae6cf34069727fb40"
+    },
+    {
+      "type": "TenantScope",
+      "file": "tenant-scope.schema.json",
+      "sha256": "57bdb1872e6fabd039bba1622df46052ca0ab042cd722f9050118549214813b3"
+    },
+    {
+      "type": "TickIndex",
+      "file": "tick-index.schema.json",
+      "sha256": "60d7db43d3aad77535409681995d8702293d1e1e8b3d5382ca4c26ff4e0e0087"
+    },
+    {
+      "type": "VirtualTimeMs",
+      "file": "virtual-time-ms.schema.json",
+      "sha256": "080420067f6f66c16d89318c0daac8046f8c6d15b7ca3060e4072f6eacabdb76"
+    }
+  ]
+}

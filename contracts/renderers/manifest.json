@@ -1,0 +1,234 @@
+{
+  "contract": "epoch/renderers",
+  "contractVersion": "1.0.0",
+  "protocolVersion": "1.0.0",
+  "description": "Typed, versioned, provider-neutral Renderer Runtime hosting-surface contract (W013): abstract renderer descriptors (kind, capabilities, budgets), device-session snapshots over the W011 device vocabulary, negotiated bindings, invocation envelopes, and content-addressed receipts. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "dataTypes": [
+    "ControlIntent",
+    "DeviceClass",
+    "DeviceDescriptor",
+    "DeviceDisplayCapabilities",
+    "DeviceSessionId",
+    "DeviceSessionSnapshot",
+    "DeviceSpatialCapabilities",
+    "EffectiveLimits",
+    "ExperienceGraphKind",
+    "ExperienceIssue",
+    "ExperienceProtocolError",
+    "InteractionModality",
+    "InvocationEnvelope",
+    "InvocationId",
+    "JsonValue",
+    "OpaqueScopeId",
+    "PoseTrackingKind",
+    "RendererBinding",
+    "RendererBindingContent",
+    "RendererBindingState",
+    "RendererBudgets",
+    "RendererDescriptor",
+    "RendererErrorCode",
+    "RendererId",
+    "RendererInvocationKind",
+    "RendererIssue",
+    "RendererOutputCapabilities",
+    "RendererProtocolVersion",
+    "RendererReceipt",
+    "RendererReceiptContent",
+    "RendererReceiptKind",
+    "RendererRuntimeError",
+    "RendererSessionId",
+    "Sha256Hex",
+    "TenantScope",
+    "VirtualTimeMs"
+  ],
+  "documentKinds": [
+    "renderer.binding",
+    "renderer.descriptor",
+    "renderer.invocation",
+    "renderer.receipt"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical set ordering, negotiated-limit consistency) are enforced by the runtime validators in @epoch/renderer-runtime and are not represented in the JSON Schema files",
+  "emittedBy": "renderRendererContractFiles() in @epoch/renderer-runtime (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "ControlIntent",
+      "file": "schemas/control-intent.schema.json",
+      "sha256": "a3f270851776ecd396fc612f4d3a5fcbce776fbe6e018ed832c487fe93ea9e2e"
+    },
+    {
+      "type": "DeviceClass",
+      "file": "schemas/device-class.schema.json",
+      "sha256": "fd4142f851a68b66b2d3b31a8789f6529f1fb3688438df4d96df7ba0cc57b92a"
+    },
+    {
+      "type": "DeviceDescriptor",
+      "file": "schemas/device-descriptor.schema.json",
+      "sha256": "6fbbb2246da307e8936ed0554b399dfff9eaca80b63c6916fe80ca25013df4e4"
+    },
+    {
+      "type": "DeviceDisplayCapabilities",
+      "file": "schemas/device-display-capabilities.schema.json",
+      "sha256": "75935c3c136474147f5ef2a463a2aee30ac1d83b3085d9ab49284b8cb0b8b3b5"
+    },
+    {
+      "type": "DeviceSessionId",
+      "file": "schemas/device-session-id.schema.json",
+      "sha256": "e88fa7c0464be657625d7490b39a1438aeaae3e066e3d802648c1af61cfdfc8b"
+    },
+    {
+      "type": "DeviceSessionSnapshot",
+      "file": "schemas/device-session-snapshot.schema.json",
+      "sha256": "5935a5c721f09602834ea672f238068836bfab81068426383b34ec555c3ac02e"
+    },
+    {
+      "type": "DeviceSpatialCapabilities",
+      "file": "schemas/device-spatial-capabilities.schema.json",
+      "sha256": "3624d4e1850752a8c9a4b6e970cbabbbce2a5811d18e51d7f140034da4029c80"
+    },
+    {
+      "type": "EffectiveLimits",
+      "file": "schemas/effective-limits.schema.json",
+      "sha256": "96e7a22423af4079df8c078d643837d0b6d47172ed6ca8f73745155921f49df7"
+    },
+    {
+      "type": "ExperienceGraphKind",
+      "file": "schemas/experience-graph-kind.schema.json",
+      "sha256": "0a27f0c6faf22bca47787b84758fb0226e43504e6f7bda77f9997ca38931b562"
+    },
+    {
+      "type": "ExperienceIssue",
+      "file": "schemas/experience-issue.schema.json",
+      "sha256": "8d547669fd15dfd5bd360498a2f51608793cbb17bf73154459d5ee9e167daaf2"
+    },
+    {
+      "type": "ExperienceProtocolError",
+      "file": "schemas/experience-protocol-error.schema.json",
+      "sha256": "d122c54d6fcaaee7fa878109d3de6e1a585e6f75281090f6737787e5d739c5f5"
+    },
+    {
+      "type": "InteractionModality",
+      "file": "schemas/interaction-modality.schema.json",
+      "sha256": "7c94571c739bf1eb9b84828adb675077cb2d4a28b9af7b3bd95f5bf8bb174e10"
+    },
+    {
+      "type": "InvocationEnvelope",
+      "file": "schemas/invocation-envelope.schema.json",
+      "sha256": "1e2e72ab9584a5dcf3785aac0bd63f8316750604f6bce33f73e4b57699782e29"
+    },
+    {
+      "type": "InvocationId",
+      "file": "schemas/invocation-id.schema.json",
+      "sha256": "759e6dca85713fc682311759daf18b50bf8c4ed691801fc6a8cc1861f5ba0b92"
+    },
+    {
+      "type": "JsonValue",
+      "file": "schemas/json-value.schema.json",
+      "sha256": "e86b542ab6661915fe8468e70a075c2797e34a62fcdbdcb2ef6ffb8b7225a41e"
+    },
+    {
+      "type": "OpaqueScopeId",
+      "file": "schemas/opaque-scope-id.schema.json",
+      "sha256": "c6b38c6c40b314271d3638405933081c6ec8fb1dfff1f97ca52467ec6283e712"
+    },
+    {
+      "type": "PoseTrackingKind",
+      "file": "schemas/pose-tracking-kind.schema.json",
+      "sha256": "e18ad59e78357cc9ed9515f920dd354e9d5bae02bcebe963125f690c87afcb83"
+    },
+    {
+      "type": "RendererBinding",
+      "file": "schemas/renderer-binding.schema.json",
+      "sha256": "497caf3959dcc4d13e1d1ee34797c20a3516ad69a666999196f99d31b43df2fe"
+    },
+    {
+      "type": "RendererBindingContent",
+      "file": "schemas/renderer-binding-content.schema.json",
+      "sha256": "7917a4bfd3603a0ea9d1baa6c4b32b23ccf4a11bfac0f3f9f48483f478543f84"
+    },
+    {
+      "type": "RendererBindingState",
+      "file": "schemas/renderer-binding-state.schema.json",
+      "sha256": "df81c0f0048922a52652febdd159af47801c623e31390e001cebb9d0e2b376a9"
+    },
+    {
+      "type": "RendererBudgets",
+      "file": "schemas/renderer-budgets.schema.json",
+      "sha256": "2b5c748c98def5a6a8bc6ce35b3a07e69599b12ec2399ebad74adff668ab1344"
+    },
+    {
+      "type": "RendererDescriptor",
+      "file": "schemas/renderer-descriptor.schema.json",
+      "sha256": "dfaa3650c543bde86f956365073002e2a8a4172cfcbeb6abfa520e20f6d04be5"
+    },
+    {
+      "type": "RendererErrorCode",
+      "file": "schemas/renderer-error-code.schema.json",
+      "sha256": "e5804c6636ea2cdef832c22d8f45db3724e786fc477ece3edd47916f0ffd5328"
+    },
+    {
+      "type": "RendererId",
+      "file": "schemas/renderer-id.schema.json",
+      "sha256": "abbc595c344d84acd85e85ab7c8f4a536cd8b414a64244ad780d0faf1f1093fc"
+    },
+    {
+      "type": "RendererInvocationKind",
+      "file": "schemas/renderer-invocation-kind.schema.json",
+      "sha256": "068c0153174cc8b7409ac43fa95308ee6094de09f318ac2eeb4ef663fc07ba4d"
+    },
+    {
+      "type": "RendererIssue",
+      "file": "schemas/renderer-issue.schema.json",
+      "sha256": "5b8085fb5dfe7b63ac5976fe2117f0a1f68314bb8f0972c7e14b9094ef8447f6"
+    },
+    {
+      "type": "RendererOutputCapabilities",
+      "file": "schemas/renderer-output-capabilities.schema.json",
+      "sha256": "8f5fba04e484ee156cbd94fa2328b8909f425d91d2f82376484acc616bba5265"
+    },
+    {
+      "type": "RendererProtocolVersion",
+      "file": "schemas/renderer-protocol-version.schema.json",
+      "sha256": "82e237ee0609ee7de4181ef7d241e2fef5c80e611ad93c28e67f0957bf2122c4"
+    },
+    {
+      "type": "RendererReceipt",
+      "file": "schemas/renderer-receipt.schema.json",
+      "sha256": "fb5fb24a179ecf3de25f3d52e15b1236650086b9c51714fca3cb7241a2934af8"
+    },
+    {
+      "type": "RendererReceiptContent",
+      "file": "schemas/renderer-receipt-content.schema.json",
+      "sha256": "02f3d18d726a7cf9496f82c93417ed69aa4860574286d40aa21cd6a4884d11b3"
+    },
+    {
+      "type": "RendererReceiptKind",
+      "file": "schemas/renderer-receipt-kind.schema.json",
+      "sha256": "0293113189c05a1be0c30e6185b050ce177ba01ae778074c43a6a70e004dc893"
+    },
+    {
+      "type": "RendererRuntimeError",
+      "file": "schemas/renderer-runtime-error.schema.json",
+      "sha256": "a11a11bce35ea8e3c83ce886db1633f8d96ca6c4ae61f392e00d89ce38dc62ea"
+    },
+    {
+      "type": "RendererSessionId",
+      "file": "schemas/renderer-session-id.schema.json",
+      "sha256": "bbf49bbf3ef40be2e0efdc7af5efe641554dae0ad61145c926d6737a81985706"
+    },
+    {
+      "type": "Sha256Hex",
+      "file": "schemas/sha256-hex.schema.json",
+      "sha256": "dd3c16f00f5118626c3edfd9fb6bfe17d46a88af26fef35ae6cf34069727fb40"
+    },
+    {
+      "type": "TenantScope",
+      "file": "schemas/tenant-scope.schema.json",
+      "sha256": "57bdb1872e6fabd039bba1622df46052ca0ab042cd722f9050118549214813b3"
+    },
+    {
+      "type": "VirtualTimeMs",
+      "file": "schemas/virtual-time-ms.schema.json",
+      "sha256": "39708d1c5d0ed6cc963d43c94e8b3eb77a1790634b9f5fe1450878576bf8064a"
+    }
+  ]
+}

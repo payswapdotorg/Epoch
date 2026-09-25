@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DeviceSessionState",
+  "$defs": {
+    "DeviceSessionState": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "closed"
+      ],
+      "title": "DeviceSessionState",
+      "description": "Lifecycle state of a device session: active, paused, or closed (terminal)."
+    }
+  }
+}

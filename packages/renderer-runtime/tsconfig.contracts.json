@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/renderer-runtime": ["./src/index.ts"],
+      "@epoch/world-contracts": ["../../contracts/world/src/index.ts"]
+    }
+  },
+  "include": [
+    "../../contracts/renderers/index.d.ts",
+    "../../contracts/renderers/parity.ts"
+  ]
+}

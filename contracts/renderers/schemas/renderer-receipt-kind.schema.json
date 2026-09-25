@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererReceiptKind",
+  "$defs": {
+    "RendererReceiptKind": {
+      "type": "string",
+      "enum": [
+        "frame-receipt",
+        "intent-receipt",
+        "mount-receipt"
+      ],
+      "title": "RendererReceiptKind",
+      "description": "Typed receipt kind: the execution evidence of one admitted invocation."
+    }
+  }
+}

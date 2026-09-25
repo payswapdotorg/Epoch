@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererBudgets",
+  "$defs": {
+    "RendererBudgets": {
+      "type": "object",
+      "properties": {
+        "maxGraphNodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        },
+        "maxGraphEdges": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 131072
+        },
+        "maxTriangles": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 100000000
+        },
+        "maxTextureBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 1099511627776
+        }
+      },
+      "required": [
+        "maxGraphNodes",
+        "maxGraphEdges"
+      ],
+      "additionalProperties": false,
+      "title": "RendererBudgets",
+      "description": "Neutral budgets a renderer descriptor enforces at the hosting boundary."
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RuntimeEventKind",
+  "$defs": {
+    "RuntimeEventKind": {
+      "type": "string",
+      "enum": [
+        "frame-started",
+        "session-closed",
+        "session-opened",
+        "session-paused",
+        "session-resumed",
+        "state-mounted",
+        "tick-advanced"
+      ],
+      "title": "RuntimeEventKind",
+      "description": "Typed runtime-event kind: frame, tick, state, or lifecycle event of a device session."
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EffectiveLimits",
+  "$defs": {
+    "EffectiveLimits": {
+      "type": "object",
+      "properties": {
+        "graphKinds": {
+          "minItems": 1,
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExperienceGraphKind"
+          }
+        },
+        "interaction": {
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionModality"
+          }
+        },
+        "stereoscopic": {
+          "type": "boolean"
+        },
+        "maxGraphNodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        },
+        "maxGraphEdges": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 131072
+        },
+        "maxTriangles": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 100000000
+        },
+        "maxTextureBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 1099511627776
+        }
+      },
+      "required": [
+        "graphKinds",
+        "interaction",
+        "stereoscopic",
+        "maxGraphNodes",
+        "maxGraphEdges"
+      ],
+      "additionalProperties": false,
+      "title": "EffectiveLimits",
+      "description": "The negotiated enforcement envelope of a renderer session binding: hosting kinds, serviced modalities, stereoscopic support, and node/edge/triangle/texture budgets."
+    },
+    "ExperienceGraphKind": {
+      "type": "string",
+      "enum": [
+        "2d",
+        "3d",
+        "animation",
+        "narrative",
+        "timeline-replay",
+        "presence",
+        "controls"
+      ],
+      "title": "ExperienceGraphKind",
+      "description": "Presentation projection of an Experience Graph: 2D, 3D, animation, narrative, timeline/replay, presence, or controls."
+    },
+    "InteractionModality": {
+      "type": "string",
+      "enum": [
+        "gamepad",
+        "gaze",
+        "gesture",
+        "keyboard",
+        "pointer",
+        "touch",
+        "voice"
+      ],
+      "title": "InteractionModality",
+      "description": "Neutral interaction modality of a device."
+    }
+  }
+}
