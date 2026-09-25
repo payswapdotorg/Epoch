@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CompilerIssue",
+  "$defs": {
+    "CompilerIssue": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "CompilerIssue",
+      "description": "One flattened compiler validation issue: dotted path (\"$\" = root) plus message."
+    }
+  }
+}

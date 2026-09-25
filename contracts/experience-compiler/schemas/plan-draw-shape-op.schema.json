@@ -1,0 +1,571 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PlanDrawShapeOp",
+  "$defs": {
+    "PlanDrawShapeOp": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "type": "string",
+          "const": "draw-shape"
+        },
+        "nodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "ref": {
+          "$ref": "#/$defs/ProjectedReference"
+        },
+        "geometry": {
+          "$ref": "#/$defs/Geometry2d"
+        },
+        "stroke": {
+          "$ref": "#/$defs/StrokeStyle2d"
+        },
+        "fill": {
+          "$ref": "#/$defs/FillStyle2d"
+        },
+        "zIndex": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "op",
+        "nodeId",
+        "geometry"
+      ],
+      "additionalProperties": false,
+      "title": "PlanDrawShapeOp",
+      "description": "Compiled 2D draw operation: neutral geometry, resolved styling, and inherited presentation attributes."
+    },
+    "ExperienceNodeId": {
+      "type": "string",
+      "pattern": "^xn-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ExperienceNodeId",
+      "description": "Experience-local node identifier: \"xn-\" followed by a lowercase slug."
+    },
+    "ProjectedReference": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ProjectedWorldEntityRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedWorldRelationRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedWorldEventRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedAgentRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedEvidenceRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedCapabilityRef"
+        }
+      ],
+      "title": "ProjectedReference",
+      "description": "Opaque, tenant-scoped, exact-revision reference to projected kernel state; never an embedded kernel object."
+    },
+    "ProjectedWorldEntityRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "world-entity"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "entityId": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "entityId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedWorldEntityRef",
+      "description": "Exact-revision reference to a materialized world-model entity (W002 grammar; digest of its canonical JSON)."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "urn:epoch:contracts:world:entity-id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "EntityId",
+      "description": "Opaque entity identity (graph node), caller-assigned."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "ProjectedWorldRelationRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "world-relation"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "relationId": {
+          "$ref": "#/$defs/WorldRelationId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "relationId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedWorldRelationRef",
+      "description": "Exact-revision reference to a materialized world-model relation (W002 grammar; digest of its canonical JSON)."
+    },
+    "WorldRelationId": {
+      "type": "string",
+      "pattern": "^rel-[0-9a-f]{64}$",
+      "title": "WorldRelationId",
+      "description": "World-model relation identity: rel-<sha256-of-key> (owned by @epoch/world-model)."
+    },
+    "ProjectedWorldEventRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "world-event"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "eventId": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:event-id"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "eventId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedWorldEventRef",
+      "description": "Exact-revision reference to a world-model event (W002 grammar; digest of its canonical JSON)."
+    },
+    "urn:epoch:contracts:world:event-id": {
+      "type": "string",
+      "pattern": "^evt-[0-9]+$",
+      "title": "EventId"
+    },
+    "ProjectedAgentRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "agent"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "agentId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedAgentRef",
+      "description": "Exact-revision reference to a registered agent (W003 grammar; digest of its registration canonical JSON)."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "ProjectedEvidenceRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "evidence-record"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "recordDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "recordDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedEvidenceRef",
+      "description": "Reference to an evidence record by its content-addressed identity (W006: the SHA-256 digest is the id)."
+    },
+    "ProjectedCapabilityRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "capability"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "capabilityVersion": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "capabilityId",
+        "capabilityVersion",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedCapabilityRef",
+      "description": "Exact-revision reference to a registered capability manifest (W007 grammar; digest of its canonical JSON)."
+    },
+    "Geometry2d": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Geometry2dPoint"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dRect"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dCircle"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dEllipse"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dPolyline"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dPolygon"
+        }
+      ],
+      "title": "Geometry2d",
+      "description": "Neutral 2D geometry: point, rect, circle, ellipse, polyline, or polygon."
+    },
+    "Geometry2dPoint": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "point"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "form",
+        "x",
+        "y"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dPoint"
+    },
+    "Geometry2dRect": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "rect"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "minimum": 0
+        },
+        "height": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "form",
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dRect"
+    },
+    "Geometry2dCircle": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "circle"
+        },
+        "cx": {
+          "type": "number"
+        },
+        "cy": {
+          "type": "number"
+        },
+        "r": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "form",
+        "cx",
+        "cy",
+        "r"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dCircle"
+    },
+    "Geometry2dEllipse": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "ellipse"
+        },
+        "cx": {
+          "type": "number"
+        },
+        "cy": {
+          "type": "number"
+        },
+        "rx": {
+          "type": "number",
+          "minimum": 0
+        },
+        "ry": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "form",
+        "cx",
+        "cy",
+        "rx",
+        "ry"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dEllipse"
+    },
+    "Geometry2dPolyline": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "polyline"
+        },
+        "points": {
+          "$ref": "#/$defs/PolylinePoints"
+        }
+      },
+      "required": [
+        "form",
+        "points"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dPolyline"
+    },
+    "PolylinePoints": {
+      "minItems": 2,
+      "maxItems": 512,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Point2d"
+      },
+      "title": "PolylinePoints",
+      "description": "Ordered polyline vertices (semantic order; at least 2, at most 512)."
+    },
+    "Point2d": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "additionalProperties": false,
+      "title": "Point2d",
+      "description": "Finite 2D point (x, y)."
+    },
+    "Geometry2dPolygon": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "polygon"
+        },
+        "points": {
+          "$ref": "#/$defs/PolygonPoints"
+        }
+      },
+      "required": [
+        "form",
+        "points"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dPolygon"
+    },
+    "PolygonPoints": {
+      "minItems": 3,
+      "maxItems": 512,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Point2d"
+      },
+      "title": "PolygonPoints"
+    },
+    "StrokeStyle2d": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/ColorHex"
+        },
+        "lineWidth": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "color",
+        "lineWidth"
+      ],
+      "additionalProperties": false,
+      "title": "StrokeStyle2d",
+      "description": "Stroke styling of a 2D shape: canonical color plus positive line width."
+    },
+    "ColorHex": {
+      "type": "string",
+      "pattern": "^#[0-9a-f]{6}([0-9a-f]{2})?$",
+      "title": "ColorHex",
+      "description": "Presentation color as lowercase hex: #RRGGBB or #RRGGBBAA."
+    },
+    "FillStyle2d": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/ColorHex"
+        }
+      },
+      "required": [
+        "color"
+      ],
+      "additionalProperties": false,
+      "title": "FillStyle2d",
+      "description": "Fill styling of a 2D shape: canonical color."
+    },
+    "PresentationAttributes": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "PresentationAttributes",
+      "description": "Presentation-only open attribute record (never kernel semantics; reserved keys are rejected at admission)."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  }
+}

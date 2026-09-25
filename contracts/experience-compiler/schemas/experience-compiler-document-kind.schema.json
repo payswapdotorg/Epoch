@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExperienceCompilerDocumentKind",
+  "$defs": {
+    "ExperienceCompilerDocumentKind": {
+      "type": "string",
+      "const": "experience.render-plan",
+      "title": "ExperienceCompilerDocumentKind",
+      "description": "The document kind the experience compiler emits: the Render Plan."
+    }
+  }
+}

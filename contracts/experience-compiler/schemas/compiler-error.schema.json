@@ -1,0 +1,282 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CompilerError",
+  "$defs": {
+    "CompilerError": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "version-unsupported"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "malformed-descriptor"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "issues": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/CompilerIssue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "issues"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "digest-mismatch"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "cross-tenant-denied"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "expectedTenantId": {
+              "type": "string"
+            },
+            "encounteredTenantId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "expectedTenantId",
+            "encounteredTenantId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "unknown-reference"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "reference": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "reference"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "authority-violation"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "violations": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "key": {
+                    "type": "string"
+                  },
+                  "origin": {
+                    "type": "string",
+                    "enum": [
+                      "kernel-reserved",
+                      "vendor-blocklist"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "key",
+                  "origin"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "violations"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "device-budget-exceeded"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "limit": {
+              "type": "string",
+              "enum": [
+                "maxTriangles",
+                "maxTextureBytes"
+              ]
+            },
+            "expected": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "encountered": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "limit",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "CompilerError",
+      "description": "Typed, discriminated compile/admission error of the experience compiler."
+    },
+    "CompilerIssue": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "CompilerIssue",
+      "description": "One flattened compiler validation issue: dotted path (\"$\" = root) plus message."
+    }
+  }
+}

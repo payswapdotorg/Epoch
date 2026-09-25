@@ -1,0 +1,33 @@
+{
+  "name": "@epoch/experience-compiler",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Experience Compiler v1 (Work Order W012, experience layer): the pure projection stage between the W011 Experience Protocol and the W013 renderer surfaces. It VALIDATES Experience Graph envelopes with the W011 admission discipline and COMPILES them into deterministic, renderer-ready, content-addressed Render Plans (staged, sorted, device-shaped, tenant-scoped). It is never semantic authority, never mutates kernel state, and never becomes a second semantic store (architecture lock rules 8/16).",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/renderer-runtime": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

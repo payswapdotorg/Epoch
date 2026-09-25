@@ -1,0 +1,1851 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RenderPlan",
+  "$defs": {
+    "RenderPlan": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.render-plan"
+        },
+        "protocolVersion": {
+          "$ref": "#/$defs/RenderPlanProtocolVersion"
+        },
+        "sourceGraphId": {
+          "$ref": "#/$defs/ExperienceGraphId"
+        },
+        "sourceGraphKind": {
+          "$ref": "#/$defs/ExperienceGraphKind"
+        },
+        "sourceEnvelopeDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "sourceRefs": {
+          "maxItems": 512,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectedReference"
+          }
+        },
+        "target": {
+          "$ref": "#/$defs/DeviceDescriptor"
+        },
+        "constraints": {
+          "$ref": "#/$defs/PlanConstraints"
+        },
+        "usage": {
+          "$ref": "#/$defs/RenderPlanUsage"
+        },
+        "stages": {
+          "minItems": 1,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlanStage"
+          }
+        },
+        "digest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "sourceGraphId",
+        "sourceGraphKind",
+        "sourceEnvelopeDigest",
+        "tenantScope",
+        "sourceRefs",
+        "target",
+        "constraints",
+        "usage",
+        "stages",
+        "digest"
+      ],
+      "additionalProperties": false,
+      "title": "RenderPlan",
+      "description": "The sealed Render Plan envelope: staged, sorted, device-shaped compiled content plus its SHA-256 content digest (envelope digest -> plan digest chain)."
+    },
+    "RenderPlanProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RenderPlanProtocolVersion",
+      "description": "Exact render-plan protocol version admitted by this release (\"1.0.0\")."
+    },
+    "ExperienceGraphId": {
+      "type": "string",
+      "pattern": "^xg-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ExperienceGraphId",
+      "description": "Experience-graph identifier: \"xg-\" followed by a lowercase slug."
+    },
+    "ExperienceGraphKind": {
+      "type": "string",
+      "enum": [
+        "2d",
+        "3d",
+        "animation",
+        "narrative",
+        "timeline-replay",
+        "presence",
+        "controls"
+      ],
+      "title": "ExperienceGraphKind",
+      "description": "Presentation projection of an Experience Graph: 2D, 3D, animation, narrative, timeline/replay, presence, or controls."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "ProjectedReference": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ProjectedWorldEntityRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedWorldRelationRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedWorldEventRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedAgentRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedEvidenceRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedCapabilityRef"
+        }
+      ],
+      "title": "ProjectedReference",
+      "description": "Opaque, tenant-scoped, exact-revision reference to projected kernel state; never an embedded kernel object."
+    },
+    "ProjectedWorldEntityRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "world-entity"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "entityId": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "entityId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedWorldEntityRef",
+      "description": "Exact-revision reference to a materialized world-model entity (W002 grammar; digest of its canonical JSON)."
+    },
+    "urn:epoch:contracts:world:entity-id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "EntityId",
+      "description": "Opaque entity identity (graph node), caller-assigned."
+    },
+    "ProjectedWorldRelationRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "world-relation"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "relationId": {
+          "$ref": "#/$defs/WorldRelationId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "relationId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedWorldRelationRef",
+      "description": "Exact-revision reference to a materialized world-model relation (W002 grammar; digest of its canonical JSON)."
+    },
+    "WorldRelationId": {
+      "type": "string",
+      "pattern": "^rel-[0-9a-f]{64}$",
+      "title": "WorldRelationId",
+      "description": "World-model relation identity: rel-<sha256-of-key> (owned by @epoch/world-model)."
+    },
+    "ProjectedWorldEventRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "world-event"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "eventId": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:event-id"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "eventId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedWorldEventRef",
+      "description": "Exact-revision reference to a world-model event (W002 grammar; digest of its canonical JSON)."
+    },
+    "urn:epoch:contracts:world:event-id": {
+      "type": "string",
+      "pattern": "^evt-[0-9]+$",
+      "title": "EventId"
+    },
+    "ProjectedAgentRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "agent"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "agentId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedAgentRef",
+      "description": "Exact-revision reference to a registered agent (W003 grammar; digest of its registration canonical JSON)."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "ProjectedEvidenceRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "evidence-record"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "recordDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "recordDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedEvidenceRef",
+      "description": "Reference to an evidence record by its content-addressed identity (W006: the SHA-256 digest is the id)."
+    },
+    "ProjectedCapabilityRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "capability"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "capabilityVersion": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "capabilityId",
+        "capabilityVersion",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedCapabilityRef",
+      "description": "Exact-revision reference to a registered capability manifest (W007 grammar; digest of its canonical JSON)."
+    },
+    "DeviceDescriptor": {
+      "type": "object",
+      "properties": {
+        "descriptorVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "deviceClass": {
+          "$ref": "#/$defs/DeviceClass"
+        },
+        "interaction": {
+          "minItems": 1,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionModality"
+          }
+        },
+        "display": {
+          "$ref": "#/$defs/DeviceDisplayCapabilities"
+        },
+        "spatial": {
+          "$ref": "#/$defs/DeviceSpatialCapabilities"
+        },
+        "latencyBudgetMs": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "descriptorVersion",
+        "deviceClass",
+        "interaction",
+        "display",
+        "spatial"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceDescriptor",
+      "description": "Abstract, provider-neutral device descriptor: capabilities and budgets as typed data; filled/adapted by renderer/device adaptation (W019)."
+    },
+    "DeviceClass": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "laptop",
+        "tablet",
+        "phone",
+        "headset",
+        "wall-display"
+      ],
+      "title": "DeviceClass",
+      "description": "Neutral device class of a device descriptor (never a vendor product)."
+    },
+    "InteractionModality": {
+      "type": "string",
+      "enum": [
+        "gamepad",
+        "gaze",
+        "gesture",
+        "keyboard",
+        "pointer",
+        "touch",
+        "voice"
+      ],
+      "title": "InteractionModality",
+      "description": "Neutral interaction modality of a device."
+    },
+    "DeviceDisplayCapabilities": {
+      "type": "object",
+      "properties": {
+        "stereoscopic": {
+          "type": "boolean"
+        },
+        "maxPixels": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "refreshHz": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "colorDepthBits": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "stereoscopic"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceDisplayCapabilities",
+      "description": "Neutral display capabilities and budgets of a device descriptor."
+    },
+    "DeviceSpatialCapabilities": {
+      "type": "object",
+      "properties": {
+        "poseTracking": {
+          "$ref": "#/$defs/PoseTrackingKind"
+        },
+        "worldAnchored": {
+          "type": "boolean"
+        },
+        "maxTriangles": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maxTextureBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "poseTracking",
+        "worldAnchored"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceSpatialCapabilities",
+      "description": "Neutral spatial capabilities and budgets of a device descriptor."
+    },
+    "PoseTrackingKind": {
+      "type": "string",
+      "enum": [
+        "none",
+        "3dof",
+        "6dof"
+      ],
+      "title": "PoseTrackingKind",
+      "description": "Neutral pose-tracking capability of a device."
+    },
+    "PlanConstraints": {
+      "type": "object",
+      "properties": {
+        "stereoscopic": {
+          "type": "boolean"
+        },
+        "poseTracking": {
+          "$ref": "#/$defs/PoseTrackingKind"
+        },
+        "worldAnchored": {
+          "type": "boolean"
+        },
+        "interaction": {
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionModality"
+          }
+        },
+        "maxPixels": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "refreshHz": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "colorDepthBits": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maxTriangles": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maxTextureBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "latencyBudgetMs": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "stereoscopic",
+        "poseTracking",
+        "worldAnchored",
+        "interaction"
+      ],
+      "additionalProperties": false,
+      "title": "PlanConstraints",
+      "description": "The typed plan constraints: target-device budgets and limits as data (device-aware plan shaping)."
+    },
+    "RenderPlanUsage": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "edges": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "estimatedTriangles": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "assetBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "nodes",
+        "edges",
+        "estimatedTriangles",
+        "assetBytes"
+      ],
+      "additionalProperties": false,
+      "title": "RenderPlanUsage",
+      "description": "Deterministic resource accounting of the compiled plan: exact node/edge counts, primitive-triangle estimate, and mesh-asset bytes."
+    },
+    "PlanStage": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/RelateStage"
+        },
+        {
+          "$ref": "#/$defs/Draw2dStage"
+        },
+        {
+          "$ref": "#/$defs/Place3dStage"
+        },
+        {
+          "$ref": "#/$defs/AnimateStage"
+        },
+        {
+          "$ref": "#/$defs/NarrateStage"
+        },
+        {
+          "$ref": "#/$defs/TimelineStage"
+        },
+        {
+          "$ref": "#/$defs/PresenceStage"
+        },
+        {
+          "$ref": "#/$defs/ControlsStage"
+        }
+      ],
+      "title": "PlanStage",
+      "description": "One compiled plan stage of the deterministic pipeline: relate, draw-2d, place-3d, animate, narrate, timeline, presence, or controls."
+    },
+    "RelateStage": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "const": "relate"
+        },
+        "relations": {
+          "minItems": 1,
+          "maxItems": 8192,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlanRelation"
+          }
+        }
+      },
+      "required": [
+        "stage",
+        "relations"
+      ],
+      "additionalProperties": false,
+      "title": "RelateStage",
+      "description": "The relate stage: the plan relation set (present iff the source graph has edges)."
+    },
+    "PlanRelation": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/ExperienceEdgeKind"
+        },
+        "from": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "to": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "kind",
+        "from",
+        "to"
+      ],
+      "additionalProperties": false,
+      "title": "PlanRelation",
+      "description": "One experience edge carried into the plan, verbatim and canonically ordered."
+    },
+    "ExperienceEdgeKind": {
+      "type": "string",
+      "enum": [
+        "anchors",
+        "animates",
+        "binds-control",
+        "contains",
+        "follows",
+        "synchronizes"
+      ],
+      "title": "ExperienceEdgeKind",
+      "description": "Typed relationship kind between two Experience Graph nodes."
+    },
+    "ExperienceNodeId": {
+      "type": "string",
+      "pattern": "^xn-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ExperienceNodeId",
+      "description": "Experience-local node identifier: \"xn-\" followed by a lowercase slug."
+    },
+    "PresentationAttributes": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "PresentationAttributes",
+      "description": "Presentation-only open attribute record (never kernel semantics; reserved keys are rejected at admission)."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "Draw2dStage": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "const": "draw-2d"
+        },
+        "draws": {
+          "minItems": 1,
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlanDrawOp"
+          }
+        }
+      },
+      "required": [
+        "stage",
+        "draws"
+      ],
+      "additionalProperties": false,
+      "title": "Draw2dStage",
+      "description": "The draw-2d stage: z-ordered 2D draw operations."
+    },
+    "PlanDrawOp": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PlanDrawShapeOp"
+        },
+        {
+          "$ref": "#/$defs/PlanDrawLabelOp"
+        }
+      ],
+      "title": "PlanDrawOp",
+      "description": "One compiled 2D draw operation: shape or label."
+    },
+    "PlanDrawShapeOp": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "type": "string",
+          "const": "draw-shape"
+        },
+        "nodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "ref": {
+          "$ref": "#/$defs/ProjectedReference"
+        },
+        "geometry": {
+          "$ref": "#/$defs/Geometry2d"
+        },
+        "stroke": {
+          "$ref": "#/$defs/StrokeStyle2d"
+        },
+        "fill": {
+          "$ref": "#/$defs/FillStyle2d"
+        },
+        "zIndex": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "op",
+        "nodeId",
+        "geometry"
+      ],
+      "additionalProperties": false,
+      "title": "PlanDrawShapeOp",
+      "description": "Compiled 2D draw operation: neutral geometry, resolved styling, and inherited presentation attributes."
+    },
+    "Geometry2d": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Geometry2dPoint"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dRect"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dCircle"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dEllipse"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dPolyline"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dPolygon"
+        }
+      ],
+      "title": "Geometry2d",
+      "description": "Neutral 2D geometry: point, rect, circle, ellipse, polyline, or polygon."
+    },
+    "Geometry2dPoint": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "point"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "form",
+        "x",
+        "y"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dPoint"
+    },
+    "Geometry2dRect": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "rect"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "minimum": 0
+        },
+        "height": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "form",
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dRect"
+    },
+    "Geometry2dCircle": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "circle"
+        },
+        "cx": {
+          "type": "number"
+        },
+        "cy": {
+          "type": "number"
+        },
+        "r": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "form",
+        "cx",
+        "cy",
+        "r"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dCircle"
+    },
+    "Geometry2dEllipse": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "ellipse"
+        },
+        "cx": {
+          "type": "number"
+        },
+        "cy": {
+          "type": "number"
+        },
+        "rx": {
+          "type": "number",
+          "minimum": 0
+        },
+        "ry": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "form",
+        "cx",
+        "cy",
+        "rx",
+        "ry"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dEllipse"
+    },
+    "Geometry2dPolyline": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "polyline"
+        },
+        "points": {
+          "$ref": "#/$defs/PolylinePoints"
+        }
+      },
+      "required": [
+        "form",
+        "points"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dPolyline"
+    },
+    "PolylinePoints": {
+      "minItems": 2,
+      "maxItems": 512,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Point2d"
+      },
+      "title": "PolylinePoints",
+      "description": "Ordered polyline vertices (semantic order; at least 2, at most 512)."
+    },
+    "Point2d": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "additionalProperties": false,
+      "title": "Point2d",
+      "description": "Finite 2D point (x, y)."
+    },
+    "Geometry2dPolygon": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "polygon"
+        },
+        "points": {
+          "$ref": "#/$defs/PolygonPoints"
+        }
+      },
+      "required": [
+        "form",
+        "points"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dPolygon"
+    },
+    "PolygonPoints": {
+      "minItems": 3,
+      "maxItems": 512,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Point2d"
+      },
+      "title": "PolygonPoints"
+    },
+    "StrokeStyle2d": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/ColorHex"
+        },
+        "lineWidth": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "color",
+        "lineWidth"
+      ],
+      "additionalProperties": false,
+      "title": "StrokeStyle2d",
+      "description": "Stroke styling of a 2D shape: canonical color plus positive line width."
+    },
+    "ColorHex": {
+      "type": "string",
+      "pattern": "^#[0-9a-f]{6}([0-9a-f]{2})?$",
+      "title": "ColorHex",
+      "description": "Presentation color as lowercase hex: #RRGGBB or #RRGGBBAA."
+    },
+    "FillStyle2d": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/ColorHex"
+        }
+      },
+      "required": [
+        "color"
+      ],
+      "additionalProperties": false,
+      "title": "FillStyle2d",
+      "description": "Fill styling of a 2D shape: canonical color."
+    },
+    "PlanDrawLabelOp": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "type": "string",
+          "const": "draw-label"
+        },
+        "nodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "ref": {
+          "$ref": "#/$defs/ProjectedReference"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "offset2d": {
+          "$ref": "#/$defs/Point2d"
+        },
+        "style": {
+          "$ref": "#/$defs/TextStyle"
+        },
+        "anchorNodeIds": {
+          "$ref": "#/$defs/AnchorNodeIds"
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "op",
+        "nodeId",
+        "text",
+        "offset2d"
+      ],
+      "additionalProperties": false,
+      "title": "PlanDrawLabelOp",
+      "description": "Compiled 2D label draw operation: bounded text, resolved offset, optional styling and anchor targets."
+    },
+    "TextStyle": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/ColorHex"
+        },
+        "fontSizePx": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "weight": {
+          "$ref": "#/$defs/TextWeight"
+        }
+      },
+      "additionalProperties": false,
+      "title": "TextStyle",
+      "description": "Neutral text styling: optional color, font size, and weight."
+    },
+    "TextWeight": {
+      "type": "string",
+      "enum": [
+        "bold",
+        "light",
+        "medium",
+        "regular"
+      ],
+      "title": "TextWeight",
+      "description": "Neutral text weight of a label style."
+    },
+    "AnchorNodeIds": {
+      "minItems": 1,
+      "maxItems": 16,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ExperienceNodeId"
+      },
+      "title": "AnchorNodeIds",
+      "description": "Sorted, duplicate-free anchor target node ids of one label plan op."
+    },
+    "Place3dStage": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "const": "place-3d"
+        },
+        "placements": {
+          "minItems": 1,
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlanPlaceOp"
+          }
+        }
+      },
+      "required": [
+        "stage",
+        "placements"
+      ],
+      "additionalProperties": false,
+      "title": "Place3dStage",
+      "description": "The place-3d stage: canonically ordered 3D placement operations."
+    },
+    "PlanPlaceOp": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PlanPlaceSpatialOp"
+        },
+        {
+          "$ref": "#/$defs/PlanPlaceLabelOp"
+        }
+      ],
+      "title": "PlanPlaceOp",
+      "description": "One compiled 3D placement operation: spatial primitive or label."
+    },
+    "PlanPlaceSpatialOp": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "type": "string",
+          "const": "place-spatial"
+        },
+        "nodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "ref": {
+          "$ref": "#/$defs/ProjectedReference"
+        },
+        "primitive": {
+          "$ref": "#/$defs/SpatialPrimitive"
+        },
+        "position": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "orientation": {
+          "$ref": "#/$defs/Quaternion"
+        },
+        "scale": {
+          "$ref": "#/$defs/PlanScale3d"
+        },
+        "mesh": {
+          "$ref": "#/$defs/MeshBinding"
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "op",
+        "nodeId",
+        "primitive",
+        "position"
+      ],
+      "additionalProperties": false,
+      "title": "PlanPlaceSpatialOp",
+      "description": "Compiled 3D placement operation: neutral primitive, resolved transform, optional content-addressed mesh."
+    },
+    "SpatialPrimitive": {
+      "type": "string",
+      "enum": [
+        "box",
+        "cone",
+        "cylinder",
+        "mesh",
+        "plane",
+        "sphere"
+      ],
+      "title": "SpatialPrimitive",
+      "description": "Neutral geometric primitive of a 3D node (mesh binds an opaque content-addressed asset)."
+    },
+    "Vec3": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3,
+      "title": "Vec3",
+      "description": "Finite 3-component numeric vector (x, y, z)."
+    },
+    "Quaternion": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4,
+      "title": "Quaternion",
+      "description": "Finite orientation quaternion (x, y, z, w); neutral math, renderer-normalized."
+    },
+    "PlanScale3d": {
+      "title": "PlanScale3d",
+      "description": "Positive per-axis 3D scale.",
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "MeshBinding": {
+      "type": "object",
+      "properties": {
+        "assetDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "byteSize": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "mediaType": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9!#$&^_.+-]{0,126}\\/[A-Za-z0-9][A-Za-z0-9!#$&^_.+-]{0,126}$"
+        }
+      },
+      "required": [
+        "assetDigest"
+      ],
+      "additionalProperties": false,
+      "title": "MeshBinding",
+      "description": "Content-addressed mesh-asset binding: SHA-256 digest plus optional neutral metadata (no filenames, URLs, or engine formats)."
+    },
+    "PlanPlaceLabelOp": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "type": "string",
+          "const": "place-label"
+        },
+        "nodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "ref": {
+          "$ref": "#/$defs/ProjectedReference"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "offset3d": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "style": {
+          "$ref": "#/$defs/TextStyle"
+        },
+        "anchorNodeIds": {
+          "$ref": "#/$defs/AnchorNodeIds"
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "op",
+        "nodeId",
+        "text",
+        "offset3d"
+      ],
+      "additionalProperties": false,
+      "title": "PlanPlaceLabelOp",
+      "description": "Compiled 3D label placement operation: bounded text, resolved offset, optional styling and anchor targets."
+    },
+    "AnimateStage": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "const": "animate"
+        },
+        "bindings": {
+          "minItems": 1,
+          "maxItems": 131072,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlanAnimationBinding"
+          }
+        }
+      },
+      "required": [
+        "stage",
+        "bindings"
+      ],
+      "additionalProperties": false,
+      "title": "AnimateStage",
+      "description": "The animate stage: flattened, canonically ordered animation bindings."
+    },
+    "PlanAnimationBinding": {
+      "type": "object",
+      "properties": {
+        "clipNodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "targetNodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "propertyPath": {
+          "$ref": "#/$defs/PropertyPath"
+        },
+        "durationMs": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "keyframes": {
+          "minItems": 1,
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Keyframe"
+          }
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "clipNodeId",
+        "targetNodeId",
+        "propertyPath",
+        "durationMs",
+        "keyframes"
+      ],
+      "additionalProperties": false,
+      "title": "PlanAnimationBinding",
+      "description": "One flattened animation binding: which plan op, which property, the clip duration, and the strictly time-ordered keyframes."
+    },
+    "PropertyPath": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)*$",
+      "title": "PropertyPath",
+      "description": "Dotted path naming the animated property of a target node descriptor."
+    },
+    "Keyframe": {
+      "type": "object",
+      "properties": {
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "value": {
+          "$ref": "#/$defs/JsonValue"
+        },
+        "easing": {
+          "$ref": "#/$defs/EasingKind"
+        }
+      },
+      "required": [
+        "atMs",
+        "value"
+      ],
+      "additionalProperties": false,
+      "title": "Keyframe",
+      "description": "One animation keyframe: millisecond offset, JSON value, optional easing."
+    },
+    "EasingKind": {
+      "type": "string",
+      "enum": [
+        "ease-in",
+        "ease-in-out",
+        "ease-out",
+        "linear",
+        "step"
+      ],
+      "title": "EasingKind",
+      "description": "Neutral interpolation of one animation keyframe segment."
+    },
+    "NarrateStage": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "const": "narrate"
+        },
+        "beats": {
+          "minItems": 1,
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlanNarrativeBeat"
+          }
+        }
+      },
+      "required": [
+        "stage",
+        "beats"
+      ],
+      "additionalProperties": false,
+      "title": "NarrateStage",
+      "description": "The narrate stage: narrative beats in compiled presentation order."
+    },
+    "PlanNarrativeBeat": {
+      "type": "object",
+      "properties": {
+        "sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "nodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "ref": {
+          "$ref": "#/$defs/ProjectedReference"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "body": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "tone": {
+          "$ref": "#/$defs/PlanNarrativeTone"
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "sequence",
+        "nodeId",
+        "title"
+      ],
+      "additionalProperties": false,
+      "title": "PlanNarrativeBeat",
+      "description": "One narrative beat in its compiled presentation order (sequence resolved from the follows chain)."
+    },
+    "PlanNarrativeTone": {
+      "title": "PlanNarrativeTone",
+      "description": "Presentation tone of a compiled narrative beat.",
+      "type": "string",
+      "enum": [
+        "cautionary",
+        "celebratory",
+        "informative",
+        "neutral"
+      ]
+    },
+    "TimelineStage": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "const": "timeline"
+        },
+        "tracks": {
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlanTimelineTrack"
+          }
+        },
+        "markers": {
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlanTimelineMarker"
+          }
+        }
+      },
+      "required": [
+        "stage",
+        "tracks",
+        "markers"
+      ],
+      "additionalProperties": false,
+      "title": "TimelineStage",
+      "description": "The timeline stage: tracks and markers in compiled time order."
+    },
+    "PlanTimelineTrack": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "ref": {
+          "$ref": "#/$defs/ProjectedReference"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "startMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "endMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "nodeId",
+        "label",
+        "startMs",
+        "endMs"
+      ],
+      "additionalProperties": false,
+      "title": "PlanTimelineTrack",
+      "description": "One timeline track in compiled time order."
+    },
+    "PlanTimelineMarker": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "ref": {
+          "$ref": "#/$defs/ProjectedReference"
+        },
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "markerKind": {
+          "$ref": "#/$defs/TimelineMarkerKind"
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "nodeId",
+        "atMs",
+        "markerKind"
+      ],
+      "additionalProperties": false,
+      "title": "PlanTimelineMarker",
+      "description": "One timeline marker in compiled time order: event, phase boundary, replay cursor, or branch point."
+    },
+    "TimelineMarkerKind": {
+      "type": "string",
+      "enum": [
+        "branch-point",
+        "event",
+        "phase-end",
+        "phase-start",
+        "replay-cursor"
+      ],
+      "title": "TimelineMarkerKind",
+      "description": "Kind of a timeline marker (event, phase boundary, replay cursor, branch point)."
+    },
+    "PresenceStage": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "const": "presence"
+        },
+        "seats": {
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlanPresenceSeat"
+          }
+        },
+        "cursors": {
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlanPresenceCursor"
+          }
+        }
+      },
+      "required": [
+        "stage",
+        "seats",
+        "cursors"
+      ],
+      "additionalProperties": false,
+      "title": "PresenceStage",
+      "description": "The presence stage: seats and cursors in compiled order."
+    },
+    "PlanPresenceSeat": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "ref": {
+          "$ref": "#/$defs/ProjectedReference"
+        },
+        "participant": {
+          "$ref": "#/$defs/ParticipantReference"
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "nodeId",
+        "participant"
+      ],
+      "additionalProperties": false,
+      "title": "PlanPresenceSeat",
+      "description": "One presence seat in compiled (participant, node) order."
+    },
+    "ParticipantReference": {
+      "type": "object",
+      "properties": {
+        "participantId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "participantKind": {
+          "$ref": "#/$defs/ParticipantKind"
+        }
+      },
+      "required": [
+        "participantId",
+        "participantKind"
+      ],
+      "additionalProperties": false,
+      "title": "ParticipantReference",
+      "description": "Opaque presence-participant reference: bounded id plus neutral kind."
+    },
+    "ParticipantKind": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "human",
+        "system"
+      ],
+      "title": "ParticipantKind",
+      "description": "Neutral presence-participant kind."
+    },
+    "PlanPresenceCursor": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "ref": {
+          "$ref": "#/$defs/ProjectedReference"
+        },
+        "participant": {
+          "$ref": "#/$defs/ParticipantReference"
+        },
+        "position2d": {
+          "$ref": "#/$defs/Point2d"
+        },
+        "position3d": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "nodeId",
+        "participant"
+      ],
+      "additionalProperties": false,
+      "title": "PlanPresenceCursor",
+      "description": "One presence cursor in compiled (participant, node) order."
+    },
+    "ControlsStage": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "const": "controls"
+        },
+        "controls": {
+          "minItems": 1,
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlanControlOp"
+          }
+        }
+      },
+      "required": [
+        "stage",
+        "controls"
+      ],
+      "additionalProperties": false,
+      "title": "ControlsStage",
+      "description": "The controls stage: canonically ordered control bindings."
+    },
+    "PlanControlOp": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "ref": {
+          "$ref": "#/$defs/ProjectedReference"
+        },
+        "controlKind": {
+          "$ref": "#/$defs/ControlKind"
+        },
+        "intent": {
+          "$ref": "#/$defs/ControlIntent"
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "options": {
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "nodeId",
+        "controlKind",
+        "intent"
+      ],
+      "additionalProperties": false,
+      "title": "PlanControlOp",
+      "description": "One compiled control binding: neutral control role, emitted typed intent (R30), optional label and selector options."
+    },
+    "ControlKind": {
+      "type": "string",
+      "enum": [
+        "axis",
+        "button",
+        "selector",
+        "toggle"
+      ],
+      "title": "ControlKind",
+      "description": "Neutral interaction-control role of a controls-graph node."
+    },
+    "ControlIntent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "ControlIntent",
+      "description": "Typed UI intent a control emits: qualified id plus semver core (shape-compatible with the action-protocol ActionTypeReference)."
+    }
+  }
+}

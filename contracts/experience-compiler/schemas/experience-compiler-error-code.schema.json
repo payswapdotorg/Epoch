@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExperienceCompilerErrorCode",
+  "$defs": {
+    "ExperienceCompilerErrorCode": {
+      "type": "string",
+      "enum": [
+        "version-unsupported",
+        "malformed-descriptor",
+        "digest-mismatch",
+        "cross-tenant-denied",
+        "unknown-reference",
+        "authority-violation",
+        "device-budget-exceeded"
+      ],
+      "title": "ExperienceCompilerErrorCode",
+      "description": "Typed compile/admission-error code of the experience compiler."
+    }
+  }
+}

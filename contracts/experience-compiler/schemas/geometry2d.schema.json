@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/Geometry2d",
+  "$defs": {
+    "Geometry2d": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Geometry2dPoint"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dRect"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dCircle"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dEllipse"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dPolyline"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dPolygon"
+        }
+      ],
+      "title": "Geometry2d",
+      "description": "Neutral 2D geometry: point, rect, circle, ellipse, polyline, or polygon."
+    },
+    "Geometry2dPoint": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "point"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "form",
+        "x",
+        "y"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dPoint"
+    },
+    "Geometry2dRect": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "rect"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "minimum": 0
+        },
+        "height": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "form",
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dRect"
+    },
+    "Geometry2dCircle": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "circle"
+        },
+        "cx": {
+          "type": "number"
+        },
+        "cy": {
+          "type": "number"
+        },
+        "r": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "form",
+        "cx",
+        "cy",
+        "r"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dCircle"
+    },
+    "Geometry2dEllipse": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "ellipse"
+        },
+        "cx": {
+          "type": "number"
+        },
+        "cy": {
+          "type": "number"
+        },
+        "rx": {
+          "type": "number",
+          "minimum": 0
+        },
+        "ry": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "form",
+        "cx",
+        "cy",
+        "rx",
+        "ry"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dEllipse"
+    },
+    "Geometry2dPolyline": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "polyline"
+        },
+        "points": {
+          "$ref": "#/$defs/PolylinePoints"
+        }
+      },
+      "required": [
+        "form",
+        "points"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dPolyline"
+    },
+    "PolylinePoints": {
+      "minItems": 2,
+      "maxItems": 512,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Point2d"
+      },
+      "title": "PolylinePoints",
+      "description": "Ordered polyline vertices (semantic order; at least 2, at most 512)."
+    },
+    "Point2d": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "additionalProperties": false,
+      "title": "Point2d",
+      "description": "Finite 2D point (x, y)."
+    },
+    "Geometry2dPolygon": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "polygon"
+        },
+        "points": {
+          "$ref": "#/$defs/PolygonPoints"
+        }
+      },
+      "required": [
+        "form",
+        "points"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dPolygon"
+    },
+    "PolygonPoints": {
+      "minItems": 3,
+      "maxItems": 512,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Point2d"
+      },
+      "title": "PolygonPoints"
+    }
+  }
+}
