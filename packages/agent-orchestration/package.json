@@ -1,0 +1,38 @@
+{
+  "name": "@epoch/agent-orchestration",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Agent Orchestration kernel (W020): the typed orchestration MODEL — tenant-scoped plan/runbook descriptors whose steps are typed action PROPOSAL references (never embedded action semantics), capability-scoped agent bindings resolved against the W007 registry, deterministic content-addressed plan compilation (topological, sorted, identical inputs produce identical plans), retry/reconciliation policy shapes as typed data, idempotency keys, and the typed orchestration error taxonomy. The orchestration layer SCHEDULES — agents propose (W003), the Action Gateway authorizes (W022, future); this kernel never authorizes, executes, or embeds provider semantics.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/authorization": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "contract": "epoch/agent-orchestration",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Agent Orchestration contract surface (W020): tenant-scoped plans with steps as typed action-proposal references, capability-scoped agent bindings, deterministic content-addressed plan compilation, retry policies as typed data, idempotency keys, sessions and proposal handoffs. JSON Schema projection under schemas/; runtime validators in @epoch/agent-orchestration.",
+  "dataTypes": [
+    "ActionEventPhase",
+    "AgentBinding",
+    "CapabilityPin",
+    "CapabilityVersionPin",
+    "CompiledPlan",
+    "CompiledPlanStep",
+    "IdempotencyKey",
+    "OrchestratedAgent",
+    "OrchestrationIssue",
+    "OrchestrationPlan",
+    "OrchestrationPrincipalId",
+    "OrchestrationRecordVersion",
+    "OrchestrationSession",
+    "OrchestrationTenantId",
+    "PlanId",
+    "PlanStep",
+    "ProposalHandoff",
+    "RetryPolicy",
+    "RetryableActionPhase",
+    "SessionId",
+    "SessionStatus",
+    "SessionStatusTransition",
+    "Sha256Digest",
+    "StepId",
+    "StepState",
+    "StepStatus",
+    "StepTransition"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (unique capability pins within an agent descriptor, compiled stepCount consistency) and semantic admission gates (topological ordering, proposal-set resolution, registry binding) are enforced by the runtime validators in @epoch/agent-orchestration and are not represented in the JSON Schema files",
+  "emittedBy": "renderAgentOrchestrationContractFiles() in @epoch/agent-orchestration (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "ActionEventPhase",
+      "file": "action-event-phase.schema.json",
+      "sha256": "5bde947c1648aa73d1d36c6b51e575297bcd877ab04f82b2a73719aad2bc8e9b"
+    },
+    {
+      "type": "AgentBinding",
+      "file": "agent-binding.schema.json",
+      "sha256": "5b98b088f3db44ef578eb27e538562f66fdc1ec8862ba41ff3f15e852ec37c83"
+    },
+    {
+      "type": "CapabilityPin",
+      "file": "capability-pin.schema.json",
+      "sha256": "c55d6f1035944e2ff9e03fff570227d459635b3739fbdaff7cafbe8de5dc3a8e"
+    },
+    {
+      "type": "CapabilityVersionPin",
+      "file": "capability-version-pin.schema.json",
+      "sha256": "25e6bd0532ebfe8fb2eb95976ddfe4a47514ff4251be5668ddfb2e902b8212b9"
+    },
+    {
+      "type": "CompiledPlan",
+      "file": "compiled-plan.schema.json",
+      "sha256": "cb76cb326bac14a11c226addb40dc8dc50024e591abf218e9226a78cce72d521"
+    },
+    {
+      "type": "CompiledPlanStep",
+      "file": "compiled-plan-step.schema.json",
+      "sha256": "ee284c4e70d2ea042128cb3c59dc5152852c2bc9575f15e6a957b29851818114"
+    },
+    {
+      "type": "IdempotencyKey",
+      "file": "idempotency-key.schema.json",
+      "sha256": "1e44169dbbf968c5a95e54a8e929135432caa52f1251f7020a1f44bc2c9de1bc"
+    },
+    {
+      "type": "OrchestratedAgent",
+      "file": "orchestrated-agent.schema.json",
+      "sha256": "48cfd2b1126474d73344f62dce6b0bf13062a9a76a7b9fa0551343d6531aa6d2"
+    },
+    {
+      "type": "OrchestrationIssue",
+      "file": "orchestration-issue.schema.json",
+      "sha256": "581fa5ae36f1bdbf8f2057f0a9a45bb48aa61aa9925aa63e7a3e09e483ab31d3"
+    },
+    {
+      "type": "OrchestrationPlan",
+      "file": "orchestration-plan.schema.json",
+      "sha256": "32b554340b21d088ea63efe758b2edd21bd3252ab05f069f4863f8370d324146"
+    },
+    {
+      "type": "OrchestrationPrincipalId",
+      "file": "orchestration-principal-id.schema.json",
+      "sha256": "8336b28692d3d2439cf86d9780ee2a73cc4cd49e55ec1246b8e88359df66405c"
+    },
+    {
+      "type": "OrchestrationRecordVersion",
+      "file": "orchestration-record-version.schema.json",
+      "sha256": "dbaa8cee72b657df1391c6c3899064624b807d968d21ab1c4106e231f705d41f"
+    },
+    {
+      "type": "OrchestrationSession",
+      "file": "orchestration-session.schema.json",
+      "sha256": "481d1c5eb369b7c5275d0f7c68ba80dfa359602fcebd15789e24f422f64c0d9e"
+    },
+    {
+      "type": "OrchestrationTenantId",
+      "file": "orchestration-tenant-id.schema.json",
+      "sha256": "849c3c910d74292910f28196d64454112116f42779bdb4c545a234e5e28f8af8"
+    },
+    {
+      "type": "PlanId",
+      "file": "plan-id.schema.json",
+      "sha256": "bdb30c4df560ac895a4b2d5b783e768fdf2d8c2e33b2f5fc82dad212670861a5"
+    },
+    {
+      "type": "PlanStep",
+      "file": "plan-step.schema.json",
+      "sha256": "6d287848d504e56214f48eb963931d6228fb1178dbde7e363633db4c386b5cc6"
+    },
+    {
+      "type": "ProposalHandoff",
+      "file": "proposal-handoff.schema.json",
+      "sha256": "647ba70d2d57550492ba046a525e99ec68563afb71c006adbcebf34fd46dce89"
+    },
+    {
+      "type": "RetryPolicy",
+      "file": "retry-policy.schema.json",
+      "sha256": "dc6dcd12f9d80059e83f1a6046c2bb228488042109a83277980590b0b5fd0714"
+    },
+    {
+      "type": "RetryableActionPhase",
+      "file": "retryable-action-phase.schema.json",
+      "sha256": "d4a1021f53517e9e666777a5367802467bbd89dfd308580922ca41cb564252fc"
+    },
+    {
+      "type": "SessionId",
+      "file": "session-id.schema.json",
+      "sha256": "22fc04403108b3562f960a09a26432bf7bc34c9aa6f4f8644fc0b8044c45f66b"
+    },
+    {
+      "type": "SessionStatus",
+      "file": "session-status.schema.json",
+      "sha256": "0ef50d107a2e5e78c3d938e5325494d6e9d405ab704f756f02da6d62dce8a411"
+    },
+    {
+      "type": "SessionStatusTransition",
+      "file": "session-status-transition.schema.json",
+      "sha256": "029afd711dcdae0bd9822f4d273981170ad84bd8c5f4af8154b0d47f532c8d38"
+    },
+    {
+      "type": "Sha256Digest",
+      "file": "sha256-digest.schema.json",
+      "sha256": "a1283a958ca86c7adc43bb66c09b59c4972b8df3350c02615a4d38d8085fb82f"
+    },
+    {
+      "type": "StepId",
+      "file": "step-id.schema.json",
+      "sha256": "55ffbcfcb6425d036cc7859fe86983ca132bce142be59eb341ed8ded2228b179"
+    },
+    {
+      "type": "StepState",
+      "file": "step-state.schema.json",
+      "sha256": "57dd839a6e61c14d68bea3d54d2ed60315e3910d052b8399fd2d49c0635043f5"
+    },
+    {
+      "type": "StepStatus",
+      "file": "step-status.schema.json",
+      "sha256": "28120a3baab695f455ae0112eb457906bb40236f97ab8deac1e5e8f464e34574"
+    },
+    {
+      "type": "StepTransition",
+      "file": "step-transition.schema.json",
+      "sha256": "43b9e39a85babb80817b2cbc26daebaf27a2858df2683d96b0bb0e3e9f8557f7"
+    }
+  ]
+}

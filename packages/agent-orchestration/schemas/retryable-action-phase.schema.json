@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RetryableActionPhase",
+  "$defs": {
+    "RetryableActionPhase": {
+      "type": "string",
+      "enum": [
+        "rejected",
+        "failed"
+      ],
+      "title": "RetryableActionPhase",
+      "description": "Action lifecycle phases a retry policy may cover: rejected or failed."
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:retryable-action-phase:1.0.0"
+}

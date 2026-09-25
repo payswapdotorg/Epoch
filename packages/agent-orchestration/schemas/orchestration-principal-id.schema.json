@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OrchestrationPrincipalId",
+  "$defs": {
+    "OrchestrationPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "OrchestrationPrincipalId",
+      "description": "Opaque principal reference: \"principal:\" followed by a lowercase slug (W009 grammar)."
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:orchestration-principal-id:1.0.0"
+}

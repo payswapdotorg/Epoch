@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CompiledPlanStep",
+  "$defs": {
+    "CompiledPlanStep": {
+      "readOnly": true,
+      "title": "CompiledPlanStep",
+      "description": "Compiled plan step: the authored step with dependsOn canonically sorted and the retry policy defaulted.",
+      "type": "object",
+      "properties": {
+        "stepId": {
+          "$ref": "#/$defs/StepId"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "proposal": {
+          "$ref": "#/$defs/ProposalReference"
+        },
+        "dependsOn": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StepId"
+          }
+        },
+        "retryPolicy": {
+          "$ref": "#/$defs/RetryPolicy"
+        }
+      },
+      "required": [
+        "stepId",
+        "agentId",
+        "proposal",
+        "dependsOn",
+        "retryPolicy"
+      ],
+      "additionalProperties": false
+    },
+    "StepId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$",
+      "title": "StepId",
+      "description": "Plan-local step identity: a bare lowercase slug, unique within its plan."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "ProposalReference": {
+      "type": "object",
+      "properties": {
+        "proposalId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "canonicalDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "proposalId",
+        "canonicalDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProposalReference",
+      "description": "Exact-revision proposal reference: id plus the SHA-256 digest of the canonical proposal."
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    },
+    "RetryPolicy": {
+      "readOnly": true,
+      "title": "RetryPolicy",
+      "description": "Retry policy as typed data: total dispatch attempts allowed and the action phases that re-queue the step.",
+      "type": "object",
+      "properties": {
+        "maxAttempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "retryOn": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RetryableActionPhase"
+          }
+        }
+      },
+      "required": [
+        "maxAttempts",
+        "retryOn"
+      ],
+      "additionalProperties": false
+    },
+    "RetryableActionPhase": {
+      "type": "string",
+      "enum": [
+        "rejected",
+        "failed"
+      ],
+      "title": "RetryableActionPhase",
+      "description": "Action lifecycle phases a retry policy may cover: rejected or failed."
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:compiled-plan-step:1.0.0"
+}

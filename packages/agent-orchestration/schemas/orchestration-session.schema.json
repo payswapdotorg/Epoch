@@ -1,0 +1,582 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OrchestrationSession",
+  "$defs": {
+    "OrchestrationSession": {
+      "readOnly": true,
+      "title": "OrchestrationSession",
+      "description": "Tenant-scoped orchestration session: one compiled plan, its bound agents, step execution-tracking states, and the replayable transition history.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/OrchestrationRecordVersion"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/SessionId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OrchestrationTenantId"
+        },
+        "plan": {
+          "$ref": "#/$defs/CompiledPlan"
+        },
+        "agents": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AgentBinding"
+          }
+        },
+        "status": {
+          "$ref": "#/$defs/SessionStatus"
+        },
+        "steps": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StepState"
+          }
+        },
+        "sessionTransitions": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SessionStatusTransition"
+          }
+        },
+        "stepTransitions": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StepTransition"
+          }
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "sessionId",
+        "tenantId",
+        "plan",
+        "agents",
+        "status",
+        "steps",
+        "sessionTransitions",
+        "stepTransitions",
+        "createdAt",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    },
+    "OrchestrationRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "OrchestrationRecordVersion",
+      "description": "Version discriminator carried by every serialized agent-orchestration record (currently 1)."
+    },
+    "SessionId": {
+      "type": "string",
+      "pattern": "^session:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SessionId",
+      "description": "Opaque orchestration session identity: \"session:\" followed by a lowercase slug."
+    },
+    "OrchestrationTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "OrchestrationTenantId",
+      "description": "Opaque tenant scope of an orchestration document: \"tenant:\" followed by a lowercase slug (W009 grammar)."
+    },
+    "CompiledPlan": {
+      "readOnly": true,
+      "title": "CompiledPlan",
+      "description": "Validated, normalized, content-addressed plan: deterministic topological step order and the plan digest.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/OrchestrationRecordVersion"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OrchestrationTenantId"
+        },
+        "planId": {
+          "$ref": "#/$defs/PlanId"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "createdBy": {
+          "$ref": "#/$defs/OrchestrationPrincipalId"
+        },
+        "planDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        },
+        "steps": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CompiledPlanStep"
+          }
+        },
+        "stepCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tenantId",
+        "planId",
+        "planDigest",
+        "steps",
+        "stepCount"
+      ],
+      "additionalProperties": false
+    },
+    "PlanId": {
+      "type": "string",
+      "pattern": "^plan:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PlanId",
+      "description": "Opaque orchestration plan identity: \"plan:\" followed by a lowercase slug."
+    },
+    "OrchestrationPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "OrchestrationPrincipalId",
+      "description": "Opaque principal reference: \"principal:\" followed by a lowercase slug (W009 grammar)."
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "CompiledPlanStep": {
+      "readOnly": true,
+      "title": "CompiledPlanStep",
+      "description": "Compiled plan step: the authored step with dependsOn canonically sorted and the retry policy defaulted.",
+      "type": "object",
+      "properties": {
+        "stepId": {
+          "$ref": "#/$defs/StepId"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "proposal": {
+          "$ref": "#/$defs/ProposalReference"
+        },
+        "dependsOn": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StepId"
+          }
+        },
+        "retryPolicy": {
+          "$ref": "#/$defs/RetryPolicy"
+        }
+      },
+      "required": [
+        "stepId",
+        "agentId",
+        "proposal",
+        "dependsOn",
+        "retryPolicy"
+      ],
+      "additionalProperties": false
+    },
+    "StepId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$",
+      "title": "StepId",
+      "description": "Plan-local step identity: a bare lowercase slug, unique within its plan."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "ProposalReference": {
+      "type": "object",
+      "properties": {
+        "proposalId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "canonicalDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "proposalId",
+        "canonicalDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProposalReference",
+      "description": "Exact-revision proposal reference: id plus the SHA-256 digest of the canonical proposal."
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    },
+    "RetryPolicy": {
+      "readOnly": true,
+      "title": "RetryPolicy",
+      "description": "Retry policy as typed data: total dispatch attempts allowed and the action phases that re-queue the step.",
+      "type": "object",
+      "properties": {
+        "maxAttempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "retryOn": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RetryableActionPhase"
+          }
+        }
+      },
+      "required": [
+        "maxAttempts",
+        "retryOn"
+      ],
+      "additionalProperties": false
+    },
+    "RetryableActionPhase": {
+      "type": "string",
+      "enum": [
+        "rejected",
+        "failed"
+      ],
+      "title": "RetryableActionPhase",
+      "description": "Action lifecycle phases a retry policy may cover: rejected or failed."
+    },
+    "AgentBinding": {
+      "readOnly": true,
+      "title": "AgentBinding",
+      "description": "Capability-scoped agent binding: the orchestrated agent descriptor, its resolved capability pins, and the binding digest.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/OrchestrationRecordVersion"
+        },
+        "agent": {
+          "$ref": "#/$defs/OrchestratedAgent"
+        },
+        "capabilities": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityPin"
+          }
+        },
+        "bindingDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "agent",
+        "capabilities",
+        "bindingDigest"
+      ],
+      "additionalProperties": false
+    },
+    "OrchestratedAgent": {
+      "readOnly": true,
+      "title": "OrchestratedAgent",
+      "description": "Provider-neutral orchestrated agent: registered agent id plus exact capability version pins (never a vendor/model descriptor).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/OrchestrationRecordVersion"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "capabilities": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityVersionPin"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "agentId",
+        "capabilities"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityVersionPin": {
+      "readOnly": true,
+      "title": "CapabilityVersionPin",
+      "description": "Exact capability version pin: dot-namespaced capability id plus semver core version (W007 registry grammar).",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "$ref": "#/$defs/CapabilityId"
+        },
+        "version": {
+          "$ref": "#/$defs/SemverCore"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+      "title": "CapabilityId",
+      "description": "Opaque, stable capability identity: dot-namespaced qualified name; the extension scoping unit (lock rule 9)."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "CapabilityPin": {
+      "readOnly": true,
+      "title": "CapabilityPin",
+      "description": "A capability resolved against the W007 registry at binding time: id, version, category, and the lifecycle state observed (retired never binds).",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "$ref": "#/$defs/CapabilityId"
+        },
+        "version": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "category": {
+          "$ref": "#/$defs/CapabilityCategory"
+        },
+        "lifecycleAtBinding": {
+          "type": "string",
+          "enum": [
+            "registered",
+            "deprecated"
+          ]
+        }
+      },
+      "required": [
+        "capabilityId",
+        "version",
+        "category",
+        "lifecycleAtBinding"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityCategory": {
+      "type": "string",
+      "enum": [
+        "source",
+        "semantic",
+        "reconstruction",
+        "visualization",
+        "simulation",
+        "evaluator",
+        "action",
+        "verification"
+      ],
+      "title": "CapabilityCategory",
+      "description": "Capability Fabric adapter category: source, semantic, reconstruction, visualization, simulation, evaluator, action, or verification."
+    },
+    "SessionStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "running",
+        "suspended",
+        "completed",
+        "failed",
+        "cancelled"
+      ],
+      "title": "SessionStatus",
+      "description": "Session lifecycle state: pending, running, suspended, completed, failed, or cancelled (last three terminal)."
+    },
+    "StepState": {
+      "readOnly": true,
+      "title": "StepState",
+      "description": "Execution-tracking record of one step: status, attempts, and the last action-lifecycle fact recorded against it.",
+      "type": "object",
+      "properties": {
+        "stepId": {
+          "$ref": "#/$defs/StepId"
+        },
+        "status": {
+          "$ref": "#/$defs/StepStatus"
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "lastPhase": {
+          "$ref": "#/$defs/ActionEventPhase"
+        },
+        "lastEventDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        },
+        "dispatchedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "settledAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "stepId",
+        "status",
+        "attempt"
+      ],
+      "additionalProperties": false
+    },
+    "StepStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "dispatched",
+        "authorized",
+        "executed",
+        "failed",
+        "rejected",
+        "skipped"
+      ],
+      "title": "StepStatus",
+      "description": "Step execution-tracking state: pending, dispatched, authorized, executed, failed, rejected, or skipped (last four terminal)."
+    },
+    "ActionEventPhase": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "authorized",
+        "rejected",
+        "executed",
+        "effects-recorded",
+        "failed"
+      ],
+      "title": "ActionEventPhase",
+      "description": "Action lifecycle phase recorded by an event (W010 vocabulary): proposed, authorized, rejected, executed, effects-recorded, or failed."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "SessionStatusTransition": {
+      "readOnly": true,
+      "title": "SessionStatusTransition",
+      "description": "Replayable session-status transition with its typed cause and instant.",
+      "type": "object",
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/SessionStatus"
+        },
+        "to": {
+          "$ref": "#/$defs/SessionStatus"
+        },
+        "cause": {
+          "type": "string",
+          "enum": [
+            "start",
+            "suspend",
+            "resume",
+            "cancel",
+            "all-steps-executed",
+            "step-settled-unexecuted"
+          ]
+        },
+        "at": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "cause",
+        "at"
+      ],
+      "additionalProperties": false
+    },
+    "StepTransition": {
+      "readOnly": true,
+      "title": "StepTransition",
+      "description": "Replayable step-status transition with its typed cause, the driving action phase/event digest, and instant.",
+      "type": "object",
+      "properties": {
+        "stepId": {
+          "$ref": "#/$defs/StepId"
+        },
+        "from": {
+          "$ref": "#/$defs/StepStatus"
+        },
+        "to": {
+          "$ref": "#/$defs/StepStatus"
+        },
+        "cause": {
+          "type": "string",
+          "enum": [
+            "dependency-satisfied",
+            "event",
+            "retry",
+            "cascade",
+            "cancel"
+          ]
+        },
+        "phase": {
+          "$ref": "#/$defs/ActionEventPhase"
+        },
+        "eventDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "at": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "stepId",
+        "from",
+        "to",
+        "cause",
+        "attempt",
+        "at"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:orchestration-session:1.0.0"
+}
