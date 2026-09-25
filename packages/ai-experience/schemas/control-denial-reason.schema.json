@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ControlDenialReason",
+  "$defs": {
+    "ControlDenialReason": {
+      "type": "string",
+      "enum": [
+        "actor-lacks-control-authority",
+        "actor-not-controller",
+        "claimed-authority-invalid"
+      ],
+      "title": "ControlDenialReason",
+      "description": "Why a control transition was denied: the role lacks the authority, the actor is not the controller, or the claimed authority does not hold."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:control-denial-reason:1.0.0"
+}

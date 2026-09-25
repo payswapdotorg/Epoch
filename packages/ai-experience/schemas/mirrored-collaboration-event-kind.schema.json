@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/MirroredCollaborationEventKind",
+  "$defs": {
+    "MirroredCollaborationEventKind": {
+      "type": "string",
+      "enum": [
+        "participant.joined",
+        "participant.left",
+        "participant.presence",
+        "subject.focused",
+        "subject.released",
+        "coordination.note",
+        "session.closed"
+      ],
+      "title": "MirroredCollaborationEventKind",
+      "description": "The W010 collaboration coordination-event kind vocabulary (mirrored for the adapter input)."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:mirrored-collaboration-event-kind:1.0.0"
+}

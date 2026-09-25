@@ -1,0 +1,1037 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AiCollaborationEventRegistration",
+  "$defs": {
+    "AiCollaborationEventRegistration": {
+      "readOnly": true,
+      "title": "AiCollaborationEventRegistration",
+      "description": "AI-collaboration event creation envelope: content plus the digest claimed for it.",
+      "type": "object",
+      "properties": {
+        "event": {
+          "$ref": "#/$defs/AiCollaborationEvent"
+        },
+        "digest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "event",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "AiCollaborationEvent": {
+      "readOnly": true,
+      "title": "AiCollaborationEvent",
+      "description": "Immutable typed AI-collaboration event in the W010 session-journal envelope grammar: sequence, tenant scope, acting principal, event kind, and the producer-supplied occurrence instant.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AiExperienceRecordVersion"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/AiSessionId"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "tenantId": {
+          "$ref": "#/$defs/AiTenantId"
+        },
+        "actor": {
+          "$ref": "#/$defs/AiPrincipalId"
+        },
+        "occurredAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "kind": {
+          "$ref": "#/$defs/AiCollaborationEventKind"
+        },
+        "participant": {
+          "$ref": "#/$defs/AiPrincipalId"
+        },
+        "presence": {
+          "$ref": "#/$defs/AgentPresenceState"
+        },
+        "target": {
+          "$ref": "#/$defs/FocusTarget"
+        },
+        "provenance": {
+          "$ref": "#/$defs/ControlProvenance"
+        },
+        "supersededController": {
+          "$ref": "#/$defs/AiPrincipalId"
+        },
+        "rejection": {
+          "$ref": "#/$defs/ControlRejection"
+        },
+        "intent": {
+          "$ref": "#/$defs/InteractionIntent"
+        },
+        "momentDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "sessionId",
+        "sequence",
+        "tenantId",
+        "actor",
+        "occurredAt",
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "AiExperienceRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AiExperienceRecordVersion",
+      "description": "Exact record version admitted by this release (1)."
+    },
+    "AiSessionId": {
+      "type": "string",
+      "pattern": "^session:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AiSessionId",
+      "description": "Collaboration session identity: \"session:\" followed by a lowercase slug (W010 grammar)."
+    },
+    "AiTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AiTenantId",
+      "description": "Tenant scope of an AI-collaboration record: \"tenant:\" followed by a lowercase slug (W009 grammar)."
+    },
+    "AiPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AiPrincipalId",
+      "description": "Collaboration participant principal: \"principal:\" followed by a lowercase slug (W009 grammar)."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "AiCollaborationEventKind": {
+      "type": "string",
+      "enum": [
+        "control.denied",
+        "control.released",
+        "control.taken",
+        "focus.changed",
+        "focus.released",
+        "intent.emitted",
+        "moment.captured",
+        "presence.changed",
+        "session.closed"
+      ],
+      "title": "AiCollaborationEventKind",
+      "description": "Kind of a typed AI-collaboration event: presence, focus, control transitions/denials, emitted intents, captured moments, or the terminal session close."
+    },
+    "AgentPresenceState": {
+      "type": "string",
+      "enum": [
+        "joining",
+        "present",
+        "idle",
+        "left"
+      ],
+      "title": "AgentPresenceState",
+      "description": "Presence state of a collaboration participant (W010 vocabulary): joining, present, idle, or the terminal left."
+    },
+    "FocusTarget": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/WorldEntityTarget"
+        },
+        {
+          "$ref": "#/$defs/ActionProposalFocusTarget"
+        }
+      ],
+      "title": "FocusTarget",
+      "description": "What a participant focuses on — the W010 collaboration subject grammar (world entity or exact-revision action proposal), mirrored and parity-pinned."
+    },
+    "WorldEntityTarget": {
+      "readOnly": true,
+      "title": "WorldEntityTarget",
+      "description": "World-entity focus target: an opaque W002 entity id (referenced, never embedded).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "world-entity"
+        },
+        "entityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "kind",
+        "entityId"
+      ],
+      "additionalProperties": false
+    },
+    "ActionProposalFocusTarget": {
+      "readOnly": true,
+      "title": "ActionProposalFocusTarget",
+      "description": "Action-proposal focus target: an exact-revision W003 proposal reference (referenced, never embedded).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "action-proposal"
+        },
+        "proposal": {
+          "$ref": "#/$defs/ActionProposalTarget"
+        }
+      },
+      "required": [
+        "kind",
+        "proposal"
+      ],
+      "additionalProperties": false
+    },
+    "ActionProposalTarget": {
+      "readOnly": true,
+      "title": "ActionProposalTarget",
+      "description": "Exact-revision action-proposal reference (W003 ProposalReference shape): message id plus the SHA-256 digest of the canonical proposal.",
+      "type": "object",
+      "properties": {
+        "proposalId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+        },
+        "canonicalDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "proposalId",
+        "canonicalDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "ControlProvenance": {
+      "readOnly": true,
+      "title": "ControlProvenance",
+      "description": "Provenance of a control transition: who acted, when (producer-supplied), on what authority.",
+      "type": "object",
+      "properties": {
+        "actor": {
+          "$ref": "#/$defs/AiPrincipalId"
+        },
+        "occurredAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "authority": {
+          "$ref": "#/$defs/ControlAuthority"
+        }
+      },
+      "required": [
+        "actor",
+        "occurredAt",
+        "authority"
+      ],
+      "additionalProperties": false
+    },
+    "ControlAuthority": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "session-owner"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "role-grant"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "explicit-handover"
+            },
+            "from": {
+              "$ref": "#/$defs/AiPrincipalId"
+            }
+          },
+          "required": [
+            "kind",
+            "from"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ControlAuthority",
+      "description": "The authority a takeover claims: session-owner, role-grant, or an explicit handover from the current controller."
+    },
+    "ControlRejection": {
+      "readOnly": true,
+      "title": "ControlRejection",
+      "description": "Typed rejection of an unauthorized control transition — the full claimed provenance plus the typed denial reason.",
+      "type": "object",
+      "properties": {
+        "actor": {
+          "$ref": "#/$defs/AiPrincipalId"
+        },
+        "occurredAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "claimedAuthority": {
+          "$ref": "#/$defs/ControlAuthority"
+        },
+        "reason": {
+          "$ref": "#/$defs/ControlDenialReason"
+        }
+      },
+      "required": [
+        "actor",
+        "occurredAt",
+        "claimedAuthority",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "ControlDenialReason": {
+      "type": "string",
+      "enum": [
+        "actor-lacks-control-authority",
+        "actor-not-controller",
+        "claimed-authority-invalid"
+      ],
+      "title": "ControlDenialReason",
+      "description": "Why a control transition was denied: the role lacks the authority, the actor is not the controller, or the claimed authority does not hold."
+    },
+    "InteractionIntent": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "annotate"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "target": {
+              "$ref": "#/$defs/ProjectedReference"
+            },
+            "note": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "data": {
+              "readOnly": true,
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/JsonValue"
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion",
+            "target",
+            "note"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "approve"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "target": {
+              "$ref": "#/$defs/ActionProposalTarget"
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion",
+            "target"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "branch"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "from": {
+              "$ref": "#/$defs/TimelinePosition"
+            },
+            "label": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion",
+            "from"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "compare"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "targets": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "$ref": "#/$defs/ProjectedReference"
+                },
+                {
+                  "$ref": "#/$defs/ProjectedReference"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion",
+            "targets"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "execute"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "target": {
+              "$ref": "#/$defs/ActionProposalTarget"
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion",
+            "target"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "filter"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "criteria": {
+              "readOnly": true,
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/JsonValue"
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion",
+            "criteria"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "follow-agent"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "agentId": {
+              "$ref": "#/$defs/AiAgentId"
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion",
+            "agentId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "inspect"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "target": {
+              "$ref": "#/$defs/ProjectedReference"
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion",
+            "target"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "pause"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "query"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion",
+            "text"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "replay"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "position": {
+              "$ref": "#/$defs/TimelinePosition"
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion",
+            "position"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "reject"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "target": {
+              "$ref": "#/$defs/ActionProposalTarget"
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion",
+            "target"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "release-control"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "resume"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "select"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "target": {
+              "$ref": "#/$defs/ProjectedReference"
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion",
+            "target"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "take-control"
+            },
+            "intentVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "authority": {
+              "$ref": "#/$defs/ControlAuthority"
+            }
+          },
+          "required": [
+            "kind",
+            "intentVersion",
+            "authority"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "InteractionIntent",
+      "description": "The typed interaction-intent union: sixteen versioned members, one per admitted Universal-interaction subset. Agents emit typed intents, never executable UI code."
+    },
+    "ProjectedReference": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ProjectedWorldEntityRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedWorldRelationRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedWorldEventRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedAgentRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedEvidenceRef"
+        },
+        {
+          "$ref": "#/$defs/ProjectedCapabilityRef"
+        }
+      ],
+      "title": "ProjectedReference",
+      "description": "Opaque, tenant-scoped, exact-revision reference to projected kernel state; never an embedded kernel object."
+    },
+    "ProjectedWorldEntityRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "world-entity"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "entityId": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "entityId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedWorldEntityRef",
+      "description": "Exact-revision reference to a materialized world-model entity (W002 grammar; digest of its canonical JSON)."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "urn:epoch:contracts:world:entity-id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "EntityId",
+      "description": "Opaque entity identity (graph node), caller-assigned."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "ProjectedWorldRelationRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "world-relation"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "relationId": {
+          "$ref": "#/$defs/WorldRelationId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "relationId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedWorldRelationRef",
+      "description": "Exact-revision reference to a materialized world-model relation (W002 grammar; digest of its canonical JSON)."
+    },
+    "WorldRelationId": {
+      "type": "string",
+      "pattern": "^rel-[0-9a-f]{64}$",
+      "title": "WorldRelationId",
+      "description": "World-model relation identity: rel-<sha256-of-key> (owned by @epoch/world-model)."
+    },
+    "ProjectedWorldEventRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "world-event"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "eventId": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:event-id"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "eventId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedWorldEventRef",
+      "description": "Exact-revision reference to a world-model event (W002 grammar; digest of its canonical JSON)."
+    },
+    "urn:epoch:contracts:world:event-id": {
+      "type": "string",
+      "pattern": "^evt-[0-9]+$",
+      "title": "EventId"
+    },
+    "ProjectedAgentRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "agent"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "agentId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedAgentRef",
+      "description": "Exact-revision reference to a registered agent (W003 grammar; digest of its registration canonical JSON)."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "ProjectedEvidenceRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "evidence-record"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "recordDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "recordDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedEvidenceRef",
+      "description": "Reference to an evidence record by its content-addressed identity (W006: the SHA-256 digest is the id)."
+    },
+    "ProjectedCapabilityRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "capability"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "capabilityVersion": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "capabilityId",
+        "capabilityVersion",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedCapabilityRef",
+      "description": "Exact-revision reference to a registered capability manifest (W007 grammar; digest of its canonical JSON)."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "TimelinePosition": {
+      "readOnly": true,
+      "title": "TimelinePosition",
+      "description": "One timeline/replay position: a W010 event-log stream coordinate (inclusive last-applied sequence; 0 denotes the stream start).",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "$ref": "#/$defs/EventStreamId"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "EventStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "EventStreamId",
+      "description": "Opaque event stream identity: the unit of total order; every event in a stream carries a contiguous 1-based sequence."
+    },
+    "AiAgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AiAgentId",
+      "description": "Registered agent identity: \"agent:\" followed by a lowercase slug (W003 grammar)."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:ai-collaboration-event-registration:1.0.0"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AiExperienceRecordVersion",
+  "$defs": {
+    "AiExperienceRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AiExperienceRecordVersion",
+      "description": "Exact record version admitted by this release (1)."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:ai-experience-record-version:1.0.0"
+}

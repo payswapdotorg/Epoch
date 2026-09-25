@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ControlAuthority",
+  "$defs": {
+    "ControlAuthority": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "session-owner"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "role-grant"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "explicit-handover"
+            },
+            "from": {
+              "$ref": "#/$defs/AiPrincipalId"
+            }
+          },
+          "required": [
+            "kind",
+            "from"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ControlAuthority",
+      "description": "The authority a takeover claims: session-owner, role-grant, or an explicit handover from the current controller."
+    },
+    "AiPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AiPrincipalId",
+      "description": "Collaboration participant principal: \"principal:\" followed by a lowercase slug (W009 grammar)."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:control-authority:1.0.0"
+}

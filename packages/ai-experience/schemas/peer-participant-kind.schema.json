@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PeerParticipantKind",
+  "$defs": {
+    "PeerParticipantKind": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "human"
+      ],
+      "title": "PeerParticipantKind",
+      "description": "Collaboration peer participant kind — the W011 ParticipantKind subset of humans and agents (peers with typed roles)."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:peer-participant-kind:1.0.0"
+}

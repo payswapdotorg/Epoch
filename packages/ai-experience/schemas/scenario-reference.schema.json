@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ScenarioReference",
+  "$defs": {
+    "ScenarioReference": {
+      "readOnly": true,
+      "title": "ScenarioReference",
+      "description": "Opaque scenario reference — the world scenario an Engineering Moment belongs to.",
+      "type": "object",
+      "properties": {
+        "scenarioId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "scenarioId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:ai-experience:scenario-reference:1.0.0"
+}

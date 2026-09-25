@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AiTenantId",
+  "$defs": {
+    "AiTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AiTenantId",
+      "description": "Tenant scope of an AI-collaboration record: \"tenant:\" followed by a lowercase slug (W009 grammar)."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:ai-tenant-id:1.0.0"
+}

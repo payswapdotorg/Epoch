@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PlaybackState",
+  "$defs": {
+    "PlaybackState": {
+      "type": "string",
+      "enum": [
+        "playing",
+        "paused"
+      ],
+      "title": "PlaybackState",
+      "description": "The playback state of a collaboration session (pause/resume intents)."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:playback-state:1.0.0"
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/InteractionIntentKind",
+  "$defs": {
+    "InteractionIntentKind": {
+      "type": "string",
+      "enum": [
+        "annotate",
+        "approve",
+        "branch",
+        "compare",
+        "execute",
+        "filter",
+        "follow-agent",
+        "inspect",
+        "pause",
+        "query",
+        "reject",
+        "release-control",
+        "replay",
+        "resume",
+        "select",
+        "take-control"
+      ],
+      "title": "InteractionIntentKind",
+      "description": "Kind of a typed interaction intent — a closed, sorted subset of the Epoch Universal interactions."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:interaction-intent-kind:1.0.0"
+}
