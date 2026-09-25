@@ -122,3 +122,16 @@ contracts are pinned FROM THIS PACKAGE instead:
 `test/feature-projection.test.ts` asserts the exact serialized key sets
 and the semantic invariants of every record type the feature mirrors —
 contract drift fails this package's battery.
+
+The W015 fix pass (PR #56) verified the runner-independent alternative
+(explicit `import { ... } from 'vitest'` in app-side test files) is
+structurally closed on this branch — the runner executes such imports
+from either config root, but the branch-context app `tsc --noEmit`
+cannot resolve `'vitest'` (TS2307; the app manifest predates the W014
+harness and is frozen), and every suppression escape is banned
+(`@ts-ignore`: eslint error; `@ts-expect-error`: TS2578 in the merge
+context; ambient `declare module`: augments the real vitest types the
+W014 shell tests import). The per-file relocation record and evidence
+live in `apps/web/src/features/agents/README.md` ("The W015-FIX
+record"); the relocated coverage is this package's
+`test/feature-projection.test.ts`.

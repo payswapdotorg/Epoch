@@ -62,6 +62,39 @@ Once an integration Work Order wires the app manifest, the parity pin
 extends naturally into the app harness (the mirrors live in one file,
 `contracts.ts`, precisely so that pin stays cheap).
 
+### The W015-FIX record (why app-side runner-independent tests are closed)
+
+The W015 fix pass (PR #56, pull_request CI job 108262132391) considered
+the runner-independent option first — explicit
+`import { describe, it, expect } from 'vitest'` in app-side test files —
+and closed it with reproducible evidence:
+
+- the Vitest RUNNER is not the blocker: the runner intercepts its own
+  specifier from either config root, so the `@epoch/ai-experience`
+  runner (globals mode, cross-root include) executes app-tree test
+  files with explicit imports green — verified at the W015 base
+  (`4d6f2f1f`): 14 files / 259 tests;
+- the branch-context app typecheck is: this branch's `apps/web`
+  manifest predates the W014 test harness and is frozen for W015, so
+  under pnpm's isolated layout `tsc --noEmit` fails both feature test
+  files with TS2307 ("Cannot find module 'vitest'") — reproduced on the
+  branch — and the push-event CI runs that task;
+- the suppression escapes are closed: `@ts-ignore` is an error under
+  the shared eslint preset (`@typescript-eslint/ban-ts-comment`);
+  `@ts-expect-error` flips to an unused-directive error (TS2578) in the
+  merge context where the import resolves; an ambient
+  `declare module 'vitest'` would augment the real vitest types the
+  W014 shell tests import;
+- a literal file move into the package tree would import app-layer
+  sources from the experience layer — forbidden by the layer rules.
+
+Relocating the coverage against the owning package's pinned surface is
+therefore the sanctioned fallback (fix requirement 2), recorded here
+per file: `__tests__/guards.test.ts` and
+`__tests__/view-models.test.ts` (with `__tests__/fixtures.ts` and
+`__tests__/test-globals.d.ts`) →
+`packages/ai-experience/test/feature-projection.test.ts`.
+
 ## Public surface
 
 `index.ts` re-exports the contracts, guards, view-model builders, and
