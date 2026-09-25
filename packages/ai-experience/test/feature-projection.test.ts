@@ -268,3 +268,135 @@ describe('the feature contracts track the package record shapes', () => {
     expect(agent?.participantKind).toBe('agent');
   });
 });
+
+describe('the semantic invariants the feature view models rely on', () => {
+  it('the presence roster is sorted by principalId and agents carry their agent id', () => {
+    const projection = projectCollaboration(validSession(), joinedEvents());
+    expect(projection.ok).toBe(true);
+    if (!projection.ok) return;
+    const ids = projection.value.presence.map((entry) => entry.principalId);
+    expect(ids).toEqual([...ids].sort());
+    for (const entry of projection.value.presence) {
+      expect(entry.participantKind === 'agent' ? entry.agentId : true).toBeTruthy();
+      expect(entry.participantKind === 'human' ? entry.agentId === undefined : true).toBe(true);
+    }
+  });
+
+  it('at most one participant holds control, and denials carry complete provenance', () => {
+    const projection = projectCollaboration(validSession(), [
+      ...joinedEvents(),
+      {
+        schemaVersion: 1,
+        sessionId: SESSION,
+        sequence: 8,
+        tenantId: TENANT,
+        actor: LEAD,
+        occurredAt: T2,
+        kind: 'control.taken',
+        provenance: { actor: LEAD, occurredAt: T2, authority: { kind: 'role-grant' } },
+      },
+      {
+        schemaVersion: 1,
+        sessionId: SESSION,
+        sequence: 9,
+        tenantId: TENANT,
+        actor: INSPECTOR,
+        occurredAt: T2,
+        kind: 'control.denied',
+        rejection: {
+          actor: INSPECTOR,
+          occurredAt: T2,
+          claimedAuthority: { kind: 'role-grant' },
+          reason: 'actor-lacks-control-authority',
+        },
+      },
+    ]);
+    expect(projection.ok).toBe(true);
+    if (!projection.ok) return;
+    expect(projection.value.controller).toBe(LEAD);
+    for (const denial of projection.value.controlDenials) {
+      expect(keySet(denial as unknown as JsonValue)).toEqual([
+        'actor',
+        'claimedAuthority',
+        'occurredAt',
+        'reason',
+      ]);
+      expect(denial.actor).toBe(INSPECTOR);
+      expect(denial.claimedAuthority).toEqual({ kind: 'role-grant' });
+    }
+  });
+
+  it('moments derive their available actions from the sorted union of role grants', () => {
+    const projection = projectCollaboration(validSession(), joinedEvents());
+    expect(projection.ok).toBe(true);
+    if (!projection.ok) return;
+    const moment = captureEngineeringMoment({
+      session: validSession(),
+      projection: projection.value,
+      worldSnapshot: [ENTITY_REF],
+      visualState: { graphKind: 'presence', graphDigest: 'a'.repeat(64) },
+      evidence: [EVIDENCE_REF],
+      knownEvidence: [DIGEST_EVIDENCE],
+      streamBounds: [{ streamId: STREAM, lastSequence: 7 }],
+      timelinePosition: { streamId: STREAM, sequence: 7 },
+      scenario: { scenarioId: 'scenario:bridge-12-review' },
+      capturedBy: LEAD,
+      capturedAt: T4,
+    });
+    expect(moment.ok).toBe(true);
+    if (!moment.ok) return;
+    // The union of the full grants and the inspector's viewer grant,
+    // sorted and duplicate-free (exactly what the roster/feed derive).
+    expect(moment.value.moment.availableActions).toEqual([
+      'annotate',
+      'approve',
+      'branch',
+      'compare',
+      'execute',
+      'filter',
+      'follow-agent',
+      'inspect',
+      'pause',
+      'query',
+      'reject',
+      'release-control',
+      'replay',
+      'resume',
+      'select',
+      'take-control',
+    ]);
+  });
+
+  it('branch points and captured moments are sequence-ordered (feed determinism)', () => {
+    const projection = projectCollaboration(validSession(), [
+      ...joinedEvents(),
+      {
+        schemaVersion: 1,
+        sessionId: SESSION,
+        sequence: 8,
+        tenantId: TENANT,
+        actor: LEAD,
+        occurredAt: T2,
+        kind: 'intent.emitted',
+        intent: {
+          kind: 'branch',
+          intentVersion: 1,
+          from: { streamId: STREAM, sequence: 3 },
+          label: 'alt-steel',
+        },
+      },
+      event({
+        sequence: 9,
+        actor: LEAD,
+        kind: 'moment.captured',
+        momentDigest: 'f'.repeat(64),
+      }),
+    ]);
+    expect(projection.ok).toBe(true);
+    if (!projection.ok) return;
+    expect(projection.value.branchPoints.map((b) => b.sequence)).toEqual([8]);
+    expect(projection.value.moments.map((m) => m.sequence)).toEqual([9]);
+    expect(projection.value.lastSequence).toBe(9);
+    expect(projection.value.eventCount).toBe(9);
+  });
+});

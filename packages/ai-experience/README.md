@@ -113,9 +113,12 @@ point is total; errors are values, never exceptions.
 
 ## Testing note (the web feature module)
 
-The package's Vitest runner also executes the pure-logic tests of the
-W015 web feature module (`apps/web/src/features/agents/**`): the app
-manifest is frozen during this Work Order (integration is a serialized
-shell/integration change), so the feature tests run here in `globals`
-mode and import nothing outside `apps/web`. See
-`vitest.config.mts`.
+The W015 web feature module (`apps/web/src/features/agents/**`) follows
+the marketplace feature module's standing convention (W023): it ships no
+app-side test files (the app test harness landed with the W014 shell
+after this module's dispatch base, and the frozen app manifest prevents
+declaring test-only dependencies for the feature tree). Its structural
+contracts are pinned FROM THIS PACKAGE instead:
+`test/feature-projection.test.ts` asserts the exact serialized key sets
+and the semantic invariants of every record type the feature mirrors —
+contract drift fails this package's battery.

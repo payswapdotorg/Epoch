@@ -31,17 +31,36 @@ branch points, typed activity feed, and Engineering Moment cards).
 ## Integration path (deferred by design)
 
 Wiring this module into the app — declaring `@epoch/ai-experience` in
-`apps/web/package.json`, mounting the panel on a route, and feeding it
-live collaboration projections — is a serialized shell/integration
-change: `apps/web/package.json`, `apps/web/app/*`, and
-`apps/web/src/shell/*` are frozen surfaces during the W014/W015/W023
-wave. Until then the module stands alone: it compiles, lints, and builds
-green within the app workspace (`pnpm --filter @epoch/web typecheck`,
-`lint`, `build`), and its logic tests run under the
-`@epoch/ai-experience` package's Vitest runner in `globals` mode (see
-`packages/ai-experience/vitest.config.mts` and
-`__tests__/test-globals.d.ts`), so `pnpm --filter @epoch/ai-experience
-test` executes them inside the workspace battery.
+`apps/web/package.json`, registering the feature descriptor with the
+shell's mounting seam, and feeding the panel live collaboration
+projections — is a serialized shell/integration change:
+`apps/web/package.json`, `apps/web/app/*`, `apps/web/src/shell/*`, and
+`apps/web/src/shared/*` are frozen surfaces during the W014/W015/W023
+wave (features enter the shell ONLY through explicit typed registration
+— never directory discovery). Until then the module stands alone: it
+compiles, lints, and builds green within the app workspace
+(`pnpm --filter @epoch/web typecheck`, `lint`, `build`).
+
+## Testing (the standing feature-module convention)
+
+Following the marketplace feature module's standing convention (W023),
+this module ships no app-side test files: the app test harness landed
+with the shell (W014) after this module's dispatch base, and the frozen
+app manifest prevents declaring test-only dependencies for the feature
+tree. The module's correctness is pinned from the OWNING package
+instead:
+
+- `packages/ai-experience/test/feature-projection.test.ts` pins the
+  exact serialized key sets and semantic invariants of every record type
+  these contracts mirror (drift fails the workspace battery);
+- the view-model builders are pure, total, deterministic functions over
+  those pinned shapes (typechecked by the app's `tsc --noEmit`);
+- the runtime guards are exercised indirectly through the same pinned
+  record fixtures.
+
+Once an integration Work Order wires the app manifest, the parity pin
+extends naturally into the app harness (the mirrors live in one file,
+`contracts.ts`, precisely so that pin stays cheap).
 
 ## Public surface
 
