@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/Spatial3dDescriptor",
+  "$defs": {
+    "Spatial3dDescriptor": {
+      "type": "object",
+      "properties": {
+        "primitive": {
+          "$ref": "#/$defs/SpatialPrimitive"
+        },
+        "position": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "orientation": {
+          "$ref": "#/$defs/Quaternion"
+        },
+        "scale": {
+          "$ref": "#/$defs/Scale3d"
+        },
+        "mesh": {
+          "$ref": "#/$defs/MeshBinding"
+        }
+      },
+      "required": [
+        "primitive",
+        "position"
+      ],
+      "additionalProperties": false,
+      "title": "Spatial3dDescriptor",
+      "description": "Typed descriptor of a 3D spatial node: neutral primitive, position, optional orientation/scale, optional content-addressed mesh."
+    },
+    "SpatialPrimitive": {
+      "type": "string",
+      "enum": [
+        "box",
+        "cone",
+        "cylinder",
+        "mesh",
+        "plane",
+        "sphere"
+      ],
+      "title": "SpatialPrimitive",
+      "description": "Neutral geometric primitive of a 3D node (mesh binds an opaque content-addressed asset)."
+    },
+    "Vec3": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3,
+      "title": "Vec3",
+      "description": "Finite 3-component numeric vector (x, y, z)."
+    },
+    "Quaternion": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4,
+      "title": "Quaternion",
+      "description": "Finite orientation quaternion (x, y, z, w); neutral math, renderer-normalized."
+    },
+    "Scale3d": {
+      "title": "Scale3d",
+      "description": "Positive per-axis 3D scale.",
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "MeshBinding": {
+      "type": "object",
+      "properties": {
+        "assetDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "byteSize": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "mediaType": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9!#$&^_.+-]{0,126}\\/[A-Za-z0-9][A-Za-z0-9!#$&^_.+-]{0,126}$"
+        }
+      },
+      "required": [
+        "assetDigest"
+      ],
+      "additionalProperties": false,
+      "title": "MeshBinding",
+      "description": "Content-addressed mesh-asset binding: SHA-256 digest plus optional neutral metadata (no filenames, URLs, or engine formats)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  }
+}

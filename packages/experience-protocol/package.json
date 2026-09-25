@@ -1,0 +1,34 @@
+{
+  "name": "@epoch/experience-protocol",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Experience Protocol v1 — the typed, provider-neutral projection contract of the Experience layer (W011): versioned Experience Graph envelopes for 2D, 3D, animation, narrative, timeline/replay, presence and controls; tenant-scoped projection requests; an abstract device-descriptor slot; deterministic content-addressed serialization; and a typed admission-error taxonomy. A read projection of kernel state — never semantic authority (architecture lock rule 8).",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

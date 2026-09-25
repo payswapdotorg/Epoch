@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ParticipantReference",
+  "$defs": {
+    "ParticipantReference": {
+      "type": "object",
+      "properties": {
+        "participantId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "participantKind": {
+          "$ref": "#/$defs/ParticipantKind"
+        }
+      },
+      "required": [
+        "participantId",
+        "participantKind"
+      ],
+      "additionalProperties": false,
+      "title": "ParticipantReference",
+      "description": "Opaque presence-participant reference: bounded id plus neutral kind."
+    },
+    "ParticipantKind": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "human",
+        "system"
+      ],
+      "title": "ParticipantKind",
+      "description": "Neutral presence-participant kind."
+    }
+  }
+}

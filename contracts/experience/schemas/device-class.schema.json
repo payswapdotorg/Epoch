@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DeviceClass",
+  "$defs": {
+    "DeviceClass": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "laptop",
+        "tablet",
+        "phone",
+        "headset",
+        "wall-display"
+      ],
+      "title": "DeviceClass",
+      "description": "Neutral device class of a device descriptor (never a vendor product)."
+    }
+  }
+}

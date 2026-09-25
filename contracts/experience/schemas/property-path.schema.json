@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PropertyPath",
+  "$defs": {
+    "PropertyPath": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)*$",
+      "title": "PropertyPath",
+      "description": "Dotted path naming the animated property of a target node descriptor."
+    }
+  }
+}

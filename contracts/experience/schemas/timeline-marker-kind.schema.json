@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TimelineMarkerKind",
+  "$defs": {
+    "TimelineMarkerKind": {
+      "type": "string",
+      "enum": [
+        "branch-point",
+        "event",
+        "phase-end",
+        "phase-start",
+        "replay-cursor"
+      ],
+      "title": "TimelineMarkerKind",
+      "description": "Kind of a timeline marker (event, phase boundary, replay cursor, branch point)."
+    }
+  }
+}

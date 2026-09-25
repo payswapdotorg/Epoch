@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/experience-protocol": ["./src/index.ts"],
+      "@epoch/world-contracts": ["../../contracts/world/src/index.ts"]
+    }
+  },
+  "include": [
+    "../../contracts/experience/index.d.ts",
+    "../../contracts/experience/parity.ts"
+  ]
+}

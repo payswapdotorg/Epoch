@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExperienceProtocolVersion",
+  "$defs": {
+    "ExperienceProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "ExperienceProtocolVersion",
+      "description": "Exact experience-protocol version admitted by this release (\"1.0.0\")."
+    }
+  }
+}

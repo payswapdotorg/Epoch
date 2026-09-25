@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AnimationClipDescriptor",
+  "$defs": {
+    "AnimationClipDescriptor": {
+      "type": "object",
+      "properties": {
+        "durationMs": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "tracks": {
+          "minItems": 1,
+          "maxItems": 128,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnimationTrack"
+          }
+        }
+      },
+      "required": [
+        "durationMs",
+        "tracks"
+      ],
+      "additionalProperties": false,
+      "title": "AnimationClipDescriptor",
+      "description": "Typed descriptor of an animation clip: positive duration plus sorted, unique, in-range tracks."
+    },
+    "AnimationTrack": {
+      "type": "object",
+      "properties": {
+        "targetNodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "propertyPath": {
+          "$ref": "#/$defs/PropertyPath"
+        },
+        "keyframes": {
+          "minItems": 1,
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Keyframe"
+          }
+        }
+      },
+      "required": [
+        "targetNodeId",
+        "propertyPath",
+        "keyframes"
+      ],
+      "additionalProperties": false,
+      "title": "AnimationTrack",
+      "description": "One animation track: target node, dotted property path, and strictly time-ordered keyframes."
+    },
+    "ExperienceNodeId": {
+      "type": "string",
+      "pattern": "^xn-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ExperienceNodeId",
+      "description": "Experience-local node identifier: \"xn-\" followed by a lowercase slug."
+    },
+    "PropertyPath": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)*$",
+      "title": "PropertyPath",
+      "description": "Dotted path naming the animated property of a target node descriptor."
+    },
+    "Keyframe": {
+      "type": "object",
+      "properties": {
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "value": {
+          "$ref": "#/$defs/JsonValue"
+        },
+        "easing": {
+          "$ref": "#/$defs/EasingKind"
+        }
+      },
+      "required": [
+        "atMs",
+        "value"
+      ],
+      "additionalProperties": false,
+      "title": "Keyframe",
+      "description": "One animation keyframe: millisecond offset, JSON value, optional easing."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "EasingKind": {
+      "type": "string",
+      "enum": [
+        "ease-in",
+        "ease-in-out",
+        "ease-out",
+        "linear",
+        "step"
+      ],
+      "title": "EasingKind",
+      "description": "Neutral interpolation of one animation keyframe segment."
+    }
+  }
+}

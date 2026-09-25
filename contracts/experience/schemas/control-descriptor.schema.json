@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ControlDescriptor",
+  "$defs": {
+    "ControlDescriptor": {
+      "type": "object",
+      "properties": {
+        "controlKind": {
+          "$ref": "#/$defs/ControlKind"
+        },
+        "intent": {
+          "$ref": "#/$defs/ControlIntent"
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "options": {
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        }
+      },
+      "required": [
+        "controlKind",
+        "intent"
+      ],
+      "additionalProperties": false,
+      "title": "ControlDescriptor",
+      "description": "Typed descriptor of an interaction control: neutral control role, emitted typed intent, optional label and selector options."
+    },
+    "ControlKind": {
+      "type": "string",
+      "enum": [
+        "axis",
+        "button",
+        "selector",
+        "toggle"
+      ],
+      "title": "ControlKind",
+      "description": "Neutral interaction-control role of a controls-graph node."
+    },
+    "ControlIntent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "ControlIntent",
+      "description": "Typed UI intent a control emits: qualified id plus semver core (shape-compatible with the action-protocol ActionTypeReference)."
+    }
+  }
+}

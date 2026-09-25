@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProjectedAgentRef",
+  "$defs": {
+    "ProjectedAgentRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "agent"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "agentId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedAgentRef",
+      "description": "Exact-revision reference to a registered agent (W003 grammar; digest of its registration canonical JSON)."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  }
+}

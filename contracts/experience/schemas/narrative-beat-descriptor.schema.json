@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/NarrativeBeatDescriptor",
+  "$defs": {
+    "NarrativeBeatDescriptor": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "body": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "tone": {
+          "$ref": "#/$defs/NarrativeTone"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "additionalProperties": false,
+      "title": "NarrativeBeatDescriptor",
+      "description": "Typed descriptor of a narrative beat: bounded title, optional body, optional presentation tone."
+    },
+    "NarrativeTone": {
+      "type": "string",
+      "enum": [
+        "cautionary",
+        "celebratory",
+        "informative",
+        "neutral"
+      ],
+      "title": "NarrativeTone",
+      "description": "Presentation tone of a narrative beat."
+    }
+  }
+}
