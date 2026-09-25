@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PrincipalRecord",
+  "$defs": {
+    "PrincipalRecord": {
+      "readOnly": true,
+      "title": "PrincipalRecord",
+      "description": "Published principal record: the immutable principal content, its lifecycle state, and the SHA-256 digest of the content.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/IdentityRecordVersion"
+        },
+        "principal": {
+          "$ref": "#/$defs/Principal"
+        },
+        "lifecycle": {
+          "$ref": "#/$defs/PrincipalLifecycleState"
+        },
+        "principalDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "principal",
+        "lifecycle",
+        "principalDigest"
+      ],
+      "additionalProperties": false
+    },
+    "IdentityRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "IdentityRecordVersion",
+      "description": "Version discriminator carried by every serialized identity record (currently 1)."
+    },
+    "Principal": {
+      "readOnly": true,
+      "title": "Principal",
+      "description": "Immutable, content-addressed principal: opaque id, participant kind, display name. Carries no tenant, no membership, and no credential material.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/IdentityRecordVersion"
+        },
+        "principalId": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "kind": {
+          "$ref": "#/$defs/PrincipalKind"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "principalId",
+        "kind",
+        "displayName"
+      ],
+      "additionalProperties": false
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque, prefixed principal identity: \"principal:\" followed by a lowercase slug. Never encodes a tenant, provider, or credential."
+    },
+    "PrincipalKind": {
+      "type": "string",
+      "enum": [
+        "human",
+        "agent",
+        "service"
+      ],
+      "title": "PrincipalKind",
+      "description": "Principal kind: human, agent (registered autonomous participant), or service (machine client)."
+    },
+    "PrincipalLifecycleState": {
+      "type": "string",
+      "enum": [
+        "active",
+        "suspended",
+        "deactivated"
+      ],
+      "title": "PrincipalLifecycleState",
+      "description": "Principal lifecycle: active, suspended (advisory hold — authentication fails inactive-principal), or deactivated (terminal)."
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:identity:principal-record:1.0.0"
+}

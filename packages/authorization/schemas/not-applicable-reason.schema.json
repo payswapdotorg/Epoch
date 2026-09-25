@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/NotApplicableReason",
+  "$defs": {
+    "NotApplicableReason": {
+      "type": "string",
+      "enum": [
+        "resource-not-tenant-scoped"
+      ],
+      "title": "NotApplicableReason",
+      "description": "Typed reason a decision is not-applicable: resource-not-tenant-scoped."
+    }
+  },
+  "$id": "urn:epoch:authorization:not-applicable-reason:1.0.0"
+}

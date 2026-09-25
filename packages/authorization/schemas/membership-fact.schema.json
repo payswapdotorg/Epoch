@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/MembershipFact",
+  "$defs": {
+    "MembershipFact": {
+      "readOnly": true,
+      "title": "MembershipFact",
+      "description": "Caller-supplied tenancy membership fact: tenant-wide (tenant only), workspace-wide (tenant + workspace), or project-scoped (tenant + workspace + project).",
+      "type": "object",
+      "properties": {
+        "principalId": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/WorkspaceId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/ProjectId"
+        }
+      },
+      "required": [
+        "principalId",
+        "tenantId"
+      ],
+      "additionalProperties": false
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque principal id: \"principal:\" followed by a lowercase slug (mirrors @epoch/identity)."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant id: \"tenant:\" followed by a lowercase slug (mirrors @epoch/tenancy)."
+    },
+    "WorkspaceId": {
+      "type": "string",
+      "pattern": "^workspace:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkspaceId",
+      "description": "Opaque workspace id: \"workspace:\" followed by a lowercase slug (mirrors @epoch/tenancy)."
+    },
+    "ProjectId": {
+      "type": "string",
+      "pattern": "^project:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ProjectId",
+      "description": "Opaque project id: \"project:\" followed by a lowercase slug (mirrors @epoch/tenancy)."
+    }
+  },
+  "$id": "urn:epoch:authorization:membership-fact:1.0.0"
+}

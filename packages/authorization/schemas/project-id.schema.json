@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProjectId",
+  "$defs": {
+    "ProjectId": {
+      "type": "string",
+      "pattern": "^project:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ProjectId",
+      "description": "Opaque project id: \"project:\" followed by a lowercase slug (mirrors @epoch/tenancy)."
+    }
+  },
+  "$id": "urn:epoch:authorization:project-id:1.0.0"
+}

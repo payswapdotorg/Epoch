@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuthenticationFailureReason",
+  "$defs": {
+    "AuthenticationFailureReason": {
+      "type": "string",
+      "enum": [
+        "invalid-credential",
+        "expired-credential",
+        "revoked-credential",
+        "malformed-assertion",
+        "challenge-mismatch",
+        "unknown-principal",
+        "inactive-principal"
+      ],
+      "title": "AuthenticationFailureReason",
+      "description": "Typed failure reason carried by failed authentication results: invalid/expired/revoked credential, malformed assertion, challenge mismatch, unknown principal, or inactive principal."
+    }
+  },
+  "$id": "urn:epoch:identity:authentication-failure-reason:1.0.0"
+}

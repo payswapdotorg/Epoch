@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DenyDecision",
+  "$defs": {
+    "DenyDecision": {
+      "readOnly": true,
+      "title": "DenyDecision",
+      "description": "Deny decision: exactly one typed denial plus exact evidence paths (fail-closed).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AuthorizationRecordVersion"
+        },
+        "requestDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        },
+        "evidence": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidencePath"
+          }
+        },
+        "outcome": {
+          "type": "string",
+          "const": "deny"
+        },
+        "denial": {
+          "$ref": "#/$defs/Denial"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "requestDigest",
+        "evidence",
+        "outcome",
+        "denial"
+      ],
+      "additionalProperties": false
+    },
+    "AuthorizationRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AuthorizationRecordVersion",
+      "description": "Version discriminator carried by every serialized authorization record (currently 1)."
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "EvidencePath": {
+      "type": "string",
+      "pattern": "^(?:request|principals|memberships|knownTenants)(?:\\.[A-Za-z][A-Za-z0-9_]*|\\[\\d+\\])*$",
+      "title": "EvidencePath",
+      "description": "Exact evidence path: a dotted pointer into the request or context that grounds a decision (e.g. \"request.resource.tenantId\", \"memberships[2]\")."
+    },
+    "Denial": {
+      "readOnly": true,
+      "title": "Denial",
+      "description": "A machine-readable denial: exactly one typed code plus an audit message.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/DenialCode"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "DenialCode": {
+      "type": "string",
+      "enum": [
+        "unknown-principal",
+        "unknown-tenant",
+        "cross-tenant-denied",
+        "cross-workspace-denied",
+        "cross-project-denied",
+        "inactive-principal",
+        "unauthenticated-principal"
+      ],
+      "title": "DenialCode",
+      "description": "Machine-readable denial code: unknown-principal, unknown-tenant, cross-tenant-denied, cross-workspace-denied, cross-project-denied, inactive-principal, or unauthenticated-principal."
+    }
+  },
+  "$id": "urn:epoch:authorization:deny-decision:1.0.0"
+}

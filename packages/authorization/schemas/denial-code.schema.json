@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DenialCode",
+  "$defs": {
+    "DenialCode": {
+      "type": "string",
+      "enum": [
+        "unknown-principal",
+        "unknown-tenant",
+        "cross-tenant-denied",
+        "cross-workspace-denied",
+        "cross-project-denied",
+        "inactive-principal",
+        "unauthenticated-principal"
+      ],
+      "title": "DenialCode",
+      "description": "Machine-readable denial code: unknown-principal, unknown-tenant, cross-tenant-denied, cross-workspace-denied, cross-project-denied, inactive-principal, or unauthenticated-principal."
+    }
+  },
+  "$id": "urn:epoch:authorization:denial-code:1.0.0"
+}

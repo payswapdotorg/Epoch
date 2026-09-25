@@ -1,0 +1,150 @@
+{
+  "contract": "epoch/authorization",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Authorization contract surface (W009): the decision point over opaque principal/tenant/resource ids — requests, caller-supplied principal/membership facts, and deterministic decisions (allow/deny/not-applicable) with typed reasons, exact evidence paths, and content-addressed digests. JSON Schema projection under schemas/; runtime validators in @epoch/authorization.",
+  "dataTypes": [
+    "AllowDecision",
+    "AllowReason",
+    "AuthorizationContext",
+    "AuthorizationDecision",
+    "AuthorizationOutcome",
+    "AuthorizationPolicyTarget",
+    "AuthorizationRecordVersion",
+    "AuthorizationRequest",
+    "Denial",
+    "DenialCode",
+    "DenyDecision",
+    "EvidencePath",
+    "MembershipFact",
+    "NotApplicableDecision",
+    "NotApplicableReason",
+    "PrincipalFact",
+    "PrincipalId",
+    "PrincipalStatus",
+    "ProjectId",
+    "ResourceReference",
+    "Sha256Digest",
+    "TenantId",
+    "WorkspaceId"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (scope-chain completeness, duplicate-free principal facts, membership/fact consistency) are enforced by the runtime validators in @epoch/authorization and are not represented in the JSON Schema files",
+  "emittedBy": "renderAuthorizationContractFiles() in @epoch/authorization (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "AllowDecision",
+      "file": "allow-decision.schema.json",
+      "sha256": "c29508413fa6a5c08522dd5ed70b351fb9cffa77eee5273b92ce8182bade83e9"
+    },
+    {
+      "type": "AllowReason",
+      "file": "allow-reason.schema.json",
+      "sha256": "8c91497826299b05d802a1482bf934f7d88fab8d2e583552c0ce52e815e71b3e"
+    },
+    {
+      "type": "AuthorizationContext",
+      "file": "authorization-context.schema.json",
+      "sha256": "9346f642a244e97f5f3d7cf4e2787fab92b22c7008ded8bafd91871b3ea69109"
+    },
+    {
+      "type": "AuthorizationDecision",
+      "file": "authorization-decision.schema.json",
+      "sha256": "406e62ea8f9418a76ac6e2aa651555c474fd5e815c362a0b0ac63f5d9ba7d6b2"
+    },
+    {
+      "type": "AuthorizationOutcome",
+      "file": "authorization-outcome.schema.json",
+      "sha256": "dbf65cd5107aa5af0641bb6e618db405ecac7aa16b24cdbf530fc8226bad9178"
+    },
+    {
+      "type": "AuthorizationPolicyTarget",
+      "file": "authorization-policy-target.schema.json",
+      "sha256": "a8fac4cdb8c38b9dcaa9741edfdb07d2bda3a5f641aca6194b92f99ae17c75ce"
+    },
+    {
+      "type": "AuthorizationRecordVersion",
+      "file": "authorization-record-version.schema.json",
+      "sha256": "4bd788e23932fe171b3afcc91838e6bc8bdcc24247d82119ec13d3cd97deda68"
+    },
+    {
+      "type": "AuthorizationRequest",
+      "file": "authorization-request.schema.json",
+      "sha256": "d00a2b6fa7941487728b31ec7f73c2dad8114dbf0d5f178a170752e9b631d8f5"
+    },
+    {
+      "type": "Denial",
+      "file": "denial.schema.json",
+      "sha256": "2603afa25fa3394cbe411b65a2df2ed1c435e3c948b65111169923f21d85d067"
+    },
+    {
+      "type": "DenialCode",
+      "file": "denial-code.schema.json",
+      "sha256": "7b84eea5c28ab06fcb719787e49c23b40066684452cb677f8a47b305e9d8387e"
+    },
+    {
+      "type": "DenyDecision",
+      "file": "deny-decision.schema.json",
+      "sha256": "6fae5f5a79f111b8b18e0f267818f2dca92121f644d3ffcab6b30c875c395b56"
+    },
+    {
+      "type": "EvidencePath",
+      "file": "evidence-path.schema.json",
+      "sha256": "a11bf29429bbf58a1604afe0a220fcd7e742d1a5345d1c5f4ee9e391ba2c2a40"
+    },
+    {
+      "type": "MembershipFact",
+      "file": "membership-fact.schema.json",
+      "sha256": "2441c5b2869470bae6b76d81987e2175ecb55a42d0d5aad818feb3bbf188f0e6"
+    },
+    {
+      "type": "NotApplicableDecision",
+      "file": "not-applicable-decision.schema.json",
+      "sha256": "c3c515131e4cd6e1a37e5646891896a47d8187d136b385d03ca8f28d701cca69"
+    },
+    {
+      "type": "NotApplicableReason",
+      "file": "not-applicable-reason.schema.json",
+      "sha256": "1b5ad8d9471c9790d1d26e63761422b34cd3646c58eeb910ade7b3db5f25a8e0"
+    },
+    {
+      "type": "PrincipalFact",
+      "file": "principal-fact.schema.json",
+      "sha256": "cfa5e8cdcf57401bc428e7edf063a94cc8329fa8cbe3cc98e30e2ee30721a7bf"
+    },
+    {
+      "type": "PrincipalId",
+      "file": "principal-id.schema.json",
+      "sha256": "efb6d2ba83ffad45f7108993c3fe5c4aa470bff5dc466291cc3ff2573bfe75ac"
+    },
+    {
+      "type": "PrincipalStatus",
+      "file": "principal-status.schema.json",
+      "sha256": "e8639d8f3acb6d5e42ae728fe49ffd415db20a81547ada4c22721c1d3d8ff128"
+    },
+    {
+      "type": "ProjectId",
+      "file": "project-id.schema.json",
+      "sha256": "0023fe91743dde053f7742f87c09bcc2bab3a2e1bec8c101e0d420f3afd87ca3"
+    },
+    {
+      "type": "ResourceReference",
+      "file": "resource-reference.schema.json",
+      "sha256": "9acec230c404eb1198fe2b335a29e3de6dcc5f817165bab78f1f9a4a0db216ae"
+    },
+    {
+      "type": "Sha256Digest",
+      "file": "sha256-digest.schema.json",
+      "sha256": "e67133c35a802cfaff629338105375aab2d4b4f8da419adc876b22db15feda19"
+    },
+    {
+      "type": "TenantId",
+      "file": "tenant-id.schema.json",
+      "sha256": "5bd92e23a05d825a0ebda0ec124ed4165a836c155f9ee50c6675f9e44572c886"
+    },
+    {
+      "type": "WorkspaceId",
+      "file": "workspace-id.schema.json",
+      "sha256": "4fd5a2dba488d5f4ab9f2ff1f6eb2936b1ad0214ee88d13256b701cdd955cd31"
+    }
+  ]
+}

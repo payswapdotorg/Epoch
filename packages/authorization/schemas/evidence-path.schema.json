@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EvidencePath",
+  "$defs": {
+    "EvidencePath": {
+      "type": "string",
+      "pattern": "^(?:request|principals|memberships|knownTenants)(?:\\.[A-Za-z][A-Za-z0-9_]*|\\[\\d+\\])*$",
+      "title": "EvidencePath",
+      "description": "Exact evidence path: a dotted pointer into the request or context that grounds a decision (e.g. \"request.resource.tenantId\", \"memberships[2]\")."
+    }
+  },
+  "$id": "urn:epoch:authorization:evidence-path:1.0.0"
+}

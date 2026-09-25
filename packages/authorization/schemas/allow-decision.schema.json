@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AllowDecision",
+  "$defs": {
+    "AllowDecision": {
+      "readOnly": true,
+      "title": "AllowDecision",
+      "description": "Allow decision: typed reasons plus exact evidence paths, answering one exact request revision.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AuthorizationRecordVersion"
+        },
+        "requestDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        },
+        "evidence": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidencePath"
+          }
+        },
+        "outcome": {
+          "type": "string",
+          "const": "allow"
+        },
+        "reasons": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AllowReason"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "requestDigest",
+        "evidence",
+        "outcome",
+        "reasons"
+      ],
+      "additionalProperties": false
+    },
+    "AuthorizationRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AuthorizationRecordVersion",
+      "description": "Version discriminator carried by every serialized authorization record (currently 1)."
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "EvidencePath": {
+      "type": "string",
+      "pattern": "^(?:request|principals|memberships|knownTenants)(?:\\.[A-Za-z][A-Za-z0-9_]*|\\[\\d+\\])*$",
+      "title": "EvidencePath",
+      "description": "Exact evidence path: a dotted pointer into the request or context that grounds a decision (e.g. \"request.resource.tenantId\", \"memberships[2]\")."
+    },
+    "AllowReason": {
+      "type": "string",
+      "enum": [
+        "covering-membership",
+        "active-principal",
+        "authenticated-principal"
+      ],
+      "title": "AllowReason",
+      "description": "Typed reason an allow decision may cite: covering-membership, active-principal, authenticated-principal."
+    }
+  },
+  "$id": "urn:epoch:authorization:allow-decision:1.0.0"
+}

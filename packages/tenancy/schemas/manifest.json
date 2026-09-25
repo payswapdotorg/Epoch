@@ -1,0 +1,72 @@
+{
+  "contract": "epoch/tenancy",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Tenancy contract surface (W009): the Platform -> Tenant -> Workspace -> Project -> World/Scenario/Evidence hierarchy as typed opaque-id references, with digest-checked records and deterministic snapshots. JSON Schema projection under schemas/; runtime validators in @epoch/tenancy.",
+  "dataTypes": [
+    "ProjectId",
+    "Sha256Digest",
+    "TenancyNode",
+    "TenancyNodeId",
+    "TenancyNodeKind",
+    "TenancyNodeRecord",
+    "TenancyRecordVersion",
+    "TenancySnapshot",
+    "TenantId",
+    "WorkspaceId"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (id-prefix/kind agreement, snapshot id uniqueness) are enforced by the runtime validators in @epoch/tenancy and are not represented in the JSON Schema files",
+  "emittedBy": "renderTenancyContractFiles() in @epoch/tenancy (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "ProjectId",
+      "file": "project-id.schema.json",
+      "sha256": "325800c2106709dc30de9c00545024f910108c93e3ba1ab90f51af4c20150ec3"
+    },
+    {
+      "type": "Sha256Digest",
+      "file": "sha256-digest.schema.json",
+      "sha256": "355b4de930cdb5ec123cb4ab6b98b6e012fae3e7da3f49da446e5317e615aa91"
+    },
+    {
+      "type": "TenancyNode",
+      "file": "tenancy-node.schema.json",
+      "sha256": "87e4f83499ffcc70086fa86efaa0cef75997e1c0aa5b00c393575e400cd108de"
+    },
+    {
+      "type": "TenancyNodeId",
+      "file": "tenancy-node-id.schema.json",
+      "sha256": "862a6baea379fe007f4a2a1270ec7652278193942c02dd443c1d1af26b37d775"
+    },
+    {
+      "type": "TenancyNodeKind",
+      "file": "tenancy-node-kind.schema.json",
+      "sha256": "cedfb2410a9948116456f1b3c562b52d963b132f6ed56e8ae981e046ab1d40a0"
+    },
+    {
+      "type": "TenancyNodeRecord",
+      "file": "tenancy-node-record.schema.json",
+      "sha256": "a6b1cd29a1b698beb02b493ca49f5e09fe56209fd3b89a90e16a2f33d138f3d8"
+    },
+    {
+      "type": "TenancyRecordVersion",
+      "file": "tenancy-record-version.schema.json",
+      "sha256": "40218036fd13107d5dfc39d9c84d2ea951d97fa083797b5f6a1969f04e81d829"
+    },
+    {
+      "type": "TenancySnapshot",
+      "file": "tenancy-snapshot.schema.json",
+      "sha256": "d6cfb196c0e51648339c11c953d771ec21bcd35d8fb211aadbcb76203f544131"
+    },
+    {
+      "type": "TenantId",
+      "file": "tenant-id.schema.json",
+      "sha256": "29a2f6976400c9b1c683af19ff4c81608b3b5e949123a54bd06fe0ad59f20d24"
+    },
+    {
+      "type": "WorkspaceId",
+      "file": "workspace-id.schema.json",
+      "sha256": "acbb875190bbd92581153dd8c1ef67f84ac1cf3a511710d1ec02abcf7d2d1661"
+    }
+  ]
+}
