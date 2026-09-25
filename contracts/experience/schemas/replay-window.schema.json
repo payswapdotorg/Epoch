@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ReplayWindow",
+  "$defs": {
+    "ReplayWindow": {
+      "type": "object",
+      "properties": {
+        "fromSequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "toSequence": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "fromSequence",
+        "toSequence"
+      ],
+      "additionalProperties": false,
+      "title": "ReplayWindow",
+      "description": "Bounded world-model event-sequence window for timeline/replay projections (from inclusive, to exclusive)."
+    }
+  }
+}

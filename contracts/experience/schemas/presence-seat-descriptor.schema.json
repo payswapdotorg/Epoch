@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PresenceSeatDescriptor",
+  "$defs": {
+    "PresenceSeatDescriptor": {
+      "type": "object",
+      "properties": {
+        "participant": {
+          "$ref": "#/$defs/ParticipantReference"
+        }
+      },
+      "required": [
+        "participant"
+      ],
+      "additionalProperties": false,
+      "title": "PresenceSeatDescriptor",
+      "description": "Typed descriptor of a presence seat: the participant occupying it."
+    },
+    "ParticipantReference": {
+      "type": "object",
+      "properties": {
+        "participantId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "participantKind": {
+          "$ref": "#/$defs/ParticipantKind"
+        }
+      },
+      "required": [
+        "participantId",
+        "participantKind"
+      ],
+      "additionalProperties": false,
+      "title": "ParticipantReference",
+      "description": "Opaque presence-participant reference: bounded id plus neutral kind."
+    },
+    "ParticipantKind": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "human",
+        "system"
+      ],
+      "title": "ParticipantKind",
+      "description": "Neutral presence-participant kind."
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExperienceNodeKind",
+  "$defs": {
+    "ExperienceNodeKind": {
+      "type": "string",
+      "enum": [
+        "shape-2d",
+        "spatial-3d",
+        "label",
+        "animation-clip",
+        "narrative-beat",
+        "timeline-track",
+        "timeline-marker",
+        "presence-seat",
+        "presence-cursor",
+        "control"
+      ],
+      "title": "ExperienceNodeKind",
+      "description": "Typed presentation-descriptor kind of an Experience Graph node."
+    }
+  }
+}

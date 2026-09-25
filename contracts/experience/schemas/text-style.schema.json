@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TextStyle",
+  "$defs": {
+    "TextStyle": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/ColorHex"
+        },
+        "fontSizePx": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "weight": {
+          "$ref": "#/$defs/TextWeight"
+        }
+      },
+      "additionalProperties": false,
+      "title": "TextStyle",
+      "description": "Neutral text styling: optional color, font size, and weight."
+    },
+    "ColorHex": {
+      "type": "string",
+      "pattern": "^#[0-9a-f]{6}([0-9a-f]{2})?$",
+      "title": "ColorHex",
+      "description": "Presentation color as lowercase hex: #RRGGBB or #RRGGBBAA."
+    },
+    "TextWeight": {
+      "type": "string",
+      "enum": [
+        "bold",
+        "light",
+        "medium",
+        "regular"
+      ],
+      "title": "TextWeight",
+      "description": "Neutral text weight of a label style."
+    }
+  }
+}

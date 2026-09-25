@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExperienceProtocolError",
+  "$defs": {
+    "ExperienceProtocolError": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "version-unsupported"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "malformed-descriptor"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "issues": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ExperienceIssue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "issues"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "digest-mismatch"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "cross-tenant-denied"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "expectedTenantId": {
+              "type": "string"
+            },
+            "encounteredTenantId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "expectedTenantId",
+            "encounteredTenantId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "unknown-reference"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "reference": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "reference"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "authority-violation"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "violations": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "key": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "key"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "violations"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ExperienceProtocolError",
+      "description": "Typed, discriminated admission error of the experience protocol."
+    },
+    "ExperienceIssue": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "ExperienceIssue",
+      "description": "One flattened validation issue: dotted path (\"$\" = root) plus message."
+    }
+  }
+}

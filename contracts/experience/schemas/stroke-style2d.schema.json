@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/StrokeStyle2d",
+  "$defs": {
+    "StrokeStyle2d": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/ColorHex"
+        },
+        "lineWidth": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "color",
+        "lineWidth"
+      ],
+      "additionalProperties": false,
+      "title": "StrokeStyle2d",
+      "description": "Stroke styling of a 2D shape: canonical color plus positive line width."
+    },
+    "ColorHex": {
+      "type": "string",
+      "pattern": "^#[0-9a-f]{6}([0-9a-f]{2})?$",
+      "title": "ColorHex",
+      "description": "Presentation color as lowercase hex: #RRGGBB or #RRGGBBAA."
+    }
+  }
+}

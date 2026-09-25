@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProjectedReferenceKind",
+  "$defs": {
+    "ProjectedReferenceKind": {
+      "type": "string",
+      "enum": [
+        "world-entity",
+        "world-relation",
+        "world-event",
+        "agent",
+        "evidence-record",
+        "capability"
+      ],
+      "title": "ProjectedReferenceKind",
+      "description": "Which kernel subsystem a projected reference addresses."
+    }
+  }
+}

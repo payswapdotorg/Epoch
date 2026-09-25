@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TenantScope",
+  "$defs": {
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    }
+  }
+}

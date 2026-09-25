@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PresenceCursorDescriptor",
+  "$defs": {
+    "PresenceCursorDescriptor": {
+      "type": "object",
+      "properties": {
+        "participant": {
+          "$ref": "#/$defs/ParticipantReference"
+        },
+        "position2d": {
+          "$ref": "#/$defs/Point2d"
+        },
+        "position3d": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "participant"
+      ],
+      "additionalProperties": false,
+      "title": "PresenceCursorDescriptor",
+      "description": "Typed descriptor of a presence cursor: participant plus a 2D or 3D position and optional timestamp."
+    },
+    "ParticipantReference": {
+      "type": "object",
+      "properties": {
+        "participantId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "participantKind": {
+          "$ref": "#/$defs/ParticipantKind"
+        }
+      },
+      "required": [
+        "participantId",
+        "participantKind"
+      ],
+      "additionalProperties": false,
+      "title": "ParticipantReference",
+      "description": "Opaque presence-participant reference: bounded id plus neutral kind."
+    },
+    "ParticipantKind": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "human",
+        "system"
+      ],
+      "title": "ParticipantKind",
+      "description": "Neutral presence-participant kind."
+    },
+    "Point2d": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "additionalProperties": false,
+      "title": "Point2d",
+      "description": "Finite 2D point (x, y)."
+    },
+    "Vec3": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3,
+      "title": "Vec3",
+      "description": "Finite 3-component numeric vector (x, y, z)."
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TextWeight",
+  "$defs": {
+    "TextWeight": {
+      "type": "string",
+      "enum": [
+        "bold",
+        "light",
+        "medium",
+        "regular"
+      ],
+      "title": "TextWeight",
+      "description": "Neutral text weight of a label style."
+    }
+  }
+}

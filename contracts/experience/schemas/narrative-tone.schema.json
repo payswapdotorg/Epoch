@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/NarrativeTone",
+  "$defs": {
+    "NarrativeTone": {
+      "type": "string",
+      "enum": [
+        "cautionary",
+        "celebratory",
+        "informative",
+        "neutral"
+      ],
+      "title": "NarrativeTone",
+      "description": "Presentation tone of a narrative beat."
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExperienceEdgeKind",
+  "$defs": {
+    "ExperienceEdgeKind": {
+      "type": "string",
+      "enum": [
+        "anchors",
+        "animates",
+        "binds-control",
+        "contains",
+        "follows",
+        "synchronizes"
+      ],
+      "title": "ExperienceEdgeKind",
+      "description": "Typed relationship kind between two Experience Graph nodes."
+    }
+  }
+}

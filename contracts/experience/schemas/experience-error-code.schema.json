@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExperienceErrorCode",
+  "$defs": {
+    "ExperienceErrorCode": {
+      "type": "string",
+      "enum": [
+        "version-unsupported",
+        "malformed-descriptor",
+        "digest-mismatch",
+        "cross-tenant-denied",
+        "unknown-reference",
+        "authority-violation"
+      ],
+      "title": "ExperienceErrorCode",
+      "description": "Typed admission-error code of the experience protocol."
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExperienceEdge",
+  "$defs": {
+    "ExperienceEdge": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/ExperienceEdgeKind"
+        },
+        "from": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "to": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "attributes": {
+          "$ref": "#/$defs/PresentationAttributes"
+        }
+      },
+      "required": [
+        "kind",
+        "from",
+        "to"
+      ],
+      "additionalProperties": false,
+      "title": "ExperienceEdge",
+      "description": "One Experience Graph edge: typed kind plus ordered endpoint node ids."
+    },
+    "ExperienceEdgeKind": {
+      "type": "string",
+      "enum": [
+        "anchors",
+        "animates",
+        "binds-control",
+        "contains",
+        "follows",
+        "synchronizes"
+      ],
+      "title": "ExperienceEdgeKind",
+      "description": "Typed relationship kind between two Experience Graph nodes."
+    },
+    "ExperienceNodeId": {
+      "type": "string",
+      "pattern": "^xn-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ExperienceNodeId",
+      "description": "Experience-local node identifier: \"xn-\" followed by a lowercase slug."
+    },
+    "PresentationAttributes": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "PresentationAttributes",
+      "description": "Presentation-only open attribute record (never kernel semantics; reserved keys are rejected at admission)."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  }
+}
