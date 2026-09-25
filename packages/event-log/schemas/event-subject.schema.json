@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EventSubject",
+  "$defs": {
+    "EventSubject": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "entity"
+            },
+            "entityId": {
+              "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+            }
+          },
+          "required": [
+            "kind",
+            "entityId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "relation"
+            },
+            "relationId": {
+              "$ref": "#/$defs/WorldRelationId"
+            }
+          },
+          "required": [
+            "kind",
+            "relationId"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "EventSubject",
+      "description": "Opaque reference to a world-graph subject: an entity id or a relation id (W002 vocabulary), never an embedded object."
+    },
+    "urn:epoch:contracts:world:entity-id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "EntityId",
+      "description": "Opaque entity identity (graph node), caller-assigned."
+    },
+    "WorldRelationId": {
+      "type": "string",
+      "pattern": "^rel-[0-9a-f]{64}$",
+      "title": "WorldRelationId",
+      "description": "World-model relation identity: rel-<sha256-of-key> (owned by @epoch/world-model)."
+    }
+  },
+  "$id": "urn:epoch:event-log:event-subject:1.0.0"
+}

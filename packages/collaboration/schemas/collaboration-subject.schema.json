@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CollaborationSubject",
+  "$defs": {
+    "CollaborationSubject": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "world-entity"
+            },
+            "entityId": {
+              "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+            }
+          },
+          "required": [
+            "kind",
+            "entityId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "action-proposal"
+            },
+            "proposal": {
+              "$ref": "#/$defs/ProposalReference"
+            }
+          },
+          "required": [
+            "kind",
+            "proposal"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "CollaborationSubject",
+      "description": "Opaque reference into the shared model: a world entity (W002) or an action proposal at an exact revision (W003). Never embedded, never mutated by coordination."
+    },
+    "urn:epoch:contracts:world:entity-id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "EntityId",
+      "description": "Opaque entity identity (graph node), caller-assigned."
+    },
+    "ProposalReference": {
+      "type": "object",
+      "properties": {
+        "proposalId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "canonicalDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "proposalId",
+        "canonicalDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProposalReference",
+      "description": "Exact-revision proposal reference: id plus the SHA-256 digest of the canonical proposal."
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    }
+  },
+  "$id": "urn:epoch:collaboration:collaboration-subject:1.0.0"
+}

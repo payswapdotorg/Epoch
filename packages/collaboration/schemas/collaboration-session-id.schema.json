@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CollaborationSessionId",
+  "$defs": {
+    "CollaborationSessionId": {
+      "type": "string",
+      "pattern": "^session:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "CollaborationSessionId",
+      "description": "Opaque collaboration session identity: \"session:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:collaboration:collaboration-session-id:1.0.0"
+}

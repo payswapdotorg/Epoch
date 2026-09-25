@@ -1,0 +1,31 @@
+{
+  "name": "@epoch/replay",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Replay kernel — deterministic reconstruction (W010): folds event-log streams (single or intersecting) through typed event handlers into a reconstruction with a canonical state digest; divergence detection (replayed digest vs recorded digest mismatch is a typed error); check-pointable folds resumable from a recorded cursor+digest pair. ZERO wall-clock, ZERO randomness — timestamps come from event payload data, never from reading the clock during replay.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CollaborationTenantId",
+  "$defs": {
+    "CollaborationTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "CollaborationTenantId",
+      "description": "Opaque tenant scope of a collaboration session (W009 grammar)."
+    }
+  },
+  "$id": "urn:epoch:collaboration:collaboration-tenant-id:1.0.0"
+}

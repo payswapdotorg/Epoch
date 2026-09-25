@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ReplayError",
+  "$defs": {
+    "ReplayError": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "validation"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "issues": {
+              "readOnly": true,
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ReplayIssue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "issues"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "version-unsupported"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "unknown-stream"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "streamId": {
+              "$ref": "#/$defs/EventStreamId"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "streamId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "unknown-event-kind"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "discriminator": {
+              "type": "string",
+              "minLength": 1
+            },
+            "streamId": {
+              "$ref": "#/$defs/EventStreamId"
+            },
+            "sequence": {
+              "$ref": "#/$defs/EventSequence"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "discriminator",
+            "streamId",
+            "sequence"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "checkpoint-mismatch"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "replay-divergence"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            },
+            "streamIds": {
+              "readOnly": true,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/EventStreamId"
+              }
+            },
+            "eventCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "expected",
+            "encountered",
+            "streamIds",
+            "eventCount"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ReplayError",
+      "description": "Typed, discriminated replay error (validation, version skew, unknown stream/kind, checkpoint mismatch, divergence)."
+    },
+    "ReplayIssue": {
+      "readOnly": true,
+      "title": "ReplayIssue",
+      "description": "One flattened validation issue: dotted path (\"$\" = root) plus message.",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "EventStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "EventStreamId",
+      "description": "Opaque event stream identity: the unit of total order; every event in a stream carries a contiguous 1-based sequence."
+    },
+    "EventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "EventSequence",
+      "description": "One event sequence number: 1-based, strictly contiguous per stream (the stream cursor)."
+    }
+  },
+  "$id": "urn:epoch:replay:replay-error:1.0.0"
+}

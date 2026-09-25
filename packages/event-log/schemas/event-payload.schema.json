@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EventPayload",
+  "$defs": {
+    "EventPayload": {
+      "readOnly": true,
+      "title": "EventPayload",
+      "description": "Typed event payload: namespaced discriminator plus opaque JSON data (kernel payload contracts for reserved namespaces).",
+      "type": "object",
+      "properties": {
+        "discriminator": {
+          "$ref": "#/$defs/EventKindDiscriminator"
+        },
+        "data": {
+          "$ref": "#/$defs/EventData"
+        }
+      },
+      "required": [
+        "discriminator",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "EventKindDiscriminator": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,62}:[a-z][a-z0-9-]{0,126}$",
+      "title": "EventKindDiscriminator",
+      "description": "Namespaced event-kind discriminator selecting the payload data contract; the \"world\" and \"action\" namespaces are kernel-reserved."
+    },
+    "EventData": {
+      "readOnly": true,
+      "title": "EventData",
+      "description": "Opaque JSON data of an event payload; the discriminator selects its interpretation.",
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      }
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:event-log:event-payload:1.0.0"
+}

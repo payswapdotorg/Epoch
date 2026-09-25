@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/FoldedEventEntry",
+  "$defs": {
+    "FoldedEventEntry": {
+      "readOnly": true,
+      "title": "FoldedEventEntry",
+      "description": "One applied event in a fold trace: (stream, sequence) plus its payload discriminator.",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "$ref": "#/$defs/EventStreamId"
+        },
+        "sequence": {
+          "$ref": "#/$defs/EventSequence"
+        },
+        "discriminator": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence",
+        "discriminator"
+      ],
+      "additionalProperties": false
+    },
+    "EventStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "EventStreamId",
+      "description": "Opaque event stream identity: the unit of total order; every event in a stream carries a contiguous 1-based sequence."
+    },
+    "EventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "EventSequence",
+      "description": "One event sequence number: 1-based, strictly contiguous per stream (the stream cursor)."
+    }
+  },
+  "$id": "urn:epoch:replay:folded-event-entry:1.0.0"
+}

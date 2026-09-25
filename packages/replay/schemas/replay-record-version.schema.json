@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ReplayRecordVersion",
+  "$defs": {
+    "ReplayRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "ReplayRecordVersion",
+      "description": "Version discriminator carried by every serialized replay record (checkpoint and reconstruction snapshot; currently 1)."
+    }
+  },
+  "$id": "urn:epoch:replay:replay-record-version:1.0.0"
+}

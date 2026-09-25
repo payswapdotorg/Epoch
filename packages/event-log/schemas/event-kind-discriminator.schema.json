@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EventKindDiscriminator",
+  "$defs": {
+    "EventKindDiscriminator": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,62}:[a-z][a-z0-9-]{0,126}$",
+      "title": "EventKindDiscriminator",
+      "description": "Namespaced event-kind discriminator selecting the payload data contract; the \"world\" and \"action\" namespaces are kernel-reserved."
+    }
+  },
+  "$id": "urn:epoch:event-log:event-kind-discriminator:1.0.0"
+}
