@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:provisional-registration-plan",
+  "$defs": {
+    "urn:epoch:document-adapter:provisional-registration-plan": {
+      "readOnly": true,
+      "title": "ProvisionalRegistrationPlan",
+      "description": "W007 source-category registration plan: derived plans carry category source and origin provisional-document-derived; the policy is enforced at build time.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "category": {
+          "$ref": "#/$defs/CapabilityCategory"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "origin": {
+          "$ref": "#/$defs/CapabilityOrigin"
+        },
+        "contracts": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "readOnly": true,
+            "type": "object",
+            "properties": {
+              "contractId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "contractVersion": {
+                "type": "string",
+                "pattern": "^\\d+\\.\\d+\\.\\d+$"
+              }
+            },
+            "required": [
+              "contractId",
+              "contractVersion"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "attestationDigest": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:sha256-digest"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "category",
+        "version",
+        "origin",
+        "contracts",
+        "attestationDigest"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityCategory": {
+      "type": "string",
+      "enum": [
+        "source",
+        "semantic",
+        "reconstruction",
+        "visualization",
+        "simulation",
+        "evaluator",
+        "action",
+        "verification"
+      ],
+      "title": "CapabilityCategory",
+      "description": "Capability Fabric adapter category: source, semantic, reconstruction, visualization, simulation, evaluator, action, or verification."
+    },
+    "CapabilityOrigin": {
+      "type": "string",
+      "enum": [
+        "first-party",
+        "community",
+        "external-software",
+        "provisional-document-derived"
+      ],
+      "title": "CapabilityOrigin",
+      "description": "Where a registered capability originates: first-party, community, external software, or provisional document-derived."
+    },
+    "urn:epoch:document-adapter:sha256-digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:document-adapter:provisional-registration-plan:1.0.0"
+}

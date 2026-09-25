@@ -1,0 +1,417 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:provisional-adapter-definition",
+  "$defs": {
+    "urn:epoch:document-adapter:provisional-adapter-definition": {
+      "readOnly": true,
+      "title": "ProvisionalAdapterDefinition",
+      "description": "Provisional adapter definition: the mapping candidate with complete five-stage evidence provenance and its W007 registration plan; terminal lifecycle.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:record-version"
+        },
+        "definitionId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:definition-id"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:tenant-scope"
+        },
+        "documentDigest": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:sha256-digest"
+        },
+        "candidate": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:extraction-candidate"
+        },
+        "evidenceChain": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:stage-evidence-chain"
+        },
+        "registration": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:provisional-registration-plan"
+        },
+        "lifecycle": {
+          "type": "string",
+          "const": "provisional"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "definitionId",
+        "tenantScope",
+        "documentDigest",
+        "candidate",
+        "evidenceChain",
+        "registration",
+        "lifecycle"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:record-version": {
+      "type": "number",
+      "const": 1,
+      "title": "DocumentRecordVersion",
+      "description": "Version discriminator carried by every serialized document-adapter document (currently 1)."
+    },
+    "urn:epoch:document-adapter:definition-id": {
+      "type": "string",
+      "pattern": "^docmap:[0-9a-f]{64}$",
+      "title": "DefinitionId",
+      "description": "Opaque, content-derived provisional-definition identity: \"docmap:\" + 64 lowercase hex characters."
+    },
+    "urn:epoch:document-adapter:tenant-scope": {
+      "readOnly": true,
+      "title": "TenantScope",
+      "description": "Tenant scoping: owning tenant plus optional workspace/project narrowing.",
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:tenant-id"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:workspace-id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:project-id"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:tenant-id": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "urn:epoch:document-adapter:workspace-id": {
+      "type": "string",
+      "pattern": "^workspace:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkspaceId",
+      "description": "Opaque workspace identity: \"workspace:\" followed by a lowercase slug."
+    },
+    "urn:epoch:document-adapter:project-id": {
+      "type": "string",
+      "pattern": "^project:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ProjectId",
+      "description": "Opaque project identity: \"project:\" followed by a lowercase slug."
+    },
+    "urn:epoch:document-adapter:sha256-digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "urn:epoch:document-adapter:extraction-candidate": {
+      "readOnly": true,
+      "title": "ExtractionCandidate",
+      "description": "Typed mapping candidate derived deterministically from a content-addressed document: field locator onto W002 semantic target.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:record-version"
+        },
+        "candidateId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:candidate-id"
+        },
+        "documentDigest": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:sha256-digest"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:tenant-scope"
+        },
+        "locator": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:document-field-locator"
+        },
+        "semanticTarget": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:semantic-type-key"
+        },
+        "propertyMappings": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:document-adapter:property-mapping"
+          }
+        },
+        "declaredConfidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "capabilityRef": {
+          "$ref": "#/$defs/QualifiedTypeReference"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "candidateId",
+        "documentDigest",
+        "tenantScope",
+        "locator",
+        "semanticTarget",
+        "propertyMappings"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:candidate-id": {
+      "type": "string",
+      "pattern": "^cand:[0-9a-f]{64}$",
+      "title": "CandidateId",
+      "description": "Opaque, content-derived mapping-candidate identity: \"cand:\" + 64 lowercase hex characters."
+    },
+    "urn:epoch:document-adapter:document-field-locator": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "structured-text"
+            },
+            "sourcePath": {
+              "$ref": "#/$defs/urn:epoch:document-adapter:source-path"
+            },
+            "line": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "format",
+            "sourcePath",
+            "line"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "structured-json"
+            },
+            "sourcePath": {
+              "$ref": "#/$defs/urn:epoch:document-adapter:source-path"
+            }
+          },
+          "required": [
+            "format",
+            "sourcePath"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "DocumentFieldLocator",
+      "description": "Document field locator: format, stable source path, and (text form) 1-based line."
+    },
+    "urn:epoch:document-adapter:source-path": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,127}$",
+      "title": "SourcePath",
+      "description": "Stable identifier of a document field inside a typed document form."
+    },
+    "urn:epoch:document-adapter:semantic-type-key": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*:[a-z][a-z0-9-]*$",
+      "title": "SemanticTypeKey",
+      "description": "W002 world-model semantic namespace type key (namespace:name); the core namespace is reserved for kernel vocabulary."
+    },
+    "urn:epoch:document-adapter:property-mapping": {
+      "readOnly": true,
+      "title": "PropertyMapping",
+      "description": "One property-level mapping from a document property onto a semantic property.",
+      "type": "object",
+      "properties": {
+        "sourceProperty": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:property-name"
+        },
+        "semanticProperty": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:property-name"
+        }
+      },
+      "required": [
+        "sourceProperty",
+        "semanticProperty"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:property-name": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,127}$",
+      "title": "PropertyName",
+      "description": "Document property name (source and semantic sides), W002 property-name grammar."
+    },
+    "QualifiedTypeReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "QualifiedTypeReference",
+      "description": "Reference to a versioned, protocol-defined type: dot-namespaced id plus semver core version."
+    },
+    "urn:epoch:document-adapter:stage-evidence-chain": {
+      "readOnly": true,
+      "title": "StageEvidenceChain",
+      "description": "Ordered stage evidence chain: a prefix of the derivation pipeline, every link a W006 evidence record anchored to the document digest.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:record-version"
+        },
+        "documentDigest": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:sha256-digest"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:tenant-scope"
+        },
+        "stages": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:document-adapter:stage-evidence-link"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "documentDigest",
+        "tenantScope",
+        "stages"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:stage-evidence-link": {
+      "readOnly": true,
+      "title": "StageEvidenceLink",
+      "description": "One stage evidence link: derivation stage plus the content address of its W006 evidence record.",
+      "type": "object",
+      "properties": {
+        "stage": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:extraction-stage-kind"
+        },
+        "evidenceDigest": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:sha256-digest"
+        }
+      },
+      "required": [
+        "stage",
+        "evidenceDigest"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:extraction-stage-kind": {
+      "type": "string",
+      "enum": [
+        "uploaded",
+        "parsed",
+        "candidates-extracted",
+        "review-pending",
+        "provisional"
+      ],
+      "title": "ExtractionStageKind",
+      "description": "Derivation stage: uploaded, parsed, candidates-extracted, review-pending, provisional (terminal)."
+    },
+    "urn:epoch:document-adapter:provisional-registration-plan": {
+      "readOnly": true,
+      "title": "ProvisionalRegistrationPlan",
+      "description": "W007 source-category registration plan: derived plans carry category source and origin provisional-document-derived; the policy is enforced at build time.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "category": {
+          "$ref": "#/$defs/CapabilityCategory"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "origin": {
+          "$ref": "#/$defs/CapabilityOrigin"
+        },
+        "contracts": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "readOnly": true,
+            "type": "object",
+            "properties": {
+              "contractId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "contractVersion": {
+                "type": "string",
+                "pattern": "^\\d+\\.\\d+\\.\\d+$"
+              }
+            },
+            "required": [
+              "contractId",
+              "contractVersion"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "attestationDigest": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:sha256-digest"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "category",
+        "version",
+        "origin",
+        "contracts",
+        "attestationDigest"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityCategory": {
+      "type": "string",
+      "enum": [
+        "source",
+        "semantic",
+        "reconstruction",
+        "visualization",
+        "simulation",
+        "evaluator",
+        "action",
+        "verification"
+      ],
+      "title": "CapabilityCategory",
+      "description": "Capability Fabric adapter category: source, semantic, reconstruction, visualization, simulation, evaluator, action, or verification."
+    },
+    "CapabilityOrigin": {
+      "type": "string",
+      "enum": [
+        "first-party",
+        "community",
+        "external-software",
+        "provisional-document-derived"
+      ],
+      "title": "CapabilityOrigin",
+      "description": "Where a registered capability originates: first-party, community, external software, or provisional document-derived."
+    }
+  },
+  "$id": "urn:epoch:document-adapter:provisional-adapter-definition:1.0.0"
+}

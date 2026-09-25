@@ -1,0 +1,33 @@
+{
+  "name": "@epoch/document-adapter-host",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Document-to-Adapter HOST (W028, service layer) — the long-running in-memory reference host: ingestion session lifecycle (typed bytes in -> staged evidence out), the deterministic advance-on-evidence stage driver with typed idempotency keys and duplicate suppression, tenant-scoped reads, trust-escalation floor passthrough, and health/liveness as typed data. NO persistence, NO network, NO real processes; the typed derivation model lives in @epoch/document-adapter (kernel).",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/document-adapter": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

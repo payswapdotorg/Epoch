@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:semantic-type-key",
+  "$defs": {
+    "urn:epoch:document-adapter:semantic-type-key": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*:[a-z][a-z0-9-]*$",
+      "title": "SemanticTypeKey",
+      "description": "W002 world-model semantic namespace type key (namespace:name); the core namespace is reserved for kernel vocabulary."
+    }
+  },
+  "$id": "urn:epoch:document-adapter:semantic-type-key:1.0.0"
+}

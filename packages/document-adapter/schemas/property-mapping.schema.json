@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:property-mapping",
+  "$defs": {
+    "urn:epoch:document-adapter:property-mapping": {
+      "readOnly": true,
+      "title": "PropertyMapping",
+      "description": "One property-level mapping from a document property onto a semantic property.",
+      "type": "object",
+      "properties": {
+        "sourceProperty": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:property-name"
+        },
+        "semanticProperty": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:property-name"
+        }
+      },
+      "required": [
+        "sourceProperty",
+        "semanticProperty"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:property-name": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,127}$",
+      "title": "PropertyName",
+      "description": "Document property name (source and semantic sides), W002 property-name grammar."
+    }
+  },
+  "$id": "urn:epoch:document-adapter:property-mapping:1.0.0"
+}

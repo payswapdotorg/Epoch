@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:document-field-locator",
+  "$defs": {
+    "urn:epoch:document-adapter:document-field-locator": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "structured-text"
+            },
+            "sourcePath": {
+              "$ref": "#/$defs/urn:epoch:document-adapter:source-path"
+            },
+            "line": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "format",
+            "sourcePath",
+            "line"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "structured-json"
+            },
+            "sourcePath": {
+              "$ref": "#/$defs/urn:epoch:document-adapter:source-path"
+            }
+          },
+          "required": [
+            "format",
+            "sourcePath"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "DocumentFieldLocator",
+      "description": "Document field locator: format, stable source path, and (text form) 1-based line."
+    },
+    "urn:epoch:document-adapter:source-path": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,127}$",
+      "title": "SourcePath",
+      "description": "Stable identifier of a document field inside a typed document form."
+    }
+  },
+  "$id": "urn:epoch:document-adapter:document-field-locator:1.0.0"
+}

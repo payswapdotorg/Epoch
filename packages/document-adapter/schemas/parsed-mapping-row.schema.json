@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:parsed-mapping-row",
+  "$defs": {
+    "urn:epoch:document-adapter:parsed-mapping-row": {
+      "readOnly": true,
+      "title": "ParsedMappingRow",
+      "description": "One parsed mapping row: source path, W002 semantic target, property mappings, optional confidence/capability reference.",
+      "type": "object",
+      "properties": {
+        "sourcePath": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:source-path"
+        },
+        "semanticTarget": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:semantic-type-key"
+        },
+        "propertyMappings": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:document-adapter:property-mapping"
+          }
+        },
+        "declaredConfidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "capabilityRef": {
+          "$ref": "#/$defs/QualifiedTypeReference"
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "sourcePath",
+        "semanticTarget",
+        "propertyMappings"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:source-path": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,127}$",
+      "title": "SourcePath",
+      "description": "Stable identifier of a document field inside a typed document form."
+    },
+    "urn:epoch:document-adapter:semantic-type-key": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*:[a-z][a-z0-9-]*$",
+      "title": "SemanticTypeKey",
+      "description": "W002 world-model semantic namespace type key (namespace:name); the core namespace is reserved for kernel vocabulary."
+    },
+    "urn:epoch:document-adapter:property-mapping": {
+      "readOnly": true,
+      "title": "PropertyMapping",
+      "description": "One property-level mapping from a document property onto a semantic property.",
+      "type": "object",
+      "properties": {
+        "sourceProperty": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:property-name"
+        },
+        "semanticProperty": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:property-name"
+        }
+      },
+      "required": [
+        "sourceProperty",
+        "semanticProperty"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:property-name": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,127}$",
+      "title": "PropertyName",
+      "description": "Document property name (source and semantic sides), W002 property-name grammar."
+    },
+    "QualifiedTypeReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "QualifiedTypeReference",
+      "description": "Reference to a versioned, protocol-defined type: dot-namespaced id plus semver core version."
+    }
+  },
+  "$id": "urn:epoch:document-adapter:parsed-mapping-row:1.0.0"
+}
