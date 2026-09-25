@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/UsageMeteredPricing",
+  "$defs": {
+    "UsageMeteredPricing": {
+      "readOnly": true,
+      "title": "UsageMeteredPricing",
+      "description": "Usage-metered pricing: per-unit amount, currency, unit name, and optional included allowance.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "usage-metered"
+        },
+        "unitAmount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        },
+        "unitName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "includedUnits": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        }
+      },
+      "required": [
+        "kind",
+        "unitAmount",
+        "currency",
+        "unitName"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:usage-metered-pricing:1.0.0"
+}

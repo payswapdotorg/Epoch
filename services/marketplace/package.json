@@ -1,0 +1,33 @@
+{
+  "name": "@epoch/marketplace-host",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Marketplace HOST (W023, service layer) — the long-running in-memory reference host: listing lifecycle sessions (draft -> submitted -> published; publication seals the immutable version), entitlement evaluation sessions (check + grant/revoke transitions with full provenance and immediate revocation), payment-port registration and check passthrough (payment state never authority), idempotent duplicate-suppressed usage metering intake, deterministic usage-account folds, developer revenue record intake, tenant-scoped reads (R12), and health/liveness as typed data. NO persistence, NO network, NO real processes; the typed domain model lives in @epoch/marketplace (kernel).",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/marketplace": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

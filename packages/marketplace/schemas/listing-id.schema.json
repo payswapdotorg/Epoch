@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ListingId",
+  "$defs": {
+    "ListingId": {
+      "type": "string",
+      "pattern": "^listing:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ListingId",
+      "description": "Opaque marketplace listing identity: \"listing:\" followed by a lowercase slug (stable across versions)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:listing-id:1.0.0"
+}

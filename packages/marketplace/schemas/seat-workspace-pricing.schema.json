@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SeatWorkspacePricing",
+  "$defs": {
+    "SeatWorkspacePricing": {
+      "readOnly": true,
+      "title": "SeatWorkspacePricing",
+      "description": "Seat/workspace pricing: per-seat amount, currency, billing period, and optional seat bounds.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "seat-workspace"
+        },
+        "perSeatAmount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        },
+        "billingPeriod": {
+          "type": "string",
+          "enum": [
+            "monthly",
+            "annual"
+          ]
+        },
+        "minSeats": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "maxSeats": {
+          "$ref": "#/$defs/PositiveInteger"
+        }
+      },
+      "required": [
+        "kind",
+        "perSeatAmount",
+        "currency",
+        "billingPeriod"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    },
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "PositiveInteger",
+      "description": "Positive integer (1 to MAX_SAFE_INTEGER)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:seat-workspace-pricing:1.0.0"
+}

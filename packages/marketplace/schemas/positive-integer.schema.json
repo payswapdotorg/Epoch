@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PositiveInteger",
+  "$defs": {
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "PositiveInteger",
+      "description": "Positive integer (1 to MAX_SAFE_INTEGER)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:positive-integer:1.0.0"
+}

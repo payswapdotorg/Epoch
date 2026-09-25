@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TrustEvidenceKind",
+  "$defs": {
+    "TrustEvidenceKind": {
+      "type": "string",
+      "enum": [
+        "document",
+        "measurement",
+        "observation",
+        "computation",
+        "assertion",
+        "external",
+        "other"
+      ],
+      "title": "TrustEvidenceKind",
+      "description": "Kind of trust evidence: document, measurement, observation, computation, assertion, external, other (the W006 evidence-kind vocabulary)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:trust-evidence-kind:1.0.0"
+}

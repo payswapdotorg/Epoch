@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EntitlementScope",
+  "$defs": {
+    "EntitlementScope": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "tenant"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "workspace"
+            },
+            "workspaceId": {
+              "$ref": "#/$defs/WorkspaceId"
+            }
+          },
+          "required": [
+            "kind",
+            "workspaceId"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "EntitlementScope",
+      "description": "Entitlement scope: tenant-wide, or narrowed to one workspace (W009 workspace id)."
+    },
+    "WorkspaceId": {
+      "type": "string",
+      "pattern": "^workspace:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkspaceId",
+      "description": "Opaque workspace identity: \"workspace:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:marketplace:entitlement-scope:1.0.0"
+}

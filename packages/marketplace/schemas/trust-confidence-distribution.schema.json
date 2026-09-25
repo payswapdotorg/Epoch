@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TrustConfidenceDistribution",
+  "$defs": {
+    "TrustConfidenceDistribution": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "point"
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "interval"
+            },
+            "lower": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "upper": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "bias": {
+              "$ref": "#/$defs/TrustIntervalBias"
+            }
+          },
+          "required": [
+            "kind",
+            "lower",
+            "upper"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "set"
+            },
+            "values": {
+              "readOnly": true,
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "weights": {
+              "readOnly": true,
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "values"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "TrustConfidenceDistribution",
+      "description": "Bounded [0,1] uncertainty distribution: point, interval, or weighted set (the W006 shape)."
+    },
+    "TrustIntervalBias": {
+      "type": "string",
+      "enum": [
+        "none",
+        "low",
+        "high"
+      ],
+      "title": "TrustIntervalBias",
+      "description": "Directional bias admitted for interval confidence estimates: none, low, high (the W006 vocabulary)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:trust-confidence-distribution:1.0.0"
+}

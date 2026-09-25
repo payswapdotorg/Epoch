@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/UsageAccount",
+  "$defs": {
+    "UsageAccount": {
+      "readOnly": true,
+      "title": "UsageAccount",
+      "description": "Deterministic usage account of one entitlement: metered-event count, exact decimal total units, first/last instants, and the sorted event content digests.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "entitlementId": {
+          "$ref": "#/$defs/EntitlementId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "listingId": {
+          "$ref": "#/$defs/ListingId"
+        },
+        "listingVersionDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "streamId": {
+          "$ref": "#/$defs/UsageStreamId"
+        },
+        "eventCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "totalUnits": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "firstEventAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "lastEventAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "eventDigests": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Sha256Hex"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "entitlementId",
+        "tenantId",
+        "listingId",
+        "listingVersionDigest",
+        "streamId",
+        "eventCount",
+        "totalUnits",
+        "eventDigests"
+      ],
+      "additionalProperties": false
+    },
+    "EntitlementId": {
+      "type": "string",
+      "pattern": "^entitlement:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "EntitlementId",
+      "description": "Opaque entitlement identity: \"entitlement:\" followed by a lowercase slug."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "ListingId": {
+      "type": "string",
+      "pattern": "^listing:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ListingId",
+      "description": "Opaque marketplace listing identity: \"listing:\" followed by a lowercase slug (stable across versions)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "UsageStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "UsageStreamId",
+      "description": "Opaque usage-stream identity: \"stream:\" followed by a lowercase slug (the W010 stream grammar)."
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:usage-account:1.0.0"
+}

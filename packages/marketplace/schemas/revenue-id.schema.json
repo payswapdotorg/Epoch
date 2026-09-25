@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RevenueId",
+  "$defs": {
+    "RevenueId": {
+      "type": "string",
+      "pattern": "^revenue:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RevenueId",
+      "description": "Opaque developer revenue record identity: \"revenue:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:marketplace:revenue-id:1.0.0"
+}

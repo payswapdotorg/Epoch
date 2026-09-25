@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/FreePricing",
+  "$defs": {
+    "FreePricing": {
+      "readOnly": true,
+      "title": "FreePricing",
+      "description": "Free pricing model: no monetary fields.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "free"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:marketplace:free-pricing:1.0.0"
+}

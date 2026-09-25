@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ListingVisibility",
+  "$defs": {
+    "ListingVisibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "private"
+      ],
+      "title": "ListingVisibility",
+      "description": "Listing visibility: public (every tenant catalog) or private (developer tenant + allow-list only)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:listing-visibility:1.0.0"
+}

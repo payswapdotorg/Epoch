@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityVersionReference",
+  "$defs": {
+    "CapabilityVersionReference": {
+      "readOnly": true,
+      "title": "CapabilityVersionReference",
+      "description": "Reference to a versioned capability in the W007 registry vocabulary: dot-namespaced capability id plus semver core version (referenced opaquely, never embedded).",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "$ref": "#/$defs/QualifiedName"
+        },
+        "version": {
+          "$ref": "#/$defs/SemverCore"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "QualifiedName": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+      "title": "QualifiedName",
+      "description": "Dot-namespaced qualified name (the agent-protocol capability-id grammar)."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic version core (no prerelease/build suffixes)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:capability-version-reference:1.0.0"
+}

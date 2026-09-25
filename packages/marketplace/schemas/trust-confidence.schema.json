@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TrustConfidence",
+  "$defs": {
+    "TrustConfidence": {
+      "readOnly": true,
+      "title": "TrustConfidence",
+      "description": "Uncertainty attached to a trust-evidence record: distribution, acquisition method, rationale (the W006 shape).",
+      "type": "object",
+      "properties": {
+        "distribution": {
+          "$ref": "#/$defs/TrustConfidenceDistribution"
+        },
+        "method": {
+          "$ref": "#/$defs/TrustConfidenceMethod"
+        },
+        "rationale": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "distribution"
+      ],
+      "additionalProperties": false
+    },
+    "TrustConfidenceDistribution": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "point"
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "interval"
+            },
+            "lower": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "upper": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "bias": {
+              "$ref": "#/$defs/TrustIntervalBias"
+            }
+          },
+          "required": [
+            "kind",
+            "lower",
+            "upper"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "set"
+            },
+            "values": {
+              "readOnly": true,
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "weights": {
+              "readOnly": true,
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "values"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "TrustConfidenceDistribution",
+      "description": "Bounded [0,1] uncertainty distribution: point, interval, or weighted set (the W006 shape)."
+    },
+    "TrustIntervalBias": {
+      "type": "string",
+      "enum": [
+        "none",
+        "low",
+        "high"
+      ],
+      "title": "TrustIntervalBias",
+      "description": "Directional bias admitted for interval confidence estimates: none, low, high (the W006 vocabulary)."
+    },
+    "TrustConfidenceMethod": {
+      "type": "string",
+      "enum": [
+        "stated",
+        "measured",
+        "estimated",
+        "derived",
+        "imported"
+      ],
+      "title": "TrustConfidenceMethod",
+      "description": "How a confidence figure was obtained: stated, measured, estimated, derived, imported (the W006 vocabulary)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:trust-confidence:1.0.0"
+}

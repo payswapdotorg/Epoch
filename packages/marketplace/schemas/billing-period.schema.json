@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BillingPeriod",
+  "$defs": {
+    "BillingPeriod": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "annual"
+      ],
+      "title": "BillingPeriod",
+      "description": "Billing period admitted by subscription and seat/workspace pricing: monthly or annual."
+    }
+  },
+  "$id": "urn:epoch:marketplace:billing-period:1.0.0"
+}

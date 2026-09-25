@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EnterprisePrivatePricing",
+  "$defs": {
+    "EnterprisePrivatePricing": {
+      "readOnly": true,
+      "title": "EnterprisePrivatePricing",
+      "description": "Enterprise/private pricing: opaque contact route plus the sorted private audience of tenant ids (negotiation is out of band; record shape only).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "enterprise-private"
+        },
+        "contactRoute": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "audienceTenantIds": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TenantId"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "contactRoute",
+        "audienceTenantIds"
+      ],
+      "additionalProperties": false
+    },
+    "OpaqueReference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "OpaqueReference",
+      "description": "Opaque, bounded, provider-neutral reference string owned by its producing system."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:marketplace:enterprise-private-pricing:1.0.0"
+}

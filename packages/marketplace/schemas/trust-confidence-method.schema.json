@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TrustConfidenceMethod",
+  "$defs": {
+    "TrustConfidenceMethod": {
+      "type": "string",
+      "enum": [
+        "stated",
+        "measured",
+        "estimated",
+        "derived",
+        "imported"
+      ],
+      "title": "TrustConfidenceMethod",
+      "description": "How a confidence figure was obtained: stated, measured, estimated, derived, imported (the W006 vocabulary)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:trust-confidence-method:1.0.0"
+}

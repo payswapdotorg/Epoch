@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SubscriptionPricing",
+  "$defs": {
+    "SubscriptionPricing": {
+      "readOnly": true,
+      "title": "SubscriptionPricing",
+      "description": "Subscription pricing: recurring amount, currency, and billing period (monthly or annual).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "subscription"
+        },
+        "recurringAmount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        },
+        "billingPeriod": {
+          "type": "string",
+          "enum": [
+            "monthly",
+            "annual"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "recurringAmount",
+        "currency",
+        "billingPeriod"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:subscription-pricing:1.0.0"
+}
