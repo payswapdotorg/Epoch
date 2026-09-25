@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExperienceRuntimeErrorCode",
+  "$defs": {
+    "ExperienceRuntimeErrorCode": {
+      "type": "string",
+      "enum": [
+        "cross-tenant-denied",
+        "digest-mismatch",
+        "invalid-transition",
+        "malformed-record",
+        "version-unsupported"
+      ],
+      "title": "ExperienceRuntimeErrorCode",
+      "description": "Typed session-error code of the experience runtime."
+    }
+  }
+}

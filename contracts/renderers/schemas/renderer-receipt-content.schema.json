@@ -1,0 +1,289 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererReceiptContent",
+  "$defs": {
+    "RendererReceiptContent": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/MountReceiptContent"
+        },
+        {
+          "$ref": "#/$defs/FrameReceiptContent"
+        },
+        {
+          "$ref": "#/$defs/IntentReceiptContent"
+        }
+      ],
+      "title": "RendererReceiptContent",
+      "description": "The content of a renderer receipt: the typed execution evidence of one admitted invocation."
+    },
+    "MountReceiptContent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-receipt"
+        },
+        "protocolVersion": {
+          "$ref": "#/$defs/RendererProtocolVersion"
+        },
+        "kind": {
+          "type": "string",
+          "const": "mount-receipt"
+        },
+        "invocationId": {
+          "$ref": "#/$defs/InvocationId"
+        },
+        "rendererSessionId": {
+          "$ref": "#/$defs/RendererSessionId"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "graphDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "graphKind": {
+          "$ref": "#/$defs/ExperienceGraphKind"
+        },
+        "nodeCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "edgeCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "mountedAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "declaredTriangles": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "declaredTextureBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "kind",
+        "invocationId",
+        "rendererSessionId",
+        "tenantScope",
+        "graphDigest",
+        "graphKind",
+        "nodeCount",
+        "edgeCount",
+        "mountedAtMs"
+      ],
+      "additionalProperties": false,
+      "title": "MountReceiptContent",
+      "description": "Execution evidence of an admitted mount-graph invocation."
+    },
+    "RendererProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RendererProtocolVersion",
+      "description": "Exact renderer-runtime protocol version admitted by this release (\"1.0.0\")."
+    },
+    "InvocationId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "InvocationId",
+      "description": "Opaque invocation identifier (shared message-id grammar), unique within the caller scope."
+    },
+    "RendererSessionId": {
+      "type": "string",
+      "pattern": "^rs-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RendererSessionId",
+      "description": "Renderer-session identifier: \"rs-\" followed by a lowercase slug."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "ExperienceGraphKind": {
+      "type": "string",
+      "enum": [
+        "2d",
+        "3d",
+        "animation",
+        "narrative",
+        "timeline-replay",
+        "presence",
+        "controls"
+      ],
+      "title": "ExperienceGraphKind",
+      "description": "Presentation projection of an Experience Graph: 2D, 3D, animation, narrative, timeline/replay, presence, or controls."
+    },
+    "VirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "VirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (mirrored shared primitive; canonical home @epoch/experience-runtime)."
+    },
+    "FrameReceiptContent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-receipt"
+        },
+        "protocolVersion": {
+          "$ref": "#/$defs/RendererProtocolVersion"
+        },
+        "kind": {
+          "type": "string",
+          "const": "frame-receipt"
+        },
+        "invocationId": {
+          "$ref": "#/$defs/InvocationId"
+        },
+        "rendererSessionId": {
+          "$ref": "#/$defs/RendererSessionId"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "frameIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "atMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "stateDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "kind",
+        "invocationId",
+        "rendererSessionId",
+        "tenantScope",
+        "frameIndex",
+        "atMs"
+      ],
+      "additionalProperties": false,
+      "title": "FrameReceiptContent",
+      "description": "Execution evidence of an admitted advance-frame invocation."
+    },
+    "IntentReceiptContent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-receipt"
+        },
+        "protocolVersion": {
+          "$ref": "#/$defs/RendererProtocolVersion"
+        },
+        "kind": {
+          "type": "string",
+          "const": "intent-receipt"
+        },
+        "invocationId": {
+          "$ref": "#/$defs/InvocationId"
+        },
+        "rendererSessionId": {
+          "$ref": "#/$defs/RendererSessionId"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "modality": {
+          "$ref": "#/$defs/InteractionModality"
+        },
+        "intent": {
+          "$ref": "#/$defs/ControlIntent"
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "kind",
+        "invocationId",
+        "rendererSessionId",
+        "tenantScope",
+        "modality",
+        "intent"
+      ],
+      "additionalProperties": false,
+      "title": "IntentReceiptContent",
+      "description": "Execution evidence of an admitted submit-intent invocation."
+    },
+    "InteractionModality": {
+      "type": "string",
+      "enum": [
+        "gamepad",
+        "gaze",
+        "gesture",
+        "keyboard",
+        "pointer",
+        "touch",
+        "voice"
+      ],
+      "title": "InteractionModality",
+      "description": "Neutral interaction modality of a device."
+    },
+    "ControlIntent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "ControlIntent",
+      "description": "Typed UI intent a control emits: qualified id plus semver core (shape-compatible with the action-protocol ActionTypeReference)."
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "@epoch/experience-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Experience Runtime host model (W013): tenant-scoped device sessions over the W011 device-descriptor vocabulary, a deterministic virtual-time frame/tick scheduling model (testable without real clocks), typed runtime events (frame, state, lifecycle), session lifecycle transitions, and a typed session-error taxonomy — pure typed data with zero concrete renderers, zero engine vocabulary, and zero wall-clock dependence.",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

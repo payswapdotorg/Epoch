@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererOutputCapabilities",
+  "$defs": {
+    "RendererOutputCapabilities": {
+      "type": "object",
+      "properties": {
+        "stereoscopic": {
+          "type": "boolean"
+        },
+        "maxPixels": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 268435456
+        },
+        "refreshHz": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 1000
+        },
+        "colorDepthBits": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 64
+        }
+      },
+      "required": [
+        "stereoscopic"
+      ],
+      "additionalProperties": false,
+      "title": "RendererOutputCapabilities",
+      "description": "Neutral output capabilities a renderer descriptor declares (never an engine or API surface)."
+    }
+  }
+}

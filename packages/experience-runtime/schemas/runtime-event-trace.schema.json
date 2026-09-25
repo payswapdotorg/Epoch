@@ -1,0 +1,529 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RuntimeEventTrace",
+  "$defs": {
+    "RuntimeEventTrace": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.experience-runtime.event-trace"
+        },
+        "protocolVersion": {
+          "$ref": "#/$defs/ExperienceRuntimeProtocolVersion"
+        },
+        "deviceSessionId": {
+          "$ref": "#/$defs/DeviceSessionId"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "events": {
+          "minItems": 1,
+          "maxItems": 65536,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RuntimeEvent"
+          }
+        },
+        "digest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "deviceSessionId",
+        "tenantScope",
+        "events",
+        "digest"
+      ],
+      "additionalProperties": false,
+      "title": "RuntimeEventTrace",
+      "description": "The sealed runtime event-trace record: a session lifecycle-consistent history plus its SHA-256 content digest."
+    },
+    "ExperienceRuntimeProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "ExperienceRuntimeProtocolVersion",
+      "description": "Exact experience-runtime protocol version admitted by this release (\"1.0.0\")."
+    },
+    "DeviceSessionId": {
+      "type": "string",
+      "pattern": "^ds-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DeviceSessionId",
+      "description": "Device-session identifier: \"ds-\" followed by a lowercase slug."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "RuntimeEvent": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/SessionOpenedEvent"
+        },
+        {
+          "$ref": "#/$defs/SessionPausedEvent"
+        },
+        {
+          "$ref": "#/$defs/SessionResumedEvent"
+        },
+        {
+          "$ref": "#/$defs/SessionClosedEvent"
+        },
+        {
+          "$ref": "#/$defs/FrameStartedEvent"
+        },
+        {
+          "$ref": "#/$defs/TickAdvancedEvent"
+        },
+        {
+          "$ref": "#/$defs/StateMountedEvent"
+        }
+      ],
+      "title": "RuntimeEvent",
+      "description": "One typed runtime event of a device session: lifecycle, frame, tick, or state; totally ordered by sequence."
+    },
+    "SessionOpenedEvent": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "session-opened"
+        },
+        "sequence": {
+          "$ref": "#/$defs/EventSequence"
+        },
+        "deviceSessionId": {
+          "$ref": "#/$defs/DeviceSessionId"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "device": {
+          "$ref": "#/$defs/DeviceDescriptor"
+        },
+        "schedule": {
+          "$ref": "#/$defs/FrameSchedule"
+        },
+        "occurredAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        }
+      },
+      "required": [
+        "kind",
+        "sequence",
+        "deviceSessionId",
+        "tenantScope",
+        "device",
+        "occurredAtMs"
+      ],
+      "additionalProperties": false,
+      "title": "SessionOpenedEvent",
+      "description": "Lifecycle event: a device session was opened for a tenant-scoped device."
+    },
+    "EventSequence": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "title": "EventSequence",
+      "description": "1-based contiguous per-session sequence number of a runtime event."
+    },
+    "DeviceDescriptor": {
+      "type": "object",
+      "properties": {
+        "descriptorVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "deviceClass": {
+          "$ref": "#/$defs/DeviceClass"
+        },
+        "interaction": {
+          "minItems": 1,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionModality"
+          }
+        },
+        "display": {
+          "$ref": "#/$defs/DeviceDisplayCapabilities"
+        },
+        "spatial": {
+          "$ref": "#/$defs/DeviceSpatialCapabilities"
+        },
+        "latencyBudgetMs": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "descriptorVersion",
+        "deviceClass",
+        "interaction",
+        "display",
+        "spatial"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceDescriptor",
+      "description": "Abstract, provider-neutral device descriptor: capabilities and budgets as typed data; filled/adapted by renderer/device adaptation (W019)."
+    },
+    "DeviceClass": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "laptop",
+        "tablet",
+        "phone",
+        "headset",
+        "wall-display"
+      ],
+      "title": "DeviceClass",
+      "description": "Neutral device class of a device descriptor (never a vendor product)."
+    },
+    "InteractionModality": {
+      "type": "string",
+      "enum": [
+        "gamepad",
+        "gaze",
+        "gesture",
+        "keyboard",
+        "pointer",
+        "touch",
+        "voice"
+      ],
+      "title": "InteractionModality",
+      "description": "Neutral interaction modality of a device."
+    },
+    "DeviceDisplayCapabilities": {
+      "type": "object",
+      "properties": {
+        "stereoscopic": {
+          "type": "boolean"
+        },
+        "maxPixels": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "refreshHz": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "colorDepthBits": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "stereoscopic"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceDisplayCapabilities",
+      "description": "Neutral display capabilities and budgets of a device descriptor."
+    },
+    "DeviceSpatialCapabilities": {
+      "type": "object",
+      "properties": {
+        "poseTracking": {
+          "$ref": "#/$defs/PoseTrackingKind"
+        },
+        "worldAnchored": {
+          "type": "boolean"
+        },
+        "maxTriangles": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maxTextureBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "poseTracking",
+        "worldAnchored"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceSpatialCapabilities",
+      "description": "Neutral spatial capabilities and budgets of a device descriptor."
+    },
+    "PoseTrackingKind": {
+      "type": "string",
+      "enum": [
+        "none",
+        "3dof",
+        "6dof"
+      ],
+      "title": "PoseTrackingKind",
+      "description": "Neutral pose-tracking capability of a device."
+    },
+    "FrameSchedule": {
+      "type": "object",
+      "properties": {
+        "scheduleVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "frameDurationMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60000
+        },
+        "tickCadence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        }
+      },
+      "required": [
+        "scheduleVersion",
+        "frameDurationMs",
+        "tickCadence"
+      ],
+      "additionalProperties": false,
+      "title": "FrameSchedule",
+      "description": "Deterministic virtual-time frame/tick schedule: integer frame duration plus integer tick cadence (frames per tick)."
+    },
+    "VirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "VirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds since the session origin."
+    },
+    "SessionPausedEvent": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "session-paused"
+        },
+        "sequence": {
+          "$ref": "#/$defs/EventSequence"
+        },
+        "deviceSessionId": {
+          "$ref": "#/$defs/DeviceSessionId"
+        },
+        "occurredAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        }
+      },
+      "required": [
+        "kind",
+        "sequence",
+        "deviceSessionId",
+        "occurredAtMs"
+      ],
+      "additionalProperties": false,
+      "title": "SessionPausedEvent",
+      "description": "Lifecycle event: an active device session was paused (virtual time frozen)."
+    },
+    "SessionResumedEvent": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "session-resumed"
+        },
+        "sequence": {
+          "$ref": "#/$defs/EventSequence"
+        },
+        "deviceSessionId": {
+          "$ref": "#/$defs/DeviceSessionId"
+        },
+        "occurredAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        }
+      },
+      "required": [
+        "kind",
+        "sequence",
+        "deviceSessionId",
+        "occurredAtMs"
+      ],
+      "additionalProperties": false,
+      "title": "SessionResumedEvent",
+      "description": "Lifecycle event: a paused device session was resumed."
+    },
+    "SessionClosedEvent": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "session-closed"
+        },
+        "sequence": {
+          "$ref": "#/$defs/EventSequence"
+        },
+        "deviceSessionId": {
+          "$ref": "#/$defs/DeviceSessionId"
+        },
+        "occurredAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        }
+      },
+      "required": [
+        "kind",
+        "sequence",
+        "deviceSessionId",
+        "occurredAtMs"
+      ],
+      "additionalProperties": false,
+      "title": "SessionClosedEvent",
+      "description": "Lifecycle event: a device session was closed (terminal)."
+    },
+    "FrameStartedEvent": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "frame-started"
+        },
+        "sequence": {
+          "$ref": "#/$defs/EventSequence"
+        },
+        "deviceSessionId": {
+          "$ref": "#/$defs/DeviceSessionId"
+        },
+        "frameIndex": {
+          "$ref": "#/$defs/FrameIndex"
+        },
+        "frameDurationMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "atMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        }
+      },
+      "required": [
+        "kind",
+        "sequence",
+        "deviceSessionId",
+        "frameIndex",
+        "frameDurationMs",
+        "atMs"
+      ],
+      "additionalProperties": false,
+      "title": "FrameStartedEvent",
+      "description": "Frame event: a scheduled frame started at a virtual-time boundary."
+    },
+    "FrameIndex": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "FrameIndex",
+      "description": "0-based index of a frame within a scheduled device session."
+    },
+    "TickAdvancedEvent": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "tick-advanced"
+        },
+        "sequence": {
+          "$ref": "#/$defs/EventSequence"
+        },
+        "deviceSessionId": {
+          "$ref": "#/$defs/DeviceSessionId"
+        },
+        "tickIndex": {
+          "$ref": "#/$defs/TickIndex"
+        },
+        "frameIndex": {
+          "$ref": "#/$defs/FrameIndex"
+        },
+        "atMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        }
+      },
+      "required": [
+        "kind",
+        "sequence",
+        "deviceSessionId",
+        "tickIndex",
+        "frameIndex",
+        "atMs"
+      ],
+      "additionalProperties": false,
+      "title": "TickAdvancedEvent",
+      "description": "Tick event: the logical tick advanced at a tick-boundary frame start."
+    },
+    "TickIndex": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "TickIndex",
+      "description": "0-based index of a tick within a scheduled device session."
+    },
+    "StateMountedEvent": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "state-mounted"
+        },
+        "sequence": {
+          "$ref": "#/$defs/EventSequence"
+        },
+        "deviceSessionId": {
+          "$ref": "#/$defs/DeviceSessionId"
+        },
+        "stateDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "atMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        }
+      },
+      "required": [
+        "kind",
+        "sequence",
+        "deviceSessionId",
+        "stateDigest",
+        "atMs"
+      ],
+      "additionalProperties": false,
+      "title": "StateMountedEvent",
+      "description": "State event: render-ready content (content-addressed digest) was mounted."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  }
+}

@@ -1,0 +1,467 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererBindingContent",
+  "$defs": {
+    "RendererBindingContent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-binding"
+        },
+        "protocolVersion": {
+          "$ref": "#/$defs/RendererProtocolVersion"
+        },
+        "rendererSessionId": {
+          "$ref": "#/$defs/RendererSessionId"
+        },
+        "renderer": {
+          "$ref": "#/$defs/RendererDescriptor"
+        },
+        "device": {
+          "$ref": "#/$defs/DeviceSessionSnapshot"
+        },
+        "effective": {
+          "$ref": "#/$defs/EffectiveLimits"
+        },
+        "state": {
+          "$ref": "#/$defs/RendererBindingState"
+        },
+        "boundAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "lastFrameIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "mountedStateDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "mountedAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "invocationCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "rendererSessionId",
+        "renderer",
+        "device",
+        "effective",
+        "state",
+        "boundAtMs",
+        "invocationCount"
+      ],
+      "additionalProperties": false,
+      "title": "RendererBindingContent",
+      "description": "The content of a renderer binding record: session identity, embedded descriptor, device snapshot, negotiated effective limits, lifecycle state, and execution state."
+    },
+    "RendererProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RendererProtocolVersion",
+      "description": "Exact renderer-runtime protocol version admitted by this release (\"1.0.0\")."
+    },
+    "RendererSessionId": {
+      "type": "string",
+      "pattern": "^rs-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RendererSessionId",
+      "description": "Renderer-session identifier: \"rs-\" followed by a lowercase slug."
+    },
+    "RendererDescriptor": {
+      "type": "object",
+      "properties": {
+        "descriptorVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "rendererId": {
+          "$ref": "#/$defs/RendererId"
+        },
+        "graphKinds": {
+          "minItems": 1,
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExperienceGraphKind"
+          }
+        },
+        "interaction": {
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionModality"
+          }
+        },
+        "output": {
+          "$ref": "#/$defs/RendererOutputCapabilities"
+        },
+        "budgets": {
+          "$ref": "#/$defs/RendererBudgets"
+        }
+      },
+      "required": [
+        "descriptorVersion",
+        "rendererId",
+        "graphKinds",
+        "interaction",
+        "output",
+        "budgets"
+      ],
+      "additionalProperties": false,
+      "title": "RendererDescriptor",
+      "description": "Abstract, provider-neutral renderer descriptor: hosting kinds, serviced modalities, output capabilities, and budgets as typed data; concrete engines are future adapters."
+    },
+    "RendererId": {
+      "type": "string",
+      "pattern": "^rr-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RendererId",
+      "description": "Renderer-descriptor identifier: \"rr-\" followed by a lowercase slug (never a vendor product)."
+    },
+    "ExperienceGraphKind": {
+      "type": "string",
+      "enum": [
+        "2d",
+        "3d",
+        "animation",
+        "narrative",
+        "timeline-replay",
+        "presence",
+        "controls"
+      ],
+      "title": "ExperienceGraphKind",
+      "description": "Presentation projection of an Experience Graph: 2D, 3D, animation, narrative, timeline/replay, presence, or controls."
+    },
+    "InteractionModality": {
+      "type": "string",
+      "enum": [
+        "gamepad",
+        "gaze",
+        "gesture",
+        "keyboard",
+        "pointer",
+        "touch",
+        "voice"
+      ],
+      "title": "InteractionModality",
+      "description": "Neutral interaction modality of a device."
+    },
+    "RendererOutputCapabilities": {
+      "type": "object",
+      "properties": {
+        "stereoscopic": {
+          "type": "boolean"
+        },
+        "maxPixels": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 268435456
+        },
+        "refreshHz": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 1000
+        },
+        "colorDepthBits": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 64
+        }
+      },
+      "required": [
+        "stereoscopic"
+      ],
+      "additionalProperties": false,
+      "title": "RendererOutputCapabilities",
+      "description": "Neutral output capabilities a renderer descriptor declares (never an engine or API surface)."
+    },
+    "RendererBudgets": {
+      "type": "object",
+      "properties": {
+        "maxGraphNodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        },
+        "maxGraphEdges": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 131072
+        },
+        "maxTriangles": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 100000000
+        },
+        "maxTextureBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 1099511627776
+        }
+      },
+      "required": [
+        "maxGraphNodes",
+        "maxGraphEdges"
+      ],
+      "additionalProperties": false,
+      "title": "RendererBudgets",
+      "description": "Neutral budgets a renderer descriptor enforces at the hosting boundary."
+    },
+    "DeviceSessionSnapshot": {
+      "type": "object",
+      "properties": {
+        "deviceSessionId": {
+          "$ref": "#/$defs/DeviceSessionId"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "device": {
+          "$ref": "#/$defs/DeviceDescriptor"
+        }
+      },
+      "required": [
+        "deviceSessionId",
+        "tenantScope",
+        "device"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceSessionSnapshot",
+      "description": "The device-session value projection a renderer binding consumes: session identity, owning tenant scope, and the W011 device descriptor (capabilities/limits as typed data)."
+    },
+    "DeviceSessionId": {
+      "type": "string",
+      "pattern": "^ds-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DeviceSessionId",
+      "description": "Device-session identifier (mirrored shared primitive; canonical home @epoch/experience-runtime): \"ds-\" + lowercase slug."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "DeviceDescriptor": {
+      "type": "object",
+      "properties": {
+        "descriptorVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "deviceClass": {
+          "$ref": "#/$defs/DeviceClass"
+        },
+        "interaction": {
+          "minItems": 1,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionModality"
+          }
+        },
+        "display": {
+          "$ref": "#/$defs/DeviceDisplayCapabilities"
+        },
+        "spatial": {
+          "$ref": "#/$defs/DeviceSpatialCapabilities"
+        },
+        "latencyBudgetMs": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "descriptorVersion",
+        "deviceClass",
+        "interaction",
+        "display",
+        "spatial"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceDescriptor",
+      "description": "Abstract, provider-neutral device descriptor: capabilities and budgets as typed data; filled/adapted by renderer/device adaptation (W019)."
+    },
+    "DeviceClass": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "laptop",
+        "tablet",
+        "phone",
+        "headset",
+        "wall-display"
+      ],
+      "title": "DeviceClass",
+      "description": "Neutral device class of a device descriptor (never a vendor product)."
+    },
+    "DeviceDisplayCapabilities": {
+      "type": "object",
+      "properties": {
+        "stereoscopic": {
+          "type": "boolean"
+        },
+        "maxPixels": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "refreshHz": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "colorDepthBits": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "stereoscopic"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceDisplayCapabilities",
+      "description": "Neutral display capabilities and budgets of a device descriptor."
+    },
+    "DeviceSpatialCapabilities": {
+      "type": "object",
+      "properties": {
+        "poseTracking": {
+          "$ref": "#/$defs/PoseTrackingKind"
+        },
+        "worldAnchored": {
+          "type": "boolean"
+        },
+        "maxTriangles": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maxTextureBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "poseTracking",
+        "worldAnchored"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceSpatialCapabilities",
+      "description": "Neutral spatial capabilities and budgets of a device descriptor."
+    },
+    "PoseTrackingKind": {
+      "type": "string",
+      "enum": [
+        "none",
+        "3dof",
+        "6dof"
+      ],
+      "title": "PoseTrackingKind",
+      "description": "Neutral pose-tracking capability of a device."
+    },
+    "EffectiveLimits": {
+      "type": "object",
+      "properties": {
+        "graphKinds": {
+          "minItems": 1,
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExperienceGraphKind"
+          }
+        },
+        "interaction": {
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionModality"
+          }
+        },
+        "stereoscopic": {
+          "type": "boolean"
+        },
+        "maxGraphNodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        },
+        "maxGraphEdges": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 131072
+        },
+        "maxTriangles": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 100000000
+        },
+        "maxTextureBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 1099511627776
+        }
+      },
+      "required": [
+        "graphKinds",
+        "interaction",
+        "stereoscopic",
+        "maxGraphNodes",
+        "maxGraphEdges"
+      ],
+      "additionalProperties": false,
+      "title": "EffectiveLimits",
+      "description": "The negotiated enforcement envelope of a renderer session binding: hosting kinds, serviced modalities, stereoscopic support, and node/edge/triangle/texture budgets."
+    },
+    "RendererBindingState": {
+      "type": "string",
+      "enum": [
+        "closed",
+        "open"
+      ],
+      "title": "RendererBindingState",
+      "description": "Lifecycle state of a renderer session binding: open (admits invocations) or closed (terminal)."
+    },
+    "VirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "VirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (mirrored shared primitive; canonical home @epoch/experience-runtime)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  }
+}

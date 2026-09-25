@@ -1,0 +1,32 @@
+{
+  "name": "@epoch/renderer-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Renderer Runtime hosting surface (W013): abstract, provider-neutral renderer descriptors (kind, capabilities, budgets as typed data), renderer-session binding (descriptor x device-session snapshot), typed invocation envelopes (mount-graph / advance-frame / submit-intent), and boundary capability/budget enforcement — anything not declared is denied with typed errors (the W008 permission pattern applied to renderers). Zero engine imports, zero GPU code, zero UI-framework dependencies; concrete engines are future adapters behind the descriptor contract.",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/experience-runtime": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

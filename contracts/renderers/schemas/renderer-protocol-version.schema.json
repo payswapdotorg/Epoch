@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererProtocolVersion",
+  "$defs": {
+    "RendererProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RendererProtocolVersion",
+      "description": "Exact renderer-runtime protocol version admitted by this release (\"1.0.0\")."
+    }
+  }
+}

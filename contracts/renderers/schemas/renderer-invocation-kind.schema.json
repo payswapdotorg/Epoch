@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererInvocationKind",
+  "$defs": {
+    "RendererInvocationKind": {
+      "type": "string",
+      "enum": [
+        "advance-frame",
+        "mount-graph",
+        "submit-intent"
+      ],
+      "title": "RendererInvocationKind",
+      "description": "Typed invocation kind executed by the renderer hosting surface."
+    }
+  }
+}

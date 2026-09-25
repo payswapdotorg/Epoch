@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExperienceRuntimeError",
+  "$defs": {
+    "ExperienceRuntimeError": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "cross-tenant-denied"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "expectedTenantId": {
+              "type": "string"
+            },
+            "encounteredTenantId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "expectedTenantId",
+            "encounteredTenantId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "digest-mismatch"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "invalid-transition"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "operation": {
+              "type": "string"
+            },
+            "sessionState": {
+              "$ref": "#/$defs/DeviceSessionState"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "operation",
+            "sessionState"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "malformed-record"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "issues": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ExperienceRuntimeIssue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "issues"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "version-unsupported"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ExperienceRuntimeError",
+      "description": "Typed, discriminated session error of the experience runtime."
+    },
+    "DeviceSessionState": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "closed"
+      ],
+      "title": "DeviceSessionState",
+      "description": "Lifecycle state of a device session: active, paused, or closed (terminal)."
+    },
+    "ExperienceRuntimeIssue": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "ExperienceRuntimeIssue",
+      "description": "One flattened validation issue: dotted path (\"$\" = root) plus message."
+    }
+  }
+}

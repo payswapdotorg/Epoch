@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/InvocationEnvelope",
+  "$defs": {
+    "InvocationEnvelope": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/MountGraphEnvelope"
+        },
+        {
+          "$ref": "#/$defs/AdvanceFrameEnvelope"
+        },
+        {
+          "$ref": "#/$defs/SubmitIntentEnvelope"
+        }
+      ],
+      "title": "InvocationEnvelope",
+      "description": "One typed invocation envelope of the renderer hosting surface: mount-graph, advance-frame, or submit-intent."
+    },
+    "MountGraphEnvelope": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-invocation"
+        },
+        "protocolVersion": {
+          "$ref": "#/$defs/RendererProtocolVersion"
+        },
+        "kind": {
+          "type": "string",
+          "const": "mount-graph"
+        },
+        "invocationId": {
+          "$ref": "#/$defs/InvocationId"
+        },
+        "rendererSessionId": {
+          "$ref": "#/$defs/RendererSessionId"
+        },
+        "graphDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "atMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "declaredTriangles": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000000
+        },
+        "declaredTextureBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1099511627776
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "kind",
+        "invocationId",
+        "rendererSessionId",
+        "graphDigest",
+        "atMs"
+      ],
+      "additionalProperties": false,
+      "title": "MountGraphEnvelope",
+      "description": "Invocation envelope: mount the render-ready state referenced by content digest, with optional declared resource usage."
+    },
+    "RendererProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RendererProtocolVersion",
+      "description": "Exact renderer-runtime protocol version admitted by this release (\"1.0.0\")."
+    },
+    "InvocationId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "InvocationId",
+      "description": "Opaque invocation identifier (shared message-id grammar), unique within the caller scope."
+    },
+    "RendererSessionId": {
+      "type": "string",
+      "pattern": "^rs-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RendererSessionId",
+      "description": "Renderer-session identifier: \"rs-\" followed by a lowercase slug."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "VirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "VirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (mirrored shared primitive; canonical home @epoch/experience-runtime)."
+    },
+    "AdvanceFrameEnvelope": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-invocation"
+        },
+        "protocolVersion": {
+          "$ref": "#/$defs/RendererProtocolVersion"
+        },
+        "kind": {
+          "type": "string",
+          "const": "advance-frame"
+        },
+        "invocationId": {
+          "$ref": "#/$defs/InvocationId"
+        },
+        "rendererSessionId": {
+          "$ref": "#/$defs/RendererSessionId"
+        },
+        "frameIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "atMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "kind",
+        "invocationId",
+        "rendererSessionId",
+        "frameIndex",
+        "atMs"
+      ],
+      "additionalProperties": false,
+      "title": "AdvanceFrameEnvelope",
+      "description": "Invocation envelope: execute one frame of the mounted state at a virtual time."
+    },
+    "SubmitIntentEnvelope": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-invocation"
+        },
+        "protocolVersion": {
+          "$ref": "#/$defs/RendererProtocolVersion"
+        },
+        "kind": {
+          "type": "string",
+          "const": "submit-intent"
+        },
+        "invocationId": {
+          "$ref": "#/$defs/InvocationId"
+        },
+        "rendererSessionId": {
+          "$ref": "#/$defs/RendererSessionId"
+        },
+        "modality": {
+          "$ref": "#/$defs/InteractionModality"
+        },
+        "intent": {
+          "$ref": "#/$defs/ControlIntent"
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "kind",
+        "invocationId",
+        "rendererSessionId",
+        "modality",
+        "intent"
+      ],
+      "additionalProperties": false,
+      "title": "SubmitIntentEnvelope",
+      "description": "Invocation envelope: admit one typed control intent (R30) emitted from a declared interaction modality."
+    },
+    "InteractionModality": {
+      "type": "string",
+      "enum": [
+        "gamepad",
+        "gaze",
+        "gesture",
+        "keyboard",
+        "pointer",
+        "touch",
+        "voice"
+      ],
+      "title": "InteractionModality",
+      "description": "Neutral interaction modality of a device."
+    },
+    "ControlIntent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "ControlIntent",
+      "description": "Typed UI intent a control emits: qualified id plus semver core (shape-compatible with the action-protocol ActionTypeReference)."
+    }
+  }
+}
