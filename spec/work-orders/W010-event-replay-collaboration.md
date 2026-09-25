@@ -1,5 +1,5 @@
 # W010 — Event/Replay/Collaboration
-Status: READY_AFTER_DEPENDENCIES
+Status: AUTHORIZED (wave 5; dispatch base recorded in the live dispatch issue)
 Depends On: W002,W003,W009
 Worker Count: 1
 

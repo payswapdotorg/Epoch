@@ -60,3 +60,10 @@ Every merge must update this file before advancing.
 
 
 Target clarification: the universal lifecycle is Understand -> Decide -> Plan -> Acquire -> Realize -> Observe/Actualize -> Verify -> Forecast -> Close -> Learn. Domain packs and the Solution Navigator are projections over the shared semantic graph; they must not create competing lifecycle or ledger authorities. Canonical references: `spec/universal-solution-lifecycle.md`, `spec/domain-pack-contract.md`, `spec/solution-navigator-architecture.md`.
+
+## Wave-4 completion (2026-09-25, Tech Lead)
+- W009 (Tenancy/Identity/Authorization): PR #31 squash-merged -> b6df6644. 7-gate review ALL PASS (120 files owned-only; battery typecheck 21/21, lint 18/18, test 20/20, build 3/3 forced at --concurrency=1; determinism/neutrality clean; 156 tests; W004 parity via devDeps). Reconcile PR #33 -> 8353182.
+- W011 (Experience Protocol): PR #32 squash-merged -> fd0d6af6. 7-gate review ALL PASS (104 files owned-only; 194 tests incl. authority/neutrality/tenant/graph/determinism/kernel-parity named negatives; runtime deps exactly agent-protocol + world-model; contracts/experience per W002-W004 convention: index.d.ts + parity.ts + manifest.json + 65 schemas). Reconcile PR #34 -> ee8615ab.
+- W011 architecture questions recorded: (1) W002 standalone relation-id schema (W011 mirrors + parity-pins — advisory); (2) GRAPH_KIND_NODE_KINDS constrained mixing (constrained is correct — no change).
+- Dispatch saga lesson (recorded in replay2 lesson 129): rate-limit/capacity popups are dismissed (Enter+resend / cancel+retry), never obeyed; "concurrent conversation limit" was cleared by deleting dead-turn chats; innerText flatness is NOT a dead-turn signal (transcript virtualizes during long sandbox ops — screenshots are the liveness truth).
+- Frontier recalculated: W010/W012/W013/W023 all READY; wave 5 = W010 + W012 + W013 (W023 next; cap 3).

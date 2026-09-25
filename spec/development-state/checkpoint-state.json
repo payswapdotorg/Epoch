@@ -2,5 +2,7 @@
   "baselineSha": "e09f530926e4fa2c0e7de317a86d6d13013559f8",
   "status": "CAPABILITY_FOUNDATION_POLICY_MERGED",
   "next": "W009 + W011 remain the authorized wave on E1.0/X1.0. After that wave stabilizes, perform the explicit ACR-001/ACR-002/ACR-003 lock transition, then re-derive READY items and authorize at most three pairwise-disjoint Work Orders. W036 is the sole entry point to Solution Delivery.",
-  "verification": "PR #29 CI run 174: governance/boundary/typecheck/lint/test/build PASS; merge SHA e09f530926e4fa2c0e7de317a86d6d13013559f8. Post-merge reconciliation is documentation/governance only."
+  "verification": "PR #29 CI run 174: governance/boundary/typecheck/lint/test/build PASS; merge SHA e09f530926e4fa2c0e7de317a86d6d13013559f8. Post-merge reconciliation is documentation/governance only.",
+  "lastMergeSha": "ee8615ab",
+  "lastAction": "W009 (PR #31 -> b6df664, reconcile PR #33 -> 8353182) + W011 (PR #32 -> fd0d6af, reconcile PR #34 -> ee8615ab) merged; wave-4 complete; frontier recalculated: W010/W012/W013/W023 READY"
 }

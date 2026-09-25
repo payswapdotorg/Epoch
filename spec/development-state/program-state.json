@@ -4,10 +4,7 @@
   "workOrderVersion": "WO1.0",
   "defaultBranch": "main",
   "maxConcurrentWorkers": 3,
-  "active": [
-    "W009",
-    "W011"
-  ],
+  "active": [],
   "completed": [
     "W001",
     "W002",
@@ -16,8 +13,10 @@
     "W005",
     "W006",
     "W007",
-    "W008"
+    "W008",
+    "W009",
+    "W011"
   ],
   "blocked": [],
-  "lastMergeSha": "e09f530926e4fa2c0e7de317a86d6d13013559f8"
+  "lastMergeSha": "ee8615ab"
 }

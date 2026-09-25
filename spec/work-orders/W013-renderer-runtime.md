@@ -1,5 +1,5 @@
 # W013 — Renderer Runtime
-Status: READY_AFTER_DEPENDENCIES
+Status: AUTHORIZED (wave 5; dispatch base recorded in the live dispatch issue)
 Depends On: W011
 Worker Count: 1
 
