@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/QualifiedName",
+  "$defs": {
+    "QualifiedName": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+      "title": "QualifiedName",
+      "description": "Dot-namespaced qualified name (the agent-protocol capability-id grammar)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:qualified-name:1.0.0"
+}

@@ -1,0 +1,279 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PricingModel",
+  "$defs": {
+    "PricingModel": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/FreePricing"
+        },
+        {
+          "$ref": "#/$defs/OneTimePricing"
+        },
+        {
+          "$ref": "#/$defs/SubscriptionPricing"
+        },
+        {
+          "$ref": "#/$defs/SeatWorkspacePricing"
+        },
+        {
+          "$ref": "#/$defs/UsageMeteredPricing"
+        },
+        {
+          "$ref": "#/$defs/HybridPricing"
+        },
+        {
+          "$ref": "#/$defs/EnterprisePrivatePricing"
+        }
+      ],
+      "title": "PricingModel",
+      "description": "The closed pricing-model vocabulary (typed data only): free, one-time, subscription, seat/workspace, usage-metered, hybrid, or enterprise/private."
+    },
+    "FreePricing": {
+      "readOnly": true,
+      "title": "FreePricing",
+      "description": "Free pricing model: no monetary fields.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "free"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "OneTimePricing": {
+      "readOnly": true,
+      "title": "OneTimePricing",
+      "description": "One-time pricing: a single non-negative decimal amount plus ISO 4217 currency.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "one-time"
+        },
+        "amount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        }
+      },
+      "required": [
+        "kind",
+        "amount",
+        "currency"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    },
+    "SubscriptionPricing": {
+      "readOnly": true,
+      "title": "SubscriptionPricing",
+      "description": "Subscription pricing: recurring amount, currency, and billing period (monthly or annual).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "subscription"
+        },
+        "recurringAmount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        },
+        "billingPeriod": {
+          "type": "string",
+          "enum": [
+            "monthly",
+            "annual"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "recurringAmount",
+        "currency",
+        "billingPeriod"
+      ],
+      "additionalProperties": false
+    },
+    "SeatWorkspacePricing": {
+      "readOnly": true,
+      "title": "SeatWorkspacePricing",
+      "description": "Seat/workspace pricing: per-seat amount, currency, billing period, and optional seat bounds.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "seat-workspace"
+        },
+        "perSeatAmount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        },
+        "billingPeriod": {
+          "type": "string",
+          "enum": [
+            "monthly",
+            "annual"
+          ]
+        },
+        "minSeats": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "maxSeats": {
+          "$ref": "#/$defs/PositiveInteger"
+        }
+      },
+      "required": [
+        "kind",
+        "perSeatAmount",
+        "currency",
+        "billingPeriod"
+      ],
+      "additionalProperties": false
+    },
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "PositiveInteger",
+      "description": "Positive integer (1 to MAX_SAFE_INTEGER)."
+    },
+    "UsageMeteredPricing": {
+      "readOnly": true,
+      "title": "UsageMeteredPricing",
+      "description": "Usage-metered pricing: per-unit amount, currency, unit name, and optional included allowance.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "usage-metered"
+        },
+        "unitAmount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        },
+        "unitName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "includedUnits": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        }
+      },
+      "required": [
+        "kind",
+        "unitAmount",
+        "currency",
+        "unitName"
+      ],
+      "additionalProperties": false
+    },
+    "HybridPricing": {
+      "readOnly": true,
+      "title": "HybridPricing",
+      "description": "Hybrid pricing: one fixed component (free, one-time, subscription, or seat/workspace) plus a usage-metered component.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "hybrid"
+        },
+        "fixed": {
+          "$ref": "#/$defs/FixedPricingComponent"
+        },
+        "metered": {
+          "$ref": "#/$defs/UsageMeteredPricing"
+        }
+      },
+      "required": [
+        "kind",
+        "fixed",
+        "metered"
+      ],
+      "additionalProperties": false
+    },
+    "FixedPricingComponent": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/FreePricing"
+        },
+        {
+          "$ref": "#/$defs/OneTimePricing"
+        },
+        {
+          "$ref": "#/$defs/SubscriptionPricing"
+        },
+        {
+          "$ref": "#/$defs/SeatWorkspacePricing"
+        }
+      ],
+      "title": "FixedPricingComponent",
+      "description": "One fixed pricing component: free, one-time, subscription, or seat/workspace."
+    },
+    "EnterprisePrivatePricing": {
+      "readOnly": true,
+      "title": "EnterprisePrivatePricing",
+      "description": "Enterprise/private pricing: opaque contact route plus the sorted private audience of tenant ids (negotiation is out of band; record shape only).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "enterprise-private"
+        },
+        "contactRoute": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "audienceTenantIds": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TenantId"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "contactRoute",
+        "audienceTenantIds"
+      ],
+      "additionalProperties": false
+    },
+    "OpaqueReference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "OpaqueReference",
+      "description": "Opaque, bounded, provider-neutral reference string owned by its producing system."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:marketplace:pricing-model:1.0.0"
+}

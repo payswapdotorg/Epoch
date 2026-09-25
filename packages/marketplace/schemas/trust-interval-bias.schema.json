@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TrustIntervalBias",
+  "$defs": {
+    "TrustIntervalBias": {
+      "type": "string",
+      "enum": [
+        "none",
+        "low",
+        "high"
+      ],
+      "title": "TrustIntervalBias",
+      "description": "Directional bias admitted for interval confidence estimates: none, low, high (the W006 vocabulary)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:trust-interval-bias:1.0.0"
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/UsageCausalParent",
+  "$defs": {
+    "UsageCausalParent": {
+      "readOnly": true,
+      "title": "UsageCausalParent",
+      "description": "Causal parent of a usage event: an earlier event in the same usage stream (the W010 shape).",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "$ref": "#/$defs/UsageStreamId"
+        },
+        "sequence": {
+          "$ref": "#/$defs/UsageEventSequence"
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "UsageStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "UsageStreamId",
+      "description": "Opaque usage-stream identity: \"stream:\" followed by a lowercase slug (the W010 stream grammar)."
+    },
+    "UsageEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "UsageEventSequence",
+      "description": "One usage-event sequence number: 1-based, contiguous per usage stream."
+    }
+  },
+  "$id": "urn:epoch:marketplace:usage-causal-parent:1.0.0"
+}

@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RevenueProvenance",
+  "$defs": {
+    "RevenueProvenance": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "usage-event"
+            },
+            "usageEventDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "kind",
+            "usageEventDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "entitlement"
+            },
+            "entitlementId": {
+              "$ref": "#/$defs/EntitlementId"
+            }
+          },
+          "required": [
+            "kind",
+            "entitlementId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "manual-entry"
+            },
+            "reference": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "kind",
+            "reference"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "RevenueProvenance",
+      "description": "Revenue provenance: the usage event digest, entitlement id, or manual-entry reference that generated the accrued amount."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "EntitlementId": {
+      "type": "string",
+      "pattern": "^entitlement:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "EntitlementId",
+      "description": "Opaque entitlement identity: \"entitlement:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:marketplace:revenue-provenance:1.0.0"
+}

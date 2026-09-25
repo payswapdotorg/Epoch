@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PaymentCheckResult",
+  "$defs": {
+    "PaymentCheckResult": {
+      "type": "string",
+      "enum": [
+        "not-required",
+        "settled",
+        "unpaid",
+        "declined",
+        "refunded",
+        "unknown-charge"
+      ],
+      "title": "PaymentCheckResult",
+      "description": "Closed payment check result vocabulary: not-required, settled, unpaid, declined, refunded, unknown-charge."
+    }
+  },
+  "$id": "urn:epoch:marketplace:payment-check-result:1.0.0"
+}

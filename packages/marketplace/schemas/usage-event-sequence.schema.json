@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/UsageEventSequence",
+  "$defs": {
+    "UsageEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "UsageEventSequence",
+      "description": "One usage-event sequence number: 1-based, contiguous per usage stream."
+    }
+  },
+  "$id": "urn:epoch:marketplace:usage-event-sequence:1.0.0"
+}

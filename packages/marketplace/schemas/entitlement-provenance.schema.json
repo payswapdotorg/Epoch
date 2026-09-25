@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EntitlementProvenance",
+  "$defs": {
+    "EntitlementProvenance": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "direct"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "payment-sync"
+            },
+            "portId": {
+              "$ref": "#/$defs/PaymentPortId"
+            },
+            "portReference": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "kind",
+            "portId"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "EntitlementProvenance",
+      "description": "Grant provenance: direct (Epoch-side actor) or payment-sync (proposed from a payment port check outcome; the grant record is the authority, never the payment state)."
+    },
+    "PaymentPortId": {
+      "type": "string",
+      "pattern": "^port:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PaymentPortId",
+      "description": "Opaque payment-port identity: \"port:\" followed by a lowercase slug (provider-neutral adapter seam)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:entitlement-provenance:1.0.0"
+}

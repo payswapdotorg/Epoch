@@ -1,0 +1,336 @@
+{
+  "contract": "epoch/marketplace",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Marketplace contract surface (W023): immutable content-addressed listing versions, the closed pricing-model vocabulary, W006-shaped trust evidence, entitlement records with pure checks, W010-shaped usage events, developer revenue records, and the PaymentPort seam (checks + record-shaped outcomes only). JSON Schema projection under schemas/; runtime validators in @epoch/marketplace.",
+  "dataTypes": [
+    "Sha256Hex",
+    "ListingId",
+    "EntitlementId",
+    "RevocationId",
+    "RevenueId",
+    "PaymentPortId",
+    "PrincipalId",
+    "SemverCore",
+    "CurrencyCode",
+    "NonNegativeDecimal",
+    "PositiveInteger",
+    "OpaqueReference",
+    "QualifiedName",
+    "PricingModel",
+    "FreePricing",
+    "OneTimePricing",
+    "SubscriptionPricing",
+    "SeatWorkspacePricing",
+    "UsageMeteredPricing",
+    "HybridPricing",
+    "EnterprisePrivatePricing",
+    "FixedPricingComponent",
+    "BillingPeriod",
+    "TrustEvidenceRecord",
+    "TrustEvidenceKind",
+    "TrustEvidenceProduction",
+    "TrustEvidencePayload",
+    "TrustExactRevisionRef",
+    "TrustConfidence",
+    "TrustConfidenceDistribution",
+    "TrustConfidenceMethod",
+    "TrustIntervalBias",
+    "CapabilityVersionReference",
+    "ListingVisibility",
+    "ListingVersionContent",
+    "SealedListingVersion",
+    "EntitlementScope",
+    "EntitlementProvenance",
+    "EntitlementGrantRecord",
+    "EntitlementRevokeRecord",
+    "UsageStreamId",
+    "UsageEventSequence",
+    "UsageCausalParent",
+    "UsageEventPayload",
+    "UsageEventData",
+    "UsageEventContent",
+    "SealedUsageEvent",
+    "UsageAccount",
+    "RevenueBasis",
+    "RevenueProvenance",
+    "RevenueRecord",
+    "PaymentCheckRequest",
+    "PaymentCheckOutcome",
+    "PaymentCheckResult"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/marketplace and are not represented in the JSON Schema files",
+  "emittedBy": "renderMarketplaceContractFiles() in @epoch/marketplace (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "Sha256Hex",
+      "file": "sha256-hex.schema.json",
+      "sha256": "2028e6c9be76f46fbabdab2931790fa35a3817b2d734fb934006646baa94f1e6"
+    },
+    {
+      "type": "ListingId",
+      "file": "listing-id.schema.json",
+      "sha256": "c850d3de064cc84e61382a3930d5b8a30a92c894706b65b395d474f0263aecca"
+    },
+    {
+      "type": "EntitlementId",
+      "file": "entitlement-id.schema.json",
+      "sha256": "e7042b940a63a3382df76a3ee6bcbe3a128258efaa33ed358682eaa3cac3eb2d"
+    },
+    {
+      "type": "RevocationId",
+      "file": "revocation-id.schema.json",
+      "sha256": "0e34ea932eb425553f793cbcb79f0a3d83ccec3ed0d3ffa0c1eddd97babd780e"
+    },
+    {
+      "type": "RevenueId",
+      "file": "revenue-id.schema.json",
+      "sha256": "bb6da8fa75694f3f3123a19d28f73348ed640716468cf2087a5c2935b07ff009"
+    },
+    {
+      "type": "PaymentPortId",
+      "file": "payment-port-id.schema.json",
+      "sha256": "340d6523c81495f71bec283eca726e14d38dd5a95f9665640d6751cd2cc9ef41"
+    },
+    {
+      "type": "PrincipalId",
+      "file": "principal-id.schema.json",
+      "sha256": "5ca6d3d2dd0bc3944bd7377978e68ef82c8bc97633f9b93db15bba01089c308a"
+    },
+    {
+      "type": "SemverCore",
+      "file": "semver-core.schema.json",
+      "sha256": "6143f256f8ca2fb9210ee57ae84e36f0616910dfc9ad6543965dd29d009714dd"
+    },
+    {
+      "type": "CurrencyCode",
+      "file": "currency-code.schema.json",
+      "sha256": "8993300b35ebe614993f001b6be79013d165deb86cf38a14acf93a154187a30c"
+    },
+    {
+      "type": "NonNegativeDecimal",
+      "file": "non-negative-decimal.schema.json",
+      "sha256": "9229768ed82fca1c749ceca27eb2b4185fd318b368fb55713e64910b3e8064fb"
+    },
+    {
+      "type": "PositiveInteger",
+      "file": "positive-integer.schema.json",
+      "sha256": "24520e97866c4cfa7be8aa05e1dcac8ec48d3b0cd76c0b8e90ff292828140134"
+    },
+    {
+      "type": "OpaqueReference",
+      "file": "opaque-reference.schema.json",
+      "sha256": "e9d770807c32cfcbdd67834190b189edb0b4f9eb9865fa05b605db62a2e78f9f"
+    },
+    {
+      "type": "QualifiedName",
+      "file": "qualified-name.schema.json",
+      "sha256": "f44f2f5e988b975374daf2a898d24b2dad21d0b7ebf6d2d94de89354caf847d1"
+    },
+    {
+      "type": "PricingModel",
+      "file": "pricing-model.schema.json",
+      "sha256": "a4c23af4e5dc6ab0fe73e318eb1ac55c7fddd127b3331c748ed5b549f2353834"
+    },
+    {
+      "type": "FreePricing",
+      "file": "free-pricing.schema.json",
+      "sha256": "f7f03343815a57910bd973ac86913cbf568ff865c572972b894f23e6c4027399"
+    },
+    {
+      "type": "OneTimePricing",
+      "file": "one-time-pricing.schema.json",
+      "sha256": "abee8b90f4a798af8976cc47f579cea32a7bb10657a1e796d02eea2ee9111014"
+    },
+    {
+      "type": "SubscriptionPricing",
+      "file": "subscription-pricing.schema.json",
+      "sha256": "06a0d7e02e47099e015602fcec34f9bd5409e2412d0d3c9e9611095238abb53e"
+    },
+    {
+      "type": "SeatWorkspacePricing",
+      "file": "seat-workspace-pricing.schema.json",
+      "sha256": "84b8fc403af704636d99194b0b7417ed7f42a3e4e52043e909cdcc6c7bf8162b"
+    },
+    {
+      "type": "UsageMeteredPricing",
+      "file": "usage-metered-pricing.schema.json",
+      "sha256": "49251e839df22b0ec5a0091f284ab3a74fa87edd2ec055705e625c0916279c8c"
+    },
+    {
+      "type": "HybridPricing",
+      "file": "hybrid-pricing.schema.json",
+      "sha256": "bfb1816de713b0a5a97a855561ee77081890a61daa26a827d076090f0126f194"
+    },
+    {
+      "type": "EnterprisePrivatePricing",
+      "file": "enterprise-private-pricing.schema.json",
+      "sha256": "d650c867aefc3de006597854491fd6d9347df073dbade82ecace13a7bbcd103d"
+    },
+    {
+      "type": "FixedPricingComponent",
+      "file": "fixed-pricing-component.schema.json",
+      "sha256": "177b6f51d3ab5520ef195e46009c8180f2b62732df9e4c9360ef2e96f7c5edcc"
+    },
+    {
+      "type": "BillingPeriod",
+      "file": "billing-period.schema.json",
+      "sha256": "367b2a5dde4bf600eab7426cda71ef1a87bf3376fabef81ba026b6ce9af17179"
+    },
+    {
+      "type": "TrustEvidenceRecord",
+      "file": "trust-evidence-record.schema.json",
+      "sha256": "c49ace22cf66f9302c2b69937d9456915660fd3b5393a886cb58bf7f7a9bb869"
+    },
+    {
+      "type": "TrustEvidenceKind",
+      "file": "trust-evidence-kind.schema.json",
+      "sha256": "dea1f7419570c10349f954ad1cc1cc1ac117750e395d1792611cf6593d9144e3"
+    },
+    {
+      "type": "TrustEvidenceProduction",
+      "file": "trust-evidence-production.schema.json",
+      "sha256": "baabbb54735b3828a9aee66b675980eb198b5c50ff61876f28667a6045f64295"
+    },
+    {
+      "type": "TrustEvidencePayload",
+      "file": "trust-evidence-payload.schema.json",
+      "sha256": "dbf71a40771ee729682bbe5ad3ea833b2a46d4ed2e3463cbc153aa15e357165c"
+    },
+    {
+      "type": "TrustExactRevisionRef",
+      "file": "trust-exact-revision-ref.schema.json",
+      "sha256": "8ba260c43e9c2370102e57cff15a87b49fcefb9ccd9a974c3c4a64d313f22cb7"
+    },
+    {
+      "type": "TrustConfidence",
+      "file": "trust-confidence.schema.json",
+      "sha256": "b476619d3a35a90dff22795f92acd0e7202bfd440bb2e5d32f02c78d2420d102"
+    },
+    {
+      "type": "TrustConfidenceDistribution",
+      "file": "trust-confidence-distribution.schema.json",
+      "sha256": "07c39a7303a8fb9a909f8f87473816b0945e39a1f33677f7ee0571722f306c91"
+    },
+    {
+      "type": "TrustConfidenceMethod",
+      "file": "trust-confidence-method.schema.json",
+      "sha256": "26f273a49fcf99273386e4ebd0076678740e4dbec1a721aa6e5ab88bd934676f"
+    },
+    {
+      "type": "TrustIntervalBias",
+      "file": "trust-interval-bias.schema.json",
+      "sha256": "e09b12040920e4be1f653191f50a9c07b71486bc9640f13c504b2d16394171de"
+    },
+    {
+      "type": "CapabilityVersionReference",
+      "file": "capability-version-reference.schema.json",
+      "sha256": "10ac083e821ff57a4d8b61082a6d2529e2e28f3321e57aef633df7394d689904"
+    },
+    {
+      "type": "ListingVisibility",
+      "file": "listing-visibility.schema.json",
+      "sha256": "71e4c44014a2f6dd35ac057d55a03d443a05b2ea6089426a66a37547b70da139"
+    },
+    {
+      "type": "ListingVersionContent",
+      "file": "listing-version-content.schema.json",
+      "sha256": "edf3876b51d6d853c96689a93edbb222f0eb1227a3048b6ab42dfe096e49e39c"
+    },
+    {
+      "type": "SealedListingVersion",
+      "file": "sealed-listing-version.schema.json",
+      "sha256": "205de9d6321bbbea2f6a471305c24683c71f6f2ff7622441c1885feed5286ec9"
+    },
+    {
+      "type": "EntitlementScope",
+      "file": "entitlement-scope.schema.json",
+      "sha256": "4f6e9252ef5268c9eebcfbbe4c859d73c38fd11978c93a411c8a881e9ddca7d1"
+    },
+    {
+      "type": "EntitlementProvenance",
+      "file": "entitlement-provenance.schema.json",
+      "sha256": "eb5c5420b2101710fb9303b53da45df443247536ab20a43db9d7eb8975c32819"
+    },
+    {
+      "type": "EntitlementGrantRecord",
+      "file": "entitlement-grant-record.schema.json",
+      "sha256": "6665c5daa417b2680a7dcc50a2fd888fdca6a5a1afe6782f1ebee84eeae7ca80"
+    },
+    {
+      "type": "EntitlementRevokeRecord",
+      "file": "entitlement-revoke-record.schema.json",
+      "sha256": "6a15db2be9629e26f596722ef62e8d3c6328e5c4e7a58be294b84028590ec25e"
+    },
+    {
+      "type": "UsageStreamId",
+      "file": "usage-stream-id.schema.json",
+      "sha256": "8b1cea6594a2f547552824350ce48393776cc2487fc85bfcdc885859d94c1c89"
+    },
+    {
+      "type": "UsageEventSequence",
+      "file": "usage-event-sequence.schema.json",
+      "sha256": "c535915f8d29dc17190dd263d6bf8db13831e745d62598f3f33da2fb298a9504"
+    },
+    {
+      "type": "UsageCausalParent",
+      "file": "usage-causal-parent.schema.json",
+      "sha256": "0d5cef109afe16a89f43df572b589429812bc91209c2d76f130eb1770085d0ce"
+    },
+    {
+      "type": "UsageEventPayload",
+      "file": "usage-event-payload.schema.json",
+      "sha256": "272100abb8e8d509eab56469c81e724a89e0e834fcac08e1ba7ccfe8bcaefef4"
+    },
+    {
+      "type": "UsageEventData",
+      "file": "usage-event-data.schema.json",
+      "sha256": "081b56a6dc25bff031a8bff8c531c92bdb15406b4a6eb2c8675194fce846cabc"
+    },
+    {
+      "type": "UsageEventContent",
+      "file": "usage-event-content.schema.json",
+      "sha256": "d270bc17dd86cbe1dc018a112ca8a911ce83a720fc547ec31e1359f4fc2fd2f8"
+    },
+    {
+      "type": "SealedUsageEvent",
+      "file": "sealed-usage-event.schema.json",
+      "sha256": "9cfa5e43aca5b7c62a97025af9a338f11531ccc6ae562c5e815e21c4be6bf2f1"
+    },
+    {
+      "type": "UsageAccount",
+      "file": "usage-account.schema.json",
+      "sha256": "9a91edd69cdd31acf0757598e8ccd84965feab9b3b9b03ddf4772346b2a3343a"
+    },
+    {
+      "type": "RevenueBasis",
+      "file": "revenue-basis.schema.json",
+      "sha256": "5a4c201558c238ae5c489eef9535117b8ae52688af9d7241eddc850eb3a620f9"
+    },
+    {
+      "type": "RevenueProvenance",
+      "file": "revenue-provenance.schema.json",
+      "sha256": "e959b18ddd921d1fed86290e83d7bf29f4e0437a8fe696b9893d0a90bab3fcda"
+    },
+    {
+      "type": "RevenueRecord",
+      "file": "revenue-record.schema.json",
+      "sha256": "1583d5f01ecab72d01206b715dcd64e1849fc7d055288a4fd34c6dbaeac9b7d1"
+    },
+    {
+      "type": "PaymentCheckRequest",
+      "file": "payment-check-request.schema.json",
+      "sha256": "f13aac514e415b86311633ca589c48c26a5782d5e292933b3e0ac7a9fb5871bc"
+    },
+    {
+      "type": "PaymentCheckOutcome",
+      "file": "payment-check-outcome.schema.json",
+      "sha256": "45c28a43175d4ddb4b56cad744a8ca957ddacef73e73c8c1e5285be537f9cf34"
+    },
+    {
+      "type": "PaymentCheckResult",
+      "file": "payment-check-result.schema.json",
+      "sha256": "42f9c4df8cfc7a21f3af8958145609334d202d5ce0eb4200ab35b44f8e0addd2"
+    }
+  ]
+}

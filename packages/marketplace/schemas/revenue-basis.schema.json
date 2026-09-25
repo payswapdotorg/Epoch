@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RevenueBasis",
+  "$defs": {
+    "RevenueBasis": {
+      "type": "string",
+      "enum": [
+        "one-time",
+        "subscription",
+        "seat",
+        "usage"
+      ],
+      "title": "RevenueBasis",
+      "description": "Developer revenue basis: one-time, subscription, seat, or usage."
+    }
+  },
+  "$id": "urn:epoch:marketplace:revenue-basis:1.0.0"
+}

@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/FixedPricingComponent",
+  "$defs": {
+    "FixedPricingComponent": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/FreePricing"
+        },
+        {
+          "$ref": "#/$defs/OneTimePricing"
+        },
+        {
+          "$ref": "#/$defs/SubscriptionPricing"
+        },
+        {
+          "$ref": "#/$defs/SeatWorkspacePricing"
+        }
+      ],
+      "title": "FixedPricingComponent",
+      "description": "One fixed pricing component: free, one-time, subscription, or seat/workspace."
+    },
+    "FreePricing": {
+      "readOnly": true,
+      "title": "FreePricing",
+      "description": "Free pricing model: no monetary fields.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "free"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "OneTimePricing": {
+      "readOnly": true,
+      "title": "OneTimePricing",
+      "description": "One-time pricing: a single non-negative decimal amount plus ISO 4217 currency.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "one-time"
+        },
+        "amount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        }
+      },
+      "required": [
+        "kind",
+        "amount",
+        "currency"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    },
+    "SubscriptionPricing": {
+      "readOnly": true,
+      "title": "SubscriptionPricing",
+      "description": "Subscription pricing: recurring amount, currency, and billing period (monthly or annual).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "subscription"
+        },
+        "recurringAmount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        },
+        "billingPeriod": {
+          "type": "string",
+          "enum": [
+            "monthly",
+            "annual"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "recurringAmount",
+        "currency",
+        "billingPeriod"
+      ],
+      "additionalProperties": false
+    },
+    "SeatWorkspacePricing": {
+      "readOnly": true,
+      "title": "SeatWorkspacePricing",
+      "description": "Seat/workspace pricing: per-seat amount, currency, billing period, and optional seat bounds.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "seat-workspace"
+        },
+        "perSeatAmount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        },
+        "billingPeriod": {
+          "type": "string",
+          "enum": [
+            "monthly",
+            "annual"
+          ]
+        },
+        "minSeats": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "maxSeats": {
+          "$ref": "#/$defs/PositiveInteger"
+        }
+      },
+      "required": [
+        "kind",
+        "perSeatAmount",
+        "currency",
+        "billingPeriod"
+      ],
+      "additionalProperties": false
+    },
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "PositiveInteger",
+      "description": "Positive integer (1 to MAX_SAFE_INTEGER)."
+    }
+  },
+  "$id": "urn:epoch:marketplace:fixed-pricing-component:1.0.0"
+}

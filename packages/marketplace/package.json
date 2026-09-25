@@ -1,0 +1,37 @@
+{
+  "name": "@epoch/marketplace",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Marketplace kernel (W023) — the typed DOMAIN MODEL Epoch owns (architecture.md, binding): listing descriptors plus IMMUTABLE, content-addressed, hash-chained published versions (W011-style sealed envelopes); the closed pricing-model vocabulary (free, one-time, subscription, seat/workspace, usage-metered, hybrid, enterprise/private) as typed data only; trust metadata as W006-shaped evidence records; entitlement grant/revoke records with PURE check functions (immediate revocation; payment state is never authority — architecture lock rule 11); usage accounting as append-only typed events over the W010 event shapes; developer revenue records (record-keeping only, no payout logic); a provider-neutral PaymentPort seam expressing CHECKS and record-shaped outcomes ONLY (in-memory reference implementations — no payment processing, no credentials, no network); and the typed error taxonomy. NO monetization logic beyond record shape + validation.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/authorization": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/extension-sdk": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
