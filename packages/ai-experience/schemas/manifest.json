@@ -1,0 +1,228 @@
+{
+  "contract": "epoch/ai-experience",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral AI-experience contract surface (W015): tenant-scoped collaboration-session descriptors with human/agent role grants, agent presence/focus states, the typed interaction-intent vocabulary (Universal-interaction subsets), takeover/release transitions with provenance, Engineering Moment records (content-addressed), collaboration event adapters over the W010 event shapes, and deterministic projection folds. Semantics as typed data over the event-sourced substrate — never a second authority. JSON Schema projection under schemas/; runtime validators in @epoch/ai-experience.",
+  "dataTypes": [
+    "ActionProposalTarget",
+    "AgentPresenceState",
+    "AiCollaborationEvent",
+    "AiCollaborationEventKind",
+    "AiCollaborationEventRecord",
+    "AiCollaborationEventRegistration",
+    "AiExperienceIssue",
+    "AiExperienceRecordVersion",
+    "AiSessionDescriptor",
+    "AiSessionScope",
+    "AiSessionState",
+    "AiTenantId",
+    "BranchPoint",
+    "ControlAuthority",
+    "ControlAuthorityKind",
+    "ControlDenialReason",
+    "ControlProvenance",
+    "ControlRejection",
+    "EngineeringMomentContent",
+    "EngineeringMomentRecord",
+    "ExperienceGraphReference",
+    "FocusTarget",
+    "FocusTargetKind",
+    "InteractionIntent",
+    "InteractionIntentKind",
+    "MirroredCollaborationEventKind",
+    "MirroredCollaborationEventRecord",
+    "MomentParticipantState",
+    "ParticipantRoleDescriptor",
+    "PeerParticipantKind",
+    "PlaybackState",
+    "ProjectedEvidenceRef",
+    "ScenarioReference",
+    "Sha256Digest",
+    "StreamBound",
+    "TimelinePosition"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (role/snapshot/evidence ordering and uniqueness, agent/human kind consistency, single-controller, presence member consistency) are enforced by the runtime validators in @epoch/ai-experience and are not represented in the JSON Schema files",
+  "emittedBy": "renderAiExperienceContractFiles() in @epoch/ai-experience (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "ActionProposalTarget",
+      "file": "action-proposal-target.schema.json",
+      "sha256": "be4b72e4378d2a7b01c4a34f774c32baa1dfd16b8322d81d54e76f1d8b014a14"
+    },
+    {
+      "type": "AgentPresenceState",
+      "file": "agent-presence-state.schema.json",
+      "sha256": "bb43c23fc2e97006fcf9d58f3d8be694483cadbdbed7390ffb1244f0b1dc25b5"
+    },
+    {
+      "type": "AiCollaborationEvent",
+      "file": "ai-collaboration-event.schema.json",
+      "sha256": "2487750d17c4dfb6fe05b3f0c895be5542b53317fe1ac0572c9d3546c9f6df91"
+    },
+    {
+      "type": "AiCollaborationEventKind",
+      "file": "ai-collaboration-event-kind.schema.json",
+      "sha256": "b2877264380f56d9aeb43f0caecd652a77fe4136f34351a65067977ce33fa296"
+    },
+    {
+      "type": "AiCollaborationEventRecord",
+      "file": "ai-collaboration-event-record.schema.json",
+      "sha256": "8fabb7005ba42e9d8a97a4438234ff13bc28c1bee7ef06ff2be90e9541768ecb"
+    },
+    {
+      "type": "AiCollaborationEventRegistration",
+      "file": "ai-collaboration-event-registration.schema.json",
+      "sha256": "8e5986b44bb00893ab92cce9728fb64e8d53f30d7877dfbaf7eb05caf3b577ef"
+    },
+    {
+      "type": "AiExperienceIssue",
+      "file": "ai-experience-issue.schema.json",
+      "sha256": "85a778c3e9c13a8578b0df31d0ec4f2f30e0c57a675b201682a68861c25259c6"
+    },
+    {
+      "type": "AiExperienceRecordVersion",
+      "file": "ai-experience-record-version.schema.json",
+      "sha256": "eae71118403b6fcd26ad3bcf92e52ead71790971dde8535ef96c9ca75f591217"
+    },
+    {
+      "type": "AiSessionDescriptor",
+      "file": "ai-session-descriptor.schema.json",
+      "sha256": "3b7ba27134996a555d642d232b87c8d597f47d61db0a5bce6cd68ac4cfe8267b"
+    },
+    {
+      "type": "AiSessionScope",
+      "file": "ai-session-scope.schema.json",
+      "sha256": "90518039291b520aa8c6308ee9c64362aa91ef4517ee10f8c60b17ba7d3ae728"
+    },
+    {
+      "type": "AiSessionState",
+      "file": "ai-session-state.schema.json",
+      "sha256": "7c372488cd285b0c76c52d3b5c03e65d5d3a39eb601f428e47daaa6c9346ce7a"
+    },
+    {
+      "type": "AiTenantId",
+      "file": "ai-tenant-id.schema.json",
+      "sha256": "610ce160efab5155de106746eb269f946a90d5061b9bdda461b733120d15327b"
+    },
+    {
+      "type": "BranchPoint",
+      "file": "branch-point.schema.json",
+      "sha256": "ffc8dfc314fc6da9643a24b2a7178139fd9a99e7f529e4f1d423e9665004f9b3"
+    },
+    {
+      "type": "ControlAuthority",
+      "file": "control-authority.schema.json",
+      "sha256": "de02a99c035c32a168c764ab9e89e40e73ad958f9583821e5a62a5bd732bd503"
+    },
+    {
+      "type": "ControlAuthorityKind",
+      "file": "control-authority-kind.schema.json",
+      "sha256": "ab06f3583336b9e0735e77b9cc7dd8ea2822ccd9fea89e411cc192cc1690f291"
+    },
+    {
+      "type": "ControlDenialReason",
+      "file": "control-denial-reason.schema.json",
+      "sha256": "05174963d65f3ceed809986a58fe18ba89aeb26cf86ce90bd2d36d718097147c"
+    },
+    {
+      "type": "ControlProvenance",
+      "file": "control-provenance.schema.json",
+      "sha256": "6ccd586ceb987e023775da2610d38cfe1f3c917d3a18f904c796c41c306fe9d6"
+    },
+    {
+      "type": "ControlRejection",
+      "file": "control-rejection.schema.json",
+      "sha256": "4bacb019911e7b798f0609b31752dbe052c1c67b8460e60d2ef1a9c9bd93c7f2"
+    },
+    {
+      "type": "EngineeringMomentContent",
+      "file": "engineering-moment-content.schema.json",
+      "sha256": "2e1681e88a5ab43df5b2d7f8247ddfb6dc946120c2d6fdf85b0dc3cde8f29125"
+    },
+    {
+      "type": "EngineeringMomentRecord",
+      "file": "engineering-moment-record.schema.json",
+      "sha256": "8e245fe8b895b97c3ed9d74fc84110838998e3a658d467c94d8333b9c8e6ade8"
+    },
+    {
+      "type": "ExperienceGraphReference",
+      "file": "experience-graph-reference.schema.json",
+      "sha256": "d0befd1f1ba71cb3a23c316b7f1bd6a1d377864b1346f23b6ec43c9257cc1c9d"
+    },
+    {
+      "type": "FocusTarget",
+      "file": "focus-target.schema.json",
+      "sha256": "bdeb0f4d0467051c6eb86235d9c1009313f449622c49584541348517e1b9eeea"
+    },
+    {
+      "type": "FocusTargetKind",
+      "file": "focus-target-kind.schema.json",
+      "sha256": "60681be0f54fbb456cd53ce7df57c8412f5ab12f918683b445fa8987df868765"
+    },
+    {
+      "type": "InteractionIntent",
+      "file": "interaction-intent.schema.json",
+      "sha256": "2c6e6a56d96204d9e1f145a45cdf49bbbcbdb782e46bb4e4e7e08311bbb64b73"
+    },
+    {
+      "type": "InteractionIntentKind",
+      "file": "interaction-intent-kind.schema.json",
+      "sha256": "78990cbd515573b67afede2d76dce31678efe9b5ae28d00eebe180201c1458f1"
+    },
+    {
+      "type": "MirroredCollaborationEventKind",
+      "file": "mirrored-collaboration-event-kind.schema.json",
+      "sha256": "9d4c3715d3b19ff900a5f264de92b07562ce0dac03bd30462f5d0ca07fd272c2"
+    },
+    {
+      "type": "MirroredCollaborationEventRecord",
+      "file": "mirrored-collaboration-event-record.schema.json",
+      "sha256": "659a18914ea6b43a4c8b39582c19a398f11f35db3eb4f3a4ebb98063138d00eb"
+    },
+    {
+      "type": "MomentParticipantState",
+      "file": "moment-participant-state.schema.json",
+      "sha256": "f0a6dc62832a6bdaa6876027af456b2856a768db712d77e7d7d23a023e8ed72d"
+    },
+    {
+      "type": "ParticipantRoleDescriptor",
+      "file": "participant-role-descriptor.schema.json",
+      "sha256": "8e26416832b1b6d7207f6f9f6e6b34454f673716e99007991cbfd7fc90c6e5ea"
+    },
+    {
+      "type": "PeerParticipantKind",
+      "file": "peer-participant-kind.schema.json",
+      "sha256": "b7bef62d0c2ce203feaf924892852adeceabff2e0b496da53ee327137ce94074"
+    },
+    {
+      "type": "PlaybackState",
+      "file": "playback-state.schema.json",
+      "sha256": "a42941add154a9b8e4362c4b2ae76304bac357fe89b3eb49c4279cf52f6f00df"
+    },
+    {
+      "type": "ProjectedEvidenceRef",
+      "file": "projected-evidence-ref.schema.json",
+      "sha256": "a7a2865ec13aba7322cafd5650f8b21e36195856f7297fc780f8a266c22cafb4"
+    },
+    {
+      "type": "ScenarioReference",
+      "file": "scenario-reference.schema.json",
+      "sha256": "2cccc89b15645e41fcf9f84aff961fb16b1697c0d530205eb4a479f5b647cc0a"
+    },
+    {
+      "type": "Sha256Digest",
+      "file": "sha256-digest.schema.json",
+      "sha256": "e4c463fe5e5c794b5b3ae7540a61263faca8774cd6af0e967abd8055d7635ce7"
+    },
+    {
+      "type": "StreamBound",
+      "file": "stream-bound.schema.json",
+      "sha256": "50f7eb0d8d197422c02c07646bfb46cc3f2398db175acf7fbc059184927eb1c1"
+    },
+    {
+      "type": "TimelinePosition",
+      "file": "timeline-position.schema.json",
+      "sha256": "f6cd892a90b1fe2345458438df104afe82a63d4fc3ee7f3055aef86b4842a402"
+    }
+  ]
+}

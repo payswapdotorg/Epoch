@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AiCollaborationEventKind",
+  "$defs": {
+    "AiCollaborationEventKind": {
+      "type": "string",
+      "enum": [
+        "control.denied",
+        "control.released",
+        "control.taken",
+        "focus.changed",
+        "focus.released",
+        "intent.emitted",
+        "moment.captured",
+        "presence.changed",
+        "session.closed"
+      ],
+      "title": "AiCollaborationEventKind",
+      "description": "Kind of a typed AI-collaboration event: presence, focus, control transitions/denials, emitted intents, captured moments, or the terminal session close."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:ai-collaboration-event-kind:1.0.0"
+}

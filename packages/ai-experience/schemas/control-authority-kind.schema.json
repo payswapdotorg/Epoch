@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ControlAuthorityKind",
+  "$defs": {
+    "ControlAuthorityKind": {
+      "type": "string",
+      "enum": [
+        "session-owner",
+        "role-grant",
+        "explicit-handover"
+      ],
+      "title": "ControlAuthorityKind",
+      "description": "The authority a takeover claims: session-owner, role-grant, or explicit-handover."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:control-authority-kind:1.0.0"
+}

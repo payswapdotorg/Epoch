@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/MomentParticipantState",
+  "$defs": {
+    "MomentParticipantState": {
+      "readOnly": true,
+      "title": "MomentParticipantState",
+      "description": "One participant state captured in an Engineering Moment: presence, focus, and whether the participant holds control.",
+      "type": "object",
+      "properties": {
+        "principalId": {
+          "$ref": "#/$defs/AiPrincipalId"
+        },
+        "participantKind": {
+          "$ref": "#/$defs/PeerParticipantKind"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AiAgentId"
+        },
+        "presence": {
+          "$ref": "#/$defs/AgentPresenceState"
+        },
+        "focus": {
+          "$ref": "#/$defs/FocusTarget"
+        },
+        "holdsControl": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "principalId",
+        "participantKind",
+        "presence",
+        "holdsControl"
+      ],
+      "additionalProperties": false
+    },
+    "AiPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AiPrincipalId",
+      "description": "Collaboration participant principal: \"principal:\" followed by a lowercase slug (W009 grammar)."
+    },
+    "PeerParticipantKind": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "human"
+      ],
+      "title": "PeerParticipantKind",
+      "description": "Collaboration peer participant kind — the W011 ParticipantKind subset of humans and agents (peers with typed roles)."
+    },
+    "AiAgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AiAgentId",
+      "description": "Registered agent identity: \"agent:\" followed by a lowercase slug (W003 grammar)."
+    },
+    "AgentPresenceState": {
+      "type": "string",
+      "enum": [
+        "joining",
+        "present",
+        "idle",
+        "left"
+      ],
+      "title": "AgentPresenceState",
+      "description": "Presence state of a collaboration participant (W010 vocabulary): joining, present, idle, or the terminal left."
+    },
+    "FocusTarget": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/WorldEntityTarget"
+        },
+        {
+          "$ref": "#/$defs/ActionProposalFocusTarget"
+        }
+      ],
+      "title": "FocusTarget",
+      "description": "What a participant focuses on — the W010 collaboration subject grammar (world entity or exact-revision action proposal), mirrored and parity-pinned."
+    },
+    "WorldEntityTarget": {
+      "readOnly": true,
+      "title": "WorldEntityTarget",
+      "description": "World-entity focus target: an opaque W002 entity id (referenced, never embedded).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "world-entity"
+        },
+        "entityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "kind",
+        "entityId"
+      ],
+      "additionalProperties": false
+    },
+    "ActionProposalFocusTarget": {
+      "readOnly": true,
+      "title": "ActionProposalFocusTarget",
+      "description": "Action-proposal focus target: an exact-revision W003 proposal reference (referenced, never embedded).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "action-proposal"
+        },
+        "proposal": {
+          "$ref": "#/$defs/ActionProposalTarget"
+        }
+      },
+      "required": [
+        "kind",
+        "proposal"
+      ],
+      "additionalProperties": false
+    },
+    "ActionProposalTarget": {
+      "readOnly": true,
+      "title": "ActionProposalTarget",
+      "description": "Exact-revision action-proposal reference (W003 ProposalReference shape): message id plus the SHA-256 digest of the canonical proposal.",
+      "type": "object",
+      "properties": {
+        "proposalId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+        },
+        "canonicalDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "proposalId",
+        "canonicalDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:moment-participant-state:1.0.0"
+}

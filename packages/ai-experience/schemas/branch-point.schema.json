@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BranchPoint",
+  "$defs": {
+    "BranchPoint": {
+      "readOnly": true,
+      "title": "BranchPoint",
+      "description": "One recorded timeline branch point (from a branch intent).",
+      "type": "object",
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/TimelinePosition"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "from",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "TimelinePosition": {
+      "readOnly": true,
+      "title": "TimelinePosition",
+      "description": "One timeline/replay position: a W010 event-log stream coordinate (inclusive last-applied sequence; 0 denotes the stream start).",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "$ref": "#/$defs/EventStreamId"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "EventStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "EventStreamId",
+      "description": "Opaque event stream identity: the unit of total order; every event in a stream carries a contiguous 1-based sequence."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:branch-point:1.0.0"
+}

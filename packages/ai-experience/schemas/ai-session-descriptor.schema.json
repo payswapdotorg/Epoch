@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AiSessionDescriptor",
+  "$defs": {
+    "AiSessionDescriptor": {
+      "readOnly": true,
+      "title": "AiSessionDescriptor",
+      "description": "The typed, tenant-scoped AI-collaboration session descriptor — the opening fact with declared peer roles; every subsequent semantic is an event, never a mutation.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AiExperienceRecordVersion"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/AiSessionId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/AiTenantId"
+        },
+        "scope": {
+          "$ref": "#/$defs/AiSessionScope"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "openedBy": {
+          "$ref": "#/$defs/AiPrincipalId"
+        },
+        "openedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "roles": {
+          "readOnly": true,
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParticipantRoleDescriptor"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "sessionId",
+        "tenantId",
+        "displayName",
+        "openedBy",
+        "openedAt",
+        "roles"
+      ],
+      "additionalProperties": false
+    },
+    "AiExperienceRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AiExperienceRecordVersion",
+      "description": "Exact record version admitted by this release (1)."
+    },
+    "AiSessionId": {
+      "type": "string",
+      "pattern": "^session:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AiSessionId",
+      "description": "Collaboration session identity: \"session:\" followed by a lowercase slug (W010 grammar)."
+    },
+    "AiTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AiTenantId",
+      "description": "Tenant scope of an AI-collaboration record: \"tenant:\" followed by a lowercase slug (W009 grammar)."
+    },
+    "AiSessionScope": {
+      "readOnly": true,
+      "title": "AiSessionScope",
+      "description": "Optional tenant-hierarchy narrowing of a collaboration session (W009/W010 grammars).",
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "pattern": "^workspace:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "projectId": {
+          "type": "string",
+          "pattern": "^project:[a-z0-9][a-z0-9-]{0,62}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "AiPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AiPrincipalId",
+      "description": "Collaboration participant principal: \"principal:\" followed by a lowercase slug (W009 grammar)."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "ParticipantRoleDescriptor": {
+      "readOnly": true,
+      "title": "ParticipantRoleDescriptor",
+      "description": "Human/agent role descriptor: the participant principal, its peer kind, the registered agent id for agent peers, and the granted interaction intents.",
+      "type": "object",
+      "properties": {
+        "principalId": {
+          "$ref": "#/$defs/AiPrincipalId"
+        },
+        "participantKind": {
+          "$ref": "#/$defs/PeerParticipantKind"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AiAgentId"
+        },
+        "allowedIntents": {
+          "readOnly": true,
+          "minItems": 1,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionIntentKind"
+          }
+        },
+        "assignedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "principalId",
+        "participantKind",
+        "allowedIntents",
+        "assignedAt"
+      ],
+      "additionalProperties": false
+    },
+    "PeerParticipantKind": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "human"
+      ],
+      "title": "PeerParticipantKind",
+      "description": "Collaboration peer participant kind — the W011 ParticipantKind subset of humans and agents (peers with typed roles)."
+    },
+    "AiAgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AiAgentId",
+      "description": "Registered agent identity: \"agent:\" followed by a lowercase slug (W003 grammar)."
+    },
+    "InteractionIntentKind": {
+      "type": "string",
+      "enum": [
+        "annotate",
+        "approve",
+        "branch",
+        "compare",
+        "execute",
+        "filter",
+        "follow-agent",
+        "inspect",
+        "pause",
+        "query",
+        "reject",
+        "release-control",
+        "replay",
+        "resume",
+        "select",
+        "take-control"
+      ],
+      "title": "InteractionIntentKind",
+      "description": "Kind of a typed interaction intent — a closed, sorted subset of the Epoch Universal interactions."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:ai-session-descriptor:1.0.0"
+}

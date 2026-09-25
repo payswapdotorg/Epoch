@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AiSessionState",
+  "$defs": {
+    "AiSessionState": {
+      "type": "string",
+      "enum": [
+        "open",
+        "closed"
+      ],
+      "title": "AiSessionState",
+      "description": "Lifecycle state of a collaboration session (W010 vocabulary): open or closed (terminal)."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:ai-session-state:1.0.0"
+}

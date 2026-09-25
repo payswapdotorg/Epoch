@@ -1,0 +1,36 @@
+{
+  "name": "@epoch/ai-experience",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch AI Experience v1 — the typed AI-collaboration domain model (Work Order W015, experience layer): tenant-scoped collaboration-session descriptors with human/agent role grants, agent presence/focus states, the typed interaction-intent vocabulary (subsets of the Universal interactions), takeover/release transitions with provenance, Engineering Moment records (content-addressed, shareable/replayable), collaboration event adapters over the W010 event shapes, and deterministic projection folds. Semantics as typed data over the event-sourced substrate — never a second authority, never event storage, never a transport.",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/collaboration": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/experience-compiler": "workspace:*",
+    "@epoch/replay": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

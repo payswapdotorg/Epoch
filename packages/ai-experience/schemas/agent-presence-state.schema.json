@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AgentPresenceState",
+  "$defs": {
+    "AgentPresenceState": {
+      "type": "string",
+      "enum": [
+        "joining",
+        "present",
+        "idle",
+        "left"
+      ],
+      "title": "AgentPresenceState",
+      "description": "Presence state of a collaboration participant (W010 vocabulary): joining, present, idle, or the terminal left."
+    }
+  },
+  "$id": "urn:epoch:ai-experience:agent-presence-state:1.0.0"
+}
