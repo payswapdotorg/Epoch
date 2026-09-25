@@ -1,0 +1,101 @@
+/**
+ * Reused shared vocabularies of the compiled plan surface.
+ *
+ * The Render Plan's ops speak the W011 presentation vocabulary (geometry,
+ * styling, meshes, keyframes, participants, intents, device descriptors,
+ * projected references) — the compiler consumes that vocabulary at runtime
+ * (the pinned @epoch/experience-protocol dependency) and re-exports it here
+ * so the published contract surface at `contracts/experience-compiler` is
+ * pinned member-for-member against the same zod-inferred types. The JSON
+ * Schema projection therefore stays byte-compatible with the W011 emission
+ * of the same types.
+ *
+ * JsonValue is re-exported from @epoch/agent-protocol (canonical home:
+ * contracts/agent, W003).
+ */
+export {
+  JsonValueSchema,
+  type JsonValue,
+} from '@epoch/agent-protocol';
+export {
+  Sha256HexSchema,
+  OpaqueScopeIdSchema,
+  TenantScopeSchema,
+  ColorHexSchema,
+  Vec3Schema,
+  QuaternionSchema,
+  Point2dSchema,
+  Geometry2dSchema,
+  StrokeStyle2dSchema,
+  FillStyle2dSchema,
+  MeshBindingSchema,
+  TextStyleSchema,
+  KeyframeSchema,
+  EasingKindSchema,
+  TimelineMarkerKindSchema,
+  ParticipantReferenceSchema,
+  ParticipantKindSchema,
+  ControlKindSchema,
+  ControlIntentSchema,
+  PresentationAttributesSchema,
+  ProjectedReferenceSchema,
+  ProjectedWorldEntityRefSchema,
+  ProjectedWorldRelationRefSchema,
+  ProjectedWorldEventRefSchema,
+  ProjectedAgentRefSchema,
+  ProjectedEvidenceRefSchema,
+  ProjectedCapabilityRefSchema,
+  ProjectedReferenceKindSchema,
+  DeviceDescriptorSchema,
+  DeviceClassSchema,
+  DeviceDisplayCapabilitiesSchema,
+  DeviceSpatialCapabilitiesSchema,
+  InteractionModalitySchema,
+  PoseTrackingKindSchema,
+  SpatialPrimitiveSchema,
+  ExperienceGraphIdSchema,
+  ExperienceGraphKindSchema,
+  ExperienceNodeIdSchema,
+  ExperienceEdgeKindSchema,
+} from '@epoch/experience-protocol';
+export type {
+  Sha256Hex,
+  OpaqueScopeId,
+  TenantScope,
+  ColorHex,
+  Vec3,
+  Quaternion,
+  Point2d,
+  Geometry2d,
+  StrokeStyle2d,
+  FillStyle2d,
+  MeshBinding,
+  TextStyle,
+  Keyframe,
+  EasingKind,
+  TimelineMarkerKind,
+  ParticipantReference,
+  ParticipantKind,
+  ControlKind,
+  ControlIntent,
+  PresentationAttributes,
+  ProjectedReference,
+  ProjectedWorldEntityRef,
+  ProjectedWorldRelationRef,
+  ProjectedWorldEventRef,
+  ProjectedAgentRef,
+  ProjectedEvidenceRef,
+  ProjectedCapabilityRef,
+  ProjectedReferenceKind,
+  DeviceDescriptor,
+  DeviceClass,
+  DeviceDisplayCapabilities,
+  DeviceSpatialCapabilities,
+  InteractionModality,
+  PoseTrackingKind,
+  SpatialPrimitive,
+  ExperienceGraphId,
+  ExperienceGraphKind,
+  ExperienceNodeId,
+  ExperienceEdgeKind,
+} from '@epoch/experience-protocol';

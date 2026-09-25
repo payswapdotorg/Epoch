@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SpatialPrimitive",
+  "$defs": {
+    "SpatialPrimitive": {
+      "type": "string",
+      "enum": [
+        "box",
+        "cone",
+        "cylinder",
+        "mesh",
+        "plane",
+        "sphere"
+      ],
+      "title": "SpatialPrimitive",
+      "description": "Neutral geometric primitive of a 3D node (mesh binds an opaque content-addressed asset)."
+    }
+  }
+}

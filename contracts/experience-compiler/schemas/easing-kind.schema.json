@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EasingKind",
+  "$defs": {
+    "EasingKind": {
+      "type": "string",
+      "enum": [
+        "ease-in",
+        "ease-in-out",
+        "ease-out",
+        "linear",
+        "step"
+      ],
+      "title": "EasingKind",
+      "description": "Neutral interpolation of one animation keyframe segment."
+    }
+  }
+}

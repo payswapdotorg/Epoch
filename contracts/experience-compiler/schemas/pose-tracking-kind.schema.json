@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PoseTrackingKind",
+  "$defs": {
+    "PoseTrackingKind": {
+      "type": "string",
+      "enum": [
+        "none",
+        "3dof",
+        "6dof"
+      ],
+      "title": "PoseTrackingKind",
+      "description": "Neutral pose-tracking capability of a device."
+    }
+  }
+}

@@ -1,0 +1,393 @@
+{
+  "contract": "epoch/experience-compiler",
+  "contractVersion": "1.0.0",
+  "protocolVersion": "1.0.0",
+  "description": "Typed, versioned, provider-neutral Experience Compiler contract surface (W012): deterministic, renderer-ready Render Plans (staged, sorted, device-shaped, tenant-scoped; envelope digest -> plan digest chain). TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "dataTypes": [
+    "ColorHex",
+    "CompilerError",
+    "CompilerIssue",
+    "ControlIntent",
+    "ControlKind",
+    "DeviceClass",
+    "DeviceDescriptor",
+    "DeviceDisplayCapabilities",
+    "DeviceSpatialCapabilities",
+    "EasingKind",
+    "ExperienceCompilerDocumentKind",
+    "ExperienceCompilerErrorCode",
+    "ExperienceEdgeKind",
+    "ExperienceGraphId",
+    "ExperienceGraphKind",
+    "ExperienceNodeId",
+    "FillStyle2d",
+    "Geometry2d",
+    "InteractionModality",
+    "JsonValue",
+    "Keyframe",
+    "MeshBinding",
+    "OpaqueScopeId",
+    "ParticipantKind",
+    "ParticipantReference",
+    "PlanAnimationBinding",
+    "PlanConstraints",
+    "PlanControlOp",
+    "PlanDrawLabelOp",
+    "PlanDrawShapeOp",
+    "PlanNarrativeBeat",
+    "PlanPlaceLabelOp",
+    "PlanPlaceSpatialOp",
+    "PlanPresenceCursor",
+    "PlanPresenceSeat",
+    "PlanRelation",
+    "PlanStage",
+    "PlanStageKind",
+    "PlanTimelineMarker",
+    "PlanTimelineTrack",
+    "Point2d",
+    "PoseTrackingKind",
+    "PresentationAttributes",
+    "ProjectedAgentRef",
+    "ProjectedCapabilityRef",
+    "ProjectedEvidenceRef",
+    "ProjectedReference",
+    "ProjectedReferenceKind",
+    "ProjectedWorldEntityRef",
+    "ProjectedWorldEventRef",
+    "ProjectedWorldRelationRef",
+    "Quaternion",
+    "RenderPlan",
+    "RenderPlanContent",
+    "RenderPlanProtocolVersion",
+    "RenderPlanUsage",
+    "Sha256Hex",
+    "SpatialPrimitive",
+    "StrokeStyle2d",
+    "TenantScope",
+    "TextStyle",
+    "TimelineMarkerKind",
+    "Vec3"
+  ],
+  "documentKinds": [
+    "experience.render-plan"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical stage/op ordering, cross-field invariants, anchor resolvability, usage consistency) are enforced by the runtime validators in @epoch/experience-compiler and are not represented in the JSON Schema files",
+  "emittedBy": "renderExperienceCompilerContractFiles() in @epoch/experience-compiler (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "ColorHex",
+      "file": "schemas/color-hex.schema.json",
+      "sha256": "25ac8b396cdd22f7929d66eb77ef05187d20ebe265b7b0f0230cbbc8e628bef8"
+    },
+    {
+      "type": "CompilerError",
+      "file": "schemas/compiler-error.schema.json",
+      "sha256": "e779f418b8bf1d1c18e049ee6d675a0bd93050f957f86614425bdd89a3ef2acc"
+    },
+    {
+      "type": "CompilerIssue",
+      "file": "schemas/compiler-issue.schema.json",
+      "sha256": "99557bc969a1fe3de3ca4a4a22d9700a92bd07bdbe709970187260eb6f913ae2"
+    },
+    {
+      "type": "ControlIntent",
+      "file": "schemas/control-intent.schema.json",
+      "sha256": "a3f270851776ecd396fc612f4d3a5fcbce776fbe6e018ed832c487fe93ea9e2e"
+    },
+    {
+      "type": "ControlKind",
+      "file": "schemas/control-kind.schema.json",
+      "sha256": "3099f084a8d99b10cf0582eaffc818ee2da95b496a63ba0da19689665e4e8536"
+    },
+    {
+      "type": "DeviceClass",
+      "file": "schemas/device-class.schema.json",
+      "sha256": "fd4142f851a68b66b2d3b31a8789f6529f1fb3688438df4d96df7ba0cc57b92a"
+    },
+    {
+      "type": "DeviceDescriptor",
+      "file": "schemas/device-descriptor.schema.json",
+      "sha256": "6fbbb2246da307e8936ed0554b399dfff9eaca80b63c6916fe80ca25013df4e4"
+    },
+    {
+      "type": "DeviceDisplayCapabilities",
+      "file": "schemas/device-display-capabilities.schema.json",
+      "sha256": "75935c3c136474147f5ef2a463a2aee30ac1d83b3085d9ab49284b8cb0b8b3b5"
+    },
+    {
+      "type": "DeviceSpatialCapabilities",
+      "file": "schemas/device-spatial-capabilities.schema.json",
+      "sha256": "3624d4e1850752a8c9a4b6e970cbabbbce2a5811d18e51d7f140034da4029c80"
+    },
+    {
+      "type": "EasingKind",
+      "file": "schemas/easing-kind.schema.json",
+      "sha256": "7081314444b67e97cbb6761786e579bd44fe75b0e0efc468ae15e05927b4ee53"
+    },
+    {
+      "type": "ExperienceCompilerDocumentKind",
+      "file": "schemas/experience-compiler-document-kind.schema.json",
+      "sha256": "e34ff31cf8c94336c5aabd36b85ba826496ba8b795b7dce41709b12dca8f6dba"
+    },
+    {
+      "type": "ExperienceCompilerErrorCode",
+      "file": "schemas/experience-compiler-error-code.schema.json",
+      "sha256": "65a12e97a032d4c75de6636309f9502f04192fc0c75c85514d602cd8751c5026"
+    },
+    {
+      "type": "ExperienceEdgeKind",
+      "file": "schemas/experience-edge-kind.schema.json",
+      "sha256": "5b3735211ec5329be55cd823d3dae95def043dcb3f4de6b84eb7c1abbec76450"
+    },
+    {
+      "type": "ExperienceGraphId",
+      "file": "schemas/experience-graph-id.schema.json",
+      "sha256": "b9596557c08a2797ead912e7b4bea020090ae044c9dbc4308cb19bc0f220177f"
+    },
+    {
+      "type": "ExperienceGraphKind",
+      "file": "schemas/experience-graph-kind.schema.json",
+      "sha256": "0a27f0c6faf22bca47787b84758fb0226e43504e6f7bda77f9997ca38931b562"
+    },
+    {
+      "type": "ExperienceNodeId",
+      "file": "schemas/experience-node-id.schema.json",
+      "sha256": "081e803fce84719f961132aefa26c1b4bcaf27edba7167b0b4343fc179683f51"
+    },
+    {
+      "type": "FillStyle2d",
+      "file": "schemas/fill-style2d.schema.json",
+      "sha256": "b0bad043cdc997a26de3933eaf30b4c487bb9375877034814ee98feaeb6f29c3"
+    },
+    {
+      "type": "Geometry2d",
+      "file": "schemas/geometry2d.schema.json",
+      "sha256": "6d858cf4d9ddf2d20ed45217fd7da8499b6fae94803adf050857da8a430aeff9"
+    },
+    {
+      "type": "InteractionModality",
+      "file": "schemas/interaction-modality.schema.json",
+      "sha256": "7c94571c739bf1eb9b84828adb675077cb2d4a28b9af7b3bd95f5bf8bb174e10"
+    },
+    {
+      "type": "JsonValue",
+      "file": "schemas/json-value.schema.json",
+      "sha256": "e86b542ab6661915fe8468e70a075c2797e34a62fcdbdcb2ef6ffb8b7225a41e"
+    },
+    {
+      "type": "Keyframe",
+      "file": "schemas/keyframe.schema.json",
+      "sha256": "1b29cb4d68c3e73f86fb5a529d3dcfa5b281adf2aefd58b1b3e5f274dd01ea58"
+    },
+    {
+      "type": "MeshBinding",
+      "file": "schemas/mesh-binding.schema.json",
+      "sha256": "8b9fa7bcd75ef3b54f1dccd38dd9bb881af47c8e09028f5981d3f3ea532a7ce9"
+    },
+    {
+      "type": "OpaqueScopeId",
+      "file": "schemas/opaque-scope-id.schema.json",
+      "sha256": "c6b38c6c40b314271d3638405933081c6ec8fb1dfff1f97ca52467ec6283e712"
+    },
+    {
+      "type": "ParticipantKind",
+      "file": "schemas/participant-kind.schema.json",
+      "sha256": "bf4989f8029cac9a10c671d803a14cfbeae2e68c312f25bb4bcbc47ef2162e78"
+    },
+    {
+      "type": "ParticipantReference",
+      "file": "schemas/participant-reference.schema.json",
+      "sha256": "17fa40365168217db504e5190629afa7ee354ddc393ad650015abb4404ac1bf4"
+    },
+    {
+      "type": "PlanAnimationBinding",
+      "file": "schemas/plan-animation-binding.schema.json",
+      "sha256": "3a9a0780a3d7cd23c14a61df9cf3c80c489e2fc91291d1cf753931773ec24864"
+    },
+    {
+      "type": "PlanConstraints",
+      "file": "schemas/plan-constraints.schema.json",
+      "sha256": "dc65d96aee1ce0dda4f4d3a1cf34f7eab32b87cd5fc5740c65566d2ddf77ac6e"
+    },
+    {
+      "type": "PlanControlOp",
+      "file": "schemas/plan-control-op.schema.json",
+      "sha256": "e10a4c0e969acb04071ab4f9b158be2510fe3bed04c67becdaeaa934547f7508"
+    },
+    {
+      "type": "PlanDrawLabelOp",
+      "file": "schemas/plan-draw-label-op.schema.json",
+      "sha256": "1aadd02d0f225c6e87f2f7ff6880eed2eb4515dc30a843555aed897387d60729"
+    },
+    {
+      "type": "PlanDrawShapeOp",
+      "file": "schemas/plan-draw-shape-op.schema.json",
+      "sha256": "cb43b865baaa7e15f2fb8ad3a7aabc0ad40255d16d62c04a158fe52cfec3b595"
+    },
+    {
+      "type": "PlanNarrativeBeat",
+      "file": "schemas/plan-narrative-beat.schema.json",
+      "sha256": "2353f8a8caac1f80028e5e795000b4c7e35ffb37f58d4cffb3fef884032dddd0"
+    },
+    {
+      "type": "PlanPlaceLabelOp",
+      "file": "schemas/plan-place-label-op.schema.json",
+      "sha256": "5af45e9515b3ce87b370ae7d438ad65c9b684a0c67da2e89dcc5806377a39dd2"
+    },
+    {
+      "type": "PlanPlaceSpatialOp",
+      "file": "schemas/plan-place-spatial-op.schema.json",
+      "sha256": "1b0f11f01df88ea8ceb2c418400cc069e8d77c50084dad5b75cca618470eedb7"
+    },
+    {
+      "type": "PlanPresenceCursor",
+      "file": "schemas/plan-presence-cursor.schema.json",
+      "sha256": "8ef92af7888299340d16e6af1d5071171a3c2ce76fd01fd13d3885080a5fdc9d"
+    },
+    {
+      "type": "PlanPresenceSeat",
+      "file": "schemas/plan-presence-seat.schema.json",
+      "sha256": "d8ede344f494abc82aa09aad5a8acbb064c47a83bac375e0bf96f8f94d406045"
+    },
+    {
+      "type": "PlanRelation",
+      "file": "schemas/plan-relation.schema.json",
+      "sha256": "df4ea204b96f8f84a49c5df13983a8a7a8fc2c49c7753f3c0a2e97fc4483cec2"
+    },
+    {
+      "type": "PlanStage",
+      "file": "schemas/plan-stage.schema.json",
+      "sha256": "6e9855897a951d028c31c498cc865bd09263f6ffd573500ee1ee966569fea827"
+    },
+    {
+      "type": "PlanStageKind",
+      "file": "schemas/plan-stage-kind.schema.json",
+      "sha256": "fae5d7367014c8d4bc65256d7ce804bb5f26d4242b73da4897f0f94e7c9e3521"
+    },
+    {
+      "type": "PlanTimelineMarker",
+      "file": "schemas/plan-timeline-marker.schema.json",
+      "sha256": "606beca0febcc153b395cd3b09e2b11793b2290d833ca0803bc677824aeccd6f"
+    },
+    {
+      "type": "PlanTimelineTrack",
+      "file": "schemas/plan-timeline-track.schema.json",
+      "sha256": "e09082916b6973263d5735883fa75deed21fc5865715628a2ed671b1d53b52bd"
+    },
+    {
+      "type": "Point2d",
+      "file": "schemas/point2d.schema.json",
+      "sha256": "1832ee12c1a36ecc51fc7220bd9fdb3484e326b397e541bd91dd2d12642b3bf3"
+    },
+    {
+      "type": "PoseTrackingKind",
+      "file": "schemas/pose-tracking-kind.schema.json",
+      "sha256": "e18ad59e78357cc9ed9515f920dd354e9d5bae02bcebe963125f690c87afcb83"
+    },
+    {
+      "type": "PresentationAttributes",
+      "file": "schemas/presentation-attributes.schema.json",
+      "sha256": "706b48ff92c416e271a04ca636e704ecf21927a21ab27a955e17f1ad082303fa"
+    },
+    {
+      "type": "ProjectedAgentRef",
+      "file": "schemas/projected-agent-ref.schema.json",
+      "sha256": "30a0c83221f580c89e22f7d784d3a6ed2aea042f5cfba44e5096f7a9078dc7b4"
+    },
+    {
+      "type": "ProjectedCapabilityRef",
+      "file": "schemas/projected-capability-ref.schema.json",
+      "sha256": "6c6d29cbef77879fd25943e89798d40b283dc78ea637496ce3d4a5291f43342e"
+    },
+    {
+      "type": "ProjectedEvidenceRef",
+      "file": "schemas/projected-evidence-ref.schema.json",
+      "sha256": "6627b0de448bfdb7118cebdeb3a274a70bc90a4212c239d664a1e2717593ae2d"
+    },
+    {
+      "type": "ProjectedReference",
+      "file": "schemas/projected-reference.schema.json",
+      "sha256": "df4fd86a8322d65f0a1611d4523aa82b49f6f166ab24235fecc8b5c7e22dd78b"
+    },
+    {
+      "type": "ProjectedReferenceKind",
+      "file": "schemas/projected-reference-kind.schema.json",
+      "sha256": "03f36829eea0615b1fb5652002e56e13caa3226a3e7fc7c8b3745847d0829a34"
+    },
+    {
+      "type": "ProjectedWorldEntityRef",
+      "file": "schemas/projected-world-entity-ref.schema.json",
+      "sha256": "6b4d6dba39c3254cf0b7560c5eb06b2a5e516626478dc1bcb3229f02d02d2956"
+    },
+    {
+      "type": "ProjectedWorldEventRef",
+      "file": "schemas/projected-world-event-ref.schema.json",
+      "sha256": "b549f2650a56a782e74f85de1f22ec2c156e888ecf7893bc2a6d6d2d29891d23"
+    },
+    {
+      "type": "ProjectedWorldRelationRef",
+      "file": "schemas/projected-world-relation-ref.schema.json",
+      "sha256": "4f42452942f137bad3c4242cb10b8b18e0e0ca66b70b8946345bd5dd468d566c"
+    },
+    {
+      "type": "Quaternion",
+      "file": "schemas/quaternion.schema.json",
+      "sha256": "a275112d998beea538ca110626d5f56f0ab470eecd802b4d451e9c817e366525"
+    },
+    {
+      "type": "RenderPlan",
+      "file": "schemas/render-plan.schema.json",
+      "sha256": "bbc459ce54f8833e52640f91fd8c3422dacf17580a6ddcea0225cdf189c8fa27"
+    },
+    {
+      "type": "RenderPlanContent",
+      "file": "schemas/render-plan-content.schema.json",
+      "sha256": "caeaf8a97f45ea273df790ea37f8eb93f14a8313f1da44ebf66a8f9c81de3f28"
+    },
+    {
+      "type": "RenderPlanProtocolVersion",
+      "file": "schemas/render-plan-protocol-version.schema.json",
+      "sha256": "c75d3fdcebb137d8457486b2c8116ae5c7aab7b4ce720b44337ed4bcb00cb4e1"
+    },
+    {
+      "type": "RenderPlanUsage",
+      "file": "schemas/render-plan-usage.schema.json",
+      "sha256": "0c17fdb719d6f3babaa3f6c9ece6f87fcae1b67a53c0507506025ad06b0399a5"
+    },
+    {
+      "type": "Sha256Hex",
+      "file": "schemas/sha256-hex.schema.json",
+      "sha256": "dd3c16f00f5118626c3edfd9fb6bfe17d46a88af26fef35ae6cf34069727fb40"
+    },
+    {
+      "type": "SpatialPrimitive",
+      "file": "schemas/spatial-primitive.schema.json",
+      "sha256": "7a544c4137d9aa7e4e0d673e589541112ffcb9b84d4fbdd58f3c980c182bbdca"
+    },
+    {
+      "type": "StrokeStyle2d",
+      "file": "schemas/stroke-style2d.schema.json",
+      "sha256": "d16bc4b2e5c21a269e4b2d930a2b16aa311d72346cd2cf158188e2649864470b"
+    },
+    {
+      "type": "TenantScope",
+      "file": "schemas/tenant-scope.schema.json",
+      "sha256": "57bdb1872e6fabd039bba1622df46052ca0ab042cd722f9050118549214813b3"
+    },
+    {
+      "type": "TextStyle",
+      "file": "schemas/text-style.schema.json",
+      "sha256": "1c97d16828c04ec86046bd89a5aeebf40e6c7f58b6f13f30d3241dd2572c2622"
+    },
+    {
+      "type": "TimelineMarkerKind",
+      "file": "schemas/timeline-marker-kind.schema.json",
+      "sha256": "0f3fbeb0b0f34cf79aabf73842479603242562ebb65f1cbd8015f570989547a9"
+    },
+    {
+      "type": "Vec3",
+      "file": "schemas/vec3.schema.json",
+      "sha256": "94bd0b176b49d2ec54e31e8d6219e5c99d15bf60ed5db2101012efb62214094e"
+    }
+  ]
+}

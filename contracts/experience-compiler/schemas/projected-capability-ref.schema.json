@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProjectedCapabilityRef",
+  "$defs": {
+    "ProjectedCapabilityRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "capability"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "capabilityVersion": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "capabilityId",
+        "capabilityVersion",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedCapabilityRef",
+      "description": "Exact-revision reference to a registered capability manifest (W007 grammar; digest of its canonical JSON)."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ControlKind",
+  "$defs": {
+    "ControlKind": {
+      "type": "string",
+      "enum": [
+        "axis",
+        "button",
+        "selector",
+        "toggle"
+      ],
+      "title": "ControlKind",
+      "description": "Neutral interaction-control role of a controls-graph node."
+    }
+  }
+}

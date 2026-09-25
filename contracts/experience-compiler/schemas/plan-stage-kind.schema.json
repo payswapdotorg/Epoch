@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PlanStageKind",
+  "$defs": {
+    "PlanStageKind": {
+      "type": "string",
+      "enum": [
+        "relate",
+        "draw-2d",
+        "place-3d",
+        "animate",
+        "narrate",
+        "timeline",
+        "presence",
+        "controls"
+      ],
+      "title": "PlanStageKind",
+      "description": "One deterministic compilation stage of a Render Plan."
+    }
+  }
+}

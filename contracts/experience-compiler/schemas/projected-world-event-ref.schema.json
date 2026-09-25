@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProjectedWorldEventRef",
+  "$defs": {
+    "ProjectedWorldEventRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "world-event"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "eventId": {
+          "$ref": "#/$defs/urn:epoch:contracts:world:event-id"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "eventId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedWorldEventRef",
+      "description": "Exact-revision reference to a world-model event (W002 grammar; digest of its canonical JSON)."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "urn:epoch:contracts:world:event-id": {
+      "type": "string",
+      "pattern": "^evt-[0-9]+$",
+      "title": "EventId"
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  }
+}
