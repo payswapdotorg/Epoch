@@ -2,7 +2,7 @@
   "name": "@epoch/web",
   "version": "0.0.0",
   "private": true,
-  "description": "Epoch web app (W001 minimal runnable placeholder; the real shell arrives with W014).",
+  "description": "Epoch web app shell (W014): the composition layer that hosts projections — navigation frame, tenant/session providers, typed feature mounting points, and App Router wiring. The shell adds no domain model of its own (architecture lock rules 8/16).",
   "epoch": {
     "layer": "app"
   },
@@ -11,7 +11,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "next": "catalog:",
@@ -19,12 +20,18 @@
     "react-dom": "catalog:"
   },
   "devDependencies": {
+    "@epoch/authorization": "workspace:*",
     "@epoch/eslint-config": "workspace:*",
+    "@epoch/experience-compiler": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
     "@epoch/tsconfig": "workspace:*",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "eslint": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }
