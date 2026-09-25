@@ -261,6 +261,52 @@ importers:
         specifier: 'catalog:'
         version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
 
+  packages/ai-experience:
+    dependencies:
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../agent-protocol
+      '@epoch/event-log':
+        specifier: workspace:*
+        version: link:../event-log
+      '@epoch/experience-protocol':
+        specifier: workspace:*
+        version: link:../experience-protocol
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/collaboration':
+        specifier: workspace:*
+        version: link:../collaboration
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@epoch/experience-compiler':
+        specifier: workspace:*
+        version: link:../experience-compiler
+      '@epoch/replay':
+        specifier: workspace:*
+        version: link:../replay
+      '@epoch/tenancy':
+        specifier: workspace:*
+        version: link:../tenancy
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
+
   packages/authorization:
     dependencies:
       '@epoch/agent-protocol':
