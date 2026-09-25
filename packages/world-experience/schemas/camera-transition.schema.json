@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CameraTransition",
+  "$defs": {
+    "CameraTransition": {
+      "type": "object",
+      "properties": {
+        "transitionKind": {
+          "type": "string",
+          "enum": [
+            "cut",
+            "smooth"
+          ]
+        },
+        "fromMode": {
+          "$ref": "#/$defs/WorldCameraMode"
+        },
+        "toMode": {
+          "$ref": "#/$defs/WorldCameraMode"
+        },
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "durationMs": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "transitionKind",
+        "fromMode",
+        "toMode",
+        "atMs"
+      ],
+      "additionalProperties": false,
+      "title": "CameraTransition",
+      "description": "One explicit camera transition: kind (cut/smooth), from/to modes, virtual time, optional duration."
+    },
+    "WorldCameraMode": {
+      "type": "string",
+      "enum": [
+        "follow-agent",
+        "free",
+        "orbit"
+      ],
+      "title": "WorldCameraMode",
+      "description": "Camera mode of a world scene: orbit, free, or follow-agent."
+    }
+  },
+  "$id": "urn:epoch:world-experience:camera-transition:1.0.0"
+}

@@ -1,0 +1,471 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldExperienceError",
+  "$defs": {
+    "WorldExperienceError": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/WorldVersionUnsupportedError"
+        },
+        {
+          "$ref": "#/$defs/WorldMalformedRecordError"
+        },
+        {
+          "$ref": "#/$defs/WorldDigestMismatchError"
+        },
+        {
+          "$ref": "#/$defs/WorldUnknownSceneReferenceError"
+        },
+        {
+          "$ref": "#/$defs/WorldCrossTenantDeniedError"
+        },
+        {
+          "$ref": "#/$defs/WorldInvalidIntentError"
+        },
+        {
+          "$ref": "#/$defs/WorldUnknownOverlayReferenceError"
+        },
+        {
+          "$ref": "#/$defs/WorldUnknownOntologyRecordError"
+        },
+        {
+          "$ref": "#/$defs/WorldBudgetExceededError"
+        },
+        {
+          "$ref": "#/$defs/WorldExecutableUiRejectedError"
+        },
+        {
+          "$ref": "#/$defs/WorldInvalidReplayPositionError"
+        },
+        {
+          "$ref": "#/$defs/WorldUnknownEvidenceReferenceError"
+        }
+      ],
+      "title": "WorldExperienceError",
+      "description": "One typed world-experience error: a closed code taxonomy with precisely typed payloads (never a bare throw)."
+    },
+    "WorldVersionUnsupportedError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "version-unsupported"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected": {
+          "type": "string"
+        },
+        "encountered": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "expected",
+        "encountered"
+      ],
+      "additionalProperties": false,
+      "title": "WorldVersionUnsupportedError"
+    },
+    "WorldMalformedRecordError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "malformed-record"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldIssue"
+          }
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "issues"
+      ],
+      "additionalProperties": false,
+      "title": "WorldMalformedRecordError"
+    },
+    "WorldIssue": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "WorldIssue",
+      "description": "One typed world-experience issue: dotted path plus message."
+    },
+    "WorldDigestMismatchError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "digest-mismatch"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "expected": {
+          "type": "string"
+        },
+        "encountered": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "path",
+        "expected",
+        "encountered"
+      ],
+      "additionalProperties": false,
+      "title": "WorldDigestMismatchError"
+    },
+    "WorldUnknownSceneReferenceError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "unknown-scene-reference"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "encountered": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "path",
+        "encountered"
+      ],
+      "additionalProperties": false,
+      "title": "WorldUnknownSceneReferenceError"
+    },
+    "WorldCrossTenantDeniedError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "cross-tenant-denied"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "expectedTenantId": {
+          "type": "string"
+        },
+        "encounteredTenantId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "path",
+        "expectedTenantId",
+        "encounteredTenantId"
+      ],
+      "additionalProperties": false,
+      "title": "WorldCrossTenantDeniedError"
+    },
+    "WorldInvalidIntentError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "invalid-intent"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldIssue"
+          }
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "issues"
+      ],
+      "additionalProperties": false,
+      "title": "WorldInvalidIntentError"
+    },
+    "WorldUnknownOverlayReferenceError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "unknown-overlay-reference"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "overlayId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "path",
+        "overlayId"
+      ],
+      "additionalProperties": false,
+      "title": "WorldUnknownOverlayReferenceError"
+    },
+    "WorldUnknownOntologyRecordError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "unknown-ontology-record"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "recordId": {
+          "type": "string"
+        },
+        "discriminator": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "path"
+      ],
+      "additionalProperties": false,
+      "title": "WorldUnknownOntologyRecordError"
+    },
+    "WorldBudgetExceededError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "budget-exceeded"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "resource": {
+          "type": "string",
+          "enum": [
+            "graph-edges",
+            "graph-nodes",
+            "texture-bytes",
+            "triangles"
+          ]
+        },
+        "limit": {
+          "type": "number"
+        },
+        "encountered": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "path",
+        "resource",
+        "limit",
+        "encountered"
+      ],
+      "additionalProperties": false,
+      "title": "WorldBudgetExceededError"
+    },
+    "WorldExecutableUiRejectedError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "executable-ui-rejected"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "offendingKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "path",
+        "offendingKey"
+      ],
+      "additionalProperties": false,
+      "title": "WorldExecutableUiRejectedError"
+    },
+    "WorldInvalidReplayPositionError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "invalid-replay-position"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "boundMs": {
+          "type": "number"
+        },
+        "encounteredMs": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "path"
+      ],
+      "additionalProperties": false,
+      "title": "WorldInvalidReplayPositionError"
+    },
+    "WorldUnknownEvidenceReferenceError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "unknown-evidence-reference"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "evidenceDigest": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "path",
+        "evidenceDigest"
+      ],
+      "additionalProperties": false,
+      "title": "WorldUnknownEvidenceReferenceError"
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-experience-error:1.0.0"
+}

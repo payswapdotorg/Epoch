@@ -1,0 +1,1066 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldScene",
+  "$defs": {
+    "WorldScene": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-scene"
+        },
+        "protocolVersion": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "sceneId": {
+          "$ref": "#/$defs/WorldSceneId"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "entities": {
+          "minItems": 1,
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SceneEntity"
+          }
+        },
+        "focusedEntityIds": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldEntityId"
+          }
+        },
+        "overlays": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/VisualOverlay"
+          }
+        },
+        "appliedOverlays": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OverlayApplication"
+          }
+        },
+        "animations": {
+          "maxItems": 128,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnimationInstruction"
+          }
+        },
+        "narrativeBlocks": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NarrativeStatusBlock"
+          }
+        },
+        "timeline": {
+          "$ref": "#/$defs/SceneTimeline"
+        },
+        "camera": {
+          "$ref": "#/$defs/CameraState"
+        },
+        "participants": {
+          "maxItems": 128,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParticipantReference"
+          }
+        },
+        "agents": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectedAgentRef"
+          }
+        },
+        "evidenceReferences": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectedEvidenceRef"
+          }
+        },
+        "controls": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SceneControl"
+          }
+        },
+        "digest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "sceneId",
+        "tenantScope",
+        "name",
+        "entities",
+        "focusedEntityIds",
+        "overlays",
+        "appliedOverlays",
+        "animations",
+        "narrativeBlocks",
+        "timeline",
+        "camera",
+        "participants",
+        "agents",
+        "evidenceReferences",
+        "controls",
+        "digest"
+      ],
+      "additionalProperties": false,
+      "title": "WorldScene",
+      "description": "The sealed world scene envelope: canonically ordered content plus its SHA-256 content digest (exact-revision addressing)."
+    },
+    "WorldSceneId": {
+      "type": "string",
+      "pattern": "^wsc-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldSceneId",
+      "description": "World-scene identifier: \"wsc-\" followed by a lowercase slug."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "SceneEntity": {
+      "type": "object",
+      "properties": {
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "entityType": {
+          "$ref": "#/$defs/SceneEntityTypeKey"
+        },
+        "representationRecordId": {
+          "$ref": "#/$defs/WorldOntologyRecordId"
+        },
+        "affordanceRecordId": {
+          "$ref": "#/$defs/WorldOntologyRecordId"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "position": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "orientation": {
+          "$ref": "#/$defs/Quaternion"
+        },
+        "scale": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "visible": {
+          "type": "boolean"
+        },
+        "isolated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "entityId",
+        "contentDigest",
+        "entityType",
+        "representationRecordId",
+        "position",
+        "visible",
+        "isolated"
+      ],
+      "additionalProperties": false,
+      "title": "SceneEntity",
+      "description": "One scene entity: opaque exact-revision world reference, ontology binding, presentation placement, view flags."
+    },
+    "WorldEntityId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "WorldEntityId",
+      "description": "Opaque world-entity identity (mirrored shared grammar; canonical home @epoch/world-model): 1..256 chars, caller-assigned."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "SceneEntityTypeKey": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*:[a-z][a-z0-9-]*$",
+      "title": "SceneEntityTypeKey",
+      "description": "Opaque world entity-type key ('namespace:name') — owned by the world model; never interpreted here."
+    },
+    "WorldOntologyRecordId": {
+      "type": "string",
+      "pattern": "^ont-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldOntologyRecordId",
+      "description": "Ontology-record identifier: \"ont-\" followed by a lowercase slug."
+    },
+    "Vec3": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3,
+      "title": "Vec3",
+      "description": "Finite 3-component numeric vector (x, y, z)."
+    },
+    "Quaternion": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4,
+      "title": "Quaternion",
+      "description": "Finite orientation quaternion (x, y, z, w); neutral math, renderer-normalized."
+    },
+    "VisualOverlay": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/HighlightOverlay"
+        },
+        {
+          "$ref": "#/$defs/AnnotationOverlay"
+        },
+        {
+          "$ref": "#/$defs/MeasurementOverlay"
+        },
+        {
+          "$ref": "#/$defs/StateOverlay"
+        }
+      ],
+      "title": "VisualOverlay",
+      "description": "One visual overlay of a world scene: highlight, annotation, measurement, or state — presentation data only."
+    },
+    "HighlightOverlay": {
+      "type": "object",
+      "properties": {
+        "overlayId": {
+          "$ref": "#/$defs/WorldOverlayId"
+        },
+        "overlayKind": {
+          "type": "string",
+          "const": "highlight"
+        },
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "color": {
+          "$ref": "#/$defs/ColorHex"
+        }
+      },
+      "required": [
+        "overlayId",
+        "overlayKind",
+        "entityId",
+        "color"
+      ],
+      "additionalProperties": false,
+      "title": "HighlightOverlay"
+    },
+    "WorldOverlayId": {
+      "type": "string",
+      "pattern": "^ovl-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldOverlayId",
+      "description": "Visual-overlay identifier: \"ovl-\" followed by a lowercase slug."
+    },
+    "ColorHex": {
+      "type": "string",
+      "pattern": "^#[0-9a-f]{6}([0-9a-f]{2})?$",
+      "title": "ColorHex",
+      "description": "Presentation color as lowercase hex: #RRGGBB or #RRGGBBAA."
+    },
+    "AnnotationOverlay": {
+      "type": "object",
+      "properties": {
+        "overlayId": {
+          "$ref": "#/$defs/WorldOverlayId"
+        },
+        "overlayKind": {
+          "type": "string",
+          "const": "annotation"
+        },
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "evidenceDigests": {
+          "maxItems": 32,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Sha256Hex"
+          }
+        }
+      },
+      "required": [
+        "overlayId",
+        "overlayKind",
+        "entityId",
+        "text"
+      ],
+      "additionalProperties": false,
+      "title": "AnnotationOverlay"
+    },
+    "MeasurementOverlay": {
+      "type": "object",
+      "properties": {
+        "overlayId": {
+          "$ref": "#/$defs/WorldOverlayId"
+        },
+        "overlayKind": {
+          "type": "string",
+          "const": "measurement"
+        },
+        "fromEntityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "toEntityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "evidenceDigests": {
+          "maxItems": 32,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Sha256Hex"
+          }
+        }
+      },
+      "required": [
+        "overlayId",
+        "overlayKind",
+        "fromEntityId",
+        "toEntityId"
+      ],
+      "additionalProperties": false,
+      "title": "MeasurementOverlay"
+    },
+    "StateOverlay": {
+      "type": "object",
+      "properties": {
+        "overlayId": {
+          "$ref": "#/$defs/WorldOverlayId"
+        },
+        "overlayKind": {
+          "type": "string",
+          "const": "state"
+        },
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "stateKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "tint": {
+          "$ref": "#/$defs/ColorHex"
+        },
+        "badgeLabel": {
+          "type": "string",
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "overlayId",
+        "overlayKind",
+        "entityId",
+        "stateKey"
+      ],
+      "additionalProperties": false,
+      "title": "StateOverlay"
+    },
+    "OverlayApplication": {
+      "type": "object",
+      "properties": {
+        "overlayId": {
+          "$ref": "#/$defs/WorldOverlayId"
+        },
+        "orderIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "overlayId",
+        "orderIndex"
+      ],
+      "additionalProperties": false,
+      "title": "OverlayApplication",
+      "description": "One applied overlay: id plus deterministic application order index."
+    },
+    "AnimationInstruction": {
+      "type": "object",
+      "properties": {
+        "instructionId": {
+          "$ref": "#/$defs/AnimationInstructionId"
+        },
+        "targetEntityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "propertyPath": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)*$"
+        },
+        "keyframes": {
+          "minItems": 1,
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Keyframe"
+          }
+        },
+        "easing": {
+          "$ref": "#/$defs/EasingKind"
+        },
+        "durationMs": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "loop": {
+          "type": "boolean"
+        },
+        "startAtMs": {
+          "$ref": "#/$defs/WorldVirtualTimeMs"
+        }
+      },
+      "required": [
+        "instructionId",
+        "targetEntityId",
+        "propertyPath",
+        "keyframes",
+        "easing",
+        "durationMs",
+        "loop"
+      ],
+      "additionalProperties": false,
+      "title": "AnimationInstruction",
+      "description": "One animation instruction: target entity, presentation property path, strictly ordered keyframes, easing, duration, loop."
+    },
+    "AnimationInstructionId": {
+      "type": "string",
+      "pattern": "^ani-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AnimationInstructionId",
+      "description": "Animation-instruction identifier: \"ani-\" followed by a lowercase slug."
+    },
+    "Keyframe": {
+      "type": "object",
+      "properties": {
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "value": {
+          "$ref": "#/$defs/JsonValue"
+        },
+        "easing": {
+          "$ref": "#/$defs/EasingKind"
+        }
+      },
+      "required": [
+        "atMs",
+        "value"
+      ],
+      "additionalProperties": false,
+      "title": "Keyframe",
+      "description": "One animation keyframe: millisecond offset, JSON value, optional easing."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "EasingKind": {
+      "type": "string",
+      "enum": [
+        "ease-in",
+        "ease-in-out",
+        "ease-out",
+        "linear",
+        "step"
+      ],
+      "title": "EasingKind",
+      "description": "Neutral interpolation of one animation keyframe segment."
+    },
+    "WorldVirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "WorldVirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (caller-supplied; never a wall clock)."
+    },
+    "NarrativeStatusBlock": {
+      "type": "object",
+      "properties": {
+        "blockId": {
+          "$ref": "#/$defs/NarrativeBlockId"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "body": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "tone": {
+          "$ref": "#/$defs/NarrativeTone"
+        },
+        "statusKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "evidenceDigests": {
+          "maxItems": 32,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Sha256Hex"
+          }
+        },
+        "atMs": {
+          "$ref": "#/$defs/WorldVirtualTimeMs"
+        }
+      },
+      "required": [
+        "blockId",
+        "title"
+      ],
+      "additionalProperties": false,
+      "title": "NarrativeStatusBlock",
+      "description": "One narrative/status block: bounded title/body, presentation tone, optional machine-readable status key, sorted evidence citations, virtual time."
+    },
+    "NarrativeBlockId": {
+      "type": "string",
+      "pattern": "^nrb-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "NarrativeBlockId",
+      "description": "Narrative/status-block identifier: \"nrb-\" followed by a lowercase slug."
+    },
+    "NarrativeTone": {
+      "type": "string",
+      "enum": [
+        "cautionary",
+        "celebratory",
+        "informative",
+        "neutral"
+      ],
+      "title": "NarrativeTone",
+      "description": "Presentation tone of a narrative beat."
+    },
+    "SceneTimeline": {
+      "type": "object",
+      "properties": {
+        "markers": {
+          "maxItems": 512,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SceneTimelineMarker"
+          }
+        },
+        "trackLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "trackStartMs": {
+          "$ref": "#/$defs/WorldVirtualTimeMs"
+        },
+        "trackEndMs": {
+          "$ref": "#/$defs/WorldVirtualTimeMs"
+        },
+        "position": {
+          "$ref": "#/$defs/SceneTimelinePosition"
+        }
+      },
+      "required": [
+        "markers",
+        "trackLabel",
+        "trackStartMs",
+        "trackEndMs",
+        "position"
+      ],
+      "additionalProperties": false,
+      "title": "SceneTimeline",
+      "description": "The scene timeline: sorted markers (event/phase/replay-cursor/branch-point), a bounded track, and the current replay position."
+    },
+    "SceneTimelineMarker": {
+      "type": "object",
+      "properties": {
+        "markerId": {
+          "$ref": "#/$defs/SceneMarkerId"
+        },
+        "atMs": {
+          "$ref": "#/$defs/WorldVirtualTimeMs"
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "markerKind": {
+          "$ref": "#/$defs/TimelineMarkerKind"
+        }
+      },
+      "required": [
+        "markerId",
+        "atMs",
+        "markerKind"
+      ],
+      "additionalProperties": false,
+      "title": "SceneTimelineMarker",
+      "description": "One scene timeline marker: virtual time, optional label, and kind (event, phase boundary, replay cursor, branch point)."
+    },
+    "SceneMarkerId": {
+      "type": "string",
+      "pattern": "^mrk-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SceneMarkerId",
+      "description": "Scene timeline-marker identifier: \"mrk-\" followed by a lowercase slug."
+    },
+    "TimelineMarkerKind": {
+      "type": "string",
+      "enum": [
+        "branch-point",
+        "event",
+        "phase-end",
+        "phase-start",
+        "replay-cursor"
+      ],
+      "title": "TimelineMarkerKind",
+      "description": "Kind of a timeline marker (event, phase boundary, replay cursor, branch point)."
+    },
+    "SceneTimelinePosition": {
+      "type": "object",
+      "properties": {
+        "atMs": {
+          "$ref": "#/$defs/WorldVirtualTimeMs"
+        },
+        "frameIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "replayWindow": {
+          "$ref": "#/$defs/ReplayWindow"
+        }
+      },
+      "required": [
+        "atMs",
+        "frameIndex",
+        "paused"
+      ],
+      "additionalProperties": false,
+      "title": "SceneTimelinePosition",
+      "description": "The scene timeline/replay position: virtual time, frame index, paused flag, optional replay window."
+    },
+    "ReplayWindow": {
+      "type": "object",
+      "properties": {
+        "fromSequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "toSequence": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "fromSequence",
+        "toSequence"
+      ],
+      "additionalProperties": false,
+      "title": "ReplayWindow",
+      "description": "Bounded world-model event-sequence window for timeline/replay projections (from inclusive, to exclusive)."
+    },
+    "CameraState": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/FollowAgentCamera"
+        },
+        {
+          "$ref": "#/$defs/FreeCamera"
+        },
+        {
+          "$ref": "#/$defs/OrbitCamera"
+        }
+      ],
+      "title": "CameraState",
+      "description": "The camera state of a world scene as typed data: orbit, free, or follow-agent (agent plus cursor state)."
+    },
+    "FollowAgentCamera": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "const": "follow-agent"
+        },
+        "agentRef": {
+          "$ref": "#/$defs/ProjectedAgentRef"
+        },
+        "followDistance": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "cursor": {
+          "$ref": "#/$defs/FollowCursorState"
+        }
+      },
+      "required": [
+        "mode",
+        "agentRef"
+      ],
+      "additionalProperties": false,
+      "title": "FollowAgentCamera"
+    },
+    "ProjectedAgentRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "agent"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "agentId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedAgentRef",
+      "description": "Exact-revision reference to a registered agent (W003 grammar; digest of its registration canonical JSON)."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "FollowCursorState": {
+      "type": "object",
+      "properties": {
+        "position2d": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "additionalProperties": false
+        },
+        "position3d": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "additionalProperties": false,
+      "title": "FollowCursorState",
+      "description": "The followed agent cursor state: a 2D or 3D position at a virtual time."
+    },
+    "FreeCamera": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "const": "free"
+        },
+        "position": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "orientation": {
+          "$ref": "#/$defs/Quaternion"
+        }
+      },
+      "required": [
+        "mode",
+        "position"
+      ],
+      "additionalProperties": false,
+      "title": "FreeCamera"
+    },
+    "OrbitCamera": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "const": "orbit"
+        },
+        "position": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "orientation": {
+          "$ref": "#/$defs/Quaternion"
+        },
+        "target": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "fovRadians": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 3.141592653589793
+        }
+      },
+      "required": [
+        "mode",
+        "position"
+      ],
+      "additionalProperties": false,
+      "title": "OrbitCamera"
+    },
+    "ParticipantReference": {
+      "type": "object",
+      "properties": {
+        "participantId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "participantKind": {
+          "$ref": "#/$defs/ParticipantKind"
+        }
+      },
+      "required": [
+        "participantId",
+        "participantKind"
+      ],
+      "additionalProperties": false,
+      "title": "ParticipantReference",
+      "description": "Opaque presence-participant reference: bounded id plus neutral kind."
+    },
+    "ParticipantKind": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "human",
+        "system"
+      ],
+      "title": "ParticipantKind",
+      "description": "Neutral presence-participant kind."
+    },
+    "ProjectedEvidenceRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "evidence-record"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "recordDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "recordDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedEvidenceRef",
+      "description": "Reference to an evidence record by its content-addressed identity (W006: the SHA-256 digest is the id)."
+    },
+    "SceneControl": {
+      "type": "object",
+      "properties": {
+        "controlId": {
+          "$ref": "#/$defs/SceneControlId"
+        },
+        "controlKind": {
+          "$ref": "#/$defs/ControlKind"
+        },
+        "intent": {
+          "$ref": "#/$defs/ControlIntent"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "options": {
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        }
+      },
+      "required": [
+        "controlId",
+        "controlKind",
+        "intent"
+      ],
+      "additionalProperties": false,
+      "title": "SceneControl",
+      "description": "One candidate/action control: neutral control role, emitted typed intent, optional label and selector options."
+    },
+    "SceneControlId": {
+      "type": "string",
+      "pattern": "^ctl-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SceneControlId",
+      "description": "Scene candidate/action-control identifier: \"ctl-\" followed by a lowercase slug."
+    },
+    "ControlKind": {
+      "type": "string",
+      "enum": [
+        "axis",
+        "button",
+        "selector",
+        "toggle"
+      ],
+      "title": "ControlKind",
+      "description": "Neutral interaction-control role of a controls-graph node."
+    },
+    "ControlIntent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "ControlIntent",
+      "description": "Typed UI intent a control emits: qualified id plus semver core (shape-compatible with the action-protocol ActionTypeReference)."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-scene:1.0.0"
+}

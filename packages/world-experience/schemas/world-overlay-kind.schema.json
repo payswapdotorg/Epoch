@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldOverlayKind",
+  "$defs": {
+    "WorldOverlayKind": {
+      "type": "string",
+      "enum": [
+        "annotation",
+        "highlight",
+        "measurement",
+        "state"
+      ],
+      "title": "WorldOverlayKind",
+      "description": "Visual overlay kind of a world scene: highlight, annotation, measurement, or state overlay."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-overlay-kind:1.0.0"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldExperienceProtocolVersion",
+  "$defs": {
+    "WorldExperienceProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "WorldExperienceProtocolVersion",
+      "description": "Exact world-experience protocol version admitted by this release (\"1.0.0\")."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-experience-protocol-version:1.0.0"
+}

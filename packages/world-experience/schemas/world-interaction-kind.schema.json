@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldInteractionKind",
+  "$defs": {
+    "WorldInteractionKind": {
+      "type": "string",
+      "enum": [
+        "annotate",
+        "branch",
+        "change",
+        "compare",
+        "connect",
+        "disconnect",
+        "filter",
+        "follow-agent",
+        "hide",
+        "inspect",
+        "isolate",
+        "measure",
+        "move",
+        "pause",
+        "query",
+        "replay",
+        "resume",
+        "rotate",
+        "select",
+        "show",
+        "simulate",
+        "zoom"
+      ],
+      "title": "WorldInteractionKind",
+      "description": "One world-subset universal interaction (select, inspect, measure, move, rotate, zoom, isolate, hide, show, compare, annotate, simulate, change, connect, disconnect, filter, query, branch, replay, pause, resume, follow-agent)."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-interaction-kind:1.0.0"
+}

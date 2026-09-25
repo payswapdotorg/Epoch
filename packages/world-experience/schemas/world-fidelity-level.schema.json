@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldFidelityLevel",
+  "$defs": {
+    "WorldFidelityLevel": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "low",
+        "mobile",
+        "remote",
+        "web"
+      ],
+      "title": "WorldFidelityLevel",
+      "description": "Typed device-adaptation fidelity level: desktop (full), web (normal), mobile (field), low (2D/reduced), remote (optional)."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-fidelity-level:1.0.0"
+}

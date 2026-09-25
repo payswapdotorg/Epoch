@@ -1,0 +1,928 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldOntologyRecord",
+  "$defs": {
+    "WorldOntologyRecord": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Symbol2dRecord"
+        },
+        {
+          "$ref": "#/$defs/Representation3dRecord"
+        },
+        {
+          "$ref": "#/$defs/MaterialRecord"
+        },
+        {
+          "$ref": "#/$defs/StateOverlayRecord"
+        },
+        {
+          "$ref": "#/$defs/AnimationRecord"
+        },
+        {
+          "$ref": "#/$defs/AffordanceRecord"
+        }
+      ],
+      "title": "WorldOntologyRecord",
+      "description": "One pack-contributed domain visual ontology record: symbol-2d, representation-3d, material, state-overlay, animation, or affordance — typed presentation declarations, never semantic authority."
+    },
+    "Symbol2dRecord": {
+      "type": "object",
+      "properties": {
+        "ontologyVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "recordId": {
+          "$ref": "#/$defs/WorldOntologyRecordId"
+        },
+        "recordKind": {
+          "type": "string",
+          "const": "symbol-2d"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "contributor": {
+          "type": "object",
+          "properties": {
+            "packId": {
+              "$ref": "#/$defs/OpaqueScopeId"
+            }
+          },
+          "required": [
+            "packId"
+          ],
+          "additionalProperties": false
+        },
+        "appliesTo": {
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "geometry": {
+          "$ref": "#/$defs/Geometry2d"
+        },
+        "stroke": {
+          "$ref": "#/$defs/StrokeStyle2d"
+        },
+        "fill": {
+          "$ref": "#/$defs/FillStyle2d"
+        }
+      },
+      "required": [
+        "ontologyVersion",
+        "recordId",
+        "recordKind",
+        "tenantScope",
+        "contributor",
+        "appliesTo",
+        "geometry"
+      ],
+      "additionalProperties": false,
+      "title": "Symbol2dRecord"
+    },
+    "WorldOntologyRecordId": {
+      "type": "string",
+      "pattern": "^ont-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldOntologyRecordId",
+      "description": "Ontology-record identifier: \"ont-\" followed by a lowercase slug."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "Geometry2d": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Geometry2dPoint"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dRect"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dCircle"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dEllipse"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dPolyline"
+        },
+        {
+          "$ref": "#/$defs/Geometry2dPolygon"
+        }
+      ],
+      "title": "Geometry2d",
+      "description": "Neutral 2D geometry: point, rect, circle, ellipse, polyline, or polygon."
+    },
+    "Geometry2dPoint": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "point"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "form",
+        "x",
+        "y"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dPoint"
+    },
+    "Geometry2dRect": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "rect"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "minimum": 0
+        },
+        "height": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "form",
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dRect"
+    },
+    "Geometry2dCircle": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "circle"
+        },
+        "cx": {
+          "type": "number"
+        },
+        "cy": {
+          "type": "number"
+        },
+        "r": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "form",
+        "cx",
+        "cy",
+        "r"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dCircle"
+    },
+    "Geometry2dEllipse": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "ellipse"
+        },
+        "cx": {
+          "type": "number"
+        },
+        "cy": {
+          "type": "number"
+        },
+        "rx": {
+          "type": "number",
+          "minimum": 0
+        },
+        "ry": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "form",
+        "cx",
+        "cy",
+        "rx",
+        "ry"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dEllipse"
+    },
+    "Geometry2dPolyline": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "polyline"
+        },
+        "points": {
+          "$ref": "#/$defs/PolylinePoints"
+        }
+      },
+      "required": [
+        "form",
+        "points"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dPolyline"
+    },
+    "PolylinePoints": {
+      "minItems": 2,
+      "maxItems": 512,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Point2d"
+      },
+      "title": "PolylinePoints",
+      "description": "Ordered polyline vertices (semantic order; at least 2, at most 512)."
+    },
+    "Point2d": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "additionalProperties": false,
+      "title": "Point2d",
+      "description": "Finite 2D point (x, y)."
+    },
+    "Geometry2dPolygon": {
+      "type": "object",
+      "properties": {
+        "form": {
+          "type": "string",
+          "const": "polygon"
+        },
+        "points": {
+          "$ref": "#/$defs/PolygonPoints"
+        }
+      },
+      "required": [
+        "form",
+        "points"
+      ],
+      "additionalProperties": false,
+      "title": "Geometry2dPolygon"
+    },
+    "PolygonPoints": {
+      "minItems": 3,
+      "maxItems": 512,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Point2d"
+      },
+      "title": "PolygonPoints"
+    },
+    "StrokeStyle2d": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/ColorHex"
+        },
+        "lineWidth": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "color",
+        "lineWidth"
+      ],
+      "additionalProperties": false,
+      "title": "StrokeStyle2d",
+      "description": "Stroke styling of a 2D shape: canonical color plus positive line width."
+    },
+    "ColorHex": {
+      "type": "string",
+      "pattern": "^#[0-9a-f]{6}([0-9a-f]{2})?$",
+      "title": "ColorHex",
+      "description": "Presentation color as lowercase hex: #RRGGBB or #RRGGBBAA."
+    },
+    "FillStyle2d": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/ColorHex"
+        }
+      },
+      "required": [
+        "color"
+      ],
+      "additionalProperties": false,
+      "title": "FillStyle2d",
+      "description": "Fill styling of a 2D shape: canonical color."
+    },
+    "Representation3dRecord": {
+      "type": "object",
+      "properties": {
+        "ontologyVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "recordId": {
+          "$ref": "#/$defs/WorldOntologyRecordId"
+        },
+        "recordKind": {
+          "type": "string",
+          "const": "representation-3d"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "contributor": {
+          "type": "object",
+          "properties": {
+            "packId": {
+              "$ref": "#/$defs/OpaqueScopeId"
+            }
+          },
+          "required": [
+            "packId"
+          ],
+          "additionalProperties": false
+        },
+        "appliesTo": {
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "primitive": {
+          "$ref": "#/$defs/SpatialPrimitive"
+        },
+        "scale": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "mesh": {
+          "$ref": "#/$defs/MeshBinding"
+        },
+        "materialRecordId": {
+          "$ref": "#/$defs/WorldOntologyRecordId"
+        }
+      },
+      "required": [
+        "ontologyVersion",
+        "recordId",
+        "recordKind",
+        "tenantScope",
+        "contributor",
+        "appliesTo",
+        "primitive"
+      ],
+      "additionalProperties": false,
+      "title": "Representation3dRecord"
+    },
+    "SpatialPrimitive": {
+      "type": "string",
+      "enum": [
+        "box",
+        "cone",
+        "cylinder",
+        "mesh",
+        "plane",
+        "sphere"
+      ],
+      "title": "SpatialPrimitive",
+      "description": "Neutral geometric primitive of a 3D node (mesh binds an opaque content-addressed asset)."
+    },
+    "MeshBinding": {
+      "type": "object",
+      "properties": {
+        "assetDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "byteSize": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "mediaType": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9!#$&^_.+-]{0,126}\\/[A-Za-z0-9][A-Za-z0-9!#$&^_.+-]{0,126}$"
+        }
+      },
+      "required": [
+        "assetDigest"
+      ],
+      "additionalProperties": false,
+      "title": "MeshBinding",
+      "description": "Content-addressed mesh-asset binding: SHA-256 digest plus optional neutral metadata (no filenames, URLs, or engine formats)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "MaterialRecord": {
+      "type": "object",
+      "properties": {
+        "ontologyVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "recordId": {
+          "$ref": "#/$defs/WorldOntologyRecordId"
+        },
+        "recordKind": {
+          "type": "string",
+          "const": "material"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "contributor": {
+          "type": "object",
+          "properties": {
+            "packId": {
+              "$ref": "#/$defs/OpaqueScopeId"
+            }
+          },
+          "required": [
+            "packId"
+          ],
+          "additionalProperties": false
+        },
+        "color": {
+          "$ref": "#/$defs/ColorHex"
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "roughness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "metalness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "texture": {
+          "type": "object",
+          "properties": {
+            "assetDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            },
+            "byteSize": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "mediaType": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "assetDigest",
+            "byteSize",
+            "mediaType"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ontologyVersion",
+        "recordId",
+        "recordKind",
+        "tenantScope",
+        "contributor"
+      ],
+      "additionalProperties": false,
+      "title": "MaterialRecord"
+    },
+    "StateOverlayRecord": {
+      "type": "object",
+      "properties": {
+        "ontologyVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "recordId": {
+          "$ref": "#/$defs/WorldOntologyRecordId"
+        },
+        "recordKind": {
+          "type": "string",
+          "const": "state-overlay"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "contributor": {
+          "type": "object",
+          "properties": {
+            "packId": {
+              "$ref": "#/$defs/OpaqueScopeId"
+            }
+          },
+          "required": [
+            "packId"
+          ],
+          "additionalProperties": false
+        },
+        "appliesTo": {
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "stateKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "tint": {
+          "$ref": "#/$defs/ColorHex"
+        },
+        "badgeLabel": {
+          "type": "string",
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "ontologyVersion",
+        "recordId",
+        "recordKind",
+        "tenantScope",
+        "contributor",
+        "appliesTo",
+        "stateKey"
+      ],
+      "additionalProperties": false,
+      "title": "StateOverlayRecord"
+    },
+    "AnimationRecord": {
+      "type": "object",
+      "properties": {
+        "ontologyVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "recordId": {
+          "$ref": "#/$defs/WorldOntologyRecordId"
+        },
+        "recordKind": {
+          "type": "string",
+          "const": "animation"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "contributor": {
+          "type": "object",
+          "properties": {
+            "packId": {
+              "$ref": "#/$defs/OpaqueScopeId"
+            }
+          },
+          "required": [
+            "packId"
+          ],
+          "additionalProperties": false
+        },
+        "appliesTo": {
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "durationMs": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "loop": {
+          "type": "boolean"
+        },
+        "tracks": {
+          "minItems": 1,
+          "maxItems": 128,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnimationTrack"
+          }
+        }
+      },
+      "required": [
+        "ontologyVersion",
+        "recordId",
+        "recordKind",
+        "tenantScope",
+        "contributor",
+        "appliesTo",
+        "durationMs",
+        "loop",
+        "tracks"
+      ],
+      "additionalProperties": false,
+      "title": "AnimationRecord"
+    },
+    "AnimationTrack": {
+      "type": "object",
+      "properties": {
+        "targetNodeId": {
+          "$ref": "#/$defs/ExperienceNodeId"
+        },
+        "propertyPath": {
+          "$ref": "#/$defs/PropertyPath"
+        },
+        "keyframes": {
+          "minItems": 1,
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Keyframe"
+          }
+        }
+      },
+      "required": [
+        "targetNodeId",
+        "propertyPath",
+        "keyframes"
+      ],
+      "additionalProperties": false,
+      "title": "AnimationTrack",
+      "description": "One animation track: target node, dotted property path, and strictly time-ordered keyframes."
+    },
+    "ExperienceNodeId": {
+      "type": "string",
+      "pattern": "^xn-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ExperienceNodeId",
+      "description": "Experience-local node identifier: \"xn-\" followed by a lowercase slug."
+    },
+    "PropertyPath": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)*$",
+      "title": "PropertyPath",
+      "description": "Dotted path naming the animated property of a target node descriptor."
+    },
+    "Keyframe": {
+      "type": "object",
+      "properties": {
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "value": {
+          "$ref": "#/$defs/JsonValue"
+        },
+        "easing": {
+          "$ref": "#/$defs/EasingKind"
+        }
+      },
+      "required": [
+        "atMs",
+        "value"
+      ],
+      "additionalProperties": false,
+      "title": "Keyframe",
+      "description": "One animation keyframe: millisecond offset, JSON value, optional easing."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "EasingKind": {
+      "type": "string",
+      "enum": [
+        "ease-in",
+        "ease-in-out",
+        "ease-out",
+        "linear",
+        "step"
+      ],
+      "title": "EasingKind",
+      "description": "Neutral interpolation of one animation keyframe segment."
+    },
+    "AffordanceRecord": {
+      "type": "object",
+      "properties": {
+        "ontologyVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "recordId": {
+          "$ref": "#/$defs/WorldOntologyRecordId"
+        },
+        "recordKind": {
+          "type": "string",
+          "const": "affordance"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "contributor": {
+          "type": "object",
+          "properties": {
+            "packId": {
+              "$ref": "#/$defs/OpaqueScopeId"
+            }
+          },
+          "required": [
+            "packId"
+          ],
+          "additionalProperties": false
+        },
+        "appliesTo": {
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "interactions": {
+          "minItems": 1,
+          "maxItems": 22,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldInteractionKind"
+          }
+        },
+        "modalities": {
+          "minItems": 1,
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionModality"
+          }
+        }
+      },
+      "required": [
+        "ontologyVersion",
+        "recordId",
+        "recordKind",
+        "tenantScope",
+        "contributor",
+        "appliesTo",
+        "interactions",
+        "modalities"
+      ],
+      "additionalProperties": false,
+      "title": "AffordanceRecord"
+    },
+    "WorldInteractionKind": {
+      "type": "string",
+      "enum": [
+        "annotate",
+        "branch",
+        "change",
+        "compare",
+        "connect",
+        "disconnect",
+        "filter",
+        "follow-agent",
+        "hide",
+        "inspect",
+        "isolate",
+        "measure",
+        "move",
+        "pause",
+        "query",
+        "replay",
+        "resume",
+        "rotate",
+        "select",
+        "show",
+        "simulate",
+        "zoom"
+      ],
+      "title": "WorldInteractionKind",
+      "description": "One world-subset universal interaction (select, inspect, measure, move, rotate, zoom, isolate, hide, show, compare, annotate, simulate, change, connect, disconnect, filter, query, branch, replay, pause, resume, follow-agent)."
+    },
+    "InteractionModality": {
+      "type": "string",
+      "enum": [
+        "gamepad",
+        "gaze",
+        "gesture",
+        "keyboard",
+        "pointer",
+        "touch",
+        "voice"
+      ],
+      "title": "InteractionModality",
+      "description": "Neutral interaction modality of a device."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-ontology-record:1.0.0"
+}

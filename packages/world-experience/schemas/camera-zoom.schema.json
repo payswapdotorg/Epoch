@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CameraZoom",
+  "$defs": {
+    "CameraZoom": {
+      "type": "object",
+      "properties": {
+        "factor": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "factor"
+      ],
+      "additionalProperties": false,
+      "title": "CameraZoom",
+      "description": "A camera zoom step: a strictly positive multiplicative factor."
+    }
+  },
+  "$id": "urn:epoch:world-experience:camera-zoom:1.0.0"
+}

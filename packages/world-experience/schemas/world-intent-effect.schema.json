@@ -1,0 +1,250 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldIntentEffect",
+  "$defs": {
+    "WorldIntentEffect": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/InspectRequestedEffect"
+        },
+        {
+          "$ref": "#/$defs/MeasureRequestedEffect"
+        },
+        {
+          "$ref": "#/$defs/CompareRequestedEffect"
+        },
+        {
+          "$ref": "#/$defs/SimulateRequestedEffect"
+        },
+        {
+          "$ref": "#/$defs/QueryRequestedEffect"
+        },
+        {
+          "$ref": "#/$defs/ChangeRequestedEffect"
+        },
+        {
+          "$ref": "#/$defs/ConnectRequestedEffect"
+        },
+        {
+          "$ref": "#/$defs/DisconnectRequestedEffect"
+        },
+        {
+          "$ref": "#/$defs/BranchRequestedEffect"
+        }
+      ],
+      "title": "WorldIntentEffect",
+      "description": "One typed host-side effect of a semantic world intent: the request this layer forwards to the proper authority (never executed here)."
+    },
+    "InspectRequestedEffect": {
+      "type": "object",
+      "properties": {
+        "effect": {
+          "type": "string",
+          "const": "inspect-requested"
+        },
+        "entityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "effect",
+        "entityId"
+      ],
+      "additionalProperties": false,
+      "title": "InspectRequestedEffect"
+    },
+    "MeasureRequestedEffect": {
+      "type": "object",
+      "properties": {
+        "effect": {
+          "type": "string",
+          "const": "measure-requested"
+        },
+        "fromEntityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "toEntityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "effect",
+        "fromEntityId",
+        "toEntityId"
+      ],
+      "additionalProperties": false,
+      "title": "MeasureRequestedEffect"
+    },
+    "CompareRequestedEffect": {
+      "type": "object",
+      "properties": {
+        "effect": {
+          "type": "string",
+          "const": "compare-requested"
+        },
+        "leftEntityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "rightEntityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "effect",
+        "leftEntityId",
+        "rightEntityId"
+      ],
+      "additionalProperties": false,
+      "title": "CompareRequestedEffect"
+    },
+    "SimulateRequestedEffect": {
+      "type": "object",
+      "properties": {
+        "effect": {
+          "type": "string",
+          "const": "simulate-requested"
+        },
+        "scenarioRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "effect",
+        "scenarioRef"
+      ],
+      "additionalProperties": false,
+      "title": "SimulateRequestedEffect"
+    },
+    "QueryRequestedEffect": {
+      "type": "object",
+      "properties": {
+        "effect": {
+          "type": "string",
+          "const": "query-requested"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        }
+      },
+      "required": [
+        "effect",
+        "text"
+      ],
+      "additionalProperties": false,
+      "title": "QueryRequestedEffect"
+    },
+    "ChangeRequestedEffect": {
+      "type": "object",
+      "properties": {
+        "effect": {
+          "type": "string",
+          "const": "change-requested"
+        },
+        "entityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "propertyPath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "effect",
+        "entityId",
+        "propertyPath"
+      ],
+      "additionalProperties": false,
+      "title": "ChangeRequestedEffect"
+    },
+    "ConnectRequestedEffect": {
+      "type": "object",
+      "properties": {
+        "effect": {
+          "type": "string",
+          "const": "connect-requested"
+        },
+        "fromEntityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "toEntityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "effect",
+        "fromEntityId",
+        "toEntityId"
+      ],
+      "additionalProperties": false,
+      "title": "ConnectRequestedEffect"
+    },
+    "DisconnectRequestedEffect": {
+      "type": "object",
+      "properties": {
+        "effect": {
+          "type": "string",
+          "const": "disconnect-requested"
+        },
+        "fromEntityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "toEntityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "effect",
+        "fromEntityId",
+        "toEntityId"
+      ],
+      "additionalProperties": false,
+      "title": "DisconnectRequestedEffect"
+    },
+    "BranchRequestedEffect": {
+      "type": "object",
+      "properties": {
+        "effect": {
+          "type": "string",
+          "const": "branch-requested"
+        },
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "effect",
+        "atMs"
+      ],
+      "additionalProperties": false,
+      "title": "BranchRequestedEffect"
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-intent-effect:1.0.0"
+}

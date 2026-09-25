@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldMountGraphEnvelope",
+  "$defs": {
+    "WorldMountGraphEnvelope": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-invocation"
+        },
+        "protocolVersion": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "kind": {
+          "type": "string",
+          "const": "mount-graph"
+        },
+        "invocationId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "rendererSessionId": {
+          "$ref": "#/$defs/WorldRendererSessionId"
+        },
+        "graphDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "atMs": {
+          "$ref": "#/$defs/WorldVirtualTimeMs"
+        },
+        "declaredTriangles": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "declaredTextureBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "kind",
+        "invocationId",
+        "rendererSessionId",
+        "graphDigest",
+        "atMs"
+      ],
+      "additionalProperties": false,
+      "title": "WorldMountGraphEnvelope",
+      "description": "Mount-graph invocation envelope emitted by the world-experience compiler (mirrored W013 shape; content digest + declared usage)."
+    },
+    "WorldInvocationId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "WorldInvocationId",
+      "description": "Opaque invocation identifier (shared message-id grammar), unique within the caller scope."
+    },
+    "WorldRendererSessionId": {
+      "type": "string",
+      "pattern": "^rs-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldRendererSessionId",
+      "description": "Renderer-session identifier (mirrored shared grammar; canonical home @epoch/renderer-runtime): \"rs-\" + lowercase slug."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "WorldVirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "WorldVirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (caller-supplied; never a wall clock)."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-mount-graph-envelope:1.0.0"
+}

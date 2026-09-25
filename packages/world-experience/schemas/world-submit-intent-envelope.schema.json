@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldSubmitIntentEnvelope",
+  "$defs": {
+    "WorldSubmitIntentEnvelope": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-invocation"
+        },
+        "protocolVersion": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "kind": {
+          "type": "string",
+          "const": "submit-intent"
+        },
+        "invocationId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "rendererSessionId": {
+          "$ref": "#/$defs/WorldRendererSessionId"
+        },
+        "modality": {
+          "type": "string",
+          "enum": [
+            "gamepad",
+            "gaze",
+            "gesture",
+            "keyboard",
+            "pointer",
+            "touch",
+            "voice"
+          ]
+        },
+        "intent": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d+\\.\\d+$"
+            }
+          },
+          "required": [
+            "id",
+            "version"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "kind",
+        "invocationId",
+        "rendererSessionId",
+        "modality",
+        "intent"
+      ],
+      "additionalProperties": false,
+      "title": "WorldSubmitIntentEnvelope",
+      "description": "Submit-intent invocation envelope emitted by the world-experience compiler (mirrored W013 shape; typed control intent from a declared modality)."
+    },
+    "WorldInvocationId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "WorldInvocationId",
+      "description": "Opaque invocation identifier (shared message-id grammar), unique within the caller scope."
+    },
+    "WorldRendererSessionId": {
+      "type": "string",
+      "pattern": "^rs-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldRendererSessionId",
+      "description": "Renderer-session identifier (mirrored shared grammar; canonical home @epoch/renderer-runtime): \"rs-\" + lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-submit-intent-envelope:1.0.0"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldOverlayId",
+  "$defs": {
+    "WorldOverlayId": {
+      "type": "string",
+      "pattern": "^ovl-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldOverlayId",
+      "description": "Visual-overlay identifier: \"ovl-\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-overlay-id:1.0.0"
+}

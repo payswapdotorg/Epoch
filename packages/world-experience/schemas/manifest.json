@@ -1,0 +1,270 @@
+{
+  "contract": "epoch/world-experience",
+  "contractVersion": "1.0.0",
+  "protocolVersion": "1.0.0",
+  "description": "Typed, versioned, provider-neutral World Experience contract surface (W016): the interactive-world domain model — world scene/view descriptors (Experience Graph vocabulary), camera/follow semantics, the world-subset interaction-intent vocabulary, the pack-contributable domain visual ontology, typed fidelity projections, and renderer-envelope compilers (W013-shaped mount/advance/submit envelopes). JSON Schema projection under schemas/; runtime validators in @epoch/world-experience.",
+  "dataTypes": [
+    "AnimationInstruction",
+    "CameraState",
+    "CameraTransition",
+    "CameraZoom",
+    "FidelityReduction",
+    "FollowAgentCamera",
+    "FollowCursorState",
+    "FreeCamera",
+    "NarrativeStatusBlock",
+    "OrbitCamera",
+    "OverlayApplication",
+    "SceneControl",
+    "SceneEntity",
+    "SceneTimeline",
+    "SceneTimelineMarker",
+    "SceneTimelinePosition",
+    "VisualOverlay",
+    "WorldAdvanceFrameEnvelope",
+    "WorldCameraMode",
+    "WorldCameraTransitionKind",
+    "WorldEntityId",
+    "WorldExperienceError",
+    "WorldExperienceProtocolVersion",
+    "WorldFidelityLevel",
+    "WorldIntentEffect",
+    "WorldInteractionIntent",
+    "WorldInteractionKind",
+    "WorldInvocationId",
+    "WorldIssue",
+    "WorldMountGraphEnvelope",
+    "WorldOntologyRecord",
+    "WorldOntologyRecordId",
+    "WorldOntologyRecordKind",
+    "WorldOverlayId",
+    "WorldOverlayKind",
+    "WorldRenderBudgets",
+    "WorldRendererSessionId",
+    "WorldScene",
+    "WorldSceneContent",
+    "WorldSceneFidelityProjection",
+    "WorldSceneId",
+    "WorldSubmitIntentEnvelope"
+  ],
+  "documentKinds": [
+    "world.fidelity-projection",
+    "world.intent",
+    "world.ontology-record",
+    "world.scene"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical collection ordering, cross-field invariants, reference resolvability, replay bounds, executable-UI gates) are enforced by the runtime validators in @epoch/world-experience and are not represented in the JSON Schema files",
+  "emittedBy": "renderWorldExperienceContractFiles() in @epoch/world-experience (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "AnimationInstruction",
+      "file": "animation-instruction.schema.json",
+      "sha256": "e2e9cf753314d4948895aec23200caa5ab39a441c0bde1b41a7769334768f2c2"
+    },
+    {
+      "type": "CameraState",
+      "file": "camera-state.schema.json",
+      "sha256": "f5503fe1b09b3a3eec7ef35d872c13cdd9a889706031136add6fc8d2fb1bcb0f"
+    },
+    {
+      "type": "CameraTransition",
+      "file": "camera-transition.schema.json",
+      "sha256": "3f68a72ada0d74df533355f8a097b21e3cec1122d42cdd68b6c3b6bfb8eec98d"
+    },
+    {
+      "type": "CameraZoom",
+      "file": "camera-zoom.schema.json",
+      "sha256": "fc8b1d562e03bbffc5aa7e454c9c599673e6b707ac728f2c2551221bf7f5348f"
+    },
+    {
+      "type": "FidelityReduction",
+      "file": "fidelity-reduction.schema.json",
+      "sha256": "e1dd5b5760e8c3edb7f5f94d73d2620dd476feebaaabc8eef7cdf0b957584873"
+    },
+    {
+      "type": "FollowAgentCamera",
+      "file": "follow-agent-camera.schema.json",
+      "sha256": "b9e242144f75db58d88f972a7f244360b52135df2a4a20f390f566c822811cc3"
+    },
+    {
+      "type": "FollowCursorState",
+      "file": "follow-cursor-state.schema.json",
+      "sha256": "a4f9d79d819f3b3ce9060db117dcf4027edc0d0cd198b26e24d37c1b3f87c97f"
+    },
+    {
+      "type": "FreeCamera",
+      "file": "free-camera.schema.json",
+      "sha256": "e779ccf9f695135d600d0989a49e6a10d5d64eaf6af8c0a5614bf9ed97164584"
+    },
+    {
+      "type": "NarrativeStatusBlock",
+      "file": "narrative-status-block.schema.json",
+      "sha256": "d4e49c20d6cfabe9043db4a6dc224811bab9bcf8b1688d97c89d34406b43bd0f"
+    },
+    {
+      "type": "OrbitCamera",
+      "file": "orbit-camera.schema.json",
+      "sha256": "3c12fe44fa33132665a2b1fcfefbab37522d83366356e5cd816d0c43f413a01a"
+    },
+    {
+      "type": "OverlayApplication",
+      "file": "overlay-application.schema.json",
+      "sha256": "8f9f4bccb6eff6548f075bed8c1c45ae9e922e9b240949b62d423dc528f970b1"
+    },
+    {
+      "type": "SceneControl",
+      "file": "scene-control.schema.json",
+      "sha256": "3f6f91c9da99f4a55ee467675ea8dcbb411cfc1e9d62dc90cbab4c8cef7c23d9"
+    },
+    {
+      "type": "SceneEntity",
+      "file": "scene-entity.schema.json",
+      "sha256": "50f84062d4c4e83aa34be6daea9f5a167aa9c9708365fa10948c8ce1468aedb8"
+    },
+    {
+      "type": "SceneTimeline",
+      "file": "scene-timeline.schema.json",
+      "sha256": "2908d80096409f929812f8e53d9862c118b46afb245114bc6d2eb8451f5a20e3"
+    },
+    {
+      "type": "SceneTimelineMarker",
+      "file": "scene-timeline-marker.schema.json",
+      "sha256": "bd0bd1d815970c5ea4e928901f824d9ad3f1c4d689cdd5bcbe7d573f73db4a35"
+    },
+    {
+      "type": "SceneTimelinePosition",
+      "file": "scene-timeline-position.schema.json",
+      "sha256": "ccc855c323fb734b823e7673561234c363957110865d1bf907cccdda287db2ce"
+    },
+    {
+      "type": "VisualOverlay",
+      "file": "visual-overlay.schema.json",
+      "sha256": "3f96bf2c43b8d480668d677b9e5e32657784ac7785977a489b170e8aec0ee3f3"
+    },
+    {
+      "type": "WorldAdvanceFrameEnvelope",
+      "file": "world-advance-frame-envelope.schema.json",
+      "sha256": "52300c008112eda9d345995e58e8f6066555aa312e2bb20b400978f4c958b800"
+    },
+    {
+      "type": "WorldCameraMode",
+      "file": "world-camera-mode.schema.json",
+      "sha256": "61b15963f66ba77b138027dd87f9dda0145a72bead9b4ddae6b537df39c28584"
+    },
+    {
+      "type": "WorldCameraTransitionKind",
+      "file": "world-camera-transition-kind.schema.json",
+      "sha256": "17633ea72d5957db3fb356fcd8bb7a6f7fdb67b6cfe9d47ef52ae6e191c90e0b"
+    },
+    {
+      "type": "WorldEntityId",
+      "file": "world-entity-id.schema.json",
+      "sha256": "e76a10906ee00713967169ed4f35e94f5c6fbe560b988b39563c960191149a90"
+    },
+    {
+      "type": "WorldExperienceError",
+      "file": "world-experience-error.schema.json",
+      "sha256": "7c58e11137b0960eca8e96ef738bec2c7ad1e844c9386506f26992d233912e8d"
+    },
+    {
+      "type": "WorldExperienceProtocolVersion",
+      "file": "world-experience-protocol-version.schema.json",
+      "sha256": "70288321e22d7c30535b66c56a934fda11da58f8d55399fa5daab17b98b82767"
+    },
+    {
+      "type": "WorldFidelityLevel",
+      "file": "world-fidelity-level.schema.json",
+      "sha256": "c861faeb50fdba6b8c4f04220db77577196089dda348ef295905c62b1e85f251"
+    },
+    {
+      "type": "WorldIntentEffect",
+      "file": "world-intent-effect.schema.json",
+      "sha256": "55ccf8ed63221aac83d7c61ec98e6c788dcefa0e1c6179063ab2b698eb6a86a7"
+    },
+    {
+      "type": "WorldInteractionIntent",
+      "file": "world-interaction-intent.schema.json",
+      "sha256": "adf44939883c51f1180fe5821d8589a9f83425d857a60732ed00d374772394db"
+    },
+    {
+      "type": "WorldInteractionKind",
+      "file": "world-interaction-kind.schema.json",
+      "sha256": "060e3d60acd7c6d8be9e40ac857c8635811964d889b4dfa000f0f6b7f6d018c5"
+    },
+    {
+      "type": "WorldInvocationId",
+      "file": "world-invocation-id.schema.json",
+      "sha256": "a3a5413d95a8d2dccf4d332550ed94c131041238e9330469b704e6b5d2b354b5"
+    },
+    {
+      "type": "WorldIssue",
+      "file": "world-issue.schema.json",
+      "sha256": "a59ae131212f40c716cac106bbc01a344d2a926082b44d41f7a8adaa8d3f2dd4"
+    },
+    {
+      "type": "WorldMountGraphEnvelope",
+      "file": "world-mount-graph-envelope.schema.json",
+      "sha256": "d8dad94f21a274dd52d1ac9432a00c846e829ffe6af1b882eb95eb92d6539ca5"
+    },
+    {
+      "type": "WorldOntologyRecord",
+      "file": "world-ontology-record.schema.json",
+      "sha256": "629f6e3286e20afcec212d5fc85c48f709b16176f7ce9db56e04443832d52f4d"
+    },
+    {
+      "type": "WorldOntologyRecordId",
+      "file": "world-ontology-record-id.schema.json",
+      "sha256": "37d3e6e6e26b4eab90280186b769f856e98e7bb2f816e87127ef23ea589ce7e0"
+    },
+    {
+      "type": "WorldOntologyRecordKind",
+      "file": "world-ontology-record-kind.schema.json",
+      "sha256": "d833339af9fe234664f88561df93e3849e509d1dcaf92e7362b2de9290ac18e6"
+    },
+    {
+      "type": "WorldOverlayId",
+      "file": "world-overlay-id.schema.json",
+      "sha256": "3f58b529f66d6045ea79f515554107307e00a8a1181fa88463da409ed7cef675"
+    },
+    {
+      "type": "WorldOverlayKind",
+      "file": "world-overlay-kind.schema.json",
+      "sha256": "6e1093e7845d1265a616530085747ebb44f5462762ae9c774ddc6a0576b41c2d"
+    },
+    {
+      "type": "WorldRenderBudgets",
+      "file": "world-render-budgets.schema.json",
+      "sha256": "ac461e52ac6b6e655a5f1346a7a03f7f3184cf01cd0b4c0e484ccf6597ac4c6a"
+    },
+    {
+      "type": "WorldRendererSessionId",
+      "file": "world-renderer-session-id.schema.json",
+      "sha256": "7762922662d2279053ced366a8c6dda2640a0921581a83585af2caae847daa35"
+    },
+    {
+      "type": "WorldScene",
+      "file": "world-scene.schema.json",
+      "sha256": "239fcea75c274a105905cd44c1873e66fe179df997c77a2dc5ede2a70164c366"
+    },
+    {
+      "type": "WorldSceneContent",
+      "file": "world-scene-content.schema.json",
+      "sha256": "c51883a4ff15bbd9e4ed403c0ad6b3618a458c96f5e9637ddc407fab0ad8c391"
+    },
+    {
+      "type": "WorldSceneFidelityProjection",
+      "file": "world-scene-fidelity-projection.schema.json",
+      "sha256": "3684969cb193a72f6aecdae8c9bb877982db2df0d05e957aa231a008ad2979b9"
+    },
+    {
+      "type": "WorldSceneId",
+      "file": "world-scene-id.schema.json",
+      "sha256": "073f2d49a2f888f3af5b928ae91bcdab457ab9b59fc28c0d9117ded265792041"
+    },
+    {
+      "type": "WorldSubmitIntentEnvelope",
+      "file": "world-submit-intent-envelope.schema.json",
+      "sha256": "9eae595aa00695e8209684d9e7e53dc4e3382e5e6145f60da1e45a295bf1d6ab"
+    }
+  ]
+}

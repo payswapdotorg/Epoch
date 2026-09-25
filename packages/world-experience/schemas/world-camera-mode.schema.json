@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldCameraMode",
+  "$defs": {
+    "WorldCameraMode": {
+      "type": "string",
+      "enum": [
+        "follow-agent",
+        "free",
+        "orbit"
+      ],
+      "title": "WorldCameraMode",
+      "description": "Camera mode of a world scene: orbit, free, or follow-agent."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-camera-mode:1.0.0"
+}

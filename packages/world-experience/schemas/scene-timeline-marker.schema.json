@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SceneTimelineMarker",
+  "$defs": {
+    "SceneTimelineMarker": {
+      "type": "object",
+      "properties": {
+        "markerId": {
+          "$ref": "#/$defs/SceneMarkerId"
+        },
+        "atMs": {
+          "$ref": "#/$defs/WorldVirtualTimeMs"
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "markerKind": {
+          "$ref": "#/$defs/TimelineMarkerKind"
+        }
+      },
+      "required": [
+        "markerId",
+        "atMs",
+        "markerKind"
+      ],
+      "additionalProperties": false,
+      "title": "SceneTimelineMarker",
+      "description": "One scene timeline marker: virtual time, optional label, and kind (event, phase boundary, replay cursor, branch point)."
+    },
+    "SceneMarkerId": {
+      "type": "string",
+      "pattern": "^mrk-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SceneMarkerId",
+      "description": "Scene timeline-marker identifier: \"mrk-\" followed by a lowercase slug."
+    },
+    "WorldVirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "WorldVirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (caller-supplied; never a wall clock)."
+    },
+    "TimelineMarkerKind": {
+      "type": "string",
+      "enum": [
+        "branch-point",
+        "event",
+        "phase-end",
+        "phase-start",
+        "replay-cursor"
+      ],
+      "title": "TimelineMarkerKind",
+      "description": "Kind of a timeline marker (event, phase boundary, replay cursor, branch point)."
+    }
+  },
+  "$id": "urn:epoch:world-experience:scene-timeline-marker:1.0.0"
+}

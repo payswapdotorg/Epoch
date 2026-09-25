@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldInvocationId",
+  "$defs": {
+    "WorldInvocationId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "WorldInvocationId",
+      "description": "Opaque invocation identifier (shared message-id grammar), unique within the caller scope."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-invocation-id:1.0.0"
+}

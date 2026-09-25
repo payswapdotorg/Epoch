@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldOntologyRecordId",
+  "$defs": {
+    "WorldOntologyRecordId": {
+      "type": "string",
+      "pattern": "^ont-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldOntologyRecordId",
+      "description": "Ontology-record identifier: \"ont-\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-ontology-record-id:1.0.0"
+}
