@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldOntologyRecordKind",
+  "$defs": {
+    "WorldOntologyRecordKind": {
+      "type": "string",
+      "enum": [
+        "affordance",
+        "animation",
+        "material",
+        "representation-3d",
+        "state-overlay",
+        "symbol-2d"
+      ],
+      "title": "WorldOntologyRecordKind",
+      "description": "One domain visual ontology record kind: 2D symbols, 3D representations, materials/textures, state overlays, animations, interaction affordances."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-ontology-record-kind:1.0.0"
+}

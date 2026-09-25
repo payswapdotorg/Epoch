@@ -1,0 +1,34 @@
+{
+  "name": "@epoch/world-experience",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch World Experience v1 (Work Order W016, experience layer): the interactive-world DOMAIN MODEL — tenant-scoped world scene/view descriptors (Experience Graph vocabulary: focused entities, visual overlays, animation instructions, narrative/status blocks, timeline/replay positions, presence, evidence references, candidate/action controls), camera/follow-agent semantics as typed data, the world-subset interaction-intent vocabulary, the pack-contributable domain visual ontology, typed fidelity projections, and renderer-envelope compilers that emit W013 mount-graph/advance-frame/submit-intent envelopes as pure data. A typed projection of the same world used by humans and agents — never a second authority (architecture lock rule 8).",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/experience-compiler": "workspace:*",
+    "@epoch/renderer-runtime": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

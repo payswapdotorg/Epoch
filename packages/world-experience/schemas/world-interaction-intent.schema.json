@@ -1,0 +1,951 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldInteractionIntent",
+  "$defs": {
+    "WorldInteractionIntent": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/SelectIntent"
+        },
+        {
+          "$ref": "#/$defs/InspectIntent"
+        },
+        {
+          "$ref": "#/$defs/MeasureIntent"
+        },
+        {
+          "$ref": "#/$defs/MoveIntent"
+        },
+        {
+          "$ref": "#/$defs/RotateIntent"
+        },
+        {
+          "$ref": "#/$defs/ZoomIntent"
+        },
+        {
+          "$ref": "#/$defs/IsolateIntent"
+        },
+        {
+          "$ref": "#/$defs/HideIntent"
+        },
+        {
+          "$ref": "#/$defs/ShowIntent"
+        },
+        {
+          "$ref": "#/$defs/CompareIntent"
+        },
+        {
+          "$ref": "#/$defs/AnnotateIntent"
+        },
+        {
+          "$ref": "#/$defs/SimulateIntent"
+        },
+        {
+          "$ref": "#/$defs/ChangeIntent"
+        },
+        {
+          "$ref": "#/$defs/ConnectIntent"
+        },
+        {
+          "$ref": "#/$defs/DisconnectIntent"
+        },
+        {
+          "$ref": "#/$defs/FilterIntent"
+        },
+        {
+          "$ref": "#/$defs/QueryIntent"
+        },
+        {
+          "$ref": "#/$defs/BranchIntent"
+        },
+        {
+          "$ref": "#/$defs/ReplayIntent"
+        },
+        {
+          "$ref": "#/$defs/PauseIntent"
+        },
+        {
+          "$ref": "#/$defs/ResumeIntent"
+        },
+        {
+          "$ref": "#/$defs/FollowAgentIntent"
+        }
+      ],
+      "title": "WorldInteractionIntent",
+      "description": "One world-subset interaction intent: typed, versioned data (never executable UI code) covering select/inspect/measure/move/rotate/zoom/isolate/hide/show/compare/annotate/simulate/change/connect/disconnect/filter/query/branch/replay/pause/resume/follow-agent."
+    },
+    "SelectIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "select"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "entityId"
+      ],
+      "additionalProperties": false,
+      "title": "SelectIntent"
+    },
+    "WorldInvocationId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "WorldInvocationId",
+      "description": "Opaque invocation identifier (shared message-id grammar), unique within the caller scope."
+    },
+    "WorldEntityId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "WorldEntityId",
+      "description": "Opaque world-entity identity (mirrored shared grammar; canonical home @epoch/world-model): 1..256 chars, caller-assigned."
+    },
+    "InspectIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "inspect"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "entityId"
+      ],
+      "additionalProperties": false,
+      "title": "InspectIntent"
+    },
+    "MeasureIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "measure"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "fromEntityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "toEntityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "fromEntityId",
+        "toEntityId"
+      ],
+      "additionalProperties": false,
+      "title": "MeasureIntent"
+    },
+    "MoveIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "move"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "delta": {
+          "$ref": "#/$defs/Vec3"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "entityId",
+        "delta"
+      ],
+      "additionalProperties": false,
+      "title": "MoveIntent"
+    },
+    "Vec3": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3,
+      "title": "Vec3",
+      "description": "Finite 3-component numeric vector (x, y, z)."
+    },
+    "RotateIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "rotate"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "delta": {
+          "$ref": "#/$defs/Quaternion"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "entityId",
+        "delta"
+      ],
+      "additionalProperties": false,
+      "title": "RotateIntent"
+    },
+    "Quaternion": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4,
+      "title": "Quaternion",
+      "description": "Finite orientation quaternion (x, y, z, w); neutral math, renderer-normalized."
+    },
+    "ZoomIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "zoom"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "factor": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "factor"
+      ],
+      "additionalProperties": false,
+      "title": "ZoomIntent"
+    },
+    "IsolateIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "isolate"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "entityId"
+      ],
+      "additionalProperties": false,
+      "title": "IsolateIntent"
+    },
+    "HideIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "hide"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "entityIds": {
+          "minItems": 1,
+          "maxItems": 512,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldEntityId"
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "entityIds"
+      ],
+      "additionalProperties": false,
+      "title": "HideIntent"
+    },
+    "ShowIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "show"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "entityIds": {
+          "minItems": 1,
+          "maxItems": 512,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldEntityId"
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "entityIds"
+      ],
+      "additionalProperties": false,
+      "title": "ShowIntent"
+    },
+    "CompareIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "compare"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "leftEntityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "rightEntityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "leftEntityId",
+        "rightEntityId"
+      ],
+      "additionalProperties": false,
+      "title": "CompareIntent"
+    },
+    "AnnotateIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "annotate"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "evidenceDigests": {
+          "maxItems": 32,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Sha256Hex"
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "entityId",
+        "text"
+      ],
+      "additionalProperties": false,
+      "title": "AnnotateIntent"
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "SimulateIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "simulate"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "scenarioRef": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "scenarioRef"
+      ],
+      "additionalProperties": false,
+      "title": "SimulateIntent"
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "ChangeIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "change"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "propertyPath": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)*$"
+        },
+        "value": {
+          "$ref": "#/$defs/JsonValue"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "entityId",
+        "propertyPath",
+        "value"
+      ],
+      "additionalProperties": false,
+      "title": "ChangeIntent"
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "ConnectIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "connect"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "fromEntityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "toEntityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "fromEntityId",
+        "toEntityId"
+      ],
+      "additionalProperties": false,
+      "title": "ConnectIntent"
+    },
+    "DisconnectIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "disconnect"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "fromEntityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "toEntityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "fromEntityId",
+        "toEntityId"
+      ],
+      "additionalProperties": false,
+      "title": "DisconnectIntent"
+    },
+    "FilterIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "filter"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "includeEntityIds": {
+          "minItems": 1,
+          "maxItems": 512,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldEntityId"
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "includeEntityIds"
+      ],
+      "additionalProperties": false,
+      "title": "FilterIntent"
+    },
+    "QueryIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "query"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "text"
+      ],
+      "additionalProperties": false,
+      "title": "QueryIntent"
+    },
+    "BranchIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "branch"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "atMs": {
+          "$ref": "#/$defs/WorldVirtualTimeMs"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "atMs"
+      ],
+      "additionalProperties": false,
+      "title": "BranchIntent"
+    },
+    "WorldVirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "WorldVirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (caller-supplied; never a wall clock)."
+    },
+    "ReplayIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "replay"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "fromMs": {
+          "$ref": "#/$defs/WorldVirtualTimeMs"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "fromMs"
+      ],
+      "additionalProperties": false,
+      "title": "ReplayIntent"
+    },
+    "PauseIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "pause"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId"
+      ],
+      "additionalProperties": false,
+      "title": "PauseIntent"
+    },
+    "ResumeIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "resume"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId"
+      ],
+      "additionalProperties": false,
+      "title": "ResumeIntent"
+    },
+    "FollowAgentIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "follow-agent"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "agentId"
+      ],
+      "additionalProperties": false,
+      "title": "FollowAgentIntent"
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-interaction-intent:1.0.0"
+}

@@ -1,0 +1,423 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldSceneFidelityProjection",
+  "$defs": {
+    "WorldSceneFidelityProjection": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-fidelity-projection"
+        },
+        "protocolVersion": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "sceneId": {
+          "$ref": "#/$defs/WorldSceneId"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "fidelity": {
+          "$ref": "#/$defs/WorldFidelityLevel"
+        },
+        "spatial": {
+          "type": "boolean"
+        },
+        "remoteRendering": {
+          "type": "boolean"
+        },
+        "entityIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "focusedEntityIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "appliedOverlayIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^ovl-[a-z0-9][a-z0-9-]{0,62}$"
+          }
+        },
+        "animationInstructionIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^ani-[a-z0-9][a-z0-9-]{0,62}$"
+          }
+        },
+        "markerIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^mrk-[a-z0-9][a-z0-9-]{0,62}$"
+          }
+        },
+        "narrativeBlockIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^nrb-[a-z0-9][a-z0-9-]{0,62}$"
+          }
+        },
+        "presenceParticipantIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          }
+        },
+        "camera": {
+          "$ref": "#/$defs/CameraState"
+        },
+        "positionAtMs": {
+          "$ref": "#/$defs/WorldVirtualTimeMs"
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "reductions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FidelityReduction"
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "sceneId",
+        "tenantScope",
+        "fidelity",
+        "spatial",
+        "remoteRendering",
+        "entityIds",
+        "focusedEntityIds",
+        "appliedOverlayIds",
+        "animationInstructionIds",
+        "markerIds",
+        "narrativeBlockIds",
+        "presenceParticipantIds",
+        "camera",
+        "positionAtMs",
+        "paused",
+        "reductions"
+      ],
+      "additionalProperties": false,
+      "title": "WorldSceneFidelityProjection",
+      "description": "The typed fidelity projection of one world scene: same semantics, explicit aspect reductions, deterministic truncation in canonical order."
+    },
+    "WorldSceneId": {
+      "type": "string",
+      "pattern": "^wsc-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldSceneId",
+      "description": "World-scene identifier: \"wsc-\" followed by a lowercase slug."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "WorldFidelityLevel": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "low",
+        "mobile",
+        "remote",
+        "web"
+      ],
+      "title": "WorldFidelityLevel",
+      "description": "Typed device-adaptation fidelity level: desktop (full), web (normal), mobile (field), low (2D/reduced), remote (optional)."
+    },
+    "CameraState": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/FollowAgentCamera"
+        },
+        {
+          "$ref": "#/$defs/FreeCamera"
+        },
+        {
+          "$ref": "#/$defs/OrbitCamera"
+        }
+      ],
+      "title": "CameraState",
+      "description": "The camera state of a world scene as typed data: orbit, free, or follow-agent (agent plus cursor state)."
+    },
+    "FollowAgentCamera": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "const": "follow-agent"
+        },
+        "agentRef": {
+          "$ref": "#/$defs/ProjectedAgentRef"
+        },
+        "followDistance": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "cursor": {
+          "$ref": "#/$defs/FollowCursorState"
+        }
+      },
+      "required": [
+        "mode",
+        "agentRef"
+      ],
+      "additionalProperties": false,
+      "title": "FollowAgentCamera"
+    },
+    "ProjectedAgentRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "agent"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "agentId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedAgentRef",
+      "description": "Exact-revision reference to a registered agent (W003 grammar; digest of its registration canonical JSON)."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "FollowCursorState": {
+      "type": "object",
+      "properties": {
+        "position2d": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "additionalProperties": false
+        },
+        "position3d": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "additionalProperties": false,
+      "title": "FollowCursorState",
+      "description": "The followed agent cursor state: a 2D or 3D position at a virtual time."
+    },
+    "Vec3": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3,
+      "title": "Vec3",
+      "description": "Finite 3-component numeric vector (x, y, z)."
+    },
+    "FreeCamera": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "const": "free"
+        },
+        "position": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "orientation": {
+          "$ref": "#/$defs/Quaternion"
+        }
+      },
+      "required": [
+        "mode",
+        "position"
+      ],
+      "additionalProperties": false,
+      "title": "FreeCamera"
+    },
+    "Quaternion": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4,
+      "title": "Quaternion",
+      "description": "Finite orientation quaternion (x, y, z, w); neutral math, renderer-normalized."
+    },
+    "OrbitCamera": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "const": "orbit"
+        },
+        "position": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "orientation": {
+          "$ref": "#/$defs/Quaternion"
+        },
+        "target": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "fovRadians": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 3.141592653589793
+        }
+      },
+      "required": [
+        "mode",
+        "position"
+      ],
+      "additionalProperties": false,
+      "title": "OrbitCamera"
+    },
+    "WorldVirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "WorldVirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (caller-supplied; never a wall clock)."
+    },
+    "FidelityReduction": {
+      "type": "object",
+      "properties": {
+        "aspect": {
+          "type": "string",
+          "enum": [
+            "animation-instructions",
+            "applied-overlays",
+            "narrative-blocks",
+            "presence-participants",
+            "spatial-presentation",
+            "timeline-markers"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "fidelity-max-animation-instructions",
+            "fidelity-max-applied-overlays",
+            "fidelity-max-timeline-markers",
+            "fidelity-narrative-detail",
+            "fidelity-presence-detail",
+            "fidelity-spatial-disabled"
+          ]
+        },
+        "encountered": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "retained": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "aspect",
+        "reason",
+        "encountered",
+        "retained"
+      ],
+      "additionalProperties": false,
+      "title": "FidelityReduction",
+      "description": "One explicit fidelity reduction: aspect, typed reason, encountered vs retained counts (never silent degradation)."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-scene-fidelity-projection:1.0.0"
+}

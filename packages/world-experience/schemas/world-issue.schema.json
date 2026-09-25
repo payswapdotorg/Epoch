@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldIssue",
+  "$defs": {
+    "WorldIssue": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "WorldIssue",
+      "description": "One typed world-experience issue: dotted path plus message."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-issue:1.0.0"
+}

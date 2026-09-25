@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldEntityId",
+  "$defs": {
+    "WorldEntityId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "WorldEntityId",
+      "description": "Opaque world-entity identity (mirrored shared grammar; canonical home @epoch/world-model): 1..256 chars, caller-assigned."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-entity-id:1.0.0"
+}

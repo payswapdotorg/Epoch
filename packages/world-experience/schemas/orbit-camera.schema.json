@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OrbitCamera",
+  "$defs": {
+    "OrbitCamera": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "const": "orbit"
+        },
+        "position": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "orientation": {
+          "$ref": "#/$defs/Quaternion"
+        },
+        "target": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "fovRadians": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 3.141592653589793
+        }
+      },
+      "required": [
+        "mode",
+        "position"
+      ],
+      "additionalProperties": false,
+      "title": "OrbitCamera"
+    },
+    "Vec3": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3,
+      "title": "Vec3",
+      "description": "Finite 3-component numeric vector (x, y, z)."
+    },
+    "Quaternion": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4,
+      "title": "Quaternion",
+      "description": "Finite orientation quaternion (x, y, z, w); neutral math, renderer-normalized."
+    }
+  },
+  "$id": "urn:epoch:world-experience:orbit-camera:1.0.0"
+}

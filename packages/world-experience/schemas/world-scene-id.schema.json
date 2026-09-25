@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldSceneId",
+  "$defs": {
+    "WorldSceneId": {
+      "type": "string",
+      "pattern": "^wsc-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldSceneId",
+      "description": "World-scene identifier: \"wsc-\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:world-experience:world-scene-id:1.0.0"
+}

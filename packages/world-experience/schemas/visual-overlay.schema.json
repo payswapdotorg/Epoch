@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/VisualOverlay",
+  "$defs": {
+    "VisualOverlay": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/HighlightOverlay"
+        },
+        {
+          "$ref": "#/$defs/AnnotationOverlay"
+        },
+        {
+          "$ref": "#/$defs/MeasurementOverlay"
+        },
+        {
+          "$ref": "#/$defs/StateOverlay"
+        }
+      ],
+      "title": "VisualOverlay",
+      "description": "One visual overlay of a world scene: highlight, annotation, measurement, or state — presentation data only."
+    },
+    "HighlightOverlay": {
+      "type": "object",
+      "properties": {
+        "overlayId": {
+          "$ref": "#/$defs/WorldOverlayId"
+        },
+        "overlayKind": {
+          "type": "string",
+          "const": "highlight"
+        },
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "color": {
+          "$ref": "#/$defs/ColorHex"
+        }
+      },
+      "required": [
+        "overlayId",
+        "overlayKind",
+        "entityId",
+        "color"
+      ],
+      "additionalProperties": false,
+      "title": "HighlightOverlay"
+    },
+    "WorldOverlayId": {
+      "type": "string",
+      "pattern": "^ovl-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldOverlayId",
+      "description": "Visual-overlay identifier: \"ovl-\" followed by a lowercase slug."
+    },
+    "WorldEntityId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "WorldEntityId",
+      "description": "Opaque world-entity identity (mirrored shared grammar; canonical home @epoch/world-model): 1..256 chars, caller-assigned."
+    },
+    "ColorHex": {
+      "type": "string",
+      "pattern": "^#[0-9a-f]{6}([0-9a-f]{2})?$",
+      "title": "ColorHex",
+      "description": "Presentation color as lowercase hex: #RRGGBB or #RRGGBBAA."
+    },
+    "AnnotationOverlay": {
+      "type": "object",
+      "properties": {
+        "overlayId": {
+          "$ref": "#/$defs/WorldOverlayId"
+        },
+        "overlayKind": {
+          "type": "string",
+          "const": "annotation"
+        },
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "evidenceDigests": {
+          "maxItems": 32,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Sha256Hex"
+          }
+        }
+      },
+      "required": [
+        "overlayId",
+        "overlayKind",
+        "entityId",
+        "text"
+      ],
+      "additionalProperties": false,
+      "title": "AnnotationOverlay"
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "MeasurementOverlay": {
+      "type": "object",
+      "properties": {
+        "overlayId": {
+          "$ref": "#/$defs/WorldOverlayId"
+        },
+        "overlayKind": {
+          "type": "string",
+          "const": "measurement"
+        },
+        "fromEntityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "toEntityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "evidenceDigests": {
+          "maxItems": 32,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Sha256Hex"
+          }
+        }
+      },
+      "required": [
+        "overlayId",
+        "overlayKind",
+        "fromEntityId",
+        "toEntityId"
+      ],
+      "additionalProperties": false,
+      "title": "MeasurementOverlay"
+    },
+    "StateOverlay": {
+      "type": "object",
+      "properties": {
+        "overlayId": {
+          "$ref": "#/$defs/WorldOverlayId"
+        },
+        "overlayKind": {
+          "type": "string",
+          "const": "state"
+        },
+        "entityId": {
+          "$ref": "#/$defs/WorldEntityId"
+        },
+        "stateKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "tint": {
+          "$ref": "#/$defs/ColorHex"
+        },
+        "badgeLabel": {
+          "type": "string",
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "overlayId",
+        "overlayKind",
+        "entityId",
+        "stateKey"
+      ],
+      "additionalProperties": false,
+      "title": "StateOverlay"
+    }
+  },
+  "$id": "urn:epoch:world-experience:visual-overlay:1.0.0"
+}

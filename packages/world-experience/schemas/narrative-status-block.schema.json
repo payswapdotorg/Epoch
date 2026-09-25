@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/NarrativeStatusBlock",
+  "$defs": {
+    "NarrativeStatusBlock": {
+      "type": "object",
+      "properties": {
+        "blockId": {
+          "$ref": "#/$defs/NarrativeBlockId"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "body": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "tone": {
+          "$ref": "#/$defs/NarrativeTone"
+        },
+        "statusKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "evidenceDigests": {
+          "maxItems": 32,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Sha256Hex"
+          }
+        },
+        "atMs": {
+          "$ref": "#/$defs/WorldVirtualTimeMs"
+        }
+      },
+      "required": [
+        "blockId",
+        "title"
+      ],
+      "additionalProperties": false,
+      "title": "NarrativeStatusBlock",
+      "description": "One narrative/status block: bounded title/body, presentation tone, optional machine-readable status key, sorted evidence citations, virtual time."
+    },
+    "NarrativeBlockId": {
+      "type": "string",
+      "pattern": "^nrb-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "NarrativeBlockId",
+      "description": "Narrative/status-block identifier: \"nrb-\" followed by a lowercase slug."
+    },
+    "NarrativeTone": {
+      "type": "string",
+      "enum": [
+        "cautionary",
+        "celebratory",
+        "informative",
+        "neutral"
+      ],
+      "title": "NarrativeTone",
+      "description": "Presentation tone of a narrative beat."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "WorldVirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "WorldVirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (caller-supplied; never a wall clock)."
+    }
+  },
+  "$id": "urn:epoch:world-experience:narrative-status-block:1.0.0"
+}
