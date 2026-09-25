@@ -1,0 +1,34 @@
+{
+  "name": "@epoch/collaboration",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Collaboration kernel — session-based presence/coordination over the shared model (W010): typed collaboration sessions with tenant scoping, participant membership as opaque principal ids, presence events, and session-scoped coordination envelopes. A coordination surface, NOT a second authority: it never mutates the world model and never makes authorization decisions — actors' actions still flow through the Action Gateway.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

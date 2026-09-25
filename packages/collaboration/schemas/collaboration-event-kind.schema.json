@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CollaborationEventKind",
+  "$defs": {
+    "CollaborationEventKind": {
+      "type": "string",
+      "enum": [
+        "participant.joined",
+        "participant.left",
+        "participant.presence",
+        "subject.focused",
+        "subject.released",
+        "coordination.note",
+        "session.closed"
+      ],
+      "title": "CollaborationEventKind",
+      "description": "Closed vocabulary of session-scoped coordination kinds: membership, presence, subject focus, notes, and the terminal session.closed."
+    }
+  },
+  "$id": "urn:epoch:collaboration:collaboration-event-kind:1.0.0"
+}

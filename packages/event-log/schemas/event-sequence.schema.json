@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EventSequence",
+  "$defs": {
+    "EventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "EventSequence",
+      "description": "One event sequence number: 1-based, strictly contiguous per stream (the stream cursor)."
+    }
+  },
+  "$id": "urn:epoch:event-log:event-sequence:1.0.0"
+}

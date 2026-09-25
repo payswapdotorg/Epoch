@@ -1,0 +1,34 @@
+{
+  "name": "@epoch/event-log",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Event Log kernel — the authoritative append-only change history (W010): totally-ordered per-stream typed events carrying actor/tenant scoping, causal references, payload discriminators and content digests; strict monotonic sequence admission with gap/duplicate/tamper/cross-tenant rejection; deterministic in-memory cursor and read primitives. Events are immutable facts; corrections are new events, never mutations.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EventLogRecordVersion",
+  "$defs": {
+    "EventLogRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "EventLogRecordVersion",
+      "description": "Version discriminator carried by every serialized event-log record and snapshot (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:event-log:event-log-record-version:1.0.0"
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ParticipantPresence",
+  "$defs": {
+    "ParticipantPresence": {
+      "readOnly": true,
+      "title": "ParticipantPresence",
+      "description": "Membership projection of one session participant: principal, presence, last touch.",
+      "type": "object",
+      "properties": {
+        "principalId": {
+          "$ref": "#/$defs/ParticipantPrincipalId"
+        },
+        "presence": {
+          "$ref": "#/$defs/PresenceState"
+        },
+        "lastSequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "principalId",
+        "presence",
+        "lastSequence"
+      ],
+      "additionalProperties": false
+    },
+    "ParticipantPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ParticipantPrincipalId",
+      "description": "Opaque session participant principal id (W009 grammar)."
+    },
+    "PresenceState": {
+      "type": "string",
+      "enum": [
+        "joining",
+        "present",
+        "idle",
+        "left"
+      ],
+      "title": "PresenceState",
+      "description": "Presence of a session participant: joining, present, idle, or left (terminal)."
+    }
+  },
+  "$id": "urn:epoch:collaboration:participant-presence:1.0.0"
+}

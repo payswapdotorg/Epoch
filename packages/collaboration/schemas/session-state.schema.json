@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SessionState",
+  "$defs": {
+    "SessionState": {
+      "type": "string",
+      "enum": [
+        "open",
+        "closed"
+      ],
+      "title": "SessionState",
+      "description": "Session lifecycle state: open or closed (closed is terminal)."
+    }
+  },
+  "$id": "urn:epoch:collaboration:session-state:1.0.0"
+}

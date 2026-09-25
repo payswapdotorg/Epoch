@@ -1,0 +1,120 @@
+{
+  "contract": "epoch/event-log",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Event Log contract surface (W010): the authoritative append-only change history as totally-ordered per-stream typed events with actor/tenant scoping, causal references, payload discriminators and content digests. JSON Schema projection under schemas/; runtime validators in @epoch/event-log.",
+  "dataTypes": [
+    "ActionLifecycleEventData",
+    "CausalEventReference",
+    "EventActor",
+    "EventData",
+    "EventKindDiscriminator",
+    "EventLogIssue",
+    "EventLogRecordVersion",
+    "EventLogSnapshot",
+    "EventPayload",
+    "EventRecord",
+    "EventRegistration",
+    "EventSequence",
+    "EventStreamId",
+    "EventSubject",
+    "EventTenantId",
+    "Sha256Digest",
+    "StreamInfo",
+    "WorldSubjectsEventData"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (intra-stream causal parents, kernel payload contracts for reserved namespaces, snapshot ordering/projection consistency) are enforced by the runtime validators in @epoch/event-log and are not represented in the JSON Schema files",
+  "emittedBy": "renderEventLogContractFiles() in @epoch/event-log (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "ActionLifecycleEventData",
+      "file": "action-lifecycle-event-data.schema.json",
+      "sha256": "d8f0d945fceaaf4281f6c1248205d873e24a1d209883308cadcffef9461a9c4a"
+    },
+    {
+      "type": "CausalEventReference",
+      "file": "causal-event-reference.schema.json",
+      "sha256": "6b477b450ef6e5ff3071b4d9a475a212d11e93fdf5e805b270c27cf6c2b56125"
+    },
+    {
+      "type": "EventActor",
+      "file": "event-actor.schema.json",
+      "sha256": "2c1e6594987d1200b481e29c3c7330ccb9ea4448bf3bf18c0d6e9d61021a520e"
+    },
+    {
+      "type": "EventData",
+      "file": "event-data.schema.json",
+      "sha256": "3943dc76b78f4a03d845f088c86badced87da337c0c703b6b63171fd2d806b09"
+    },
+    {
+      "type": "EventKindDiscriminator",
+      "file": "event-kind-discriminator.schema.json",
+      "sha256": "2e77c0cef58ee748b2e7043f5597e9492701d2adc26d0ada2fbe60f1a9a1376d"
+    },
+    {
+      "type": "EventLogIssue",
+      "file": "event-log-issue.schema.json",
+      "sha256": "57ff6d0a76617cc3f19c65b57271fa054498f72e13ebec2be8e319af1e991a67"
+    },
+    {
+      "type": "EventLogRecordVersion",
+      "file": "event-log-record-version.schema.json",
+      "sha256": "09cec7a163023db9da001825e83f072765c0f12a6cc9fcbba16b671b548c6f2c"
+    },
+    {
+      "type": "EventLogSnapshot",
+      "file": "event-log-snapshot.schema.json",
+      "sha256": "82c919a8aac8437ce435135d0b752c2f9abd862c66fe57651bd63e5a6a3a97c6"
+    },
+    {
+      "type": "EventPayload",
+      "file": "event-payload.schema.json",
+      "sha256": "0fe8ed51f3d73ba607c718a3ae6b254630241889a19f2211a6e951f1825fb10c"
+    },
+    {
+      "type": "EventRecord",
+      "file": "event-record.schema.json",
+      "sha256": "a0e995f822488c9009dd194a3b6b6a7c2451aa0b2459bffea0e1180da96a6ebf"
+    },
+    {
+      "type": "EventRegistration",
+      "file": "event-registration.schema.json",
+      "sha256": "9f69e3af34041d7db623b8c6151c98ac0b568449b9a84ac04ce848b52a0d3b27"
+    },
+    {
+      "type": "EventSequence",
+      "file": "event-sequence.schema.json",
+      "sha256": "05ea277e82e4762ff3a1b7a470ed24a3d1fde6e1279ddd74d1dd603a9e7d944e"
+    },
+    {
+      "type": "EventStreamId",
+      "file": "event-stream-id.schema.json",
+      "sha256": "2a82387b41234b8355cd79b29674eafed081acc1bb879db3205632eada54a931"
+    },
+    {
+      "type": "EventSubject",
+      "file": "event-subject.schema.json",
+      "sha256": "4573f2eb839dc0afa6344715fc91392474f1f93a8f731cc2a5c36156590cdeb1"
+    },
+    {
+      "type": "EventTenantId",
+      "file": "event-tenant-id.schema.json",
+      "sha256": "64ec99168b6dd3b4e945dab43dc96f2e695a7fa2040cb831e50ea59168ee21a0"
+    },
+    {
+      "type": "Sha256Digest",
+      "file": "sha256-digest.schema.json",
+      "sha256": "688cbac2416adeb25773383d93c2ca79e3bdd939c9d3055dd94f2e10739e604d"
+    },
+    {
+      "type": "StreamInfo",
+      "file": "stream-info.schema.json",
+      "sha256": "49b54b535d50f2ef2eb89aa09105f0035b1879a2a65796379577fe5536b4074f"
+    },
+    {
+      "type": "WorldSubjectsEventData",
+      "file": "world-subjects-event-data.schema.json",
+      "sha256": "0f2e322edc74efeaba9c7538bcd7b90df4c8c706afb1eabfb559b7b42e486011"
+    }
+  ]
+}

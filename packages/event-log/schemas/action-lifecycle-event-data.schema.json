@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ActionLifecycleEventData",
+  "$defs": {
+    "ActionLifecycleEventData": {
+      "readOnly": true,
+      "title": "ActionLifecycleEventData",
+      "description": "Payload data for the reserved \"action:lifecycle\" event kind: exact-revision proposal reference, action type, and lifecycle phase (W003 vocabulary).",
+      "type": "object",
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/ProposalReference"
+        },
+        "actionType": {
+          "$ref": "#/$defs/ActionTypeReference"
+        },
+        "phase": {
+          "type": "string",
+          "enum": [
+            "proposed",
+            "authorized",
+            "rejected",
+            "executed",
+            "effects-recorded",
+            "failed"
+          ]
+        },
+        "detail": {
+          "$ref": "#/$defs/EventData"
+        }
+      },
+      "required": [
+        "action",
+        "actionType",
+        "phase"
+      ],
+      "additionalProperties": false
+    },
+    "ProposalReference": {
+      "type": "object",
+      "properties": {
+        "proposalId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "canonicalDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "proposalId",
+        "canonicalDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProposalReference",
+      "description": "Exact-revision proposal reference: id plus the SHA-256 digest of the canonical proposal."
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    },
+    "ActionTypeReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "ActionTypeReference",
+      "description": "Reference to a versioned action type: dot-namespaced id plus semver core version."
+    },
+    "EventData": {
+      "readOnly": true,
+      "title": "EventData",
+      "description": "Opaque JSON data of an event payload; the discriminator selects its interpretation.",
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      }
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:event-log:action-lifecycle-event-data:1.0.0"
+}

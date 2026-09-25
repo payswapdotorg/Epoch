@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PresenceState",
+  "$defs": {
+    "PresenceState": {
+      "type": "string",
+      "enum": [
+        "joining",
+        "present",
+        "idle",
+        "left"
+      ],
+      "title": "PresenceState",
+      "description": "Presence of a session participant: joining, present, idle, or left (terminal)."
+    }
+  },
+  "$id": "urn:epoch:collaboration:presence-state:1.0.0"
+}

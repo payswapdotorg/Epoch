@@ -1,0 +1,138 @@
+{
+  "contract": "epoch/collaboration",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Collaboration contract surface (W010): session-based presence/coordination over the shared model — tenant-scoped sessions, opaque principal membership, presence events, and session-scoped coordination envelopes. A coordination surface, never a second authority. JSON Schema projection under schemas/; runtime validators in @epoch/collaboration.",
+  "dataTypes": [
+    "CollaborationEvent",
+    "CollaborationEventKind",
+    "CollaborationEventRecord",
+    "CollaborationIssue",
+    "CollaborationRecordVersion",
+    "CollaborationSession",
+    "CollaborationSessionId",
+    "CollaborationSessionRecord",
+    "CollaborationSnapshot",
+    "CollaborationSubject",
+    "CollaborationSubjectKind",
+    "CollaborationTenantId",
+    "CoordinationData",
+    "ParticipantPresence",
+    "ParticipantPrincipalId",
+    "PresenceState",
+    "SessionRegistration",
+    "SessionScope",
+    "SessionState",
+    "SessionStateInfo",
+    "Sha256Digest"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (session scope workspace-with-project, per-kind event member consistency, membership/presence invariants) are enforced by the runtime validators in @epoch/collaboration and are not represented in the JSON Schema files",
+  "emittedBy": "renderCollaborationContractFiles() in @epoch/collaboration (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "CollaborationEvent",
+      "file": "collaboration-event.schema.json",
+      "sha256": "46b63e6c1c1889c20302949bc7651d5694dde3aff2fdd10074ed00668bf46140"
+    },
+    {
+      "type": "CollaborationEventKind",
+      "file": "collaboration-event-kind.schema.json",
+      "sha256": "8bd0f36be5fa159162b4315b1f14d49301abf253a5b8c6819a8ae6d97df81576"
+    },
+    {
+      "type": "CollaborationEventRecord",
+      "file": "collaboration-event-record.schema.json",
+      "sha256": "eff706bcf32fc224e91b52e939df18814b76323e6c7debdca09470cd5d400309"
+    },
+    {
+      "type": "CollaborationIssue",
+      "file": "collaboration-issue.schema.json",
+      "sha256": "e16530ba089f9ce95c24566996e5c2f4e2a47cc475dd58a0a5caaee83ea7c4f2"
+    },
+    {
+      "type": "CollaborationRecordVersion",
+      "file": "collaboration-record-version.schema.json",
+      "sha256": "8fbb15ddd5b3b61e3ed1c5085da4e5afbaa465eb6bc5ed4da0ff45f2c5e15673"
+    },
+    {
+      "type": "CollaborationSession",
+      "file": "collaboration-session.schema.json",
+      "sha256": "ba84697053033b8a7d067bc0a0b5b191ca7bef52369bb5ca83e311b93657c121"
+    },
+    {
+      "type": "CollaborationSessionId",
+      "file": "collaboration-session-id.schema.json",
+      "sha256": "420fd356bd582b466071368bd09d8607a637daa9e16ca4953f57b53c2a1b0d10"
+    },
+    {
+      "type": "CollaborationSessionRecord",
+      "file": "collaboration-session-record.schema.json",
+      "sha256": "4ed45ae945353edb3fe76977921e3a446e1057bd390d8877c301485a8526a328"
+    },
+    {
+      "type": "CollaborationSnapshot",
+      "file": "collaboration-snapshot.schema.json",
+      "sha256": "31044fcab8362bba8f01c2652c0205b24915dbc4c981bcc86155197588f39518"
+    },
+    {
+      "type": "CollaborationSubject",
+      "file": "collaboration-subject.schema.json",
+      "sha256": "b7d23b5b2ba0d0b2943c7cfa082763c101c29235604be539f93ec85231741858"
+    },
+    {
+      "type": "CollaborationSubjectKind",
+      "file": "collaboration-subject-kind.schema.json",
+      "sha256": "c237fdaa485d86f20ac0a03d36b669907d237b234f0363b99d225e03cdcdb15d"
+    },
+    {
+      "type": "CollaborationTenantId",
+      "file": "collaboration-tenant-id.schema.json",
+      "sha256": "dc5d7ba818b51b64c39925967931611837056c65aeb0d83876043d6f231e4367"
+    },
+    {
+      "type": "CoordinationData",
+      "file": "coordination-data.schema.json",
+      "sha256": "1563783563ad6f03b463a780e42e4a494737f4dc71c1a407d96fd50a9b39f5f5"
+    },
+    {
+      "type": "ParticipantPresence",
+      "file": "participant-presence.schema.json",
+      "sha256": "c65c3a662e74d73554ebd8a4e183ed2363cf9c8637a4e0118992258886f6b766"
+    },
+    {
+      "type": "ParticipantPrincipalId",
+      "file": "participant-principal-id.schema.json",
+      "sha256": "caf0fee7de8971275b3d1d1b9917c4a0388b08af4f5056d957cd7f580f1ebdd4"
+    },
+    {
+      "type": "PresenceState",
+      "file": "presence-state.schema.json",
+      "sha256": "fc7497082c4ff11b81a10c6074b684b9f0caee48877aae99e48c2394fe8c69cf"
+    },
+    {
+      "type": "SessionRegistration",
+      "file": "session-registration.schema.json",
+      "sha256": "bd730db544648931d4d42c0f8d4d380f9f92a1fc23bcfa8488d9db0fb1287e59"
+    },
+    {
+      "type": "SessionScope",
+      "file": "session-scope.schema.json",
+      "sha256": "9af6b1df8aacba0f9fc7167f292c86fe0a1ed310c6eedf4a2856bad189908a0c"
+    },
+    {
+      "type": "SessionState",
+      "file": "session-state.schema.json",
+      "sha256": "c640758cf4eb12cdf2f59b9ed6b5d7f68bc94b7e442d8b2b40341d924c496087"
+    },
+    {
+      "type": "SessionStateInfo",
+      "file": "session-state-info.schema.json",
+      "sha256": "be7fcaa8e61b24730059e9f992da2cc70087159e399065462eb7f2f7b7cecb57"
+    },
+    {
+      "type": "Sha256Digest",
+      "file": "sha256-digest.schema.json",
+      "sha256": "e5946ef362c014c0a4727640f8b2e23d1d4c6a5892a714a378c661c3c201e8d3"
+    }
+  ]
+}

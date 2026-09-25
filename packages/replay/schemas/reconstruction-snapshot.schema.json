@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ReconstructionSnapshot",
+  "$defs": {
+    "ReconstructionSnapshot": {
+      "readOnly": true,
+      "title": "ReconstructionSnapshot",
+      "description": "Serialized reconstruction projection: fold position plus the canonical state projection (content-addressed by stateDigest).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/ReplayRecordVersion"
+        },
+        "streamIds": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EventStreamId"
+          }
+        },
+        "cursors": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReplayCursor"
+          }
+        },
+        "eventCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "state": {
+          "$ref": "#/$defs/JsonValue"
+        },
+        "stateDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "streamIds",
+        "cursors",
+        "eventCount",
+        "state",
+        "stateDigest"
+      ],
+      "additionalProperties": false
+    },
+    "ReplayRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "ReplayRecordVersion",
+      "description": "Version discriminator carried by every serialized replay record (checkpoint and reconstruction snapshot; currently 1)."
+    },
+    "EventStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "EventStreamId",
+      "description": "Opaque event stream identity: the unit of total order; every event in a stream carries a contiguous 1-based sequence."
+    },
+    "ReplayCursor": {
+      "readOnly": true,
+      "title": "ReplayCursor",
+      "description": "Per-stream resume coordinate: events with sequence > lastSequence apply next.",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "$ref": "#/$defs/EventStreamId"
+        },
+        "lastSequence": {
+          "$ref": "#/$defs/EventSequence"
+        }
+      },
+      "required": [
+        "streamId",
+        "lastSequence"
+      ],
+      "additionalProperties": false
+    },
+    "EventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "EventSequence",
+      "description": "One event sequence number: 1-based, strictly contiguous per stream (the stream cursor)."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:replay:reconstruction-snapshot:1.0.0"
+}

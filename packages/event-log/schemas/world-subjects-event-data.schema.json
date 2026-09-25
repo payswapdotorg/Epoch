@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldSubjectsEventData",
+  "$defs": {
+    "WorldSubjectsEventData": {
+      "readOnly": true,
+      "title": "WorldSubjectsEventData",
+      "description": "Payload data for the reserved \"world:subjects\" event kind: one or more world-graph subjects plus an optional note.",
+      "type": "object",
+      "properties": {
+        "subjects": {
+          "readOnly": true,
+          "minItems": 1,
+          "maxItems": 100,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EventSubject"
+          }
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "subjects"
+      ],
+      "additionalProperties": false
+    },
+    "EventSubject": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "entity"
+            },
+            "entityId": {
+              "$ref": "#/$defs/urn:epoch:contracts:world:entity-id"
+            }
+          },
+          "required": [
+            "kind",
+            "entityId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "relation"
+            },
+            "relationId": {
+              "$ref": "#/$defs/WorldRelationId"
+            }
+          },
+          "required": [
+            "kind",
+            "relationId"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "EventSubject",
+      "description": "Opaque reference to a world-graph subject: an entity id or a relation id (W002 vocabulary), never an embedded object."
+    },
+    "urn:epoch:contracts:world:entity-id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "EntityId",
+      "description": "Opaque entity identity (graph node), caller-assigned."
+    },
+    "WorldRelationId": {
+      "type": "string",
+      "pattern": "^rel-[0-9a-f]{64}$",
+      "title": "WorldRelationId",
+      "description": "World-model relation identity: rel-<sha256-of-key> (owned by @epoch/world-model)."
+    }
+  },
+  "$id": "urn:epoch:event-log:world-subjects-event-data:1.0.0"
+}
