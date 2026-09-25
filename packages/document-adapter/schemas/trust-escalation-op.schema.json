@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:trust-escalation-op",
+  "$defs": {
+    "urn:epoch:document-adapter:trust-escalation-op": {
+      "type": "string",
+      "enum": [
+        "certify",
+        "execute",
+        "grant-capability"
+      ],
+      "title": "TrustEscalationOp",
+      "description": "Trust-escalation operation that is always denied for document-derived mappings: certify, execute, grant-capability."
+    }
+  },
+  "$id": "urn:epoch:document-adapter:trust-escalation-op:1.0.0"
+}

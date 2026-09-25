@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:document-descriptor",
+  "$defs": {
+    "urn:epoch:document-adapter:document-descriptor": {
+      "readOnly": true,
+      "title": "DocumentDescriptor",
+      "description": "Content-addressed (SHA-256 over canonical bytes), format-typed, tenant-scoped document descriptor.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:record-version"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:tenant-scope"
+        },
+        "digest": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:sha256-digest"
+        },
+        "format": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:document-format"
+        },
+        "byteLength": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tenantScope",
+        "digest",
+        "format",
+        "byteLength"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:record-version": {
+      "type": "number",
+      "const": 1,
+      "title": "DocumentRecordVersion",
+      "description": "Version discriminator carried by every serialized document-adapter document (currently 1)."
+    },
+    "urn:epoch:document-adapter:tenant-scope": {
+      "readOnly": true,
+      "title": "TenantScope",
+      "description": "Tenant scoping: owning tenant plus optional workspace/project narrowing.",
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:tenant-id"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:workspace-id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:project-id"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:tenant-id": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "urn:epoch:document-adapter:workspace-id": {
+      "type": "string",
+      "pattern": "^workspace:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkspaceId",
+      "description": "Opaque workspace identity: \"workspace:\" followed by a lowercase slug."
+    },
+    "urn:epoch:document-adapter:project-id": {
+      "type": "string",
+      "pattern": "^project:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ProjectId",
+      "description": "Opaque project identity: \"project:\" followed by a lowercase slug."
+    },
+    "urn:epoch:document-adapter:sha256-digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "urn:epoch:document-adapter:document-format": {
+      "type": "string",
+      "enum": [
+        "structured-text",
+        "structured-json"
+      ],
+      "title": "DocumentFormat",
+      "description": "Deterministic document form: structured-text or structured-json (real formats are future adapters)."
+    }
+  },
+  "$id": "urn:epoch:document-adapter:document-descriptor:1.0.0"
+}

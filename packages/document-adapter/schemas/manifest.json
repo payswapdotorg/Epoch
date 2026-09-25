@@ -1,0 +1,114 @@
+{
+  "contract": "epoch/document-adapter",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Document-to-Adapter derivation contract surface (W028): content-addressed document descriptors over deterministic structured document forms, the staged evidence-chained derivation pipeline (Uploaded -> Parsed -> CandidatesExtracted -> ReviewPending -> Provisional, terminal), extraction candidates, provisional adapter definitions with full provenance, W007 source-category registration plans, and the typed error taxonomy including trust-escalation-denied. JSON Schema projection under schemas/; runtime validators in @epoch/document-adapter.",
+  "dataTypes": [
+    "DocumentAdapterIssue",
+    "DocumentContent",
+    "DocumentDescriptor",
+    "DocumentFieldLocator",
+    "ExtractionCandidate",
+    "ExtractionStageKind",
+    "ParsedDocument",
+    "ParsedMappingRow",
+    "PropertyMapping",
+    "ProvisionalAdapterDefinition",
+    "ProvisionalRegistrationPlan",
+    "SemanticTypeKey",
+    "StageEvidenceChain",
+    "StageEvidenceLink",
+    "StageRunContext",
+    "TenantScope",
+    "TrustEscalationOp"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/document-adapter and are not represented in the JSON Schema files",
+  "emittedBy": "renderDocumentAdapterContractFiles() in @epoch/document-adapter (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "DocumentAdapterIssue",
+      "file": "document-adapter-issue.schema.json",
+      "sha256": "8641af71d2aea601557c83348010ebe31ee3b50561110c0a8cb88d819244f05b"
+    },
+    {
+      "type": "DocumentContent",
+      "file": "document-content.schema.json",
+      "sha256": "e6a753326c20c67a3d9877a712dfe1d9acb4383664afcf4dee56552146c879fb"
+    },
+    {
+      "type": "DocumentDescriptor",
+      "file": "document-descriptor.schema.json",
+      "sha256": "fc52c900d7b46169ea96e7bc61f23e62ddb3ac2f555587575d501797e6e2b517"
+    },
+    {
+      "type": "DocumentFieldLocator",
+      "file": "document-field-locator.schema.json",
+      "sha256": "a34e4afb9df81000242dfe12920c4d666cf54fb539a47d6c5908b9d7ec5a67bb"
+    },
+    {
+      "type": "ExtractionCandidate",
+      "file": "extraction-candidate.schema.json",
+      "sha256": "d2f11ac2c91e6347ef9fb30aefc9ad7e413f5f2a03691a702798b0b8de3a0416"
+    },
+    {
+      "type": "ExtractionStageKind",
+      "file": "extraction-stage-kind.schema.json",
+      "sha256": "978332117b38811f04bdbd1c01e22de42f7a49b4317dcca929e236c48e4b331f"
+    },
+    {
+      "type": "ParsedDocument",
+      "file": "parsed-document.schema.json",
+      "sha256": "9ee573f968c699176fb0d7d6c0692cfb1825a1d7b8096931e6dca52b43a794f3"
+    },
+    {
+      "type": "ParsedMappingRow",
+      "file": "parsed-mapping-row.schema.json",
+      "sha256": "0ae9d5b17e4355ad5af24c333e9ec6a6bd23f26be0691f406c4260465af53d82"
+    },
+    {
+      "type": "PropertyMapping",
+      "file": "property-mapping.schema.json",
+      "sha256": "78e7ef7196cdffedd6895169c70d78ef186d3ad32615d9584671ae10168905cd"
+    },
+    {
+      "type": "ProvisionalAdapterDefinition",
+      "file": "provisional-adapter-definition.schema.json",
+      "sha256": "a49817ffefc3c925fccd901dfe8b9ff0115e2f2f990f487a0b8ba035e51680d1"
+    },
+    {
+      "type": "ProvisionalRegistrationPlan",
+      "file": "provisional-registration-plan.schema.json",
+      "sha256": "b751279876fa4fc4a760685ce914a94c3077eed6621542b1c77074aa1131d454"
+    },
+    {
+      "type": "SemanticTypeKey",
+      "file": "semantic-type-key.schema.json",
+      "sha256": "3535fda5f5bc6215e5a1cfac673efa7e9cf37922d94557b4092cd9463b7871b3"
+    },
+    {
+      "type": "StageEvidenceChain",
+      "file": "stage-evidence-chain.schema.json",
+      "sha256": "d7191139364823ef39e0c1c49b9adbfa96e48657e595c2c8e857c2597d29655b"
+    },
+    {
+      "type": "StageEvidenceLink",
+      "file": "stage-evidence-link.schema.json",
+      "sha256": "1d299d004ebdcc45833ad03dba010830fdab7074d77137853a146cc607397adc"
+    },
+    {
+      "type": "StageRunContext",
+      "file": "stage-run-context.schema.json",
+      "sha256": "19709d69b6335c22c86444a87251276693f8661bb8627eb870ae10bee0da06c6"
+    },
+    {
+      "type": "TenantScope",
+      "file": "tenant-scope.schema.json",
+      "sha256": "624457de93d5ba5122616e1017f45792c6b006414d0993793c99a53297d2507d"
+    },
+    {
+      "type": "TrustEscalationOp",
+      "file": "trust-escalation-op.schema.json",
+      "sha256": "05d6f6f5432f23357be80504c7c8391ef754f0331486b4b8247e11867ee162ae"
+    }
+  ]
+}

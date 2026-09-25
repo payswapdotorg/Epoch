@@ -1,0 +1,38 @@
+{
+  "name": "@epoch/document-adapter",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Document-to-Adapter kernel (W028) — the typed derivation MODEL: content-addressed, tenant-scoped DocumentDescriptors over typed document forms; the deterministic Uploaded -> Parsed -> CandidatesExtracted -> ReviewPending -> Provisional derivation pipeline as typed data with a W006 evidence record chained to the document digest at EVERY stage; ExtractionCandidates and ProvisionalAdapterDefinitions with full provenance; registration shapes against the W007 source-category vocabulary (origin provisional-document-derived); and a typed error taxonomy including trust-escalation-denied. Document-derived mappings are PROVISIONAL by construction — trust escalation is a typed rejection, never a code path (extension-architecture.md, binding).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/constraint-language": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/extension-sdk": "workspace:*",
+    "@epoch/provenance": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:document-content",
+  "$defs": {
+    "urn:epoch:document-adapter:document-content": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "structured-text"
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "format",
+            "text"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "structured-json"
+            },
+            "json": {
+              "$ref": "#/$defs/JsonValue"
+            }
+          },
+          "required": [
+            "format",
+            "json"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "DocumentContent",
+      "description": "Typed document bytes: structured-text (UTF-8 text) or structured-json (JSON value)."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:document-adapter:document-content:1.0.0"
+}

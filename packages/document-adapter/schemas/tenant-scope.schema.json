@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:tenant-scope",
+  "$defs": {
+    "urn:epoch:document-adapter:tenant-scope": {
+      "readOnly": true,
+      "title": "TenantScope",
+      "description": "Tenant scoping: owning tenant plus optional workspace/project narrowing.",
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:tenant-id"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:workspace-id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:project-id"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:tenant-id": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "urn:epoch:document-adapter:workspace-id": {
+      "type": "string",
+      "pattern": "^workspace:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkspaceId",
+      "description": "Opaque workspace identity: \"workspace:\" followed by a lowercase slug."
+    },
+    "urn:epoch:document-adapter:project-id": {
+      "type": "string",
+      "pattern": "^project:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ProjectId",
+      "description": "Opaque project identity: \"project:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:document-adapter:tenant-scope:1.0.0"
+}

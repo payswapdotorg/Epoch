@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:parsed-document",
+  "$defs": {
+    "urn:epoch:document-adapter:parsed-document": {
+      "readOnly": true,
+      "title": "ParsedDocument",
+      "description": "Normalized typed view of a parsed mapping-table document: descriptor, canonical bytes, mapping rows.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:record-version"
+        },
+        "descriptor": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:document-descriptor"
+        },
+        "canonicalBytes": {
+          "type": "string"
+        },
+        "rows": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:document-adapter:parsed-mapping-row"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "descriptor",
+        "canonicalBytes",
+        "rows"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:record-version": {
+      "type": "number",
+      "const": 1,
+      "title": "DocumentRecordVersion",
+      "description": "Version discriminator carried by every serialized document-adapter document (currently 1)."
+    },
+    "urn:epoch:document-adapter:document-descriptor": {
+      "readOnly": true,
+      "title": "DocumentDescriptor",
+      "description": "Content-addressed (SHA-256 over canonical bytes), format-typed, tenant-scoped document descriptor.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:record-version"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:tenant-scope"
+        },
+        "digest": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:sha256-digest"
+        },
+        "format": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:document-format"
+        },
+        "byteLength": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tenantScope",
+        "digest",
+        "format",
+        "byteLength"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:tenant-scope": {
+      "readOnly": true,
+      "title": "TenantScope",
+      "description": "Tenant scoping: owning tenant plus optional workspace/project narrowing.",
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:tenant-id"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:workspace-id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:project-id"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:tenant-id": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "urn:epoch:document-adapter:workspace-id": {
+      "type": "string",
+      "pattern": "^workspace:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkspaceId",
+      "description": "Opaque workspace identity: \"workspace:\" followed by a lowercase slug."
+    },
+    "urn:epoch:document-adapter:project-id": {
+      "type": "string",
+      "pattern": "^project:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ProjectId",
+      "description": "Opaque project identity: \"project:\" followed by a lowercase slug."
+    },
+    "urn:epoch:document-adapter:sha256-digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "urn:epoch:document-adapter:document-format": {
+      "type": "string",
+      "enum": [
+        "structured-text",
+        "structured-json"
+      ],
+      "title": "DocumentFormat",
+      "description": "Deterministic document form: structured-text or structured-json (real formats are future adapters)."
+    },
+    "urn:epoch:document-adapter:parsed-mapping-row": {
+      "readOnly": true,
+      "title": "ParsedMappingRow",
+      "description": "One parsed mapping row: source path, W002 semantic target, property mappings, optional confidence/capability reference.",
+      "type": "object",
+      "properties": {
+        "sourcePath": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:source-path"
+        },
+        "semanticTarget": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:semantic-type-key"
+        },
+        "propertyMappings": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/urn:epoch:document-adapter:property-mapping"
+          }
+        },
+        "declaredConfidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "capabilityRef": {
+          "$ref": "#/$defs/QualifiedTypeReference"
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "sourcePath",
+        "semanticTarget",
+        "propertyMappings"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:source-path": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,127}$",
+      "title": "SourcePath",
+      "description": "Stable identifier of a document field inside a typed document form."
+    },
+    "urn:epoch:document-adapter:semantic-type-key": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*:[a-z][a-z0-9-]*$",
+      "title": "SemanticTypeKey",
+      "description": "W002 world-model semantic namespace type key (namespace:name); the core namespace is reserved for kernel vocabulary."
+    },
+    "urn:epoch:document-adapter:property-mapping": {
+      "readOnly": true,
+      "title": "PropertyMapping",
+      "description": "One property-level mapping from a document property onto a semantic property.",
+      "type": "object",
+      "properties": {
+        "sourceProperty": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:property-name"
+        },
+        "semanticProperty": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:property-name"
+        }
+      },
+      "required": [
+        "sourceProperty",
+        "semanticProperty"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:property-name": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,127}$",
+      "title": "PropertyName",
+      "description": "Document property name (source and semantic sides), W002 property-name grammar."
+    },
+    "QualifiedTypeReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "QualifiedTypeReference",
+      "description": "Reference to a versioned, protocol-defined type: dot-namespaced id plus semver core version."
+    }
+  },
+  "$id": "urn:epoch:document-adapter:parsed-document:1.0.0"
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:document-adapter-issue",
+  "$defs": {
+    "urn:epoch:document-adapter:document-adapter-issue": {
+      "readOnly": true,
+      "title": "DocumentAdapterIssue",
+      "description": "One flattened validation issue: dotted path (\"$\" = root) plus message.",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:document-adapter:document-adapter-issue:1.0.0"
+}

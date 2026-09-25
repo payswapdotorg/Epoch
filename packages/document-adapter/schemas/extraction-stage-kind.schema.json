@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:extraction-stage-kind",
+  "$defs": {
+    "urn:epoch:document-adapter:extraction-stage-kind": {
+      "type": "string",
+      "enum": [
+        "uploaded",
+        "parsed",
+        "candidates-extracted",
+        "review-pending",
+        "provisional"
+      ],
+      "title": "ExtractionStageKind",
+      "description": "Derivation stage: uploaded, parsed, candidates-extracted, review-pending, provisional (terminal)."
+    }
+  },
+  "$id": "urn:epoch:document-adapter:extraction-stage-kind:1.0.0"
+}

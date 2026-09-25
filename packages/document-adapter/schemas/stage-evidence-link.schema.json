@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/urn:epoch:document-adapter:stage-evidence-link",
+  "$defs": {
+    "urn:epoch:document-adapter:stage-evidence-link": {
+      "readOnly": true,
+      "title": "StageEvidenceLink",
+      "description": "One stage evidence link: derivation stage plus the content address of its W006 evidence record.",
+      "type": "object",
+      "properties": {
+        "stage": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:extraction-stage-kind"
+        },
+        "evidenceDigest": {
+          "$ref": "#/$defs/urn:epoch:document-adapter:sha256-digest"
+        }
+      },
+      "required": [
+        "stage",
+        "evidenceDigest"
+      ],
+      "additionalProperties": false
+    },
+    "urn:epoch:document-adapter:extraction-stage-kind": {
+      "type": "string",
+      "enum": [
+        "uploaded",
+        "parsed",
+        "candidates-extracted",
+        "review-pending",
+        "provisional"
+      ],
+      "title": "ExtractionStageKind",
+      "description": "Derivation stage: uploaded, parsed, candidates-extracted, review-pending, provisional (terminal)."
+    },
+    "urn:epoch:document-adapter:sha256-digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:document-adapter:stage-evidence-link:1.0.0"
+}
