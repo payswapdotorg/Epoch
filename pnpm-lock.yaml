@@ -166,6 +166,58 @@ importers:
         specifier: 'catalog:'
         version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
 
+  packages/agent-orchestration:
+    dependencies:
+      '@epoch/action-protocol':
+        specifier: workspace:*
+        version: link:../action-protocol
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../agent-protocol
+      '@epoch/capability-registry':
+        specifier: workspace:*
+        version: link:../capability-registry
+      '@epoch/event-log':
+        specifier: workspace:*
+        version: link:../event-log
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/authorization':
+        specifier: workspace:*
+        version: link:../authorization
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@epoch/identity':
+        specifier: workspace:*
+        version: link:../identity
+      '@epoch/policy-contracts':
+        specifier: workspace:*
+        version: link:../policy-contracts
+      '@epoch/tenancy':
+        specifier: workspace:*
+        version: link:../tenancy
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@epoch/world-model':
+        specifier: workspace:*
+        version: link:../world-model
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
+
   packages/agent-protocol:
     dependencies:
       zod:
@@ -922,6 +974,61 @@ importers:
       '@epoch/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
+
+  services/agent-runtime:
+    dependencies:
+      '@epoch/agent-orchestration':
+        specifier: workspace:*
+        version: link:../../packages/agent-orchestration
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../../packages/agent-protocol
+      '@epoch/capability-registry':
+        specifier: workspace:*
+        version: link:../../packages/capability-registry
+      '@epoch/event-log':
+        specifier: workspace:*
+        version: link:../../packages/event-log
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/action-protocol':
+        specifier: workspace:*
+        version: link:../../packages/action-protocol
+      '@epoch/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@epoch/identity':
+        specifier: workspace:*
+        version: link:../../packages/identity
+      '@epoch/policy-contracts':
+        specifier: workspace:*
+        version: link:../../packages/policy-contracts
+      '@epoch/tenancy':
+        specifier: workspace:*
+        version: link:../../packages/tenancy
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      '@epoch/world-model':
+        specifier: workspace:*
+        version: link:../../packages/world-model
       '@types/node':
         specifier: 'catalog:'
         version: 22.20.4
