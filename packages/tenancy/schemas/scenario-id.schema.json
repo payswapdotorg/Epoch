@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ScenarioId",
+  "$defs": {
+    "ScenarioId": {
+      "type": "string",
+      "pattern": "^scenario:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ScenarioId",
+      "description": "Opaque scenario identity: \"scenario:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:tenancy:scenario-id:1.0.0"
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@epoch/authorization",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Authorization kernel — the typed decision point over opaque principal/tenant/resource ids: authorization requests (principal + tenant scope + resource reference + action), decisions (allow/deny/not-applicable with typed reasons and exact evidence paths), fail-closed tenant isolation (cross-tenant-denied by construction), content-addressed decision records, and a W004 policy-target projection (W009). Not a policy engine: policy evaluation is host-wired behind the typed facts interface.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

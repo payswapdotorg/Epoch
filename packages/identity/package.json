@@ -1,0 +1,31 @@
+{
+  "name": "@epoch/identity",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Identity kernel — typed, provider-neutral principal modeling: opaque principal ids across the five principal kinds (human/agent/solver/robot/service), principal lifecycle governance, credential-assertion descriptors and authentication-result records with typed reasons, and content-addressed audit records (W009). Ships zero concrete identity providers, zero network, zero secrets storage.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

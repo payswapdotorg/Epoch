@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DecisionOutcome",
+  "$defs": {
+    "DecisionOutcome": {
+      "type": "string",
+      "enum": [
+        "allow",
+        "deny",
+        "not-applicable"
+      ],
+      "title": "DecisionOutcome",
+      "description": "Authorization decision outcome: allow, deny, or not-applicable (no policy applied — NOT an allow; consumers fail closed)."
+    }
+  },
+  "$id": "urn:epoch:authorization:decision-outcome:1.0.0"
+}

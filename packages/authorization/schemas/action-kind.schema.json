@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ActionKind",
+  "$defs": {
+    "ActionKind": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+(:[a-z0-9-]+)+$",
+      "title": "ActionKind",
+      "description": "Colon-namespaced action class, e.g. \"world:write\" or \"evidence:append\" — the same form as the W003 authority scopes."
+    }
+  },
+  "$id": "urn:epoch:authorization:action-kind:1.0.0"
+}

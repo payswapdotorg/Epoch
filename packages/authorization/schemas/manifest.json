@@ -1,0 +1,120 @@
+{
+  "contract": "epoch/authorization",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Authorization contract surface (W009): the decision point over opaque principal/tenant/resource ids — authorization requests (principal + tenant scope + resource reference + action), decisions (allow/deny/not-applicable with typed reasons and exact evidence paths), fail-closed tenant isolation, and content-addressed decision records. Policy semantics stay in W004. JSON Schema projection under schemas/; runtime validators in @epoch/authorization.",
+  "dataTypes": [
+    "ActionKind",
+    "AuthorizationContext",
+    "AuthorizationDecision",
+    "AuthorizationRecord",
+    "AuthorizationRecordVersion",
+    "AuthorizationRequest",
+    "DecisionOutcome",
+    "DecisionReason",
+    "DecisionReasonCode",
+    "EvidencePath",
+    "PolicyTag",
+    "PolicyTargetProjection",
+    "PrincipalId",
+    "ResourceId",
+    "ResourceReference",
+    "ResourceType",
+    "Sha256Digest",
+    "TenantId"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/authorization and are not represented in the JSON Schema files",
+  "emittedBy": "renderAuthorizationContractFiles() in @epoch/authorization (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "ActionKind",
+      "file": "action-kind.schema.json",
+      "sha256": "086c0a02d73f8cd908a8eed8b405d227f2f530a31bc124b65fcee2d6ff820118"
+    },
+    {
+      "type": "AuthorizationContext",
+      "file": "authorization-context.schema.json",
+      "sha256": "33b9ad6094aec20af070e27a7d8df9eb785561a895cecfb4e86f305ed1dc9cd0"
+    },
+    {
+      "type": "AuthorizationDecision",
+      "file": "authorization-decision.schema.json",
+      "sha256": "d706e772b83a92f179f3efc42d5c1ef011b607e90796bd454e96d6be32bb7fb3"
+    },
+    {
+      "type": "AuthorizationRecord",
+      "file": "authorization-record.schema.json",
+      "sha256": "640c5ccc21b7e40172c24327e25adced0725588b14b1f8df4da38fe3914721c1"
+    },
+    {
+      "type": "AuthorizationRecordVersion",
+      "file": "authorization-record-version.schema.json",
+      "sha256": "3c8230c183d56d51c19291be278ae8ed0a80f11a65afc0ae8db6e61dc97f8a24"
+    },
+    {
+      "type": "AuthorizationRequest",
+      "file": "authorization-request.schema.json",
+      "sha256": "3e1c421ce1e7af5440c1aa6ad34ea293a0d12ec6acb18492ab348b479a68421a"
+    },
+    {
+      "type": "DecisionOutcome",
+      "file": "decision-outcome.schema.json",
+      "sha256": "1c06a073aa7bfad12a661b13e6834449e6ef5cc14efcaa2dfab9a88acc2228dd"
+    },
+    {
+      "type": "DecisionReason",
+      "file": "decision-reason.schema.json",
+      "sha256": "32b54c35d64c52ec98c135279044461a26424c4bc66af0b2e30064f160de6521"
+    },
+    {
+      "type": "DecisionReasonCode",
+      "file": "decision-reason-code.schema.json",
+      "sha256": "33f033edaa16d7c9364c439aa8d7a6ee036f4fb55a1685460b50e909f76e3b71"
+    },
+    {
+      "type": "EvidencePath",
+      "file": "evidence-path.schema.json",
+      "sha256": "26069c5dac646eaabfbefea79b4c2e601cfdc3931dba7054997c7e4272f28bf2"
+    },
+    {
+      "type": "PolicyTag",
+      "file": "policy-tag.schema.json",
+      "sha256": "3f956fa9573d50a1edf6f4d49ac509fdf18c64384ca1850faac3b7e4a443b115"
+    },
+    {
+      "type": "PolicyTargetProjection",
+      "file": "policy-target-projection.schema.json",
+      "sha256": "2f1451df9426da6a919ec1711ffa03e752e5668ccb26fe0c47d9ef3dca00e29d"
+    },
+    {
+      "type": "PrincipalId",
+      "file": "principal-id.schema.json",
+      "sha256": "a774acce63ee2b662ebea2f5e2d4c5ac5cbdd503709761f638503f743330b740"
+    },
+    {
+      "type": "ResourceId",
+      "file": "resource-id.schema.json",
+      "sha256": "3940486fdb1015e234b830b9b72c62650b74324529d95e6f2b0616f27f4ecd65"
+    },
+    {
+      "type": "ResourceReference",
+      "file": "resource-reference.schema.json",
+      "sha256": "da1982dc2fa47ea045011b81aa9d2e748886f654d81d697b54bce7fdd3fbea9b"
+    },
+    {
+      "type": "ResourceType",
+      "file": "resource-type.schema.json",
+      "sha256": "90aa2cc003f1b7c9e00106ef2b3b62095db19ae249dabb4ae036f6e253f27091"
+    },
+    {
+      "type": "Sha256Digest",
+      "file": "sha256-digest.schema.json",
+      "sha256": "e67133c35a802cfaff629338105375aab2d4b4f8da419adc876b22db15feda19"
+    },
+    {
+      "type": "TenantId",
+      "file": "tenant-id.schema.json",
+      "sha256": "c5e9dc71ad06c31e4506f9f41d66628e563ffeac4b7b03b9bc8bd4954ab42561"
+    }
+  ]
+}

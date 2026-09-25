@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ResourceId",
+  "$defs": {
+    "ResourceId": {
+      "type": "string",
+      "pattern": "^[\\x21-\\x7E]{1,128}$",
+      "title": "ResourceId",
+      "description": "Opaque resource identity (1..128 visible characters); the owning domain (tenancy, evidence, actions) defines the space."
+    }
+  },
+  "$id": "urn:epoch:authorization:resource-id:1.0.0"
+}

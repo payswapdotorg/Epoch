@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TenancyNodeKind",
+  "$defs": {
+    "TenancyNodeKind": {
+      "type": "string",
+      "enum": [
+        "platform",
+        "tenant",
+        "workspace",
+        "project",
+        "world",
+        "scenario",
+        "evidence"
+      ],
+      "title": "TenancyNodeKind",
+      "description": "Tenancy hierarchy level: platform, tenant, workspace, project, or the project-scoped leaves world/scenario/evidence."
+    }
+  },
+  "$id": "urn:epoch:tenancy:tenancy-node-kind:1.0.0"
+}

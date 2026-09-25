@@ -1,0 +1,90 @@
+{
+  "contract": "epoch/identity",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Identity contract surface (W009): principal modeling across the five principal kinds, credential-assertion descriptors over the factor-class taxonomy, authentication-result records with typed reasons, and content-addressed audit records. Zero concrete providers, zero network, zero secrets storage. JSON Schema projection under schemas/; runtime validators in @epoch/identity.",
+  "dataTypes": [
+    "AuthenticationReason",
+    "AuthenticationReasonCode",
+    "AuthenticationResult",
+    "CredentialAssertion",
+    "CredentialMethod",
+    "IdentityRecordVersion",
+    "Principal",
+    "PrincipalId",
+    "PrincipalKind",
+    "PrincipalLifecycleState",
+    "SealedAuthenticationResult",
+    "SealedCredentialAssertion",
+    "Sha256Digest"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/identity and are not represented in the JSON Schema files",
+  "emittedBy": "renderIdentityContractFiles() in @epoch/identity (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "AuthenticationReason",
+      "file": "authentication-reason.schema.json",
+      "sha256": "43ef512395afa56c9507b60bcb9e9bea5e251f0a12d8b38e7db6c00c93dd7f44"
+    },
+    {
+      "type": "AuthenticationReasonCode",
+      "file": "authentication-reason-code.schema.json",
+      "sha256": "d7055f38ff73d2e22e6f1149acd280ca31b1771553a84930a009f5ba6ed83c32"
+    },
+    {
+      "type": "AuthenticationResult",
+      "file": "authentication-result.schema.json",
+      "sha256": "b60b81ea708bec6655c54ce3133366a85d2f0a6f0c02b162ff5cb4cc6b079f86"
+    },
+    {
+      "type": "CredentialAssertion",
+      "file": "credential-assertion.schema.json",
+      "sha256": "dae0c0f62984d8a54babf3409c548d8fdd4d3e60b69d7228bdb55891bd6f090f"
+    },
+    {
+      "type": "CredentialMethod",
+      "file": "credential-method.schema.json",
+      "sha256": "22eba6bcc18801f76871e2435e7ae2671089f46b28c5424b23d9c6cb726d7db2"
+    },
+    {
+      "type": "IdentityRecordVersion",
+      "file": "identity-record-version.schema.json",
+      "sha256": "4054a1838f94126e8caac0b15114b411fe45ffd3b8f3fea752241016691a6cdf"
+    },
+    {
+      "type": "Principal",
+      "file": "principal.schema.json",
+      "sha256": "9db4f360a384943906c7b7fd9d19cfa4eb5b71640951bf47c628ea306e4c763e"
+    },
+    {
+      "type": "PrincipalId",
+      "file": "principal-id.schema.json",
+      "sha256": "85ab7750589650c02fd5ef45e7184d23a562644663c07abbf97e5b389c9cbdb5"
+    },
+    {
+      "type": "PrincipalKind",
+      "file": "principal-kind.schema.json",
+      "sha256": "80268243e0ecd1da31028ebb36e73cfe8189f93bbff0fd779f5a22cded6a89d3"
+    },
+    {
+      "type": "PrincipalLifecycleState",
+      "file": "principal-lifecycle-state.schema.json",
+      "sha256": "d5ed4780d9d842dae990e46dc98b01f41eab66be4167a339f732acd38c30d60b"
+    },
+    {
+      "type": "SealedAuthenticationResult",
+      "file": "sealed-authentication-result.schema.json",
+      "sha256": "8d66acd85fa7ea96ef896c75e724baf73889096ee5a038bda191a6c48dbb7466"
+    },
+    {
+      "type": "SealedCredentialAssertion",
+      "file": "sealed-credential-assertion.schema.json",
+      "sha256": "dd9858e2a702b0349c8dc35430388aebce02283fc7787155986d7ce8a6eaffe2"
+    },
+    {
+      "type": "Sha256Digest",
+      "file": "sha256-digest.schema.json",
+      "sha256": "55e9eab5c73659642f23929517801f4c5cf86622481e09f488b553665a1b85a8"
+    }
+  ]
+}

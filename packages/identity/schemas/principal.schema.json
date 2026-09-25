@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/Principal",
+  "$defs": {
+    "Principal": {
+      "readOnly": true,
+      "title": "Principal",
+      "description": "A registered principal: typed id, class, lifecycle status, display label — no credential material, no tenancy membership, no provider fields.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/IdentityRecordVersion"
+        },
+        "principalId": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "kind": {
+          "$ref": "#/$defs/PrincipalKind"
+        },
+        "status": {
+          "$ref": "#/$defs/PrincipalLifecycleState"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "principalId",
+        "kind",
+        "status",
+        "displayName"
+      ],
+      "additionalProperties": false
+    },
+    "IdentityRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "IdentityRecordVersion",
+      "description": "Version discriminator carried by every serialized identity document (currently 1)."
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque principal identity: \"principal:\" followed by a lowercase slug; the single source of principal identity."
+    },
+    "PrincipalKind": {
+      "type": "string",
+      "enum": [
+        "human",
+        "agent",
+        "solver",
+        "robot",
+        "service"
+      ],
+      "title": "PrincipalKind",
+      "description": "Principal class: human, agent, solver, robot, or service — never a vendor, product, or model."
+    },
+    "PrincipalLifecycleState": {
+      "type": "string",
+      "enum": [
+        "active",
+        "suspended",
+        "disabled"
+      ],
+      "title": "PrincipalLifecycleState",
+      "description": "Principal lifecycle: active (eligible to authenticate), suspended (temporarily barred, reversible), or disabled (barred, retained for audit)."
+    }
+  },
+  "$id": "urn:epoch:identity:principal:1.0.0"
+}

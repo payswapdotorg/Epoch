@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DecisionReasonCode",
+  "$defs": {
+    "DecisionReasonCode": {
+      "type": "string",
+      "enum": [
+        "principal-verified",
+        "tenant-verified",
+        "policy-allows",
+        "policy-denies",
+        "no-applicable-policy"
+      ],
+      "title": "DecisionReasonCode",
+      "description": "Typed decision reason: principal-verified, tenant-verified, policy-allows, policy-denies, or no-applicable-policy."
+    }
+  },
+  "$id": "urn:epoch:authorization:decision-reason-code:1.0.0"
+}

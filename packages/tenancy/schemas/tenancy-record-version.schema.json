@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TenancyRecordVersion",
+  "$defs": {
+    "TenancyRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "TenancyRecordVersion",
+      "description": "Version discriminator carried by every serialized tenancy document (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:tenancy:tenancy-record-version:1.0.0"
+}

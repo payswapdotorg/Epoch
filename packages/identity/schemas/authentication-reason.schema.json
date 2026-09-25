@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuthenticationReason",
+  "$defs": {
+    "AuthenticationReason": {
+      "readOnly": true,
+      "title": "AuthenticationReason",
+      "description": "Typed authentication reason: a closed code plus optional bounded auditable detail.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/AuthenticationReasonCode"
+        },
+        "detail": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "additionalProperties": false
+    },
+    "AuthenticationReasonCode": {
+      "type": "string",
+      "enum": [
+        "credential-verified",
+        "credential-invalid",
+        "credential-expired",
+        "principal-unknown",
+        "principal-inactive"
+      ],
+      "title": "AuthenticationReasonCode",
+      "description": "Typed authentication reason: credential-verified, credential-invalid, credential-expired, principal-unknown, or principal-inactive."
+    }
+  },
+  "$id": "urn:epoch:identity:authentication-reason:1.0.0"
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PrincipalKind",
+  "$defs": {
+    "PrincipalKind": {
+      "type": "string",
+      "enum": [
+        "human",
+        "agent",
+        "solver",
+        "robot",
+        "service"
+      ],
+      "title": "PrincipalKind",
+      "description": "Principal class: human, agent, solver, robot, or service — never a vendor, product, or model."
+    }
+  },
+  "$id": "urn:epoch:identity:principal-kind:1.0.0"
+}

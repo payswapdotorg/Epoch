@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DecisionReason",
+  "$defs": {
+    "DecisionReason": {
+      "readOnly": true,
+      "title": "DecisionReason",
+      "description": "Typed decision reason: a closed code plus optional bounded human-auditable detail.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/DecisionReasonCode"
+        },
+        "detail": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "additionalProperties": false
+    },
+    "DecisionReasonCode": {
+      "type": "string",
+      "enum": [
+        "principal-verified",
+        "tenant-verified",
+        "policy-allows",
+        "policy-denies",
+        "no-applicable-policy"
+      ],
+      "title": "DecisionReasonCode",
+      "description": "Typed decision reason: principal-verified, tenant-verified, policy-allows, policy-denies, or no-applicable-policy."
+    }
+  },
+  "$id": "urn:epoch:authorization:decision-reason:1.0.0"
+}

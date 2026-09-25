@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PlatformId",
+  "$defs": {
+    "PlatformId": {
+      "type": "string",
+      "pattern": "^platform:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PlatformId",
+      "description": "Opaque platform identity: \"platform:\" followed by a lowercase slug (the single root)."
+    }
+  },
+  "$id": "urn:epoch:tenancy:platform-id:1.0.0"
+}

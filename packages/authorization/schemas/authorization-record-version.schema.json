@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuthorizationRecordVersion",
+  "$defs": {
+    "AuthorizationRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AuthorizationRecordVersion",
+      "description": "Version discriminator carried by every serialized authorization document (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:authorization:authorization-record-version:1.0.0"
+}

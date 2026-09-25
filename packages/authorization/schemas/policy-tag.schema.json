@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PolicyTag",
+  "$defs": {
+    "PolicyTag": {
+      "type": "string",
+      "pattern": "^.{1,256}$",
+      "title": "PolicyTag",
+      "description": "Caller-supplied policy-matching tag (1..256 characters), provider-neutral."
+    }
+  },
+  "$id": "urn:epoch:authorization:policy-tag:1.0.0"
+}

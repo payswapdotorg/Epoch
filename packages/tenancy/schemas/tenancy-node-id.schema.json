@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TenancyNodeId",
+  "$defs": {
+    "TenancyNodeId": {
+      "type": "string",
+      "pattern": "^(platform|tenant|workspace|project|world|scenario|evidence):[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenancyNodeId",
+      "description": "Typed tenancy-node identity: a known kind prefix (\"tenant:\", \"workspace:\", ...) followed by a lowercase slug; the prefix encodes the node kind."
+    }
+  },
+  "$id": "urn:epoch:tenancy:tenancy-node-id:1.0.0"
+}

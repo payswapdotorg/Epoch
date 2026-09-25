@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PolicyTargetProjection",
+  "$defs": {
+    "PolicyTargetProjection": {
+      "readOnly": true,
+      "title": "PolicyTargetProjection",
+      "description": "The policy-target projection of an authorization request: exactly the shape @epoch/policy-contracts (W004) policy targets admit.",
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "projectId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actionKind": {
+          "$ref": "#/$defs/ActionKind"
+        },
+        "resourceType": {
+          "$ref": "#/$defs/ResourceType"
+        },
+        "tags": {
+          "readOnly": true,
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PolicyTag"
+          }
+        }
+      },
+      "required": [
+        "tenantId",
+        "actionKind",
+        "resourceType"
+      ],
+      "additionalProperties": false
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug — the @epoch/tenancy id space."
+    },
+    "ActionKind": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+(:[a-z0-9-]+)+$",
+      "title": "ActionKind",
+      "description": "Colon-namespaced action class, e.g. \"world:write\" or \"evidence:append\" — the same form as the W003 authority scopes."
+    },
+    "ResourceType": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$",
+      "title": "ResourceType",
+      "description": "Resource class as a lowercase slug (e.g. \"workspace\", \"world\", \"evidence\") — provider-neutral."
+    },
+    "PolicyTag": {
+      "type": "string",
+      "pattern": "^.{1,256}$",
+      "title": "PolicyTag",
+      "description": "Caller-supplied policy-matching tag (1..256 characters), provider-neutral."
+    }
+  },
+  "$id": "urn:epoch:authorization:policy-target-projection:1.0.0"
+}

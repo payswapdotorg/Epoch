@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SealedTenancyNode",
+  "$defs": {
+    "SealedTenancyNode": {
+      "readOnly": true,
+      "title": "SealedTenancyNode",
+      "description": "A tenancy node plus the SHA-256 digest claimed for its canonical JSON content; admission recomputes and rejects mismatches (tamper detection).",
+      "type": "object",
+      "properties": {
+        "node": {
+          "$ref": "#/$defs/TenancyNode"
+        },
+        "digest": {
+          "$ref": "#/$defs/Sha256Digest"
+        }
+      },
+      "required": [
+        "node",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "TenancyNode": {
+      "readOnly": true,
+      "title": "TenancyNode",
+      "description": "A tenancy hierarchy node: typed id (prefix = kind), kind, an opaque parent-id reference (null only for the platform root), and an optional display name.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/TenancyRecordVersion"
+        },
+        "id": {
+          "$ref": "#/$defs/TenancyNodeId"
+        },
+        "kind": {
+          "$ref": "#/$defs/TenancyNodeKind"
+        },
+        "parentId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TenancyNodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "kind",
+        "parentId"
+      ],
+      "additionalProperties": false
+    },
+    "TenancyRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "TenancyRecordVersion",
+      "description": "Version discriminator carried by every serialized tenancy document (currently 1)."
+    },
+    "TenancyNodeId": {
+      "type": "string",
+      "pattern": "^(platform|tenant|workspace|project|world|scenario|evidence):[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenancyNodeId",
+      "description": "Typed tenancy-node identity: a known kind prefix (\"tenant:\", \"workspace:\", ...) followed by a lowercase slug; the prefix encodes the node kind."
+    },
+    "TenancyNodeKind": {
+      "type": "string",
+      "enum": [
+        "platform",
+        "tenant",
+        "workspace",
+        "project",
+        "world",
+        "scenario",
+        "evidence"
+      ],
+      "title": "TenancyNodeKind",
+      "description": "Tenancy hierarchy level: platform, tenant, workspace, project, or the project-scoped leaves world/scenario/evidence."
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:tenancy:sealed-tenancy-node:1.0.0"
+}

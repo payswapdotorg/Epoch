@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ResourceType",
+  "$defs": {
+    "ResourceType": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$",
+      "title": "ResourceType",
+      "description": "Resource class as a lowercase slug (e.g. \"workspace\", \"world\", \"evidence\") — provider-neutral."
+    }
+  },
+  "$id": "urn:epoch:authorization:resource-type:1.0.0"
+}

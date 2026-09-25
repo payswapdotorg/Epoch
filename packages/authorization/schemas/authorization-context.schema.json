@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuthorizationContext",
+  "$defs": {
+    "AuthorizationContext": {
+      "readOnly": true,
+      "title": "AuthorizationContext",
+      "description": "Optional request scope refinement: workspace/project ids (tenancy id spaces) and caller-supplied tags for policy matching.",
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "pattern": "^workspace:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "projectId": {
+          "type": "string",
+          "pattern": "^project:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "tags": {
+          "readOnly": true,
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PolicyTag"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "PolicyTag": {
+      "type": "string",
+      "pattern": "^.{1,256}$",
+      "title": "PolicyTag",
+      "description": "Caller-supplied policy-matching tag (1..256 characters), provider-neutral."
+    }
+  },
+  "$id": "urn:epoch:authorization:authorization-context:1.0.0"
+}

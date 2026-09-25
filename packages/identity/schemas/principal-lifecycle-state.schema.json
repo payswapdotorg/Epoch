@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PrincipalLifecycleState",
+  "$defs": {
+    "PrincipalLifecycleState": {
+      "type": "string",
+      "enum": [
+        "active",
+        "suspended",
+        "disabled"
+      ],
+      "title": "PrincipalLifecycleState",
+      "description": "Principal lifecycle: active (eligible to authenticate), suspended (temporarily barred, reversible), or disabled (barred, retained for audit)."
+    }
+  },
+  "$id": "urn:epoch:identity:principal-lifecycle-state:1.0.0"
+}
