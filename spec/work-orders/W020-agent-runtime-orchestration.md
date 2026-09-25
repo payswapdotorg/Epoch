@@ -1,5 +1,5 @@
 # W020 — Agent Runtime/Orchestration
-Status: READY_AFTER_DEPENDENCIES
+Status: AUTHORIZED (wave 6; dispatch base recorded in the live dispatch issue)
 Depends On: W003,W007,W010
 Worker Count: 1
 

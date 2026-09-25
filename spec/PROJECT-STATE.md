@@ -67,3 +67,10 @@ Target clarification: the universal lifecycle is Understand -> Decide -> Plan ->
 - W011 architecture questions recorded: (1) W002 standalone relation-id schema (W011 mirrors + parity-pins — advisory); (2) GRAPH_KIND_NODE_KINDS constrained mixing (constrained is correct — no change).
 - Dispatch saga lesson (recorded in replay2 lesson 129): rate-limit/capacity popups are dismissed (Enter+resend / cancel+retry), never obeyed; "concurrent conversation limit" was cleared by deleting dead-turn chats; innerText flatness is NOT a dead-turn signal (transcript virtualizes during long sandbox ops — screenshots are the liveness truth).
 - Frontier recalculated: W010/W012/W013/W023 all READY; wave 5 = W010 + W012 + W013 (W023 next; cap 3).
+
+## Wave-5 partial completion (2026-09-25, Tech Lead)
+- W010 (Event/Replay/Collaboration): PR #38 squash-merged -> ae28d1cb. 7-gate ALL PASS (128 files owned-only; battery 25/25+22/22+24/24+3/3 forced; determinism 0; runtime deps exactly per pin — replay composes sibling event-log, intra-WO composition accepted; sequence-integrity + cross-tenant negatives).
+- W013 (Renderer Runtime): PR #39 squash-merged -> 9b3ae994. 7-gate ALL PASS (121 files owned-only; battery 24/24+21/21+23/23+3/3 forced; engine-neutral 0 non-comment refs; runtime deps exactly agent-protocol+experience-protocol+zod).
+- Reconcile PR #40 -> 067c50e0 (5 importers, +176 lines).
+- W012 (Experience Compiler): dispatch pending — platform enforces max 2 concurrent generations this window (12 phantom creates logged; W013 landed the instant W012a died at 07:01, confirming slot handoff). Dispatched the moment a slot frees.
+- Frontier: W020 + W028 READY (wave 6 candidates); W014/W015/W016 need W012.
