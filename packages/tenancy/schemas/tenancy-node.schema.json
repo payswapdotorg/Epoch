@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TenancyNode",
+  "$defs": {
+    "TenancyNode": {
+      "readOnly": true,
+      "title": "TenancyNode",
+      "description": "Immutable, content-addressed tenancy node: kind-prefixed opaque id, kind, display name, and the opaque id of the parent node (null only for the platform root).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/TenancyRecordVersion"
+        },
+        "nodeId": {
+          "$ref": "#/$defs/TenancyNodeId"
+        },
+        "kind": {
+          "$ref": "#/$defs/TenancyNodeKind"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "parentId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TenancyNodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "nodeId",
+        "kind",
+        "displayName",
+        "parentId"
+      ],
+      "additionalProperties": false
+    },
+    "TenancyRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "TenancyRecordVersion",
+      "description": "Version discriminator carried by every serialized tenancy node, record, and snapshot (currently 1)."
+    },
+    "TenancyNodeId": {
+      "type": "string",
+      "pattern": "^(platform|tenant|workspace|project|world|scenario|evidence):[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenancyNodeId",
+      "description": "Opaque, kind-prefixed tenancy node identity: one of the seven kind prefixes plus a lowercase slug."
+    },
+    "TenancyNodeKind": {
+      "type": "string",
+      "enum": [
+        "platform",
+        "tenant",
+        "workspace",
+        "project",
+        "world",
+        "scenario",
+        "evidence"
+      ],
+      "title": "TenancyNodeKind",
+      "description": "Tenancy node kind: platform, tenant, workspace, project (organizational scopes) or world, scenario, evidence (project-local content)."
+    }
+  },
+  "$id": "urn:epoch:tenancy:tenancy-node:1.0.0"
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AllowReason",
+  "$defs": {
+    "AllowReason": {
+      "type": "string",
+      "enum": [
+        "covering-membership",
+        "active-principal",
+        "authenticated-principal"
+      ],
+      "title": "AllowReason",
+      "description": "Typed reason an allow decision may cite: covering-membership, active-principal, authenticated-principal."
+    }
+  },
+  "$id": "urn:epoch:authorization:allow-reason:1.0.0"
+}

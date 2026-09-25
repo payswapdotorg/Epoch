@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PrincipalStatus",
+  "$defs": {
+    "PrincipalStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "suspended",
+        "deactivated"
+      ],
+      "title": "PrincipalStatus",
+      "description": "Principal status fact (mirrors @epoch/identity): active, suspended, or deactivated."
+    }
+  },
+  "$id": "urn:epoch:authorization:principal-status:1.0.0"
+}

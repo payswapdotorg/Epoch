@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuthorizationRequest",
+  "$defs": {
+    "AuthorizationRequest": {
+      "readOnly": true,
+      "title": "AuthorizationRequest",
+      "description": "Typed authorization request: principal id, opaque action kind, and the tenancy-scoped resource, over opaque ids only.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AuthorizationRecordVersion"
+        },
+        "principalId": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "actionKind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "resource": {
+          "$ref": "#/$defs/ResourceReference"
+        },
+        "justification": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10000
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "principalId",
+        "actionKind",
+        "resource"
+      ],
+      "additionalProperties": false
+    },
+    "AuthorizationRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AuthorizationRecordVersion",
+      "description": "Version discriminator carried by every serialized authorization record (currently 1)."
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque principal id: \"principal:\" followed by a lowercase slug (mirrors @epoch/identity)."
+    },
+    "ResourceReference": {
+      "readOnly": true,
+      "title": "ResourceReference",
+      "description": "The tenancy-scoped resource a request acts on: opaque type and id plus the optional tenant/workspace/project scope (a resource without a tenant is platform-scoped).",
+      "type": "object",
+      "properties": {
+        "resourceType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "resourceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/WorkspaceId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/ProjectId"
+        }
+      },
+      "required": [
+        "resourceType",
+        "resourceId"
+      ],
+      "additionalProperties": false
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant id: \"tenant:\" followed by a lowercase slug (mirrors @epoch/tenancy)."
+    },
+    "WorkspaceId": {
+      "type": "string",
+      "pattern": "^workspace:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkspaceId",
+      "description": "Opaque workspace id: \"workspace:\" followed by a lowercase slug (mirrors @epoch/tenancy)."
+    },
+    "ProjectId": {
+      "type": "string",
+      "pattern": "^project:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ProjectId",
+      "description": "Opaque project id: \"project:\" followed by a lowercase slug (mirrors @epoch/tenancy)."
+    }
+  },
+  "$id": "urn:epoch:authorization:authorization-request:1.0.0"
+}

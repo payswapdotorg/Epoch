@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/Principal",
+  "$defs": {
+    "Principal": {
+      "readOnly": true,
+      "title": "Principal",
+      "description": "Immutable, content-addressed principal: opaque id, participant kind, display name. Carries no tenant, no membership, and no credential material.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/IdentityRecordVersion"
+        },
+        "principalId": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "kind": {
+          "$ref": "#/$defs/PrincipalKind"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "principalId",
+        "kind",
+        "displayName"
+      ],
+      "additionalProperties": false
+    },
+    "IdentityRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "IdentityRecordVersion",
+      "description": "Version discriminator carried by every serialized identity record (currently 1)."
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque, prefixed principal identity: \"principal:\" followed by a lowercase slug. Never encodes a tenant, provider, or credential."
+    },
+    "PrincipalKind": {
+      "type": "string",
+      "enum": [
+        "human",
+        "agent",
+        "service"
+      ],
+      "title": "PrincipalKind",
+      "description": "Principal kind: human, agent (registered autonomous participant), or service (machine client)."
+    }
+  },
+  "$id": "urn:epoch:identity:principal:1.0.0"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/IdentityRecordVersion",
+  "$defs": {
+    "IdentityRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "IdentityRecordVersion",
+      "description": "Version discriminator carried by every serialized identity record (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:identity:identity-record-version:1.0.0"
+}

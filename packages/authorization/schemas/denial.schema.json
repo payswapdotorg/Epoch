@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/Denial",
+  "$defs": {
+    "Denial": {
+      "readOnly": true,
+      "title": "Denial",
+      "description": "A machine-readable denial: exactly one typed code plus an audit message.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/DenialCode"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "DenialCode": {
+      "type": "string",
+      "enum": [
+        "unknown-principal",
+        "unknown-tenant",
+        "cross-tenant-denied",
+        "cross-workspace-denied",
+        "cross-project-denied",
+        "inactive-principal",
+        "unauthenticated-principal"
+      ],
+      "title": "DenialCode",
+      "description": "Machine-readable denial code: unknown-principal, unknown-tenant, cross-tenant-denied, cross-workspace-denied, cross-project-denied, inactive-principal, or unauthenticated-principal."
+    }
+  },
+  "$id": "urn:epoch:authorization:denial:1.0.0"
+}

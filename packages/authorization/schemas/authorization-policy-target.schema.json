@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuthorizationPolicyTarget",
+  "$defs": {
+    "AuthorizationPolicyTarget": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "projectId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actionKind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "resourceType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        }
+      },
+      "additionalProperties": false,
+      "title": "AuthorizationPolicyTarget",
+      "description": "The W004 policy-target projection of an authorization request: tenant/workspace/project scope, action kind, resource type, and optional tags (shape-compatible with @epoch/policy-contracts PolicyTarget; pinned by parity tests)."
+    }
+  },
+  "$id": "urn:epoch:authorization:authorization-policy-target:1.0.0"
+}

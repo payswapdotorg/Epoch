@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/NotApplicableDecision",
+  "$defs": {
+    "NotApplicableDecision": {
+      "readOnly": true,
+      "title": "NotApplicableDecision",
+      "description": "Not-applicable decision: this decision point has nothing to say (e.g. a platform-scoped resource); the caller routes to the responsible authority.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AuthorizationRecordVersion"
+        },
+        "requestDigest": {
+          "$ref": "#/$defs/Sha256Digest"
+        },
+        "evidence": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidencePath"
+          }
+        },
+        "outcome": {
+          "type": "string",
+          "const": "not-applicable"
+        },
+        "reason": {
+          "$ref": "#/$defs/NotApplicableReason"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "requestDigest",
+        "evidence",
+        "outcome",
+        "reason",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "AuthorizationRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AuthorizationRecordVersion",
+      "description": "Version discriminator carried by every serialized authorization record (currently 1)."
+    },
+    "Sha256Digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Digest",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "EvidencePath": {
+      "type": "string",
+      "pattern": "^(?:request|principals|memberships|knownTenants)(?:\\.[A-Za-z][A-Za-z0-9_]*|\\[\\d+\\])*$",
+      "title": "EvidencePath",
+      "description": "Exact evidence path: a dotted pointer into the request or context that grounds a decision (e.g. \"request.resource.tenantId\", \"memberships[2]\")."
+    },
+    "NotApplicableReason": {
+      "type": "string",
+      "enum": [
+        "resource-not-tenant-scoped"
+      ],
+      "title": "NotApplicableReason",
+      "description": "Typed reason a decision is not-applicable: resource-not-tenant-scoped."
+    }
+  },
+  "$id": "urn:epoch:authorization:not-applicable-decision:1.0.0"
+}

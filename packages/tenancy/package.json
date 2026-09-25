@@ -1,0 +1,30 @@
+{
+  "name": "@epoch/tenancy",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Tenancy kernel — the Platform -> Tenant -> Workspace -> Project -> World/Scenario/Evidence hierarchy as typed opaque-id references, with deterministic create/resolve/validate machinery, cycle prevention, hierarchy-escape rejection, and digest-checked admission (W009).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

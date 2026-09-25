@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuthorizationContext",
+  "$defs": {
+    "AuthorizationContext": {
+      "readOnly": true,
+      "title": "AuthorizationContext",
+      "description": "Caller-supplied decision context: principal facts, membership facts, and known tenants (projected from @epoch/identity and @epoch/tenancy by the host).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AuthorizationRecordVersion"
+        },
+        "principals": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PrincipalFact"
+          }
+        },
+        "memberships": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MembershipFact"
+          }
+        },
+        "knownTenants": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TenantId"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "principals",
+        "memberships",
+        "knownTenants"
+      ],
+      "additionalProperties": false
+    },
+    "AuthorizationRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AuthorizationRecordVersion",
+      "description": "Version discriminator carried by every serialized authorization record (currently 1)."
+    },
+    "PrincipalFact": {
+      "readOnly": true,
+      "title": "PrincipalFact",
+      "description": "Caller-supplied principal fact: status and authentication state projected from @epoch/identity records by the host.",
+      "type": "object",
+      "properties": {
+        "principalId": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "status": {
+          "$ref": "#/$defs/PrincipalStatus"
+        },
+        "authenticated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "principalId",
+        "status",
+        "authenticated"
+      ],
+      "additionalProperties": false
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque principal id: \"principal:\" followed by a lowercase slug (mirrors @epoch/identity)."
+    },
+    "PrincipalStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "suspended",
+        "deactivated"
+      ],
+      "title": "PrincipalStatus",
+      "description": "Principal status fact (mirrors @epoch/identity): active, suspended, or deactivated."
+    },
+    "MembershipFact": {
+      "readOnly": true,
+      "title": "MembershipFact",
+      "description": "Caller-supplied tenancy membership fact: tenant-wide (tenant only), workspace-wide (tenant + workspace), or project-scoped (tenant + workspace + project).",
+      "type": "object",
+      "properties": {
+        "principalId": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/WorkspaceId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/ProjectId"
+        }
+      },
+      "required": [
+        "principalId",
+        "tenantId"
+      ],
+      "additionalProperties": false
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant id: \"tenant:\" followed by a lowercase slug (mirrors @epoch/tenancy)."
+    },
+    "WorkspaceId": {
+      "type": "string",
+      "pattern": "^workspace:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkspaceId",
+      "description": "Opaque workspace id: \"workspace:\" followed by a lowercase slug (mirrors @epoch/tenancy)."
+    },
+    "ProjectId": {
+      "type": "string",
+      "pattern": "^project:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ProjectId",
+      "description": "Opaque project id: \"project:\" followed by a lowercase slug (mirrors @epoch/tenancy)."
+    }
+  },
+  "$id": "urn:epoch:authorization:authorization-context:1.0.0"
+}

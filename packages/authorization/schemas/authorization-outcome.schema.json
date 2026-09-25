@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuthorizationOutcome",
+  "$defs": {
+    "AuthorizationOutcome": {
+      "type": "string",
+      "enum": [
+        "allow",
+        "deny",
+        "not-applicable"
+      ],
+      "title": "AuthorizationOutcome",
+      "description": "Exhaustive authorization decision outcome: allow, deny, or not-applicable."
+    }
+  },
+  "$id": "urn:epoch:authorization:authorization-outcome:1.0.0"
+}
