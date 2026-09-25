@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SessionStatus",
+  "$defs": {
+    "SessionStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "running",
+        "suspended",
+        "completed",
+        "failed",
+        "cancelled"
+      ],
+      "title": "SessionStatus",
+      "description": "Session lifecycle state: pending, running, suspended, completed, failed, or cancelled (last three terminal)."
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:session-status:1.0.0"
+}

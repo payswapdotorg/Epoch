@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/IdempotencyKey",
+  "$defs": {
+    "IdempotencyKey": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "IdempotencyKey",
+      "description": "Deterministic idempotency key: the SHA-256 of the canonical JSON of the keyed operation scope."
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:idempotency-key:1.0.0"
+}

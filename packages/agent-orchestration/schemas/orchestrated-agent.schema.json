@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OrchestratedAgent",
+  "$defs": {
+    "OrchestratedAgent": {
+      "readOnly": true,
+      "title": "OrchestratedAgent",
+      "description": "Provider-neutral orchestrated agent: registered agent id plus exact capability version pins (never a vendor/model descriptor).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/OrchestrationRecordVersion"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "capabilities": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityVersionPin"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "agentId",
+        "capabilities"
+      ],
+      "additionalProperties": false
+    },
+    "OrchestrationRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "OrchestrationRecordVersion",
+      "description": "Version discriminator carried by every serialized agent-orchestration record (currently 1)."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "CapabilityVersionPin": {
+      "readOnly": true,
+      "title": "CapabilityVersionPin",
+      "description": "Exact capability version pin: dot-namespaced capability id plus semver core version (W007 registry grammar).",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "$ref": "#/$defs/CapabilityId"
+        },
+        "version": {
+          "$ref": "#/$defs/SemverCore"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+      "title": "CapabilityId",
+      "description": "Opaque, stable capability identity: dot-namespaced qualified name; the extension scoping unit (lock rule 9)."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:orchestrated-agent:1.0.0"
+}

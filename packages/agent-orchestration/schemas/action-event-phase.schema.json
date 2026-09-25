@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ActionEventPhase",
+  "$defs": {
+    "ActionEventPhase": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "authorized",
+        "rejected",
+        "executed",
+        "effects-recorded",
+        "failed"
+      ],
+      "title": "ActionEventPhase",
+      "description": "Action lifecycle phase recorded by an event (W010 vocabulary): proposed, authorized, rejected, executed, effects-recorded, or failed."
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:action-event-phase:1.0.0"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@epoch/agent-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Agent Runtime service (W020): the long-running HOST MODEL over @epoch/agent-orchestration — tenant-scoped session lifecycle management, W010 event intake with idempotent duplicate suppression, the advance-on-event plan execution driver (typed state transitions, retry policies, cascade skips, settlement), proposal handoffs toward the Action Gateway boundary (W022, future) as typed data, and health/liveness as typed data. In-memory reference behavior: NO persistence, NO network, NO real processes; core logic stays pure (zero wall-clock, zero randomness — instants are caller-supplied).",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-orchestration": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

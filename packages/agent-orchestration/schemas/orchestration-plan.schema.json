@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OrchestrationPlan",
+  "$defs": {
+    "OrchestrationPlan": {
+      "readOnly": true,
+      "title": "OrchestrationPlan",
+      "description": "Tenant-scoped, caller-authored orchestration plan: steps as typed action-proposal references (never embedded action semantics).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/OrchestrationRecordVersion"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OrchestrationTenantId"
+        },
+        "planId": {
+          "$ref": "#/$defs/PlanId"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "createdBy": {
+          "$ref": "#/$defs/OrchestrationPrincipalId"
+        },
+        "steps": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlanStep"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tenantId",
+        "planId",
+        "steps"
+      ],
+      "additionalProperties": false
+    },
+    "OrchestrationRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "OrchestrationRecordVersion",
+      "description": "Version discriminator carried by every serialized agent-orchestration record (currently 1)."
+    },
+    "OrchestrationTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "OrchestrationTenantId",
+      "description": "Opaque tenant scope of an orchestration document: \"tenant:\" followed by a lowercase slug (W009 grammar)."
+    },
+    "PlanId": {
+      "type": "string",
+      "pattern": "^plan:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PlanId",
+      "description": "Opaque orchestration plan identity: \"plan:\" followed by a lowercase slug."
+    },
+    "OrchestrationPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "OrchestrationPrincipalId",
+      "description": "Opaque principal reference: \"principal:\" followed by a lowercase slug (W009 grammar)."
+    },
+    "PlanStep": {
+      "readOnly": true,
+      "title": "PlanStep",
+      "description": "Authored plan step: an exact-revision action proposal reference, the assigned agent, dependencies, and a retry policy.",
+      "type": "object",
+      "properties": {
+        "stepId": {
+          "$ref": "#/$defs/StepId"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "proposal": {
+          "$ref": "#/$defs/ProposalReference"
+        },
+        "dependsOn": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StepId"
+          }
+        },
+        "retryPolicy": {
+          "$ref": "#/$defs/RetryPolicy"
+        }
+      },
+      "required": [
+        "stepId",
+        "agentId",
+        "proposal",
+        "dependsOn"
+      ],
+      "additionalProperties": false
+    },
+    "StepId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$",
+      "title": "StepId",
+      "description": "Plan-local step identity: a bare lowercase slug, unique within its plan."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "ProposalReference": {
+      "type": "object",
+      "properties": {
+        "proposalId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "canonicalDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "proposalId",
+        "canonicalDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProposalReference",
+      "description": "Exact-revision proposal reference: id plus the SHA-256 digest of the canonical proposal."
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    },
+    "RetryPolicy": {
+      "readOnly": true,
+      "title": "RetryPolicy",
+      "description": "Retry policy as typed data: total dispatch attempts allowed and the action phases that re-queue the step.",
+      "type": "object",
+      "properties": {
+        "maxAttempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "retryOn": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RetryableActionPhase"
+          }
+        }
+      },
+      "required": [
+        "maxAttempts",
+        "retryOn"
+      ],
+      "additionalProperties": false
+    },
+    "RetryableActionPhase": {
+      "type": "string",
+      "enum": [
+        "rejected",
+        "failed"
+      ],
+      "title": "RetryableActionPhase",
+      "description": "Action lifecycle phases a retry policy may cover: rejected or failed."
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:orchestration-plan:1.0.0"
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityVersionPin",
+  "$defs": {
+    "CapabilityVersionPin": {
+      "readOnly": true,
+      "title": "CapabilityVersionPin",
+      "description": "Exact capability version pin: dot-namespaced capability id plus semver core version (W007 registry grammar).",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "$ref": "#/$defs/CapabilityId"
+        },
+        "version": {
+          "$ref": "#/$defs/SemverCore"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+      "title": "CapabilityId",
+      "description": "Opaque, stable capability identity: dot-namespaced qualified name; the extension scoping unit (lock rule 9)."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:capability-version-pin:1.0.0"
+}

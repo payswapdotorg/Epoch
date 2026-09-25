@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/StepStatus",
+  "$defs": {
+    "StepStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "dispatched",
+        "authorized",
+        "executed",
+        "failed",
+        "rejected",
+        "skipped"
+      ],
+      "title": "StepStatus",
+      "description": "Step execution-tracking state: pending, dispatched, authorized, executed, failed, rejected, or skipped (last four terminal)."
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:step-status:1.0.0"
+}

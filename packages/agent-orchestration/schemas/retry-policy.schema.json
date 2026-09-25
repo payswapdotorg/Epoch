@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RetryPolicy",
+  "$defs": {
+    "RetryPolicy": {
+      "readOnly": true,
+      "title": "RetryPolicy",
+      "description": "Retry policy as typed data: total dispatch attempts allowed and the action phases that re-queue the step.",
+      "type": "object",
+      "properties": {
+        "maxAttempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "retryOn": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RetryableActionPhase"
+          }
+        }
+      },
+      "required": [
+        "maxAttempts",
+        "retryOn"
+      ],
+      "additionalProperties": false
+    },
+    "RetryableActionPhase": {
+      "type": "string",
+      "enum": [
+        "rejected",
+        "failed"
+      ],
+      "title": "RetryableActionPhase",
+      "description": "Action lifecycle phases a retry policy may cover: rejected or failed."
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:retry-policy:1.0.0"
+}

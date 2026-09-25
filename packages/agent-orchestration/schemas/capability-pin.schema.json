@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityPin",
+  "$defs": {
+    "CapabilityPin": {
+      "readOnly": true,
+      "title": "CapabilityPin",
+      "description": "A capability resolved against the W007 registry at binding time: id, version, category, and the lifecycle state observed (retired never binds).",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "$ref": "#/$defs/CapabilityId"
+        },
+        "version": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "category": {
+          "$ref": "#/$defs/CapabilityCategory"
+        },
+        "lifecycleAtBinding": {
+          "type": "string",
+          "enum": [
+            "registered",
+            "deprecated"
+          ]
+        }
+      },
+      "required": [
+        "capabilityId",
+        "version",
+        "category",
+        "lifecycleAtBinding"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+      "title": "CapabilityId",
+      "description": "Opaque, stable capability identity: dot-namespaced qualified name; the extension scoping unit (lock rule 9)."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "CapabilityCategory": {
+      "type": "string",
+      "enum": [
+        "source",
+        "semantic",
+        "reconstruction",
+        "visualization",
+        "simulation",
+        "evaluator",
+        "action",
+        "verification"
+      ],
+      "title": "CapabilityCategory",
+      "description": "Capability Fabric adapter category: source, semantic, reconstruction, visualization, simulation, evaluator, action, or verification."
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:capability-pin:1.0.0"
+}

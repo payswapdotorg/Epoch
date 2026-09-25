@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OrchestrationIssue",
+  "$defs": {
+    "OrchestrationIssue": {
+      "readOnly": true,
+      "title": "OrchestrationIssue",
+      "description": "One flattened validation issue: dotted path plus message (\"$\" = root).",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:agent-orchestration:orchestration-issue:1.0.0"
+}
