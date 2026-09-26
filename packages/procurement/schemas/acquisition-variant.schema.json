@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "external-procurement",
+    "internal-allocation",
+    "subscription-license",
+    "cloud-service-provisioning",
+    "fabrication-request",
+    "specialist-capability-assignment",
+    "data-evidence-acquisition"
+  ],
+  "$id": "urn:epoch:procurement:acquisition-variant:1.0.0"
+}

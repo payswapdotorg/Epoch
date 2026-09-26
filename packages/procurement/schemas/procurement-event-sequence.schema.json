@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProcurementEventSequence",
+  "$defs": {
+    "ProcurementEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "ProcurementEventSequence",
+      "description": "One procurement-event sequence number: 1-based, contiguous per procurement stream."
+    }
+  },
+  "$id": "urn:epoch:procurement:procurement-event-sequence:1.0.0"
+}

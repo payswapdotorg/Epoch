@@ -1,0 +1,38 @@
+{
+  "name": "@epoch/procurement-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Procurement Runtime service (W037): the thin typed HOST FACADE over @epoch/procurement — requirement intake (lineage + package assembly over the REAL W036 acquisition requests), quoting through the SupplierPort adapter seam (ONE in-memory reference adapter; the core never names a vendor), selection, W036 commitment linkage, purchase-order issue/amendment (version-chained), supplier-delivery tracking (append-only state machine with accumulating partial receipts linked to W036 observation intake), substitution decisions behind the constraint-evaluation gate, and the derived-only acquisition-status projection. Every step emits procurement:* events (W010-shaped, one package = one stream stream:procurement-<suffix>) sealed by the kernel and pinned by REAL sealEvent parity tests. The W009 authorization gate denies unauthorized intake BEFORE any kernel admission; tenant isolation is typed tenant-isolation-rejected; replayed intake (same content-addressed idempotency key) returns sealed prior records (the typed duplicate-intake-returned admission). In-memory reference behavior: NO persistence, NO network, NO real supplier systems; core logic stays pure (zero wall-clock, zero randomness — instants are caller-supplied).",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/authorization": "workspace:*",
+    "@epoch/procurement": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/constraint-language": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

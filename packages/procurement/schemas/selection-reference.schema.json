@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SelectionReference",
+  "$defs": {
+    "SelectionReference": {
+      "readOnly": true,
+      "title": "SelectionReference",
+      "description": "One quote-selection reference: the selection id plus its exact content digest (the recorded decision the order grounds).",
+      "type": "object",
+      "properties": {
+        "selectionId": {
+          "type": "string",
+          "pattern": "^selection:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "selectionId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:procurement:selection-reference:1.0.0"
+}

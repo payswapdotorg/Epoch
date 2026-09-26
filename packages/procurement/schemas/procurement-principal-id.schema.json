@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProcurementPrincipalId",
+  "$defs": {
+    "ProcurementPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ProcurementPrincipalId",
+      "description": "Opaque acting principal: \"principal:\" followed by a lowercase slug (W009 identity grammar)."
+    }
+  },
+  "$id": "urn:epoch:procurement:procurement-principal-id:1.0.0"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AcquisitionId",
+  "$defs": {
+    "AcquisitionId": {
+      "type": "string",
+      "pattern": "^acquisition:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AcquisitionId",
+      "description": "Opaque acquisition-request identity: \"acquisition:\" followed by a lowercase slug (the W036 grammar)."
+    }
+  },
+  "$id": "urn:epoch:procurement:acquisition-id:1.0.0"
+}

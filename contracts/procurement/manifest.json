@@ -1,0 +1,162 @@
+{
+  "contract": "epoch/procurement",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Procurement public contract surface (W037, W012 convention): the CORE record types a domain pack or downstream consumer binds to — sealed requirement lineage, acquisition packages, quotes with typed lead-time references, recorded quote selections, commitment references, version-chained purchase orders, supplier-delivery transitions with receipts, substitution requests with the constraint-evaluation reference, the derived acquisition-status projection, and procurement events over the W010 shapes. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "dataTypes": [
+    "Sha256Hex",
+    "Timestamp",
+    "RequirementRef",
+    "RequirementLineageContent",
+    "SealedRequirementLineage",
+    "PackageLine",
+    "AcquisitionPackageContent",
+    "SealedAcquisitionPackage",
+    "LeadTimeObservation",
+    "QuoteContent",
+    "SealedQuote",
+    "QuoteSelectionContent",
+    "SealedQuoteSelection",
+    "CommitmentReference",
+    "PurchaseOrderContent",
+    "SealedPurchaseOrder",
+    "ReceiptPayload",
+    "SupplierDeliveryTransitionContent",
+    "SealedSupplierDeliveryTransition",
+    "ConstraintEvaluationReference",
+    "SubstitutionRequestContent",
+    "SealedSubstitutionRequest",
+    "SealedAcquisitionStatus",
+    "ProcurementEventContent",
+    "SealedProcurementEvent"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/procurement and are not represented in the JSON Schema files",
+  "emittedBy": "renderProcurementPublicContractFiles() in @epoch/procurement (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "Sha256Hex",
+      "file": "schemas/sha256-hex.schema.json",
+      "sha256": "19c7e4b83fc4182146fada0571b007abfe0d5dacf2d6ea24a93bf6d54f79615b"
+    },
+    {
+      "type": "Timestamp",
+      "file": "schemas/timestamp.schema.json",
+      "sha256": "406b1d435cb198738c3bfc2769db2c0a31e9bab25927c182ba5fd849a7bfbdad"
+    },
+    {
+      "type": "RequirementRef",
+      "file": "schemas/requirement-ref.schema.json",
+      "sha256": "2b355360d5ea9e6249cf0f6e30347fec29f8f89a42f42c8b37c0c982c54bc2e4"
+    },
+    {
+      "type": "RequirementLineageContent",
+      "file": "schemas/requirement-lineage-content.schema.json",
+      "sha256": "3b085294c8b698a1bc3452f8f6975c532f75b16b87d70ea0de3f5a21b05550a2"
+    },
+    {
+      "type": "SealedRequirementLineage",
+      "file": "schemas/sealed-requirement-lineage.schema.json",
+      "sha256": "116e4d558ece12f5ef1a45555f10de92aa3f921c241073769f79b1f63021c60d"
+    },
+    {
+      "type": "PackageLine",
+      "file": "schemas/package-line.schema.json",
+      "sha256": "58d5cb6aee39a02b3133dfa832b15e125ab3868597f470b08caae345f8c85184"
+    },
+    {
+      "type": "AcquisitionPackageContent",
+      "file": "schemas/acquisition-package-content.schema.json",
+      "sha256": "a11245e1ae8d76937160e82ef5fbb89571d210cf8daac866d53ae512f53d5a4b"
+    },
+    {
+      "type": "SealedAcquisitionPackage",
+      "file": "schemas/sealed-acquisition-package.schema.json",
+      "sha256": "074a6c3308661f1c4433af13696c4499bed93f8b612181f4d7c15997923a505c"
+    },
+    {
+      "type": "LeadTimeObservation",
+      "file": "schemas/lead-time-observation.schema.json",
+      "sha256": "6b03e8081aadac8e77a6e620e9fbe509432bc11b651353396f8a112bc61ff35c"
+    },
+    {
+      "type": "QuoteContent",
+      "file": "schemas/quote-content.schema.json",
+      "sha256": "454f773da9de719c7f7040c477ef71479d1d925490600d9e5ef19240de5a7ffb"
+    },
+    {
+      "type": "SealedQuote",
+      "file": "schemas/sealed-quote.schema.json",
+      "sha256": "7a3304cf0540f7d0361b0c5029c22ea3f5cce9ce74c4811d0dfdef5ef8e05e5b"
+    },
+    {
+      "type": "QuoteSelectionContent",
+      "file": "schemas/quote-selection-content.schema.json",
+      "sha256": "3f701ca77e1fbd4b38ad255b35533c0c0ad64af30cf10f89b408b34efd904684"
+    },
+    {
+      "type": "SealedQuoteSelection",
+      "file": "schemas/sealed-quote-selection.schema.json",
+      "sha256": "0349481736cebb4442f67fcd9cd2946a708c8fe1f7c4750ba819e7370c1709f3"
+    },
+    {
+      "type": "CommitmentReference",
+      "file": "schemas/commitment-reference.schema.json",
+      "sha256": "26f5f29867b65ee6b5ba53363b70a868f0e01d6e8b0f904988afbfaa04fd4d48"
+    },
+    {
+      "type": "PurchaseOrderContent",
+      "file": "schemas/purchase-order-content.schema.json",
+      "sha256": "dca662cdbe35d4e3537f46876c320fedea96ec44f51b6c4b585b57464fe8896d"
+    },
+    {
+      "type": "SealedPurchaseOrder",
+      "file": "schemas/sealed-purchase-order.schema.json",
+      "sha256": "b1868923ee58ee575c44e94d2983f99505a875ce3d34db1d27ba2ea892704e8f"
+    },
+    {
+      "type": "ReceiptPayload",
+      "file": "schemas/receipt-payload.schema.json",
+      "sha256": "e987c2b4f9d4b644b0d116506d3e5aa8668acb2b493873873cba0aa4622353e7"
+    },
+    {
+      "type": "SupplierDeliveryTransitionContent",
+      "file": "schemas/supplier-delivery-transition-content.schema.json",
+      "sha256": "6269a43f93aeb1e0f3ff762c0e2fc6bb81b009074920a6ba147445fca59e5f34"
+    },
+    {
+      "type": "SealedSupplierDeliveryTransition",
+      "file": "schemas/sealed-supplier-delivery-transition.schema.json",
+      "sha256": "185439d28f963e8908244d89cfd86d63fb10d55e9485df1cb016a2a5ee0ff645"
+    },
+    {
+      "type": "ConstraintEvaluationReference",
+      "file": "schemas/constraint-evaluation-reference.schema.json",
+      "sha256": "a15896b0e712fa2b10dca5247cac36806b0da1c40de36bfff54fe5020f504e2e"
+    },
+    {
+      "type": "SubstitutionRequestContent",
+      "file": "schemas/substitution-request-content.schema.json",
+      "sha256": "74685609f8b563f6ee8106d9a8977cc84c71f1363f9732384570f798c97b4f3f"
+    },
+    {
+      "type": "SealedSubstitutionRequest",
+      "file": "schemas/sealed-substitution-request.schema.json",
+      "sha256": "8ff404171b6637b808f4993953fdf725f8d42c8974a722e3d4e1378a1551c753"
+    },
+    {
+      "type": "SealedAcquisitionStatus",
+      "file": "schemas/sealed-acquisition-status.schema.json",
+      "sha256": "a599df585728e1ea47307e87ef8aa0f6efe0e884f49f7954e608d03648020ddf"
+    },
+    {
+      "type": "ProcurementEventContent",
+      "file": "schemas/procurement-event-content.schema.json",
+      "sha256": "49beca0da3674f0a6e9e0f407f199c3dbbee48c1d5ebf413012102be5ac71afb"
+    },
+    {
+      "type": "SealedProcurementEvent",
+      "file": "schemas/sealed-procurement-event.schema.json",
+      "sha256": "85b783cec06ccf9b3e64952a93951487e1505c2de0bfc91c4e5537619641cfbf"
+    }
+  ]
+}
