@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "ordered",
+    "confirmed",
+    "shipped",
+    "partial",
+    "received",
+    "accepted",
+    "rejected",
+    "disputed"
+  ],
+  "$id": "urn:epoch:procurement:supplier-delivery-state:1.0.0"
+}

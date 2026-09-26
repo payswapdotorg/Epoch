@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProcurementStreamId",
+  "$defs": {
+    "ProcurementStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ProcurementStreamId",
+      "description": "Opaque procurement-event stream identity: \"stream:\" followed by a lowercase slug (the W010 stream grammar)."
+    }
+  },
+  "$id": "urn:epoch:procurement:procurement-stream-id:1.0.0"
+}

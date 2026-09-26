@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RequirementRef",
+  "$defs": {
+    "RequirementRef": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "work-package"
+            },
+            "workPackageId": {
+              "$ref": "#/$defs/WorkPackageId"
+            }
+          },
+          "required": [
+            "kind",
+            "workPackageId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "solution-line"
+            },
+            "solutionLineId": {
+              "$ref": "#/$defs/SolutionLineId"
+            }
+          },
+          "required": [
+            "kind",
+            "solutionLineId"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "RequirementRef",
+      "description": "One opaque requirement reference into a W036 ProgramOfWork: a work-package id or a solution-line id (never an embedded object)."
+    },
+    "WorkPackageId": {
+      "type": "string",
+      "pattern": "^work-package:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkPackageId",
+      "description": "Opaque work-package identity: \"work-package:\" followed by a lowercase slug."
+    },
+    "SolutionLineId": {
+      "type": "string",
+      "pattern": "^line:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionLineId",
+      "description": "Opaque solution-line identity: \"line:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:procurement:requirement-ref:1.0.0"
+}

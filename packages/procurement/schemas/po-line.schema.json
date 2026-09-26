@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PoLine",
+  "$defs": {
+    "PoLine": {
+      "readOnly": true,
+      "title": "PoLine",
+      "description": "One commercial line of a purchase order: description, quantity+unit, and the unit cost (amount + ISO 4217 currency) — an exact mirror of the selected quote line.",
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "quantity": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "unit": {
+          "$ref": "#/$defs/UnitLabel"
+        },
+        "unitCost": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "amount": {
+              "$ref": "#/$defs/NonNegativeDecimal"
+            },
+            "currency": {
+              "$ref": "#/$defs/CurrencyCode"
+            }
+          },
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "description",
+        "quantity",
+        "unit",
+        "unitCost"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "UnitLabel": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "title": "UnitLabel",
+      "description": "Unit-of-measure label (1-32 characters, provider-neutral)."
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    }
+  },
+  "$id": "urn:epoch:procurement:po-line:1.0.0"
+}

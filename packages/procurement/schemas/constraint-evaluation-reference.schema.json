@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ConstraintEvaluationReference",
+  "$defs": {
+    "ConstraintEvaluationReference": {
+      "readOnly": true,
+      "title": "ConstraintEvaluationReference",
+      "description": "The constraint-evaluation reference a substitution acceptance must carry: an opaque digest in the W004 policy-evaluation shape plus an optional opaque policy-shape reference.",
+      "type": "object",
+      "properties": {
+        "evaluationDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "policyShapeRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        }
+      },
+      "required": [
+        "evaluationDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "OpaqueReference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "OpaqueReference",
+      "description": "Opaque, bounded, provider-neutral reference string owned by its producing system."
+    }
+  },
+  "$id": "urn:epoch:procurement:constraint-evaluation-reference:1.0.0"
+}

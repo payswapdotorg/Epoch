@@ -1,0 +1,378 @@
+{
+  "contract": "epoch/procurement",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Procurement contract surface (W037, in-package full surface): requirement-to-acquisition-package lineage, sealed commercial packages over the W036 Acquire contract, quotes/offers/allocations with typed Prediction/Estimate lead-time references, hash-chained quote selections, W036 commitment linkage, version-chained purchase orders, the supplier-delivery state machine with accumulating receipts linked to W036 observation intake, substitution requests with the constraint-evaluation gate, the derived-only acquisition-status projection, and the procurement:* event vocabulary over the W010 event shapes. JSON Schema projection under schemas/; runtime validators in @epoch/procurement.",
+  "dataTypes": [
+    "Sha256Hex",
+    "LineageId",
+    "PackageId",
+    "QuoteId",
+    "SelectionId",
+    "PoId",
+    "PoTransitionId",
+    "SubstitutionId",
+    "SupplierId",
+    "ProcurementStreamId",
+    "ProcurementPrincipalId",
+    "Timestamp",
+    "PrincipalId",
+    "SolutionId",
+    "AcquisitionId",
+    "AcquisitionVariant",
+    "SupplierDeliveryState",
+    "QuoteState",
+    "QuoteAllocationState",
+    "LeadTimeSemantics",
+    "ProcurementStatusState",
+    "SubstitutionDecisionKind",
+    "RequirementRefKind",
+    "RequirementRef",
+    "RequirementLineageContent",
+    "SealedRequirementLineage",
+    "PackageLine",
+    "AcquisitionPackageContent",
+    "SealedAcquisitionPackage",
+    "QuoteAllocation",
+    "QuoteLine",
+    "LeadTimeObservation",
+    "QuoteContent",
+    "SealedQuote",
+    "ConsideredQuote",
+    "QuoteSelectionContent",
+    "SealedQuoteSelection",
+    "CommitmentReference",
+    "PoLine",
+    "PoTotal",
+    "SelectionReference",
+    "PurchaseOrderContent",
+    "SealedPurchaseOrder",
+    "ObservationReference",
+    "ReceiptLine",
+    "ReceiptPayload",
+    "SupplierDeliveryTransitionContent",
+    "SealedSupplierDeliveryTransition",
+    "SubstitutionLine",
+    "ConstraintEvaluationReference",
+    "SubstitutionRequestContent",
+    "SealedSubstitutionRequest",
+    "SubstitutionDecisionContent",
+    "SealedSubstitutionDecision",
+    "AcquisitionStatusDetail",
+    "SealedAcquisitionStatus",
+    "ProcurementEventSequence",
+    "ProcurementCausalParent",
+    "ProcurementEventPayload",
+    "ProcurementEventContent",
+    "SealedProcurementEvent"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical ordering, chain mirrors, digest verification, tenant checks) are enforced by the runtime validators in @epoch/procurement and are not represented in the JSON Schema files",
+  "emittedBy": "renderProcurementContractFiles() in @epoch/procurement (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "Sha256Hex",
+      "file": "sha256-hex.schema.json",
+      "sha256": "19c7e4b83fc4182146fada0571b007abfe0d5dacf2d6ea24a93bf6d54f79615b"
+    },
+    {
+      "type": "LineageId",
+      "file": "lineage-id.schema.json",
+      "sha256": "44652e85e8052bc880ef10a84a5e2af5e112dd465741bdf74d1ed793eefdd9ea"
+    },
+    {
+      "type": "PackageId",
+      "file": "package-id.schema.json",
+      "sha256": "522fce92e8d937743a5647e3e55753ccb37a0e6b5fbd5b24649834c8740feff5"
+    },
+    {
+      "type": "QuoteId",
+      "file": "quote-id.schema.json",
+      "sha256": "00f7970e5d99af704d37365f04b7217aaf369ac59f47a0f9a62e17c259adbb81"
+    },
+    {
+      "type": "SelectionId",
+      "file": "selection-id.schema.json",
+      "sha256": "2224d650c46064fb498d81c744cfb5cf82a242b283a3a48a1d59b50c79def4de"
+    },
+    {
+      "type": "PoId",
+      "file": "po-id.schema.json",
+      "sha256": "bffa5b15a8b9fc536a7afe24ff4f95b1d34c566935b7ea17cd7987d3881862fd"
+    },
+    {
+      "type": "PoTransitionId",
+      "file": "po-transition-id.schema.json",
+      "sha256": "f6fd7b73c30be2361475a3f3a6c9b0156f88cc2ae0999035b8f8dfe25700bf4d"
+    },
+    {
+      "type": "SubstitutionId",
+      "file": "substitution-id.schema.json",
+      "sha256": "9a1f2a3f82ff85bb6f1e26c870e0560182094c03c0e81460e4396139e9429168"
+    },
+    {
+      "type": "SupplierId",
+      "file": "supplier-id.schema.json",
+      "sha256": "50db74be7aaee0919565db0efc379ee622cad426c12c5348a31685d173c6abd5"
+    },
+    {
+      "type": "ProcurementStreamId",
+      "file": "procurement-stream-id.schema.json",
+      "sha256": "dd5a49aff50e3c220633bd961d82b720a62541e1534de42fd566e3e5f13e6803"
+    },
+    {
+      "type": "ProcurementPrincipalId",
+      "file": "procurement-principal-id.schema.json",
+      "sha256": "b68e546644b57684b4e4bd55b3a99add7128585055bc539bafbc654560d0c55f"
+    },
+    {
+      "type": "Timestamp",
+      "file": "timestamp.schema.json",
+      "sha256": "406b1d435cb198738c3bfc2769db2c0a31e9bab25927c182ba5fd849a7bfbdad"
+    },
+    {
+      "type": "PrincipalId",
+      "file": "principal-id.schema.json",
+      "sha256": "d896c132e042dee254f3acd677d27a6135ae18f83447a9e04ef50387845e6642"
+    },
+    {
+      "type": "SolutionId",
+      "file": "solution-id.schema.json",
+      "sha256": "b4cb090f40010acb19971f9aaa5b0c6d257d25f93be66689021f6cb8c1007f33"
+    },
+    {
+      "type": "AcquisitionId",
+      "file": "acquisition-id.schema.json",
+      "sha256": "6068e432f22b62fc4dc75c33256ecd8db2827d2ebbc4e67593eb06fc4c23bee3"
+    },
+    {
+      "type": "AcquisitionVariant",
+      "file": "acquisition-variant.schema.json",
+      "sha256": "51eeff8a06950604ca4a4370b1e896e0409b95f780e4b2720e991287f9fabedb"
+    },
+    {
+      "type": "SupplierDeliveryState",
+      "file": "supplier-delivery-state.schema.json",
+      "sha256": "f51a3aa9a9a44fe21b099005e91a8b59d0d62b1990a78b78941088c755468e63"
+    },
+    {
+      "type": "QuoteState",
+      "file": "quote-state.schema.json",
+      "sha256": "355429f4f2054dde2738b743157072936c6e49011f9b727a9e37b39fc0d498d7"
+    },
+    {
+      "type": "QuoteAllocationState",
+      "file": "quote-allocation-state.schema.json",
+      "sha256": "c574350eb3d7a32b572af820a909bf2cc55f857874ea3e765a70e4f870098990"
+    },
+    {
+      "type": "LeadTimeSemantics",
+      "file": "lead-time-semantics.schema.json",
+      "sha256": "9c6a3398565794f1d34b475966152061eb05b3f724e01c00a7007039aca68a16"
+    },
+    {
+      "type": "ProcurementStatusState",
+      "file": "procurement-status-state.schema.json",
+      "sha256": "64f36454b5226e05c696f0013c759518861b8d5ab3e8886d9502c8fd0d18a4b3"
+    },
+    {
+      "type": "SubstitutionDecisionKind",
+      "file": "substitution-decision-kind.schema.json",
+      "sha256": "dcef46799b16a5ea19574c843c4932da7337b9f4c35debb6ea554bf36462f3b4"
+    },
+    {
+      "type": "RequirementRefKind",
+      "file": "requirement-ref-kind.schema.json",
+      "sha256": "ab2c1d2e9fe4be28c1c15ce89849f3f7ed49f49ff34f82883c34cc8ff3f19923"
+    },
+    {
+      "type": "RequirementRef",
+      "file": "requirement-ref.schema.json",
+      "sha256": "2b355360d5ea9e6249cf0f6e30347fec29f8f89a42f42c8b37c0c982c54bc2e4"
+    },
+    {
+      "type": "RequirementLineageContent",
+      "file": "requirement-lineage-content.schema.json",
+      "sha256": "3b085294c8b698a1bc3452f8f6975c532f75b16b87d70ea0de3f5a21b05550a2"
+    },
+    {
+      "type": "SealedRequirementLineage",
+      "file": "sealed-requirement-lineage.schema.json",
+      "sha256": "116e4d558ece12f5ef1a45555f10de92aa3f921c241073769f79b1f63021c60d"
+    },
+    {
+      "type": "PackageLine",
+      "file": "package-line.schema.json",
+      "sha256": "58d5cb6aee39a02b3133dfa832b15e125ab3868597f470b08caae345f8c85184"
+    },
+    {
+      "type": "AcquisitionPackageContent",
+      "file": "acquisition-package-content.schema.json",
+      "sha256": "a11245e1ae8d76937160e82ef5fbb89571d210cf8daac866d53ae512f53d5a4b"
+    },
+    {
+      "type": "SealedAcquisitionPackage",
+      "file": "sealed-acquisition-package.schema.json",
+      "sha256": "074a6c3308661f1c4433af13696c4499bed93f8b612181f4d7c15997923a505c"
+    },
+    {
+      "type": "QuoteAllocation",
+      "file": "quote-allocation.schema.json",
+      "sha256": "b455aeb038da9844e40e6ba13ff23a9134853083b8a45305762b5e5e71d5722f"
+    },
+    {
+      "type": "QuoteLine",
+      "file": "quote-line.schema.json",
+      "sha256": "b0871fb84a6f01b95605ffc415dafed7031bc56651512c9b72980999cb0fbe63"
+    },
+    {
+      "type": "LeadTimeObservation",
+      "file": "lead-time-observation.schema.json",
+      "sha256": "6b03e8081aadac8e77a6e620e9fbe509432bc11b651353396f8a112bc61ff35c"
+    },
+    {
+      "type": "QuoteContent",
+      "file": "quote-content.schema.json",
+      "sha256": "454f773da9de719c7f7040c477ef71479d1d925490600d9e5ef19240de5a7ffb"
+    },
+    {
+      "type": "SealedQuote",
+      "file": "sealed-quote.schema.json",
+      "sha256": "7a3304cf0540f7d0361b0c5029c22ea3f5cce9ce74c4811d0dfdef5ef8e05e5b"
+    },
+    {
+      "type": "ConsideredQuote",
+      "file": "considered-quote.schema.json",
+      "sha256": "a962b3020d0ef85607af3faebd7c3f3a88cc7603121198cfbea6a5407279784d"
+    },
+    {
+      "type": "QuoteSelectionContent",
+      "file": "quote-selection-content.schema.json",
+      "sha256": "3f701ca77e1fbd4b38ad255b35533c0c0ad64af30cf10f89b408b34efd904684"
+    },
+    {
+      "type": "SealedQuoteSelection",
+      "file": "sealed-quote-selection.schema.json",
+      "sha256": "0349481736cebb4442f67fcd9cd2946a708c8fe1f7c4750ba819e7370c1709f3"
+    },
+    {
+      "type": "CommitmentReference",
+      "file": "commitment-reference.schema.json",
+      "sha256": "26f5f29867b65ee6b5ba53363b70a868f0e01d6e8b0f904988afbfaa04fd4d48"
+    },
+    {
+      "type": "PoLine",
+      "file": "po-line.schema.json",
+      "sha256": "a3b70bc049095830009c0c83766c26baad36108abe546829f1fd721de4113f58"
+    },
+    {
+      "type": "PoTotal",
+      "file": "po-total.schema.json",
+      "sha256": "b6fd8b017d7dbca93c49e24b649f42f26377dc9345caf9f32ab2150d0abb2c12"
+    },
+    {
+      "type": "SelectionReference",
+      "file": "selection-reference.schema.json",
+      "sha256": "d71f21f5d123490af01e66dc17fa4aebee9640e0c017e182236bb810b784cb9d"
+    },
+    {
+      "type": "PurchaseOrderContent",
+      "file": "purchase-order-content.schema.json",
+      "sha256": "dca662cdbe35d4e3537f46876c320fedea96ec44f51b6c4b585b57464fe8896d"
+    },
+    {
+      "type": "SealedPurchaseOrder",
+      "file": "sealed-purchase-order.schema.json",
+      "sha256": "b1868923ee58ee575c44e94d2983f99505a875ce3d34db1d27ba2ea892704e8f"
+    },
+    {
+      "type": "ObservationReference",
+      "file": "observation-reference.schema.json",
+      "sha256": "f06f82d61815ae07bd3cede5e2d90b513998f8ef80714edc2c26e578362f819c"
+    },
+    {
+      "type": "ReceiptLine",
+      "file": "receipt-line.schema.json",
+      "sha256": "d4b537cdac0276042a38e1c41606512f9592c37feb74bc50438f7d88e65c4ec9"
+    },
+    {
+      "type": "ReceiptPayload",
+      "file": "receipt-payload.schema.json",
+      "sha256": "e987c2b4f9d4b644b0d116506d3e5aa8668acb2b493873873cba0aa4622353e7"
+    },
+    {
+      "type": "SupplierDeliveryTransitionContent",
+      "file": "supplier-delivery-transition-content.schema.json",
+      "sha256": "6269a43f93aeb1e0f3ff762c0e2fc6bb81b009074920a6ba147445fca59e5f34"
+    },
+    {
+      "type": "SealedSupplierDeliveryTransition",
+      "file": "sealed-supplier-delivery-transition.schema.json",
+      "sha256": "185439d28f963e8908244d89cfd86d63fb10d55e9485df1cb016a2a5ee0ff645"
+    },
+    {
+      "type": "SubstitutionLine",
+      "file": "substitution-line.schema.json",
+      "sha256": "e3f2007a748d9ba523a456a1724673078d40d22190c9bf230427402ae9cb8a40"
+    },
+    {
+      "type": "ConstraintEvaluationReference",
+      "file": "constraint-evaluation-reference.schema.json",
+      "sha256": "a15896b0e712fa2b10dca5247cac36806b0da1c40de36bfff54fe5020f504e2e"
+    },
+    {
+      "type": "SubstitutionRequestContent",
+      "file": "substitution-request-content.schema.json",
+      "sha256": "74685609f8b563f6ee8106d9a8977cc84c71f1363f9732384570f798c97b4f3f"
+    },
+    {
+      "type": "SealedSubstitutionRequest",
+      "file": "sealed-substitution-request.schema.json",
+      "sha256": "8ff404171b6637b808f4993953fdf725f8d42c8974a722e3d4e1378a1551c753"
+    },
+    {
+      "type": "SubstitutionDecisionContent",
+      "file": "substitution-decision-content.schema.json",
+      "sha256": "6cd124613659473dd6d23a9e1cb992d8a53cf0e1db2eb12c4dbfd773620591aa"
+    },
+    {
+      "type": "SealedSubstitutionDecision",
+      "file": "sealed-substitution-decision.schema.json",
+      "sha256": "5854a3da52453cef356d8b408ddb7faf532c3460c53ff887e106849128d48633"
+    },
+    {
+      "type": "AcquisitionStatusDetail",
+      "file": "acquisition-status-detail.schema.json",
+      "sha256": "62333ca5cdc144833010aff0464c20f95f60951b5ee7931e3cd2bfb13be32bb2"
+    },
+    {
+      "type": "SealedAcquisitionStatus",
+      "file": "sealed-acquisition-status.schema.json",
+      "sha256": "a599df585728e1ea47307e87ef8aa0f6efe0e884f49f7954e608d03648020ddf"
+    },
+    {
+      "type": "ProcurementEventSequence",
+      "file": "procurement-event-sequence.schema.json",
+      "sha256": "027bdfe0adc91013aa9dd334bf35977dcf935fac6baa1087c66e897150b6bd17"
+    },
+    {
+      "type": "ProcurementCausalParent",
+      "file": "procurement-causal-parent.schema.json",
+      "sha256": "5da058e0040e642e92a4ebf49e809bbc0b088fd973a2157f9f4b21f9b75edb70"
+    },
+    {
+      "type": "ProcurementEventPayload",
+      "file": "procurement-event-payload.schema.json",
+      "sha256": "d69cbbce7daf9937f87c3ff232bf5fec0b9731e0862401bc8ae384f5372008b4"
+    },
+    {
+      "type": "ProcurementEventContent",
+      "file": "procurement-event-content.schema.json",
+      "sha256": "49beca0da3674f0a6e9e0f407f199c3dbbee48c1d5ebf413012102be5ac71afb"
+    },
+    {
+      "type": "SealedProcurementEvent",
+      "file": "sealed-procurement-event.schema.json",
+      "sha256": "85b783cec06ccf9b3e64952a93951487e1505c2de0bfc91c4e5537619641cfbf"
+    }
+  ]
+}

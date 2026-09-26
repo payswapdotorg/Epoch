@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProcurementCausalParent",
+  "$defs": {
+    "ProcurementCausalParent": {
+      "readOnly": true,
+      "title": "ProcurementCausalParent",
+      "description": "Causal parent of a procurement event: an earlier event in the same procurement stream (the W010 shape).",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "$ref": "#/$defs/ProcurementStreamId"
+        },
+        "sequence": {
+          "$ref": "#/$defs/ProcurementEventSequence"
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "ProcurementStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ProcurementStreamId",
+      "description": "Opaque procurement-event stream identity: \"stream:\" followed by a lowercase slug (the W010 stream grammar)."
+    },
+    "ProcurementEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "ProcurementEventSequence",
+      "description": "One procurement-event sequence number: 1-based, contiguous per procurement stream."
+    }
+  },
+  "$id": "urn:epoch:procurement:procurement-causal-parent:1.0.0"
+}

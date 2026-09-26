@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ConsideredQuote",
+  "$defs": {
+    "ConsideredQuote": {
+      "readOnly": true,
+      "title": "ConsideredQuote",
+      "description": "One considered-quote comparison entry: the quote id plus its exact content digest (the offer comparison is recorded).",
+      "type": "object",
+      "properties": {
+        "quoteId": {
+          "type": "string",
+          "pattern": "^quote:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "quoteDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "quoteId",
+        "quoteDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:procurement:considered-quote:1.0.0"
+}

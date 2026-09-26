@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LineageId",
+  "$defs": {
+    "LineageId": {
+      "type": "string",
+      "pattern": "^lineage:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LineageId",
+      "description": "Opaque requirement-lineage record identity: \"lineage:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:procurement:lineage-id:1.0.0"
+}

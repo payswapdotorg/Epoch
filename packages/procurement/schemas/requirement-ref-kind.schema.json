@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "work-package",
+    "solution-line"
+  ],
+  "$id": "urn:epoch:procurement:requirement-ref-kind:1.0.0"
+}

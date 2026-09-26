@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LeadTimeObservation",
+  "$defs": {
+    "LeadTimeObservation": {
+      "readOnly": true,
+      "title": "LeadTimeObservation",
+      "description": "One typed lead-time observation: a Prediction/Estimate distinction-record reference (exact digest) with the mandatory uncertainty state — never a bare number.",
+      "type": "object",
+      "properties": {
+        "semantics": {
+          "type": "string",
+          "enum": [
+            "prediction",
+            "estimate"
+          ]
+        },
+        "recordId": {
+          "$ref": "#/$defs/DistinctionRecordId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "uncertainty": {
+          "$ref": "#/$defs/UncertaintyState"
+        },
+        "subjectNote": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "semantics",
+        "recordId",
+        "contentDigest",
+        "uncertainty"
+      ],
+      "additionalProperties": false
+    },
+    "DistinctionRecordId": {
+      "type": "string",
+      "pattern": "^(prediction|estimate|baseline|commitment|observation|actual|forecast|outcome|learning):[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DistinctionRecordId",
+      "description": "Opaque semantic-distinction record identity: one of the nine kind prefixes followed by a lowercase slug."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "UncertaintyState": {
+      "readOnly": true,
+      "title": "UncertaintyState",
+      "description": "The uncertainty state of one delivery fact: provenance, freshness and confidence (all required — the decision-sufficiency rule preserves what is not known).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "provenance": {
+          "$ref": "#/$defs/ProvenanceState"
+        },
+        "freshness": {
+          "$ref": "#/$defs/FreshnessState"
+        },
+        "confidence": {
+          "$ref": "#/$defs/ConfidenceState"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "provenance",
+        "freshness",
+        "confidence"
+      ],
+      "additionalProperties": false
+    },
+    "ProvenanceState": {
+      "readOnly": true,
+      "title": "ProvenanceState",
+      "description": "Provenance of one delivery fact: observed/reported/derived/assumed/imported/unknown, optional opaque source reference, optional acting principal.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "observed",
+            "reported",
+            "derived",
+            "assumed",
+            "imported",
+            "unknown"
+          ]
+        },
+        "sourceRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "actor": {
+          "$ref": "#/$defs/PrincipalId"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "OpaqueReference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "OpaqueReference",
+      "description": "Opaque, bounded, provider-neutral reference string owned by its producing system."
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque acting principal: \"principal:\" followed by a lowercase slug (W009 identity grammar)."
+    },
+    "FreshnessState": {
+      "readOnly": true,
+      "title": "FreshnessState",
+      "description": "Freshness of one delivery fact: fresh/aging/stale/unknown plus the producer-supplied assessment instant.",
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "fresh",
+            "aging",
+            "stale",
+            "unknown"
+          ]
+        },
+        "assessedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "state",
+        "assessedAt"
+      ],
+      "additionalProperties": false
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "ConfidenceState": {
+      "readOnly": true,
+      "title": "ConfidenceState",
+      "description": "Confidence of one delivery fact: acquisition method (stated/measured/estimated/derived/imported), a 0..1 value, optional interval and rationale.",
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "stated",
+            "measured",
+            "estimated",
+            "derived",
+            "imported"
+          ]
+        },
+        "value": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "interval": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "low": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "high": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "low",
+            "high"
+          ],
+          "additionalProperties": false
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "method",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:procurement:lead-time-observation:1.0.0"
+}

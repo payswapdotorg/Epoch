@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/procurement": ["./src/index.ts"],
+      "@epoch/world-contracts": ["../../contracts/world/src/index.ts"]
+    }
+  },
+  "include": [
+    "../../contracts/procurement/index.d.ts",
+    "../../contracts/procurement/parity.ts"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CommitmentReference",
+  "$defs": {
+    "CommitmentReference": {
+      "readOnly": true,
+      "title": "CommitmentReference",
+      "description": "One W036 Commitment-distinction record reference: the kind-prefixed record id plus its exact content digest (procurement links commitments, it never re-implements them).",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "pattern": "^commitment:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "recordId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:procurement:commitment-reference:1.0.0"
+}

@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RequirementLineageContent",
+  "$defs": {
+    "RequirementLineageContent": {
+      "readOnly": true,
+      "title": "RequirementLineageContent",
+      "description": "The immutable content of one requirement-lineage record: one opaque ProgramOfWork requirement reference bound to one acquisition package, with provenance and tenant scope (fan-out: many lineage records may name one requirement).",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.procurement.requirement-lineage"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "lineageId": {
+          "$ref": "#/$defs/LineageId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "requirementRef": {
+          "$ref": "#/$defs/RequirementRef"
+        },
+        "packageId": {
+          "$ref": "#/$defs/PackageId"
+        },
+        "recordedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "recordedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "lineageId",
+        "tenantId",
+        "solutionId",
+        "requirementRef",
+        "packageId",
+        "recordedAt",
+        "recordedBy"
+      ],
+      "additionalProperties": false
+    },
+    "LineageId": {
+      "type": "string",
+      "pattern": "^lineage:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LineageId",
+      "description": "Opaque requirement-lineage record identity: \"lineage:\" followed by a lowercase slug."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "SolutionId": {
+      "type": "string",
+      "pattern": "^solution:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionId",
+      "description": "Opaque solution-package identity: \"solution:\" followed by a lowercase slug (stable across versions)."
+    },
+    "RequirementRef": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "work-package"
+            },
+            "workPackageId": {
+              "$ref": "#/$defs/WorkPackageId"
+            }
+          },
+          "required": [
+            "kind",
+            "workPackageId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "solution-line"
+            },
+            "solutionLineId": {
+              "$ref": "#/$defs/SolutionLineId"
+            }
+          },
+          "required": [
+            "kind",
+            "solutionLineId"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "RequirementRef",
+      "description": "One opaque requirement reference into a W036 ProgramOfWork: a work-package id or a solution-line id (never an embedded object)."
+    },
+    "WorkPackageId": {
+      "type": "string",
+      "pattern": "^work-package:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkPackageId",
+      "description": "Opaque work-package identity: \"work-package:\" followed by a lowercase slug."
+    },
+    "SolutionLineId": {
+      "type": "string",
+      "pattern": "^line:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionLineId",
+      "description": "Opaque solution-line identity: \"line:\" followed by a lowercase slug."
+    },
+    "PackageId": {
+      "type": "string",
+      "pattern": "^package:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PackageId",
+      "description": "Opaque acquisition-package identity: \"package:\" followed by a lowercase slug."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque acting principal: \"principal:\" followed by a lowercase slug (W009 identity grammar)."
+    }
+  },
+  "$id": "urn:epoch:procurement:requirement-lineage-content:1.0.0"
+}

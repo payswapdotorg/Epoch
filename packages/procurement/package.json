@@ -1,0 +1,37 @@
+{
+  "name": "@epoch/procurement",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Procurement kernel (W037) — resource acquisition as the universal acquisition layer, with procurement/supplier delivery as the concrete construction/commercial projection of @epoch/solution-delivery's Acquire contract (W036): typed content-addressed requirement-to-acquisition-package lineage (one requirement fans out to many acquisition attempts); provider-neutral quotes/offers/allocations with selection as a RECORDED, hash-chained decision referencing exact quote digests (a selection not backed by a live quote digest is dangling-quote-rejected); commitment linkage through W036 Commitment-distinction records (created/linked, never re-implemented); sealed version-chained purchase orders (previousPOVersionDigest, the W023 convention); the supplier-delivery state machine (ordered -> confirmed -> shipped/partial -> received -> accepted|rejected|disputed) with append-only transitions and accumulating partial receipts linked to W036 DeliveryRecord observation intake; substitution requests whose acceptance REQUIRES a constraint-evaluation reference (W004 policy shapes, opaque digest — otherwise unevaluated-substitution-rejected); typed lead-time observations (Prediction/Estimate distinction references with mandatory uncertainty, never a bare number); and acquisition status as a sealed derived-only projection. Provider-neutral supplier identity (opaque ids, never vendor names in core types). NO persistence, NO UI, NO provider vocabulary.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/constraint-language": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

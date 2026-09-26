@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PoId",
+  "$defs": {
+    "PoId": {
+      "type": "string",
+      "pattern": "^po:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PoId",
+      "description": "Opaque purchase-order identity: \"po:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:procurement:po-id:1.0.0"
+}

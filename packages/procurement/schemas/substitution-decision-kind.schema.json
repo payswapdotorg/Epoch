@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "accepted",
+    "rejected"
+  ],
+  "$id": "urn:epoch:procurement:substitution-decision-kind:1.0.0"
+}
