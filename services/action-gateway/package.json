@@ -1,0 +1,37 @@
+{
+  "name": "@epoch/action-gateway",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Action Gateway service (W022) — the EXECUTION AUTHORITY (architecture lock rule 3: actions execute only through the Action Gateway): tenant-scoped intake over @epoch/action-policy (typed policy decisions with full W004 provenance, append-only hash-chained records), the W009 authorization gate (unauthenticated/unauthorized intake is typed authorization-rejected BEFORE policy evaluation), the human-approval flow (quorum, deadlines, delegation bounds, supersession — approval authorizes exactly the referenced decision + proposal revision), execution dispatch behind the ActionExecutionPort adapter seam (the gateway records record-shaped outcomes ONLY — typed success/failure records with evidence references; it never implements side effects), the action:* event vocabulary over the W010 event shapes (one action = one stream, digests mirror computeEventDigest, admitted by the real sealEvent — devDep parity), and health/snapshot as typed data. In-memory reference behavior: NO persistence, NO network, NO real side effects; core logic stays pure (zero wall-clock, zero randomness — instants are caller-supplied).",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/action-policy": "workspace:*",
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/evidence": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

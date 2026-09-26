@@ -1,0 +1,36 @@
+{
+  "name": "@epoch/action-policy",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Action Policy kernel (W022) — the typed policy EVALUATION layer over @epoch/action-protocol proposals and @epoch/policy-contracts policy sets: deterministic allow / deny / requires-approval decisions with FULL W004 provenance (matched policies, applied precedence, evaluated scope — reused, never re-implemented), sealed as content-addressed, per-proposal hash-chained append-only records (a decision is never mutated; a changed situation is a NEW decision with previousDecisionDigest); human approval as a first-class typed surface (approval directives with W009-shaped approver scope, quorum, deadline, delegation depth; approval and rejection as sealed records referencing the ORIGINAL decision digest — approval NEVER re-evaluates policy, drift is proposal-drift-rejected); replay/idempotency keyed on (proposal digest, policy-set digest); tenant-scoped decisions with cross-tenant proposal references typed tenant-isolation-rejected.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
