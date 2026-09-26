@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "change",
+    "delay",
+    "rework",
+    "defect",
+    "blocker"
+  ],
+  "$id": "urn:epoch:execution-tracking:issue-kind:1.0.0"
+}

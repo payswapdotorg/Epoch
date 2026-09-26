@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExecutionStreamId",
+  "$defs": {
+    "ExecutionStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ExecutionStreamId",
+      "description": "Opaque execution-event stream identity: \"stream:\" followed by a lowercase slug (the W010 stream grammar)."
+    }
+  },
+  "$id": "urn:epoch:execution-tracking:execution-stream-id:1.0.0"
+}

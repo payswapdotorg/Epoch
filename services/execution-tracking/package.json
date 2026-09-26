@@ -1,0 +1,37 @@
+{
+  "name": "@epoch/execution-tracking-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Execution Tracking Runtime service (W038): the thin typed HOST FACADE over @epoch/execution-tracking — program registration (the opaque work-package/activity/milestone index over the REAL W036 ProgramOfWork), delivery-record registration, the low-friction field-capture intake through the FieldCapturePort adapter seam (ONE in-memory reference adapter; the core never names a vendor) and through direct calls, observation recording with IDEMPOTENT replay (same capture content -> the typed duplicate-observation admission returning the prior digest; state unchanged), tracking-state transitions (append-only chains), issue raising/resolution (changes/delays/rework/defects/blockers), reconciliation proposals and their application EXCLUSIVELY through the W036 DeliveryRecord authority path (recordObservation -> acceptObservation -> actualizeObservation), and the derived execution-state projection. Every step emits execution:* events (W010-shaped, one stream per work package stream:execution-<suffix>) sealed by the kernel and pinned by REAL sealEvent parity tests. The W009 authorization gate denies unauthorized operations BEFORE any kernel admission; tenant isolation is typed tenant-isolation-rejected. In-memory reference behavior: NO persistence, NO network, NO real field systems; core logic stays pure (zero wall-clock, zero randomness — instants are caller-supplied).",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/authorization": "workspace:*",
+    "@epoch/execution-tracking": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

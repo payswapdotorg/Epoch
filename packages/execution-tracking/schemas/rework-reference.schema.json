@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ReworkReference",
+  "$defs": {
+    "ReworkReference": {
+      "readOnly": true,
+      "title": "ReworkReference",
+      "description": "Rework provenance: the original work records (work package, optional activity, optional prior tracking record) the rework redoes, plus the reason.",
+      "type": "object",
+      "properties": {
+        "workPackageId": {
+          "$ref": "#/$defs/WorkPackageId"
+        },
+        "activityId": {
+          "$ref": "#/$defs/ActivityId"
+        },
+        "originalTrackingRecordId": {
+          "$ref": "#/$defs/StateId"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "workPackageId",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "WorkPackageId": {
+      "type": "string",
+      "pattern": "^work-package:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkPackageId",
+      "description": "Opaque work-package identity: \"work-package:\" followed by a lowercase slug."
+    },
+    "ActivityId": {
+      "type": "string",
+      "pattern": "^activity:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ActivityId",
+      "description": "Opaque activity identity: \"activity:\" followed by a lowercase slug (the W036 ProgramOfWork grammar)."
+    },
+    "StateId": {
+      "type": "string",
+      "pattern": "^state:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "StateId",
+      "description": "Opaque tracking-state record identity: \"state:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:execution-tracking:rework-reference:1.0.0"
+}
