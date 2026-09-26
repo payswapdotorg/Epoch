@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/IdempotencyRecord",
+  "$defs": {
+    "IdempotencyRecord": {
+      "readOnly": true,
+      "title": "IdempotencyRecord",
+      "description": "One consumed submission idempotency key: the tenant-scoped key bound to the run identity it admitted.",
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/FabricIdempotencyKey"
+        },
+        "runId": {
+          "$ref": "#/$defs/SimulationRunId"
+        },
+        "runDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "tenantId",
+        "idempotencyKey",
+        "runId",
+        "runDigest"
+      ],
+      "additionalProperties": false
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "FabricIdempotencyKey": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "FabricIdempotencyKey",
+      "description": "A submission idempotency key: caller-supplied opaque token, or the derived content key (lowercase hex SHA-256)."
+    },
+    "SimulationRunId": {
+      "type": "string",
+      "pattern": "^simrun:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SimulationRunId",
+      "description": "Simulation run identity: \"simrun:\" followed by a lowercase slug (derived deterministically from the run identity digest)."
+    }
+  },
+  "$id": "urn:epoch:simulation-fabric:idempotency-record:1.0.0"
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SimulationEventDiscriminator",
+  "$defs": {
+    "SimulationEventDiscriminator": {
+      "type": "string",
+      "enum": [
+        "simulation:run-submitted",
+        "simulation:run-scheduled",
+        "simulation:run-started",
+        "simulation:run-completed",
+        "simulation:run-failed",
+        "simulation:run-cancelled",
+        "simulation:result-published"
+      ],
+      "title": "SimulationEventDiscriminator",
+      "description": "One simulation lifecycle event discriminator (the open-namespace simulation:* family over the W010 event shapes)."
+    }
+  },
+  "$id": "urn:epoch:simulation-fabric:simulation-event-discriminator:1.0.0"
+}

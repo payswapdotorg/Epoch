@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SimulationJobId",
+  "$defs": {
+    "SimulationJobId": {
+      "type": "string",
+      "pattern": "^simjob:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SimulationJobId",
+      "description": "Simulation job identity: \"simjob:\" followed by a lowercase slug (a caller-supplied opaque handle, never the run identity)."
+    }
+  },
+  "$id": "urn:epoch:simulation-fabric:simulation-job-id:1.0.0"
+}

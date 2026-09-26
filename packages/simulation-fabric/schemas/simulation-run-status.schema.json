@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SimulationRunStatus",
+  "$defs": {
+    "SimulationRunStatus": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "scheduled",
+        "running",
+        "completed",
+        "failed",
+        "cancelled"
+      ],
+      "title": "SimulationRunStatus",
+      "description": "One run lifecycle status: submitted, scheduled, running, or the terminal completed / failed / cancelled."
+    }
+  },
+  "$id": "urn:epoch:simulation-fabric:simulation-run-status:1.0.0"
+}

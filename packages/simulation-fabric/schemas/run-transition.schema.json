@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RunTransition",
+  "$defs": {
+    "RunTransition": {
+      "readOnly": true,
+      "title": "RunTransition",
+      "description": "One typed run-state transition: cause, acting principal (provenance), and the caller-supplied instant; the genesis record carries from: null.",
+      "type": "object",
+      "properties": {
+        "from": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SimulationRunStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "to": {
+          "$ref": "#/$defs/SimulationRunStatus"
+        },
+        "cause": {
+          "$ref": "#/$defs/RunTransitionCause"
+        },
+        "actor": {
+          "$ref": "#/$defs/FabricPrincipalId"
+        },
+        "at": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "cause",
+        "actor",
+        "at"
+      ],
+      "additionalProperties": false
+    },
+    "SimulationRunStatus": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "scheduled",
+        "running",
+        "completed",
+        "failed",
+        "cancelled"
+      ],
+      "title": "SimulationRunStatus",
+      "description": "One run lifecycle status: submitted, scheduled, running, or the terminal completed / failed / cancelled."
+    },
+    "RunTransitionCause": {
+      "type": "string",
+      "enum": [
+        "submission",
+        "planning",
+        "dispatch",
+        "result-ingested",
+        "execution-failed",
+        "result-rejected",
+        "cancellation"
+      ],
+      "title": "RunTransitionCause",
+      "description": "The typed cause of a run-state transition: submission, planning, dispatch, result-ingested, execution-failed, result-rejected, or cancellation."
+    },
+    "FabricPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "FabricPrincipalId",
+      "description": "Acting principal of a fabric operation: \"principal:\" followed by a lowercase slug (the W009/W010 actor grammar, mirrored)."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    }
+  },
+  "$id": "urn:epoch:simulation-fabric:run-transition:1.0.0"
+}

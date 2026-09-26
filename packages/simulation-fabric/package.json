@@ -1,0 +1,37 @@
+{
+  "name": "@epoch/simulation-fabric",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Simulation Execution Fabric kernel (W021) — the typed, versioned, provider-neutral EXECUTION fabric over @epoch/simulation-protocol (W005): simulation-job submission with deterministic content-addressed run identity (digest over canonical invocation payload, W006-evidence conventions), typed idempotency keys (replayed submission -> same run identity via the typed duplicate-run admission; different content under the same key -> idempotency-conflict), execution planning with capability bindings as opaque typed references to W007 registrations (never structural copies), the sealed append-only run state machine (W023 version-chain style: previousRunDigest chaining, content-addressed states, submitted -> scheduled -> running -> completed | failed | cancelled), result ingestion through the REAL W005 admission + conformance pipelines, the simulation:* event vocabulary over the W010 event shapes (one run = one stream, stream:simulation-<suffix>), tenant-scoped runs with typed tenant-isolation-rejected gates, and the SimulationExecutionPort adapter seam with ONE in-memory reference adapter (external grids/clouds are adapters, NEVER core types). In-memory reference machinery only: NO persistence, NO network, NO clocks (instants are caller-supplied).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/simulation-protocol": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/authorization": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

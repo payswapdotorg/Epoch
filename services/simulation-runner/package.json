@@ -1,0 +1,36 @@
+{
+  "name": "@epoch/simulation-runner",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Simulation Runner service (W021): the thin, typed HOST FACADE over @epoch/simulation-fabric — job intake (W005 registration/request admission through the fabric's REAL pipelines, capability bindings pre-resolved against the REAL W007 capability registry with retire/deprecate semantics), run supervision (planning, pull-style execution through the SimulationExecutionPort seam, push-style start+result publication, cancellation), the one-shot driveSimulationJob driver, health/liveness as typed data, and deterministic snapshot/restore. Tenant-scoped with the typed tenant-isolation-rejected gate. In-memory reference behavior only: NO persistence, NO network servers, NO real processes; the service is a typed library surface with a driver, not an HTTP server (zero wall-clock, zero randomness — instants are caller-supplied).",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/simulation-fabric": "workspace:*",
+    "@epoch/simulation-protocol": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/authorization": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

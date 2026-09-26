@@ -1,0 +1,1106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SimulationFabricSnapshot",
+  "$defs": {
+    "SimulationFabricSnapshot": {
+      "readOnly": true,
+      "title": "SimulationFabricSnapshot",
+      "description": "Deterministic, serialization-friendly whole-fabric projection: run entries sorted by (tenantId, runId) and idempotency records sorted by (tenantId, idempotencyKey).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/SimulationFabricRecordVersion"
+        },
+        "entries": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FabricRunEntry"
+          }
+        },
+        "idempotency": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/IdempotencyRecord"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "entries",
+        "idempotency"
+      ],
+      "additionalProperties": false
+    },
+    "SimulationFabricRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "SimulationFabricRecordVersion",
+      "description": "Version discriminator carried by every serialized simulation-fabric record and snapshot (currently 1)."
+    },
+    "FabricRunEntry": {
+      "readOnly": true,
+      "title": "FabricRunEntry",
+      "description": "One hosted run entry: the run document, its admitted W005 invocation request and simulator registration (the executed chain), and its sealed simulation event stream.",
+      "type": "object",
+      "properties": {
+        "run": {
+          "$ref": "#/$defs/SimulationRun"
+        },
+        "request": {
+          "$ref": "#/$defs/SimulationInvocationRequest"
+        },
+        "registration": {
+          "$ref": "#/$defs/SimulatorRegistration"
+        },
+        "events": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SealedSimulationEvent"
+          }
+        }
+      },
+      "required": [
+        "run",
+        "request",
+        "registration",
+        "events"
+      ],
+      "additionalProperties": false
+    },
+    "SimulationRun": {
+      "readOnly": true,
+      "title": "SimulationRun",
+      "description": "A simulation run: tenant-scoped, content-addressed identity (digest over the canonical invocation payload), exact-revision invocation and simulator references, opaque capability bindings, the append-only sealed state chain, and (on completion) the sealed result.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/SimulationFabricRecordVersion"
+        },
+        "runId": {
+          "$ref": "#/$defs/SimulationRunId"
+        },
+        "runDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "status": {
+          "$ref": "#/$defs/SimulationRunStatus"
+        },
+        "invocation": {
+          "$ref": "#/$defs/InvocationReference"
+        },
+        "simulator": {
+          "$ref": "#/$defs/SimulatorReference"
+        },
+        "capabilityBindings": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityBindingRef"
+          }
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/FabricIdempotencyKey"
+        },
+        "states": {
+          "readOnly": true,
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SimulationRunState"
+          }
+        },
+        "stateDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "result": {
+          "$ref": "#/$defs/SealedSimulationResult"
+        },
+        "failure": {
+          "$ref": "#/$defs/SimulationFailure"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "runId",
+        "runDigest",
+        "tenantId",
+        "status",
+        "invocation",
+        "simulator",
+        "capabilityBindings",
+        "idempotencyKey",
+        "states",
+        "stateDigest",
+        "createdAt",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    },
+    "SimulationRunId": {
+      "type": "string",
+      "pattern": "^simrun:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SimulationRunId",
+      "description": "Simulation run identity: \"simrun:\" followed by a lowercase slug (derived deterministically from the run identity digest)."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "SimulationRunStatus": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "scheduled",
+        "running",
+        "completed",
+        "failed",
+        "cancelled"
+      ],
+      "title": "SimulationRunStatus",
+      "description": "One run lifecycle status: submitted, scheduled, running, or the terminal completed / failed / cancelled."
+    },
+    "InvocationReference": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "requestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "requestId",
+        "requestDigest"
+      ],
+      "additionalProperties": false,
+      "title": "InvocationReference",
+      "description": "Exact-revision invocation reference: request id plus the SHA-256 digest of the request canonical JSON."
+    },
+    "MessageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "MessageId",
+      "description": "Opaque message identifier, unique within the emitting scope."
+    },
+    "SimulatorReference": {
+      "type": "object",
+      "properties": {
+        "simulatorId": {
+          "$ref": "#/$defs/SimulatorId"
+        },
+        "registrationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "simulatorId",
+        "registrationDigest"
+      ],
+      "additionalProperties": false,
+      "title": "SimulatorReference",
+      "description": "Exact-revision simulator reference: id plus the SHA-256 digest of the registration canonical JSON."
+    },
+    "SimulatorId": {
+      "type": "string",
+      "pattern": "^simulator:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SimulatorId",
+      "description": "Registered simulator identifier: \"simulator:\" followed by a lowercase slug."
+    },
+    "CapabilityBindingRef": {
+      "readOnly": true,
+      "title": "CapabilityBindingRef",
+      "description": "Opaque typed reference to a W007 capability registration: capability id, semver version, and the registration manifest digest (the exact-revision pin). Never a structural copy of the registry record.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,255}$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "registrationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "version",
+        "registrationDigest"
+      ],
+      "additionalProperties": false
+    },
+    "FabricIdempotencyKey": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "FabricIdempotencyKey",
+      "description": "A submission idempotency key: caller-supplied opaque token, or the derived content key (lowercase hex SHA-256)."
+    },
+    "SimulationRunState": {
+      "readOnly": true,
+      "title": "SimulationRunState",
+      "description": "One sealed, content-addressed run-state record: status, the typed transition that produced it, the previousRunDigest chain link, and its own SHA-256 content address (append-only; W023 version-chain style).",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.simulation-fabric.run-state"
+        },
+        "schemaVersion": {
+          "$ref": "#/$defs/SimulationFabricRecordVersion"
+        },
+        "runId": {
+          "$ref": "#/$defs/SimulationRunId"
+        },
+        "runDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "$ref": "#/$defs/SimulationRunStatus"
+        },
+        "transition": {
+          "$ref": "#/$defs/RunTransition"
+        },
+        "previousRunDigest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stateDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "runId",
+        "runDigest",
+        "status",
+        "transition",
+        "previousRunDigest",
+        "stateDigest"
+      ],
+      "additionalProperties": false
+    },
+    "RunTransition": {
+      "readOnly": true,
+      "title": "RunTransition",
+      "description": "One typed run-state transition: cause, acting principal (provenance), and the caller-supplied instant; the genesis record carries from: null.",
+      "type": "object",
+      "properties": {
+        "from": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SimulationRunStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "to": {
+          "$ref": "#/$defs/SimulationRunStatus"
+        },
+        "cause": {
+          "$ref": "#/$defs/RunTransitionCause"
+        },
+        "actor": {
+          "$ref": "#/$defs/FabricPrincipalId"
+        },
+        "at": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "cause",
+        "actor",
+        "at"
+      ],
+      "additionalProperties": false
+    },
+    "RunTransitionCause": {
+      "type": "string",
+      "enum": [
+        "submission",
+        "planning",
+        "dispatch",
+        "result-ingested",
+        "execution-failed",
+        "result-rejected",
+        "cancellation"
+      ],
+      "title": "RunTransitionCause",
+      "description": "The typed cause of a run-state transition: submission, planning, dispatch, result-ingested, execution-failed, result-rejected, or cancellation."
+    },
+    "FabricPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "FabricPrincipalId",
+      "description": "Acting principal of a fabric operation: \"principal:\" followed by a lowercase slug (the W009/W010 actor grammar, mirrored)."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "SealedSimulationResult": {
+      "readOnly": true,
+      "title": "SealedSimulationResult",
+      "description": "A sealed simulation result: the admitted W005 SimulationResult document plus its canonical SHA-256 digest (the exact-revision address of the prediction artifact).",
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/$defs/SimulationResult"
+        },
+        "resultDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "result",
+        "resultDigest"
+      ],
+      "additionalProperties": false
+    },
+    "SimulationResult": {
+      "type": "object",
+      "properties": {
+        "protocolVersion": {
+          "$ref": "#/$defs/SimulationProtocolVersion"
+        },
+        "messageKind": {
+          "type": "string",
+          "const": "simulation.result"
+        },
+        "resultId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "request": {
+          "$ref": "#/$defs/InvocationReference"
+        },
+        "simulator": {
+          "$ref": "#/$defs/SimulatorReference"
+        },
+        "outcome": {
+          "$ref": "#/$defs/SimulationOutcome"
+        },
+        "deterministic": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "protocolVersion",
+        "messageKind",
+        "resultId",
+        "request",
+        "simulator",
+        "outcome",
+        "deterministic"
+      ],
+      "additionalProperties": false,
+      "title": "SimulationResult",
+      "description": "Simulation result message: exact-revision request and simulator bindings, completed/failed outcome, and the determinism claim."
+    },
+    "SimulationProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "SimulationProtocolVersion",
+      "description": "Exact simulation-protocol version admitted by this release (\"1.0.0\")."
+    },
+    "SimulationOutcome": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CompletedSimulationResult"
+        },
+        {
+          "$ref": "#/$defs/FailedSimulationResult"
+        }
+      ],
+      "title": "SimulationOutcome",
+      "description": "Exhaustive simulation outcome union: completed (with outputs) or failed (with a failure)."
+    },
+    "CompletedSimulationResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "const": "completed"
+        },
+        "outputs": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "outputs"
+      ],
+      "additionalProperties": false,
+      "title": "CompletedSimulationResult",
+      "description": "Completed simulation outcome: at least one named output value."
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "FailedSimulationResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "const": "failed"
+        },
+        "failure": {
+          "$ref": "#/$defs/SimulationFailure"
+        }
+      },
+      "required": [
+        "status",
+        "failure"
+      ],
+      "additionalProperties": false,
+      "title": "FailedSimulationResult",
+      "description": "Failed simulation outcome: machine-readable failure code and reason."
+    },
+    "SimulationFailure": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/SimulationFailureCode"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "SimulationFailure",
+      "description": "A simulation failure: machine-readable code plus a human-auditable reason."
+    },
+    "SimulationFailureCode": {
+      "type": "string",
+      "enum": [
+        "input-out-of-domain",
+        "numerical-divergence",
+        "resource-limit-exceeded",
+        "internal-error"
+      ],
+      "title": "SimulationFailureCode",
+      "description": "Machine-readable failure code carried by failed simulation results."
+    },
+    "SimulationInvocationRequest": {
+      "type": "object",
+      "properties": {
+        "protocolVersion": {
+          "$ref": "#/$defs/SimulationProtocolVersion"
+        },
+        "messageKind": {
+          "type": "string",
+          "const": "simulation.invocation-request"
+        },
+        "messageId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "requestId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "simulator": {
+          "$ref": "#/$defs/SimulatorReference"
+        },
+        "inputs": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "protocolVersion",
+        "messageKind",
+        "messageId",
+        "createdAt",
+        "requestId",
+        "simulator",
+        "inputs"
+      ],
+      "additionalProperties": false,
+      "title": "SimulationInvocationRequest",
+      "description": "Request to run a registered simulator at an exact registration revision: named inputs, optional seed, optional notes."
+    },
+    "SimulatorRegistration": {
+      "type": "object",
+      "properties": {
+        "protocolVersion": {
+          "$ref": "#/$defs/SimulationProtocolVersion"
+        },
+        "messageKind": {
+          "type": "string",
+          "const": "simulation.registration"
+        },
+        "messageId": {
+          "$ref": "#/$defs/MessageId"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "simulatorId": {
+          "$ref": "#/$defs/SimulatorId"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "inputs": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        },
+        "outputs": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          }
+        },
+        "fidelity": {
+          "$ref": "#/$defs/FidelityProfile"
+        },
+        "validityDomain": {
+          "$ref": "#/$defs/ValidityDomain"
+        },
+        "assumptions": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        },
+        "reproducibility": {
+          "$ref": "#/$defs/ReproducibilityProfile"
+        },
+        "costProfile": {
+          "$ref": "#/$defs/CostProfile"
+        },
+        "latencyProfile": {
+          "$ref": "#/$defs/LatencyProfile"
+        }
+      },
+      "required": [
+        "protocolVersion",
+        "messageKind",
+        "messageId",
+        "createdAt",
+        "simulatorId",
+        "displayName",
+        "inputs",
+        "outputs",
+        "fidelity",
+        "validityDomain",
+        "assumptions",
+        "reproducibility",
+        "costProfile",
+        "latencyProfile"
+      ],
+      "additionalProperties": false,
+      "title": "SimulatorRegistration",
+      "description": "Simulator registration message: inputs, outputs, fidelity, validity domain, assumptions, reproducibility, cost and latency."
+    },
+    "ParameterSpec": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/ParameterKind"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "enumValues": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "required",
+        "description"
+      ],
+      "additionalProperties": false,
+      "title": "ParameterSpec",
+      "description": "Named capability parameter with value kind, optionality, and description."
+    },
+    "ParameterKind": {
+      "type": "string",
+      "enum": [
+        "integer",
+        "number",
+        "string",
+        "boolean",
+        "enum",
+        "entity-reference",
+        "json"
+      ],
+      "title": "ParameterKind",
+      "description": "Value kind of a capability parameter."
+    },
+    "FidelityProfile": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "knownDeviations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        }
+      },
+      "required": [
+        "summary",
+        "knownDeviations"
+      ],
+      "additionalProperties": false,
+      "title": "FidelityProfile",
+      "description": "Declared fidelity: a summary of the fidelity level plus the list of known systematic deviations (possibly empty)."
+    },
+    "ValidityDomain": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "includes": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        },
+        "excludes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        }
+      },
+      "required": [
+        "summary",
+        "includes",
+        "excludes"
+      ],
+      "additionalProperties": false,
+      "title": "ValidityDomain",
+      "description": "Declared validity domain: summary, at least one included scope, and explicitly excluded regimes."
+    },
+    "ReproducibilityProfile": {
+      "type": "object",
+      "properties": {
+        "deterministic": {
+          "type": "boolean"
+        },
+        "seedPolicy": {
+          "$ref": "#/$defs/SeedPolicy"
+        }
+      },
+      "required": [
+        "deterministic",
+        "seedPolicy"
+      ],
+      "additionalProperties": false,
+      "title": "ReproducibilityProfile",
+      "description": "Reproducibility declaration: the determinism (digest-stability) claim plus the seed policy."
+    },
+    "SeedPolicy": {
+      "type": "string",
+      "enum": [
+        "not-applicable",
+        "external-seed",
+        "internal-seed"
+      ],
+      "title": "SeedPolicy",
+      "description": "How the simulator handles seeds: not-applicable (no seeding), external-seed (callers supply a seed), or internal-seed (the simulator derives a fixed seed itself)."
+    },
+    "CostProfile": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "basis": {
+              "type": "string",
+              "const": "none"
+            }
+          },
+          "required": [
+            "basis"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "basis": {
+              "type": "string",
+              "const": "per-proposal"
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            }
+          },
+          "required": [
+            "basis",
+            "currency",
+            "amount"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "basis": {
+              "type": "string",
+              "const": "per-session"
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            }
+          },
+          "required": [
+            "basis",
+            "currency",
+            "amount"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "basis": {
+              "type": "string",
+              "const": "per-hour"
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            }
+          },
+          "required": [
+            "basis",
+            "currency",
+            "amount"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "CostProfile",
+      "description": "Neutral cost declaration; amounts are non-negative decimal strings with ISO 4217 currency codes."
+    },
+    "LatencyProfile": {
+      "type": "object",
+      "properties": {
+        "p50Milliseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "p95Milliseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "p50Milliseconds",
+        "p95Milliseconds"
+      ],
+      "additionalProperties": false,
+      "title": "LatencyProfile",
+      "description": "Whole-millisecond latency profile with p50/p95 percentiles (p95 >= p50)."
+    },
+    "SealedSimulationEvent": {
+      "readOnly": true,
+      "title": "SealedSimulationEvent",
+      "description": "Published simulation event record: immutable W010-shaped content plus the SHA-256 of its canonical JSON (the exact-revision content address).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "streamId": {
+          "type": "string",
+          "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "sequence": {
+          "$ref": "#/$defs/SimulationEventSequence"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "actor": {
+          "type": "string",
+          "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "causalParent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SimulationCausalParent"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload": {
+          "$ref": "#/$defs/SimulationEventPayload"
+        },
+        "occurredAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "contentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "streamId",
+        "sequence",
+        "tenantId",
+        "actor",
+        "causalParent",
+        "payload",
+        "occurredAt",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "SimulationEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "SimulationEventSequence",
+      "description": "One simulation-event sequence number: 1-based, contiguous per simulation stream."
+    },
+    "SimulationCausalParent": {
+      "readOnly": true,
+      "title": "SimulationCausalParent",
+      "description": "Causal parent of a simulation event: an earlier event in the same simulation stream (the W010 shape).",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "type": "string",
+          "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "sequence": {
+          "$ref": "#/$defs/SimulationEventSequence"
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "SimulationEventPayload": {
+      "readOnly": true,
+      "title": "SimulationEventPayload",
+      "description": "Typed event payload of a simulation event: namespaced discriminator plus opaque JSON data (the W010 shape).",
+      "type": "object",
+      "properties": {
+        "discriminator": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "data": {
+          "readOnly": true,
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "discriminator",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "IdempotencyRecord": {
+      "readOnly": true,
+      "title": "IdempotencyRecord",
+      "description": "One consumed submission idempotency key: the tenant-scoped key bound to the run identity it admitted.",
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/FabricIdempotencyKey"
+        },
+        "runId": {
+          "$ref": "#/$defs/SimulationRunId"
+        },
+        "runDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "tenantId",
+        "idempotencyKey",
+        "runId",
+        "runDigest"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:simulation-fabric:simulation-fabric-snapshot:1.0.0"
+}

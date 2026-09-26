@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SimulationEventSequence",
+  "$defs": {
+    "SimulationEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "SimulationEventSequence",
+      "description": "One simulation-event sequence number: 1-based, contiguous per simulation stream."
+    }
+  },
+  "$id": "urn:epoch:simulation-fabric:simulation-event-sequence:1.0.0"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SimulationFabricRecordVersion",
+  "$defs": {
+    "SimulationFabricRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "SimulationFabricRecordVersion",
+      "description": "Version discriminator carried by every serialized simulation-fabric record and snapshot (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:simulation-fabric:simulation-fabric-record-version:1.0.0"
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SimulationCausalParent",
+  "$defs": {
+    "SimulationCausalParent": {
+      "readOnly": true,
+      "title": "SimulationCausalParent",
+      "description": "Causal parent of a simulation event: an earlier event in the same simulation stream (the W010 shape).",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "type": "string",
+          "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "sequence": {
+          "$ref": "#/$defs/SimulationEventSequence"
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "SimulationEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "SimulationEventSequence",
+      "description": "One simulation-event sequence number: 1-based, contiguous per simulation stream."
+    }
+  },
+  "$id": "urn:epoch:simulation-fabric:simulation-causal-parent:1.0.0"
+}
