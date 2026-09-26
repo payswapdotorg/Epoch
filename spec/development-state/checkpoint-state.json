@@ -1,8 +1,8 @@
 {
   "baselineSha": "e09f530926e4fa2c0e7de317a86d6d13013559f8",
-  "status": "W022_COMPLETE",
-  "next": "W037 in flight (capacity-era paced re-dispatch loop); W029/W030 newly eligible (W022 merged). Critical paths: W029->W031->W032->W033->W034->W035 (longest); W037/W038->W039->W040->W044; W038->W043. W017/W018/W019 are terminal leaves (lowest priority).",
-  "verification": "PR #65 CI 2x success on dd9f97c5; Tech Lead 7-gate review at epoch-review: scope 49/49 owned (action-policy 25 + action-gateway 24), token audit clean, per-run install green, governance+boundary PASS, battery 118/118 (typecheck+lint+test+build, --concurrency=1), report 18003 chars with literal marker; 4 non-blocking architecture questions recorded.",
-  "lastMergeSha": "3c7e3590f4",
-  "lastAction": "W022 (PR #65 -> ec1d9ace76) merged + reconcile PR #66 (3c7e3590, +95 lockfile lines) \u2014 22/44 complete"
+  "status": "W037_COMPLETE",
+  "next": "W029 in flight (chat 0357cf0b, window-waiting). W038 next dispatch (packet ready; delivery-chain root with W037 done, gates W039 + W043). Critical paths: W029->W031(needs W026/W027)->W032->W033->W034->W035; W038->W039->W040->W044; W038->W043.",
+  "verification": "PR #67 CI 2x success on fb2acde (review-rebased head); Tech Lead 7-gate review at epoch-review: scope 159/159 owned, token audit clean, per-run install green, governance+boundary PASS, battery 124/124, report 14408 chars with literal marker (base-claim inaccuracy reconciled).",
+  "lastMergeSha": "6781701c06",
+  "lastAction": "W037 (PR #67 -> 6781701c06) merged after review rebase (stale-base artifacts stripped); reconcile PR #68 in flight \u2014 23/44 complete"
 }
