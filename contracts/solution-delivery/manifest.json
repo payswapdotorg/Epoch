@@ -1,0 +1,198 @@
+{
+  "contract": "epoch/solution-delivery",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Solution Delivery public contract surface (W036, W012 convention): the CORE record types a domain pack or downstream consumer binds to — sealed solution versions and baseline approvals, the nine semantic-distinction records, work packages/activities/milestones, the sealed ProgramOfWork, the sealed DeliveryRecord, lifecycle stage/transition records, acquisition requests, information-acquisition requests, the external request/event seam, delivery events, and the pack profile. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "dataTypes": [
+    "Sha256Hex",
+    "Timestamp",
+    "UncertaintyState",
+    "WorldEntityReference",
+    "ConstraintReference",
+    "EvidenceReference",
+    "SolutionLine",
+    "SolutionVersionContent",
+    "SealedSolutionVersion",
+    "BaselineApproval",
+    "Measure",
+    "DistinctionSubject",
+    "DistinctionRecordContent",
+    "SealedDistinctionRecord",
+    "Activity",
+    "WorkPackage",
+    "MilestoneRecord",
+    "ProgramOfWorkContent",
+    "SealedProgramOfWork",
+    "DeliveryRecordContent",
+    "SealedDeliveryRecord",
+    "LifecycleStageRecord",
+    "LifecycleTransitionRecord",
+    "AcquisitionRequestDetail",
+    "AcquisitionRequestRecord",
+    "InformationAcquisitionRequest",
+    "ExternalRequestEnvelope",
+    "ExternalEventEnvelope",
+    "DeliveryEventContent",
+    "SealedDeliveryEvent",
+    "SolutionPackProfile"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/solution-delivery and are not represented in the JSON Schema files",
+  "emittedBy": "renderSolutionDeliveryPublicContractFiles() in @epoch/solution-delivery (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "Sha256Hex",
+      "file": "schemas/sha256-hex.schema.json",
+      "sha256": "5b1cc0bc51f74318aae38ac6d72983e1e7745a208f7790ee12995adedebf08de"
+    },
+    {
+      "type": "Timestamp",
+      "file": "schemas/timestamp.schema.json",
+      "sha256": "faf8e1752ed73d3bab374c485d8cf216bca1deb5c92a9f1792324d116831869b"
+    },
+    {
+      "type": "UncertaintyState",
+      "file": "schemas/uncertainty-state.schema.json",
+      "sha256": "fab5364ff6fae02f3327e94b5ec6d10a202ae5324ab00586e5e43f5c014f6a11"
+    },
+    {
+      "type": "WorldEntityReference",
+      "file": "schemas/world-entity-reference.schema.json",
+      "sha256": "9897f134dba6cf1d9278da250ea5a03a16f5ac6b756c38717d5bd663451f9d20"
+    },
+    {
+      "type": "ConstraintReference",
+      "file": "schemas/constraint-reference.schema.json",
+      "sha256": "5792d49390a173fed68a34f6914d76d4e073860c44cb794acffc7fc367a2b64d"
+    },
+    {
+      "type": "EvidenceReference",
+      "file": "schemas/evidence-reference.schema.json",
+      "sha256": "653d48e2e0e478f32cdd76ead8e57c6227ec39c3f5387104e102800b974590c2"
+    },
+    {
+      "type": "SolutionLine",
+      "file": "schemas/solution-line.schema.json",
+      "sha256": "30e0ffb0acf0d24c669c44b7d72ca287c8e36dc3ae807479e949a4292af38939"
+    },
+    {
+      "type": "SolutionVersionContent",
+      "file": "schemas/solution-version-content.schema.json",
+      "sha256": "728b3ace4f79aec2bf19c7f88d2bf267710ea9ea14a92aabb7244d14ccaf5cc1"
+    },
+    {
+      "type": "SealedSolutionVersion",
+      "file": "schemas/sealed-solution-version.schema.json",
+      "sha256": "bc6696508f7bf75918bd67893516b756718a33b327942cf62b1abdd7e3f18e28"
+    },
+    {
+      "type": "BaselineApproval",
+      "file": "schemas/baseline-approval.schema.json",
+      "sha256": "54debeef97413403ebec6a083e579b98bd94ec596d624681ceb19e89bcb3d2f3"
+    },
+    {
+      "type": "Measure",
+      "file": "schemas/measure.schema.json",
+      "sha256": "03464d6b89c5cdbb95f1c6fc1ef6ad9af33a38cdb9ce5b3272027438a27b317c"
+    },
+    {
+      "type": "DistinctionSubject",
+      "file": "schemas/distinction-subject.schema.json",
+      "sha256": "a6e294064a75ec9151796f44fb9166796252d1c08bf8b4e767ebf57cf42ba4d8"
+    },
+    {
+      "type": "DistinctionRecordContent",
+      "file": "schemas/distinction-record-content.schema.json",
+      "sha256": "3362d1ab86c52598c8ad6a28cfe8c4ad4c60d7b50611c724ab97a72ac0e1aeec"
+    },
+    {
+      "type": "SealedDistinctionRecord",
+      "file": "schemas/sealed-distinction-record.schema.json",
+      "sha256": "f19a1bb42210770780e08a35ed0572cfe485b20c38e55e04aab318238e7032cc"
+    },
+    {
+      "type": "Activity",
+      "file": "schemas/activity.schema.json",
+      "sha256": "f26b022f745d11e973d421563361e074f2386064ffde3170f27631d2e6971222"
+    },
+    {
+      "type": "WorkPackage",
+      "file": "schemas/work-package.schema.json",
+      "sha256": "f7b542656c0a2660ade5170b5d35f9cfad2d82698294c8dacec2f258118a28c5"
+    },
+    {
+      "type": "MilestoneRecord",
+      "file": "schemas/milestone-record.schema.json",
+      "sha256": "f7a0ae3985c491bbc42512d20703e943b32d18a2bdd08ab153eda7f5ac9503f8"
+    },
+    {
+      "type": "ProgramOfWorkContent",
+      "file": "schemas/program-of-work-content.schema.json",
+      "sha256": "d558c8a9875d323c23bf4dc089063432d864dd5ff22877e465d972db78960ec3"
+    },
+    {
+      "type": "SealedProgramOfWork",
+      "file": "schemas/sealed-program-of-work.schema.json",
+      "sha256": "f380cfdb4ef70e7e608797ad92e0f87875c64436e7dfed1308b2d4c504350a1f"
+    },
+    {
+      "type": "DeliveryRecordContent",
+      "file": "schemas/delivery-record-content.schema.json",
+      "sha256": "4f97c32372a51ec80ab8f128b382a24f680f42c68b29ac66ddd68d953a2d1afd"
+    },
+    {
+      "type": "SealedDeliveryRecord",
+      "file": "schemas/sealed-delivery-record.schema.json",
+      "sha256": "8ffee1792980c9e8af56fef8542484d8cbc9d70892cafa94755e417af752d4f8"
+    },
+    {
+      "type": "LifecycleStageRecord",
+      "file": "schemas/lifecycle-stage-record.schema.json",
+      "sha256": "128588c7c030ff0db764ee69ef3a685cd8ecca6f596b24c8fd3995866b27609d"
+    },
+    {
+      "type": "LifecycleTransitionRecord",
+      "file": "schemas/lifecycle-transition-record.schema.json",
+      "sha256": "fda9e16e19c361b2698d6e21090b7e3ce4cfdd8c99f9f459366325d2167cb0d5"
+    },
+    {
+      "type": "AcquisitionRequestDetail",
+      "file": "schemas/acquisition-request-detail.schema.json",
+      "sha256": "7c3872db3982858bc827a5eb3afbd68d0efd02eace5605e2b0a87daedeca4567"
+    },
+    {
+      "type": "AcquisitionRequestRecord",
+      "file": "schemas/acquisition-request-record.schema.json",
+      "sha256": "d2696479f1a675dc87afb3a3eb1596a5a0a69f53945dca6735def13259ef29fa"
+    },
+    {
+      "type": "InformationAcquisitionRequest",
+      "file": "schemas/information-acquisition-request.schema.json",
+      "sha256": "2f12a61feeb707264268ccc096f019e742ac3a7063311cb322e613577ff42b91"
+    },
+    {
+      "type": "ExternalRequestEnvelope",
+      "file": "schemas/external-request-envelope.schema.json",
+      "sha256": "e698fa9a1544454ee804071ae36c5ce1d1377dcb0a57ce9b54789be11ce01b67"
+    },
+    {
+      "type": "ExternalEventEnvelope",
+      "file": "schemas/external-event-envelope.schema.json",
+      "sha256": "b601c1cb7ea610c7b3dda28ca1e79b8b6a59df6c14163d8375fd3e393df54a6f"
+    },
+    {
+      "type": "DeliveryEventContent",
+      "file": "schemas/delivery-event-content.schema.json",
+      "sha256": "c47583f7ebc8037ad4216154fdc5ff2eb748f0baf4d1e4401c46f8253ec588d5"
+    },
+    {
+      "type": "SealedDeliveryEvent",
+      "file": "schemas/sealed-delivery-event.schema.json",
+      "sha256": "d7d3fea99322e676d39e5f6354457aa56d15ad129829d43e1b1fe10915910007"
+    },
+    {
+      "type": "SolutionPackProfile",
+      "file": "schemas/solution-pack-profile.schema.json",
+      "sha256": "b32329c746404c1140db28b09d373f8a586233ff6499419c08a529f23027e4e3"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OpaqueReference",
+  "$defs": {
+    "OpaqueReference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "OpaqueReference",
+      "description": "Opaque, bounded, provider-neutral reference string owned by its producing system."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:opaque-reference:1.0.0"
+}

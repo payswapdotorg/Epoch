@@ -1,0 +1,36 @@
+{
+  "name": "@epoch/solution-delivery",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Solution Delivery kernel (W036) — the universal delivery DOMAIN MODEL (USL1.0, binding): tenant-scoped SolutionPackage + immutable hash-chained SolutionVersion baselines; DeliveryRecord delivery-facts authority (observation intake, acceptance, actualization of ACCEPTED observations only); ProgramOfWork authoritative schedule dimension (dependency-aware realization graph with deterministic quantity/cost/resource folds); the universal Understand/Decide/Plan/Acquire/Realize/Observe/Actualize/Verify/Forecast/Close/Learn lifecycle as typed stage records + typed relations (branch/pause/resume/loop/overlap — projections, never a linear FSM); the nine semantic-distinction record types (Prediction/Estimate/Baseline/Commitment/Observation/Actual/Forecast/Outcome/LearningRecord — immutable, digest-bearing, never collapsed); uncertainty/provenance/freshness/confidence on facts; information-acquisition requests; provider-neutral acquisition/realization variant catalogs and external request/event envelopes; the delivery:* event vocabulary over the W010 event shapes; and Solution Navigator synchronized projections over the SAME identities. NO persistence, NO UI, NO provider vocabulary.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/constraint-language": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

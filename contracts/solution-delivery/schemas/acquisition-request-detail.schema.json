@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "readOnly": true,
+      "type": "object",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "const": "external-procurement"
+        },
+        "lines": {
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AcquisitionLine"
+          }
+        }
+      },
+      "required": [
+        "variant",
+        "lines"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "readOnly": true,
+      "type": "object",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "const": "internal-allocation"
+        },
+        "resourceRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "quantity": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "unit": {
+          "$ref": "#/$defs/UnitLabel"
+        },
+        "fromScope": {
+          "$ref": "#/$defs/OpaqueReference"
+        }
+      },
+      "required": [
+        "variant",
+        "resourceRef",
+        "quantity",
+        "unit"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "readOnly": true,
+      "type": "object",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "const": "subscription-license"
+        },
+        "licenseRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "seats": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "termNote": {
+          "type": "string",
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "variant",
+        "seats"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "readOnly": true,
+      "type": "object",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "const": "cloud-service-provisioning"
+        },
+        "serviceKind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "capacityNote": {
+          "type": "string",
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "variant",
+        "serviceKind"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "readOnly": true,
+      "type": "object",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "const": "fabrication-request"
+        },
+        "designRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "quantity": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "unit": {
+          "$ref": "#/$defs/UnitLabel"
+        }
+      },
+      "required": [
+        "variant",
+        "quantity",
+        "unit"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "readOnly": true,
+      "type": "object",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "const": "specialist-capability-assignment"
+        },
+        "capabilityRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "assignee": {
+          "type": "string",
+          "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$"
+        }
+      },
+      "required": [
+        "variant",
+        "capabilityRef"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "readOnly": true,
+      "type": "object",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "const": "data-evidence-acquisition"
+        },
+        "subjectRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        }
+      },
+      "required": [
+        "variant",
+        "subjectRef"
+      ],
+      "additionalProperties": false
+    }
+  ],
+  "$defs": {
+    "AcquisitionLine": {
+      "readOnly": true,
+      "title": "AcquisitionLine",
+      "description": "One acquisition line: description, quantity+unit, optional solution-line link, and an optional opaque external-party reference (never a vendor name).",
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "quantity": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "unit": {
+          "$ref": "#/$defs/UnitLabel"
+        },
+        "solutionLineId": {
+          "type": "string",
+          "pattern": "^line:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "externalPartyRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        }
+      },
+      "required": [
+        "description",
+        "quantity",
+        "unit"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "UnitLabel": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "title": "UnitLabel",
+      "description": "Unit-of-measure label (1-32 characters, provider-neutral)."
+    },
+    "OpaqueReference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "OpaqueReference",
+      "description": "Opaque, bounded, provider-neutral reference string owned by its producing system."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:acquisition-request-detail:1.0.0"
+}

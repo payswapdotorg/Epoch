@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SolutionLineId",
+  "$defs": {
+    "SolutionLineId": {
+      "type": "string",
+      "pattern": "^line:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionLineId",
+      "description": "Opaque solution-line identity: \"line:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:solution-line-id:1.0.0"
+}

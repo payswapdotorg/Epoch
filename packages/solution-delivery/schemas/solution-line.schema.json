@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SolutionLine",
+  "$defs": {
+    "SolutionLine": {
+      "readOnly": true,
+      "title": "SolutionLine",
+      "description": "One solution line: quantity+unit line item with optional unit cost, optional world-entity link (Navigator identity preservation) and optional acquisition variant.",
+      "type": "object",
+      "properties": {
+        "lineId": {
+          "$ref": "#/$defs/SolutionLineId"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "quantity": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            },
+            "unit": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false
+        },
+        "unitCost": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            }
+          },
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "additionalProperties": false
+        },
+        "worldEntityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "acquisitionVariant": {
+          "type": "string",
+          "enum": [
+            "external-procurement",
+            "internal-allocation",
+            "subscription-license",
+            "cloud-service-provisioning",
+            "fabrication-request",
+            "specialist-capability-assignment",
+            "data-evidence-acquisition"
+          ]
+        }
+      },
+      "required": [
+        "lineId",
+        "title",
+        "quantity"
+      ],
+      "additionalProperties": false
+    },
+    "SolutionLineId": {
+      "type": "string",
+      "pattern": "^line:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionLineId",
+      "description": "Opaque solution-line identity: \"line:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:solution-line:1.0.0"
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OutcomePayload",
+  "$defs": {
+    "OutcomePayload": {
+      "readOnly": true,
+      "title": "OutcomePayload",
+      "description": "Outcome payload: the outcome kind, sorted verification references, and an optional note.",
+      "type": "object",
+      "properties": {
+        "outcomeKind": {
+          "type": "string",
+          "enum": [
+            "delivered",
+            "accepted",
+            "handover",
+            "residual",
+            "rejected",
+            "abandoned"
+          ]
+        },
+        "verificationRefs": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Sha256Hex"
+          }
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "outcomeKind",
+        "verificationRefs"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:outcome-payload:1.0.0"
+}

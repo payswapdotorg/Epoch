@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/GateId",
+  "$defs": {
+    "GateId": {
+      "type": "string",
+      "pattern": "^gate:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "GateId",
+      "description": "Opaque verification-gate identity: \"gate:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:gate-id:1.0.0"
+}

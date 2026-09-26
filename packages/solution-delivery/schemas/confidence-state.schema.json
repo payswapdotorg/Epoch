@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ConfidenceState",
+  "$defs": {
+    "ConfidenceState": {
+      "readOnly": true,
+      "title": "ConfidenceState",
+      "description": "Confidence of one delivery fact: acquisition method (stated/measured/estimated/derived/imported), a 0..1 value, optional interval and rationale.",
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "stated",
+            "measured",
+            "estimated",
+            "derived",
+            "imported"
+          ]
+        },
+        "value": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "interval": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "low": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "high": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "low",
+            "high"
+          ],
+          "additionalProperties": false
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "method",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:confidence-state:1.0.0"
+}

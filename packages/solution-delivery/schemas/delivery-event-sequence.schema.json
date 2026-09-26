@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DeliveryEventSequence",
+  "$defs": {
+    "DeliveryEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "DeliveryEventSequence",
+      "description": "One delivery-event sequence number: 1-based, contiguous per delivery stream."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:delivery-event-sequence:1.0.0"
+}

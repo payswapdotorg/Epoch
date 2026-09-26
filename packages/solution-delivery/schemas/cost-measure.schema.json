@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CostMeasure",
+  "$defs": {
+    "CostMeasure": {
+      "readOnly": true,
+      "title": "CostMeasure",
+      "description": "A cost measure: canonical decimal amount plus an ISO 4217 currency code.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "cost"
+        },
+        "amount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        }
+      },
+      "required": [
+        "kind",
+        "amount",
+        "currency"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:cost-measure:1.0.0"
+}

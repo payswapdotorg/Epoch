@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/MilestoneId",
+  "$defs": {
+    "MilestoneId": {
+      "type": "string",
+      "pattern": "^milestone:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "MilestoneId",
+      "description": "Opaque milestone identity: \"milestone:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:milestone-id:1.0.0"
+}

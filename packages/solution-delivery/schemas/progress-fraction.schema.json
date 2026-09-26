@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProgressFraction",
+  "$defs": {
+    "ProgressFraction": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "title": "ProgressFraction",
+      "description": "Progress fraction between 0 and 1 inclusive."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:progress-fraction:1.0.0"
+}

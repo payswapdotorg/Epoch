@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProgramId",
+  "$defs": {
+    "ProgramId": {
+      "type": "string",
+      "pattern": "^program:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ProgramId",
+      "description": "Opaque program-of-work identity: \"program:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:program-id:1.0.0"
+}

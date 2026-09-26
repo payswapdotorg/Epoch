@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/UnitLabel",
+  "$defs": {
+    "UnitLabel": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "title": "UnitLabel",
+      "description": "Unit-of-measure label (1-32 characters, provider-neutral)."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:unit-label:1.0.0"
+}

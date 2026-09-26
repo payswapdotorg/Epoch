@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SolutionPackProfile",
+  "$defs": {
+    "SolutionPackProfile": {
+      "readOnly": true,
+      "title": "SolutionPackProfile",
+      "description": "The machine-readable domain-pack profile (DP1.0): pack identity, targeted universal lifecycle version, stage display vocabulary, and projection rules over the eleven Navigator projections.",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.solution-delivery.pack-profile"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "packId": {
+          "$ref": "#/$defs/QualifiedName"
+        },
+        "packVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "supportedLifecycleVersion": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "stageVocabulary": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "enum": [
+              "understand",
+              "decide",
+              "plan",
+              "acquire",
+              "realize",
+              "observe",
+              "actualize",
+              "verify",
+              "forecast",
+              "close",
+              "learn"
+            ]
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "required": [
+            "understand",
+            "decide",
+            "plan",
+            "acquire",
+            "realize",
+            "observe",
+            "actualize",
+            "verify",
+            "forecast",
+            "close",
+            "learn"
+          ]
+        },
+        "projectionRules": {
+          "maxItems": 32,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectionRule"
+          }
+        },
+        "measurementNote": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "capabilityDependencies": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/QualifiedName"
+          }
+        },
+        "migrationNote": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "packId",
+        "packVersion",
+        "tenantId",
+        "supportedLifecycleVersion",
+        "stageVocabulary",
+        "projectionRules"
+      ],
+      "additionalProperties": false
+    },
+    "QualifiedName": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+      "title": "QualifiedName",
+      "description": "Dot-namespaced qualified name (the agent-protocol capability-id grammar)."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic version core (no prerelease/build suffixes)."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "ProjectionRule": {
+      "readOnly": true,
+      "title": "ProjectionRule",
+      "description": "One pack projection rule: a Navigator projection kind (world-view, solution, decision, program-of-work, schedule, acquisition, realization, verification, forecast, outcomes, learning) plus its presentation.",
+      "type": "object",
+      "properties": {
+        "projection": {
+          "type": "string",
+          "enum": [
+            "world-view",
+            "solution",
+            "decision",
+            "program-of-work",
+            "schedule",
+            "acquisition",
+            "realization",
+            "verification",
+            "forecast",
+            "outcomes",
+            "learning"
+          ]
+        },
+        "presentation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "projection",
+        "presentation"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:solution-pack-profile:1.0.0"
+}

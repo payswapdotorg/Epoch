@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BaselineApprovalId",
+  "$defs": {
+    "BaselineApprovalId": {
+      "type": "string",
+      "pattern": "^approval:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "BaselineApprovalId",
+      "description": "Opaque baseline-approval identity: \"approval:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:baseline-approval-id:1.0.0"
+}
