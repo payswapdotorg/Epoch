@@ -983,6 +983,55 @@ importers:
         specifier: 'catalog:'
         version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
 
+  packages/simulation-fabric:
+    dependencies:
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../agent-protocol
+      '@epoch/simulation-protocol':
+        specifier: workspace:*
+        version: link:../simulation-protocol
+      '@epoch/tenancy':
+        specifier: workspace:*
+        version: link:../tenancy
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/authorization':
+        specifier: workspace:*
+        version: link:../authorization
+      '@epoch/capability-registry':
+        specifier: workspace:*
+        version: link:../capability-registry
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@epoch/event-log':
+        specifier: workspace:*
+        version: link:../event-log
+      '@epoch/evidence':
+        specifier: workspace:*
+        version: link:../evidence
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@epoch/verification':
+        specifier: workspace:*
+        version: link:../verification
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
+
   packages/simulation-protocol:
     dependencies:
       '@epoch/agent-protocol':
@@ -1299,6 +1348,52 @@ importers:
       '@epoch/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
+
+  services/simulation-runner:
+    dependencies:
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../../packages/agent-protocol
+      '@epoch/capability-registry':
+        specifier: workspace:*
+        version: link:../../packages/capability-registry
+      '@epoch/simulation-fabric':
+        specifier: workspace:*
+        version: link:../../packages/simulation-fabric
+      '@epoch/simulation-protocol':
+        specifier: workspace:*
+        version: link:../../packages/simulation-protocol
+      '@epoch/tenancy':
+        specifier: workspace:*
+        version: link:../../packages/tenancy
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@epoch/event-log':
+        specifier: workspace:*
+        version: link:../../packages/event-log
       '@epoch/tsconfig':
         specifier: workspace:*
         version: link:../../packages/tsconfig
