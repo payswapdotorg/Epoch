@@ -1,8 +1,8 @@
 {
   "baselineSha": "e09f530926e4fa2c0e7de317a86d6d13013559f8",
-  "status": "CAPABILITY_FOUNDATION_POLICY_MERGED",
-  "next": "W022 (Action Gateway) is the critical-path gate for W029/W030/W031 \u2014 re-dispatch when generation capacity recovers (W022 landed 05:49Z but was reaped by the capacity-window rotation; packet w022a.md staged). W037/W038/W041/W024/W026/W027 + W017/W018/W019 eligible; 3 slots.",
-  "verification": "PR #62 CI 2x success on 82f02ad88b; Tech Lead 7-gate review at epoch-review: scope 71/71 owned, token audit clean, per-run install green, governance+boundary PASS, typecheck 39/39, lint 36/36, test 39/39, build 3/3 (turbo --concurrency=1); report 16385 chars with literal marker.",
-  "lastMergeSha": "680a859a70",
-  "lastAction": "W021 (PR #62 -> 62062a92) merged + reconcile PR #63 (680a859a, +95 lockfile lines, frozen-install re-armed) \u2014 21/44 complete"
+  "status": "W022_COMPLETE",
+  "next": "W037 in flight (capacity-era paced re-dispatch loop); W029/W030 newly eligible (W022 merged). Critical paths: W029->W031->W032->W033->W034->W035 (longest); W037/W038->W039->W040->W044; W038->W043. W017/W018/W019 are terminal leaves (lowest priority).",
+  "verification": "PR #65 CI 2x success on dd9f97c5; Tech Lead 7-gate review at epoch-review: scope 49/49 owned (action-policy 25 + action-gateway 24), token audit clean, per-run install green, governance+boundary PASS, battery 118/118 (typecheck+lint+test+build, --concurrency=1), report 18003 chars with literal marker; 4 non-blocking architecture questions recorded.",
+  "lastMergeSha": "3c7e3590f4",
+  "lastAction": "W022 (PR #65 -> ec1d9ace76) merged + reconcile PR #66 (3c7e3590, +95 lockfile lines) \u2014 22/44 complete"
 }
