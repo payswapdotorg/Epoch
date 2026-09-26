@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ResourceKind",
+  "$defs": {
+    "ResourceKind": {
+      "type": "string",
+      "enum": [
+        "labor",
+        "equipment",
+        "material",
+        "resource"
+      ],
+      "title": "ResourceKind",
+      "description": "One resource-usage observation kind: labor, equipment, material, or resource (the generic catch-all)."
+    }
+  },
+  "$id": "urn:epoch:execution-tracking:resource-kind:1.0.0"
+}

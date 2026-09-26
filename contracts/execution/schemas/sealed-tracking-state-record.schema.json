@@ -1,0 +1,350 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SealedTrackingStateRecord",
+  "$defs": {
+    "SealedTrackingStateRecord": {
+      "readOnly": true,
+      "title": "SealedTrackingStateRecord",
+      "description": "The sealed tracking-state record: immutable state-transition content plus its SHA-256 content digest (exact-revision addressing).",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.execution-tracking.tracking-state"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "recordId": {
+          "$ref": "#/$defs/StateId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "subject": {
+          "$ref": "#/$defs/TrackingSubject"
+        },
+        "fromState": {
+          "type": "string",
+          "enum": [
+            "not-started",
+            "in-progress",
+            "completed",
+            "blocked"
+          ]
+        },
+        "toState": {
+          "type": "string",
+          "enum": [
+            "not-started",
+            "in-progress",
+            "completed",
+            "blocked"
+          ]
+        },
+        "cause": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "observedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "recordedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "recordedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "evidenceLinks": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FieldEvidenceLink"
+          }
+        },
+        "uncertainty": {
+          "$ref": "#/$defs/UncertaintyState"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "recordId",
+        "tenantId",
+        "solutionId",
+        "subject",
+        "fromState",
+        "toState",
+        "cause",
+        "observedAt",
+        "recordedAt",
+        "recordedBy",
+        "evidenceLinks",
+        "uncertainty",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "StateId": {
+      "type": "string",
+      "pattern": "^state:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "StateId",
+      "description": "Opaque tracking-state record identity: \"state:\" followed by a lowercase slug."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "SolutionId": {
+      "type": "string",
+      "pattern": "^solution:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionId",
+      "description": "Opaque solution-package identity: \"solution:\" followed by a lowercase slug (stable across versions)."
+    },
+    "TrackingSubject": {
+      "readOnly": true,
+      "title": "TrackingSubject",
+      "description": "The subject of one tracking-state record: an opaque work-package id from the ProgramOfWork, optionally narrowed to one opaque activity id.",
+      "type": "object",
+      "properties": {
+        "workPackageId": {
+          "$ref": "#/$defs/WorkPackageId"
+        },
+        "activityId": {
+          "$ref": "#/$defs/ActivityId"
+        }
+      },
+      "required": [
+        "workPackageId"
+      ],
+      "additionalProperties": false
+    },
+    "WorkPackageId": {
+      "type": "string",
+      "pattern": "^work-package:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkPackageId",
+      "description": "Opaque work-package identity: \"work-package:\" followed by a lowercase slug."
+    },
+    "ActivityId": {
+      "type": "string",
+      "pattern": "^activity:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ActivityId",
+      "description": "Opaque activity identity: \"activity:\" followed by a lowercase slug (the W036 ProgramOfWork grammar)."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque acting principal: \"principal:\" followed by a lowercase slug (W009 identity grammar)."
+    },
+    "FieldEvidenceLink": {
+      "readOnly": true,
+      "title": "FieldEvidenceLink",
+      "description": "One field-evidence reference: the W006 evidence record digest (photo, sensor reading, or document) plus capture context — captured instant and principal, optional opaque capture method and note. NEVER an embedded payload.",
+      "type": "object",
+      "properties": {
+        "digest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "evidenceKind": {
+          "type": "string",
+          "enum": [
+            "photo",
+            "sensor-reading",
+            "document"
+          ]
+        },
+        "capturedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "capturedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "captureMethod": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "digest",
+        "evidenceKind",
+        "capturedAt",
+        "capturedBy"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "OpaqueReference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "OpaqueReference",
+      "description": "Opaque, bounded, provider-neutral reference string owned by its producing system."
+    },
+    "UncertaintyState": {
+      "readOnly": true,
+      "title": "UncertaintyState",
+      "description": "The uncertainty state of one delivery fact: provenance, freshness and confidence (all required — the decision-sufficiency rule preserves what is not known).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "provenance": {
+          "$ref": "#/$defs/ProvenanceState"
+        },
+        "freshness": {
+          "$ref": "#/$defs/FreshnessState"
+        },
+        "confidence": {
+          "$ref": "#/$defs/ConfidenceState"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "provenance",
+        "freshness",
+        "confidence"
+      ],
+      "additionalProperties": false
+    },
+    "ProvenanceState": {
+      "readOnly": true,
+      "title": "ProvenanceState",
+      "description": "Provenance of one delivery fact: observed/reported/derived/assumed/imported/unknown, optional opaque source reference, optional acting principal.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "observed",
+            "reported",
+            "derived",
+            "assumed",
+            "imported",
+            "unknown"
+          ]
+        },
+        "sourceRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "actor": {
+          "$ref": "#/$defs/PrincipalId"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "FreshnessState": {
+      "readOnly": true,
+      "title": "FreshnessState",
+      "description": "Freshness of one delivery fact: fresh/aging/stale/unknown plus the producer-supplied assessment instant.",
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "fresh",
+            "aging",
+            "stale",
+            "unknown"
+          ]
+        },
+        "assessedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "state",
+        "assessedAt"
+      ],
+      "additionalProperties": false
+    },
+    "ConfidenceState": {
+      "readOnly": true,
+      "title": "ConfidenceState",
+      "description": "Confidence of one delivery fact: acquisition method (stated/measured/estimated/derived/imported), a 0..1 value, optional interval and rationale.",
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "stated",
+            "measured",
+            "estimated",
+            "derived",
+            "imported"
+          ]
+        },
+        "value": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "interval": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "low": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "high": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "low",
+            "high"
+          ],
+          "additionalProperties": false
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "method",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:execution-tracking:sealed-tracking-state-record:1.0.0"
+}

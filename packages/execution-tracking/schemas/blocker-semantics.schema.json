@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BlockerSemantics",
+  "$defs": {
+    "BlockerSemantics": {
+      "readOnly": true,
+      "title": "BlockerSemantics",
+      "description": "Blocker dependency semantics: the blocked subject (work package, optional activity), the opaque blocked-by reference, and the reason it is blocked.",
+      "type": "object",
+      "properties": {
+        "workPackageId": {
+          "$ref": "#/$defs/WorkPackageId"
+        },
+        "activityId": {
+          "$ref": "#/$defs/ActivityId"
+        },
+        "blockedByRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "workPackageId",
+        "blockedByRef",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "WorkPackageId": {
+      "type": "string",
+      "pattern": "^work-package:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkPackageId",
+      "description": "Opaque work-package identity: \"work-package:\" followed by a lowercase slug."
+    },
+    "ActivityId": {
+      "type": "string",
+      "pattern": "^activity:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ActivityId",
+      "description": "Opaque activity identity: \"activity:\" followed by a lowercase slug (the W036 ProgramOfWork grammar)."
+    },
+    "OpaqueReference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "OpaqueReference",
+      "description": "Opaque, bounded, provider-neutral reference string owned by its producing system."
+    }
+  },
+  "$id": "urn:epoch:execution-tracking:blocker-semantics:1.0.0"
+}

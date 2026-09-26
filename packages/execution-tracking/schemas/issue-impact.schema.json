@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/IssueImpact",
+  "$defs": {
+    "IssueImpact": {
+      "readOnly": true,
+      "title": "IssueImpact",
+      "description": "The impact reference set of one execution issue: the opaque ProgramOfWork schedule items (work packages, activities, milestones) it touches.",
+      "type": "object",
+      "properties": {
+        "workPackageIds": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorkPackageId"
+          }
+        },
+        "activityIds": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActivityId"
+          }
+        },
+        "milestoneIds": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MilestoneId"
+          }
+        }
+      },
+      "required": [
+        "workPackageIds",
+        "activityIds",
+        "milestoneIds"
+      ],
+      "additionalProperties": false
+    },
+    "WorkPackageId": {
+      "type": "string",
+      "pattern": "^work-package:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkPackageId",
+      "description": "Opaque work-package identity: \"work-package:\" followed by a lowercase slug."
+    },
+    "ActivityId": {
+      "type": "string",
+      "pattern": "^activity:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ActivityId",
+      "description": "Opaque activity identity: \"activity:\" followed by a lowercase slug (the W036 ProgramOfWork grammar)."
+    },
+    "MilestoneId": {
+      "type": "string",
+      "pattern": "^milestone:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "MilestoneId",
+      "description": "Opaque milestone identity: \"milestone:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:execution-tracking:issue-impact:1.0.0"
+}

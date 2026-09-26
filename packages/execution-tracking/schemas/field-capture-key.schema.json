@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/FieldCaptureKey",
+  "$defs": {
+    "FieldCaptureKey": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,48}$",
+      "title": "FieldCaptureKey",
+      "description": "The low-friction field-capture key: a lowercase slug (max 48) embedded in the derived record ids and the idempotency keys."
+    }
+  },
+  "$id": "urn:epoch:execution-tracking:field-capture-key:1.0.0"
+}

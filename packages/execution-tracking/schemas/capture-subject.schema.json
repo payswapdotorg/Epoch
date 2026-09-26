@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CaptureSubject",
+  "$defs": {
+    "CaptureSubject": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "work-package"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^work-package:[a-z0-9][a-z0-9-]{0,62}$"
+            }
+          },
+          "required": [
+            "kind",
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "activity"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^activity:[a-z0-9][a-z0-9-]{0,62}$"
+            }
+          },
+          "required": [
+            "kind",
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "milestone"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^milestone:[a-z0-9][a-z0-9-]{0,62}$"
+            }
+          },
+          "required": [
+            "kind",
+            "id"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "CaptureSubject",
+      "description": "The linkage anchor of one field capture: an opaque work-package, activity, or milestone reference (the intake infers the work package from it)."
+    }
+  },
+  "$id": "urn:epoch:execution-tracking:capture-subject:1.0.0"
+}

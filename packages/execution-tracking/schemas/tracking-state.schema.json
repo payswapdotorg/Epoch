@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "not-started",
+    "in-progress",
+    "completed",
+    "blocked"
+  ],
+  "$id": "urn:epoch:execution-tracking:tracking-state:1.0.0"
+}

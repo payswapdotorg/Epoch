@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ResourceObservationId",
+  "$defs": {
+    "ResourceObservationId": {
+      "type": "string",
+      "pattern": "^resource-observation:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ResourceObservationId",
+      "description": "Opaque resource-usage observation record identity: \"resource-observation:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:execution-tracking:resource-observation-id:1.0.0"
+}

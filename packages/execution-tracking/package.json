@@ -1,0 +1,36 @@
+{
+  "name": "@epoch/execution-tracking",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Execution Tracking kernel (W038) — the universal REALIZATION-TRACKING layer and low-friction field-observation ingestion over @epoch/solution-delivery (W036): construction execution is ONE projection; build/deployment/fabrication/installation/commissioning vocabulary maps onto the same spine. Typed, sealed, append-only work-package/activity state tracking records referencing ProgramOfWork items by OPAQUE ID (schedule authority STAYS in ProgramOfWork — tracking records OBSERVE, never re-schedule); progress actualization as W036 Observation-distinction records whose actualization flows ONLY through the W036 DeliveryRecord acceptance/actualization path (this package produces observations and reconciles them — it NEVER writes Actual records directly; actualization-bypass-rejected); labor/equipment/material/resource usage observations (content-addressed, quantity+unit+time+provenance+mandatory uncertainty); field evidence references by W006 digest with capture context (never payloads); changes/delays/rework/defects/blockers with severity+impact references+resolution state (rework references original work records; blockers carry dependency semantics); confidence/provenance/freshness on EVERY observation (uncertainty-missing-rejected); replay/idempotent observation handling (duplicate-observation typed admission returning the prior digest); explicit Observation-NE-Actual separation with typed reconciliation proposals the W036 authority accepts/actualizes. NO persistence, NO UI, NO provider vocabulary (field systems stay behind the service-layer FieldCapturePort seam).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

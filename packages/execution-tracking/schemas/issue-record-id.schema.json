@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/IssueRecordId",
+  "$defs": {
+    "IssueRecordId": {
+      "type": "string",
+      "pattern": "^(change|delay|rework|defect|blocker):[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "IssueRecordId",
+      "description": "Opaque execution-issue record identity: one of the five family prefixes followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:execution-tracking:issue-record-id:1.0.0"
+}

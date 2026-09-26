@@ -1,0 +1,144 @@
+{
+  "contract": "epoch/execution-tracking",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Execution Tracking public contract surface (W038, W012 convention): the CORE record types a domain pack or downstream consumer binds to — tracking-state records, resource observations, field-evidence references with capture context, the issue families with resolutions, reconciliation proposals, the low-friction field capture, and execution events over the W010 shapes. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "dataTypes": [
+    "Sha256Hex",
+    "Timestamp",
+    "FieldEvidenceLink",
+    "FieldEvidenceLinkRecordContent",
+    "SealedFieldEvidenceLink",
+    "TrackingSubject",
+    "TrackingStateRecordContent",
+    "SealedTrackingStateRecord",
+    "ResourceObservationContent",
+    "SealedResourceObservation",
+    "IssueImpact",
+    "ReworkReference",
+    "BlockerSemantics",
+    "IssueRecordContent",
+    "SealedIssueRecord",
+    "IssueResolutionContent",
+    "SealedIssueResolution",
+    "ReconciliationProposalContent",
+    "SealedReconciliationProposal",
+    "FieldCapture",
+    "ExecutionEventContent",
+    "SealedExecutionEvent"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/execution-tracking and are not represented in the JSON Schema files",
+  "emittedBy": "renderExecutionTrackingPublicContractFiles() in @epoch/execution-tracking (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "Sha256Hex",
+      "file": "schemas/sha256-hex.schema.json",
+      "sha256": "d0e27900dc0669c1b75965757368be75aa4135eef943098271a77cba87634b4e"
+    },
+    {
+      "type": "Timestamp",
+      "file": "schemas/timestamp.schema.json",
+      "sha256": "6d35b4b894f9f69b23c4a5d016952c2abf18e859834bbb6c3f75c2dc15cea59b"
+    },
+    {
+      "type": "FieldEvidenceLink",
+      "file": "schemas/field-evidence-link.schema.json",
+      "sha256": "30b32d35e76eb43c8f0efba35c10610612b208e58af6533f092e1c4a661aec68"
+    },
+    {
+      "type": "FieldEvidenceLinkRecordContent",
+      "file": "schemas/field-evidence-link-record-content.schema.json",
+      "sha256": "cfe7a17da6d62b8c2fa81be74c195d10a5031cb1229e15fa3fe2d742030be00b"
+    },
+    {
+      "type": "SealedFieldEvidenceLink",
+      "file": "schemas/sealed-field-evidence-link.schema.json",
+      "sha256": "5085a7b586f1f35543e82116522ddde7219d495a86a1b9f9d741b8f83362ab28"
+    },
+    {
+      "type": "TrackingSubject",
+      "file": "schemas/tracking-subject.schema.json",
+      "sha256": "e7be52341921971b17bec6760409ac5643eca9e619ce99947fdc916057c84a79"
+    },
+    {
+      "type": "TrackingStateRecordContent",
+      "file": "schemas/tracking-state-record-content.schema.json",
+      "sha256": "128dca09024453c18c80b20a755fceb96484106e98854c6a8db55c39ed4e967e"
+    },
+    {
+      "type": "SealedTrackingStateRecord",
+      "file": "schemas/sealed-tracking-state-record.schema.json",
+      "sha256": "17a66b442fed399603c26e709990eb9c8a58fb0c4883531bd35274d70755329c"
+    },
+    {
+      "type": "ResourceObservationContent",
+      "file": "schemas/resource-observation-content.schema.json",
+      "sha256": "be27fa2f562dc9c287070240658a1d5d85254dd652012ae3f173e2494b68e734"
+    },
+    {
+      "type": "SealedResourceObservation",
+      "file": "schemas/sealed-resource-observation.schema.json",
+      "sha256": "8507afc2d39d3776e2063294abe59cf12c581b8c5951da581b8a391595c47b88"
+    },
+    {
+      "type": "IssueImpact",
+      "file": "schemas/issue-impact.schema.json",
+      "sha256": "8c65303cce9a1890a18717d4b9cf5cbb4fa1d5e8231892f30f12fa429e7b55e5"
+    },
+    {
+      "type": "ReworkReference",
+      "file": "schemas/rework-reference.schema.json",
+      "sha256": "7bb06414dc5bd0a0b524764fc7986f2fdb7ff38383ebd73197be01c6338e8700"
+    },
+    {
+      "type": "BlockerSemantics",
+      "file": "schemas/blocker-semantics.schema.json",
+      "sha256": "533239068bd94dd6024991ce2b040247018f076bbbcf6204e619b8591c7e7454"
+    },
+    {
+      "type": "IssueRecordContent",
+      "file": "schemas/issue-record-content.schema.json",
+      "sha256": "f1ca0153ed3bb714744e452980de5cdf42a9eb8c714093f5201aa60aa620dc49"
+    },
+    {
+      "type": "SealedIssueRecord",
+      "file": "schemas/sealed-issue-record.schema.json",
+      "sha256": "7de568e7328389314a926e40f88e9388b147edc5f491138e9ae2b12b8a4e727b"
+    },
+    {
+      "type": "IssueResolutionContent",
+      "file": "schemas/issue-resolution-content.schema.json",
+      "sha256": "45e4fb1723634276da963bc07f3ab2c6ddf0bf17fdbadae0109e214e01c58cba"
+    },
+    {
+      "type": "SealedIssueResolution",
+      "file": "schemas/sealed-issue-resolution.schema.json",
+      "sha256": "441ef5ab4bc64a67d6612c304159f01a44480795efe40c801f7d410839942ddf"
+    },
+    {
+      "type": "ReconciliationProposalContent",
+      "file": "schemas/reconciliation-proposal-content.schema.json",
+      "sha256": "aa564946410342e378587a4156ed9ea601fec314d0d7ac4d3e33f4b15237d614"
+    },
+    {
+      "type": "SealedReconciliationProposal",
+      "file": "schemas/sealed-reconciliation-proposal.schema.json",
+      "sha256": "8173507b584b543a54835431c5a82761ad5a49b05b49d194627239afa97a5e48"
+    },
+    {
+      "type": "FieldCapture",
+      "file": "schemas/field-capture.schema.json",
+      "sha256": "5b1c41a7dfd094cee6a9156b8ffb916d0231305fcc48f08424f178d73a08b300"
+    },
+    {
+      "type": "ExecutionEventContent",
+      "file": "schemas/execution-event-content.schema.json",
+      "sha256": "91107ae06e8c9a803ce87b889fe1d2b7be241617b6998e74b011fae661837f05"
+    },
+    {
+      "type": "SealedExecutionEvent",
+      "file": "schemas/sealed-execution-event.schema.json",
+      "sha256": "b358eebf6ad24287859d7dee3a9df9685422cd14ccf60d3efee5d1738d8888e6"
+    }
+  ]
+}

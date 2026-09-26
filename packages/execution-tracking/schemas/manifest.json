@@ -1,0 +1,336 @@
+{
+  "contract": "epoch/execution-tracking",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Execution Tracking contract surface (W038, in-package full surface): work-package/activity tracking-state records (append-only chains observing the ProgramOfWork by opaque id), labor/equipment/material resource observations, field-evidence references by W006 digest with capture context, the change/delay/rework/defect/blocker issue families with resolutions, reconciliation proposals over the W036 observation/actualization authority, the low-friction field capture, and the execution:* event vocabulary over the W010 shapes. JSON Schema projection under schemas/; runtime validators in @epoch/execution-tracking.",
+  "dataTypes": [
+    "Sha256Hex",
+    "SolutionId",
+    "WorkPackageId",
+    "ActivityId",
+    "MilestoneId",
+    "DeliveryId",
+    "DistinctionRecordId",
+    "StateId",
+    "ResourceObservationId",
+    "EvidenceLinkId",
+    "IssueRecordId",
+    "IssueResolutionId",
+    "ReconciliationId",
+    "FieldCaptureKey",
+    "PrincipalId",
+    "ExecutionStreamId",
+    "NonNegativeDecimal",
+    "OpaqueReference",
+    "UnitLabel",
+    "Timestamp",
+    "TrackingState",
+    "ResourceKind",
+    "FieldEvidenceKind",
+    "IssueKind",
+    "IssueSeverity",
+    "ResolutionState",
+    "IssueResolutionDecision",
+    "DomainTrackingStateBindings",
+    "FieldEvidenceLink",
+    "FieldEvidenceLinkRecordContent",
+    "SealedFieldEvidenceLink",
+    "TrackingSubject",
+    "TrackingStateRecordContent",
+    "SealedTrackingStateRecord",
+    "ResourceObservationContent",
+    "SealedResourceObservation",
+    "IssueImpact",
+    "ReworkReference",
+    "BlockerSemantics",
+    "IssueRecordContent",
+    "SealedIssueRecord",
+    "IssueResolutionContent",
+    "SealedIssueResolution",
+    "ReconciliationEntry",
+    "ReconciliationProposalContent",
+    "SealedReconciliationProposal",
+    "CaptureSubject",
+    "CaptureResourceUsage",
+    "FieldCapture",
+    "ExecutionEventSequence",
+    "ExecutionCausalParent",
+    "ExecutionEventPayload",
+    "ExecutionEventContent",
+    "SealedExecutionEvent"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical ordering, chain checks, digest verification, tenant checks) are enforced by the runtime validators in @epoch/execution-tracking and are not represented in the JSON Schema files",
+  "emittedBy": "renderExecutionTrackingContractFiles() in @epoch/execution-tracking (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "Sha256Hex",
+      "file": "sha256-hex.schema.json",
+      "sha256": "d0e27900dc0669c1b75965757368be75aa4135eef943098271a77cba87634b4e"
+    },
+    {
+      "type": "SolutionId",
+      "file": "solution-id.schema.json",
+      "sha256": "36b77d5a683e5c3a1432dbc8802324928dd7e51febe0612acc7aa5784b291bf8"
+    },
+    {
+      "type": "WorkPackageId",
+      "file": "work-package-id.schema.json",
+      "sha256": "5fc71a35fd2b7e04e11946b8a52867dfeb07fb69e01d090eb07fe9fa53340dbc"
+    },
+    {
+      "type": "ActivityId",
+      "file": "activity-id.schema.json",
+      "sha256": "eed62f29a13efc056b317281c6b66ab9a69b41c12aeed59335f42822fbe3899d"
+    },
+    {
+      "type": "MilestoneId",
+      "file": "milestone-id.schema.json",
+      "sha256": "d805d4878d8eefb0e52a4748791e42fe9e513cdedf889435cdef068e7f7cf92f"
+    },
+    {
+      "type": "DeliveryId",
+      "file": "delivery-id.schema.json",
+      "sha256": "35f393dc4f776bad335231d72e460464133876fced15670965b15036914f6ef4"
+    },
+    {
+      "type": "DistinctionRecordId",
+      "file": "distinction-record-id.schema.json",
+      "sha256": "01b4c7193b73d24df60713e5b413d158a2daad841c53939061faf100771a5134"
+    },
+    {
+      "type": "StateId",
+      "file": "state-id.schema.json",
+      "sha256": "403f5ff110d27d4accb101938b16c2cb370ccf29214061ca9df96d6064478707"
+    },
+    {
+      "type": "ResourceObservationId",
+      "file": "resource-observation-id.schema.json",
+      "sha256": "36b85a4e8af6b5c43433b80a0c3416f4075d47b90c19dd7b118c97debe41bea4"
+    },
+    {
+      "type": "EvidenceLinkId",
+      "file": "evidence-link-id.schema.json",
+      "sha256": "e784c098758a5612a678b97b10196cb8a265599821b7272513679bc23bdb71cf"
+    },
+    {
+      "type": "IssueRecordId",
+      "file": "issue-record-id.schema.json",
+      "sha256": "40f91f82390747660ae585bbec3d366b7e05c8ac20e904bc2fd9f57f8afa8d46"
+    },
+    {
+      "type": "IssueResolutionId",
+      "file": "issue-resolution-id.schema.json",
+      "sha256": "cd32154257a053e7d41b1f325557db89aeb2f7f31d3cbdb6b873c848348c31ba"
+    },
+    {
+      "type": "ReconciliationId",
+      "file": "reconciliation-id.schema.json",
+      "sha256": "887ac3f765c4077e626f6576b2c12d4e74699ec5935147a84f5ab033d371b91d"
+    },
+    {
+      "type": "FieldCaptureKey",
+      "file": "field-capture-key.schema.json",
+      "sha256": "438e44ac4419c052d336d58909cedb9eaf6d8cd3443713ca5ef80d63ab14d2bc"
+    },
+    {
+      "type": "PrincipalId",
+      "file": "principal-id.schema.json",
+      "sha256": "982f2b902d8c80226e6f5b6d530e214221d78284748c178843c474357f721365"
+    },
+    {
+      "type": "ExecutionStreamId",
+      "file": "execution-stream-id.schema.json",
+      "sha256": "15855b4f75a9f4cb0689a9d21672a73e5f133b4fc45f2f32bb50ae5f721a2338"
+    },
+    {
+      "type": "NonNegativeDecimal",
+      "file": "non-negative-decimal.schema.json",
+      "sha256": "ce48a9c2acc82ea042c533c6a6ac411cd9e41f3fbcc9890e6b469473d454325a"
+    },
+    {
+      "type": "OpaqueReference",
+      "file": "opaque-reference.schema.json",
+      "sha256": "a31aeddc2f2d16f2b70b1f0a06a98ff361034e73d2fcc6a05a4d866957ead829"
+    },
+    {
+      "type": "UnitLabel",
+      "file": "unit-label.schema.json",
+      "sha256": "183b36f9b367be95720f825e5bd856f8288a1d8a0229a689d9e5062a3b790d79"
+    },
+    {
+      "type": "Timestamp",
+      "file": "timestamp.schema.json",
+      "sha256": "6d35b4b894f9f69b23c4a5d016952c2abf18e859834bbb6c3f75c2dc15cea59b"
+    },
+    {
+      "type": "TrackingState",
+      "file": "tracking-state.schema.json",
+      "sha256": "70d6aa71a8cd534f38d53d06c2c815a2a329479883577b6a0b61123a9fcc44f1"
+    },
+    {
+      "type": "ResourceKind",
+      "file": "resource-kind.schema.json",
+      "sha256": "7b6e192e3240449ab0c3b729f9e0d1d6b4c65f88698380d46daaed8f4cec9c59"
+    },
+    {
+      "type": "FieldEvidenceKind",
+      "file": "field-evidence-kind.schema.json",
+      "sha256": "04047f44ec9775a6e3a31a64e6cc5e4e5dd7c88c90113d903ae3b80e9a8a6a44"
+    },
+    {
+      "type": "IssueKind",
+      "file": "issue-kind.schema.json",
+      "sha256": "05ff4d65060384637ec167bc824dfd04ec31563a32c9012c6f66d76066d51ddf"
+    },
+    {
+      "type": "IssueSeverity",
+      "file": "issue-severity.schema.json",
+      "sha256": "833bb0dc06fa671eb4f6800ead35dfb7ecb291f8e3cda54f06a0ec59217b2aa9"
+    },
+    {
+      "type": "ResolutionState",
+      "file": "resolution-state.schema.json",
+      "sha256": "2e90ba02a8183034aa81d524715b496e9f9425fe4e7dd934d2d7018d73e947b5"
+    },
+    {
+      "type": "IssueResolutionDecision",
+      "file": "issue-resolution-decision.schema.json",
+      "sha256": "00fa83bf011a42801240f2e89a91b124db27c846f464b86aa7cbd76843b19af1"
+    },
+    {
+      "type": "DomainTrackingStateBindings",
+      "file": "domain-tracking-state-bindings.schema.json",
+      "sha256": "6b0c03df47a232aca89727a8b2943940ebb4e064480b29a30cbb7cce6c0b67d3"
+    },
+    {
+      "type": "FieldEvidenceLink",
+      "file": "field-evidence-link.schema.json",
+      "sha256": "30b32d35e76eb43c8f0efba35c10610612b208e58af6533f092e1c4a661aec68"
+    },
+    {
+      "type": "FieldEvidenceLinkRecordContent",
+      "file": "field-evidence-link-record-content.schema.json",
+      "sha256": "cfe7a17da6d62b8c2fa81be74c195d10a5031cb1229e15fa3fe2d742030be00b"
+    },
+    {
+      "type": "SealedFieldEvidenceLink",
+      "file": "sealed-field-evidence-link.schema.json",
+      "sha256": "5085a7b586f1f35543e82116522ddde7219d495a86a1b9f9d741b8f83362ab28"
+    },
+    {
+      "type": "TrackingSubject",
+      "file": "tracking-subject.schema.json",
+      "sha256": "e7be52341921971b17bec6760409ac5643eca9e619ce99947fdc916057c84a79"
+    },
+    {
+      "type": "TrackingStateRecordContent",
+      "file": "tracking-state-record-content.schema.json",
+      "sha256": "128dca09024453c18c80b20a755fceb96484106e98854c6a8db55c39ed4e967e"
+    },
+    {
+      "type": "SealedTrackingStateRecord",
+      "file": "sealed-tracking-state-record.schema.json",
+      "sha256": "17a66b442fed399603c26e709990eb9c8a58fb0c4883531bd35274d70755329c"
+    },
+    {
+      "type": "ResourceObservationContent",
+      "file": "resource-observation-content.schema.json",
+      "sha256": "be27fa2f562dc9c287070240658a1d5d85254dd652012ae3f173e2494b68e734"
+    },
+    {
+      "type": "SealedResourceObservation",
+      "file": "sealed-resource-observation.schema.json",
+      "sha256": "8507afc2d39d3776e2063294abe59cf12c581b8c5951da581b8a391595c47b88"
+    },
+    {
+      "type": "IssueImpact",
+      "file": "issue-impact.schema.json",
+      "sha256": "8c65303cce9a1890a18717d4b9cf5cbb4fa1d5e8231892f30f12fa429e7b55e5"
+    },
+    {
+      "type": "ReworkReference",
+      "file": "rework-reference.schema.json",
+      "sha256": "7bb06414dc5bd0a0b524764fc7986f2fdb7ff38383ebd73197be01c6338e8700"
+    },
+    {
+      "type": "BlockerSemantics",
+      "file": "blocker-semantics.schema.json",
+      "sha256": "533239068bd94dd6024991ce2b040247018f076bbbcf6204e619b8591c7e7454"
+    },
+    {
+      "type": "IssueRecordContent",
+      "file": "issue-record-content.schema.json",
+      "sha256": "f1ca0153ed3bb714744e452980de5cdf42a9eb8c714093f5201aa60aa620dc49"
+    },
+    {
+      "type": "SealedIssueRecord",
+      "file": "sealed-issue-record.schema.json",
+      "sha256": "7de568e7328389314a926e40f88e9388b147edc5f491138e9ae2b12b8a4e727b"
+    },
+    {
+      "type": "IssueResolutionContent",
+      "file": "issue-resolution-content.schema.json",
+      "sha256": "45e4fb1723634276da963bc07f3ab2c6ddf0bf17fdbadae0109e214e01c58cba"
+    },
+    {
+      "type": "SealedIssueResolution",
+      "file": "sealed-issue-resolution.schema.json",
+      "sha256": "441ef5ab4bc64a67d6612c304159f01a44480795efe40c801f7d410839942ddf"
+    },
+    {
+      "type": "ReconciliationEntry",
+      "file": "reconciliation-entry.schema.json",
+      "sha256": "5abe0f92a14915f099f86c4d80794c4fd586d5610676a44dad190ffbb2b711fc"
+    },
+    {
+      "type": "ReconciliationProposalContent",
+      "file": "reconciliation-proposal-content.schema.json",
+      "sha256": "aa564946410342e378587a4156ed9ea601fec314d0d7ac4d3e33f4b15237d614"
+    },
+    {
+      "type": "SealedReconciliationProposal",
+      "file": "sealed-reconciliation-proposal.schema.json",
+      "sha256": "8173507b584b543a54835431c5a82761ad5a49b05b49d194627239afa97a5e48"
+    },
+    {
+      "type": "CaptureSubject",
+      "file": "capture-subject.schema.json",
+      "sha256": "dde8447ebcc51812d26f302a8c46436da5c832aab55b36431e9609dd22f4864f"
+    },
+    {
+      "type": "CaptureResourceUsage",
+      "file": "capture-resource-usage.schema.json",
+      "sha256": "2b39d588742212f22b315b27a5f3851e4bae9f639b1c144d7de92291d2c0bbdc"
+    },
+    {
+      "type": "FieldCapture",
+      "file": "field-capture.schema.json",
+      "sha256": "5b1c41a7dfd094cee6a9156b8ffb916d0231305fcc48f08424f178d73a08b300"
+    },
+    {
+      "type": "ExecutionEventSequence",
+      "file": "execution-event-sequence.schema.json",
+      "sha256": "628a2e7ff995061ec8760d057004e14a56014d0519114183f284741175fbc5af"
+    },
+    {
+      "type": "ExecutionCausalParent",
+      "file": "execution-causal-parent.schema.json",
+      "sha256": "dd6bb2669913af8a72b32bd3731d5cd6b0f3d6b2684cdfcee9e463fb7e281690"
+    },
+    {
+      "type": "ExecutionEventPayload",
+      "file": "execution-event-payload.schema.json",
+      "sha256": "20dcfe01073d6ba7ea34a1a25fe814ba0c28b68310879cc0f7aada8db27c572f"
+    },
+    {
+      "type": "ExecutionEventContent",
+      "file": "execution-event-content.schema.json",
+      "sha256": "91107ae06e8c9a803ce87b889fe1d2b7be241617b6998e74b011fae661837f05"
+    },
+    {
+      "type": "SealedExecutionEvent",
+      "file": "sealed-execution-event.schema.json",
+      "sha256": "b358eebf6ad24287859d7dee3a9df9685422cd14ccf60d3efee5d1738d8888e6"
+    }
+  ]
+}

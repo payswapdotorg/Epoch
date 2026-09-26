@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "minor",
+    "moderate",
+    "major",
+    "critical"
+  ],
+  "$id": "urn:epoch:execution-tracking:issue-severity:1.0.0"
+}

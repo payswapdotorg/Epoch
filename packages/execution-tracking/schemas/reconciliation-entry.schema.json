@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ReconciliationEntry",
+  "$defs": {
+    "ReconciliationEntry": {
+      "readOnly": true,
+      "title": "ReconciliationEntry",
+      "description": "One proposed observation-to-actual pairing: the W036 observation record id plus the actual id the W036 authority will mint for it.",
+      "type": "object",
+      "properties": {
+        "observationId": {
+          "$ref": "#/$defs/DistinctionRecordId"
+        },
+        "proposedActualId": {
+          "type": "string",
+          "pattern": "^actual:[a-z0-9][a-z0-9-]{0,62}$"
+        }
+      },
+      "required": [
+        "observationId",
+        "proposedActualId"
+      ],
+      "additionalProperties": false
+    },
+    "DistinctionRecordId": {
+      "type": "string",
+      "pattern": "^(prediction|estimate|baseline|commitment|observation|actual|forecast|outcome|learning):[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DistinctionRecordId",
+      "description": "Opaque semantic-distinction record identity: one of the nine kind prefixes followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:execution-tracking:reconciliation-entry:1.0.0"
+}
