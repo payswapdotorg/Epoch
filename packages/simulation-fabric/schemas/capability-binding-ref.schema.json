@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityBindingRef",
+  "$defs": {
+    "CapabilityBindingRef": {
+      "readOnly": true,
+      "title": "CapabilityBindingRef",
+      "description": "Opaque typed reference to a W007 capability registration: capability id, semver version, and the registration manifest digest (the exact-revision pin). Never a structural copy of the registry record.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,255}$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "registrationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "version",
+        "registrationDigest"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:simulation-fabric:capability-binding-ref:1.0.0"
+}

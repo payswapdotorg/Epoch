@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/FabricPrincipalId",
+  "$defs": {
+    "FabricPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "FabricPrincipalId",
+      "description": "Acting principal of a fabric operation: \"principal:\" followed by a lowercase slug (the W009/W010 actor grammar, mirrored)."
+    }
+  },
+  "$id": "urn:epoch:simulation-fabric:fabric-principal-id:1.0.0"
+}

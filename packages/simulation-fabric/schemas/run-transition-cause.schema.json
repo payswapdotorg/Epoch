@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RunTransitionCause",
+  "$defs": {
+    "RunTransitionCause": {
+      "type": "string",
+      "enum": [
+        "submission",
+        "planning",
+        "dispatch",
+        "result-ingested",
+        "execution-failed",
+        "result-rejected",
+        "cancellation"
+      ],
+      "title": "RunTransitionCause",
+      "description": "The typed cause of a run-state transition: submission, planning, dispatch, result-ingested, execution-failed, result-rejected, or cancellation."
+    }
+  },
+  "$id": "urn:epoch:simulation-fabric:run-transition-cause:1.0.0"
+}

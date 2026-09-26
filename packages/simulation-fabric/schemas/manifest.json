@@ -1,0 +1,138 @@
+{
+  "contract": "epoch/simulation-fabric",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Simulation Execution Fabric contract surface (W021): content-addressed simulation runs over the W005 simulation protocol, opaque capability binding references, the sealed append-only run state chain (previousRunDigest chaining), the simulation:* event vocabulary over the W010 event shapes, and the execution-port seam. JSON Schema projection under schemas/; runtime validators in @epoch/simulation-fabric.",
+  "dataTypes": [
+    "CapabilityBindingRef",
+    "FabricIdempotencyKey",
+    "FabricPrincipalId",
+    "FabricRunEntry",
+    "IdempotencyRecord",
+    "RunTransition",
+    "RunTransitionCause",
+    "SealedSimulationEvent",
+    "SealedSimulationResult",
+    "SimulationCausalParent",
+    "SimulationEventContent",
+    "SimulationEventDiscriminator",
+    "SimulationEventPayload",
+    "SimulationEventSequence",
+    "SimulationFabricRecordVersion",
+    "SimulationFabricSnapshot",
+    "SimulationJobId",
+    "SimulationRun",
+    "SimulationRunId",
+    "SimulationRunState",
+    "SimulationRunStatus"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (W010 causal-parent ordering on event content) and semantic admission gates (W005 pipeline admission, cross-document conformance, state-chain integrity, idempotency bookkeeping) are enforced by the runtime validators in @epoch/simulation-fabric and are not represented in the JSON Schema files",
+  "emittedBy": "renderSimulationFabricContractFiles() in @epoch/simulation-fabric (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "CapabilityBindingRef",
+      "file": "capability-binding-ref.schema.json",
+      "sha256": "a2d965d96f81f06ce225e81b3f67e9bf18d6efba6cd3eb95fbc567a12e8b5870"
+    },
+    {
+      "type": "FabricIdempotencyKey",
+      "file": "fabric-idempotency-key.schema.json",
+      "sha256": "11a42c5f2f463b547bfeabcca09533214a53baf3399008219d96bbf684a508b5"
+    },
+    {
+      "type": "FabricPrincipalId",
+      "file": "fabric-principal-id.schema.json",
+      "sha256": "4ea8b2570fdcd7ffdeb159b88fcb7b42874be7058af719b3631352c1f78fd5d4"
+    },
+    {
+      "type": "FabricRunEntry",
+      "file": "fabric-run-entry.schema.json",
+      "sha256": "5b851dac94fe7772388001e4fd630b92e4fdf0bb20ab67c0af9dccb208ce26f4"
+    },
+    {
+      "type": "IdempotencyRecord",
+      "file": "idempotency-record.schema.json",
+      "sha256": "3e02dacd032064fdc57717a65b61139b4c51dd985bbb076e55bd2318b05b3582"
+    },
+    {
+      "type": "RunTransition",
+      "file": "run-transition.schema.json",
+      "sha256": "ed9ba6bb9f386977ba0d3cd4269b5be4cd64f4b57c12132ee97818e62812451c"
+    },
+    {
+      "type": "RunTransitionCause",
+      "file": "run-transition-cause.schema.json",
+      "sha256": "72074607b8a46600b88fbad68a9871b056ba6f3eb7c3d1af407a8874e850a0e4"
+    },
+    {
+      "type": "SealedSimulationEvent",
+      "file": "sealed-simulation-event.schema.json",
+      "sha256": "1e9e3c2257b5a15dad197808e76d687e2abaa7c7df2188d23eb098ba4055d7bc"
+    },
+    {
+      "type": "SealedSimulationResult",
+      "file": "sealed-simulation-result.schema.json",
+      "sha256": "6365e438c12addaa4e28a67857a671f674e18069aad617203c428f0141c0522a"
+    },
+    {
+      "type": "SimulationCausalParent",
+      "file": "simulation-causal-parent.schema.json",
+      "sha256": "b1ee1752cd7f7f33598c6aa73f06e32b9799889ecc21a1122ae27781e88a6e5a"
+    },
+    {
+      "type": "SimulationEventContent",
+      "file": "simulation-event-content.schema.json",
+      "sha256": "54a918418178d1db3085452293cf6f843a9f0d5a55cc226349a9a436c494b1e8"
+    },
+    {
+      "type": "SimulationEventDiscriminator",
+      "file": "simulation-event-discriminator.schema.json",
+      "sha256": "f95824725cdfb2ec80bea55ecf96d4c0dee3b893b5160be83bbb0527d2685984"
+    },
+    {
+      "type": "SimulationEventPayload",
+      "file": "simulation-event-payload.schema.json",
+      "sha256": "b46b89c666b1bf78d5aa0009d6368ab5bc0471de40bc1e3a5256a6988b492051"
+    },
+    {
+      "type": "SimulationEventSequence",
+      "file": "simulation-event-sequence.schema.json",
+      "sha256": "e4995e384b859b54b96e54c6bce519811dd968d748f65ac753ad590f3b6e55f0"
+    },
+    {
+      "type": "SimulationFabricRecordVersion",
+      "file": "simulation-fabric-record-version.schema.json",
+      "sha256": "4c57b0e98a3b917bf673ac4f94f71909a5196f393f368dc1594967f2a55d2dc7"
+    },
+    {
+      "type": "SimulationFabricSnapshot",
+      "file": "simulation-fabric-snapshot.schema.json",
+      "sha256": "fa63a77bccc9aaaef2f738e7fad96f91b1173d978b14673a9e34cf4d2244a2f0"
+    },
+    {
+      "type": "SimulationJobId",
+      "file": "simulation-job-id.schema.json",
+      "sha256": "46a2b52120f8ee9ec845b5540d785e0a826de6eff4612979d6423dc0d5988a76"
+    },
+    {
+      "type": "SimulationRun",
+      "file": "simulation-run.schema.json",
+      "sha256": "c86ec2868e203d0bbe8e055f1d345a078bb457c3aece326741a286ad29cb29d0"
+    },
+    {
+      "type": "SimulationRunId",
+      "file": "simulation-run-id.schema.json",
+      "sha256": "3bc47f656695b1ae7160d3e763a74297099451809d5b24a55f47cf612650aabc"
+    },
+    {
+      "type": "SimulationRunState",
+      "file": "simulation-run-state.schema.json",
+      "sha256": "93d9ba93052fe6c0e52c586d1c50662b98e3338f62247a1dcb18008d8e87598d"
+    },
+    {
+      "type": "SimulationRunStatus",
+      "file": "simulation-run-status.schema.json",
+      "sha256": "e08bd7688e48c889f32d59675eb1b826bbc91277eca5b44785814792c742acc0"
+    }
+  ]
+}

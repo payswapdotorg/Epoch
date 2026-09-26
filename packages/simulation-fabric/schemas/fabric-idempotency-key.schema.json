@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/FabricIdempotencyKey",
+  "$defs": {
+    "FabricIdempotencyKey": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "FabricIdempotencyKey",
+      "description": "A submission idempotency key: caller-supplied opaque token, or the derived content key (lowercase hex SHA-256)."
+    }
+  },
+  "$id": "urn:epoch:simulation-fabric:fabric-idempotency-key:1.0.0"
+}
