@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProvenanceState",
+  "$defs": {
+    "ProvenanceState": {
+      "readOnly": true,
+      "title": "ProvenanceState",
+      "description": "Provenance of one delivery fact: observed/reported/derived/assumed/imported/unknown, optional opaque source reference, optional acting principal.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "observed",
+            "reported",
+            "derived",
+            "assumed",
+            "imported",
+            "unknown"
+          ]
+        },
+        "sourceRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "actor": {
+          "$ref": "#/$defs/PrincipalId"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "OpaqueReference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "OpaqueReference",
+      "description": "Opaque, bounded, provider-neutral reference string owned by its producing system."
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque acting principal: \"principal:\" followed by a lowercase slug (W009 identity grammar)."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:provenance-state:1.0.0"
+}

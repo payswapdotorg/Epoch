@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DeliveryCausalParent",
+  "$defs": {
+    "DeliveryCausalParent": {
+      "readOnly": true,
+      "title": "DeliveryCausalParent",
+      "description": "Causal parent of a delivery event: an earlier event in the same delivery stream (the W010 shape).",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "$ref": "#/$defs/DeliveryStreamId"
+        },
+        "sequence": {
+          "$ref": "#/$defs/DeliveryEventSequence"
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "DeliveryStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DeliveryStreamId",
+      "description": "Opaque delivery-event stream identity: \"stream:\" followed by a lowercase slug (the W010 stream grammar)."
+    },
+    "DeliveryEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "DeliveryEventSequence",
+      "description": "One delivery-event sequence number: 1-based, contiguous per delivery stream."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:delivery-causal-parent:1.0.0"
+}

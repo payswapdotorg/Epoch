@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ResourceAssignment",
+  "$defs": {
+    "ResourceAssignment": {
+      "readOnly": true,
+      "title": "ResourceAssignment",
+      "description": "One resource assignment: an opaque resource reference with a canonical decimal quantity and unit.",
+      "type": "object",
+      "properties": {
+        "resourceId": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "quantity": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "unit": {
+          "$ref": "#/$defs/UnitLabel"
+        }
+      },
+      "required": [
+        "resourceId",
+        "quantity",
+        "unit"
+      ],
+      "additionalProperties": false
+    },
+    "OpaqueReference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "OpaqueReference",
+      "description": "Opaque, bounded, provider-neutral reference string owned by its producing system."
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "UnitLabel": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "title": "UnitLabel",
+      "description": "Unit-of-measure label (1-32 characters, provider-neutral)."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:resource-assignment:1.0.0"
+}

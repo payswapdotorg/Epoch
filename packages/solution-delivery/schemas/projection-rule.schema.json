@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProjectionRule",
+  "$defs": {
+    "ProjectionRule": {
+      "readOnly": true,
+      "title": "ProjectionRule",
+      "description": "One pack projection rule: a Navigator projection kind (world-view, solution, decision, program-of-work, schedule, acquisition, realization, verification, forecast, outcomes, learning) plus its presentation.",
+      "type": "object",
+      "properties": {
+        "projection": {
+          "type": "string",
+          "enum": [
+            "world-view",
+            "solution",
+            "decision",
+            "program-of-work",
+            "schedule",
+            "acquisition",
+            "realization",
+            "verification",
+            "forecast",
+            "outcomes",
+            "learning"
+          ]
+        },
+        "presentation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "projection",
+        "presentation"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:projection-rule:1.0.0"
+}

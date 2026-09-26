@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ConstraintReference",
+  "$defs": {
+    "ConstraintReference": {
+      "readOnly": true,
+      "title": "ConstraintReference",
+      "description": "Reference to a constraint in the W004 constraint-language grammar (opaque constraint id; referenced, never embedded).",
+      "type": "object",
+      "properties": {
+        "constraintId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,127}$"
+        }
+      },
+      "required": [
+        "constraintId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:constraint-reference:1.0.0"
+}

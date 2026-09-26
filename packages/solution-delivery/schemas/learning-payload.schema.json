@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LearningPayload",
+  "$defs": {
+    "LearningPayload": {
+      "readOnly": true,
+      "title": "LearningPayload",
+      "description": "Learning payload: the lesson text and the sorted record links (context, solution, actuals, outcome).",
+      "type": "object",
+      "properties": {
+        "lesson": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "links": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DistinctionRecordId"
+          }
+        }
+      },
+      "required": [
+        "lesson",
+        "links"
+      ],
+      "additionalProperties": false
+    },
+    "DistinctionRecordId": {
+      "type": "string",
+      "pattern": "^(prediction|estimate|baseline|commitment|observation|actual|forecast|outcome|learning):[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DistinctionRecordId",
+      "description": "Opaque semantic-distinction record identity: one of the nine kind prefixes followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:learning-payload:1.0.0"
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BaselinePayload",
+  "$defs": {
+    "BaselinePayload": {
+      "readOnly": true,
+      "title": "BaselinePayload",
+      "description": "Baseline payload: the approved solution version and its exact content digest (the version chain is the authority).",
+      "type": "object",
+      "properties": {
+        "solutionVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "solutionVersionDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "solutionVersion",
+        "solutionVersionDigest"
+      ],
+      "additionalProperties": false
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic version core (no prerelease/build suffixes)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:baseline-payload:1.0.0"
+}

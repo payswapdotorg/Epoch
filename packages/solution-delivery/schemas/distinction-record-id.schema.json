@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DistinctionRecordId",
+  "$defs": {
+    "DistinctionRecordId": {
+      "type": "string",
+      "pattern": "^(prediction|estimate|baseline|commitment|observation|actual|forecast|outcome|learning):[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DistinctionRecordId",
+      "description": "Opaque semantic-distinction record identity: one of the nine kind prefixes followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:distinction-record-id:1.0.0"
+}

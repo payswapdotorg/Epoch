@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LifecycleSubject",
+  "$defs": {
+    "LifecycleSubject": {
+      "readOnly": true,
+      "title": "LifecycleSubject",
+      "description": "The lifecycle subject: the owning solution plus the tracked object (solution package or delivery record).",
+      "type": "object",
+      "properties": {
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "subjectKind": {
+          "type": "string",
+          "enum": [
+            "solution-package",
+            "delivery-record"
+          ]
+        },
+        "subjectId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "solutionId",
+        "subjectKind",
+        "subjectId"
+      ],
+      "additionalProperties": false
+    },
+    "SolutionId": {
+      "type": "string",
+      "pattern": "^solution:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionId",
+      "description": "Opaque solution-package identity: \"solution:\" followed by a lowercase slug (stable across versions)."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:lifecycle-subject:1.0.0"
+}

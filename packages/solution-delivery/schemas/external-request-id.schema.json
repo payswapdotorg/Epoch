@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ExternalRequestId",
+  "$defs": {
+    "ExternalRequestId": {
+      "type": "string",
+      "pattern": "^external-request:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ExternalRequestId",
+      "description": "Opaque external-request envelope identity: \"external-request:\" followed by a lowercase slug (provider-neutral seam)."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:external-request-id:1.0.0"
+}

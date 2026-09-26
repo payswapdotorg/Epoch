@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DeliveryId",
+  "$defs": {
+    "DeliveryId": {
+      "type": "string",
+      "pattern": "^delivery:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DeliveryId",
+      "description": "Opaque delivery-record identity: \"delivery:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:delivery-id:1.0.0"
+}

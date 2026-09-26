@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldEntityReference",
+  "$defs": {
+    "WorldEntityReference": {
+      "readOnly": true,
+      "title": "WorldEntityReference",
+      "description": "Reference to a world-graph entity in the W002 world-model grammar (opaque entity id; referenced, never embedded).",
+      "type": "object",
+      "properties": {
+        "entityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "entityId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:world-entity-reference:1.0.0"
+}

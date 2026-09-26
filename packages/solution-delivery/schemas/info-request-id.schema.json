@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/InfoRequestId",
+  "$defs": {
+    "InfoRequestId": {
+      "type": "string",
+      "pattern": "^info-request:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "InfoRequestId",
+      "description": "Opaque information-acquisition-request identity: \"info-request:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:info-request-id:1.0.0"
+}

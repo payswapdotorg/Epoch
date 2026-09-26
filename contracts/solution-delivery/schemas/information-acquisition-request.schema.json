@@ -1,0 +1,376 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/InformationAcquisitionRequest",
+  "$defs": {
+    "InformationAcquisitionRequest": {
+      "readOnly": true,
+      "title": "InformationAcquisitionRequest",
+      "description": "One information-acquisition request: what is missing, the decision it can change, the freshness requirement, an optional opaque source, and the open/fulfilled/abandoned status.",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.solution-delivery.info-request"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "requestId": {
+          "$ref": "#/$defs/InfoRequestId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "requestedInformation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "decisionImpact": {
+          "$ref": "#/$defs/DecisionImpact"
+        },
+        "freshnessRequirement": {
+          "$ref": "#/$defs/FreshnessRequirement"
+        },
+        "requestedFrom": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "issuedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "issuedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "fulfilled",
+            "abandoned"
+          ]
+        },
+        "fulfillment": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "evidence": {
+              "maxItems": 64,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/EvidenceReference"
+              }
+            },
+            "fulfilledAt": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "fulfilledBy": {
+              "$ref": "#/$defs/PrincipalId"
+            },
+            "uncertainty": {
+              "$ref": "#/$defs/UncertaintyState"
+            }
+          },
+          "required": [
+            "evidence",
+            "fulfilledAt",
+            "fulfilledBy",
+            "uncertainty"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "requestId",
+        "tenantId",
+        "solutionId",
+        "requestedInformation",
+        "decisionImpact",
+        "issuedAt",
+        "issuedBy",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "InfoRequestId": {
+      "type": "string",
+      "pattern": "^info-request:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "InfoRequestId",
+      "description": "Opaque information-acquisition-request identity: \"info-request:\" followed by a lowercase slug."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "SolutionId": {
+      "type": "string",
+      "pattern": "^solution:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionId",
+      "description": "Opaque solution-package identity: \"solution:\" followed by a lowercase slug (stable across versions)."
+    },
+    "DecisionImpact": {
+      "readOnly": true,
+      "title": "DecisionImpact",
+      "description": "The decision impact of one requested unknown: the lifecycle stage, the decision kind it can change, the materiality, and the rationale.",
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "enum": [
+            "understand",
+            "decide",
+            "plan",
+            "acquire",
+            "realize",
+            "observe",
+            "actualize",
+            "verify",
+            "forecast",
+            "close",
+            "learn"
+          ]
+        },
+        "decisionKind": {
+          "type": "string",
+          "enum": [
+            "solution-selection",
+            "constraint-compliance",
+            "safety-boundary",
+            "authority-boundary",
+            "verification-result",
+            "cost-basis",
+            "schedule-basis",
+            "resource-allocation"
+          ]
+        },
+        "materiality": {
+          "type": "string",
+          "enum": [
+            "material",
+            "immaterial"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "stage",
+        "decisionKind",
+        "materiality",
+        "rationale"
+      ],
+      "additionalProperties": false
+    },
+    "FreshnessRequirement": {
+      "readOnly": true,
+      "title": "FreshnessRequirement",
+      "description": "The freshness requirement of one information request: a state plus the assessment instant.",
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "fresh",
+            "aging",
+            "stale"
+          ]
+        },
+        "assessedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "state",
+        "assessedAt"
+      ],
+      "additionalProperties": false
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "OpaqueReference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "OpaqueReference",
+      "description": "Opaque, bounded, provider-neutral reference string owned by its producing system."
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque acting principal: \"principal:\" followed by a lowercase slug (W009 identity grammar)."
+    },
+    "EvidenceReference": {
+      "readOnly": true,
+      "title": "EvidenceReference",
+      "description": "Reference to evidence in the W006 grammar: canonical SHA-256 content digest (exact-revision addressing).",
+      "type": "object",
+      "properties": {
+        "digest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "UncertaintyState": {
+      "readOnly": true,
+      "title": "UncertaintyState",
+      "description": "The uncertainty state of one delivery fact: provenance, freshness and confidence (all required — the decision-sufficiency rule preserves what is not known).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "provenance": {
+          "$ref": "#/$defs/ProvenanceState"
+        },
+        "freshness": {
+          "$ref": "#/$defs/FreshnessState"
+        },
+        "confidence": {
+          "$ref": "#/$defs/ConfidenceState"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "provenance",
+        "freshness",
+        "confidence"
+      ],
+      "additionalProperties": false
+    },
+    "ProvenanceState": {
+      "readOnly": true,
+      "title": "ProvenanceState",
+      "description": "Provenance of one delivery fact: observed/reported/derived/assumed/imported/unknown, optional opaque source reference, optional acting principal.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "observed",
+            "reported",
+            "derived",
+            "assumed",
+            "imported",
+            "unknown"
+          ]
+        },
+        "sourceRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "actor": {
+          "$ref": "#/$defs/PrincipalId"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "FreshnessState": {
+      "readOnly": true,
+      "title": "FreshnessState",
+      "description": "Freshness of one delivery fact: fresh/aging/stale/unknown plus the producer-supplied assessment instant.",
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "fresh",
+            "aging",
+            "stale",
+            "unknown"
+          ]
+        },
+        "assessedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "state",
+        "assessedAt"
+      ],
+      "additionalProperties": false
+    },
+    "ConfidenceState": {
+      "readOnly": true,
+      "title": "ConfidenceState",
+      "description": "Confidence of one delivery fact: acquisition method (stated/measured/estimated/derived/imported), a 0..1 value, optional interval and rationale.",
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "stated",
+            "measured",
+            "estimated",
+            "derived",
+            "imported"
+          ]
+        },
+        "value": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "interval": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "low": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "high": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "low",
+            "high"
+          ],
+          "additionalProperties": false
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "method",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:information-acquisition-request:1.0.0"
+}

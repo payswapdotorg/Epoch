@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DistinctionSubject",
+  "$defs": {
+    "DistinctionSubject": {
+      "readOnly": true,
+      "title": "DistinctionSubject",
+      "description": "The subject of one distinction record: the owning solution plus a typed anchor (solution, line, work package, activity, milestone, program, or delivery id).",
+      "type": "object",
+      "properties": {
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "subjectKind": {
+          "type": "string",
+          "enum": [
+            "solution",
+            "solution-line",
+            "work-package",
+            "activity",
+            "milestone",
+            "program",
+            "delivery"
+          ]
+        },
+        "subjectId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "solutionId",
+        "subjectKind",
+        "subjectId"
+      ],
+      "additionalProperties": false
+    },
+    "SolutionId": {
+      "type": "string",
+      "pattern": "^solution:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionId",
+      "description": "Opaque solution-package identity: \"solution:\" followed by a lowercase slug (stable across versions)."
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:distinction-subject:1.0.0"
+}

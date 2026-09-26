@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DecisionImpact",
+  "$defs": {
+    "DecisionImpact": {
+      "readOnly": true,
+      "title": "DecisionImpact",
+      "description": "The decision impact of one requested unknown: the lifecycle stage, the decision kind it can change, the materiality, and the rationale.",
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "enum": [
+            "understand",
+            "decide",
+            "plan",
+            "acquire",
+            "realize",
+            "observe",
+            "actualize",
+            "verify",
+            "forecast",
+            "close",
+            "learn"
+          ]
+        },
+        "decisionKind": {
+          "type": "string",
+          "enum": [
+            "solution-selection",
+            "constraint-compliance",
+            "safety-boundary",
+            "authority-boundary",
+            "verification-result",
+            "cost-basis",
+            "schedule-basis",
+            "resource-allocation"
+          ]
+        },
+        "materiality": {
+          "type": "string",
+          "enum": [
+            "material",
+            "immaterial"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "stage",
+        "decisionKind",
+        "materiality",
+        "rationale"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:solution-delivery:decision-impact:1.0.0"
+}

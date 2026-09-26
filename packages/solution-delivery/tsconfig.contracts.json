@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/solution-delivery": ["./src/index.ts"],
+      "@epoch/world-contracts": ["../../contracts/world/src/index.ts"]
+    }
+  },
+  "include": [
+    "../../contracts/solution-delivery/index.d.ts",
+    "../../contracts/solution-delivery/parity.ts"
+  ]
+}
