@@ -60,3 +60,7 @@ Shared contracts are sequenced before consumers. Concurrent workers never edit t
 
 ## Universal domain-pack rule
 W026/W027 and every future domain pack depend on W036 for the universal lifecycle contracts. They may not proceed with a local lifecycle authority. Domain specialization is validated against `spec/domain-pack-contract.md`.
+W002,W003,W004,W006,W007,W009,W010,W011,W020 -> W045
+
+## Autonomous-discovery dependency rule
+W045 is the universal entry point for task-driven role/capability discovery and scheduled ecosystem discovery. It may consume domain-pack role/capability templates after their owning pack contracts exist, but no domain pack may create its own organization compiler.
