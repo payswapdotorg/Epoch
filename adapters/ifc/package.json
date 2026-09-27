@@ -1,0 +1,37 @@
+{
+  "name": "@epoch/adapter-ifc",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Building Model adapter (W029 reference set) — the typed, provider-neutral reference adapter for building-model exchange payloads (source + semantic categories): deterministic, content-addressed ingestion of building-model fixtures (typed rejection ingestion-rejected with reason on malformed/incomplete input — never a partial silent load), and typed semantic projections of building elements, properties, and relationships mapped INTO the W002 world-model graph as REAL AssertionInput records (external-standard semantics are ADAPTED, never authoritative — external-semantics-not-authority typed boundary). Provider vocabulary stays in src/provider (blocklist-tested). In-memory reference behavior: NO network, NO live exchange-format parsers, NO real side effects; fixtures stand in for provider payloads.",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/adapter-sdk": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/action-policy": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

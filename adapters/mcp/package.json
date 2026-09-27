@@ -1,0 +1,39 @@
+{
+  "name": "@epoch/adapter-mcp",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch External Tool adapter (W029 reference set) — the typed, provider-neutral reference adapter for external tool protocols (action + evaluator categories): tool discovery derives typed W007 capability-registration documents (tool invocation surfaces); tool invocation builds deterministic W003 action proposals admitted EXCLUSIVELY through the W022 action-gateway seam (policy decision first — allow / deny / requires-approval — then the authority's typed outcome records; the adapter holds NO credentials, executes NOTHING itself, and never bypasses the gateway — gateway-bypass-rejected and credential-rejected typed). The evaluator surface judges recorded tool-invocation outcomes against declared criteria with mandatory justification. Provider vocabulary stays in src/provider (blocklist-tested). In-memory reference behavior: NO network, NO live tool calls, NO real side effects; fixtures stand in for provider payloads.",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/adapter-sdk": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/action-gateway": "workspace:*",
+    "@epoch/action-policy": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

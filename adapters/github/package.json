@@ -1,0 +1,40 @@
+{
+  "name": "@epoch/adapter-github",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Hosted Software-Workspace adapter (W029 reference set) — the typed, provider-neutral reference adapter for hosted software-workspace state (source + action categories): deterministic projection of hosted workspace snapshots (revisions, content trees, work-item references) as content-addressed OBSERVATION records over W002 assertion conventions (source, timestamp, confidence, validity; provenance carrying adapter identity + source digest), and a typed change-proposal action surface routed EXCLUSIVELY through the W022 action-authority seam (the adapter never executes; outcomes are the authority's typed decision/outcome records; gateway-bypass-rejected). Provider vocabulary stays in src/provider (blocklist-tested). In-memory reference behavior: NO network, NO live provider calls, NO real side effects; fixtures stand in for provider payloads.",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/adapter-sdk": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/action-gateway": "workspace:*",
+    "@epoch/action-policy": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
