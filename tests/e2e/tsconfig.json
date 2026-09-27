@@ -1,0 +1,83 @@
+{
+  "extends": "@epoch/tsconfig/library.json",
+  "compilerOptions": {
+    "lib": [
+      "ES2022"
+    ],
+    "noEmit": true,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "../../packs/construction/node_modules/@types"
+    ],
+    "paths": {
+      "@epoch/action-policy": [
+        "../../packages/action-policy/src/index.ts"
+      ],
+      "@epoch/action-protocol": [
+        "../../packages/action-protocol/src/index.ts"
+      ],
+      "@epoch/actualization": [
+        "../../packages/actualization/src/index.ts"
+      ],
+      "@epoch/adapter-github": [
+        "../../adapters/github/src/index.ts"
+      ],
+      "@epoch/agent-orchestration": [
+        "../../packages/agent-orchestration/src/index.ts"
+      ],
+      "@epoch/authorization": [
+        "../../packages/authorization/src/index.ts"
+      ],
+      "@epoch/contracts-constraints": [
+        "../../contracts/constraints/v1/index.ts"
+      ],
+      "@epoch/document-adapter": [
+        "../../packages/document-adapter/src/index.ts"
+      ],
+      "@epoch/event-log": [
+        "../../packages/event-log/src/index.ts"
+      ],
+      "@epoch/evidence": [
+        "../../packages/evidence/src/index.ts"
+      ],
+      "@epoch/execution-tracking": [
+        "../../packages/execution-tracking/src/index.ts"
+      ],
+      "@epoch/pack-construction": [
+        "../../packs/construction/src/index.ts"
+      ],
+      "@epoch/pack-software": [
+        "../../packs/software/src/index.ts"
+      ],
+      "@epoch/policy-contracts": [
+        "../../packages/policy-contracts/src/index.ts"
+      ],
+      "@epoch/procurement": [
+        "../../packages/procurement/src/index.ts"
+      ],
+      "@epoch/solution-delivery": [
+        "../../packages/solution-delivery/src/index.ts"
+      ],
+      "@epoch/tenancy": [
+        "../../packages/tenancy/src/index.ts"
+      ],
+      "@epoch/variance": [
+        "../../packages/variance/src/index.ts"
+      ],
+      "@epoch/world-contracts": [
+        "../../contracts/world/src/index.ts"
+      ],
+      "vitest": [
+        "../../packs/construction/node_modules/vitest/dist/index.d.ts"
+      ]
+    }
+  },
+  "include": [
+    "test/**/*.ts",
+    "../../examples/e2e/**/*.ts",
+    "vitest.config.mts",
+    "eslint.config.mjs"
+  ]
+}
