@@ -1,8 +1,8 @@
 {
  "baselineSha": "e09f530926e4fa2c0e7de317a86d6d13013559f8",
- "status": "W017_W018_COMPLETE",
- "next": "W029 in flight (chat f8099b64, server-side; GitHub-poll monitoring until operator chat login). Frontier eligible: W019 (renderer/device adaptation), W039+W043 (critical path, packets rendered), W024/W026/W027/W030/W041 (packets need re-render post-wipe). Critical paths: W029->W031(needs W026/W027)->W032->W033->W034->W035; W039->W040->W044; W043.",
- "verification": "PR #71 CI success + Tech Lead 7-gate (scope 33/33 apps/desktop, battery 133/133 8m59s; worker claimed 34 files vs 33 actual \u2014 noted); PR #72 CI 2x success + 7-gate (scope 28/28 apps/mobile, battery 133/133 8m32s; first battery run invalidated by a mid-run checkout switch \u2014 clean re-run passed). Sandbox rollback 23:58Z: reviews completed on the re-cloned epoch-review.",
- "lastMergeSha": "aabcefebce00356147d937fada9bbb54f92e7506",
- "lastAction": "W017 (PR #71 -> 7ebd1181) + W018 (PR #72 -> 731a18d7) merged + reconcile PR #73 -> aabcefebce \u2014 26/44 complete"
+ "status": "W029_COMPLETE",
+ "next": "W029 merged (PR #74 -> dc0d083c + lockfile reconcile -> 73211d0) \u2014 27/44. Frontier eligible: W019, W024, W026, W027, W030, W041, W039, W043. Critical paths: W026/W027 -> W031 -> W032 -> W033 -> W034 -> W035; W039 -> W040 -> W044; W043. Next wave per standing plan: W039 then W043 (packets patched: clone inside /home/z/my-project for files-API harvest visibility), dispatched SERIALLY \u2014 the platform is culling concurrent sessions during the peak window (one-active-generation policy observed 2026-09-27).",
+ "verification": "PR #74 CI 2x success + Tech Lead 7-gate on the fresh clone: G1 scope 104/104 adapters/{github,ifc,mcp,fmi} only (27/26/27/24 per adapter); G2 secrets 0 (600K-char diff scan); G3 install clean 10.5s; G4 governance+boundary PASS; G5 battery 148/148 (12m20s, --concurrency=1 --force, fresh re-run) with adapter test counts cross-checked EXACT (github 62, ifc 54, mcp 58, fmi 51 = 225/225); G6 CI 2/2 success; G7 report complete with marker + 6 limitations (incl. the serial lockfile reconcile, done as 73211d0) + 3 architecture questions (domain vocabulary ownership for W026/W027; envelope key casing; step-instant derivation).",
+ "lastMergeSha": "73211d00d1244d5cbb3d3683684bdcbe5f9184e3",
+ "lastAction": "W029 (PR #74 -> dc0d083c) merged + lockfile reconcile -> 73211d0 \u2014 27/44 complete"
 }
