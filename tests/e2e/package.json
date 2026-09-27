@@ -1,0 +1,38 @@
+{
+  "name": "@epoch/e2e-slices",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "W031 Reference E2E slices: deterministic in-process cross-surface proof layer. Five named slices (construction-delivery, software-delivery, adapter-intake, action-gateway, recovery) composing REAL workspace packages through their public APIs. NOT a pnpm workspace importer: tests/e2e sits outside the pnpm-workspace.yaml globs (owned surface, root manifests frozen), so this manifest DECLARES the frozen devDependency policy while import resolution happens via vitest resolve.alias + tsconfig paths. Run via: pnpm --filter @epoch/pack-construction exec vitest run --root ../../tests/e2e (see docs/e2e/README.md).",
+  "epoch": {
+    "layer": "service"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/procurement": "workspace:*",
+    "@epoch/execution-tracking": "workspace:*",
+    "@epoch/actualization": "workspace:*",
+    "@epoch/variance": "workspace:*",
+    "@epoch/pack-construction": "workspace:*",
+    "@epoch/pack-software": "workspace:*",
+    "@epoch/adapter-github": "workspace:*",
+    "@epoch/document-adapter": "workspace:*",
+    "@epoch/agent-orchestration": "workspace:*",
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/action-policy": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "vitest": "catalog:",
+    "typescript": "catalog:"
+  }
+}
