@@ -1,8 +1,8 @@
 {
  "baselineSha": "e09f530926e4fa2c0e7de317a86d6d13013559f8",
- "status": "W038_COMPLETE",
- "next": "W029 in flight (chat f8099b64, generating since 20:50Z). Frontier eligible: W017/W018/W019 (tier-6 clients), W039+W043 newly unblocked (W038 done), W024/W026/W027/W030/W041. Critical paths: W029->W031(needs W026/W027)->W032->W033->W034->W035; W038 done -> W039->W040->W044; W043 open.",
- "verification": "PR #69 CI 2x success on 822118956b; Tech Lead 7-gate review at epoch-review: scope 138/138 owned (3 surfaces), token audit 0 hits, install exit 0, governance+boundary PASS, battery 130/130 (10m03s serialized), report complete with marker (base a7c169a claimed = actual).",
- "lastMergeSha": "740fb672031a0926c3ad19ae3399d45c5f4ca284",
- "lastAction": "W038 (PR #69 -> 8cc282f1) merged + reconcile PR #70 -> 740fb67203 \u2014 24/44 complete; W039/W043 unblocked"
+ "status": "W017_W018_COMPLETE",
+ "next": "W029 in flight (chat f8099b64, server-side; GitHub-poll monitoring until operator chat login). Frontier eligible: W019 (renderer/device adaptation), W039+W043 (critical path, packets rendered), W024/W026/W027/W030/W041 (packets need re-render post-wipe). Critical paths: W029->W031(needs W026/W027)->W032->W033->W034->W035; W039->W040->W044; W043.",
+ "verification": "PR #71 CI success + Tech Lead 7-gate (scope 33/33 apps/desktop, battery 133/133 8m59s; worker claimed 34 files vs 33 actual \u2014 noted); PR #72 CI 2x success + 7-gate (scope 28/28 apps/mobile, battery 133/133 8m32s; first battery run invalidated by a mid-run checkout switch \u2014 clean re-run passed). Sandbox rollback 23:58Z: reviews completed on the re-cloned epoch-review.",
+ "lastMergeSha": "aabcefebce00356147d937fada9bbb54f92e7506",
+ "lastAction": "W017 (PR #71 -> 7ebd1181) + W018 (PR #72 -> 731a18d7) merged + reconcile PR #73 -> aabcefebce \u2014 26/44 complete"
 }
