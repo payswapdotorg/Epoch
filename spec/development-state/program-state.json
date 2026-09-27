@@ -34,8 +34,9 @@
     "W018",
     "W029",
     "W039",
-    "W026"
+    "W026",
+    "W027"
   ],
   "blocked": [],
-  "lastMergeSha": "c443d707589554bc319ce47189d49a1a2e5ff42f"
+  "lastMergeSha": "16f6e49"
 }

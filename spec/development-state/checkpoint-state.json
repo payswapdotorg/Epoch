@@ -43,6 +43,25 @@
       },
       "programProgress": "29/44",
       "note": "Base-skew handled: worker base 29b13f3 (pre-W039); merge verified conflict-free + battery on merged tree. W027 send attempts (2x) never landed server-side (peak capacity gate at send time); retry cadence active."
+    },
+    {
+      "id": "W027_COMPLETE",
+      "at": "2026-09-27T19:41:46Z",
+      "workOrder": "W027",
+      "mergeSha": "af29b3e75f",
+      "reconcileSha": "16f6e49",
+      "pr": 79,
+      "gates": {
+        "G1_scope": "PASS 46/46 owned (packs/software only)",
+        "G2_secrets": "PASS",
+        "G3_install": "PASS",
+        "G4_governance_boundary": "PASS",
+        "G5_battery": "PASS 163/163 exit 0",
+        "G6_ci": "PASS 2/2",
+        "G7_report": "PASS"
+      },
+      "programProgress": "30/44",
+      "note": "Revival delivery: turn froze mid-battery (lesson-36), sandbox-first revival (lesson-37) recovered 46 files; worker fixed experience-devDeps parity issue, pack gates green, full battery re-run. Capacity gate opened 17:32 after lesson-183 tab purge; 2-wide window proven (W041 landed in parallel, generating)."
     }
   ]
 }
