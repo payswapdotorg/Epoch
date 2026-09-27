@@ -22,9 +22,13 @@ A pack may specialize:
 - acquisition strategies;
 - realization strategies;
 - outcome schemas;
-- learning features.
+- learning features;
+- reusable role templates;
+- capability-demand templates;
+- task/condition signals that can imply one or more capability demands;
+- domain evaluation suites for role/capability selection.
 
-A pack must reference canonical universal object identities and lifecycle states.
+A pack must reference canonical universal object identities and lifecycle states. Role/capability templates are reusable priors; the universal Role & Capability Discovery Plane may compose, split or ignore them based on task evidence.
 
 ## Pack profile
 
@@ -82,6 +86,18 @@ Mature open-source systems such as Blender, FreeCAD, O3DE, Godot, SALOME, ParaVi
 
 The integration preference is:
 library/API → provider-neutral adapter → sandboxed extension/plugin → optional client surface → fork.
+
+## Role and capability demand profile
+
+A production pack should expose a machine-readable profile for reusable demand/role knowledge. A profile may declare:
+- `roleTemplates` — candidate missions and interfaces;
+- `capabilityDemandTemplates` — required operations, modalities, outputs, quality and evidence;
+- `taskSignals` — observable conditions that suggest a demand;
+- `evaluationSuites` — tests used to evaluate candidate capabilities/roles;
+- `requiredAuthority` — the approvals or gateway classes needed for consequential operations.
+
+These declarations are priors, not automatic assignments. The universal discovery plane owns the task-specific organization decision.
+
 
 A fork, source-level embedding or distribution topology that materially changes licensing/security/maintenance posture requires an approved Architecture Change Request under spec/architecture-change-requests/ACR-003-capability-foundations.md.
 
