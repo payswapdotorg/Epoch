@@ -51,12 +51,13 @@ The Tech Lead derives the live frontier from dependencies. Up to three READY ite
 | W042 | Provider-neutral external event bridge + optional Aurum Chat adapter | W007,W010,W036,W041 | packages/external-event-bridge/*, adapters/aurum-chat/*, contracts/external-event-bridge/*, docs/integrations/aurum-chat/* |
 | W043 | Delivery supervision + alerts | W020,W022,W036,W038 | packages/supervision/*, services/supervision/*, packages/alerts/*, contracts/supervision/* |
 | W044 | Delivery-to-learning construction E2E fixture | W026,W031,W037,W038,W039,W040,W041,W042,W043 | examples/delivery-e2e/*, tests/delivery-e2e/*, docs/delivery-e2e/* |
+| W045 | Autonomous Role & Capability Discovery: capability-demand compiler, role proposals, organization search, external model/capability discovery, scheduled ecosystem scan | W002,W003,W004,W006,W007,W009,W010,W011,W020 | packages/capability-discovery/*, services/capability-discovery/*, contracts/capability-discovery/*, docs/capability-discovery/* |
 
 ## Approved successor architecture program
 
-ACR-001 (approved 2026-09-24) adds the Solution Delivery architecture in spec/solution-delivery-architecture.md and the optional Aurum bridge in spec/aurum-chat-integration.md. ACR-002 clarifies the universal lifecycle and domain-pack/Navigator rules in spec/universal-solution-lifecycle.md, spec/domain-pack-contract.md, and spec/solution-navigator-architecture.md. ACR-003 establishes the Capability Foundation Policy in spec/capability-foundation-policy.md: third-party engineering foundations remain replaceable capabilities behind the Capability/Adapter Fabric and forks require an explicit architecture/legal/operations gate.
+ACR-001 (approved 2026-09-24) adds the Solution Delivery architecture in spec/solution-delivery-architecture.md and the optional Aurum bridge in spec/aurum-chat-integration.md. ACR-002 clarifies the universal lifecycle and domain-pack/Navigator rules in spec/universal-solution-lifecycle.md, spec/domain-pack-contract.md, and spec/solution-navigator-architecture.md. ACR-003 establishes the Capability Foundation Policy in spec/capability-foundation-policy.md: third-party engineering foundations remain replaceable capabilities behind the Capability/Adapter Fabric and forks require an explicit architecture/legal/operations gate. ACR-004 establishes the universal Role & Capability Discovery Plane and scheduled ecosystem discovery.
 
-W036-W044 remain READY_AFTER_DEPENDENCIES until the ACR-001/ACR-002/ACR-003 lock transition is made effective. The currently authorized W009/W011 wave remains pinned to the existing E1.0/X1.0 contract surface and is not redefined by the successor architecture targets.
+W036-W045 remain READY_AFTER_DEPENDENCIES until the ACR-001/ACR-002/ACR-003/ACR-004 lock transition is made effective. The currently authorized W009/W011 wave remains pinned to the existing E1.0/X1.0 contract surface and is not redefined by the successor architecture targets.
 
 ACR-003 creates no standalone implementation Work Order. Concrete foundation integrations are scheduled through the existing Capability/Adapter, Renderer/Experience, Desktop or Domain Pack surfaces when they fit those ownership boundaries; otherwise the Architect must create and authorize a new Work Order.
 
@@ -73,7 +74,6 @@ The dependency graph is authoritative. Safe examples are:
 - after W036 and W041: W037 + W038 + W042, subject to max 3 and exact ownership checks.
 No static group overrides dependencies.
 
-| W045 | Autonomous Role & Capability Discovery: capability-demand compiler, role proposals, organization search, external model/capability discovery, scheduled ecosystem scan | W002,W003,W004,W006,W007,W009,W010,W011,W020 | packages/capability-discovery/*, services/capability-discovery/*, contracts/capability-discovery/*, docs/capability-discovery/* |
 ## Universal acceptance
 Every item must stay inside owned surfaces, add evidence for acceptance, preserve authority boundaries, avoid shared root-manifest/lockfile changes during parallel work, and document exact verification and final head SHA.
 
