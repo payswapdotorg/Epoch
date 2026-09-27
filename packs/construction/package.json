@@ -1,0 +1,38 @@
+{
+  "name": "@epoch/pack-construction",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Construction Domain Pack (W026, DP1.0) — DATA + PURE PROJECTION FUNCTIONS over the universal solution-delivery state: the DP1.0 pack profile (admitted through the W036 admitPackProfile path); construction vocabulary as typed data (World Model entity bindings for element/space/system/zone, measurement methods with net/gross rules, labour/plant/material/subcontract/overhead cost classifications, verification-method descriptors, constraint descriptors, practical-completion/defects-liability outcome types); versioned content-addressed work templates instantiated as caller-side folds; and the synchronized projections of the universal Plan/Acquire/Realize spine — an interactive-BOQ view model (identity-mapped to plan-line ids, never minted, never stored), a construction programme view over the ProgramOfWork, and a pure derived BOQ<->procurement<->execution link index. Deterministic, in-memory, zod-typed; zero wall-clock/randomness/IO; NO lifecycle authority, NO parallel ledger, NO canonical writes, NO UI, NO provider vocabulary.",
+  "epoch": {
+    "layer": "pack"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/constraint-language": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
