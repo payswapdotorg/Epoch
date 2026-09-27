@@ -42,7 +42,8 @@
     "W041",
     "W042",
     "W043",
-    "W044"
+    "W044",
+    "W045"
   ],
   "maxConcurrentWorkers": 3
 }
