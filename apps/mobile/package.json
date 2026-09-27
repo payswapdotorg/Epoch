@@ -2,8 +2,38 @@
   "name": "@epoch/mobile",
   "version": "0.0.0",
   "private": true,
-  "description": "Reserved placeholder for the Tauri 2 mobile field-client shell (W018). No runtime code before W018 dispatch.",
+  "type": "module",
+  "description": "Epoch Mobile Field Client (W018) — the typed field-shell architecture plus an in-memory reference host for the mobile field client (architecture.md §Clients: \"mobile is optimized for field capture/review/approval\"). Field sessions are tenant-scoped (W099 grammar via @epoch/tenancy); capture envelopes are versioned, content-addressed, replay-safe channels carrying photo/sensor/note references as W006-convention evidence references BY DIGEST (never embedded payloads); quantity/progress observations are shaped as W036 Observation-distinction records with the MANDATORY uncertainty state and unambiguous work-package linkage by opaque id (ambiguity is a typed rejection, never a guess); field review/approval surfaces are W003 typed proposals through the W022 action-gateway seam — the client holds no credentials, executes nothing, and receives gateway decision records (allow/deny/requires-approval); the offline queue stores typed, content-addressed, idempotent records (duplicate capture = sealed prior record) and sync admission replays through the kernel seams with provenance — never a second semantic store (lock rules 8/16). REFERENCE IMPLEMENTATION discipline (the W020/W022/W029 precedent): no real native bundling, no new third-party runtime dependencies, zero wall-clock, zero randomness, instants caller-supplied.",
   "epoch": {
     "layer": "app"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/action-policy": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/renderer-runtime": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }
