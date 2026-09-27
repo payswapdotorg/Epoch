@@ -1,22 +1,21 @@
 {
-  "eligible": [
-    "W019",
-    "W024",
-    "W030",
-    "W040",
-    "W041",
-    "W043",
-    "W031"
-  ],
-  "inFlight": [],
-  "blocked": [
-    "W025",
-    "W032",
-    "W033",
-    "W034",
-    "W035",
-    "W042",
-    "W044"
-  ],
-  "maxConcurrentWorkers": 3
+ "eligible": [
+  "W019",
+  "W024",
+  "W030",
+  "W040",
+  "W041",
+  "W043",
+  "W032"
+ ],
+ "inFlight": [],
+ "blocked": [
+  "W025",
+  "W033",
+  "W034",
+  "W035",
+  "W042",
+  "W044"
+ ],
+ "maxConcurrentWorkers": 3
 }
