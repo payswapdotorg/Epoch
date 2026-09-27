@@ -73,6 +73,7 @@ The dependency graph is authoritative. Safe examples are:
 - after W036 and W041: W037 + W038 + W042, subject to max 3 and exact ownership checks.
 No static group overrides dependencies.
 
+| W045 | Autonomous Role & Capability Discovery: capability-demand compiler, role proposals, organization search, external model/capability discovery, scheduled ecosystem scan | W002,W003,W004,W006,W007,W009,W010,W011,W020 | packages/capability-discovery/*, services/capability-discovery/*, contracts/capability-discovery/*, docs/capability-discovery/* |
 ## Universal acceptance
 Every item must stay inside owned surfaces, add evidence for acceptance, preserve authority boundaries, avoid shared root-manifest/lockfile changes during parallel work, and document exact verification and final head SHA.
 
@@ -82,7 +83,6 @@ Every domain pack must conform to spec/domain-pack-contract.md, bind to the univ
 ## Capability-foundation acceptance
 Every third-party foundation integration must conform to spec/capability-foundation-policy.md. Provider-native files/projects remain linked artifacts, not the Epoch semantic database. Any fork requires ACR approval plus documented license/dependency, security/isolation, divergence, upstream/reintegration, update and exit planning.
 
-| W045 | Autonomous Role & Capability Discovery: capability-demand compiler, role proposals, organization search, external model/capability discovery, scheduled ecosystem scan | W002,W003,W004,W006,W007,W009,W010,W011,W020 | packages/capability-discovery/*, services/capability-discovery/*, contracts/capability-discovery/*, docs/capability-discovery/* |
 
 ## ACR-004 autonomous discovery program
 
