@@ -1,0 +1,38 @@
+{
+  "name": "@epoch/variance",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Variance kernel (W039) — the explainable predicted-vs-actual variance layer over opaque typed references: the full variance class set as TYPED sealed records (quantity, price/rate, productivity, schedule, waste, rework, change, external-condition — each comparing a baseline/commitment/forecast line to actualized values with magnitude + direction under a closed zod vocabulary); ROOT-CAUSE ATTRIBUTION WITH EVIDENCE (typed attribution records linking a variance to its cause — a change record, a W038 issue, an external condition — by W006-convention evidence references; attribution without evidence is a typed attribution-evidence-required rejection); IMMUTABLE HISTORICAL PREDICTION COMPARISON (comparing forecast revisions, or a forecast to the eventual actual, produces a typed sealed comparison record; modifying or replacing a recorded historical comparison is a typed history-immutable rejection). Variance records reference actuals/forecasts/baselines/commitments by OPAQUE exact-revision typed references — no runtime edge to the actualization kernel or solution-delivery (the measure-value space is a structural mirror of the W036 measure grammar, pinned by compile-time kernel parity and runtime parity tests over devDependencies only). NO persistence, NO UI, NO provider vocabulary.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/execution-tracking": "workspace:*",
+    "@epoch/procurement": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

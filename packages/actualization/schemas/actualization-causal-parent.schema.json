@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ActualizationCausalParent",
+  "$defs": {
+    "ActualizationCausalParent": {
+      "readOnly": true,
+      "title": "ActualizationCausalParent",
+      "description": "Causal parent of an actualization event: an earlier event in the same actualization stream (the W010 shape).",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "type": "string",
+          "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "sequence": {
+          "$ref": "#/$defs/ActualizationEventSequence"
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "ActualizationEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "ActualizationEventSequence",
+      "description": "One actualization-event sequence number: 1-based, contiguous per actualization stream."
+    }
+  },
+  "$id": "urn:epoch:actualization:actualization-causal-parent:1.0.0"
+}

@@ -1,0 +1,318 @@
+{
+  "contract": "epoch/actualization",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Actualization contract surface (W039, in-package full surface): observation intake and typed validation states (insufficient/corroborated/conflicting/resolved), sealed conflict resolutions, exact-revision lineage edges chaining prediction -> baseline -> commitment -> actual -> forecast, rolling completion/cost forecast plan measures, comparison facts and calibration states, and the actualization:* event vocabulary over the W010 event shapes. JSON Schema projection under schemas/; runtime validators in @epoch/actualization.",
+  "dataTypes": [
+    "Sha256Hex",
+    "Timestamp",
+    "PrincipalId",
+    "DeliveryId",
+    "SolutionId",
+    "NonNegativeDecimal",
+    "PositiveInteger",
+    "DistinctionSubject",
+    "Measure",
+    "UncertaintyState",
+    "ValidationAssessmentId",
+    "ConflictResolutionId",
+    "LineageEdgeId",
+    "CalibrationId",
+    "ComparisonFactId",
+    "ObservationReference",
+    "AssessmentReference",
+    "ForecastRevisionReference",
+    "ComparisonRecordReference",
+    "ForecastSideReference",
+    "ActualSideReference",
+    "ReconciliationPolicy",
+    "ValidationAssessmentContent",
+    "SealedValidationAssessment",
+    "ConflictResolutionContent",
+    "SealedConflictResolution",
+    "LineageNodeRef",
+    "LineageEdgeContent",
+    "SealedLineageEdge",
+    "PlannedQuantity",
+    "PlannedCost",
+    "PlannedMeasure",
+    "ActualsToDate",
+    "ComparisonFactContent",
+    "SealedComparisonFact",
+    "CalibrationConfidence",
+    "CalibrationStateContent",
+    "SealedCalibrationState",
+    "ActualizationEventSequence",
+    "ActualizationCausalParent",
+    "ActualizationEventPayload",
+    "ActualizationEventContent",
+    "SealedActualizationEvent",
+    "ObservationIntakenData",
+    "ValidationAssessedData",
+    "ConflictResolvedData",
+    "ActualsMintedData",
+    "LineageLinkedData",
+    "ForecastRevisedData",
+    "CalibrationFoldedData",
+    "StateProjectedData"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical ordering, stage-order rules, partition checks, digest verification, tenant checks) are enforced by the runtime validators in @epoch/actualization and are not represented in the JSON Schema files",
+  "emittedBy": "renderActualizationContractFiles() in @epoch/actualization (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "Sha256Hex",
+      "file": "sha256-hex.schema.json",
+      "sha256": "61ea783a6f5cfac54591cee061a84efa3293552551af89f79a72599b363d36a0"
+    },
+    {
+      "type": "Timestamp",
+      "file": "timestamp.schema.json",
+      "sha256": "eebd3e7aa441492dca865e1f3085802d7f449c517483630c89c749ff31a17161"
+    },
+    {
+      "type": "PrincipalId",
+      "file": "principal-id.schema.json",
+      "sha256": "5fbd10e3e01a0c523aadda32b0bfb4e8bbcd6c93d4b12d06e2d584d30c2c45bb"
+    },
+    {
+      "type": "DeliveryId",
+      "file": "delivery-id.schema.json",
+      "sha256": "851bf4e5e3cf5a4cad893126dc2bd0851e2d863ef07e3a045dd8c652de3c20c8"
+    },
+    {
+      "type": "SolutionId",
+      "file": "solution-id.schema.json",
+      "sha256": "d07cfe19e5408ac15ce10cf1f0ecc633d101644fc9aebab6a3b704e695478615"
+    },
+    {
+      "type": "NonNegativeDecimal",
+      "file": "non-negative-decimal.schema.json",
+      "sha256": "901e4e9d6f9b9284e4f5d09b2a1f75ed188523a76980852474ac42c022368b8b"
+    },
+    {
+      "type": "PositiveInteger",
+      "file": "positive-integer.schema.json",
+      "sha256": "30699d13f8d096daa5260791f6a9d9968d449b04e7c234621b2ca7b017bdde10"
+    },
+    {
+      "type": "DistinctionSubject",
+      "file": "distinction-subject.schema.json",
+      "sha256": "9e184b268f7ba38439ae30847fe500b76d6bcbf435e0472ec467751b812b8aee"
+    },
+    {
+      "type": "Measure",
+      "file": "measure.schema.json",
+      "sha256": "5185cc9a15b6cac129ae9a9ff779600b451416d2adc390184d77309578eafbe1"
+    },
+    {
+      "type": "UncertaintyState",
+      "file": "uncertainty-state.schema.json",
+      "sha256": "432f7b67959cc9e03aa972fb25c6125cbf2cc30bed0fe0c810b9a3c8f6ef61d0"
+    },
+    {
+      "type": "ValidationAssessmentId",
+      "file": "validation-assessment-id.schema.json",
+      "sha256": "04d3a96f446c459b6ce357914e312f2063edfa60893d4cff235c14f3ddfb0526"
+    },
+    {
+      "type": "ConflictResolutionId",
+      "file": "conflict-resolution-id.schema.json",
+      "sha256": "1fb584913d974fbd7d2ff773d95826bf11810b4902094c4239dd36ebde59231a"
+    },
+    {
+      "type": "LineageEdgeId",
+      "file": "lineage-edge-id.schema.json",
+      "sha256": "aca43ec7a30516bb187458736a26f9cd1f2fb55fb3bf48c8029cf92292781066"
+    },
+    {
+      "type": "CalibrationId",
+      "file": "calibration-id.schema.json",
+      "sha256": "f97ba0b24aaf6aee0b8a53f2d8a4095ed624e51025e7b67e50af68e9a895ffce"
+    },
+    {
+      "type": "ComparisonFactId",
+      "file": "comparison-fact-id.schema.json",
+      "sha256": "9cec354c6a3b1ef024270921326ee6d3abeab302eb7b356f597d264c6bf15ed6"
+    },
+    {
+      "type": "ObservationReference",
+      "file": "observation-reference.schema.json",
+      "sha256": "a3ba19507b68d34ba6670bcb7f85b27dc12521e2cde9cc82d659e49253bb2bfc"
+    },
+    {
+      "type": "AssessmentReference",
+      "file": "assessment-reference.schema.json",
+      "sha256": "0aa63d129c1558c9fadce25921ba4e72b007685003faf2c76d6420b374699b31"
+    },
+    {
+      "type": "ForecastRevisionReference",
+      "file": "forecast-revision-reference.schema.json",
+      "sha256": "c0f0328ce717e6d2569bead7b898a18a9815dc28d70e442f0707d3d3ae5f9b90"
+    },
+    {
+      "type": "ComparisonRecordReference",
+      "file": "comparison-record-reference.schema.json",
+      "sha256": "83f43b7883015592f7e02b603678ac3c314e945ffdf58df10fefcd6ae41b187f"
+    },
+    {
+      "type": "ForecastSideReference",
+      "file": "forecast-side-reference.schema.json",
+      "sha256": "fa41125fa8816e06e2dcf78446b27365301589c7eee9ce8481b3acdf97879b2b"
+    },
+    {
+      "type": "ActualSideReference",
+      "file": "actual-side-reference.schema.json",
+      "sha256": "5f6184a80e78adb06b61528b3e80277d109419bae985682fad087f38436f4bfe"
+    },
+    {
+      "type": "ReconciliationPolicy",
+      "file": "reconciliation-policy.schema.json",
+      "sha256": "69f59d52429b4487f5322552fc4e0353c566a2d71897fd9b6d487eb1316fb84a"
+    },
+    {
+      "type": "ValidationAssessmentContent",
+      "file": "validation-assessment-content.schema.json",
+      "sha256": "662e37d4491470ea5622919c6bb13fcd0b3481b0749cec631eb59693b33e0233"
+    },
+    {
+      "type": "SealedValidationAssessment",
+      "file": "sealed-validation-assessment.schema.json",
+      "sha256": "ed3b03e0b710d1fe03e1af7fb8b041ac74b7018874923a7f05f8337077ad979c"
+    },
+    {
+      "type": "ConflictResolutionContent",
+      "file": "conflict-resolution-content.schema.json",
+      "sha256": "b215d5b4c1049805dee8db7563d8e12e05bebf13be67f14f6c290f366c80a08e"
+    },
+    {
+      "type": "SealedConflictResolution",
+      "file": "sealed-conflict-resolution.schema.json",
+      "sha256": "b044ee6d7487c5d36224d317bd62e2772fe64b57dea9adda3635929741acb1c8"
+    },
+    {
+      "type": "LineageNodeRef",
+      "file": "lineage-node-ref.schema.json",
+      "sha256": "5453e06a058eb9f06e2a8e6c6802888bd037eabddd7a053c14783e66fd5610b3"
+    },
+    {
+      "type": "LineageEdgeContent",
+      "file": "lineage-edge-content.schema.json",
+      "sha256": "98a67aee8e89845f6e4989ed2fa1df7e1ea0a89063450bbc2afaf9c0cbeda4ce"
+    },
+    {
+      "type": "SealedLineageEdge",
+      "file": "sealed-lineage-edge.schema.json",
+      "sha256": "dc08913f080c82cd8587a820e7e26c577a81e27dae42122d2e7cdaacc3bd296a"
+    },
+    {
+      "type": "PlannedQuantity",
+      "file": "planned-quantity.schema.json",
+      "sha256": "1014b8be31b7b9fe49b02ec9d17441619846bf5dddea34257228865306d1f5a6"
+    },
+    {
+      "type": "PlannedCost",
+      "file": "planned-cost.schema.json",
+      "sha256": "8eb80a4cff356aa5fd4e704d9d95a34ed8d56e47a25a4f7df04a376a41147370"
+    },
+    {
+      "type": "PlannedMeasure",
+      "file": "planned-measure.schema.json",
+      "sha256": "b740fa287cfc0addd34ab6fccb6cab1aac3d30cc671365f6687dfbde8894a780"
+    },
+    {
+      "type": "ActualsToDate",
+      "file": "actuals-to-date.schema.json",
+      "sha256": "42d28dbd840d761557ae6b62a52a923a5f884b454b16b1d6aad1dbc08bc1d253"
+    },
+    {
+      "type": "ComparisonFactContent",
+      "file": "comparison-fact-content.schema.json",
+      "sha256": "ebed9257cb92b856f8c19519777ce9ebed2239bc785ac7fdbced7def256e2b11"
+    },
+    {
+      "type": "SealedComparisonFact",
+      "file": "sealed-comparison-fact.schema.json",
+      "sha256": "432b3c04e57baa07bc1d8c5c8ed6cf710d3fdd4b41337b1daecc86658d5bd7ab"
+    },
+    {
+      "type": "CalibrationConfidence",
+      "file": "calibration-confidence.schema.json",
+      "sha256": "bdd2bf59ced7ba1ba7f33f21529d9e74025528f6c0dfcddcb8668694ce19377f"
+    },
+    {
+      "type": "CalibrationStateContent",
+      "file": "calibration-state-content.schema.json",
+      "sha256": "ed6eecb82cbb9b554b4d65ede1a2279834d950cccdca6f4c9ef8186c6ed3bc8c"
+    },
+    {
+      "type": "SealedCalibrationState",
+      "file": "sealed-calibration-state.schema.json",
+      "sha256": "fbbbc8f75ad6c1e9322d99cff565e52aa3647d718907301d270370a91e40fc46"
+    },
+    {
+      "type": "ActualizationEventSequence",
+      "file": "actualization-event-sequence.schema.json",
+      "sha256": "4cdd745a0bab4d782be529082cb0debdfa97fa5f6cbe59e6a464a5a8d7bf80b5"
+    },
+    {
+      "type": "ActualizationCausalParent",
+      "file": "actualization-causal-parent.schema.json",
+      "sha256": "d549d7d0d3ea61159eb4eb338c9cc9a00ea32bd8f341a536ba90d3aa873c06ea"
+    },
+    {
+      "type": "ActualizationEventPayload",
+      "file": "actualization-event-payload.schema.json",
+      "sha256": "a6851b49759e50655645ac0d5698ba34daa75af11a08270c98b466e0bb15a13a"
+    },
+    {
+      "type": "ActualizationEventContent",
+      "file": "actualization-event-content.schema.json",
+      "sha256": "24eb799b4691312ca24d4106521255a198ae72220119c290dddcae43fdd7c6dd"
+    },
+    {
+      "type": "SealedActualizationEvent",
+      "file": "sealed-actualization-event.schema.json",
+      "sha256": "d1ecb4b26960fc08052a7045bc7f3a81da8470d92b450f4b52a0234b0adf8825"
+    },
+    {
+      "type": "ObservationIntakenData",
+      "file": "observation-intaken-data.schema.json",
+      "sha256": "d55fe0d6a189735eef35d4bcddb0093400d679216c1ff5799f07db9d8855dd3b"
+    },
+    {
+      "type": "ValidationAssessedData",
+      "file": "validation-assessed-data.schema.json",
+      "sha256": "51de9ca3551ab602d8992a88373dd1945c916d8742771bb8a4b8fe8d66ec14e6"
+    },
+    {
+      "type": "ConflictResolvedData",
+      "file": "conflict-resolved-data.schema.json",
+      "sha256": "acb9c2c26cda751a2be2d9c6c148538c19bae01eee1adfb56ac26c058e82920b"
+    },
+    {
+      "type": "ActualsMintedData",
+      "file": "actuals-minted-data.schema.json",
+      "sha256": "6596bd9f1192cbdf3649eaec5bbf238d6b164319c46bfae833676874351c0adc"
+    },
+    {
+      "type": "LineageLinkedData",
+      "file": "lineage-linked-data.schema.json",
+      "sha256": "89790b8015482167834476ffad53a4948191432b9230024f0ed9e7c53cf4ac88"
+    },
+    {
+      "type": "ForecastRevisedData",
+      "file": "forecast-revised-data.schema.json",
+      "sha256": "8b7ca7ad02e2c52f57427913d6c0270355c8a9e2b50457817b46e1fc143474d8"
+    },
+    {
+      "type": "CalibrationFoldedData",
+      "file": "calibration-folded-data.schema.json",
+      "sha256": "9e078d5561706032d0111f6152aa32c24238eb67e2456909dc45f0ad0a9b9d8a"
+    },
+    {
+      "type": "StateProjectedData",
+      "file": "state-projected-data.schema.json",
+      "sha256": "a5fd53d359623bf4f4131f2fa124a044df6c25d67cf5a4b24cc1d5754108baff"
+    }
+  ]
+}

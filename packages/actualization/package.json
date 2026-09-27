@@ -1,0 +1,38 @@
+{
+  "name": "@epoch/actualization",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Actualization kernel (W039) — the Actualization, Variance-input and Forecast spine over @epoch/solution-delivery (W036): reconcile MULTIPLE realization observations (W038 usage observations, W037 supplier-delivery receipts — both are W036 Observation-distinction records) into VALIDATED ACTUALS through typed validation states (insufficient/corroborated/conflicting/resolved + typed conflict resolutions); an actualization is a deterministic FOLD over accepted observations applied EXCLUSIVELY through the W036 DeliveryRecord authority path (recordObservation -> acceptObservation -> actualizeObservation) — this package NEVER writes Actual records directly (actualization-bypass-rejected); typed exact-revision LINEAGE chaining prediction -> baseline -> commitment -> actual -> forecast for every realization variant (content-addressed, traversable in both directions, revision-precise — the W037 commitment-reference discipline); rolling COMPLETION and COST forecasts as NEW sealed W036 Forecast-distinction records (append-only revisions refining earlier forecasts, never mutations); typed CONFIDENCE on every forecast + calibration state folded from past-forecast-vs-actual comparison facts; the actualization:* event vocabulary over the W010 event shapes. NO persistence, NO UI, NO provider vocabulary (observation sources stay behind the service-layer ObservationSourcePort seam).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/execution-tracking": "workspace:*",
+    "@epoch/procurement": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AttributionId",
+  "$defs": {
+    "AttributionId": {
+      "type": "string",
+      "pattern": "^attribution:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AttributionId",
+      "description": "Opaque attribution-record identity: \"attribution:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:variance:attribution-id:1.0.0"
+}

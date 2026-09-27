@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LineageNodeRef",
+  "$defs": {
+    "LineageNodeRef": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "prediction"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^prediction:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "kind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "baseline"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^baseline:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "kind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "commitment"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^commitment:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "kind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "actual"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^actual:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "kind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "forecast"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^forecast:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "kind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "LineageNodeRef",
+      "description": "One lineage node reference: a lifecycle-first distinction kind (prediction/baseline/commitment/actual/forecast), its kind-prefixed W036 record id, and the exact content digest of that revision."
+    }
+  },
+  "$id": "urn:epoch:actualization:lineage-node-ref:1.0.0"
+}

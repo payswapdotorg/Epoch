@@ -1,0 +1,156 @@
+{
+  "contract": "epoch/variance",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Variance contract surface (W039, in-package full surface): the full variance class set as sealed records (quantity/price-rate/productivity/schedule/waste/rework/change/external-condition with magnitude + direction + band), root-cause attribution with mandatory W006-convention evidence, and the immutable historical prediction comparison (forecast revisions and forecast-vs-actual). Compared lines are opaque exact-revision references. JSON Schema projection under schemas/; runtime validators in @epoch/variance.",
+  "dataTypes": [
+    "Sha256Hex",
+    "Timestamp",
+    "TenantId",
+    "PrincipalId",
+    "NonNegativeDecimal",
+    "VarianceId",
+    "AttributionId",
+    "ComparisonId",
+    "QuantityMeasure",
+    "CostMeasure",
+    "InstantMeasure",
+    "ProgressMeasure",
+    "MeasureValue",
+    "ComparedLineRef",
+    "VarianceRecordRef",
+    "VarianceConfidence",
+    "BandThresholds",
+    "VarianceRecordContent",
+    "SealedVarianceRecord",
+    "CauseRef",
+    "AttributionRecordContent",
+    "SealedAttributionRecord",
+    "PredictionComparisonContent",
+    "SealedPredictionComparison"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical ordering, evidence-required, cross-field invariants, digest verification, tenant checks) are enforced by the runtime validators in @epoch/variance and are not represented in the JSON Schema files",
+  "emittedBy": "renderVarianceContractFiles() in @epoch/variance (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "Sha256Hex",
+      "file": "sha256-hex.schema.json",
+      "sha256": "10782295dae2c487ae0e8a347943a4d962d9e55e4bc03b2eccde770a8124315f"
+    },
+    {
+      "type": "Timestamp",
+      "file": "timestamp.schema.json",
+      "sha256": "1e4faa99e7da0894f55584ebd455a90c87e9167d2fd2df8ded3f5540810755f2"
+    },
+    {
+      "type": "TenantId",
+      "file": "tenant-id.schema.json",
+      "sha256": "495e699ae801ca0c283aa44ec9bdb4769318ffcb678101e06bc7cf9ef25627ba"
+    },
+    {
+      "type": "PrincipalId",
+      "file": "principal-id.schema.json",
+      "sha256": "b3791f894d594fae00e67a2e7fb6be3d89c8685d7ab28cf374796dcf4b58f50f"
+    },
+    {
+      "type": "NonNegativeDecimal",
+      "file": "non-negative-decimal.schema.json",
+      "sha256": "5ff3106fbb93c9ebb8247ec0f4950fbbc871a7c573a990f513f6b3c76c253fe7"
+    },
+    {
+      "type": "VarianceId",
+      "file": "variance-id.schema.json",
+      "sha256": "65a27a2194ee433a0d6709aafbe8d1647eacbaf68cf24af061e9fc02935638fd"
+    },
+    {
+      "type": "AttributionId",
+      "file": "attribution-id.schema.json",
+      "sha256": "c02f3b61342d5bc10cb731e443f556b76dedb8e3e5104acf7d08ddc629cea792"
+    },
+    {
+      "type": "ComparisonId",
+      "file": "comparison-id.schema.json",
+      "sha256": "cff872cd68065477fa27b6b3d731c7f65e871c6dd363c08a784f18713dbbbf31"
+    },
+    {
+      "type": "QuantityMeasure",
+      "file": "quantity-measure.schema.json",
+      "sha256": "6886a11d6dd38383574470567fc33c7da8ca6eab7032861562689c773814a04c"
+    },
+    {
+      "type": "CostMeasure",
+      "file": "cost-measure.schema.json",
+      "sha256": "e3846a25c968d8f1ef8465fa49cc29e15985ccc0de68f98661ca023a7ca3b7af"
+    },
+    {
+      "type": "InstantMeasure",
+      "file": "instant-measure.schema.json",
+      "sha256": "ae38d8be4988f1ee7294719674bf8923742040a880ca66a1e0fe23e17ed5a96b"
+    },
+    {
+      "type": "ProgressMeasure",
+      "file": "progress-measure.schema.json",
+      "sha256": "be1c0e259bde19f32e8f7644c1641e0b41e70a0cf3810f8ce1d838fcfaaf2597"
+    },
+    {
+      "type": "MeasureValue",
+      "file": "measure-value.schema.json",
+      "sha256": "1a87048d4a3c438b6f0678c1ed8da2c79b6e374e33e8ab6466841f0886f557f6"
+    },
+    {
+      "type": "ComparedLineRef",
+      "file": "compared-line-ref.schema.json",
+      "sha256": "3222435cbe7198dfe486a881915afd1d0d0561bd07c05a8ea9b098d286da4c29"
+    },
+    {
+      "type": "VarianceRecordRef",
+      "file": "variance-record-ref.schema.json",
+      "sha256": "6cbc5d99a7ec035c4251754e7e30d38b90418395c4320235ba0bd01a16ee3ae6"
+    },
+    {
+      "type": "VarianceConfidence",
+      "file": "variance-confidence.schema.json",
+      "sha256": "51d996cdc41623407ae1994b38969ff93c6e88f235b3c870bd4efbfc94682348"
+    },
+    {
+      "type": "BandThresholds",
+      "file": "band-thresholds.schema.json",
+      "sha256": "c570c0da8bab248f4463c1a6ea473d6dcd227e5df3d6f8bf7f838d96011e040b"
+    },
+    {
+      "type": "VarianceRecordContent",
+      "file": "variance-record-content.schema.json",
+      "sha256": "0db05233f523c8aa08484eaf1304fbd6e02ae273cba375416f67dc48cec7a873"
+    },
+    {
+      "type": "SealedVarianceRecord",
+      "file": "sealed-variance-record.schema.json",
+      "sha256": "81f47df1acd7a99522ce36948d1dc8860070ce8efac4dea9df01064a66b5f0ec"
+    },
+    {
+      "type": "CauseRef",
+      "file": "cause-ref.schema.json",
+      "sha256": "fa10b99123397d7a2cddfc21ea5ce385a46f24ce4fb00a951b4f081eecb64761"
+    },
+    {
+      "type": "AttributionRecordContent",
+      "file": "attribution-record-content.schema.json",
+      "sha256": "2fa365a79b01293eeed764525dd039b7c234cd6d7ddc0954493811f32a4c83de"
+    },
+    {
+      "type": "SealedAttributionRecord",
+      "file": "sealed-attribution-record.schema.json",
+      "sha256": "d63c6e7e24bf7e80e23ef6337339570333351101595fed0febc1aa15f7f90abf"
+    },
+    {
+      "type": "PredictionComparisonContent",
+      "file": "prediction-comparison-content.schema.json",
+      "sha256": "4aa8d553b86e3a18f8d541a2473d6864ced6be55aca040616917577372aca62f"
+    },
+    {
+      "type": "SealedPredictionComparison",
+      "file": "sealed-prediction-comparison.schema.json",
+      "sha256": "ff9faad97eec67f74a8b1628eb683a733cec98c887a2d39b704b6cd32d90244e"
+    }
+  ]
+}

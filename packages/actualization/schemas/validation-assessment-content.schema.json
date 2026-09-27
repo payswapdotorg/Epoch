@@ -1,0 +1,360 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ValidationAssessmentContent",
+  "$defs": {
+    "ValidationAssessmentContent": {
+      "readOnly": true,
+      "title": "ValidationAssessmentContent",
+      "description": "The immutable content of one validation assessment: the deterministic fold of one observation group under a reconciliation policy — group anchor, policy, sorted exact-revision observation references, the typed validation state, the folded measure, and the maximum pairwise deviation magnitude.",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.actualization.validation-assessment"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "assessmentId": {
+          "$ref": "#/$defs/ValidationAssessmentId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "deliveryId": {
+          "$ref": "#/$defs/DeliveryId"
+        },
+        "subject": {
+          "$ref": "#/$defs/DistinctionSubject"
+        },
+        "measureKind": {
+          "type": "string",
+          "enum": [
+            "quantity",
+            "cost",
+            "progress",
+            "instant"
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "policy": {
+          "$ref": "#/$defs/ReconciliationPolicy"
+        },
+        "observationRefs": {
+          "minItems": 1,
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ObservationReference"
+          }
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "insufficient",
+            "corroborated",
+            "conflicting"
+          ]
+        },
+        "foldedMeasure": {
+          "$ref": "#/$defs/Measure"
+        },
+        "deviationMagnitude": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "assessmentId",
+        "tenantId",
+        "solutionId",
+        "deliveryId",
+        "subject",
+        "measureKind",
+        "policy",
+        "observationRefs",
+        "state",
+        "foldedMeasure",
+        "deviationMagnitude"
+      ],
+      "additionalProperties": false
+    },
+    "ValidationAssessmentId": {
+      "type": "string",
+      "pattern": "^validation:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ValidationAssessmentId",
+      "description": "Opaque validation-assessment record identity: \"validation:\" followed by a lowercase slug."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "SolutionId": {
+      "type": "string",
+      "pattern": "^solution:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionId",
+      "description": "Opaque solution-package identity: \"solution:\" followed by a lowercase slug (stable across versions)."
+    },
+    "DeliveryId": {
+      "type": "string",
+      "pattern": "^delivery:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DeliveryId",
+      "description": "Opaque delivery-record identity: \"delivery:\" followed by a lowercase slug."
+    },
+    "DistinctionSubject": {
+      "readOnly": true,
+      "title": "DistinctionSubject",
+      "description": "The subject of one distinction record: the owning solution plus a typed anchor (solution, line, work package, activity, milestone, program, or delivery id).",
+      "type": "object",
+      "properties": {
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "subjectKind": {
+          "type": "string",
+          "enum": [
+            "solution",
+            "solution-line",
+            "work-package",
+            "activity",
+            "milestone",
+            "program",
+            "delivery"
+          ]
+        },
+        "subjectId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "solutionId",
+        "subjectKind",
+        "subjectId"
+      ],
+      "additionalProperties": false
+    },
+    "ReconciliationPolicy": {
+      "readOnly": true,
+      "title": "ReconciliationPolicy",
+      "description": "The reconciliation policy of one validation fold: exact or tolerance agreement mode, the fold mode (accumulate increments vs snapshot repeat-measurements; progress/instant groups always fold as snapshots), optional tolerance decimal (group unit/currency; milliseconds for instants), and the optional corroboration quorum.",
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "exact",
+            "tolerance"
+          ]
+        },
+        "foldMode": {
+          "type": "string",
+          "enum": [
+            "accumulate",
+            "snapshot"
+          ]
+        },
+        "tolerance": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "quorum": {
+          "$ref": "#/$defs/PositiveInteger"
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "additionalProperties": false
+    },
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "PositiveInteger",
+      "description": "Positive integer (1 to MAX_SAFE_INTEGER)."
+    },
+    "ObservationReference": {
+      "readOnly": true,
+      "title": "ObservationReference",
+      "description": "One W036 Observation-distinction record reference: the kind-prefixed record id plus its exact content digest (the observation-intake linkage grammar shared with W037/W038).",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "pattern": "^observation:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "recordId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "Measure": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/QuantityMeasure"
+        },
+        {
+          "$ref": "#/$defs/CostMeasure"
+        },
+        {
+          "$ref": "#/$defs/InstantMeasure"
+        },
+        {
+          "$ref": "#/$defs/ProgressMeasure"
+        }
+      ],
+      "title": "Measure",
+      "description": "One provider-neutral measure: quantity (value+unit), cost (amount+currency), instant, or progress (0..1 fraction)."
+    },
+    "QuantityMeasure": {
+      "readOnly": true,
+      "title": "QuantityMeasure",
+      "description": "A quantity measure: canonical decimal value plus a unit-of-measure label.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "quantity"
+        },
+        "value": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "unit": {
+          "$ref": "#/$defs/UnitLabel"
+        }
+      },
+      "required": [
+        "kind",
+        "value",
+        "unit"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "UnitLabel": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "title": "UnitLabel",
+      "description": "Unit-of-measure label (1-32 characters, provider-neutral)."
+    },
+    "CostMeasure": {
+      "readOnly": true,
+      "title": "CostMeasure",
+      "description": "A cost measure: canonical decimal amount plus an ISO 4217 currency code.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "cost"
+        },
+        "amount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        }
+      },
+      "required": [
+        "kind",
+        "amount",
+        "currency"
+      ],
+      "additionalProperties": false
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    },
+    "InstantMeasure": {
+      "readOnly": true,
+      "title": "InstantMeasure",
+      "description": "An instant measure: a point in time in the canonical UTC form.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "instant"
+        },
+        "at": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "kind",
+        "at"
+      ],
+      "additionalProperties": false
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "ProgressMeasure": {
+      "readOnly": true,
+      "title": "ProgressMeasure",
+      "description": "A progress measure: a completion fraction between 0 and 1.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "progress"
+        },
+        "fraction": {
+          "$ref": "#/$defs/ProgressFraction"
+        }
+      },
+      "required": [
+        "kind",
+        "fraction"
+      ],
+      "additionalProperties": false
+    },
+    "ProgressFraction": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "title": "ProgressFraction",
+      "description": "Progress fraction between 0 and 1 inclusive."
+    }
+  },
+  "$id": "urn:epoch:actualization:validation-assessment-content:1.0.0"
+}

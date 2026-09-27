@@ -1,0 +1,156 @@
+{
+  "contract": "epoch/actualization",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Actualization public contract surface (W039, W012 convention): the CORE record types a domain pack or downstream consumer binds to — the observation reference grammar, reconciliation policies, sealed validation assessments and conflict resolutions, sealed lineage edges over the five lifecycle-first node kinds, comparison facts and calibration states, and the actualization:* events over the W010 event shapes. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "dataTypes": [
+    "Sha256Hex",
+    "Timestamp",
+    "PrincipalId",
+    "DeliveryId",
+    "SolutionId",
+    "DistinctionSubject",
+    "Measure",
+    "UncertaintyState",
+    "ObservationReference",
+    "AssessmentReference",
+    "ReconciliationPolicy",
+    "ValidationAssessmentContent",
+    "SealedValidationAssessment",
+    "ConflictResolutionContent",
+    "SealedConflictResolution",
+    "LineageNodeRef",
+    "LineageEdgeContent",
+    "SealedLineageEdge",
+    "ComparisonFactContent",
+    "SealedComparisonFact",
+    "CalibrationStateContent",
+    "SealedCalibrationState",
+    "ActualizationEventContent",
+    "SealedActualizationEvent"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/actualization and are not represented in the JSON Schema files",
+  "emittedBy": "renderActualizationPublicContractFiles() in @epoch/actualization (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "Sha256Hex",
+      "file": "schemas/sha256-hex.schema.json",
+      "sha256": "61ea783a6f5cfac54591cee061a84efa3293552551af89f79a72599b363d36a0"
+    },
+    {
+      "type": "Timestamp",
+      "file": "schemas/timestamp.schema.json",
+      "sha256": "eebd3e7aa441492dca865e1f3085802d7f449c517483630c89c749ff31a17161"
+    },
+    {
+      "type": "PrincipalId",
+      "file": "schemas/principal-id.schema.json",
+      "sha256": "5fbd10e3e01a0c523aadda32b0bfb4e8bbcd6c93d4b12d06e2d584d30c2c45bb"
+    },
+    {
+      "type": "DeliveryId",
+      "file": "schemas/delivery-id.schema.json",
+      "sha256": "851bf4e5e3cf5a4cad893126dc2bd0851e2d863ef07e3a045dd8c652de3c20c8"
+    },
+    {
+      "type": "SolutionId",
+      "file": "schemas/solution-id.schema.json",
+      "sha256": "d07cfe19e5408ac15ce10cf1f0ecc633d101644fc9aebab6a3b704e695478615"
+    },
+    {
+      "type": "DistinctionSubject",
+      "file": "schemas/distinction-subject.schema.json",
+      "sha256": "9e184b268f7ba38439ae30847fe500b76d6bcbf435e0472ec467751b812b8aee"
+    },
+    {
+      "type": "Measure",
+      "file": "schemas/measure.schema.json",
+      "sha256": "5185cc9a15b6cac129ae9a9ff779600b451416d2adc390184d77309578eafbe1"
+    },
+    {
+      "type": "UncertaintyState",
+      "file": "schemas/uncertainty-state.schema.json",
+      "sha256": "432f7b67959cc9e03aa972fb25c6125cbf2cc30bed0fe0c810b9a3c8f6ef61d0"
+    },
+    {
+      "type": "ObservationReference",
+      "file": "schemas/observation-reference.schema.json",
+      "sha256": "a3ba19507b68d34ba6670bcb7f85b27dc12521e2cde9cc82d659e49253bb2bfc"
+    },
+    {
+      "type": "AssessmentReference",
+      "file": "schemas/assessment-reference.schema.json",
+      "sha256": "0aa63d129c1558c9fadce25921ba4e72b007685003faf2c76d6420b374699b31"
+    },
+    {
+      "type": "ReconciliationPolicy",
+      "file": "schemas/reconciliation-policy.schema.json",
+      "sha256": "69f59d52429b4487f5322552fc4e0353c566a2d71897fd9b6d487eb1316fb84a"
+    },
+    {
+      "type": "ValidationAssessmentContent",
+      "file": "schemas/validation-assessment-content.schema.json",
+      "sha256": "662e37d4491470ea5622919c6bb13fcd0b3481b0749cec631eb59693b33e0233"
+    },
+    {
+      "type": "SealedValidationAssessment",
+      "file": "schemas/sealed-validation-assessment.schema.json",
+      "sha256": "ed3b03e0b710d1fe03e1af7fb8b041ac74b7018874923a7f05f8337077ad979c"
+    },
+    {
+      "type": "ConflictResolutionContent",
+      "file": "schemas/conflict-resolution-content.schema.json",
+      "sha256": "b215d5b4c1049805dee8db7563d8e12e05bebf13be67f14f6c290f366c80a08e"
+    },
+    {
+      "type": "SealedConflictResolution",
+      "file": "schemas/sealed-conflict-resolution.schema.json",
+      "sha256": "b044ee6d7487c5d36224d317bd62e2772fe64b57dea9adda3635929741acb1c8"
+    },
+    {
+      "type": "LineageNodeRef",
+      "file": "schemas/lineage-node-ref.schema.json",
+      "sha256": "5453e06a058eb9f06e2a8e6c6802888bd037eabddd7a053c14783e66fd5610b3"
+    },
+    {
+      "type": "LineageEdgeContent",
+      "file": "schemas/lineage-edge-content.schema.json",
+      "sha256": "98a67aee8e89845f6e4989ed2fa1df7e1ea0a89063450bbc2afaf9c0cbeda4ce"
+    },
+    {
+      "type": "SealedLineageEdge",
+      "file": "schemas/sealed-lineage-edge.schema.json",
+      "sha256": "dc08913f080c82cd8587a820e7e26c577a81e27dae42122d2e7cdaacc3bd296a"
+    },
+    {
+      "type": "ComparisonFactContent",
+      "file": "schemas/comparison-fact-content.schema.json",
+      "sha256": "ebed9257cb92b856f8c19519777ce9ebed2239bc785ac7fdbced7def256e2b11"
+    },
+    {
+      "type": "SealedComparisonFact",
+      "file": "schemas/sealed-comparison-fact.schema.json",
+      "sha256": "432b3c04e57baa07bc1d8c5c8ed6cf710d3fdd4b41337b1daecc86658d5bd7ab"
+    },
+    {
+      "type": "CalibrationStateContent",
+      "file": "schemas/calibration-state-content.schema.json",
+      "sha256": "ed6eecb82cbb9b554b4d65ede1a2279834d950cccdca6f4c9ef8186c6ed3bc8c"
+    },
+    {
+      "type": "SealedCalibrationState",
+      "file": "schemas/sealed-calibration-state.schema.json",
+      "sha256": "fbbbc8f75ad6c1e9322d99cff565e52aa3647d718907301d270370a91e40fc46"
+    },
+    {
+      "type": "ActualizationEventContent",
+      "file": "schemas/actualization-event-content.schema.json",
+      "sha256": "24eb799b4691312ca24d4106521255a198ae72220119c290dddcae43fdd7c6dd"
+    },
+    {
+      "type": "SealedActualizationEvent",
+      "file": "schemas/sealed-actualization-event.schema.json",
+      "sha256": "d1ecb4b26960fc08052a7045bc7f3a81da8470d92b450f4b52a0234b0adf8825"
+    }
+  ]
+}

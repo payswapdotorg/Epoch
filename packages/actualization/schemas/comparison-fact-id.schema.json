@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ComparisonFactId",
+  "$defs": {
+    "ComparisonFactId": {
+      "type": "string",
+      "pattern": "^comparison-fact:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ComparisonFactId",
+      "description": "Opaque comparison-fact record identity: \"comparison-fact:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:actualization:comparison-fact-id:1.0.0"
+}

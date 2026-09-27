@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ComparisonRecordReference",
+  "$defs": {
+    "ComparisonRecordReference": {
+      "readOnly": true,
+      "title": "ComparisonRecordReference",
+      "description": "One opaque exact-revision reference to a prediction-comparison record (the variance-kernel grammar): record id plus content digest.",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "pattern": "^comparison:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "contentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "recordId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:actualization:comparison-record-reference:1.0.0"
+}

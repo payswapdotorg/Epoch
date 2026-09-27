@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/actualization": ["./src/index.ts"]
+    }
+  },
+  "include": [
+    "../../contracts/actualization/index.d.ts",
+    "../../contracts/actualization/parity.ts"
+  ]
+}

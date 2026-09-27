@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ReconciliationPolicy",
+  "$defs": {
+    "ReconciliationPolicy": {
+      "readOnly": true,
+      "title": "ReconciliationPolicy",
+      "description": "The reconciliation policy of one validation fold: exact or tolerance agreement mode, the fold mode (accumulate increments vs snapshot repeat-measurements; progress/instant groups always fold as snapshots), optional tolerance decimal (group unit/currency; milliseconds for instants), and the optional corroboration quorum.",
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "exact",
+            "tolerance"
+          ]
+        },
+        "foldMode": {
+          "type": "string",
+          "enum": [
+            "accumulate",
+            "snapshot"
+          ]
+        },
+        "tolerance": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "quorum": {
+          "$ref": "#/$defs/PositiveInteger"
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "additionalProperties": false
+    },
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "PositiveInteger",
+      "description": "Positive integer (1 to MAX_SAFE_INTEGER)."
+    }
+  },
+  "$id": "urn:epoch:actualization:reconciliation-policy:1.0.0"
+}

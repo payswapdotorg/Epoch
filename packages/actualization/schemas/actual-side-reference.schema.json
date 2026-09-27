@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ActualSideReference",
+  "$defs": {
+    "ActualSideReference": {
+      "readOnly": true,
+      "title": "ActualSideReference",
+      "description": "One exact-revision reference to the W036 Actual-distinction record a comparison fact judged against.",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "pattern": "^actual:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "contentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "recordId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:actualization:actual-side-reference:1.0.0"
+}

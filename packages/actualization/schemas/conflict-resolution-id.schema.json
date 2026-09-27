@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ConflictResolutionId",
+  "$defs": {
+    "ConflictResolutionId": {
+      "type": "string",
+      "pattern": "^resolution:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ConflictResolutionId",
+      "description": "Opaque conflict-resolution record identity: \"resolution:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:actualization:conflict-resolution-id:1.0.0"
+}

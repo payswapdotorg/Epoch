@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/VarianceRecordRef",
+  "$defs": {
+    "VarianceRecordRef": {
+      "readOnly": true,
+      "title": "VarianceRecordRef",
+      "description": "One exact-revision variance-record reference: the record id plus its content digest (the attribution binding grammar).",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "$ref": "#/$defs/VarianceId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "recordId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "VarianceId": {
+      "type": "string",
+      "pattern": "^variance:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "VarianceId",
+      "description": "Opaque variance-record identity: \"variance:\" followed by a lowercase slug."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:variance:variance-record-ref:1.0.0"
+}
