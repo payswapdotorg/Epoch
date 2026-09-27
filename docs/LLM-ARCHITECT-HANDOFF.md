@@ -15,7 +15,7 @@ Build Epoch into a provider-agnostic engineering operating system in which every
 - Multi-tenant security/authorization.
 - Web-first, desktop-power, mobile-field clients.
 
-## Approved next architecture: ACR-001 + ACR-002 + ACR-003
+## Approved next architecture: ACR-001 + ACR-002 + ACR-003 + ACR-004
 ACR-001 was approved on 2026-09-24. Its target architecture adds:
 
 SolutionPackage -> SolutionVersion -> DeliveryRecord -> Program of Work / Procurement / Execution -> Verification -> Forecast -> Outcome -> Learning.
@@ -26,11 +26,11 @@ An optional provider-neutral External Event Bridge allows systems such as Aurum 
 
 Fine-grained access produces authorized projections of the same semantic state for clients, engineers, contractors, procurement users and agents.
 
-The complete target is in spec/solution-delivery-architecture.md; the universal lifecycle is in spec/universal-solution-lifecycle.md; the domain-pack boundary is in spec/domain-pack-contract.md; Navigator behavior is in spec/solution-navigator-architecture.md; the Aurum boundary is in spec/aurum-chat-integration.md; capability foundation and upstream/fork policy is in spec/capability-foundation-policy.md; formal approval is in ACR-001, ACR-002 and ACR-003.
+The complete target is in spec/solution-delivery-architecture.md; the universal lifecycle is in spec/universal-solution-lifecycle.md; the domain-pack boundary is in spec/domain-pack-contract.md; Navigator behavior is in spec/solution-navigator-architecture.md; the Aurum boundary is in spec/aurum-chat-integration.md; capability foundation and upstream/fork policy is in spec/capability-foundation-policy.md; formal approval is in ACR-001, ACR-002, ACR-003 and ACR-004. Autonomous role/capability discovery is defined in spec/autonomous-role-capability-discovery.md and spec/capability-contribution-contract.md.
 
 ## Current lock / transition rule
-Current main is e09f530926e4fa2c0e7de317a86d6d13013559f8 after PR #29 (ACR-003 capability foundation policy), following W008 and the post-W008 reconciliations.
-The current remaining authorized W009/W011 wave is governed by E1.0/X1.0. ACR-001/ACR-002/ACR-003 are approved but not effective for new implementation until that wave is stabilized and the lock transition plus frontier update are committed. W008 is complete. W009/W011 remain on the original E1.0/X1.0 contract obligations; ACR-001 does not reinterpret their work.
+Current main is 6278e3a09bb911a59749b476e2e1df355ccd53bd after the PR #30 reconciliation following PR #29.
+The current remaining authorized W009/W011 wave is governed by E1.0/X1.0. ACR-001/ACR-002/ACR-003/ACR-004 are approved but not effective for new implementation until that wave is stabilized and the lock transition plus frontier update are committed. W008 is complete. W009/W011 remain on the original E1.0/X1.0 contract obligations; ACR-001 does not reinterpret their work.
 
 ## Universal engineering lifecycle and domain packs
 The approved target uses `Understand → Decide → Plan → Acquire → Realize → Observe/Actualize → Verify → Forecast → Close → Learn`. Procurement and execution are domain projections of Acquire and Realize. The Solution Navigator is a synchronized projection, never a new authority. Domain packs must conform to `spec/domain-pack-contract.md` and consume W036 universal contracts. Canonical documents: `spec/universal-solution-lifecycle.md`, `spec/domain-pack-contract.md`, `spec/solution-navigator-architecture.md`.
@@ -45,6 +45,7 @@ The approved target uses `Understand → Decide → Plan → Acquire → Realize
 - W042 External Event Bridge + optional Aurum adapter
 - W043 Delivery supervision + alerts
 - W044 Delivery-to-learning construction E2E
+- W045 Autonomous Role & Capability Discovery + scheduled ecosystem discovery
 
 All work orders have disjoint declared write surfaces and are dependency-gated. W036 must land before delivery descendants. The Tech Lead must cap concurrency at three workers and run exact ownership-overlap checks at dispatch.
 
@@ -55,4 +56,4 @@ Humans and agents operate on the same semantic world. The UI turns structured wo
 Every merge updates spec/PROJECT-STATE.md, development-state files, and this handoff with exact merge SHA, verification baseline, next frontier and review lessons.
 
 
-ACR-002 is an approved clarification of ACR-001, not a second lifecycle authority. ACR-003 is a compatible capability-boundary policy. All three become binding implementation policy at the same explicit architecture lock transition.
+ACR-002 is an approved clarification of ACR-001, not a second lifecycle authority. ACR-003 is a compatible capability-boundary policy. ACR-004 adds universal role/capability discovery without adding lifecycle authority. All four become binding implementation policy at the same explicit architecture lock transition.
