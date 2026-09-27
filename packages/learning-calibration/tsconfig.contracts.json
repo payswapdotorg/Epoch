@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/learning-calibration": ["./src/index.ts"]
+    }
+  },
+  "include": [
+    "../../contracts/learning-calibration/index.d.ts",
+    "../../contracts/learning-calibration/parity.ts"
+  ]
+}

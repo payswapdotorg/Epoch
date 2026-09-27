@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ValidationStateEvidence",
+  "$defs": {
+    "ValidationStateEvidence": {
+      "readOnly": true,
+      "title": "ValidationStateEvidence",
+      "description": "One opaque typed validation-state evidence: the W039 validation state of the observation group backing the actual side (insufficient/corroborated/conflicting/resolved) plus the exact-revision assessment reference that derived it.",
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "insufficient",
+            "corroborated",
+            "conflicting",
+            "resolved"
+          ]
+        },
+        "assessmentRef": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "recordId": {
+              "type": "string",
+              "pattern": "^validation:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "state",
+        "assessmentRef"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:validation-state-evidence:1.0.0"
+}

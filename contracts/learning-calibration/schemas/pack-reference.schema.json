@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PackReference",
+  "$defs": {
+    "PackReference": {
+      "readOnly": true,
+      "title": "PackReference",
+      "description": "One typed exact-revision reference to a W036 SolutionPackProfile: qualified pack id, semantic version, and the content digest of that profile revision.",
+      "type": "object",
+      "properties": {
+        "packId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:\\.[a-z0-9-]+)+$"
+        },
+        "packVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "packId",
+        "packVersion",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic version core (no prerelease/build suffixes)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:pack-reference:1.0.0"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LearningModelId",
+  "$defs": {
+    "LearningModelId": {
+      "type": "string",
+      "pattern": "^model:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LearningModelId",
+      "description": "Opaque model identity: \"model:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:learning-model-id:1.0.0"
+}

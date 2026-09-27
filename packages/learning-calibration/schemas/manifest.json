@@ -1,0 +1,438 @@
+{
+  "contract": "epoch/learning-calibration",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Learning Calibration contract surface (W040, in-package full surface): outcome-learning candidates embedding the W039 comparison-fact grammar and W036 outcome records with typed validation/variance evidence, typed eligibility states and exclusion records, sealed prediction-to-outcome datasets with deterministic folds and per-row error/variance features, calibration metric sets (bias / MAE / hit-rate with per-pack and per-variant breakdowns), the model registry (typed revisions with mandatory dataset + changing-observation lineage admitted through proposals), and the learning:* event vocabulary over the W010 event shapes. JSON Schema projection under schemas/; runtime validators in @epoch/learning-calibration.",
+  "dataTypes": [
+    "Sha256Hex",
+    "Timestamp",
+    "PrincipalId",
+    "TenantId",
+    "SolutionId",
+    "NonNegativeDecimal",
+    "QualifiedName",
+    "SemverCore",
+    "UnitLabel",
+    "CurrencyCode",
+    "DistinctionSubject",
+    "Measure",
+    "LearningCandidateId",
+    "LearningDatasetId",
+    "LearningRowId",
+    "LearningExclusionId",
+    "LearningMetricId",
+    "LearningModelId",
+    "LearningRevisionId",
+    "LearningProposalId",
+    "ComparisonRecordReference",
+    "ForecastSideReference",
+    "ActualSideReference",
+    "OutcomeRecordSlot",
+    "OutcomeRecordReference",
+    "PackReference",
+    "ValidationStateEvidence",
+    "LearningCauseRef",
+    "VarianceEvidence",
+    "ComparisonFactInput",
+    "SealedComparisonFactInput",
+    "OutcomeLearningCandidate",
+    "SealedOutcomeLearningCandidate",
+    "ExclusionRecordContent",
+    "SealedExclusionRecord",
+    "LearningBandThresholds",
+    "ErrorVarianceFeatures",
+    "DatasetRowContent",
+    "SealedDatasetRow",
+    "LearningDatasetContent",
+    "SealedLearningDataset",
+    "LearningApplicability",
+    "ToleranceBands",
+    "SignedDeviation",
+    "BiasSummary",
+    "MeanAbsoluteErrorSummary",
+    "HitRateSummary",
+    "PackBreakdown",
+    "VariantBreakdown",
+    "MetricJustification",
+    "CalibrationMetricSetContent",
+    "SealedCalibrationMetricSet",
+    "DatasetLineageRef",
+    "ChangingObservationRef",
+    "ModelRevisionContent",
+    "SealedModelRevision",
+    "ModelRevisionProposalContent",
+    "SealedModelRevisionProposal",
+    "LearningEventSequence",
+    "LearningCausalParent",
+    "LearningEventPayload",
+    "LearningEventContent",
+    "SealedLearningEvent",
+    "RecordIntakenData",
+    "DatasetAssembledData",
+    "DatasetReplayedData",
+    "MetricsFoldedData",
+    "RevisionProposedData",
+    "RevisionAdmittedData",
+    "StateProjectedData",
+    "PackViewProjectedData"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical ordering, lineage gates, partition checks, digest verification, tenant checks) are enforced by the runtime validators in @epoch/learning-calibration and are not represented in the JSON Schema files",
+  "emittedBy": "renderLearningCalibrationContractFiles() in @epoch/learning-calibration (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "Sha256Hex",
+      "file": "sha256-hex.schema.json",
+      "sha256": "c49022d18b2cf648edf73f673dc6b88d5571fdddf3b40ccc077bdee467548969"
+    },
+    {
+      "type": "Timestamp",
+      "file": "timestamp.schema.json",
+      "sha256": "22489564d51557386ab3cef7226558103fc98d2489e149a04dcbe36b26f07bda"
+    },
+    {
+      "type": "PrincipalId",
+      "file": "principal-id.schema.json",
+      "sha256": "68a2e18297045c41fe56b1ae55137182ca1fc4520b84c613344f8cea5d11751c"
+    },
+    {
+      "type": "TenantId",
+      "file": "tenant-id.schema.json",
+      "sha256": "7804118cda6179a4a8df49c5d62c7ea8845385bb5837b02e887106f3e4b874c0"
+    },
+    {
+      "type": "SolutionId",
+      "file": "solution-id.schema.json",
+      "sha256": "0986d9ea7db4ac1fb05a20dd6b7db4494881f3fb80ce380f59fd93bcfbc23072"
+    },
+    {
+      "type": "NonNegativeDecimal",
+      "file": "non-negative-decimal.schema.json",
+      "sha256": "1b7ed7b86c194cca7832222205fd4e90ceaa82d91d5e9ed79214c7f42c485a05"
+    },
+    {
+      "type": "QualifiedName",
+      "file": "qualified-name.schema.json",
+      "sha256": "23d76fdeaf8c46f74e90cd430e54da8645ca7de2f9ae0062b2863c4cc5282e52"
+    },
+    {
+      "type": "SemverCore",
+      "file": "semver-core.schema.json",
+      "sha256": "7c77df4e77bac6f7f335df5d2378f962cbacccca7bbee3336fb5b6305610dc7b"
+    },
+    {
+      "type": "UnitLabel",
+      "file": "unit-label.schema.json",
+      "sha256": "de0074993edafe46ad135be07d248c966b6846c24ff13c3b7c18e57ed61b297c"
+    },
+    {
+      "type": "CurrencyCode",
+      "file": "currency-code.schema.json",
+      "sha256": "5ae68e64dc2159552191ac9287ea141af894ae5a2c2e708c4225612d24dcbcbb"
+    },
+    {
+      "type": "DistinctionSubject",
+      "file": "distinction-subject.schema.json",
+      "sha256": "6def16aa75457eec14cfa6306b279f61f27c6559ad891fd4e4f23fee4ce3531b"
+    },
+    {
+      "type": "Measure",
+      "file": "measure.schema.json",
+      "sha256": "d3e04b92f804fc4efcacfde5c27bd0e463da1a75f673e1b955fd585de3ad3700"
+    },
+    {
+      "type": "LearningCandidateId",
+      "file": "learning-candidate-id.schema.json",
+      "sha256": "421445586d1440a9382bc67c4d6730ef020308ac7e1837514bed028d3139499b"
+    },
+    {
+      "type": "LearningDatasetId",
+      "file": "learning-dataset-id.schema.json",
+      "sha256": "ddcde3c194008be5d42358dbe04f280afeb7a16478bcc889b471aa7daf696f5a"
+    },
+    {
+      "type": "LearningRowId",
+      "file": "learning-row-id.schema.json",
+      "sha256": "cf1e39dbeac6832f405f6eea188c2d9bc4eb8ed9331af291e27fc624837cb0e1"
+    },
+    {
+      "type": "LearningExclusionId",
+      "file": "learning-exclusion-id.schema.json",
+      "sha256": "e59ad65e150c1e70c9e5a617c71dbff410eeb28dd251e11dae367e37fa9d9f21"
+    },
+    {
+      "type": "LearningMetricId",
+      "file": "learning-metric-id.schema.json",
+      "sha256": "5526d1506b57abd3af627bec5566a7e410b9266f2719d9cb3535e928918d2861"
+    },
+    {
+      "type": "LearningModelId",
+      "file": "learning-model-id.schema.json",
+      "sha256": "3baa9e00fdd52abd4da56cbf0c9bcc0bf8880098605d271957c9623922622601"
+    },
+    {
+      "type": "LearningRevisionId",
+      "file": "learning-revision-id.schema.json",
+      "sha256": "445313f3248267b23aeb6dd6dd4faf2db83a88005152cdf09105776582506c45"
+    },
+    {
+      "type": "LearningProposalId",
+      "file": "learning-proposal-id.schema.json",
+      "sha256": "a998221abd8efdb74dae1a663ee41525c0c9adf80e984dda09506eb6a8325e64"
+    },
+    {
+      "type": "ComparisonRecordReference",
+      "file": "comparison-record-reference.schema.json",
+      "sha256": "7a145eff621908c2155d3ec594765e1af221c96234733b14b05328370042fa8c"
+    },
+    {
+      "type": "ForecastSideReference",
+      "file": "forecast-side-reference.schema.json",
+      "sha256": "6c7327675bb706500db3fa52de7999a9589457f044bc98a38489d7eb8c557595"
+    },
+    {
+      "type": "ActualSideReference",
+      "file": "actual-side-reference.schema.json",
+      "sha256": "bccd3490a95c0bba5166955664da9a89ae94f976031fdd9393c63b1a81a5ac99"
+    },
+    {
+      "type": "OutcomeRecordSlot",
+      "file": "outcome-record-slot.schema.json",
+      "sha256": "006f1e4c81f250c14966eeaf5ff65aa08d8b73cd2025175d29036cb10674c163"
+    },
+    {
+      "type": "OutcomeRecordReference",
+      "file": "outcome-record-reference.schema.json",
+      "sha256": "22cfce56ecb2b60e30033a70939e19099aa19be47fd45e43d813681d69881f55"
+    },
+    {
+      "type": "PackReference",
+      "file": "pack-reference.schema.json",
+      "sha256": "783f2f5612f1050982f7b1ca4f7253d524910987464afff3cfae0bff028d8269"
+    },
+    {
+      "type": "ValidationStateEvidence",
+      "file": "validation-state-evidence.schema.json",
+      "sha256": "e091e315ce7e017d5e17abe2c27cae6b065ec58e5aaaa06ec067221725a01177"
+    },
+    {
+      "type": "LearningCauseRef",
+      "file": "learning-cause-ref.schema.json",
+      "sha256": "4b04f0bd8ac1c5cfa584fe688bb90e7df85f62c2655222d7d0fb321ae4f6c7b6"
+    },
+    {
+      "type": "VarianceEvidence",
+      "file": "variance-evidence.schema.json",
+      "sha256": "6fa8dba6dc0c73a769c87d98697391ba0c9a336e18615fe5370062f0a14a5898"
+    },
+    {
+      "type": "ComparisonFactInput",
+      "file": "comparison-fact-input.schema.json",
+      "sha256": "a4ebfc3b9a8726c3c309a3260406500e3a52c1012f45dba67c0f9ccfce0b09fa"
+    },
+    {
+      "type": "SealedComparisonFactInput",
+      "file": "sealed-comparison-fact-input.schema.json",
+      "sha256": "2510930986db97903e13d619a0c11660b0791cfd3b2a7e3d0e2e0fcb4929c634"
+    },
+    {
+      "type": "OutcomeLearningCandidate",
+      "file": "outcome-learning-candidate.schema.json",
+      "sha256": "235f8ba440a87f7883f9c05baab0e2f784f9aaaac8734986f31c66d9107c4f4a"
+    },
+    {
+      "type": "SealedOutcomeLearningCandidate",
+      "file": "sealed-outcome-learning-candidate.schema.json",
+      "sha256": "d1e110c08c0c245a209bc1f1fd4bedc9c3682adc17c430f7314d82fbaf4d55d9"
+    },
+    {
+      "type": "ExclusionRecordContent",
+      "file": "exclusion-record-content.schema.json",
+      "sha256": "e6555eafa31d8748061cb23518a742d4af2924f9df5dfa1cc9d279ae502b996e"
+    },
+    {
+      "type": "SealedExclusionRecord",
+      "file": "sealed-exclusion-record.schema.json",
+      "sha256": "3d1efcf883cdb0b258f8db772f462197fa02055d9750003802495ffed48b5473"
+    },
+    {
+      "type": "LearningBandThresholds",
+      "file": "learning-band-thresholds.schema.json",
+      "sha256": "1de6cbf11c47be6abcd8103386b128201a8c2dfc260f11f038e5620f741e5b41"
+    },
+    {
+      "type": "ErrorVarianceFeatures",
+      "file": "error-variance-features.schema.json",
+      "sha256": "9c89b05cde090c2d12af0509e3f2b00e0391255b301e8d08f8e2dd0d8bf3b638"
+    },
+    {
+      "type": "DatasetRowContent",
+      "file": "dataset-row-content.schema.json",
+      "sha256": "17fcfd7bd3d75e58ef72ece32e2bfe76b5743311e04184174a0852db7966d955"
+    },
+    {
+      "type": "SealedDatasetRow",
+      "file": "sealed-dataset-row.schema.json",
+      "sha256": "cd4ccbe07f6bc022f7866b96e9130ff5c87765368b4202b51f9ac4cdf2672194"
+    },
+    {
+      "type": "LearningDatasetContent",
+      "file": "learning-dataset-content.schema.json",
+      "sha256": "65c963152ca6a00a933f12c5bce3989a9d88d375f74992dc660d87b2da9ecef6"
+    },
+    {
+      "type": "SealedLearningDataset",
+      "file": "sealed-learning-dataset.schema.json",
+      "sha256": "da3f1b6ab1ae8dc6c40c62ded88e8fc2a872f009c9410bfb6e4aeeab35782360"
+    },
+    {
+      "type": "LearningApplicability",
+      "file": "learning-applicability.schema.json",
+      "sha256": "3b979e1ead7f3d7c826d64b48f275e97d471876ca47f26e82d45809170248fec"
+    },
+    {
+      "type": "ToleranceBands",
+      "file": "tolerance-bands.schema.json",
+      "sha256": "126676b401491f1be7c4387ddaf3f6c7f914f65f1e799313f0b5587987a5fbff"
+    },
+    {
+      "type": "SignedDeviation",
+      "file": "signed-deviation.schema.json",
+      "sha256": "eb7537aae1fd6a800c687a8fefaef08802d00d382b155f45fd0cf0fa2857f94e"
+    },
+    {
+      "type": "BiasSummary",
+      "file": "bias-summary.schema.json",
+      "sha256": "75b34b57667ae2bf3c9959301ddce24c66b2c63360c4c7a1b0cd35080c21e8d6"
+    },
+    {
+      "type": "MeanAbsoluteErrorSummary",
+      "file": "mean-absolute-error-summary.schema.json",
+      "sha256": "0ad36302afe234f3e2185084b8658eeb61a4ed6cc971ca592cfe69286a5711fa"
+    },
+    {
+      "type": "HitRateSummary",
+      "file": "hit-rate-summary.schema.json",
+      "sha256": "bb0ff3e1457447ccf849ac616a63985e66bba9a4781c113d570ac8a8e4f27ff6"
+    },
+    {
+      "type": "PackBreakdown",
+      "file": "pack-breakdown.schema.json",
+      "sha256": "d85429d2c72d654e20d99316d237f09819239f865a623211dc13617af1fb6be5"
+    },
+    {
+      "type": "VariantBreakdown",
+      "file": "variant-breakdown.schema.json",
+      "sha256": "79064519a4cf3ccf74971caec7b5c303dfce4cded56181bba14f2009d7d7e928"
+    },
+    {
+      "type": "MetricJustification",
+      "file": "metric-justification.schema.json",
+      "sha256": "0d183d0325855e79e9b53f45dd8f9da5d3624c9e0acd6257c7e0715cc82f2848"
+    },
+    {
+      "type": "CalibrationMetricSetContent",
+      "file": "calibration-metric-set-content.schema.json",
+      "sha256": "7c61f116a9a1d8ae5617f547434e7e6a036e3c26902b344fc1f52962a51a0265"
+    },
+    {
+      "type": "SealedCalibrationMetricSet",
+      "file": "sealed-calibration-metric-set.schema.json",
+      "sha256": "77a3dbc0602551f04d98dc3c00c9d5cfd6b607f224dfec7c159d7d605c4f1ca4"
+    },
+    {
+      "type": "DatasetLineageRef",
+      "file": "dataset-lineage-ref.schema.json",
+      "sha256": "528837efa90882ea37e5d661167df261740f81f019bed997c2603f217d63ab73"
+    },
+    {
+      "type": "ChangingObservationRef",
+      "file": "changing-observation-ref.schema.json",
+      "sha256": "1d3ee74ca11abdf3fe494917009f9a70b184a7c1ace6e929162980dd3e93ecbc"
+    },
+    {
+      "type": "ModelRevisionContent",
+      "file": "model-revision-content.schema.json",
+      "sha256": "b6045247dd92807657d147af74f42baa4587b40f366078a086dd2ec2692a557a"
+    },
+    {
+      "type": "SealedModelRevision",
+      "file": "sealed-model-revision.schema.json",
+      "sha256": "c7cf12c6090153b40dc6d82ed434ce59d644672066e9149c522c357fb76a60f6"
+    },
+    {
+      "type": "ModelRevisionProposalContent",
+      "file": "model-revision-proposal-content.schema.json",
+      "sha256": "e25d0b874ea87a4934d6f326b639d291f02b317d80db498adaa3b5ae2100bfe5"
+    },
+    {
+      "type": "SealedModelRevisionProposal",
+      "file": "sealed-model-revision-proposal.schema.json",
+      "sha256": "dc811ad1576f27a5c2194d01550f36ff1edb4d4596e0a38daa1a69b5bc85bcda"
+    },
+    {
+      "type": "LearningEventSequence",
+      "file": "learning-event-sequence.schema.json",
+      "sha256": "b6e35abcf7fd1cc1b2b92377143b66513c9b2a33ae4480f70b041d1ddc66049b"
+    },
+    {
+      "type": "LearningCausalParent",
+      "file": "learning-causal-parent.schema.json",
+      "sha256": "50049ef745a089c19fbb2573744ceb671db55317c73bbf98a24d9392ffe09b82"
+    },
+    {
+      "type": "LearningEventPayload",
+      "file": "learning-event-payload.schema.json",
+      "sha256": "77c073ac959d305fd7ae8fe1b5906ac76cf499f277e4d08de1b5ba23129d68b0"
+    },
+    {
+      "type": "LearningEventContent",
+      "file": "learning-event-content.schema.json",
+      "sha256": "09a59314c103dc39302918dd2fcd243746fe8ec91072844922bedb8beb6e0bac"
+    },
+    {
+      "type": "SealedLearningEvent",
+      "file": "sealed-learning-event.schema.json",
+      "sha256": "3ff389493d742dbcadf2fbd5a61630ebd11f3a6656c5cd4c0f18c82140789e58"
+    },
+    {
+      "type": "RecordIntakenData",
+      "file": "record-intaken-data.schema.json",
+      "sha256": "761b71365a98903053c02e9346a5992bd5675226adda780178ac7ca8418ba232"
+    },
+    {
+      "type": "DatasetAssembledData",
+      "file": "dataset-assembled-data.schema.json",
+      "sha256": "a398cee80b66b959d063b39f02aba15a1bdd57564e2a59dff25c66d699dc9891"
+    },
+    {
+      "type": "DatasetReplayedData",
+      "file": "dataset-replayed-data.schema.json",
+      "sha256": "263d13486da839d381bf6baafa81b1c749cd73a230564bc4c592ee03848afdea"
+    },
+    {
+      "type": "MetricsFoldedData",
+      "file": "metrics-folded-data.schema.json",
+      "sha256": "1966214a8b07181708888d98ecca0362b56b2da030a874217991be51ba4c882b"
+    },
+    {
+      "type": "RevisionProposedData",
+      "file": "revision-proposed-data.schema.json",
+      "sha256": "15cbcdeb44a403e321c3c2fe07cc4f91591792bb12c255f68f4c0ddd9b714578"
+    },
+    {
+      "type": "RevisionAdmittedData",
+      "file": "revision-admitted-data.schema.json",
+      "sha256": "9b016d080ccde761d39bc4d5571149c648b3683038681c2866a126d59bee4a41"
+    },
+    {
+      "type": "StateProjectedData",
+      "file": "state-projected-data.schema.json",
+      "sha256": "dadc5aeab3087862689b6abc430809a2ee214054e38321595d8e32c2c9aec906"
+    },
+    {
+      "type": "PackViewProjectedData",
+      "file": "pack-view-projected-data.schema.json",
+      "sha256": "03696f1760faef2c9c4bd0a96bf89750084087367d833dd54a778791fc84b966"
+    }
+  ]
+}

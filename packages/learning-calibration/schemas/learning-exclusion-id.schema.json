@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LearningExclusionId",
+  "$defs": {
+    "LearningExclusionId": {
+      "type": "string",
+      "pattern": "^exclusion:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LearningExclusionId",
+      "description": "Opaque typed exclusion-record identity: \"exclusion:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:learning-exclusion-id:1.0.0"
+}

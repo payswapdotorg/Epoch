@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/VariantBreakdown",
+  "$defs": {
+    "VariantBreakdown": {
+      "readOnly": true,
+      "title": "VariantBreakdown",
+      "description": "One per-realization-variant breakdown slice: the variant, the row/direction counts, and the exact total absolute deviation of that variant rows.",
+      "type": "object",
+      "properties": {
+        "realizationVariant": {
+          "type": "string",
+          "enum": [
+            "construction-build",
+            "software-implementation-deployment",
+            "mechanical-fabrication-assembly",
+            "electrical-installation-commissioning",
+            "manufacturing",
+            "infrastructure-provisioning",
+            "field-service-repair"
+          ]
+        },
+        "rowCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "overCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "underCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "exactCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "totalAbsoluteDeviation": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        }
+      },
+      "required": [
+        "realizationVariant",
+        "rowCount",
+        "overCount",
+        "underCount",
+        "exactCount",
+        "totalAbsoluteDeviation"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:variant-breakdown:1.0.0"
+}

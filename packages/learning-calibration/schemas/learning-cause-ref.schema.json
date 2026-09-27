@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LearningCauseRef",
+  "$defs": {
+    "LearningCauseRef": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "causeKind": {
+              "type": "string",
+              "const": "change-record"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^change:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "causeKind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "causeKind": {
+              "type": "string",
+              "const": "issue-record"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^(change|delay|rework|defect|blocker):[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "causeKind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "causeKind": {
+              "type": "string",
+              "const": "external-condition"
+            },
+            "recordId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "causeKind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "LearningCauseRef",
+      "description": "One opaque typed root-cause attribution (the W039 cause grammar): cause kind, opaque record id, exact content digest, and the mandatory sorted evidence digests."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:learning-cause-ref:1.0.0"
+}

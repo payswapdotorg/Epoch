@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SignedDeviation",
+  "$defs": {
+    "SignedDeviation": {
+      "readOnly": true,
+      "title": "SignedDeviation",
+      "description": "One signed deviation value: whether the net deviation is negative (under-forecast exceeds over-forecast) plus the canonical non-negative magnitude.",
+      "type": "object",
+      "properties": {
+        "negative": {
+          "type": "boolean"
+        },
+        "magnitude": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        }
+      },
+      "required": [
+        "negative",
+        "magnitude"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:signed-deviation:1.0.0"
+}

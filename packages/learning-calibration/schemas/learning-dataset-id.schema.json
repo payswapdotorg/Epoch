@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LearningDatasetId",
+  "$defs": {
+    "LearningDatasetId": {
+      "type": "string",
+      "pattern": "^dataset:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LearningDatasetId",
+      "description": "Opaque learning-dataset record identity: \"dataset:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:learning-dataset-id:1.0.0"
+}

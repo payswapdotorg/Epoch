@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ForecastSideReference",
+  "$defs": {
+    "ForecastSideReference": {
+      "readOnly": true,
+      "title": "ForecastSideReference",
+      "description": "One exact-revision reference to the W036 Forecast-distinction record a comparison fact judged.",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "pattern": "^forecast:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "recordId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:forecast-side-reference:1.0.0"
+}

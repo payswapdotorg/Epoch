@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ChangingObservationRef",
+  "$defs": {
+    "ChangingObservationRef": {
+      "readOnly": true,
+      "title": "ChangingObservationRef",
+      "description": "One exact-revision changing-observation reference of a model revision lineage: the comparison-fact or outcome-record id plus the content digest of the observation that changed the revision.",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "recordId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:changing-observation-ref:1.0.0"
+}
