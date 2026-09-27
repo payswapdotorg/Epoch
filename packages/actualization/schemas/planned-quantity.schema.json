@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PlannedQuantity",
+  "$defs": {
+    "PlannedQuantity": {
+      "readOnly": true,
+      "title": "PlannedQuantity",
+      "description": "The planned quantity total of one rolling completion forecast: canonical decimal value plus unit-of-measure label.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "quantity"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        }
+      },
+      "required": [
+        "kind",
+        "value",
+        "unit"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:actualization:planned-quantity:1.0.0"
+}

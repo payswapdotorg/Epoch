@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CauseRef",
+  "$defs": {
+    "CauseRef": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "causeKind": {
+              "type": "string",
+              "const": "change-record"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^change:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "causeKind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "causeKind": {
+              "type": "string",
+              "const": "issue-record"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^(change|delay|rework|defect|blocker):[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "causeKind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "causeKind": {
+              "type": "string",
+              "const": "external-condition"
+            },
+            "recordId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "causeKind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "CauseRef",
+      "description": "One cause reference: the cause kind (change record, W038 issue record, external condition), its opaque record id, and the exact content digest of that revision."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:variance:cause-ref:1.0.0"
+}

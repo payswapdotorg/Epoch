@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CalibrationStateContent",
+  "$defs": {
+    "CalibrationStateContent": {
+      "readOnly": true,
+      "title": "CalibrationStateContent",
+      "description": "The immutable content of one calibration state: the deterministic fold over one comparison-fact group — bias counts, exact total absolute deviation, worst deviation, and the derived confidence.",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.actualization.calibration-state"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "calibrationId": {
+          "$ref": "#/$defs/CalibrationId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "subject": {
+          "$ref": "#/$defs/DistinctionSubject"
+        },
+        "measureKind": {
+          "type": "string",
+          "enum": [
+            "quantity",
+            "cost",
+            "progress",
+            "instant"
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "comparisonRefs": {
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ComparisonRecordReference"
+          }
+        },
+        "comparisonCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "overCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "underCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "exactCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "totalAbsoluteDeviation": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "worstDeviation": {
+          "anyOf": [
+            {
+              "readOnly": true,
+              "type": "object",
+              "properties": {
+                "comparisonRef": {
+                  "$ref": "#/$defs/ComparisonRecordReference"
+                },
+                "deviation": {
+                  "type": "string",
+                  "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                }
+              },
+              "required": [
+                "comparisonRef",
+                "deviation"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "confidence": {
+          "$ref": "#/$defs/CalibrationConfidence"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "calibrationId",
+        "tenantId",
+        "solutionId",
+        "subject",
+        "measureKind",
+        "comparisonRefs",
+        "comparisonCount",
+        "overCount",
+        "underCount",
+        "exactCount",
+        "totalAbsoluteDeviation",
+        "worstDeviation",
+        "confidence"
+      ],
+      "additionalProperties": false
+    },
+    "CalibrationId": {
+      "type": "string",
+      "pattern": "^calibration:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "CalibrationId",
+      "description": "Opaque calibration-state record identity: \"calibration:\" followed by a lowercase slug."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "SolutionId": {
+      "type": "string",
+      "pattern": "^solution:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionId",
+      "description": "Opaque solution-package identity: \"solution:\" followed by a lowercase slug (stable across versions)."
+    },
+    "DistinctionSubject": {
+      "readOnly": true,
+      "title": "DistinctionSubject",
+      "description": "The subject of one distinction record: the owning solution plus a typed anchor (solution, line, work package, activity, milestone, program, or delivery id).",
+      "type": "object",
+      "properties": {
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "subjectKind": {
+          "type": "string",
+          "enum": [
+            "solution",
+            "solution-line",
+            "work-package",
+            "activity",
+            "milestone",
+            "program",
+            "delivery"
+          ]
+        },
+        "subjectId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "solutionId",
+        "subjectKind",
+        "subjectId"
+      ],
+      "additionalProperties": false
+    },
+    "ComparisonRecordReference": {
+      "readOnly": true,
+      "title": "ComparisonRecordReference",
+      "description": "One opaque exact-revision reference to a prediction-comparison record (the variance-kernel grammar): record id plus content digest.",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "pattern": "^comparison:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "contentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "recordId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "CalibrationConfidence": {
+      "readOnly": true,
+      "title": "CalibrationConfidence",
+      "description": "The derived confidence of one calibration fold: method \"derived\", the exact-fraction value, and the deterministic rationale.",
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "stated",
+            "measured",
+            "estimated",
+            "derived",
+            "imported"
+          ]
+        },
+        "value": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "method",
+        "value",
+        "rationale"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:actualization:calibration-state-content:1.0.0"
+}

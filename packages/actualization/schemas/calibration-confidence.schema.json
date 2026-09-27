@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CalibrationConfidence",
+  "$defs": {
+    "CalibrationConfidence": {
+      "readOnly": true,
+      "title": "CalibrationConfidence",
+      "description": "The derived confidence of one calibration fold: method \"derived\", the exact-fraction value, and the deterministic rationale.",
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "stated",
+            "measured",
+            "estimated",
+            "derived",
+            "imported"
+          ]
+        },
+        "value": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "method",
+        "value",
+        "rationale"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:actualization:calibration-confidence:1.0.0"
+}

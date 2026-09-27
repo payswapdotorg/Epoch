@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProgressMeasure",
+  "$defs": {
+    "ProgressMeasure": {
+      "readOnly": true,
+      "title": "ProgressMeasure",
+      "description": "A progress measure value: a completion fraction between 0 and 1 (the W036 measure grammar).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "progress"
+        },
+        "fraction": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "kind",
+        "fraction"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:variance:progress-measure:1.0.0"
+}

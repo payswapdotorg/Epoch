@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/VarianceId",
+  "$defs": {
+    "VarianceId": {
+      "type": "string",
+      "pattern": "^variance:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "VarianceId",
+      "description": "Opaque variance-record identity: \"variance:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:variance:variance-id:1.0.0"
+}

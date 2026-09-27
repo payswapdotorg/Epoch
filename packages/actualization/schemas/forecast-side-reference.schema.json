@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ForecastSideReference",
+  "$defs": {
+    "ForecastSideReference": {
+      "readOnly": true,
+      "title": "ForecastSideReference",
+      "description": "One exact-revision reference to the W036 Forecast-distinction record a comparison fact judged.",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "pattern": "^forecast:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "contentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "recordId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:actualization:forecast-side-reference:1.0.0"
+}

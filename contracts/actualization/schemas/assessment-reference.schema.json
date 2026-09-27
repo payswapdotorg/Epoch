@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AssessmentReference",
+  "$defs": {
+    "AssessmentReference": {
+      "readOnly": true,
+      "title": "AssessmentReference",
+      "description": "One validation-assessment reference: the assessment id plus the exact content digest of the assessment revision being bound (conflict resolutions bind exact revisions).",
+      "type": "object",
+      "properties": {
+        "assessmentId": {
+          "$ref": "#/$defs/ValidationAssessmentId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "assessmentId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "ValidationAssessmentId": {
+      "type": "string",
+      "pattern": "^validation:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ValidationAssessmentId",
+      "description": "Opaque validation-assessment record identity: \"validation:\" followed by a lowercase slug."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:actualization:assessment-reference:1.0.0"
+}

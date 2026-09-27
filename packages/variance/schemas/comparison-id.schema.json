@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ComparisonId",
+  "$defs": {
+    "ComparisonId": {
+      "type": "string",
+      "pattern": "^comparison:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ComparisonId",
+      "description": "Opaque prediction-comparison identity: \"comparison:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:variance:comparison-id:1.0.0"
+}

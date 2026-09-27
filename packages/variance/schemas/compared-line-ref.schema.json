@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ComparedLineRef",
+  "$defs": {
+    "ComparedLineRef": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "prediction"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^prediction:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "kind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "baseline"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^baseline:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "kind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "commitment"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^commitment:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "kind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "forecast"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^forecast:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "kind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "actual"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^actual:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "kind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ComparedLineRef",
+      "description": "One compared-line reference: a lifecycle-first distinction kind, its kind-prefixed W036 record id, and the exact content digest of that revision (opaque; never an embedded copy)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:variance:compared-line-ref:1.0.0"
+}
