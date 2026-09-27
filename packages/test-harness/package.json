@@ -1,0 +1,31 @@
+{
+  "name": "@epoch/test-harness",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Cross-domain Integration Harness (W032) — a typed, deterministic SCENARIO ENGINE generalizing the W031 reference-slice pattern: declarative, content-addressed scenario definitions (actors, fixtures, a typed step sequence, expected invariants); a runner that composes REAL workspace kernels through a caller-supplied ScenarioDriver (the harness never mocks Epoch kernels and never imports kernel internals — the composed kernels arrive as devDependencies of the TEST trees, never as runtime dependencies of this library) and records a sealed, replayable, byte-deterministic typed execution TRACE per step (input digest, output digest, events emitted, provenance, identity observations, state-digest delta); a reusable invariant library (tenant isolation at every boundary, provenance chain verification, authority routing, identity preservation across projections, replay determinism, round-trip); and a typed, content-addressed RESULT record per scenario (pass/fail per invariant + the trace digest). Zero wall-clock, zero randomness, zero network.",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
