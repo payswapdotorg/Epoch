@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/FieldPathTemplate",
+  "$defs": {
+    "FieldPathTemplate": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?:[A-Za-z][A-Za-z0-9_]*|\\[\\])(?:\\.(?:[A-Za-z][A-Za-z0-9_]*|\\[\\]))*$",
+      "title": "FieldPathTemplate",
+      "description": "One field-path template: dot-separated keys, [] = any array index (e.g. workPackages[].activities[].title)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:field-path-template:1.0.0"
+}

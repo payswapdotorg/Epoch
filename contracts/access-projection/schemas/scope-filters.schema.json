@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ScopeFilters",
+  "$defs": {
+    "ScopeFilters": {
+      "readOnly": true,
+      "title": "ScopeFilters",
+      "description": "The scope filters of one policy binding: evidence (all/none/listed W006 digests), commercial and supplier section visibility.",
+      "type": "object",
+      "properties": {
+        "evidence": {
+          "$ref": "#/$defs/EvidenceScope"
+        },
+        "commercial": {
+          "$ref": "#/$defs/SectionVisibility"
+        },
+        "supplier": {
+          "$ref": "#/$defs/SectionVisibility"
+        }
+      },
+      "required": [
+        "evidence",
+        "commercial",
+        "supplier"
+      ],
+      "additionalProperties": false
+    },
+    "EvidenceScope": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "all"
+            }
+          },
+          "required": [
+            "mode"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "none"
+            }
+          },
+          "required": [
+            "mode"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "listed"
+            },
+            "allowedDigests": {
+              "minItems": 1,
+              "maxItems": 512,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "required": [
+            "mode",
+            "allowedDigests"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "EvidenceScope",
+      "description": "The evidence scope filter: all, none, or a sorted minimum-necessary allowlist of W006 evidence digests."
+    },
+    "SectionVisibility": {
+      "type": "string",
+      "enum": [
+        "visible",
+        "hidden"
+      ],
+      "title": "SectionVisibility",
+      "description": "One governed section visibility: visible or hidden (hidden strikes the section after the field walk)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:scope-filters:1.0.0"
+}

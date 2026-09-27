@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProjectionSubject",
+  "$defs": {
+    "ProjectionSubject": {
+      "readOnly": true,
+      "title": "ProjectionSubject",
+      "description": "The subject of one projection: principal id + kind (human/agent/service — service-to-service follows the same path), plus the role and/or agent-task class the policy rows bind to.",
+      "type": "object",
+      "properties": {
+        "principalId": {
+          "type": "string",
+          "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "principalKind": {
+          "type": "string",
+          "enum": [
+            "human",
+            "agent",
+            "service"
+          ]
+        },
+        "role": {
+          "$ref": "#/$defs/RoleId"
+        },
+        "agentTaskClass": {
+          "$ref": "#/$defs/AgentTaskClass"
+        }
+      },
+      "required": [
+        "principalId",
+        "principalKind"
+      ],
+      "additionalProperties": false
+    },
+    "RoleId": {
+      "type": "string",
+      "pattern": "^role:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RoleId",
+      "description": "One principal role id: role:<slug> (opaque; roles are caller vocabulary)."
+    },
+    "AgentTaskClass": {
+      "type": "string",
+      "pattern": "^task-class:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentTaskClass",
+      "description": "One agent task class: task-class:<slug> (the class of work an agent task performs; task classes get their own, narrower policy rows)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:projection-subject:1.0.0"
+}

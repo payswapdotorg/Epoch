@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AccessProjectionEventSequence",
+  "$defs": {
+    "AccessProjectionEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "AccessProjectionEventSequence",
+      "description": "One access-projection event sequence number: 1-based, contiguous per access-projection stream."
+    }
+  },
+  "$id": "urn:epoch:access-projection:access-projection-event-sequence:1.0.0"
+}

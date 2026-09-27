@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProjectionEntry",
+  "$defs": {
+    "ProjectionEntry": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ReleasedField"
+        },
+        {
+          "$ref": "#/$defs/RedactionMarker"
+        }
+      ],
+      "title": "ProjectionEntry",
+      "description": "One projection entry: a released field (value by reference) or a typed redaction marker (field path + policy clause + redaction class)."
+    },
+    "ReleasedField": {
+      "readOnly": true,
+      "title": "ReleasedField",
+      "description": "One released field: the concrete walk path and the canonical value, passed through BY REFERENCE (same value, same digest).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "released"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "value": {}
+      },
+      "required": [
+        "kind",
+        "path",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "RedactionMarker": {
+      "readOnly": true,
+      "title": "RedactionMarker",
+      "description": "One redaction marker: the field path struck by a policy clause, with the redaction class (field path + policy clause + redaction class; never the value).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "redacted"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "clause": {
+          "$ref": "#/$defs/PolicyClauseRef"
+        },
+        "redactionClass": {
+          "type": "string",
+          "enum": [
+            "commercial-sensitive",
+            "supplier-sensitive",
+            "evidence-scoped",
+            "principal-identifying",
+            "policy-scoped",
+            "task-scoped"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "path",
+        "clause",
+        "redactionClass"
+      ],
+      "additionalProperties": false
+    },
+    "PolicyClauseRef": {
+      "readOnly": true,
+      "title": "PolicyClauseRef",
+      "description": "The policy clause behind one redaction: the exact policy revision and the binding row that struck the field.",
+      "type": "object",
+      "properties": {
+        "policyId": {
+          "$ref": "#/$defs/PolicyId"
+        },
+        "revision": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "bindingIndex": {
+          "$ref": "#/$defs/PositiveInteger"
+        }
+      },
+      "required": [
+        "policyId",
+        "revision",
+        "bindingIndex"
+      ],
+      "additionalProperties": false
+    },
+    "PolicyId": {
+      "type": "string",
+      "pattern": "^policy:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PolicyId",
+      "description": "One projection policy id: policy:<slug> (opaque, provider-neutral)."
+    },
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "PositiveInteger",
+      "description": "A positive safe integer (policy revisions and binding indexes are 1-based)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:projection-entry:1.0.0"
+}

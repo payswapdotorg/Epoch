@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AccessPrincipalId",
+  "$defs": {
+    "AccessPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AccessPrincipalId",
+      "description": "One principal id inside access-projection records (the W009 identity grammar)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:access-principal-id:1.0.0"
+}

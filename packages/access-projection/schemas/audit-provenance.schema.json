@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuditProvenance",
+  "$defs": {
+    "AuditProvenance": {
+      "readOnly": true,
+      "title": "AuditProvenance",
+      "description": "The provenance block of one audit record (the W006/W036 provenance convention): derived from the sealed decision + policy revision + canonical record.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "observed",
+            "reported",
+            "derived",
+            "assumed",
+            "imported",
+            "unknown"
+          ]
+        },
+        "sourceRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor": {
+          "$ref": "#/$defs/PrincipalId"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque acting principal: \"principal:\" followed by a lowercase slug (W009 identity grammar)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:audit-provenance:1.0.0"
+}

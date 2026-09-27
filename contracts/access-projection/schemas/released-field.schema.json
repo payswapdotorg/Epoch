@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ReleasedField",
+  "$defs": {
+    "ReleasedField": {
+      "readOnly": true,
+      "title": "ReleasedField",
+      "description": "One released field: the concrete walk path and the canonical value, passed through BY REFERENCE (same value, same digest).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "released"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "value": {}
+      },
+      "required": [
+        "kind",
+        "path",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:access-projection:released-field:1.0.0"
+}

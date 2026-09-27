@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BindingSelector",
+  "$defs": {
+    "BindingSelector": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "principalKind": {
+              "type": "string",
+              "const": "human"
+            },
+            "role": {
+              "$ref": "#/$defs/RoleId"
+            }
+          },
+          "required": [
+            "principalKind",
+            "role"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "principalKind": {
+              "type": "string",
+              "const": "service"
+            },
+            "role": {
+              "$ref": "#/$defs/RoleId"
+            }
+          },
+          "required": [
+            "principalKind",
+            "role"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "principalKind": {
+              "type": "string",
+              "const": "agent"
+            },
+            "role": {
+              "$ref": "#/$defs/RoleId"
+            },
+            "agentTaskClass": {
+              "$ref": "#/$defs/AgentTaskClass"
+            }
+          },
+          "required": [
+            "principalKind"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "BindingSelector",
+      "description": "The selector of one policy row: a principal kind plus exactly one of (role, agent-task class). Agents may hold BOTH a role baseline row and task-class rows (the task rows must be narrower)."
+    },
+    "RoleId": {
+      "type": "string",
+      "pattern": "^role:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RoleId",
+      "description": "One principal role id: role:<slug> (opaque; roles are caller vocabulary)."
+    },
+    "AgentTaskClass": {
+      "type": "string",
+      "pattern": "^task-class:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentTaskClass",
+      "description": "One agent task class: task-class:<slug> (the class of work an agent task performs; task classes get their own, narrower policy rows)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:binding-selector:1.0.0"
+}

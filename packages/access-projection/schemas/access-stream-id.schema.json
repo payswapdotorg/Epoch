@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AccessStreamId",
+  "$defs": {
+    "AccessStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AccessStreamId",
+      "description": "One access-projection event stream id (the W010 grammar): stream:access-<slug>, one object/policy/tenant-state = one stream."
+    }
+  },
+  "$id": "urn:epoch:access-projection:access-stream-id:1.0.0"
+}

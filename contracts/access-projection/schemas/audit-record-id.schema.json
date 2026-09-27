@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuditRecordId",
+  "$defs": {
+    "AuditRecordId": {
+      "type": "string",
+      "pattern": "^audit:[0-9a-f]{16}$",
+      "title": "AuditRecordId",
+      "description": "One projection audit record id: audit:<16 hex chars>, derived deterministically from the evaluation key (no randomness)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:audit-record-id:1.0.0"
+}

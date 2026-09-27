@@ -1,0 +1,315 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SealedProjectionAudit",
+  "$defs": {
+    "SealedProjectionAudit": {
+      "readOnly": true,
+      "title": "SealedProjectionAudit",
+      "description": "Published projection audit record: immutable content plus the SHA-256 of its canonical JSON (the exact-revision content address).",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.access-projection.audit"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "auditId": {
+          "$ref": "#/$defs/AuditRecordId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "principalId": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "subject": {
+          "$ref": "#/$defs/ProjectionSubject"
+        },
+        "policyRef": {
+          "$ref": "#/$defs/PolicyRevisionRef"
+        },
+        "objectClass": {
+          "type": "string",
+          "enum": [
+            "program-of-work",
+            "delivery-record",
+            "solution-version",
+            "distinction-record"
+          ]
+        },
+        "objectId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "objectDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "decisionDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "view",
+            "export",
+            "share"
+          ]
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "released",
+            "denied"
+          ]
+        },
+        "denialCode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "fieldsReleased": {
+          "maxItems": 16384,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        },
+        "fieldsRedacted": {
+          "maxItems": 16384,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        },
+        "appliedScopes": {
+          "$ref": "#/$defs/AppliedScopes"
+        },
+        "evaluationKey": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "provenance": {
+          "$ref": "#/$defs/AuditProvenance"
+        },
+        "projectedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "contentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "auditId",
+        "tenantId",
+        "principalId",
+        "subject",
+        "policyRef",
+        "objectClass",
+        "objectId",
+        "objectDigest",
+        "decisionDigest",
+        "action",
+        "outcome",
+        "fieldsReleased",
+        "fieldsRedacted",
+        "appliedScopes",
+        "evaluationKey",
+        "provenance",
+        "projectedAt",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "AuditRecordId": {
+      "type": "string",
+      "pattern": "^audit:[0-9a-f]{16}$",
+      "title": "AuditRecordId",
+      "description": "One projection audit record id: audit:<16 hex chars>, derived deterministically from the evaluation key (no randomness)."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque acting principal: \"principal:\" followed by a lowercase slug (W009 identity grammar)."
+    },
+    "ProjectionSubject": {
+      "readOnly": true,
+      "title": "ProjectionSubject",
+      "description": "The subject of one projection: principal id + kind (human/agent/service — service-to-service follows the same path), plus the role and/or agent-task class the policy rows bind to.",
+      "type": "object",
+      "properties": {
+        "principalId": {
+          "type": "string",
+          "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "principalKind": {
+          "type": "string",
+          "enum": [
+            "human",
+            "agent",
+            "service"
+          ]
+        },
+        "role": {
+          "$ref": "#/$defs/RoleId"
+        },
+        "agentTaskClass": {
+          "$ref": "#/$defs/AgentTaskClass"
+        }
+      },
+      "required": [
+        "principalId",
+        "principalKind"
+      ],
+      "additionalProperties": false
+    },
+    "RoleId": {
+      "type": "string",
+      "pattern": "^role:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RoleId",
+      "description": "One principal role id: role:<slug> (opaque; roles are caller vocabulary)."
+    },
+    "AgentTaskClass": {
+      "type": "string",
+      "pattern": "^task-class:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentTaskClass",
+      "description": "One agent task class: task-class:<slug> (the class of work an agent task performs; task classes get their own, narrower policy rows)."
+    },
+    "PolicyRevisionRef": {
+      "readOnly": true,
+      "title": "PolicyRevisionRef",
+      "description": "Reference to the exact projection-policy revision a projection was computed under (content-addressed).",
+      "type": "object",
+      "properties": {
+        "policyId": {
+          "$ref": "#/$defs/PolicyId"
+        },
+        "revision": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "policyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "policyId",
+        "revision",
+        "policyDigest"
+      ],
+      "additionalProperties": false
+    },
+    "PolicyId": {
+      "type": "string",
+      "pattern": "^policy:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PolicyId",
+      "description": "One projection policy id: policy:<slug> (opaque, provider-neutral)."
+    },
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "PositiveInteger",
+      "description": "A positive safe integer (policy revisions and binding indexes are 1-based)."
+    },
+    "AppliedScopes": {
+      "readOnly": true,
+      "title": "AppliedScopes",
+      "description": "The scope filters one evaluation applied: evidence mode (+ allowlist size), commercial and supplier section visibility.",
+      "type": "object",
+      "properties": {
+        "evidenceMode": {
+          "type": "string",
+          "enum": [
+            "all",
+            "listed",
+            "none"
+          ]
+        },
+        "allowedEvidenceCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 512
+        },
+        "commercial": {
+          "type": "string",
+          "enum": [
+            "visible",
+            "hidden"
+          ]
+        },
+        "supplier": {
+          "type": "string",
+          "enum": [
+            "visible",
+            "hidden"
+          ]
+        }
+      },
+      "required": [
+        "evidenceMode",
+        "allowedEvidenceCount",
+        "commercial",
+        "supplier"
+      ],
+      "additionalProperties": false
+    },
+    "AuditProvenance": {
+      "readOnly": true,
+      "title": "AuditProvenance",
+      "description": "The provenance block of one audit record (the W006/W036 provenance convention): derived from the sealed decision + policy revision + canonical record.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "observed",
+            "reported",
+            "derived",
+            "assumed",
+            "imported",
+            "unknown"
+          ]
+        },
+        "sourceRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor": {
+          "$ref": "#/$defs/PrincipalId"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:sealed-projection-audit:1.0.0"
+}
