@@ -1,0 +1,41 @@
+{
+  "name": "@epoch/contract-conformance",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "W032 Contract conformance suite: a generated-per-surface conformance runner over every published manifest-bearing contract tree under contracts/ (actions, actualization, agent, execution, experience, experience-compiler, procurement, renderers, solution-delivery). Per tree: byte-identity drift (the committed JSON Schemas equal the owning package's render*ContractFiles() emission), manifest sha256 integrity, contract/protocol VERSION PINNING against the packages' exported constants, and zod round-trip parity (z.toJSONSchema of the live schema surface equals the committed schema document) — catching cross-domain drift between packs, kernels and contracts (named contract-drift tests per tree). NOT a pnpm workspace importer: tests/contracts sits outside the pnpm-workspace.yaml globs (owned surface, root manifests frozen), so this manifest DECLARES the frozen devDependency policy while import resolution happens via vitest resolve.alias + tsconfig paths. Run via: pnpm --filter @epoch/pack-construction exec vitest run --root ../../tests/contracts.",
+  "epoch": {
+    "layer": "service"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/procurement": "workspace:*",
+    "@epoch/execution-tracking": "workspace:*",
+    "@epoch/actualization": "workspace:*",
+    "@epoch/variance": "workspace:*",
+    "@epoch/pack-construction": "workspace:*",
+    "@epoch/pack-software": "workspace:*",
+    "@epoch/document-adapter": "workspace:*",
+    "@epoch/adapter-github": "workspace:*",
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/action-policy": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "vitest": "catalog:",
+    "typescript": "catalog:",
+    "@epoch/test-harness": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "@epoch/experience-compiler": "workspace:*",
+    "@epoch/renderer-runtime": "workspace:*"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "@epoch/cross-domain-integration",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "W032 Cross-domain scenario packs: named scenarios that CROSS the two domain packs through the @epoch/test-harness scenario engine — ONE solution carrying BOTH a construction work-package (W026 BOQ/programme projections) and a software work-package (W027 roadmap/backlog projections), sharing the SAME delivery record, actualization fold and variance computation; cross-pack consistency (both packs' projections identity-map the same ProgramOfWork lines/milestones/activities); positive + negative (cross-tenant denial recorded in-trace; authority-bypass attempt rejected) + recovery (tamper detection -> verified-prefix continuation) evidence; trace-replay-deterministic named tests. NOT a pnpm workspace importer: tests/integration sits outside the pnpm-workspace.yaml globs (owned surface, root manifests frozen), so this manifest DECLARES the frozen devDependency policy while import resolution happens via vitest resolve.alias + tsconfig paths. Run via: pnpm --filter @epoch/pack-construction exec vitest run --root ../../tests/integration.",
+  "epoch": {
+    "layer": "service"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/procurement": "workspace:*",
+    "@epoch/execution-tracking": "workspace:*",
+    "@epoch/actualization": "workspace:*",
+    "@epoch/variance": "workspace:*",
+    "@epoch/pack-construction": "workspace:*",
+    "@epoch/pack-software": "workspace:*",
+    "@epoch/document-adapter": "workspace:*",
+    "@epoch/adapter-github": "workspace:*",
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/action-policy": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "vitest": "catalog:",
+    "typescript": "catalog:",
+    "@epoch/test-harness": "workspace:*"
+  }
+}
