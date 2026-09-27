@@ -1,6 +1,6 @@
 # Epoch Project State
 
-Architecture: E1.0 / X1.0 (ACR-001 + ACR-002 + ACR-003 targets pending lock transition)
+Architecture: E1.0 / X1.0 (ACR-001 + ACR-002 + ACR-003 + ACR-004 targets pending lock transition)
 Work Order schema: WO1.0
 Default branch: main
 Max concurrent workers: 3
@@ -24,6 +24,7 @@ Current frontier:
 - Foundation maintenance COMPLETE (PR #24, squash 803a1989): post-W008 pnpm-lock.yaml reconcile
 - Architect architecture PR #27 MERGED (squash 8bfd14a7): universal lifecycle + Solution Navigator + domain-pack contract + delivery Work Order reconciliation
 - Architect architecture PR #29 MERGED (squash e09f5309): Capability Foundation Policy + upstream integration/fork governance
+- Architect architecture PR #31 pending merge: Autonomous Role & Capability Discovery + scheduled ecosystem discovery
 
 Verification baseline after W008 (6314365): battery 54/54 tasks --force, 0 cached (18 typecheck + 15 lint + 16 test + 3 build + governance + boundary), across 17 kernel packages + web app; governance selftest 6/6. pnpm@10.34.5 / Node 22 / TS 5.9.3 / eslint 10.11.0 + typescript-eslint 8.70.1 / vitest 5.0.1 / Next 15.5.26 / React 19.3.0 / zod 4.6.5 / turbo 2.11.3 — frozen catalog in pnpm-workspace.yaml; policy in scripts/DEPENDENCY-BASELINE.md; CI battery: governance boundary typecheck lint test build.
 
@@ -50,11 +51,12 @@ Target additions:
 - delivery supervision and alerts
 - optional provider-neutral external event bridge, with Aurum Chat as a reference adapter only
 
-ACR-001/ACR-002/ACR-003 are not effective for new implementation yet. The currently authorized W008/W009/W011 wave remains on E1.0/X1.0. After that wave is stabilized, the Architect/Tech Lead must record the lock transition and frontier update before dispatching W036. ACR-003 is binding capability-foundation policy at that same transition.
+ACR-001/ACR-002/ACR-003/ACR-004 are not effective for new implementation yet. The currently authorized W008/W009/W011 wave remains on E1.0/X1.0. After that wave is stabilized, the Architect/Tech Lead must record the lock transition and frontier update before dispatching W036. ACR-003 is binding capability-foundation policy at that same transition.
+ACR-004 adds universal role/capability discovery and scheduled ecosystem discovery at that same transition.
 
-W036-W044 are defined and dependency-gated; none is currently authorized.
+W036-W045 are defined and dependency-gated; none is currently authorized.
 
-Current main head: e09f530926e4fa2c0e7de317a86d6d13013559f8.
+Current main head: 6278e3a09bb911a59749b476e2e1df355ccd53bd.
 
 Every merge must update this file before advancing.
 
