@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AppliedScopes",
+  "$defs": {
+    "AppliedScopes": {
+      "readOnly": true,
+      "title": "AppliedScopes",
+      "description": "The scope filters one evaluation applied: evidence mode (+ allowlist size), commercial and supplier section visibility.",
+      "type": "object",
+      "properties": {
+        "evidenceMode": {
+          "type": "string",
+          "enum": [
+            "all",
+            "listed",
+            "none"
+          ]
+        },
+        "allowedEvidenceCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 512
+        },
+        "commercial": {
+          "type": "string",
+          "enum": [
+            "visible",
+            "hidden"
+          ]
+        },
+        "supplier": {
+          "type": "string",
+          "enum": [
+            "visible",
+            "hidden"
+          ]
+        }
+      },
+      "required": [
+        "evidenceMode",
+        "allowedEvidenceCount",
+        "commercial",
+        "supplier"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:access-projection:applied-scopes:1.0.0"
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PolicyClauseRef",
+  "$defs": {
+    "PolicyClauseRef": {
+      "readOnly": true,
+      "title": "PolicyClauseRef",
+      "description": "The policy clause behind one redaction: the exact policy revision and the binding row that struck the field.",
+      "type": "object",
+      "properties": {
+        "policyId": {
+          "$ref": "#/$defs/PolicyId"
+        },
+        "revision": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "bindingIndex": {
+          "$ref": "#/$defs/PositiveInteger"
+        }
+      },
+      "required": [
+        "policyId",
+        "revision",
+        "bindingIndex"
+      ],
+      "additionalProperties": false
+    },
+    "PolicyId": {
+      "type": "string",
+      "pattern": "^policy:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PolicyId",
+      "description": "One projection policy id: policy:<slug> (opaque, provider-neutral)."
+    },
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "PositiveInteger",
+      "description": "A positive safe integer (policy revisions and binding indexes are 1-based)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:policy-clause-ref:1.0.0"
+}

@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/access-projection": [
+        "./src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "../../contracts/access-projection/index.d.ts",
+    "../../contracts/access-projection/parity.ts"
+  ]
+}

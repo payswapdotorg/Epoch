@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EvidenceScope",
+  "$defs": {
+    "EvidenceScope": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "all"
+            }
+          },
+          "required": [
+            "mode"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "none"
+            }
+          },
+          "required": [
+            "mode"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "listed"
+            },
+            "allowedDigests": {
+              "minItems": 1,
+              "maxItems": 512,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "required": [
+            "mode",
+            "allowedDigests"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "EvidenceScope",
+      "description": "The evidence scope filter: all, none, or a sorted minimum-necessary allowlist of W006 evidence digests."
+    }
+  },
+  "$id": "urn:epoch:access-projection:evidence-scope:1.0.0"
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PolicyRevisionRef",
+  "$defs": {
+    "PolicyRevisionRef": {
+      "readOnly": true,
+      "title": "PolicyRevisionRef",
+      "description": "Reference to the exact projection-policy revision a projection was computed under (content-addressed).",
+      "type": "object",
+      "properties": {
+        "policyId": {
+          "$ref": "#/$defs/PolicyId"
+        },
+        "revision": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "policyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "policyId",
+        "revision",
+        "policyDigest"
+      ],
+      "additionalProperties": false
+    },
+    "PolicyId": {
+      "type": "string",
+      "pattern": "^policy:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PolicyId",
+      "description": "One projection policy id: policy:<slug> (opaque, provider-neutral)."
+    },
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "PositiveInteger",
+      "description": "A positive safe integer (policy revisions and binding indexes are 1-based)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:policy-revision-ref:1.0.0"
+}

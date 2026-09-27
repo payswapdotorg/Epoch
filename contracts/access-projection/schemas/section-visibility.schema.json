@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SectionVisibility",
+  "$defs": {
+    "SectionVisibility": {
+      "type": "string",
+      "enum": [
+        "visible",
+        "hidden"
+      ],
+      "title": "SectionVisibility",
+      "description": "One governed section visibility: visible or hidden (hidden strikes the section after the field walk)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:section-visibility:1.0.0"
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AccessProjectionCausalParent",
+  "$defs": {
+    "AccessProjectionCausalParent": {
+      "readOnly": true,
+      "title": "AccessProjectionCausalParent",
+      "description": "Causal parent of an access-projection event: an earlier event in the same stream (the W010 shape).",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "$ref": "#/$defs/AccessStreamId"
+        },
+        "sequence": {
+          "$ref": "#/$defs/AccessProjectionEventSequence"
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "AccessStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AccessStreamId",
+      "description": "One access-projection event stream id (the W010 grammar): stream:access-<slug>, one object/policy/tenant-state = one stream."
+    },
+    "AccessProjectionEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "AccessProjectionEventSequence",
+      "description": "One access-projection event sequence number: 1-based, contiguous per access-projection stream."
+    }
+  },
+  "$id": "urn:epoch:access-projection:access-projection-causal-parent:1.0.0"
+}

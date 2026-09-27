@@ -1,0 +1,333 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AuthorizedProjectionContent",
+  "$defs": {
+    "AuthorizedProjectionContent": {
+      "readOnly": true,
+      "title": "AuthorizedProjectionContent",
+      "description": "The immutable content of one authorized projection: the canonical object identity (id + digest, never minted), the policy revision and decision digests it was computed under, the subject/action, and the sorted entry set (released fields + redaction markers).",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.access-projection.projection"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "objectClass": {
+          "type": "string",
+          "enum": [
+            "program-of-work",
+            "delivery-record",
+            "solution-version",
+            "distinction-record"
+          ]
+        },
+        "objectId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "objectDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "policyRef": {
+          "$ref": "#/$defs/PolicyRevisionRef"
+        },
+        "decisionDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "subject": {
+          "$ref": "#/$defs/ProjectionSubject"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "view",
+            "export",
+            "share"
+          ]
+        },
+        "taskContext": {
+          "$ref": "#/$defs/TaskProjectionContext"
+        },
+        "entries": {
+          "minItems": 1,
+          "maxItems": 16384,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectionEntry"
+          }
+        },
+        "projectedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "projectedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "tenantId",
+        "objectClass",
+        "objectId",
+        "objectDigest",
+        "policyRef",
+        "decisionDigest",
+        "subject",
+        "action",
+        "entries",
+        "projectedAt",
+        "projectedBy"
+      ],
+      "additionalProperties": false
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "PolicyRevisionRef": {
+      "readOnly": true,
+      "title": "PolicyRevisionRef",
+      "description": "Reference to the exact projection-policy revision a projection was computed under (content-addressed).",
+      "type": "object",
+      "properties": {
+        "policyId": {
+          "$ref": "#/$defs/PolicyId"
+        },
+        "revision": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "policyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "policyId",
+        "revision",
+        "policyDigest"
+      ],
+      "additionalProperties": false
+    },
+    "PolicyId": {
+      "type": "string",
+      "pattern": "^policy:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PolicyId",
+      "description": "One projection policy id: policy:<slug> (opaque, provider-neutral)."
+    },
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "PositiveInteger",
+      "description": "A positive safe integer (policy revisions and binding indexes are 1-based)."
+    },
+    "ProjectionSubject": {
+      "readOnly": true,
+      "title": "ProjectionSubject",
+      "description": "The subject of one projection: principal id + kind (human/agent/service — service-to-service follows the same path), plus the role and/or agent-task class the policy rows bind to.",
+      "type": "object",
+      "properties": {
+        "principalId": {
+          "type": "string",
+          "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "principalKind": {
+          "type": "string",
+          "enum": [
+            "human",
+            "agent",
+            "service"
+          ]
+        },
+        "role": {
+          "$ref": "#/$defs/RoleId"
+        },
+        "agentTaskClass": {
+          "$ref": "#/$defs/AgentTaskClass"
+        }
+      },
+      "required": [
+        "principalId",
+        "principalKind"
+      ],
+      "additionalProperties": false
+    },
+    "RoleId": {
+      "type": "string",
+      "pattern": "^role:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RoleId",
+      "description": "One principal role id: role:<slug> (opaque; roles are caller vocabulary)."
+    },
+    "AgentTaskClass": {
+      "type": "string",
+      "pattern": "^task-class:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentTaskClass",
+      "description": "One agent task class: task-class:<slug> (the class of work an agent task performs; task classes get their own, narrower policy rows)."
+    },
+    "TaskProjectionContext": {
+      "readOnly": true,
+      "title": "TaskProjectionContext",
+      "description": "Agent task projection context: the task class whose policy row applies plus the task object scope (sorted work-package/activity ids the task references).",
+      "type": "object",
+      "properties": {
+        "taskClass": {
+          "$ref": "#/$defs/AgentTaskClass"
+        },
+        "workPackageIds": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorkPackageId"
+          }
+        },
+        "activityIds": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActivityIdMirror"
+          }
+        }
+      },
+      "required": [
+        "taskClass",
+        "workPackageIds",
+        "activityIds"
+      ],
+      "additionalProperties": false
+    },
+    "WorkPackageId": {
+      "type": "string",
+      "pattern": "^work-package:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkPackageId",
+      "description": "Opaque work-package identity: \"work-package:\" followed by a lowercase slug."
+    },
+    "ActivityIdMirror": {
+      "type": "string",
+      "pattern": "^activity:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ActivityIdMirror",
+      "description": "One W036 activity id (mirrored grammar): activity:<slug>. Pinned by runtime parity against @epoch/solution-delivery."
+    },
+    "ProjectionEntry": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ReleasedField"
+        },
+        {
+          "$ref": "#/$defs/RedactionMarker"
+        }
+      ],
+      "title": "ProjectionEntry",
+      "description": "One projection entry: a released field (value by reference) or a typed redaction marker (field path + policy clause + redaction class)."
+    },
+    "ReleasedField": {
+      "readOnly": true,
+      "title": "ReleasedField",
+      "description": "One released field: the concrete walk path and the canonical value, passed through BY REFERENCE (same value, same digest).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "released"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "value": {}
+      },
+      "required": [
+        "kind",
+        "path",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "RedactionMarker": {
+      "readOnly": true,
+      "title": "RedactionMarker",
+      "description": "One redaction marker: the field path struck by a policy clause, with the redaction class (field path + policy clause + redaction class; never the value).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "redacted"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "clause": {
+          "$ref": "#/$defs/PolicyClauseRef"
+        },
+        "redactionClass": {
+          "type": "string",
+          "enum": [
+            "commercial-sensitive",
+            "supplier-sensitive",
+            "evidence-scoped",
+            "principal-identifying",
+            "policy-scoped",
+            "task-scoped"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "path",
+        "clause",
+        "redactionClass"
+      ],
+      "additionalProperties": false
+    },
+    "PolicyClauseRef": {
+      "readOnly": true,
+      "title": "PolicyClauseRef",
+      "description": "The policy clause behind one redaction: the exact policy revision and the binding row that struck the field.",
+      "type": "object",
+      "properties": {
+        "policyId": {
+          "$ref": "#/$defs/PolicyId"
+        },
+        "revision": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "bindingIndex": {
+          "$ref": "#/$defs/PositiveInteger"
+        }
+      },
+      "required": [
+        "policyId",
+        "revision",
+        "bindingIndex"
+      ],
+      "additionalProperties": false
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque acting principal: \"principal:\" followed by a lowercase slug (W009 identity grammar)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:authorized-projection-content:1.0.0"
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@epoch/access-projection-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Access Projection Runtime service (W041): the thin typed HOST FACADE over @epoch/access-projection — policy registration + versioning, canonical record admission (opaque typed references to the W036 shapes), the TWO-STAGE evaluation pipeline (the W009 authorization gate denies unauthorized operations BEFORE any kernel admission; the kernel then consumes the sealed decision), projection materialization, audit emission with the evaluation-key replay discipline, and the derived projection-state projection. Every step emits access-projection:* events (W010-shaped, one object = one stream stream:access-<slug>, one policy = one stream, one tenant state = one stream) sealed by the kernel and pinned by REAL sealEvent parity tests. In-memory reference behavior: NO persistence, NO network, NO identity-provider or policy-engine integrations; core logic stays pure (zero wall-clock, zero randomness — instants are caller-supplied).",
+  "epoch": { "layer": "service" },
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/access-projection": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

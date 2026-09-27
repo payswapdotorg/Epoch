@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TaskProjectionContext",
+  "$defs": {
+    "TaskProjectionContext": {
+      "readOnly": true,
+      "title": "TaskProjectionContext",
+      "description": "Agent task projection context: the task class whose policy row applies plus the task object scope (sorted work-package/activity ids the task references).",
+      "type": "object",
+      "properties": {
+        "taskClass": {
+          "$ref": "#/$defs/AgentTaskClass"
+        },
+        "workPackageIds": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorkPackageId"
+          }
+        },
+        "activityIds": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActivityIdMirror"
+          }
+        }
+      },
+      "required": [
+        "taskClass",
+        "workPackageIds",
+        "activityIds"
+      ],
+      "additionalProperties": false
+    },
+    "AgentTaskClass": {
+      "type": "string",
+      "pattern": "^task-class:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentTaskClass",
+      "description": "One agent task class: task-class:<slug> (the class of work an agent task performs; task classes get their own, narrower policy rows)."
+    },
+    "WorkPackageId": {
+      "type": "string",
+      "pattern": "^work-package:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkPackageId",
+      "description": "Opaque work-package identity: \"work-package:\" followed by a lowercase slug."
+    },
+    "ActivityIdMirror": {
+      "type": "string",
+      "pattern": "^activity:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ActivityIdMirror",
+      "description": "One W036 activity id (mirrored grammar): activity:<slug>. Pinned by runtime parity against @epoch/solution-delivery."
+    }
+  },
+  "$id": "urn:epoch:access-projection:task-projection-context:1.0.0"
+}

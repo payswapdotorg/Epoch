@@ -1,0 +1,32 @@
+{
+  "name": "@epoch/access-projection",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Access Projection kernel (W041) — least-privilege projections over the canonical W036 solution/delivery state. Projection POLICY is data: typed, versioned, sealed ProjectionPolicy records bind (principal role OR agent-task class) x object class -> allowed actions -> minimum-necessary field allowlists -> evidence/commercial/supplier scope filters -> redaction rules; swapping a policy revision changes the projection with ZERO code change. Evaluation is TWO STAGE, strictly ordered: the W009 authorization decision point answers allow/deny first (the kernel CONSUMES sealed decisions and their request digests — it never re-implements authorization), then the projection stage computes the visible subset through a zod-schema-driven field walk. Projections carry the SAME object id and content digest as the canonical record (projections never mint identities); every non-released field becomes a typed RedactionMarker (never a silent drop); every projection decision emits a sealed, content-addressed ProjectionAuditRecord. NO persistence, NO UI, NO provider vocabulary.",
+  "epoch": { "layer": "kernel" },
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AgentTaskClass",
+  "$defs": {
+    "AgentTaskClass": {
+      "type": "string",
+      "pattern": "^task-class:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentTaskClass",
+      "description": "One agent task class: task-class:<slug> (the class of work an agent task performs; task classes get their own, narrower policy rows)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:agent-task-class:1.0.0"
+}

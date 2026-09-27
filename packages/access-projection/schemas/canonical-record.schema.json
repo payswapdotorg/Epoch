@@ -1,0 +1,2181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CanonicalRecord",
+  "$defs": {
+    "CanonicalRecord": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "objectClass": {
+              "type": "string",
+              "const": "program-of-work"
+            },
+            "record": {
+              "$ref": "#/$defs/SealedProgramOfWork"
+            }
+          },
+          "required": [
+            "objectClass",
+            "record"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "objectClass": {
+              "type": "string",
+              "const": "delivery-record"
+            },
+            "record": {
+              "$ref": "#/$defs/SealedDeliveryRecord"
+            }
+          },
+          "required": [
+            "objectClass",
+            "record"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "objectClass": {
+              "type": "string",
+              "const": "solution-version"
+            },
+            "record": {
+              "$ref": "#/$defs/SealedSolutionVersion"
+            }
+          },
+          "required": [
+            "objectClass",
+            "record"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "objectClass": {
+              "type": "string",
+              "const": "distinction-record"
+            },
+            "record": {
+              "$ref": "#/$defs/SealedDistinctionRecord"
+            }
+          },
+          "required": [
+            "objectClass",
+            "record"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "CanonicalRecord",
+      "description": "One canonical sealed W036 record tagged by object class — the object a projection is computed over."
+    },
+    "SealedProgramOfWork": {
+      "readOnly": true,
+      "title": "SealedProgramOfWork",
+      "description": "The sealed program of work: canonically ordered immutable content plus its SHA-256 content digest (exact-revision addressing).",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.solution-delivery.program-of-work"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "programId": {
+          "type": "string",
+          "pattern": "^program:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "solutionVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "solutionVersionDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "workPackages": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorkPackage"
+          }
+        },
+        "milestones": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MilestoneRecord"
+          }
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "createdBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "programId",
+        "tenantId",
+        "solutionId",
+        "solutionVersion",
+        "solutionVersionDigest",
+        "title",
+        "workPackages",
+        "milestones",
+        "createdAt",
+        "createdBy",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "SolutionId": {
+      "type": "string",
+      "pattern": "^solution:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionId",
+      "description": "Opaque solution-package identity: \"solution:\" followed by a lowercase slug (stable across versions)."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic version core (no prerelease/build suffixes)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "WorkPackage": {
+      "readOnly": true,
+      "title": "WorkPackage",
+      "description": "One work package of the realization graph: a realization variant, sorted activities, optional solution-line/world-entity links (Navigator identity preservation), resources, constraints, approvals, and verification gates.",
+      "type": "object",
+      "properties": {
+        "workPackageId": {
+          "$ref": "#/$defs/WorkPackageId"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "solutionLineId": {
+          "$ref": "#/$defs/SolutionLineId"
+        },
+        "worldEntityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "realizationVariant": {
+          "type": "string",
+          "enum": [
+            "construction-build",
+            "software-implementation-deployment",
+            "mechanical-fabrication-assembly",
+            "electrical-installation-commissioning",
+            "manufacturing",
+            "infrastructure-provisioning",
+            "field-service-repair"
+          ]
+        },
+        "plannedStart": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "plannedFinish": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "responsibleActor": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "resources": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResourceAssignment"
+          }
+        },
+        "constraintReferences": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConstraintReference"
+          }
+        },
+        "approvals": {
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorkApproval"
+          }
+        },
+        "verificationGates": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/VerificationGate"
+          }
+        },
+        "activities": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Activity"
+          }
+        }
+      },
+      "required": [
+        "workPackageId",
+        "title",
+        "realizationVariant",
+        "resources",
+        "constraintReferences",
+        "approvals",
+        "verificationGates",
+        "activities"
+      ],
+      "additionalProperties": false
+    },
+    "WorkPackageId": {
+      "type": "string",
+      "pattern": "^work-package:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkPackageId",
+      "description": "Opaque work-package identity: \"work-package:\" followed by a lowercase slug."
+    },
+    "SolutionLineId": {
+      "type": "string",
+      "pattern": "^line:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionLineId",
+      "description": "Opaque solution-line identity: \"line:\" followed by a lowercase slug."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque acting principal: \"principal:\" followed by a lowercase slug (W009 identity grammar)."
+    },
+    "ResourceAssignment": {
+      "readOnly": true,
+      "title": "ResourceAssignment",
+      "description": "One resource assignment: an opaque resource reference with a canonical decimal quantity and unit.",
+      "type": "object",
+      "properties": {
+        "resourceId": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "quantity": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "unit": {
+          "$ref": "#/$defs/UnitLabel"
+        }
+      },
+      "required": [
+        "resourceId",
+        "quantity",
+        "unit"
+      ],
+      "additionalProperties": false
+    },
+    "OpaqueReference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "OpaqueReference",
+      "description": "Opaque, bounded, provider-neutral reference string owned by its producing system."
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "UnitLabel": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "title": "UnitLabel",
+      "description": "Unit-of-measure label (1-32 characters, provider-neutral)."
+    },
+    "ConstraintReference": {
+      "readOnly": true,
+      "title": "ConstraintReference",
+      "description": "Reference to a constraint in the W004 constraint-language grammar (opaque constraint id; referenced, never embedded).",
+      "type": "object",
+      "properties": {
+        "constraintId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,127}$"
+        }
+      },
+      "required": [
+        "constraintId"
+      ],
+      "additionalProperties": false
+    },
+    "WorkApproval": {
+      "readOnly": true,
+      "title": "WorkApproval",
+      "description": "One work-package approval: the approving principal, the instant, and an optional note.",
+      "type": "object",
+      "properties": {
+        "approvedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "approvedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "approvedBy",
+        "approvedAt"
+      ],
+      "additionalProperties": false
+    },
+    "VerificationGate": {
+      "readOnly": true,
+      "title": "VerificationGate",
+      "description": "One verification gate: the gated activity, an opaque evidence-producing method, criteria, sorted evidence references, and optional pass provenance.",
+      "type": "object",
+      "properties": {
+        "gateId": {
+          "$ref": "#/$defs/GateId"
+        },
+        "activityId": {
+          "$ref": "#/$defs/ActivityId"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "method": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "criteria": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "evidence": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceReference"
+          }
+        },
+        "passedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "passedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        }
+      },
+      "required": [
+        "gateId",
+        "activityId",
+        "title",
+        "method",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "GateId": {
+      "type": "string",
+      "pattern": "^gate:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "GateId",
+      "description": "Opaque verification-gate identity: \"gate:\" followed by a lowercase slug."
+    },
+    "ActivityId": {
+      "type": "string",
+      "pattern": "^activity:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ActivityId",
+      "description": "Opaque activity identity: \"activity:\" followed by a lowercase slug."
+    },
+    "EvidenceReference": {
+      "readOnly": true,
+      "title": "EvidenceReference",
+      "description": "Reference to evidence in the W006 grammar: canonical SHA-256 content digest (exact-revision addressing).",
+      "type": "object",
+      "properties": {
+        "digest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "Activity": {
+      "readOnly": true,
+      "title": "Activity",
+      "description": "One activity of the realization graph: planned quantity/cost/dates, sorted predecessors/successors, resources, responsible actor, constraints, actual progress/dates, blockers, evidence, confidence, and forecast finish.",
+      "type": "object",
+      "properties": {
+        "activityId": {
+          "$ref": "#/$defs/ActivityId"
+        },
+        "workPackageId": {
+          "$ref": "#/$defs/WorkPackageId"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "realizationVariant": {
+          "type": "string",
+          "enum": [
+            "construction-build",
+            "software-implementation-deployment",
+            "mechanical-fabrication-assembly",
+            "electrical-installation-commissioning",
+            "manufacturing",
+            "infrastructure-provisioning",
+            "field-service-repair"
+          ]
+        },
+        "plannedQuantity": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "value": {
+              "$ref": "#/$defs/NonNegativeDecimal"
+            },
+            "unit": {
+              "$ref": "#/$defs/UnitLabel"
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false
+        },
+        "plannedCost": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "amount": {
+              "$ref": "#/$defs/NonNegativeDecimal"
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            }
+          },
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "additionalProperties": false
+        },
+        "plannedStart": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "plannedFinish": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "predecessors": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActivityId"
+          }
+        },
+        "successors": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActivityId"
+          }
+        },
+        "resources": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResourceAssignment"
+          }
+        },
+        "responsibleActor": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "constraintReferences": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConstraintReference"
+          }
+        },
+        "actualProgress": {
+          "$ref": "#/$defs/ProgressFraction"
+        },
+        "actualStart": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "actualFinish": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "blockers": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/BlockerRecord"
+          }
+        },
+        "evidence": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceReference"
+          }
+        },
+        "confidence": {
+          "$ref": "#/$defs/ConfidenceState"
+        },
+        "forecastFinish": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "activityId",
+        "workPackageId",
+        "title",
+        "predecessors",
+        "successors",
+        "resources",
+        "constraintReferences",
+        "blockers",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "ProgressFraction": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "title": "ProgressFraction",
+      "description": "Progress fraction between 0 and 1 inclusive."
+    },
+    "BlockerRecord": {
+      "readOnly": true,
+      "title": "BlockerRecord",
+      "description": "One blocker record: description, the raising principal and instant, and an optional impact note.",
+      "type": "object",
+      "properties": {
+        "blockerId": {
+          "$ref": "#/$defs/BlockerId"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "raisedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "raisedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "impact": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "blockerId",
+        "description",
+        "raisedAt",
+        "raisedBy"
+      ],
+      "additionalProperties": false
+    },
+    "BlockerId": {
+      "type": "string",
+      "pattern": "^blocker:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "BlockerId",
+      "description": "Opaque blocker-record identity: \"blocker:\" followed by a lowercase slug."
+    },
+    "ConfidenceState": {
+      "readOnly": true,
+      "title": "ConfidenceState",
+      "description": "Confidence of one delivery fact: acquisition method (stated/measured/estimated/derived/imported), a 0..1 value, optional interval and rationale.",
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "stated",
+            "measured",
+            "estimated",
+            "derived",
+            "imported"
+          ]
+        },
+        "value": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "interval": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "low": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "high": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "low",
+            "high"
+          ],
+          "additionalProperties": false
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "method",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "MilestoneRecord": {
+      "readOnly": true,
+      "title": "MilestoneRecord",
+      "description": "One milestone record: a dated achievement point over sorted activity ids, with status, optional reached instant and sorted evidence.",
+      "type": "object",
+      "properties": {
+        "milestoneId": {
+          "$ref": "#/$defs/MilestoneId"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "targetDate": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "activityIds": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActivityId"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "reached",
+            "missed"
+          ]
+        },
+        "reachedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "evidence": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceReference"
+          }
+        }
+      },
+      "required": [
+        "milestoneId",
+        "title",
+        "activityIds",
+        "status",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "MilestoneId": {
+      "type": "string",
+      "pattern": "^milestone:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "MilestoneId",
+      "description": "Opaque milestone identity: \"milestone:\" followed by a lowercase slug."
+    },
+    "SealedDeliveryRecord": {
+      "readOnly": true,
+      "title": "SealedDeliveryRecord",
+      "description": "The sealed delivery record: canonically ordered immutable state plus its SHA-256 content digest (exact-revision addressing of the delivery state).",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.solution-delivery.delivery-record"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "deliveryId": {
+          "$ref": "#/$defs/DeliveryId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "solutionVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "solutionVersionDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "openedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "openedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "closed"
+          ]
+        },
+        "closedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "closedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "observations": {
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ObservationRecord"
+          }
+        },
+        "acceptedObservationIds": {
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^observation:[a-z0-9][a-z0-9-]{0,62}$"
+          }
+        },
+        "rejectedObservationIds": {
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^observation:[a-z0-9][a-z0-9-]{0,62}$"
+          }
+        },
+        "actuals": {
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActualRecord"
+          }
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "deliveryId",
+        "tenantId",
+        "solutionId",
+        "solutionVersion",
+        "solutionVersionDigest",
+        "openedAt",
+        "openedBy",
+        "status",
+        "observations",
+        "acceptedObservationIds",
+        "rejectedObservationIds",
+        "actuals",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "DeliveryId": {
+      "type": "string",
+      "pattern": "^delivery:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DeliveryId",
+      "description": "Opaque delivery-record identity: \"delivery:\" followed by a lowercase slug."
+    },
+    "ObservationRecord": {
+      "readOnly": true,
+      "title": "ObservationRecord",
+      "description": "The sealed observation record: immutable evidence-capture content (delivery scope, subject, measure, evidence, uncertainty) plus its SHA-256 content digest.",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.solution-delivery.distinction-record"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "recordId": {
+          "$ref": "#/$defs/DistinctionRecordId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "subject": {
+          "$ref": "#/$defs/DistinctionSubject"
+        },
+        "recordedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "recordedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "uncertainty": {
+          "$ref": "#/$defs/UncertaintyState"
+        },
+        "kind": {
+          "type": "string",
+          "const": "observation"
+        },
+        "measure": {
+          "$ref": "#/$defs/Measure"
+        },
+        "payload": {
+          "$ref": "#/$defs/ObservationPayload"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "recordId",
+        "tenantId",
+        "subject",
+        "recordedAt",
+        "recordedBy",
+        "uncertainty",
+        "kind",
+        "measure",
+        "payload",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "DistinctionRecordId": {
+      "type": "string",
+      "pattern": "^(prediction|estimate|baseline|commitment|observation|actual|forecast|outcome|learning):[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DistinctionRecordId",
+      "description": "Opaque semantic-distinction record identity: one of the nine kind prefixes followed by a lowercase slug."
+    },
+    "DistinctionSubject": {
+      "readOnly": true,
+      "title": "DistinctionSubject",
+      "description": "The subject of one distinction record: the owning solution plus a typed anchor (solution, line, work package, activity, milestone, program, or delivery id).",
+      "type": "object",
+      "properties": {
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "subjectKind": {
+          "type": "string",
+          "enum": [
+            "solution",
+            "solution-line",
+            "work-package",
+            "activity",
+            "milestone",
+            "program",
+            "delivery"
+          ]
+        },
+        "subjectId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "solutionId",
+        "subjectKind",
+        "subjectId"
+      ],
+      "additionalProperties": false
+    },
+    "UncertaintyState": {
+      "readOnly": true,
+      "title": "UncertaintyState",
+      "description": "The uncertainty state of one delivery fact: provenance, freshness and confidence (all required — the decision-sufficiency rule preserves what is not known).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "provenance": {
+          "$ref": "#/$defs/ProvenanceState"
+        },
+        "freshness": {
+          "$ref": "#/$defs/FreshnessState"
+        },
+        "confidence": {
+          "$ref": "#/$defs/ConfidenceState"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "provenance",
+        "freshness",
+        "confidence"
+      ],
+      "additionalProperties": false
+    },
+    "ProvenanceState": {
+      "readOnly": true,
+      "title": "ProvenanceState",
+      "description": "Provenance of one delivery fact: observed/reported/derived/assumed/imported/unknown, optional opaque source reference, optional acting principal.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "observed",
+            "reported",
+            "derived",
+            "assumed",
+            "imported",
+            "unknown"
+          ]
+        },
+        "sourceRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "actor": {
+          "$ref": "#/$defs/PrincipalId"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "FreshnessState": {
+      "readOnly": true,
+      "title": "FreshnessState",
+      "description": "Freshness of one delivery fact: fresh/aging/stale/unknown plus the producer-supplied assessment instant.",
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "fresh",
+            "aging",
+            "stale",
+            "unknown"
+          ]
+        },
+        "assessedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "state",
+        "assessedAt"
+      ],
+      "additionalProperties": false
+    },
+    "Measure": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/QuantityMeasure"
+        },
+        {
+          "$ref": "#/$defs/CostMeasure"
+        },
+        {
+          "$ref": "#/$defs/InstantMeasure"
+        },
+        {
+          "$ref": "#/$defs/ProgressMeasure"
+        }
+      ],
+      "title": "Measure",
+      "description": "One provider-neutral measure: quantity (value+unit), cost (amount+currency), instant, or progress (0..1 fraction)."
+    },
+    "QuantityMeasure": {
+      "readOnly": true,
+      "title": "QuantityMeasure",
+      "description": "A quantity measure: canonical decimal value plus a unit-of-measure label.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "quantity"
+        },
+        "value": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "unit": {
+          "$ref": "#/$defs/UnitLabel"
+        }
+      },
+      "required": [
+        "kind",
+        "value",
+        "unit"
+      ],
+      "additionalProperties": false
+    },
+    "CostMeasure": {
+      "readOnly": true,
+      "title": "CostMeasure",
+      "description": "A cost measure: canonical decimal amount plus an ISO 4217 currency code.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "cost"
+        },
+        "amount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        }
+      },
+      "required": [
+        "kind",
+        "amount",
+        "currency"
+      ],
+      "additionalProperties": false
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    },
+    "InstantMeasure": {
+      "readOnly": true,
+      "title": "InstantMeasure",
+      "description": "An instant measure: a point in time in the canonical UTC form.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "instant"
+        },
+        "at": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "kind",
+        "at"
+      ],
+      "additionalProperties": false
+    },
+    "ProgressMeasure": {
+      "readOnly": true,
+      "title": "ProgressMeasure",
+      "description": "A progress measure: a completion fraction between 0 and 1.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "progress"
+        },
+        "fraction": {
+          "$ref": "#/$defs/ProgressFraction"
+        }
+      },
+      "required": [
+        "kind",
+        "fraction"
+      ],
+      "additionalProperties": false
+    },
+    "ObservationPayload": {
+      "readOnly": true,
+      "title": "ObservationPayload",
+      "description": "Observation payload: the delivery record it belongs to, the observation instant and observer, and the sorted evidence references.",
+      "type": "object",
+      "properties": {
+        "deliveryId": {
+          "$ref": "#/$defs/DeliveryId"
+        },
+        "observedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "observedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "evidence": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceReference"
+          }
+        }
+      },
+      "required": [
+        "deliveryId",
+        "observedAt",
+        "observedBy",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "ActualRecord": {
+      "readOnly": true,
+      "title": "ActualRecord",
+      "description": "The sealed actual record: immutable authoritative delivery fact (derived from an accepted observation) plus its SHA-256 content digest.",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.solution-delivery.distinction-record"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "recordId": {
+          "$ref": "#/$defs/DistinctionRecordId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "subject": {
+          "$ref": "#/$defs/DistinctionSubject"
+        },
+        "recordedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "recordedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "uncertainty": {
+          "$ref": "#/$defs/UncertaintyState"
+        },
+        "kind": {
+          "type": "string",
+          "const": "actual"
+        },
+        "measure": {
+          "$ref": "#/$defs/Measure"
+        },
+        "payload": {
+          "$ref": "#/$defs/ActualPayload"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "recordId",
+        "tenantId",
+        "subject",
+        "recordedAt",
+        "recordedBy",
+        "uncertainty",
+        "kind",
+        "measure",
+        "payload",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "ActualPayload": {
+      "readOnly": true,
+      "title": "ActualPayload",
+      "description": "Actual payload: the delivery record, the observation this actual was converted from, and the actualization instant and principal.",
+      "type": "object",
+      "properties": {
+        "deliveryId": {
+          "$ref": "#/$defs/DeliveryId"
+        },
+        "derivedFromObservationId": {
+          "$ref": "#/$defs/DistinctionRecordId"
+        },
+        "actualizedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "actualizedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        }
+      },
+      "required": [
+        "deliveryId",
+        "derivedFromObservationId",
+        "actualizedAt",
+        "actualizedBy"
+      ],
+      "additionalProperties": false
+    },
+    "SealedSolutionVersion": {
+      "readOnly": true,
+      "title": "SealedSolutionVersion",
+      "description": "The sealed solution version envelope: canonically ordered immutable content plus its SHA-256 content digest (exact-revision addressing; hash-chained via previousVersionDigest).",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.solution-delivery.solution-version"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "version": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "objective": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "solutionLines": {
+          "maxItems": 512,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SolutionLine"
+          }
+        },
+        "worldReferences": {
+          "maxItems": 512,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldEntityReference"
+          }
+        },
+        "constraintReferences": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConstraintReference"
+          }
+        },
+        "previousVersionDigest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Sha256Hex"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "createdBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "solutionId",
+        "version",
+        "tenantId",
+        "title",
+        "solutionLines",
+        "worldReferences",
+        "constraintReferences",
+        "previousVersionDigest",
+        "createdAt",
+        "createdBy",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "SolutionLine": {
+      "readOnly": true,
+      "title": "SolutionLine",
+      "description": "One solution line: quantity+unit line item with optional unit cost, optional world-entity link (Navigator identity preservation) and optional acquisition variant.",
+      "type": "object",
+      "properties": {
+        "lineId": {
+          "$ref": "#/$defs/SolutionLineId"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "quantity": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            },
+            "unit": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false
+        },
+        "unitCost": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            }
+          },
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "additionalProperties": false
+        },
+        "worldEntityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "acquisitionVariant": {
+          "type": "string",
+          "enum": [
+            "external-procurement",
+            "internal-allocation",
+            "subscription-license",
+            "cloud-service-provisioning",
+            "fabrication-request",
+            "specialist-capability-assignment",
+            "data-evidence-acquisition"
+          ]
+        }
+      },
+      "required": [
+        "lineId",
+        "title",
+        "quantity"
+      ],
+      "additionalProperties": false
+    },
+    "WorldEntityReference": {
+      "readOnly": true,
+      "title": "WorldEntityReference",
+      "description": "Reference to a world-graph entity in the W002 world-model grammar (opaque entity id; referenced, never embedded).",
+      "type": "object",
+      "properties": {
+        "entityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "entityId"
+      ],
+      "additionalProperties": false
+    },
+    "SealedDistinctionRecord": {
+      "readOnly": true,
+      "title": "SealedDistinctionRecord",
+      "description": "The sealed semantic-distinction record: immutable kind-discriminated content plus its SHA-256 content digest (exact-revision addressing).",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "const": "epoch.solution-delivery.distinction-record"
+            },
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "recordId": {
+              "$ref": "#/$defs/DistinctionRecordId"
+            },
+            "tenantId": {
+              "$ref": "#/$defs/TenantId"
+            },
+            "subject": {
+              "$ref": "#/$defs/DistinctionSubject"
+            },
+            "recordedAt": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "recordedBy": {
+              "$ref": "#/$defs/PrincipalId"
+            },
+            "uncertainty": {
+              "$ref": "#/$defs/UncertaintyState"
+            },
+            "kind": {
+              "type": "string",
+              "const": "prediction"
+            },
+            "measure": {
+              "$ref": "#/$defs/Measure"
+            },
+            "payload": {
+              "$ref": "#/$defs/PredictionPayload"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "schema",
+            "schemaVersion",
+            "recordId",
+            "tenantId",
+            "subject",
+            "recordedAt",
+            "recordedBy",
+            "uncertainty",
+            "kind",
+            "measure",
+            "payload",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "const": "epoch.solution-delivery.distinction-record"
+            },
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "recordId": {
+              "$ref": "#/$defs/DistinctionRecordId"
+            },
+            "tenantId": {
+              "$ref": "#/$defs/TenantId"
+            },
+            "subject": {
+              "$ref": "#/$defs/DistinctionSubject"
+            },
+            "recordedAt": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "recordedBy": {
+              "$ref": "#/$defs/PrincipalId"
+            },
+            "uncertainty": {
+              "$ref": "#/$defs/UncertaintyState"
+            },
+            "kind": {
+              "type": "string",
+              "const": "estimate"
+            },
+            "measure": {
+              "$ref": "#/$defs/Measure"
+            },
+            "payload": {
+              "$ref": "#/$defs/EstimatePayload"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "schema",
+            "schemaVersion",
+            "recordId",
+            "tenantId",
+            "subject",
+            "recordedAt",
+            "recordedBy",
+            "uncertainty",
+            "kind",
+            "measure",
+            "payload",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "const": "epoch.solution-delivery.distinction-record"
+            },
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "recordId": {
+              "$ref": "#/$defs/DistinctionRecordId"
+            },
+            "tenantId": {
+              "$ref": "#/$defs/TenantId"
+            },
+            "subject": {
+              "$ref": "#/$defs/DistinctionSubject"
+            },
+            "recordedAt": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "recordedBy": {
+              "$ref": "#/$defs/PrincipalId"
+            },
+            "uncertainty": {
+              "$ref": "#/$defs/UncertaintyState"
+            },
+            "kind": {
+              "type": "string",
+              "const": "baseline"
+            },
+            "payload": {
+              "$ref": "#/$defs/BaselinePayload"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "schema",
+            "schemaVersion",
+            "recordId",
+            "tenantId",
+            "subject",
+            "recordedAt",
+            "recordedBy",
+            "uncertainty",
+            "kind",
+            "payload",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "const": "epoch.solution-delivery.distinction-record"
+            },
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "recordId": {
+              "$ref": "#/$defs/DistinctionRecordId"
+            },
+            "tenantId": {
+              "$ref": "#/$defs/TenantId"
+            },
+            "subject": {
+              "$ref": "#/$defs/DistinctionSubject"
+            },
+            "recordedAt": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "recordedBy": {
+              "$ref": "#/$defs/PrincipalId"
+            },
+            "uncertainty": {
+              "$ref": "#/$defs/UncertaintyState"
+            },
+            "kind": {
+              "type": "string",
+              "const": "commitment"
+            },
+            "measure": {
+              "$ref": "#/$defs/Measure"
+            },
+            "payload": {
+              "$ref": "#/$defs/CommitmentPayload"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "schema",
+            "schemaVersion",
+            "recordId",
+            "tenantId",
+            "subject",
+            "recordedAt",
+            "recordedBy",
+            "uncertainty",
+            "kind",
+            "measure",
+            "payload",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "const": "epoch.solution-delivery.distinction-record"
+            },
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "recordId": {
+              "$ref": "#/$defs/DistinctionRecordId"
+            },
+            "tenantId": {
+              "$ref": "#/$defs/TenantId"
+            },
+            "subject": {
+              "$ref": "#/$defs/DistinctionSubject"
+            },
+            "recordedAt": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "recordedBy": {
+              "$ref": "#/$defs/PrincipalId"
+            },
+            "uncertainty": {
+              "$ref": "#/$defs/UncertaintyState"
+            },
+            "kind": {
+              "type": "string",
+              "const": "observation"
+            },
+            "measure": {
+              "$ref": "#/$defs/Measure"
+            },
+            "payload": {
+              "$ref": "#/$defs/ObservationPayload"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "schema",
+            "schemaVersion",
+            "recordId",
+            "tenantId",
+            "subject",
+            "recordedAt",
+            "recordedBy",
+            "uncertainty",
+            "kind",
+            "measure",
+            "payload",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "const": "epoch.solution-delivery.distinction-record"
+            },
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "recordId": {
+              "$ref": "#/$defs/DistinctionRecordId"
+            },
+            "tenantId": {
+              "$ref": "#/$defs/TenantId"
+            },
+            "subject": {
+              "$ref": "#/$defs/DistinctionSubject"
+            },
+            "recordedAt": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "recordedBy": {
+              "$ref": "#/$defs/PrincipalId"
+            },
+            "uncertainty": {
+              "$ref": "#/$defs/UncertaintyState"
+            },
+            "kind": {
+              "type": "string",
+              "const": "actual"
+            },
+            "measure": {
+              "$ref": "#/$defs/Measure"
+            },
+            "payload": {
+              "$ref": "#/$defs/ActualPayload"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "schema",
+            "schemaVersion",
+            "recordId",
+            "tenantId",
+            "subject",
+            "recordedAt",
+            "recordedBy",
+            "uncertainty",
+            "kind",
+            "measure",
+            "payload",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "const": "epoch.solution-delivery.distinction-record"
+            },
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "recordId": {
+              "$ref": "#/$defs/DistinctionRecordId"
+            },
+            "tenantId": {
+              "$ref": "#/$defs/TenantId"
+            },
+            "subject": {
+              "$ref": "#/$defs/DistinctionSubject"
+            },
+            "recordedAt": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "recordedBy": {
+              "$ref": "#/$defs/PrincipalId"
+            },
+            "uncertainty": {
+              "$ref": "#/$defs/UncertaintyState"
+            },
+            "kind": {
+              "type": "string",
+              "const": "forecast"
+            },
+            "measure": {
+              "$ref": "#/$defs/Measure"
+            },
+            "payload": {
+              "$ref": "#/$defs/ForecastPayload"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "schema",
+            "schemaVersion",
+            "recordId",
+            "tenantId",
+            "subject",
+            "recordedAt",
+            "recordedBy",
+            "uncertainty",
+            "kind",
+            "measure",
+            "payload",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "const": "epoch.solution-delivery.distinction-record"
+            },
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "recordId": {
+              "$ref": "#/$defs/DistinctionRecordId"
+            },
+            "tenantId": {
+              "$ref": "#/$defs/TenantId"
+            },
+            "subject": {
+              "$ref": "#/$defs/DistinctionSubject"
+            },
+            "recordedAt": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "recordedBy": {
+              "$ref": "#/$defs/PrincipalId"
+            },
+            "uncertainty": {
+              "$ref": "#/$defs/UncertaintyState"
+            },
+            "kind": {
+              "type": "string",
+              "const": "outcome"
+            },
+            "payload": {
+              "$ref": "#/$defs/OutcomePayload"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "schema",
+            "schemaVersion",
+            "recordId",
+            "tenantId",
+            "subject",
+            "recordedAt",
+            "recordedBy",
+            "uncertainty",
+            "kind",
+            "payload",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "const": "epoch.solution-delivery.distinction-record"
+            },
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "recordId": {
+              "$ref": "#/$defs/DistinctionRecordId"
+            },
+            "tenantId": {
+              "$ref": "#/$defs/TenantId"
+            },
+            "subject": {
+              "$ref": "#/$defs/DistinctionSubject"
+            },
+            "recordedAt": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "recordedBy": {
+              "$ref": "#/$defs/PrincipalId"
+            },
+            "uncertainty": {
+              "$ref": "#/$defs/UncertaintyState"
+            },
+            "kind": {
+              "type": "string",
+              "const": "learning"
+            },
+            "payload": {
+              "$ref": "#/$defs/LearningPayload"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "schema",
+            "schemaVersion",
+            "recordId",
+            "tenantId",
+            "subject",
+            "recordedAt",
+            "recordedBy",
+            "uncertainty",
+            "kind",
+            "payload",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "PredictionPayload": {
+      "readOnly": true,
+      "title": "PredictionPayload",
+      "description": "Prediction payload: optional opaque basis reference (e.g. a simulation run) and optional target instant.",
+      "type": "object",
+      "properties": {
+        "basisRef": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "predictedFor": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "EstimatePayload": {
+      "readOnly": true,
+      "title": "EstimatePayload",
+      "description": "Estimate payload: optional opaque estimation-method reference and optional low/high range in the measure unit.",
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "#/$defs/OpaqueReference"
+        },
+        "range": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/NonNegativeDecimal"
+            },
+            "high": {
+              "$ref": "#/$defs/NonNegativeDecimal"
+            }
+          },
+          "required": [
+            "low",
+            "high"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "BaselinePayload": {
+      "readOnly": true,
+      "title": "BaselinePayload",
+      "description": "Baseline payload: the approved solution version and its exact content digest (the version chain is the authority).",
+      "type": "object",
+      "properties": {
+        "solutionVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "solutionVersionDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "solutionVersion",
+        "solutionVersionDigest"
+      ],
+      "additionalProperties": false
+    },
+    "CommitmentPayload": {
+      "readOnly": true,
+      "title": "CommitmentPayload",
+      "description": "Commitment payload: the committing principal, the commitment instant, and an optional acquisition-request link.",
+      "type": "object",
+      "properties": {
+        "committedBy": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "committedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "acquisitionId": {
+          "$ref": "#/$defs/AcquisitionId"
+        }
+      },
+      "required": [
+        "committedBy",
+        "committedAt"
+      ],
+      "additionalProperties": false
+    },
+    "AcquisitionId": {
+      "type": "string",
+      "pattern": "^acquisition:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AcquisitionId",
+      "description": "Opaque acquisition-request identity: \"acquisition:\" followed by a lowercase slug."
+    },
+    "ForecastPayload": {
+      "readOnly": true,
+      "title": "ForecastPayload",
+      "description": "Forecast payload: the as-of instant of the validated delivery state it projects, and the earlier forecast it refines (forecast lineage only; never a prediction/baseline/actual).",
+      "type": "object",
+      "properties": {
+        "asOf": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "refines": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DistinctionRecordId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "asOf",
+        "refines"
+      ],
+      "additionalProperties": false
+    },
+    "OutcomePayload": {
+      "readOnly": true,
+      "title": "OutcomePayload",
+      "description": "Outcome payload: the outcome kind, sorted verification references, and an optional note.",
+      "type": "object",
+      "properties": {
+        "outcomeKind": {
+          "type": "string",
+          "enum": [
+            "delivered",
+            "accepted",
+            "handover",
+            "residual",
+            "rejected",
+            "abandoned"
+          ]
+        },
+        "verificationRefs": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Sha256Hex"
+          }
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "outcomeKind",
+        "verificationRefs"
+      ],
+      "additionalProperties": false
+    },
+    "LearningPayload": {
+      "readOnly": true,
+      "title": "LearningPayload",
+      "description": "Learning payload: the lesson text and the sorted record links (context, solution, actuals, outcome).",
+      "type": "object",
+      "properties": {
+        "lesson": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "links": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DistinctionRecordId"
+          }
+        }
+      },
+      "required": [
+        "lesson",
+        "links"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:access-projection:canonical-record:1.0.0"
+}

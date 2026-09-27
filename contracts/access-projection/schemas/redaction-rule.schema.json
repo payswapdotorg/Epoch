@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RedactionRule",
+  "$defs": {
+    "RedactionRule": {
+      "readOnly": true,
+      "title": "RedactionRule",
+      "description": "One redaction rule: the redaction class carried by the RedactionMarker of a struck field-path template.",
+      "type": "object",
+      "properties": {
+        "fieldPath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "redactionClass": {
+          "type": "string",
+          "enum": [
+            "commercial-sensitive",
+            "supplier-sensitive",
+            "evidence-scoped",
+            "principal-identifying",
+            "policy-scoped",
+            "task-scoped"
+          ]
+        }
+      },
+      "required": [
+        "fieldPath",
+        "redactionClass"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:access-projection:redaction-rule:1.0.0"
+}

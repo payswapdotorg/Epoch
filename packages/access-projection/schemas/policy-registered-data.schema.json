@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "readOnly": true,
+  "type": "object",
+  "properties": {
+    "policyId": {
+      "type": "string",
+      "pattern": "^policy:[a-z0-9][a-z0-9-]{0,62}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "policyDigest": {
+      "$ref": "#/$defs/Sha256Hex"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "retired"
+      ]
+    },
+    "bindingCount": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    }
+  },
+  "required": [
+    "policyId",
+    "revision",
+    "policyDigest",
+    "status",
+    "bindingCount"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:policy-registered-data:1.0.0"
+}

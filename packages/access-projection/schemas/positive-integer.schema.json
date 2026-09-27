@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PositiveInteger",
+  "$defs": {
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "PositiveInteger",
+      "description": "A positive safe integer (policy revisions and binding indexes are 1-based)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:positive-integer:1.0.0"
+}

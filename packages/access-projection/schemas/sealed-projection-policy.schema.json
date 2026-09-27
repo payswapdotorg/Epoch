@@ -1,0 +1,358 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SealedProjectionPolicy",
+  "$defs": {
+    "SealedProjectionPolicy": {
+      "readOnly": true,
+      "title": "SealedProjectionPolicy",
+      "description": "Published projection policy revision: immutable content plus the SHA-256 of its canonical JSON (the exact-revision content address).",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.access-projection.policy"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "policyId": {
+          "$ref": "#/$defs/PolicyId"
+        },
+        "revision": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "retired"
+          ]
+        },
+        "bindings": {
+          "minItems": 1,
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PolicyBinding"
+          }
+        },
+        "contentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "policyId",
+        "revision",
+        "tenantId",
+        "title",
+        "status",
+        "bindings",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "PolicyId": {
+      "type": "string",
+      "pattern": "^policy:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PolicyId",
+      "description": "One projection policy id: policy:<slug> (opaque, provider-neutral)."
+    },
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "PositiveInteger",
+      "description": "A positive safe integer (policy revisions and binding indexes are 1-based)."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "PolicyBinding": {
+      "readOnly": true,
+      "title": "PolicyBinding",
+      "description": "One projection policy row: (principal role OR agent-task class) x object class -> allowed actions (the export/share ruling) -> minimum-necessary field allowlist -> scope filters -> redaction rules.",
+      "type": "object",
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/BindingSelector"
+        },
+        "objectClass": {
+          "type": "string",
+          "enum": [
+            "program-of-work",
+            "delivery-record",
+            "solution-version",
+            "distinction-record"
+          ]
+        },
+        "allowedActions": {
+          "minItems": 1,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "view",
+              "export",
+              "share"
+            ]
+          }
+        },
+        "fieldAllowlist": {
+          "minItems": 1,
+          "maxItems": 1024,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        },
+        "redactionRules": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RedactionRule"
+          }
+        },
+        "defaultRedactionClass": {
+          "type": "string",
+          "enum": [
+            "commercial-sensitive",
+            "supplier-sensitive",
+            "evidence-scoped",
+            "principal-identifying",
+            "policy-scoped",
+            "task-scoped"
+          ]
+        },
+        "scopeFilters": {
+          "$ref": "#/$defs/ScopeFilters"
+        }
+      },
+      "required": [
+        "selector",
+        "objectClass",
+        "allowedActions",
+        "fieldAllowlist",
+        "redactionRules",
+        "defaultRedactionClass",
+        "scopeFilters"
+      ],
+      "additionalProperties": false
+    },
+    "BindingSelector": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "principalKind": {
+              "type": "string",
+              "const": "human"
+            },
+            "role": {
+              "$ref": "#/$defs/RoleId"
+            }
+          },
+          "required": [
+            "principalKind",
+            "role"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "principalKind": {
+              "type": "string",
+              "const": "service"
+            },
+            "role": {
+              "$ref": "#/$defs/RoleId"
+            }
+          },
+          "required": [
+            "principalKind",
+            "role"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "principalKind": {
+              "type": "string",
+              "const": "agent"
+            },
+            "role": {
+              "$ref": "#/$defs/RoleId"
+            },
+            "agentTaskClass": {
+              "$ref": "#/$defs/AgentTaskClass"
+            }
+          },
+          "required": [
+            "principalKind"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "BindingSelector",
+      "description": "The selector of one policy row: a principal kind plus exactly one of (role, agent-task class). Agents may hold BOTH a role baseline row and task-class rows (the task rows must be narrower)."
+    },
+    "RoleId": {
+      "type": "string",
+      "pattern": "^role:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RoleId",
+      "description": "One principal role id: role:<slug> (opaque; roles are caller vocabulary)."
+    },
+    "AgentTaskClass": {
+      "type": "string",
+      "pattern": "^task-class:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentTaskClass",
+      "description": "One agent task class: task-class:<slug> (the class of work an agent task performs; task classes get their own, narrower policy rows)."
+    },
+    "RedactionRule": {
+      "readOnly": true,
+      "title": "RedactionRule",
+      "description": "One redaction rule: the redaction class carried by the RedactionMarker of a struck field-path template.",
+      "type": "object",
+      "properties": {
+        "fieldPath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "redactionClass": {
+          "type": "string",
+          "enum": [
+            "commercial-sensitive",
+            "supplier-sensitive",
+            "evidence-scoped",
+            "principal-identifying",
+            "policy-scoped",
+            "task-scoped"
+          ]
+        }
+      },
+      "required": [
+        "fieldPath",
+        "redactionClass"
+      ],
+      "additionalProperties": false
+    },
+    "ScopeFilters": {
+      "readOnly": true,
+      "title": "ScopeFilters",
+      "description": "The scope filters of one policy binding: evidence (all/none/listed W006 digests), commercial and supplier section visibility.",
+      "type": "object",
+      "properties": {
+        "evidence": {
+          "$ref": "#/$defs/EvidenceScope"
+        },
+        "commercial": {
+          "$ref": "#/$defs/SectionVisibility"
+        },
+        "supplier": {
+          "$ref": "#/$defs/SectionVisibility"
+        }
+      },
+      "required": [
+        "evidence",
+        "commercial",
+        "supplier"
+      ],
+      "additionalProperties": false
+    },
+    "EvidenceScope": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "all"
+            }
+          },
+          "required": [
+            "mode"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "none"
+            }
+          },
+          "required": [
+            "mode"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "listed"
+            },
+            "allowedDigests": {
+              "minItems": 1,
+              "maxItems": 512,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "required": [
+            "mode",
+            "allowedDigests"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "EvidenceScope",
+      "description": "The evidence scope filter: all, none, or a sorted minimum-necessary allowlist of W006 evidence digests."
+    },
+    "SectionVisibility": {
+      "type": "string",
+      "enum": [
+        "visible",
+        "hidden"
+      ],
+      "title": "SectionVisibility",
+      "description": "One governed section visibility: visible or hidden (hidden strikes the section after the field walk)."
+    }
+  },
+  "$id": "urn:epoch:access-projection:sealed-projection-policy:1.0.0"
+}

@@ -1,0 +1,282 @@
+{
+  "contract": "epoch/access-projection",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Access Projection contract surface (W041, in-package full surface): projection policies as sealed data (role/task-class x object-class bindings with allowed actions, minimum-necessary field allowlists, evidence/commercial/supplier scope filters and redaction rules), the two-stage evaluation over W009 decisions and canonical W036 records, authorized projections with typed redaction markers and stable object identity, the content-addressed audit trail with the evaluation-key replay discipline, and the access-projection:* event vocabulary over the W010 event shapes. JSON Schema projection under schemas/; runtime validators in @epoch/access-projection.",
+  "dataTypes": [
+    "PolicyId",
+    "RoleId",
+    "AgentTaskClass",
+    "AuditRecordId",
+    "AccessStreamId",
+    "AccessPrincipalId",
+    "FieldPathTemplate",
+    "PositiveInteger",
+    "PrincipalId",
+    "TenantId",
+    "Timestamp",
+    "Sha256Hex",
+    "EvidenceScope",
+    "SectionVisibility",
+    "ScopeFilters",
+    "RedactionRule",
+    "BindingSelector",
+    "PolicyBinding",
+    "ProjectionSubject",
+    "PolicyRevisionRef",
+    "ProjectionPolicyContent",
+    "SealedProjectionPolicy",
+    "TaskProjectionContext",
+    "CanonicalRecord",
+    "PolicyClauseRef",
+    "RedactionMarker",
+    "ReleasedField",
+    "ProjectionEntry",
+    "AuthorizedProjectionContent",
+    "SealedAuthorizedProjection",
+    "AuditProvenance",
+    "AppliedScopes",
+    "ProjectionAuditContent",
+    "SealedProjectionAudit",
+    "AccessProjectionEventSequence",
+    "AccessProjectionCausalParent",
+    "AccessProjectionEventPayload",
+    "AccessProjectionEventContent",
+    "SealedAccessProjectionEvent",
+    "PolicyRegisteredData",
+    "RecordAdmittedData",
+    "ProjectionReleasedData",
+    "ProjectionDeniedData",
+    "AuditRecordedData",
+    "StateProjectedData"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical ordering, digest verification, tenant checks) are enforced by the runtime validators in @epoch/access-projection and are not represented in the JSON Schema files",
+  "emittedBy": "renderAccessProjectionContractFiles() in @epoch/access-projection (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "PolicyId",
+      "file": "policy-id.schema.json",
+      "sha256": "35f2891fc9b71cf11d0909acad221503e781eac6f7d5d32296765728f9991569"
+    },
+    {
+      "type": "RoleId",
+      "file": "role-id.schema.json",
+      "sha256": "395d7633e942b28677eb586cc15e79320073a0d431f50c29e53ef44bbc5ca865"
+    },
+    {
+      "type": "AgentTaskClass",
+      "file": "agent-task-class.schema.json",
+      "sha256": "9ed11217a556d61d321873cc9fd3936a790acd957fb552655e73f06fdb2ebe37"
+    },
+    {
+      "type": "AuditRecordId",
+      "file": "audit-record-id.schema.json",
+      "sha256": "56dd5f9ac6e3b5037418b799f3a961bbf6eed348e2fa6302566b8d07d23c9195"
+    },
+    {
+      "type": "AccessStreamId",
+      "file": "access-stream-id.schema.json",
+      "sha256": "dfcea2694743c9ca27fee3d08bfbf8ee9a6f765ef04dedeb2fe7b592fe4db0ce"
+    },
+    {
+      "type": "AccessPrincipalId",
+      "file": "access-principal-id.schema.json",
+      "sha256": "8c9cd18207384ffeff8aac4e8c75fc71cdde6f69fabbdcc91aac8020379125b5"
+    },
+    {
+      "type": "FieldPathTemplate",
+      "file": "field-path-template.schema.json",
+      "sha256": "f2203e5f6da8933d62e88ff3402737b2347ae4322e53b6c5473cef6baec86a6c"
+    },
+    {
+      "type": "PositiveInteger",
+      "file": "positive-integer.schema.json",
+      "sha256": "558a8c73cc8f813fb9c3960594f4ab348fc8fe02c6c65335efaac85e98db4332"
+    },
+    {
+      "type": "PrincipalId",
+      "file": "principal-id.schema.json",
+      "sha256": "50ccb606eb6cbc06033fc9514d278a96d12643917e7cc97b470f0d65748b39d2"
+    },
+    {
+      "type": "TenantId",
+      "file": "tenant-id.schema.json",
+      "sha256": "af7e7ab8674121d7afe44df13ae9282b6bd7ff333d25e697f7b63e381e8d8c96"
+    },
+    {
+      "type": "Timestamp",
+      "file": "timestamp.schema.json",
+      "sha256": "bd381a664f5fed66ce4da8d9a7dab97db7c5d433377837b8bc056439098c6ae5"
+    },
+    {
+      "type": "Sha256Hex",
+      "file": "sha256-hex.schema.json",
+      "sha256": "a1cd0992d16a87093b995d9397c87be393f5ceed14ee793f7c5973f470a0a5d2"
+    },
+    {
+      "type": "EvidenceScope",
+      "file": "evidence-scope.schema.json",
+      "sha256": "ee328a578fc8960aac57a2a085da3eede953ad0d484dfd6630144939d0bf52df"
+    },
+    {
+      "type": "SectionVisibility",
+      "file": "section-visibility.schema.json",
+      "sha256": "5b1766712ae4896bee1263ce8a2dac085526ec92fc219f472c069c8d174a98bc"
+    },
+    {
+      "type": "ScopeFilters",
+      "file": "scope-filters.schema.json",
+      "sha256": "740e27dde6d57800f2c654a1b901b745edd2cdbcfc2d1c59060b5129aea41d33"
+    },
+    {
+      "type": "RedactionRule",
+      "file": "redaction-rule.schema.json",
+      "sha256": "ab4c4d87a94dc9b02551d838916d67f83d12e682dfac9f49a6cad5d5720e03bf"
+    },
+    {
+      "type": "BindingSelector",
+      "file": "binding-selector.schema.json",
+      "sha256": "e633a28c7c8bfdaaf9e55d1141546563861e32b9373afa9de29dc0e2caf3b7eb"
+    },
+    {
+      "type": "PolicyBinding",
+      "file": "policy-binding.schema.json",
+      "sha256": "4b67fb168e465748f4ecb0d07b4ad492baa6205a9ece07dbcd85fa608483969f"
+    },
+    {
+      "type": "ProjectionSubject",
+      "file": "projection-subject.schema.json",
+      "sha256": "d3de9e6cc02318febfe9932955fc84cabebf6234b38e889ab17c95b956d466fd"
+    },
+    {
+      "type": "PolicyRevisionRef",
+      "file": "policy-revision-ref.schema.json",
+      "sha256": "60390d811804b2bb0cf406ff36421b337ff8356c096d17aa640a2e68defe2fa3"
+    },
+    {
+      "type": "ProjectionPolicyContent",
+      "file": "projection-policy-content.schema.json",
+      "sha256": "b9eccd4e4c6bdb1866f1730a54fb0ae26b0199deb7a7e20cf2ddebec1a2427fd"
+    },
+    {
+      "type": "SealedProjectionPolicy",
+      "file": "sealed-projection-policy.schema.json",
+      "sha256": "3a3a3cca0c86f25832a27f51de226c18ca25c90b512c31bd2c5eba01e79c11b4"
+    },
+    {
+      "type": "TaskProjectionContext",
+      "file": "task-projection-context.schema.json",
+      "sha256": "6c2578c4bc692696d4c4a9917b0cd2af23ca06e6d8af8b861c993c259266373d"
+    },
+    {
+      "type": "CanonicalRecord",
+      "file": "canonical-record.schema.json",
+      "sha256": "de1f40e44d39e9709bc1d088c03043c4de94ece47dd5c2fe0f3b435dd703ad96"
+    },
+    {
+      "type": "PolicyClauseRef",
+      "file": "policy-clause-ref.schema.json",
+      "sha256": "ffecf1b5b522fe017d4de73c502e00725083a1f8cc4f685b9309fdff7e5fb74a"
+    },
+    {
+      "type": "RedactionMarker",
+      "file": "redaction-marker.schema.json",
+      "sha256": "5d2eead2662963c42c1478853b4a490ffd3ce025ba2343ff3df1bbef57d6dbb9"
+    },
+    {
+      "type": "ReleasedField",
+      "file": "released-field.schema.json",
+      "sha256": "97ce2df7d19b601627496869a3aac9718501e3d92e1f9b88e9eda2e1b20e0bec"
+    },
+    {
+      "type": "ProjectionEntry",
+      "file": "projection-entry.schema.json",
+      "sha256": "096d6685c423769cdf06f41349d98d4daaeb759e796c349fd0417a10ae12baee"
+    },
+    {
+      "type": "AuthorizedProjectionContent",
+      "file": "authorized-projection-content.schema.json",
+      "sha256": "3798cc0b7ef82f463cd34fce56977d73a9bba444590e95579e000d696c64ef8b"
+    },
+    {
+      "type": "SealedAuthorizedProjection",
+      "file": "sealed-authorized-projection.schema.json",
+      "sha256": "65a92af959d4b6d77be4e1fa47cd695809b746d00a721e96e5be8b00c55a3158"
+    },
+    {
+      "type": "AuditProvenance",
+      "file": "audit-provenance.schema.json",
+      "sha256": "4a4b2531071e169629c351e1c85f5adcf88a3505e1a7655434d457e9947a1743"
+    },
+    {
+      "type": "AppliedScopes",
+      "file": "applied-scopes.schema.json",
+      "sha256": "56309cd164e919ca452322a1e01a55d8c9ad83ea714e4378e98f9cf47ead33fd"
+    },
+    {
+      "type": "ProjectionAuditContent",
+      "file": "projection-audit-content.schema.json",
+      "sha256": "3ecb052a428553bdb8a4d69ab146ff91bbedf17ff334513955cf3484a73302f4"
+    },
+    {
+      "type": "SealedProjectionAudit",
+      "file": "sealed-projection-audit.schema.json",
+      "sha256": "f6baa3083db52c36f718e7a5c0b20b54869fda6499fd0fd2d27ab6fd8b23ca72"
+    },
+    {
+      "type": "AccessProjectionEventSequence",
+      "file": "access-projection-event-sequence.schema.json",
+      "sha256": "d4e98e46c12d20e5e1f1a1cab1020e1aeb65e26320a17ce942211587bb88e986"
+    },
+    {
+      "type": "AccessProjectionCausalParent",
+      "file": "access-projection-causal-parent.schema.json",
+      "sha256": "5a076c9e917b25f134d33d9f1950ce81280cd17c2a60074dcba3f72624a46190"
+    },
+    {
+      "type": "AccessProjectionEventPayload",
+      "file": "access-projection-event-payload.schema.json",
+      "sha256": "e6751e4db106b9b5d46475d7f0d6cfeb3d81fca393b8a1bd991ded5b409e28e4"
+    },
+    {
+      "type": "AccessProjectionEventContent",
+      "file": "access-projection-event-content.schema.json",
+      "sha256": "4ffa34f4b1551734d6f164c0298133823f39b35e8d1755d730bc23e33cf6efb4"
+    },
+    {
+      "type": "SealedAccessProjectionEvent",
+      "file": "sealed-access-projection-event.schema.json",
+      "sha256": "cf47a010a95ed3c3378105b44ca92ecdd72b0a58d71ebb0b6872fa2f1d1b0d78"
+    },
+    {
+      "type": "PolicyRegisteredData",
+      "file": "policy-registered-data.schema.json",
+      "sha256": "5894d50b04934df0d0bdf9411caae3a490aa5971bb13b5317cacecc200f7411e"
+    },
+    {
+      "type": "RecordAdmittedData",
+      "file": "record-admitted-data.schema.json",
+      "sha256": "ba53f4ac0817564d78b30005643ceaae6011ddd0445aa281f5af214464431b09"
+    },
+    {
+      "type": "ProjectionReleasedData",
+      "file": "projection-released-data.schema.json",
+      "sha256": "c0d079200cae838a2a6cc666105213ca0e54ec6e34d6e73df7135bc3444b6b74"
+    },
+    {
+      "type": "ProjectionDeniedData",
+      "file": "projection-denied-data.schema.json",
+      "sha256": "30a19569f4d6eeac9726e64e5ff38e7349e65b255302c3d2cee69d957f93174e"
+    },
+    {
+      "type": "AuditRecordedData",
+      "file": "audit-recorded-data.schema.json",
+      "sha256": "87e0d767c109d1598ec4933e1f9b798bb82255e532ed18188eff99de82964b69"
+    },
+    {
+      "type": "StateProjectedData",
+      "file": "state-projected-data.schema.json",
+      "sha256": "7680bc2cbd54eec2cb0443adc8ceb22551500820da3416b9a7d5c527dcd260da"
+    }
+  ]
+}
