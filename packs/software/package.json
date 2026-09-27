@@ -1,0 +1,39 @@
+{
+  "name": "@epoch/pack-software",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Software/Infrastructure Pack (W027, DP1.0) — DATA + PURE PROJECTION FUNCTIONS over the universal solution-delivery state: the DP1.0 pack profile (admitted through the W036 admitPackProfile path); software vocabulary as typed data (World Model entity bindings for system/service/environment/repository/release-unit, effort/count measurement methods with net/contingency rules, engineering/infrastructure/licensing/operations cost classifications, test-suite/review/deploy-gate/SLO verification descriptors, W004-compatible constraint descriptors, release/SLO outcome types, epic/issue/task/change work-item vocabulary, deployment-environment tiers); versioned content-addressed work templates instantiated as caller-side folds; and the synchronized projections of the universal Plan/Acquire/Realize spine — a roadmap view (releases/tracks/milestones identity-mapped to canonical milestone ids, never minted), an issue-tracker view model (display states DERIVED from canonical lifecycle states — never a parallel tracker), and a deployment-plan view (environments/rollout steps) whose deployment ACTIONS are typed W003 action-proposal TEMPLATES through the authority seam (the pack NEVER executes). Deterministic, in-memory, zod-typed; zero wall-clock/randomness/IO; NO lifecycle authority, NO parallel tracker, NO canonical writes, NO UI, NO provider vocabulary.",
+  "epoch": {
+    "layer": "pack"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/constraint-language": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
