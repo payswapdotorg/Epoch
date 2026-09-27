@@ -57,9 +57,106 @@ importers:
         specifier: 'catalog:'
         version: 2.11.3
 
-  apps/desktop: {}
+  apps/desktop:
+    dependencies:
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../../packages/agent-protocol
+      '@epoch/experience-protocol':
+        specifier: workspace:*
+        version: link:../../packages/experience-protocol
+      '@epoch/renderer-runtime':
+        specifier: workspace:*
+        version: link:../../packages/renderer-runtime
+      '@epoch/tenancy':
+        specifier: workspace:*
+        version: link:../../packages/tenancy
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@epoch/experience-compiler':
+        specifier: workspace:*
+        version: link:../../packages/experience-compiler
+      '@epoch/identity':
+        specifier: workspace:*
+        version: link:../../packages/identity
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
 
-  apps/mobile: {}
+  apps/mobile:
+    dependencies:
+      '@epoch/action-protocol':
+        specifier: workspace:*
+        version: link:../../packages/action-protocol
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../../packages/agent-protocol
+      '@epoch/experience-protocol':
+        specifier: workspace:*
+        version: link:../../packages/experience-protocol
+      '@epoch/solution-delivery':
+        specifier: workspace:*
+        version: link:../../packages/solution-delivery
+      '@epoch/tenancy':
+        specifier: workspace:*
+        version: link:../../packages/tenancy
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/action-policy':
+        specifier: workspace:*
+        version: link:../../packages/action-policy
+      '@epoch/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@epoch/evidence':
+        specifier: workspace:*
+        version: link:../../packages/evidence
+      '@epoch/identity':
+        specifier: workspace:*
+        version: link:../../packages/identity
+      '@epoch/renderer-runtime':
+        specifier: workspace:*
+        version: link:../../packages/renderer-runtime
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
 
   apps/web:
     dependencies:
