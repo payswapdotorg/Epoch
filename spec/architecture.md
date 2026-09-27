@@ -19,6 +19,13 @@ Typed interventions have target, parameters, preconditions, predicted effects, s
 ## Agents
 Registered agents declare capabilities, tools, authority, cost/latency and evidence requirements. Frameworks/models are implementation details behind the protocol.
 
+### Autonomous role and capability discovery
+Epoch also contains a provider-neutral Role & Capability Discovery Plane above the Agent Protocol and Capability Registry. It can infer task-specific capability demands from reconstructed world state, constraints, unresolved unknowns, failed attempts, delivery/work state and verification requirements; synthesize candidate roles; resolve agents, humans, skills, extensions and model substrates; construct candidate organizations; and evaluate them before assignment.
+
+The role is a task specialization, not a profession qualification. A model/provider name never establishes role suitability. Model selection is a consequence of measured capability compatibility and evaluation.
+
+The canonical contracts are spec/autonomous-role-capability-discovery.md and spec/capability-contribution-contract.md.
+
 ## Constraints
 ECL supports hard, soft, resource, safety/regulatory, epistemic/evidence and authority/governance constraints. Natural language may author constraints; deterministic compiled enforcement is preferred.
 
@@ -54,6 +61,16 @@ Examples include:
 - Assimp and format-specific adapters for asset ingestion.
 
 Provider-native files, scene graphs, repositories, solver state and workspaces are linked artifacts, not Epoch semantic authority. Forks require an approved Architecture Change Request and an explicit license, dependency, isolation, divergence and upstream/reconciliation plan.
+
+## Autonomous ecosystem discovery
+Epoch may run a deployment-neutral scheduled discovery workflow. Its default policy is a weekly scan of authorized public/private source adapters plus problem-driven discovery from known capability gaps and weak/failed evaluations.
+
+The workflow is:
+Scheduler -> source adapters -> candidate ingestion -> sandbox/profile -> capability mapping -> evaluation -> registry proposal -> role/organization availability.
+
+Discovery produces candidates and evidence; it does not grant authority. Untrusted model/code artifacts are never executed in the Epoch trust domain, unverified capabilities are not promoted into consequential workflows, and new domain packs are proposed and governed rather than silently activated.
+
+The scheduler is not tied to a particular external site. Hugging Face, GitHub, research indexes and engineering software catalogs are source adapters. Temporal or another authorized scheduler may trigger the same provider-neutral contract.
 
 ## Experience Runtime
 Consumes world/task/agent/evidence/device/capability state and produces Experience Graphs for 2D, 3D, animation, narrative, timeline/replay, presence and controls. It is never semantic authority. The Solution Navigator presents synchronized Design, Program of Work, BOQ, Procurement, Execution, Verification, Forecast, Outcome and Learning projections.
