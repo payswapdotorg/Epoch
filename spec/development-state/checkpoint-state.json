@@ -24,6 +24,25 @@
       },
       "programProgress": "28/44",
       "note": "Revival cycle: 3h stream death recovered sandbox-first (lesson-37); serial dispatch discipline (peak cull confirmed twice); W026 dispatched into clear window 12:03, generating."
+    },
+    {
+      "id": "W026_COMPLETE",
+      "at": "2026-09-27T13:26:18Z",
+      "workOrder": "W026",
+      "mergeSha": "17f16e7b993f2b0ebb3ddcd1250a8c9699885d8c",
+      "reconcileSha": "c443d707589554bc319ce47189d49a1a2e5ff42f",
+      "pr": 78,
+      "gates": {
+        "G1_scope": "PASS 41/41 owned (packs/construction only)",
+        "G2_secrets": "PASS",
+        "G3_install": "PASS (merged tree)",
+        "G4_governance_boundary": "PASS (merged tree)",
+        "G5_battery": "PASS 160/160 exit 0 (merged tree: W039+W026 compose)",
+        "G6_ci": "PASS 2/2",
+        "G7_report": "PASS"
+      },
+      "programProgress": "29/44",
+      "note": "Base-skew handled: worker base 29b13f3 (pre-W039); merge verified conflict-free + battery on merged tree. W027 send attempts (2x) never landed server-side (peak capacity gate at send time); retry cadence active."
     }
   ]
 }
