@@ -1,0 +1,38 @@
+{
+  "name": "@epoch/adapter-fmi",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Co-Simulation Participant adapter (W029 reference set) — the typed, provider-neutral reference adapter for co-simulation participant models (simulation category): participant-model fixtures become typed simulation participants with typed ports (inputs/outputs/parameters as declared, value-kinded, unit-carrying ports); a step is a typed, deterministic, content-addressed exchange (identical inputs -> identical step digests; idempotent step replay returns the sealed prior record; different content under the same key is a typed replay-conflict); the participant derives a REAL W005 simulator registration and executes behind the W021 simulation-fabric execution-port seam (compile-time + runtime devDependency parity — the fabric sees only its own typed contracts). Provider vocabulary stays in src/provider (blocklist-tested). In-memory reference behavior: NO network, NO live co-simulation runtimes, NO real side effects; fixtures stand in for provider payloads.",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/adapter-sdk": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/simulation-protocol": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/action-policy": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/simulation-fabric": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
