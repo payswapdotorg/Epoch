@@ -57,6 +57,9 @@ REQUIRED_FILES = [
     "spec/domain-pack-contract.md",
     "spec/solution-navigator-architecture.md",
     "spec/capability-foundation-policy.md",
+    "spec/autonomous-role-capability-discovery.md",
+    "spec/capability-contribution-contract.md",
+    "spec/architecture-change-requests/ACR-004-autonomous-role-capability-discovery.md",
     "spec/architecture-change-requests/ACR-003-capability-foundations.md",
     "spec/development-state/program-state.json",
     "spec/development-state/frontier-state.json",
@@ -236,6 +239,9 @@ FIXTURE_FILES = {
     "spec/domain-pack-contract.md": "# fixture domain pack contract\n",
     "spec/solution-navigator-architecture.md": "# fixture solution navigator\n",
     "spec/capability-foundation-policy.md": "# fixture capability foundation policy\n",
+    "spec/autonomous-role-capability-discovery.md": "# fixture autonomous discovery\n",
+    "spec/capability-contribution-contract.md": "# fixture capability contribution\n",
+    "spec/architecture-change-requests/ACR-004-autonomous-role-capability-discovery.md": "# fixture ACR-004\n",
     "spec/architecture-change-requests/ACR-003-capability-foundations.md": "# fixture ACR-003\n",
     "spec/work-items.md": (
         "# Fixture work items\n\n"
