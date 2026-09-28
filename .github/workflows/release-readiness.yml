@@ -1,0 +1,68 @@
+name: Release readiness
+
+# W035 — CI coverage for the owned surfaces OUTSIDE the pnpm-workspace
+# globs: the release kit (release/), the SDK examples (examples/sdk/),
+# and the documentation contract-sync pins. The repo-standard battery
+# (ci.yml: pnpm turbo run governance boundary typecheck lint test build)
+# covers the workspace packages only; this workflow adds the W035
+# out-of-glob evidence battery so every push/PR runs it:
+#
+#   1. the release-kit evidence suite (release/test — 89 tests);
+#   2. the release-tree typecheck (release src + test + examples/sdk
+#      transitively, via the borrowed @epoch/test-harness toolchain);
+#   3. lint of the release tree and the examples/sdk tree.
+#
+# Deterministic by construction: no coverage, no shuffle, no network
+# beyond the pnpm install.
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  release-kit:
+    name: release kit / typecheck / lint / test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable pnpm via corepack
+        run: corepack enable pnpm
+
+      # Same install policy as ci.yml: the lockfile is the frozen
+      # baseline on main; non-foundation work branches never commit
+      # lockfile changes, so CI regenerates it for the run only. The
+      # W035 surfaces add no workspace importers (release/ and
+      # examples/sdk carry no package.json by the runtime dependency
+      # policy), so the frozen lockfile always suffices for this job.
+      - name: Install dependencies (frozen baseline)
+        if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+        run: pnpm install --frozen-lockfile
+
+      - name: Install dependencies (lockfile regenerated for this run only)
+        if: ${{ !(github.event_name == 'push' && github.ref_name == 'main') }}
+        run: pnpm install --no-frozen-lockfile
+
+      # The release-kit evidence suite: positive / negative / recovery /
+      # determinism / parity / contract-sync / examples (89 tests).
+      - name: Release-kit evidence suite
+        run: pnpm --filter @epoch/test-harness exec vitest run --root ../../release
+
+      # Typecheck the release tree (src + test + examples/sdk transitively).
+      - name: Release-tree typecheck
+        run: pnpm --filter @epoch/test-harness exec tsc --noEmit -p ../../release/tsconfig.json
+
+      # Lint the two owned out-of-glob trees (borrowed toolchain).
+      - name: Lint release tree
+        run: (cd release && ../packages/test-harness/node_modules/.bin/eslint .)
+
+      - name: Lint examples/sdk tree
+        run: (cd examples/sdk && ../../packages/test-harness/node_modules/.bin/eslint .)
