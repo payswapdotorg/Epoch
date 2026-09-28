@@ -1,0 +1,29 @@
+{
+  "name": "@epoch/performance-scale",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "W034 Performance + scale evidence suite: the instrumented compositions over the REAL measurement subjects (W036 solution-delivery, W039 actualization + variance, W026/W027 the two domain packs, W032 test-harness) — workload generators at declared ladder sizes against the typed budget catalog, complexity-class verification via measured count ratios, the regression gate (an inflated workload exceeds a budget -> the suite FAILS with the typed verdict, then restored), determinism (rerun = byte-identical counts/verdicts), negative (malformed workload, tampered digest, tenant isolation) and round-trip + digest verification for budgets, workloads, counts and verdicts. NOT a pnpm workspace importer: tests/performance sits outside the pnpm-workspace.yaml globs (owned surface, root manifests frozen), so this manifest DECLARES the frozen devDependency policy while import resolution happens via vitest resolve.alias + tsconfig paths. Run via: pnpm --filter @epoch/test-harness exec vitest run --root ../../tests/performance.",
+  "epoch": {
+    "layer": "service"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/actualization": "workspace:*",
+    "@epoch/variance": "workspace:*",
+    "@epoch/pack-construction": "workspace:*",
+    "@epoch/pack-software": "workspace:*",
+    "@epoch/test-harness": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/performance": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "vitest": "catalog:",
+    "typescript": "catalog:"
+  }
+}
