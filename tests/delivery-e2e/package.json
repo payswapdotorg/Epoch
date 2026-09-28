@@ -1,0 +1,40 @@
+{
+  "name": "@epoch/delivery-e2e-slices",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "W044 Delivery-to-Learning End-to-End Fixture: the named acceptance test over the deterministic construction-realization scenario (examples/delivery-e2e). Proves the complete universal lifecycle — semantic identity continuity, BOQ/Program synchronization, procurement/execution as Acquire/Realize projections, baseline/commitment/actual/forecast distinction, explicit incomplete information, authorization projections, the mocked Aurum bridge legs, missed-milestone supervision with returned status and automatic update, alert propagation, predicted-vs-actual variance, and learning-dataset lineage — through REAL workspace kernels composed by their public APIs. NOT a pnpm workspace importer: tests/delivery-e2e sits outside the pnpm-workspace.yaml globs (owned surface, root manifests frozen), so this manifest DECLARES the frozen devDependency policy while import resolution happens via vitest resolve.alias + tsconfig paths. Run via: pnpm --filter @epoch/pack-construction exec vitest run --root ../../tests/delivery-e2e (see docs/delivery-e2e/README.md).",
+  "epoch": {
+    "layer": "service"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/procurement": "workspace:*",
+    "@epoch/execution-tracking": "workspace:*",
+    "@epoch/actualization": "workspace:*",
+    "@epoch/variance": "workspace:*",
+    "@epoch/learning-calibration": "workspace:*",
+    "@epoch/access-projection": "workspace:*",
+    "@epoch/external-event-bridge": "workspace:*",
+    "@epoch/adapter-aurum-chat": "workspace:*",
+    "@epoch/supervision": "workspace:*",
+    "@epoch/alerts": "workspace:*",
+    "@epoch/pack-construction": "workspace:*",
+    "@epoch/action-policy": "workspace:*",
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "vitest": "catalog:",
+    "typescript": "catalog:"
+  }
+}
