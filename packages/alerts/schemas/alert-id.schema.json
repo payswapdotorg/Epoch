@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AlertId",
+  "$defs": {
+    "AlertId": {
+      "type": "string",
+      "pattern": "^alert:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AlertId",
+      "description": "Opaque alert-chain identity: \"alert:<slug>\", derived deterministically from the finding it watches."
+    }
+  },
+  "$id": "urn:epoch:alerts:alert-id:1.0.0"
+}

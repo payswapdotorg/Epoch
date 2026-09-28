@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SupervisionPrincipalId",
+  "$defs": {
+    "SupervisionPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SupervisionPrincipalId",
+      "description": "Opaque acting principal of the supervision domain: \"principal:<slug>\" (the W009 grammar)."
+    }
+  },
+  "$id": "urn:epoch:supervision:supervision-principal-id:1.0.0"
+}

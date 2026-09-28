@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LeadTimeInputId",
+  "$defs": {
+    "LeadTimeInputId": {
+      "type": "string",
+      "pattern": "^lead-time:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LeadTimeInputId",
+      "description": "Opaque lead-time risk input identity: \"lead-time:<slug>\"."
+    }
+  },
+  "$id": "urn:epoch:supervision:lead-time-input-id:1.0.0"
+}

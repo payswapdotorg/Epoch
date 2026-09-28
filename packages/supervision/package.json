@@ -1,0 +1,38 @@
+{
+  "name": "@epoch/supervision",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Delivery Supervision kernel (W043) — policy-driven supervision of ProgramOfWork and DeliveryRecord state (USL1.0/SD1.0, binding): planned-vs-actual monitoring; critical-path and prerequisite checks (a typed CPM traversal that OBSERVES the W036 dependency graph — the schedule authority STAYS in ProgramOfWork, re-schedule attempts are typed re-schedule-rejected); acquisition/lead-time risk checks over W037-shaped lead-time observation inputs; consumption/cost anomaly checks as typed threshold rules over the W036 foldDeliveryActuals shapes (magnitude + breach class); verification failures (W036 VerificationGate + W038-shaped issue records surface as findings, never gate mutations); unresolved high-impact unknown detection over W036 DecisionImpact-material info-requests past their freshness requirements. Supervision is READ-ONLY over delivery state: every check is a pure function of sealed inputs to content-addressed, deterministic, replay-safe findings (due/late/drifted/blocked) carrying W006-convention provenance. Procurement/execution-tracking inputs arrive as OPAQUE typed references with devDep compile-time parity (the W037 kernel-parity pattern). NO persistence, NO UI, NO provider vocabulary, NO external providers (synthetic schedules only).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/execution-tracking": "workspace:*",
+    "@epoch/procurement": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

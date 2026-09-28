@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/FindingId",
+  "$defs": {
+    "FindingId": {
+      "type": "string",
+      "pattern": "^finding:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "FindingId",
+      "description": "Opaque supervision-finding identity: \"finding:<slug>\", derived deterministically from the finding class and subject."
+    }
+  },
+  "$id": "urn:epoch:supervision:finding-id:1.0.0"
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SupervisionEventSequence",
+  "$defs": {
+    "SupervisionEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "SupervisionEventSequence",
+      "description": "One supervision-event sequence number: 1-based, contiguous per supervision stream."
+    }
+  },
+  "$id": "urn:epoch:supervision:supervision-event-sequence:1.0.0"
+}

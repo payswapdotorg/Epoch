@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/NotificationId",
+  "$defs": {
+    "NotificationId": {
+      "type": "string",
+      "pattern": "^notification:[a-z0-9][a-z0-9-]{0,54}$",
+      "title": "NotificationId",
+      "description": "Opaque notification identity: \"notification:<slug>\"."
+    }
+  },
+  "$id": "urn:epoch:alerts:notification-id:1.0.0"
+}

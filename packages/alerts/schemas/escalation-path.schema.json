@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EscalationPath",
+  "$defs": {
+    "EscalationPath": {
+      "readOnly": true,
+      "title": "EscalationPath",
+      "description": "The escalation path of one policy rule: the notify targets, the escalation delay (seconds), the re-notify cadence (seconds), and the next escalation tier.",
+      "type": "object",
+      "properties": {
+        "notify": {
+          "minItems": 1,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NotificationTarget"
+          }
+        },
+        "escalationDelaySeconds": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "reNotifyCadenceSeconds": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "escalateTo": {
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NotificationTarget"
+          }
+        }
+      },
+      "required": [
+        "notify",
+        "escalationDelaySeconds",
+        "reNotifyCadenceSeconds",
+        "escalateTo"
+      ],
+      "additionalProperties": false
+    },
+    "NotificationTarget": {
+      "readOnly": true,
+      "title": "NotificationTarget",
+      "description": "One notification target: a closed neutral kind (role, principal, channel) plus an opaque reference — never a provider identity.",
+      "type": "object",
+      "properties": {
+        "targetKind": {
+          "type": "string",
+          "enum": [
+            "role",
+            "principal",
+            "channel"
+          ]
+        },
+        "targetRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "targetKind",
+        "targetRef"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    }
+  },
+  "$id": "urn:epoch:alerts:escalation-path:1.0.0"
+}

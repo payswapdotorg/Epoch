@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SubjectKindToken",
+  "$defs": {
+    "SubjectKindToken": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,31}$",
+      "title": "SubjectKindToken",
+      "description": "A neutral subject-kind token: kebab-case, bounded (the closed vocabulary lives in FINDING_SUBJECT_KINDS)."
+    }
+  },
+  "$id": "urn:epoch:supervision:subject-kind-token:1.0.0"
+}

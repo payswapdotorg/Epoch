@@ -1,0 +1,40 @@
+{
+  "name": "@epoch/supervision-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Delivery Supervision Runtime service (W043): the thin typed HOST FACADE over the @epoch/supervision + @epoch/alerts kernels — program/delivery registration (the REAL W036 sealed records verified at admission; idempotent by digest, replay-conflict on same-id-different-content), escalation-policy registration (policy as data), scheduled evaluation passes at CALLER-DRIVEN instants (no timers, no wall-clock) producing findings through the six supervision check families, the alert lifecycle (idempotent raise, append-only revisions across due->late->blocked transitions, escalation through typed W003 proposals + verifiable gateway decisions, terminal resolution), notification dispatch through the NotificationPort adapter seam (ONE in-memory reference adapter; replay-safe duplicate receipts) with policy-driven re-notify cadence sweeps, and the derived supervision-state projection. Every step emits supervision:* events (W010-shaped, one stream per supervised program stream:supervision-<suffix>, digests sealed by the kernel). The W009 authorization gate denies unauthorized operations BEFORE any kernel admission; tenant isolation is typed tenant-isolation-rejected; supervision OBSERVES, never re-schedules (reschedule attempts are re-schedule-rejected). In-memory reference behavior: NO persistence, NO network, NO clocks, NO randomness — synthetic schedules only, no external provider required or permitted.",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/alerts": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/supervision": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/execution-tracking": "workspace:*",
+    "@epoch/procurement": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

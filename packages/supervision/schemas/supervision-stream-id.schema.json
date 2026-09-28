@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SupervisionStreamId",
+  "$defs": {
+    "SupervisionStreamId": {
+      "type": "string",
+      "pattern": "^stream:supervision-[a-z0-9][a-z0-9-]{0,54}$",
+      "title": "SupervisionStreamId",
+      "description": "Opaque supervision-stream identity: \"stream:supervision-<suffix>\" (one stream per supervised program)."
+    }
+  },
+  "$id": "urn:epoch:supervision:supervision-stream-id:1.0.0"
+}

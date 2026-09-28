@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SupervisionPassId",
+  "$defs": {
+    "SupervisionPassId": {
+      "type": "string",
+      "pattern": "^pass:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SupervisionPassId",
+      "description": "Opaque supervision-pass identity: \"pass:<slug>\", caller-supplied."
+    }
+  },
+  "$id": "urn:epoch:supervision:supervision-pass-id:1.0.0"
+}

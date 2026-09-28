@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/FindingSubject",
+  "$defs": {
+    "FindingSubject": {
+      "readOnly": true,
+      "title": "FindingSubject",
+      "description": "The subject of one supervision finding: a closed subject kind plus the opaque id inside the supervised program.",
+      "type": "object",
+      "properties": {
+        "subjectKind": {
+          "type": "string",
+          "enum": [
+            "solution",
+            "solution-line",
+            "work-package",
+            "activity",
+            "milestone",
+            "program",
+            "delivery",
+            "gate",
+            "acquisition",
+            "info-request",
+            "execution-issue"
+          ]
+        },
+        "subjectId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "subjectKind",
+        "subjectId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:supervision:finding-subject:1.0.0"
+}

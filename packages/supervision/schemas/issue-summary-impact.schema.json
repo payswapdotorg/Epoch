@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/IssueSummaryImpact",
+  "$defs": {
+    "IssueSummaryImpact": {
+      "readOnly": true,
+      "title": "IssueSummaryImpact",
+      "description": "The impact-reference mirror of one execution-issue summary: the opaque ProgramOfWork schedule items (work packages, activities, milestones) the issue touches.",
+      "type": "object",
+      "properties": {
+        "workPackageIds": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^work-package:[a-z0-9][a-z0-9-]{0,62}$"
+          }
+        },
+        "activityIds": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActivityId"
+          }
+        },
+        "milestoneIds": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^milestone:[a-z0-9][a-z0-9-]{0,62}$"
+          }
+        }
+      },
+      "required": [
+        "workPackageIds",
+        "activityIds",
+        "milestoneIds"
+      ],
+      "additionalProperties": false
+    },
+    "ActivityId": {
+      "type": "string",
+      "pattern": "^activity:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ActivityId",
+      "description": "Opaque activity identity: \"activity:\" followed by a lowercase slug (the W036 ProgramOfWork grammar)."
+    }
+  },
+  "$id": "urn:epoch:supervision:issue-summary-impact:1.0.0"
+}
