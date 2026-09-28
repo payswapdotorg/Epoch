@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/InvoiceLifecycleState",
+  "$defs": {
+    "InvoiceLifecycleState": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "issued",
+        "settled",
+        "voided"
+      ],
+      "title": "InvoiceLifecycleState",
+      "description": "Invoice lifecycle state: draft, issued, settled, or voided."
+    }
+  },
+  "$id": "urn:epoch:entitlements:invoice-lifecycle-state:1.0.0"
+}

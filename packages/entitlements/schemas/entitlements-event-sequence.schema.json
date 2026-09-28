@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EntitlementsEventSequence",
+  "$defs": {
+    "EntitlementsEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "EntitlementsEventSequence",
+      "description": "One entitlements/billing event sequence number: 1-based, contiguous per stream."
+    }
+  },
+  "$id": "urn:epoch:entitlements:entitlements-event-sequence:1.0.0"
+}

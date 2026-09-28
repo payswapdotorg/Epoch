@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DeliveryActualReference",
+  "$defs": {
+    "DeliveryActualReference": {
+      "readOnly": true,
+      "title": "DeliveryActualReference",
+      "description": "The W036 validated-actual provenance of one delivery-actual invoice line: the delivery record, the actual record id, and the actual content digest (exact-revision addressing).",
+      "type": "object",
+      "properties": {
+        "deliveryId": {
+          "$ref": "#/$defs/DeliveryId"
+        },
+        "actualRecordId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "actualContentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "deliveryId",
+        "actualRecordId",
+        "actualContentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "DeliveryId": {
+      "type": "string",
+      "pattern": "^delivery:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DeliveryId",
+      "description": "Opaque delivery-record identity: \"delivery:\" followed by a lowercase slug."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:entitlements:delivery-actual-reference:1.0.0"
+}

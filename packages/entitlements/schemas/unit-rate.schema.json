@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/UnitRate",
+  "$defs": {
+    "UnitRate": {
+      "readOnly": true,
+      "title": "UnitRate",
+      "description": "One caller-supplied unit rate for billing quantity-measure delivery actuals: canonical decimal amount per unit plus ISO 4217 currency.",
+      "type": "object",
+      "properties": {
+        "unitAmount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        }
+      },
+      "required": [
+        "unitAmount",
+        "currency"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    }
+  },
+  "$id": "urn:epoch:entitlements:unit-rate:1.0.0"
+}

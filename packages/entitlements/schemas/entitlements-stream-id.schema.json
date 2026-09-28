@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EntitlementsStreamId",
+  "$defs": {
+    "EntitlementsStreamId": {
+      "type": "string",
+      "pattern": "^stream:entitlements-[a-z0-9][a-z0-9-]{0,48}$",
+      "title": "EntitlementsStreamId",
+      "description": "Opaque entitlements-stream identity: \"stream:entitlements-\" followed by a lowercase slug (the W010 stream grammar; one stream per entitlement)."
+    }
+  },
+  "$id": "urn:epoch:entitlements:entitlements-stream-id:1.0.0"
+}

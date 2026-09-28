@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SeatAssignmentId",
+  "$defs": {
+    "SeatAssignmentId": {
+      "type": "string",
+      "pattern": "^seat:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SeatAssignmentId",
+      "description": "Opaque seat-assignment identity: \"seat:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:entitlements:seat-assignment-id:1.0.0"
+}

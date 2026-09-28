@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BillingLineBasis",
+  "$defs": {
+    "BillingLineBasis": {
+      "type": "string",
+      "enum": [
+        "one-time",
+        "subscription",
+        "seat",
+        "usage",
+        "delivery-actual"
+      ],
+      "title": "BillingLineBasis",
+      "description": "Billable-line basis: one-time, subscription, seat, usage (the W023 revenue-basis vocabulary), or delivery-actual (a W036 validated actual)."
+    }
+  },
+  "$id": "urn:epoch:entitlements:billing-line-basis:1.0.0"
+}

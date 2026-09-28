@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EntitlementsEventDiscriminator",
+  "$defs": {
+    "EntitlementsEventDiscriminator": {
+      "type": "string",
+      "enum": [
+        "entitlements:seat-assigned",
+        "entitlements:seat-released",
+        "billing:account-opened",
+        "billing:invoice-drafted",
+        "billing:invoice-issued",
+        "billing:invoice-settled",
+        "billing:invoice-voided"
+      ],
+      "title": "EntitlementsEventDiscriminator",
+      "description": "Closed discriminator vocabulary of the entitlements/billing events: seat-assigned, seat-released, account-opened, invoice-drafted, invoice-issued, invoice-settled, invoice-voided."
+    }
+  },
+  "$id": "urn:epoch:entitlements:entitlements-event-discriminator:1.0.0"
+}
