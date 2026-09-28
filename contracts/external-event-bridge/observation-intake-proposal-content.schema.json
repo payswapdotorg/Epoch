@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ObservationIntakeProposalContent",
+  "$defs": {
+    "ObservationIntakeProposalContent": {
+      "readOnly": true,
+      "title": "ObservationIntakeProposalContent",
+      "description": "The immutable content of one observation intake proposal: proposal id, tenant scope, the exact external-event revision it derives from (id + digest + source provenance), correlation/causation ids, the W036-shaped observation slot, and the caller-supplied proposal provenance.",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.external-event-bridge.intake-proposal"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "proposalId": {
+          "type": "string",
+          "pattern": "^intake:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "sourceEventId": {
+          "type": "string",
+          "pattern": "^bridge-event:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "sourceEventDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source": {
+          "$ref": "#/$defs/BridgeProvenance"
+        },
+        "correlationId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "causationId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observation": {
+          "$ref": "#/$defs/ObservationIntakePayload"
+        },
+        "proposedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "proposedBy": {
+          "type": "string",
+          "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "proposalId",
+        "tenantId",
+        "sourceEventId",
+        "sourceEventDigest",
+        "source",
+        "correlationId",
+        "causationId",
+        "observation",
+        "proposedAt",
+        "proposedBy"
+      ],
+      "additionalProperties": false
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "BridgeProvenance": {
+      "readOnly": true,
+      "title": "BridgeProvenance",
+      "description": "The W006-shaped provenance of one bridge record: adapter identity, exact adapter-descriptor digest, provider event reference, raw provider-payload digest, and the provenance kind (reported/derived/imported).",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "observed",
+            "reported",
+            "derived",
+            "imported"
+          ]
+        },
+        "adapterId": {
+          "type": "string",
+          "pattern": "^adapter:[a-z0-9][a-z0-9-]{0,80}$"
+        },
+        "adapterDescriptorDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "providerEventRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "providerPayloadDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "recordedBy": {
+          "type": "string",
+          "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$"
+        }
+      },
+      "required": [
+        "kind",
+        "adapterId",
+        "adapterDescriptorDigest",
+        "providerEventRef",
+        "providerPayloadDigest"
+      ],
+      "additionalProperties": false
+    },
+    "ObservationIntakePayload": {
+      "readOnly": true,
+      "title": "ObservationIntakePayload",
+      "description": "The W036-shaped observation slot of one intake proposal: the W036 observation distinction-record envelope with opaque subject/measure/payload/uncertainty slots (validated by the W036 authority on admission).",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.solution-delivery.distinction-record"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "observation"
+        },
+        "recordId": {
+          "type": "string",
+          "pattern": "^observation:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "subject": {
+          "$ref": "#/$defs/JsonValue"
+        },
+        "measure": {
+          "$ref": "#/$defs/JsonValue"
+        },
+        "payload": {
+          "$ref": "#/$defs/JsonValue"
+        },
+        "recordedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "recordedBy": {
+          "type": "string",
+          "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "uncertainty": {
+          "$ref": "#/$defs/JsonValue"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "kind",
+        "recordId",
+        "tenantId",
+        "subject",
+        "measure",
+        "payload",
+        "recordedAt",
+        "recordedBy",
+        "uncertainty"
+      ],
+      "additionalProperties": false
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    }
+  },
+  "$id": "urn:epoch:external-event-bridge:observation-intake-proposal-content:1.0.0"
+}

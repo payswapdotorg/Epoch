@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RetryPolicy",
+  "$defs": {
+    "RetryPolicy": {
+      "readOnly": true,
+      "title": "RetryPolicy",
+      "description": "The typed retry policy: caller-supplied attempt instants (strictly ascending backoff schedule as DATA — no timers).",
+      "type": "object",
+      "properties": {
+        "attemptInstants": {
+          "readOnly": true,
+          "minItems": 1,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "required": [
+        "attemptInstants"
+      ],
+      "additionalProperties": false
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    }
+  },
+  "$id": "urn:epoch:external-event-bridge:retry-policy:1.0.0"
+}

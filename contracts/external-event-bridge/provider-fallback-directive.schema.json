@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProviderFallbackDirective",
+  "$defs": {
+    "ProviderFallbackDirective": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "fallback"
+            },
+            "fallbackAdapterId": {
+              "type": "string",
+              "pattern": "^adapter:[a-z0-9][a-z0-9-]{0,80}$"
+            }
+          },
+          "required": [
+            "mode",
+            "fallbackAdapterId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "manual-queue"
+            }
+          },
+          "required": [
+            "mode"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "alternative-provider"
+            },
+            "excludeAdapterIds": {
+              "readOnly": true,
+              "maxItems": 64,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^adapter:[a-z0-9][a-z0-9-]{0,80}$"
+              }
+            }
+          },
+          "required": [
+            "mode",
+            "excludeAdapterIds"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ProviderFallbackDirective",
+      "description": "The typed fallback directive: a designated fallback provider, a manual-queue work item, or the next alternative provider of the same class (excluded ids carried as sorted data)."
+    }
+  },
+  "$id": "urn:epoch:external-event-bridge:provider-fallback-directive:1.0.0"
+}

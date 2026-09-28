@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BridgeAuthorizationDecision",
+  "$defs": {
+    "BridgeAuthorizationDecision": {
+      "readOnly": true,
+      "title": "BridgeAuthorizationDecision",
+      "description": "The structural authorization-decision subset the bridge gate consumes: the covered request digest plus the outcome (every real W009 decision is assignable to this shape).",
+      "type": "object",
+      "properties": {
+        "requestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "allow",
+            "deny",
+            "not-applicable"
+          ]
+        }
+      },
+      "required": [
+        "requestDigest",
+        "outcome"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:external-event-bridge:bridge-authorization-decision:1.0.0"
+}

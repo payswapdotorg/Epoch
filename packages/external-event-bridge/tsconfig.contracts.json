@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/external-event-bridge": [
+        "./src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "../../contracts/external-event-bridge/index.d.ts",
+    "../../contracts/external-event-bridge/parity.ts"
+  ]
+}

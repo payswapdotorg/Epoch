@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LeastPrivilegeProjection",
+  "$defs": {
+    "LeastPrivilegeProjection": {
+      "readOnly": true,
+      "title": "LeastPrivilegeProjection",
+      "description": "The least-privilege projection reference: the sealed W041 projection-policy digest, the recipient reference, and the sorted minimum-necessary field allowlist (the W041 path-template grammar).",
+      "type": "object",
+      "properties": {
+        "policyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "recipientRef": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/-]{0,255}$"
+        },
+        "fieldAllowlist": {
+          "readOnly": true,
+          "minItems": 1,
+          "maxItems": 1024,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_][A-Za-z0-9_.[\\]-]{0,511}$"
+          }
+        }
+      },
+      "required": [
+        "policyDigest",
+        "recipientRef",
+        "fieldAllowlist"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:external-event-bridge:least-privilege-projection:1.0.0"
+}

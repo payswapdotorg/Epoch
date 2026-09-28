@@ -1,0 +1,210 @@
+{
+  "contract": "epoch/external-event-bridge",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral External Event Bridge contract surface (W042, in-package full surface): normalized inbound external events with W006-shaped provenance and the W036-shaped observation intake proposals (the authority path), the four-class outbound requests with least-privilege filtered payloads and the W041 projection-policy reference, typed retry policies and content-addressed per-attempt receipts, provider registrations with class-based resolution, the provider-unavailability records with fallback/manual-queue/alternative-provider semantics, and the bridge:* event vocabulary over the W010 event shapes. JSON Schema projection under schemas/; runtime validators in @epoch/external-event-bridge.",
+  "dataTypes": [
+    "AdapterId",
+    "BridgeProvenance",
+    "BridgeResourceReference",
+    "BridgeAuthorizationRequest",
+    "BridgeAuthorizationDecision",
+    "ExternalEventContent",
+    "SealedExternalEvent",
+    "ObservationIntakePayload",
+    "ObservationIntakeProposalContent",
+    "SealedObservationIntakeProposal",
+    "LeastPrivilegeProjection",
+    "ReleasedField",
+    "OutboundRedactionMarker",
+    "FilteredOutboundPayload",
+    "OutboundRequestContent",
+    "SealedOutboundRequest",
+    "RetryPolicy",
+    "DeliveryReceiptContent",
+    "SealedDeliveryReceipt",
+    "IntakeReceiptContent",
+    "SealedIntakeReceipt",
+    "ProviderUnavailableContent",
+    "SealedProviderUnavailable",
+    "ProviderFallbackDirective",
+    "ManualQueueRecordContent",
+    "SealedManualQueueRecord",
+    "ProviderRegistrationContent",
+    "SealedProviderRegistration",
+    "BridgeEventSequence",
+    "BridgeCausalParent",
+    "BridgeEventPayload",
+    "BridgeEventContent",
+    "SealedBridgeEvent"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical ordering, digest verification, tenant checks, scope chains) are enforced by the runtime validators in @epoch/external-event-bridge and are not represented in the JSON Schema files",
+  "emittedBy": "renderExternalEventBridgeContractFiles() in @epoch/external-event-bridge (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "AdapterId",
+      "file": "adapter-id.schema.json",
+      "sha256": "cf4c34f9a584b241c437e6eb471b7efb0a1cfc5a5aa6aa5638c49ad264f79c15"
+    },
+    {
+      "type": "BridgeProvenance",
+      "file": "bridge-provenance.schema.json",
+      "sha256": "fb0012e22feab1a8c646713e8decd8c58915645a7c6c6d2d6b888bc354ccfff6"
+    },
+    {
+      "type": "BridgeResourceReference",
+      "file": "bridge-resource-reference.schema.json",
+      "sha256": "72b29ef0e717e67055e1273f0f9bf896b04522c7b72d53206b888124d03fa23e"
+    },
+    {
+      "type": "BridgeAuthorizationRequest",
+      "file": "bridge-authorization-request.schema.json",
+      "sha256": "bb9d905bab438fde43a9ea829f06b2bc2a260c8a418011079c8a9f56573c71bb"
+    },
+    {
+      "type": "BridgeAuthorizationDecision",
+      "file": "bridge-authorization-decision.schema.json",
+      "sha256": "0209547d2d0c0ce8355edb3b02ffa094a53d57ab9294719e1a5862098b53bda5"
+    },
+    {
+      "type": "ExternalEventContent",
+      "file": "external-event-content.schema.json",
+      "sha256": "8e822fc71159a6ca7ef8925b58e4c8c0eea658569c1560c3ce1c2f8c48e3c643"
+    },
+    {
+      "type": "SealedExternalEvent",
+      "file": "sealed-external-event.schema.json",
+      "sha256": "fcb4e6203f35088ac8846245c36e4d2154bc9026377dd5e81df2f2a80d2eecf5"
+    },
+    {
+      "type": "ObservationIntakePayload",
+      "file": "observation-intake-payload.schema.json",
+      "sha256": "32289d728d092d7313d5d81d6d06a102d53c5639e551e1d344761fc4840fefe5"
+    },
+    {
+      "type": "ObservationIntakeProposalContent",
+      "file": "observation-intake-proposal-content.schema.json",
+      "sha256": "3a77864f8c61d35288b68d33b66c77707f0a340b314e93abf6e5f3fca4893dd0"
+    },
+    {
+      "type": "SealedObservationIntakeProposal",
+      "file": "sealed-observation-intake-proposal.schema.json",
+      "sha256": "c5cbaea4f5004ad35c310dfea1713ddb4e582f69b0fea87a8b618e1a7094d0a0"
+    },
+    {
+      "type": "LeastPrivilegeProjection",
+      "file": "least-privilege-projection.schema.json",
+      "sha256": "f04652ef6f982c1a1394001bf40b2e732a72a0f8a5c5c367c7afb3b440958fc2"
+    },
+    {
+      "type": "ReleasedField",
+      "file": "released-field.schema.json",
+      "sha256": "d66a013dfb6eb9425c2255f1209c4aec893449146a0ad5a321721de288ff411f"
+    },
+    {
+      "type": "OutboundRedactionMarker",
+      "file": "outbound-redaction-marker.schema.json",
+      "sha256": "3bd2deec972c645c0220dabf0b06ce73ecd66cb4f095a9e88bc4359610806cb4"
+    },
+    {
+      "type": "FilteredOutboundPayload",
+      "file": "filtered-outbound-payload.schema.json",
+      "sha256": "33b7de96bbe0ff5d110ea6f76f7d73528fce67a7a4e74641c167c362cdb87499"
+    },
+    {
+      "type": "OutboundRequestContent",
+      "file": "outbound-request-content.schema.json",
+      "sha256": "be3ba75dce5a1e546eb29aef9de11df2c0df41121f35ae096aa00748ddec8220"
+    },
+    {
+      "type": "SealedOutboundRequest",
+      "file": "sealed-outbound-request.schema.json",
+      "sha256": "7943d7dad55cf49f59f55e31de8a7b02e3cd91da6fbee1d690103628e033285f"
+    },
+    {
+      "type": "RetryPolicy",
+      "file": "retry-policy.schema.json",
+      "sha256": "1f89c35aa4a1ce0ae209ddc00501302c1255059b2d581dbf08331e47930dc926"
+    },
+    {
+      "type": "DeliveryReceiptContent",
+      "file": "delivery-receipt-content.schema.json",
+      "sha256": "fb716e3f14cefb9fbb2878ce90f2a54c5552e9206a960f1e93df507f2e83f702"
+    },
+    {
+      "type": "SealedDeliveryReceipt",
+      "file": "sealed-delivery-receipt.schema.json",
+      "sha256": "4291aa50014a0c151a434741df91ddf477bd62b330301de5fad4df92cfa2326d"
+    },
+    {
+      "type": "IntakeReceiptContent",
+      "file": "intake-receipt-content.schema.json",
+      "sha256": "20b74fca333c259817383f7681c8c30245f199ca976003fc50ea5c3f2b04b70c"
+    },
+    {
+      "type": "SealedIntakeReceipt",
+      "file": "sealed-intake-receipt.schema.json",
+      "sha256": "5c6bdeeca3c732b8f96d700a43cadce746db15f6fed49ecc4b409f6c191bf9e9"
+    },
+    {
+      "type": "ProviderUnavailableContent",
+      "file": "provider-unavailable-content.schema.json",
+      "sha256": "ac56b327a9b375234e66ed9b2b8572f71d34409b79b8a5b910d784f7909952df"
+    },
+    {
+      "type": "SealedProviderUnavailable",
+      "file": "sealed-provider-unavailable.schema.json",
+      "sha256": "a44c40570d9729c2844ec49b38cd56e19551a10baf52247df1517e82fc3f2790"
+    },
+    {
+      "type": "ProviderFallbackDirective",
+      "file": "provider-fallback-directive.schema.json",
+      "sha256": "134e4a880b5aa7e37330146e2d8f9d948a3cb061f2927dd6642193eeaae067bf"
+    },
+    {
+      "type": "ManualQueueRecordContent",
+      "file": "manual-queue-record-content.schema.json",
+      "sha256": "c57e02f8aa8705fd699a60c0c202eb0efef5765513239d88895d36a7974d2b3e"
+    },
+    {
+      "type": "SealedManualQueueRecord",
+      "file": "sealed-manual-queue-record.schema.json",
+      "sha256": "8cccd16e634be343bc7a840dacf07e175177421e8fddbb2553950eb719a0056b"
+    },
+    {
+      "type": "ProviderRegistrationContent",
+      "file": "provider-registration-content.schema.json",
+      "sha256": "37cdf2860f29af036cb49d240f5f7caf44cdbd87312003e3d3daeaaa5ce51419"
+    },
+    {
+      "type": "SealedProviderRegistration",
+      "file": "sealed-provider-registration.schema.json",
+      "sha256": "f2c25856d9141d8efe55a685bddd8a118588659443f3eae3b2fed6988ad59124"
+    },
+    {
+      "type": "BridgeEventSequence",
+      "file": "bridge-event-sequence.schema.json",
+      "sha256": "58059447dd15aa5534fbebd87bb624931dec8cd340fa3a1025364191ccc736d2"
+    },
+    {
+      "type": "BridgeCausalParent",
+      "file": "bridge-causal-parent.schema.json",
+      "sha256": "5ec6079d859f164d95f78c65ccb57fb5419bec6ae801298e3c60c8c70cda9e88"
+    },
+    {
+      "type": "BridgeEventPayload",
+      "file": "bridge-event-payload.schema.json",
+      "sha256": "7eb5e56af3f23e8c90552e4a5d4d70f045cd62033cd716e08d6c67bf46b42e9f"
+    },
+    {
+      "type": "BridgeEventContent",
+      "file": "bridge-event-content.schema.json",
+      "sha256": "71206dfa4f30e72199bef2b873eed16968fd5d12c9360e16ed8b5ffef91d5610"
+    },
+    {
+      "type": "SealedBridgeEvent",
+      "file": "sealed-bridge-event.schema.json",
+      "sha256": "2eca7c87f7feb83bead1eb328a5ae3bb5f03e9485f461c6fd87ca8c69493a722"
+    }
+  ]
+}

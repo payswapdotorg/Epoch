@@ -1,0 +1,37 @@
+{
+  "name": "@epoch/adapter-aurum-chat",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch External Chat reference adapter (W042, the W029 adapter pattern) — the typed, fixture-driven reference implementation of the @epoch/external-event-bridge provider contract for an external team-chat system. INBOUND: provider message/thread/user payloads (fixtures standing in for the provider's native shapes) are normalized into bridge ExternalEvent records (W006-shaped provenance carrying the adapter identity + the exact provider payload digest; correlation/causation ids; caller-supplied instants). OUTBOUND: bridge dispatch requests become fixture delivery outcomes (success/retryable/terminal) with content-addressed provider delivery references. In-memory reference behavior: NO network, NO live provider calls, NO real side effects. Provider vocabulary is quarantined in src/provider (blocklist-tested); the adapter is isolated from Epoch kernel contracts — it imports ONLY the bridge provider contract + the adapter SDK (kernel-import-rejected boundary test).",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/adapter-sdk": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/external-event-bridge": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
