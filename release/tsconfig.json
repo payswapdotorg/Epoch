@@ -1,0 +1,34 @@
+{
+  "extends": "../packages/tsconfig/library.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "noEmit": true,
+    "types": ["node"],
+    "typeRoots": ["../packages/test-harness/node_modules/@types"],
+    "baseUrl": ".",
+    "paths": {
+      "zod": ["../packages/test-harness/node_modules/zod/index.d.ts"],
+      "vitest": ["../packages/test-harness/node_modules/vitest/dist/index.d.ts"],
+      "@epoch/agent-protocol": ["../packages/agent-protocol/src/index.ts"],
+      "@epoch/tenancy": ["../packages/tenancy/src/index.ts"],
+      "@epoch/release-kit": ["./src/index.ts"],
+      "@epoch/adapter-sdk": ["../packages/adapter-sdk/src/index.ts"],
+      "@epoch/capability-registry": ["../packages/capability-registry/src/index.ts"],
+      "@epoch/extension-sdk": ["../packages/extension-sdk/src/index.ts"],
+      "@epoch/marketplace": ["../packages/marketplace/src/index.ts"],
+      "@epoch/event-log": ["../packages/event-log/src/index.ts"],
+      "@epoch/deploy-model": ["../deploy/src/index.ts"],
+      "@epoch/performance": ["../packages/performance/src/index.ts"],
+      "@epoch/action-protocol": ["../packages/action-protocol/src/index.ts"],
+      "@epoch/world-model": ["../packages/world-model/src/index.ts"],
+      "@epoch/world-contracts": ["../contracts/world/src/index.ts"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "../../examples/sdk/**/*.ts",
+    "vitest.config.mts",
+    "eslint.config.mjs"
+  ]
+}
