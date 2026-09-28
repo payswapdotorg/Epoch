@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BridgeCausalParent",
+  "$defs": {
+    "BridgeCausalParent": {
+      "readOnly": true,
+      "title": "BridgeCausalParent",
+      "description": "Causal parent of a bridge event: an earlier event in the same stream (the W010 shape).",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "type": "string",
+          "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "sequence": {
+          "$ref": "#/$defs/BridgeEventSequence"
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "BridgeEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "BridgeEventSequence",
+      "description": "One bridge event sequence number: 1-based, contiguous per bridge stream."
+    }
+  },
+  "$id": "urn:epoch:external-event-bridge:bridge-causal-parent:1.0.0"
+}

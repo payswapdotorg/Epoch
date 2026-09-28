@@ -1,0 +1,39 @@
+{
+  "name": "@epoch/external-event-bridge",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch External Event Bridge kernel (W042) \u2014 the provider-neutral external event/request bridge. Normalized INBOUND: typed ExternalEvent records (source adapter identity, event class, opaque payload, correlation + causation ids, caller-supplied occurrence instant, W006-shaped provenance) admitted as W036-shaped observation INTAKE PROPOSALS through the existing authority path (the bridge NEVER writes observations directly \u2014 observation-bypass-rejected). Normalized OUTBOUND: typed OutboundRequest records with exactly four classes (information / status / alert / acknowledgement-request), each payload filtered to least privilege through a W041 projection-policy typed reference (unfiltered send is least-privilege-violation-rejected). Correlation, causation, idempotency (duplicate delivery = sealed prior receipt, never a second effect), retry as typed DATA (caller-supplied instant sequences, no timers) and content-addressed per-attempt receipts. Capability discovery with optional-provider semantics: providers register typed records and are resolved BY CLASS with deterministic canonical ordering; a missing provider yields a typed provider-unavailable record with fallback | manual-queue | alternative-provider outcomes. Lifecycle-neutral: zero pack-specific branches; a pure library \u2014 nothing runs at import and core flows work with NO bridge installed.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./runtime": "./src/runtime.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/adapter-sdk": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/access-projection": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

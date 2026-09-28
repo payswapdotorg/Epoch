@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "pattern": "^adapter:[a-z0-9][a-z0-9-]{0,80}$",
+  "$id": "urn:epoch:external-event-bridge:adapter-id:1.0.0"
+}

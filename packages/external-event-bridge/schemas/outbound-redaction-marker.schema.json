@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OutboundRedactionMarker",
+  "$defs": {
+    "OutboundRedactionMarker": {
+      "readOnly": true,
+      "title": "OutboundRedactionMarker",
+      "description": "One typed redaction marker: the struck field path plus the redaction class (a struck outbound field is never silently dropped).",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "redactionClass": {
+          "type": "string",
+          "enum": [
+            "commercial-sensitive",
+            "supplier-sensitive",
+            "evidence-scoped",
+            "principal-identifying",
+            "policy-scoped",
+            "task-scoped"
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "redactionClass"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:external-event-bridge:outbound-redaction-marker:1.0.0"
+}

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/FilteredOutboundPayload",
+  "$defs": {
+    "FilteredOutboundPayload": {
+      "readOnly": true,
+      "title": "FilteredOutboundPayload",
+      "description": "The filtered outbound payload: the minimum-necessary released fields (by reference) plus typed redaction markers of every struck field (the W041 minimum-necessary selection mirrored).",
+      "type": "object",
+      "properties": {
+        "released": {
+          "readOnly": true,
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReleasedField"
+          }
+        },
+        "redacted": {
+          "readOnly": true,
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OutboundRedactionMarker"
+          }
+        }
+      },
+      "required": [
+        "released",
+        "redacted"
+      ],
+      "additionalProperties": false
+    },
+    "ReleasedField": {
+      "readOnly": true,
+      "title": "ReleasedField",
+      "description": "One released outbound field: the concrete leaf path plus its value carried by reference.",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "value": {
+          "$ref": "#/$defs/JsonValue"
+        }
+      },
+      "required": [
+        "path",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "OutboundRedactionMarker": {
+      "readOnly": true,
+      "title": "OutboundRedactionMarker",
+      "description": "One typed redaction marker: the struck field path plus the redaction class (a struck outbound field is never silently dropped).",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "redactionClass": {
+          "type": "string",
+          "enum": [
+            "commercial-sensitive",
+            "supplier-sensitive",
+            "evidence-scoped",
+            "principal-identifying",
+            "policy-scoped",
+            "task-scoped"
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "redactionClass"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:external-event-bridge:filtered-outbound-payload:1.0.0"
+}

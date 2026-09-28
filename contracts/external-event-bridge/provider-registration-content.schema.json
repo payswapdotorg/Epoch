@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProviderRegistrationContent",
+  "$defs": {
+    "ProviderRegistrationContent": {
+      "readOnly": true,
+      "title": "ProviderRegistrationContent",
+      "description": "The immutable content of one provider registration: registration id, tenant scope, the W007 adapter descriptor plus its exact digest, the W007 capability binding, the sorted supported inbound/outbound class declarations, and the caller-supplied registration provenance.",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.external-event-bridge.provider-registration"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "registrationId": {
+          "type": "string",
+          "pattern": "^registration:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "adapterDescriptor": {
+          "$ref": "#/$defs/AdapterDescriptor"
+        },
+        "adapterDescriptorDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "capabilityBinding": {
+          "$ref": "#/$defs/CapabilityBinding"
+        },
+        "supportedInboundClasses": {
+          "readOnly": true,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "observation-report",
+              "evidence-reference",
+              "delivery-event",
+              "acknowledgement",
+              "information-response",
+              "status-report",
+              "exception",
+              "communication-receipt"
+            ]
+          }
+        },
+        "supportedOutboundClasses": {
+          "readOnly": true,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "information",
+              "status",
+              "alert",
+              "acknowledgement-request"
+            ]
+          }
+        },
+        "registeredAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "registeredBy": {
+          "type": "string",
+          "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "registrationId",
+        "tenantId",
+        "adapterDescriptor",
+        "adapterDescriptorDigest",
+        "capabilityBinding",
+        "supportedInboundClasses",
+        "supportedOutboundClasses",
+        "registeredAt",
+        "registeredBy"
+      ],
+      "additionalProperties": false
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "AdapterDescriptor": {
+      "readOnly": true,
+      "title": "AdapterDescriptor",
+      "description": "Typed, content-addressed adapter document: identity, category (the per-category contract implemented), and the capability binding served.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/AdapterDescriptorVersion"
+        },
+        "adapterId": {
+          "$ref": "#/$defs/AdapterId"
+        },
+        "category": {
+          "$ref": "#/$defs/CapabilityCategory"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "binding": {
+          "$ref": "#/$defs/CapabilityBinding"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "adapterId",
+        "category",
+        "displayName",
+        "binding"
+      ],
+      "additionalProperties": false
+    },
+    "AdapterDescriptorVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "AdapterDescriptorVersion",
+      "description": "Version discriminator carried by every serialized adapter descriptor (currently 1)."
+    },
+    "AdapterId": {
+      "type": "string",
+      "pattern": "^adapter:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AdapterId",
+      "description": "Registered adapter identifier: \"adapter:\" followed by a lowercase kebab slug."
+    },
+    "CapabilityCategory": {
+      "type": "string",
+      "enum": [
+        "source",
+        "semantic",
+        "reconstruction",
+        "visualization",
+        "simulation",
+        "evaluator",
+        "action",
+        "verification"
+      ],
+      "title": "CapabilityCategory",
+      "description": "Capability Fabric adapter category: source, semantic, reconstruction, visualization, simulation, evaluator, action, or verification."
+    },
+    "CapabilityBinding": {
+      "readOnly": true,
+      "title": "CapabilityBinding",
+      "description": "Which capability (opaque, stable id) at which version range an adapter serves.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionRange": {
+          "$ref": "#/$defs/VersionConstraint"
+        }
+      },
+      "required": [
+        "capabilityId",
+        "versionRange"
+      ],
+      "additionalProperties": false
+    },
+    "VersionConstraint": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "exact"
+            },
+            "version": {
+              "$ref": "#/$defs/SemverCore"
+            }
+          },
+          "required": [
+            "kind",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "caret"
+            },
+            "version": {
+              "$ref": "#/$defs/SemverCore"
+            }
+          },
+          "required": [
+            "kind",
+            "version"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "VersionConstraint",
+      "description": "Version range an adapter declares it serves: an exact pin, or caret major-version compatibility (npm-caret semantics incl. the 0.x carve-outs)."
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic-version core (major.minor.patch, digits only, no prerelease/build suffixes)."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    }
+  },
+  "$id": "urn:epoch:external-event-bridge:provider-registration-content:1.0.0"
+}

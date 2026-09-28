@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BridgeEventSequence",
+  "$defs": {
+    "BridgeEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "BridgeEventSequence",
+      "description": "One bridge event sequence number: 1-based, contiguous per bridge stream."
+    }
+  },
+  "$id": "urn:epoch:external-event-bridge:bridge-event-sequence:1.0.0"
+}
