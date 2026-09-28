@@ -1,0 +1,86 @@
+{
+  "extends": "@epoch/tsconfig/library.json",
+  "compilerOptions": {
+    "lib": [
+      "ES2022"
+    ],
+    "noEmit": true,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "../../packs/construction/node_modules/@types"
+    ],
+    "paths": {
+      "@epoch/action-policy": [
+        "../../packages/action-policy/src/index.ts"
+      ],
+      "@epoch/action-protocol": [
+        "../../packages/action-protocol/src/index.ts"
+      ],
+      "@epoch/actualization": [
+        "../../packages/actualization/src/index.ts"
+      ],
+      "@epoch/agent-protocol": [
+        "../../packages/agent-protocol/src/index.ts"
+      ],
+      "@epoch/authorization": [
+        "../../packages/authorization/src/index.ts"
+      ],
+      "@epoch/evidence": [
+        "../../packages/evidence/src/index.ts"
+      ],
+      "@epoch/event-log": [
+        "../../packages/event-log/src/index.ts"
+      ],
+      "@epoch/execution-tracking": [
+        "../../packages/execution-tracking/src/index.ts"
+      ],
+      "@epoch/external-event-bridge": [
+        "../../packages/external-event-bridge/src/index.ts"
+      ],
+      "@epoch/adapter-aurum-chat": [
+        "../../adapters/aurum-chat/src/index.ts"
+      ],
+      "@epoch/learning-calibration": [
+        "../../packages/learning-calibration/src/index.ts"
+      ],
+      "@epoch/access-projection": [
+        "../../packages/access-projection/src/index.ts"
+      ],
+      "@epoch/alerts": [
+        "../../packages/alerts/src/index.ts"
+      ],
+      "@epoch/supervision": [
+        "../../packages/supervision/src/index.ts"
+      ],
+      "@epoch/pack-construction": [
+        "../../packs/construction/src/index.ts"
+      ],
+      "@epoch/procurement": [
+        "../../packages/procurement/src/index.ts"
+      ],
+      "@epoch/solution-delivery": [
+        "../../packages/solution-delivery/src/index.ts"
+      ],
+      "@epoch/tenancy": [
+        "../../packages/tenancy/src/index.ts"
+      ],
+      "@epoch/variance": [
+        "../../packages/variance/src/index.ts"
+      ],
+      "@epoch/world-contracts": [
+        "../../contracts/world/src/index.ts"
+      ],
+      "vitest": [
+        "../../packs/construction/node_modules/vitest/dist/index.d.ts"
+      ]
+    }
+  },
+  "include": [
+    "test/**/*.ts",
+    "../../examples/delivery-e2e/**/*.ts",
+    "vitest.config.mts",
+    "eslint.config.mjs"
+  ]
+}
