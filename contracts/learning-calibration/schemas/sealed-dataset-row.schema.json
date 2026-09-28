@@ -1,0 +1,431 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SealedDatasetRow",
+  "$defs": {
+    "SealedDatasetRow": {
+      "readOnly": true,
+      "title": "SealedDatasetRow",
+      "description": "The sealed dataset row: immutable content plus its SHA-256 content digest (exact-revision addressing of one prediction-to-outcome observation).",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.learning-calibration.dataset-row"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "rowId": {
+          "$ref": "#/$defs/LearningRowId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "subject": {
+          "$ref": "#/$defs/DistinctionSubject"
+        },
+        "predictionRef": {
+          "$ref": "#/$defs/ForecastSideReference"
+        },
+        "outcomeRef": {
+          "$ref": "#/$defs/OutcomeRecordReference"
+        },
+        "actualRef": {
+          "$ref": "#/$defs/ActualSideReference"
+        },
+        "comparisonRef": {
+          "$ref": "#/$defs/ComparisonRecordReference"
+        },
+        "measureClass": {
+          "type": "string",
+          "enum": [
+            "quantity",
+            "cost",
+            "progress",
+            "instant"
+          ]
+        },
+        "unit": {
+          "$ref": "#/$defs/UnitLabel"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        },
+        "features": {
+          "$ref": "#/$defs/ErrorVarianceFeatures"
+        },
+        "packRef": {
+          "$ref": "#/$defs/PackReference"
+        },
+        "realizationVariant": {
+          "type": "string",
+          "enum": [
+            "construction-build",
+            "software-implementation-deployment",
+            "mechanical-fabrication-assembly",
+            "electrical-installation-commissioning",
+            "manufacturing",
+            "infrastructure-provisioning",
+            "field-service-repair"
+          ]
+        },
+        "observedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "provenance": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "comparisonFact": {
+              "readOnly": true,
+              "type": "object",
+              "properties": {
+                "recordId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "contentDigest": {
+                  "$ref": "#/$defs/Sha256Hex"
+                }
+              },
+              "required": [
+                "recordId",
+                "contentDigest"
+              ],
+              "additionalProperties": false
+            },
+            "outcomeRecord": {
+              "readOnly": true,
+              "type": "object",
+              "properties": {
+                "recordId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "contentDigest": {
+                  "$ref": "#/$defs/Sha256Hex"
+                }
+              },
+              "required": [
+                "recordId",
+                "contentDigest"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "comparisonFact",
+            "outcomeRecord"
+          ],
+          "additionalProperties": false
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "rowId",
+        "tenantId",
+        "solutionId",
+        "subject",
+        "predictionRef",
+        "outcomeRef",
+        "actualRef",
+        "comparisonRef",
+        "measureClass",
+        "features",
+        "packRef",
+        "realizationVariant",
+        "observedAt",
+        "provenance",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "LearningRowId": {
+      "type": "string",
+      "pattern": "^row:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LearningRowId",
+      "description": "Opaque dataset-row record identity: \"row:\" followed by a lowercase slug."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "SolutionId": {
+      "type": "string",
+      "pattern": "^solution:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionId",
+      "description": "Opaque solution-package identity: \"solution:\" followed by a lowercase slug (stable across versions)."
+    },
+    "DistinctionSubject": {
+      "readOnly": true,
+      "title": "DistinctionSubject",
+      "description": "The subject of one distinction record: the owning solution plus a typed anchor (solution, line, work package, activity, milestone, program, or delivery id).",
+      "type": "object",
+      "properties": {
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "subjectKind": {
+          "type": "string",
+          "enum": [
+            "solution",
+            "solution-line",
+            "work-package",
+            "activity",
+            "milestone",
+            "program",
+            "delivery"
+          ]
+        },
+        "subjectId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "solutionId",
+        "subjectKind",
+        "subjectId"
+      ],
+      "additionalProperties": false
+    },
+    "ForecastSideReference": {
+      "readOnly": true,
+      "title": "ForecastSideReference",
+      "description": "One exact-revision reference to the W036 Forecast-distinction record a comparison fact judged.",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "pattern": "^forecast:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "recordId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "OutcomeRecordReference": {
+      "readOnly": true,
+      "title": "OutcomeRecordReference",
+      "description": "One exact-revision reference to a W036 Outcome-distinction record: record id plus content digest.",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "pattern": "^outcome:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "recordId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "ActualSideReference": {
+      "readOnly": true,
+      "title": "ActualSideReference",
+      "description": "One exact-revision reference to the W036 Actual-distinction record a comparison fact judged against.",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "pattern": "^actual:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "recordId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "ComparisonRecordReference": {
+      "readOnly": true,
+      "title": "ComparisonRecordReference",
+      "description": "One opaque exact-revision reference to a prediction-comparison record (the W039 variance-kernel grammar): record id plus content digest.",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "pattern": "^comparison:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "recordId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "UnitLabel": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "title": "UnitLabel",
+      "description": "Unit-of-measure label (1-32 characters, provider-neutral)."
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    },
+    "ErrorVarianceFeatures": {
+      "readOnly": true,
+      "title": "ErrorVarianceFeatures",
+      "description": "The immutable content of one error/variance feature record: deviation magnitude, forecast-bias direction, variance class, derived direction, derived magnitude band, and the attribution cause kind with its evidence count.",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.learning-calibration.error-variance-features"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "deviationMagnitude": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "bias": {
+          "type": "string",
+          "enum": [
+            "over-forecast",
+            "under-forecast",
+            "exact"
+          ]
+        },
+        "varianceClass": {
+          "type": "string",
+          "enum": [
+            "quantity",
+            "price-rate",
+            "productivity",
+            "schedule",
+            "waste",
+            "rework",
+            "change",
+            "external-condition"
+          ]
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "favorable",
+            "adverse",
+            "neutral"
+          ]
+        },
+        "magnitudeBand": {
+          "type": "string",
+          "enum": [
+            "immaterial",
+            "minor",
+            "material",
+            "severe"
+          ]
+        },
+        "attributionCauseKind": {
+          "type": "string",
+          "enum": [
+            "change-record",
+            "issue-record",
+            "external-condition",
+            "unattributed"
+          ]
+        },
+        "attributionEvidenceCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 64
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "deviationMagnitude",
+        "bias",
+        "varianceClass",
+        "direction",
+        "magnitudeBand",
+        "attributionCauseKind",
+        "attributionEvidenceCount"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "PackReference": {
+      "readOnly": true,
+      "title": "PackReference",
+      "description": "One typed exact-revision reference to a W036 SolutionPackProfile: qualified pack id, semantic version, and the content digest of that profile revision.",
+      "type": "object",
+      "properties": {
+        "packId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:\\.[a-z0-9-]+)+$"
+        },
+        "packVersion": {
+          "$ref": "#/$defs/SemverCore"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "packId",
+        "packVersion",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "SemverCore": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "SemverCore",
+      "description": "Semantic version core (no prerelease/build suffixes)."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:sealed-dataset-row:1.0.0"
+}

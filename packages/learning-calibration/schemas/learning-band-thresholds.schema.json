@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LearningBandThresholds",
+  "$defs": {
+    "LearningBandThresholds": {
+      "readOnly": true,
+      "title": "LearningBandThresholds",
+      "description": "The magnitude-band thresholds of dataset assembly: minor <= material <= severe canonical decimals (caller-supplied; never implicit defaults) — the W039 variance grammar, mirrored.",
+      "type": "object",
+      "properties": {
+        "minor": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "material": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "severe": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        }
+      },
+      "required": [
+        "minor",
+        "material",
+        "severe"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:learning-band-thresholds:1.0.0"
+}

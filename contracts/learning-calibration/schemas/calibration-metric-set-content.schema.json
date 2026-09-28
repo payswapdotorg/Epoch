@@ -1,0 +1,544 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CalibrationMetricSetContent",
+  "$defs": {
+    "CalibrationMetricSetContent": {
+      "readOnly": true,
+      "title": "CalibrationMetricSetContent",
+      "description": "The immutable content of one calibration-metric set: the exact fold definition, the bias/MAE/hit-rate summaries, the per-pack and per-variant breakdowns, and the machine-referenceable justification entries.",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.learning-calibration.calibration-metric-set"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "metricId": {
+          "$ref": "#/$defs/LearningMetricId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "modelRef": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "modelId": {
+              "$ref": "#/$defs/LearningModelId"
+            },
+            "revisionId": {
+              "$ref": "#/$defs/LearningRevisionId"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "modelId",
+            "revisionId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        "foldDefinition": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "datasetRef": {
+              "readOnly": true,
+              "type": "object",
+              "properties": {
+                "datasetId": {
+                  "$ref": "#/$defs/LearningDatasetId"
+                },
+                "contentDigest": {
+                  "$ref": "#/$defs/Sha256Hex"
+                }
+              },
+              "required": [
+                "datasetId",
+                "contentDigest"
+              ],
+              "additionalProperties": false
+            },
+            "applicability": {
+              "$ref": "#/$defs/LearningApplicability"
+            },
+            "toleranceBands": {
+              "$ref": "#/$defs/ToleranceBands"
+            },
+            "metricSpecVersion": {
+              "type": "number",
+              "const": 1
+            }
+          },
+          "required": [
+            "datasetRef",
+            "applicability",
+            "toleranceBands",
+            "metricSpecVersion"
+          ],
+          "additionalProperties": false
+        },
+        "summaryKinds": {
+          "minItems": 1,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "bias",
+              "mean-absolute-error",
+              "hit-rate"
+            ]
+          }
+        },
+        "selectedRowCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "bias": {
+          "$ref": "#/$defs/BiasSummary"
+        },
+        "meanAbsoluteError": {
+          "$ref": "#/$defs/MeanAbsoluteErrorSummary"
+        },
+        "hitRates": {
+          "minItems": 1,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HitRateSummary"
+          }
+        },
+        "packBreakdowns": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PackBreakdown"
+          }
+        },
+        "variantBreakdowns": {
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/VariantBreakdown"
+          }
+        },
+        "justification": {
+          "minItems": 1,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetricJustification"
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "metricId",
+        "tenantId",
+        "solutionId",
+        "modelRef",
+        "foldDefinition",
+        "summaryKinds",
+        "selectedRowCount",
+        "bias",
+        "meanAbsoluteError",
+        "hitRates",
+        "packBreakdowns",
+        "variantBreakdowns",
+        "justification"
+      ],
+      "additionalProperties": false
+    },
+    "LearningMetricId": {
+      "type": "string",
+      "pattern": "^metrics:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LearningMetricId",
+      "description": "Opaque calibration-metric-set record identity: \"metrics:\" followed by a lowercase slug."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "SolutionId": {
+      "type": "string",
+      "pattern": "^solution:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionId",
+      "description": "Opaque solution-package identity: \"solution:\" followed by a lowercase slug (stable across versions)."
+    },
+    "LearningModelId": {
+      "type": "string",
+      "pattern": "^model:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LearningModelId",
+      "description": "Opaque model identity: \"model:\" followed by a lowercase slug."
+    },
+    "LearningRevisionId": {
+      "type": "string",
+      "pattern": "^model-revision:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LearningRevisionId",
+      "description": "Opaque model-revision record identity: \"model-revision:\" followed by a lowercase slug."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "LearningDatasetId": {
+      "type": "string",
+      "pattern": "^dataset:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LearningDatasetId",
+      "description": "Opaque learning-dataset record identity: \"dataset:\" followed by a lowercase slug."
+    },
+    "LearningApplicability": {
+      "readOnly": true,
+      "title": "LearningApplicability",
+      "description": "The applicability scope of one calibration fold (and of the model revision it calibrates): measure class plus optional domain-pack and realization-variant selectors (null = all).",
+      "type": "object",
+      "properties": {
+        "measureClass": {
+          "type": "string",
+          "enum": [
+            "quantity",
+            "cost",
+            "progress",
+            "instant"
+          ]
+        },
+        "packId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:\\.[a-z0-9-]+)+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "realizationVariant": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "construction-build",
+                "software-implementation-deployment",
+                "mechanical-fabrication-assembly",
+                "electrical-installation-commissioning",
+                "manufacturing",
+                "infrastructure-provisioning",
+                "field-service-repair"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "measureClass",
+        "packId",
+        "realizationVariant"
+      ],
+      "additionalProperties": false
+    },
+    "ToleranceBands": {
+      "minItems": 1,
+      "maxItems": 16,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/NonNegativeDecimal"
+      },
+      "title": "ToleranceBands",
+      "description": "The declared tolerance bands of one hit-rate fold: canonical non-negative decimals, strictly ascending (non-degenerate scored scales)."
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "BiasSummary": {
+      "readOnly": true,
+      "title": "BiasSummary",
+      "description": "The bias summary of one calibration fold: counts by forecast-bias direction, the exact over/under totals, and the signed net and (truncating) mean deviation.",
+      "type": "object",
+      "properties": {
+        "overCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "underCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "exactCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "overTotalDeviation": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "underTotalDeviation": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "netDeviation": {
+          "$ref": "#/$defs/SignedDeviation"
+        },
+        "meanDeviation": {
+          "$ref": "#/$defs/SignedDeviation"
+        }
+      },
+      "required": [
+        "overCount",
+        "underCount",
+        "exactCount",
+        "overTotalDeviation",
+        "underTotalDeviation",
+        "netDeviation",
+        "meanDeviation"
+      ],
+      "additionalProperties": false
+    },
+    "SignedDeviation": {
+      "readOnly": true,
+      "title": "SignedDeviation",
+      "description": "One signed deviation value: whether the net deviation is negative (under-forecast exceeds over-forecast) plus the canonical non-negative magnitude.",
+      "type": "object",
+      "properties": {
+        "negative": {
+          "type": "boolean"
+        },
+        "magnitude": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        }
+      },
+      "required": [
+        "negative",
+        "magnitude"
+      ],
+      "additionalProperties": false
+    },
+    "MeanAbsoluteErrorSummary": {
+      "readOnly": true,
+      "title": "MeanAbsoluteErrorSummary",
+      "description": "The MAE-class summary of one calibration fold: the exact total absolute deviation, the truncating mean absolute error, and the worst deviation with its row reference.",
+      "type": "object",
+      "properties": {
+        "totalAbsoluteDeviation": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "mean": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "worstDeviation": {
+          "anyOf": [
+            {
+              "readOnly": true,
+              "type": "object",
+              "properties": {
+                "rowId": {
+                  "$ref": "#/$defs/LearningRowId"
+                },
+                "deviation": {
+                  "$ref": "#/$defs/NonNegativeDecimal"
+                }
+              },
+              "required": [
+                "rowId",
+                "deviation"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "totalAbsoluteDeviation",
+        "mean",
+        "worstDeviation"
+      ],
+      "additionalProperties": false
+    },
+    "LearningRowId": {
+      "type": "string",
+      "pattern": "^row:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LearningRowId",
+      "description": "Opaque dataset-row record identity: \"row:\" followed by a lowercase slug."
+    },
+    "HitRateSummary": {
+      "readOnly": true,
+      "title": "HitRateSummary",
+      "description": "One hit-rate summary: the declared tolerance band, the within/outside counts, and the exact truncating within fraction.",
+      "type": "object",
+      "properties": {
+        "tolerance": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "withinCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "outsideCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "hitRate": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        }
+      },
+      "required": [
+        "tolerance",
+        "withinCount",
+        "outsideCount",
+        "hitRate"
+      ],
+      "additionalProperties": false
+    },
+    "PackBreakdown": {
+      "readOnly": true,
+      "title": "PackBreakdown",
+      "description": "One per-domain-pack breakdown slice: the pack id, the row/direction counts, and the exact total absolute deviation of that pack rows.",
+      "type": "object",
+      "properties": {
+        "packId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:\\.[a-z0-9-]+)+$"
+        },
+        "rowCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "overCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "underCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "exactCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "totalAbsoluteDeviation": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        }
+      },
+      "required": [
+        "packId",
+        "rowCount",
+        "overCount",
+        "underCount",
+        "exactCount",
+        "totalAbsoluteDeviation"
+      ],
+      "additionalProperties": false
+    },
+    "VariantBreakdown": {
+      "readOnly": true,
+      "title": "VariantBreakdown",
+      "description": "One per-realization-variant breakdown slice: the variant, the row/direction counts, and the exact total absolute deviation of that variant rows.",
+      "type": "object",
+      "properties": {
+        "realizationVariant": {
+          "type": "string",
+          "enum": [
+            "construction-build",
+            "software-implementation-deployment",
+            "mechanical-fabrication-assembly",
+            "electrical-installation-commissioning",
+            "manufacturing",
+            "infrastructure-provisioning",
+            "field-service-repair"
+          ]
+        },
+        "rowCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "overCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "underCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "exactCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "totalAbsoluteDeviation": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        }
+      },
+      "required": [
+        "realizationVariant",
+        "rowCount",
+        "overCount",
+        "underCount",
+        "exactCount",
+        "totalAbsoluteDeviation"
+      ],
+      "additionalProperties": false
+    },
+    "MetricJustification": {
+      "readOnly": true,
+      "title": "MetricJustification",
+      "description": "One machine-referenceable justification entry of a metric set: the kind (dataset / model / fold-definition / observation) plus the record id or digest it rests on.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "dataset",
+            "model",
+            "fold-definition",
+            "observation"
+          ]
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "kind",
+        "reference"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:calibration-metric-set-content:1.0.0"
+}

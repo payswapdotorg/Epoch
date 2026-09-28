@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LearningApplicability",
+  "$defs": {
+    "LearningApplicability": {
+      "readOnly": true,
+      "title": "LearningApplicability",
+      "description": "The applicability scope of one calibration fold (and of the model revision it calibrates): measure class plus optional domain-pack and realization-variant selectors (null = all).",
+      "type": "object",
+      "properties": {
+        "measureClass": {
+          "type": "string",
+          "enum": [
+            "quantity",
+            "cost",
+            "progress",
+            "instant"
+          ]
+        },
+        "packId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:\\.[a-z0-9-]+)+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "realizationVariant": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "construction-build",
+                "software-implementation-deployment",
+                "mechanical-fabrication-assembly",
+                "electrical-installation-commissioning",
+                "manufacturing",
+                "infrastructure-provisioning",
+                "field-service-repair"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "measureClass",
+        "packId",
+        "realizationVariant"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:learning-applicability:1.0.0"
+}

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SealedExclusionRecord",
+  "$defs": {
+    "SealedExclusionRecord": {
+      "readOnly": true,
+      "title": "SealedExclusionRecord",
+      "description": "The sealed typed exclusion record: immutable content plus its SHA-256 content digest (exact-revision addressing of the exclusion history).",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.learning-calibration.exclusion-record"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "exclusionId": {
+          "type": "string",
+          "pattern": "^exclusion:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "solutionId": {
+          "$ref": "#/$defs/SolutionId"
+        },
+        "candidateRef": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "recordId": {
+              "$ref": "#/$defs/LearningCandidateId"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "excluded-unvalidated",
+            "excluded-unresolved",
+            "excluded-foreign-tenant"
+          ]
+        },
+        "reasons": {
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "tenant-mismatch",
+              "outcome-kind-unaccepted",
+              "outcome-kind-residual",
+              "observation-group-insufficient",
+              "observation-group-conflicting"
+            ]
+          }
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "exclusionId",
+        "tenantId",
+        "solutionId",
+        "candidateRef",
+        "state",
+        "reasons",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "SolutionId": {
+      "type": "string",
+      "pattern": "^solution:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SolutionId",
+      "description": "Opaque solution-package identity: \"solution:\" followed by a lowercase slug (stable across versions)."
+    },
+    "LearningCandidateId": {
+      "type": "string",
+      "pattern": "^candidate:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LearningCandidateId",
+      "description": "Opaque outcome-learning candidate record identity: \"candidate:\" followed by a lowercase slug."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:sealed-exclusion-record:1.0.0"
+}

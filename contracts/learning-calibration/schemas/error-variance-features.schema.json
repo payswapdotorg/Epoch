@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ErrorVarianceFeatures",
+  "$defs": {
+    "ErrorVarianceFeatures": {
+      "readOnly": true,
+      "title": "ErrorVarianceFeatures",
+      "description": "The immutable content of one error/variance feature record: deviation magnitude, forecast-bias direction, variance class, derived direction, derived magnitude band, and the attribution cause kind with its evidence count.",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.learning-calibration.error-variance-features"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "deviationMagnitude": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "bias": {
+          "type": "string",
+          "enum": [
+            "over-forecast",
+            "under-forecast",
+            "exact"
+          ]
+        },
+        "varianceClass": {
+          "type": "string",
+          "enum": [
+            "quantity",
+            "price-rate",
+            "productivity",
+            "schedule",
+            "waste",
+            "rework",
+            "change",
+            "external-condition"
+          ]
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "favorable",
+            "adverse",
+            "neutral"
+          ]
+        },
+        "magnitudeBand": {
+          "type": "string",
+          "enum": [
+            "immaterial",
+            "minor",
+            "material",
+            "severe"
+          ]
+        },
+        "attributionCauseKind": {
+          "type": "string",
+          "enum": [
+            "change-record",
+            "issue-record",
+            "external-condition",
+            "unattributed"
+          ]
+        },
+        "attributionEvidenceCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 64
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "deviationMagnitude",
+        "bias",
+        "varianceClass",
+        "direction",
+        "magnitudeBand",
+        "attributionCauseKind",
+        "attributionEvidenceCount"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:error-variance-features:1.0.0"
+}

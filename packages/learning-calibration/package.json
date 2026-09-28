@@ -1,0 +1,38 @@
+{
+  "name": "@epoch/learning-calibration",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Outcome Learning & Prediction Calibration kernel (W040) — the LEARN spine over the W036 solution-delivery + W039 actualization/variance outputs: prediction-to-outcome DATASETS as sealed, versioned, content-addressed records (deterministic folds over eligible W039 comparison facts + W036 outcome records; identical eligible inputs derive identical dataset digests); typed ELIGIBILITY states (eligible / excluded-unvalidated / excluded-unresolved / excluded-foreign-tenant — ONLY validated actual/outcome records enter datasets; every exclusion is a typed record, never a silent drop; cross-tenant rows are tenant-isolation-rejected at admission); per-row ERROR AND VARIANCE FEATURES derived from the W039 variance vocabularies (magnitude, direction via the class polarity table, magnitude band via caller-supplied thresholds, attribution cause kind — closed vocabularies, deterministic derivations); CALIBRATION METRICS as deterministic folds per (model, version, applicability scope) — bias, MAE-class summaries, hit-rate against tolerance bands, per-domain-pack and per-realization-variant breakdowns, every metric record carrying the dataset digest + the exact fold definition; a MODEL REGISTRY of typed revisions with MANDATORY lineage (dataset digests + the specific observation digests that changed each revision — model-revision-lineage-required); CONTROLLED update interfaces — model/parameter updates are TYPED PROPOSAL records (draft revision + justification + lineage) admitted through a validation gate; the kernel NEVER mutates historical source facts (history-immutable — comparison facts and outcome records are read-only by construction, no write path exists) and proposals referencing tampered/stale digests are stale-reference-rejected; domain-pack context travels by TYPED REFERENCE with pack-scoped learning surfaces as PURE PROJECTIONS over the universal dataset (parallel-history-store-rejected — no pack-keyed duplicate stores); the learning:* event vocabulary over the W010 event shapes. NO ML runtime, NO model training, NO external provider, NO persistence, NO UI, NO provider vocabulary (learning-record sources stay behind the service-layer LearningRecordSourcePort seam).",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/actualization": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evaluation-protocol": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/variance": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

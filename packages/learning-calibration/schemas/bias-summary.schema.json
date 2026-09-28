@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BiasSummary",
+  "$defs": {
+    "BiasSummary": {
+      "readOnly": true,
+      "title": "BiasSummary",
+      "description": "The bias summary of one calibration fold: counts by forecast-bias direction, the exact over/under totals, and the signed net and (truncating) mean deviation.",
+      "type": "object",
+      "properties": {
+        "overCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "underCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "exactCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "overTotalDeviation": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "underTotalDeviation": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "netDeviation": {
+          "$ref": "#/$defs/SignedDeviation"
+        },
+        "meanDeviation": {
+          "$ref": "#/$defs/SignedDeviation"
+        }
+      },
+      "required": [
+        "overCount",
+        "underCount",
+        "exactCount",
+        "overTotalDeviation",
+        "underTotalDeviation",
+        "netDeviation",
+        "meanDeviation"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "SignedDeviation": {
+      "readOnly": true,
+      "title": "SignedDeviation",
+      "description": "One signed deviation value: whether the net deviation is negative (under-forecast exceeds over-forecast) plus the canonical non-negative magnitude.",
+      "type": "object",
+      "properties": {
+        "negative": {
+          "type": "boolean"
+        },
+        "magnitude": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        }
+      },
+      "required": [
+        "negative",
+        "magnitude"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:bias-summary:1.0.0"
+}

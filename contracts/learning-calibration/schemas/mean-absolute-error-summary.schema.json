@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/MeanAbsoluteErrorSummary",
+  "$defs": {
+    "MeanAbsoluteErrorSummary": {
+      "readOnly": true,
+      "title": "MeanAbsoluteErrorSummary",
+      "description": "The MAE-class summary of one calibration fold: the exact total absolute deviation, the truncating mean absolute error, and the worst deviation with its row reference.",
+      "type": "object",
+      "properties": {
+        "totalAbsoluteDeviation": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "mean": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "worstDeviation": {
+          "anyOf": [
+            {
+              "readOnly": true,
+              "type": "object",
+              "properties": {
+                "rowId": {
+                  "$ref": "#/$defs/LearningRowId"
+                },
+                "deviation": {
+                  "$ref": "#/$defs/NonNegativeDecimal"
+                }
+              },
+              "required": [
+                "rowId",
+                "deviation"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "totalAbsoluteDeviation",
+        "mean",
+        "worstDeviation"
+      ],
+      "additionalProperties": false
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "LearningRowId": {
+      "type": "string",
+      "pattern": "^row:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LearningRowId",
+      "description": "Opaque dataset-row record identity: \"row:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:mean-absolute-error-summary:1.0.0"
+}

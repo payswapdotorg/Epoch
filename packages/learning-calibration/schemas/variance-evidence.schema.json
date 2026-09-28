@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/VarianceEvidence",
+  "$defs": {
+    "VarianceEvidence": {
+      "readOnly": true,
+      "title": "VarianceEvidence",
+      "description": "One opaque typed variance evidence: the W039 variance class of the compared deviation, the exact-revision variance-record reference, and the optional evidence-grounded root-cause attribution.",
+      "type": "object",
+      "properties": {
+        "varianceClass": {
+          "type": "string",
+          "enum": [
+            "quantity",
+            "price-rate",
+            "productivity",
+            "schedule",
+            "waste",
+            "rework",
+            "change",
+            "external-condition"
+          ]
+        },
+        "varianceRecordRef": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "recordId": {
+              "type": "string",
+              "pattern": "^variance:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        "attribution": {
+          "anyOf": [
+            {
+              "readOnly": true,
+              "type": "object",
+              "properties": {
+                "cause": {
+                  "$ref": "#/$defs/LearningCauseRef"
+                },
+                "evidence": {
+                  "minItems": 1,
+                  "maxItems": 64,
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/Sha256Hex"
+                  }
+                }
+              },
+              "required": [
+                "cause",
+                "evidence"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "varianceClass",
+        "varianceRecordRef",
+        "attribution"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "LearningCauseRef": {
+      "oneOf": [
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "causeKind": {
+              "type": "string",
+              "const": "change-record"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^change:[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "causeKind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "causeKind": {
+              "type": "string",
+              "const": "issue-record"
+            },
+            "recordId": {
+              "type": "string",
+              "pattern": "^(change|delay|rework|defect|blocker):[a-z0-9][a-z0-9-]{0,62}$"
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "causeKind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "causeKind": {
+              "type": "string",
+              "const": "external-condition"
+            },
+            "recordId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "contentDigest": {
+              "$ref": "#/$defs/Sha256Hex"
+            }
+          },
+          "required": [
+            "causeKind",
+            "recordId",
+            "contentDigest"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "LearningCauseRef",
+      "description": "One opaque typed root-cause attribution (the W039 cause grammar): cause kind, opaque record id, exact content digest, and the mandatory sorted evidence digests."
+    }
+  },
+  "$id": "urn:epoch:learning-calibration:variance-evidence:1.0.0"
+}
