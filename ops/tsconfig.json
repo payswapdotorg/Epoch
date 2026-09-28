@@ -1,0 +1,21 @@
+{
+  "extends": "../packages/tsconfig/library.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "noEmit": true,
+    "types": ["node"],
+    "typeRoots": ["../packages/test-harness/node_modules/@types"],
+    "baseUrl": ".",
+    "paths": {
+      "zod": ["../packages/test-harness/node_modules/zod/index.d.ts"],
+      "@epoch/agent-protocol": ["../packages/agent-protocol/src/index.ts"],
+      "@epoch/tenancy": ["../packages/tenancy/src/index.ts"],
+      "@epoch/deploy-model": ["../deploy/src/index.ts"],
+      "@epoch/ops-kit": ["./src/index.ts"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "eslint.config.mjs"
+  ]
+}
