@@ -1,0 +1,92 @@
+{
+  "extends": "@epoch/tsconfig/library.json",
+  "compilerOptions": {
+    "lib": [
+      "ES2022"
+    ],
+    "noEmit": true,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "../../packages/test-harness/node_modules/@types"
+    ],
+    "paths": {
+      "@epoch/action-protocol": [
+        "../../packages/action-protocol/src/index.ts"
+      ],
+      "@epoch/actualization": [
+        "../../packages/actualization/src/index.ts"
+      ],
+      "@epoch/agent-protocol": [
+        "../../packages/agent-protocol/src/index.ts"
+      ],
+      "@epoch/capability-registry": [
+        "../../packages/capability-registry/src/index.ts"
+      ],
+      "@epoch/constraint-language": [
+        "../../packages/constraint-language/src/index.ts"
+      ],
+      "@epoch/event-log": [
+        "../../packages/event-log/src/index.ts"
+      ],
+      "@epoch/evidence": [
+        "../../packages/evidence/src/index.ts"
+      ],
+      "@epoch/execution-tracking": [
+        "../../packages/execution-tracking/src/index.ts"
+      ],
+      "@epoch/identity": [
+        "../../packages/identity/src/index.ts"
+      ],
+      "@epoch/pack-construction": [
+        "../../packs/construction/src/index.ts"
+      ],
+      "@epoch/pack-software": [
+        "../../packs/software/src/index.ts"
+      ],
+      "@epoch/performance": [
+        "../../packages/performance/src/index.ts"
+      ],
+      "@epoch/policy-contracts": [
+        "../../packages/policy-contracts/src/index.ts"
+      ],
+      "@epoch/procurement": [
+        "../../packages/procurement/src/index.ts"
+      ],
+      "@epoch/solution-delivery": [
+        "../../packages/solution-delivery/src/index.ts"
+      ],
+      "@epoch/tenancy": [
+        "../../packages/tenancy/src/index.ts"
+      ],
+      "@epoch/test-harness": [
+        "../../packages/test-harness/src/index.ts"
+      ],
+      "@epoch/variance": [
+        "../../packages/variance/src/index.ts"
+      ],
+      "@epoch/verification": [
+        "../../packages/verification/src/index.ts"
+      ],
+      "@epoch/world-contracts": [
+        "../../contracts/world/src/index.ts"
+      ],
+      "@epoch/world-model": [
+        "../../packages/world-model/src/index.ts"
+      ],
+      "vitest": [
+        "../../packages/test-harness/node_modules/vitest/dist/index.d.ts"
+      ],
+      "zod": [
+        "../../packages/test-harness/node_modules/zod"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "vitest.config.mts",
+    "eslint.config.mjs"
+  ]
+}

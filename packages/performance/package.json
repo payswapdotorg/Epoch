@@ -1,0 +1,31 @@
+{
+  "name": "@epoch/performance",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Performance kernel (W034) — the deterministic, wall-clock-FREE performance engineering layer: typed, sealed, versioned PERFORMANCE BUDGETS (per operation class, an input-size -> allowed-operation-count envelope; budgets are DATA — swap a budget record, no code change); deterministic WORKLOAD GENERATORS (pure seed -> typed synthetic workloads at size N, the W031/W032 fixture pattern generalized to scale; same seed -> same workload digest); typed OPERATION COUNTERS (a counting hub + sealed measured-count records over the composition seam — counts, never time); pure BUDGET EVALUATION (workload digest + measured counts + budget record -> within/near/over verdicts carrying exact counts, reproducible by construction); and COMPLEXITY MODEL records (declared class per operation + measured count ratios across doubling ladder rungs proving the class). Zero wall-clock, zero randomness, zero network; every record is content-addressed canonical SHA-256. NO persistence, NO UI, NO provider vocabulary.",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
