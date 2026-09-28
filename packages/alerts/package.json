@@ -1,0 +1,38 @@
+{
+  "name": "@epoch/alerts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Alerts kernel (W043) — severity + escalation policy and alert lifecycle over supervision findings: POLICY AS DATA (sealed, versioned escalation-policy records: finding class token + status -> severity -> escalation path with notify targets, escalation delay and re-notify cadence — swapping a policy record changes escalation, no code change); alert records as append-only REVISION CHAINS (idempotent dedup: the same finding state re-evaluated produces the sealed prior alert; state transitions due -> late -> blocked append new revisions, never mutate); escalation ACTIONS as typed W003 action proposals through the W022 authority seam (policy decision FIRST — allow/deny/requires-approval — then typed outcome records; the kernel NEVER executes anything, gateway-bypass-rejected); typed notifications through the OPTIONAL NotificationPort seam with ONE in-memory reference adapter (provider-neutral by construction; provider-vocabulary-rejected at the seam; replay-safe dispatch). NO persistence, NO UI, NO provider vocabulary, NO external providers, NO execution.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/execution-tracking": "workspace:*",
+    "@epoch/procurement": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

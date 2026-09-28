@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/NotificationTarget",
+  "$defs": {
+    "NotificationTarget": {
+      "readOnly": true,
+      "title": "NotificationTarget",
+      "description": "One notification target: a closed neutral kind (role, principal, channel) plus an opaque reference — never a provider identity.",
+      "type": "object",
+      "properties": {
+        "targetKind": {
+          "type": "string",
+          "enum": [
+            "role",
+            "principal",
+            "channel"
+          ]
+        },
+        "targetRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "targetKind",
+        "targetRef"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:alerts:notification-target:1.0.0"
+}

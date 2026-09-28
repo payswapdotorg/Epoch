@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AlertPolicyId",
+  "$defs": {
+    "AlertPolicyId": {
+      "type": "string",
+      "pattern": "^alert-policy:[a-z0-9][a-z0-9-]{0,58}$",
+      "title": "AlertPolicyId",
+      "description": "Opaque escalation-policy identity: \"alert-policy:<slug>\"."
+    }
+  },
+  "$id": "urn:epoch:alerts:alert-policy-id:1.0.0"
+}

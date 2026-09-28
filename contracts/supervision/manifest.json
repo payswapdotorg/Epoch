@@ -1,0 +1,121 @@
+{
+  "contract": "epoch/supervision",
+  "contractVersion": "1.0.0",
+  "companionContractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Delivery Supervision + Alerts public contract surface (W043, W012 convention): the CORE record types a domain pack or downstream consumer binds to — supervision findings (content-addressed, W006-convention provenance), the W038-shaped execution-issue summaries and W037-shaped lead-time risk inputs, the typed anomaly thresholds, the sealed supervision pass, the severity/escalation policy records, the alert revision chains, the gateway-bound escalation outcomes, and the typed notifications — plus the supervision:* events over the W010 shapes. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "dataTypes": [
+    "FindingMeasures",
+    "FindingSubject",
+    "SupervisionFindingContent",
+    "SealedSupervisionFinding",
+    "ExecutionIssueSummary",
+    "LeadTimeRiskInput",
+    "SupervisionThresholds",
+    "SupervisionPassContent",
+    "SealedSupervisionPass",
+    "SealedSupervisionEvent",
+    "NotificationTarget",
+    "EscalationPath",
+    "PolicyRule",
+    "SealedEscalationPolicy",
+    "AlertFindingSummary",
+    "SealedAlertRecord",
+    "SealedEscalationOutcome",
+    "SealedNotificationRecord"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/supervision and @epoch/alerts and are not represented in the JSON Schema files",
+  "emittedBy": "renderSupervisionPublicContractFiles() in @epoch/supervision-runtime (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "FindingMeasures",
+      "file": "schemas/finding-measures.schema.json",
+      "sha256": "a8a47555f23242bc4b2cd0bd48d57c1d4f69697b6ac180fe4ffa54a0003168b5"
+    },
+    {
+      "type": "FindingSubject",
+      "file": "schemas/finding-subject.schema.json",
+      "sha256": "39b48a45a2ed7e9ec59c0472eb6014975ceeda47c651d65c792fb18035367b34"
+    },
+    {
+      "type": "SupervisionFindingContent",
+      "file": "schemas/supervision-finding-content.schema.json",
+      "sha256": "6f5f022eb45328c25b600255f9f4319ed134ddb6b0f656332d87afd22577af4e"
+    },
+    {
+      "type": "SealedSupervisionFinding",
+      "file": "schemas/sealed-supervision-finding.schema.json",
+      "sha256": "b5c6a985005e8e6c08bbe20c975d56ad362392fb1c243dbb7b17cc475df0ead2"
+    },
+    {
+      "type": "ExecutionIssueSummary",
+      "file": "schemas/execution-issue-summary.schema.json",
+      "sha256": "1264b36e8036ed3200cda892f5a97490a0037448ade741d850945ac2376af43d"
+    },
+    {
+      "type": "LeadTimeRiskInput",
+      "file": "schemas/lead-time-risk-input.schema.json",
+      "sha256": "1f665ede99cecb33e948101c15e885c6751f44a4c9489600d507f8f0b31a7d73"
+    },
+    {
+      "type": "SupervisionThresholds",
+      "file": "schemas/supervision-thresholds.schema.json",
+      "sha256": "ec83adab724d6728fbb71e14dca05fda469d291e9d7e43a05132c625f0b3e84a"
+    },
+    {
+      "type": "SupervisionPassContent",
+      "file": "schemas/supervision-pass-content.schema.json",
+      "sha256": "a74543facf0cae00c5207683e15d314e78aca26274f5718f3d6148cc96450796"
+    },
+    {
+      "type": "SealedSupervisionPass",
+      "file": "schemas/sealed-supervision-pass.schema.json",
+      "sha256": "7a68485d3b67499c1d6d30dd2834b4a0b7b5552fecf0f771067dae8cde851e04"
+    },
+    {
+      "type": "SealedSupervisionEvent",
+      "file": "schemas/sealed-supervision-event.schema.json",
+      "sha256": "229f09eb5cfa60e11be24d4048dfb6fe564f288d37482055fe1592be01a4a350"
+    },
+    {
+      "type": "NotificationTarget",
+      "file": "schemas/notification-target.schema.json",
+      "sha256": "9550b02ec7ecf80cd62a0b7f36fb14d07415444e8fa02580165bd892a021880b"
+    },
+    {
+      "type": "EscalationPath",
+      "file": "schemas/escalation-path.schema.json",
+      "sha256": "ed5c0b783eb4ef66d6253191a3da2d2d0842ed7e3ec612fa876c6b3a1d0e4e97"
+    },
+    {
+      "type": "PolicyRule",
+      "file": "schemas/policy-rule.schema.json",
+      "sha256": "8c3361c900cfd76578b90a614076f0dea8c2bb30848f89e8e2bfc12e301aac11"
+    },
+    {
+      "type": "SealedEscalationPolicy",
+      "file": "schemas/sealed-escalation-policy.schema.json",
+      "sha256": "90423ea740f471c800e4eb20c4e8f4135386d4e11ab59ea18f65a62b25953de2"
+    },
+    {
+      "type": "AlertFindingSummary",
+      "file": "schemas/alert-finding-summary.schema.json",
+      "sha256": "a8701b871295aa38950df78e66ad360be30ee9589498f046e7991774dde5478c"
+    },
+    {
+      "type": "SealedAlertRecord",
+      "file": "schemas/sealed-alert-record.schema.json",
+      "sha256": "ad1b61716a2a149bb6cb8ef8584213831df5cacc1cee7535f5f1c08235c45dee"
+    },
+    {
+      "type": "SealedEscalationOutcome",
+      "file": "schemas/sealed-escalation-outcome.schema.json",
+      "sha256": "9656b54875bf42128bff7a2b703a67b73f46fbf3f835b75e6ae9214ec1504216"
+    },
+    {
+      "type": "SealedNotificationRecord",
+      "file": "schemas/sealed-notification-record.schema.json",
+      "sha256": "ec85948f335d378a8a6cd1d2a761773d99f616548ad304d89b7d4d7f2d5ff8a3"
+    }
+  ]
+}

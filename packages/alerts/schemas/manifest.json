@@ -1,0 +1,138 @@
+{
+  "contract": "epoch/alerts",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Alerts contract surface (W043, in-package full surface): severity + escalation policy as sealed versioned data (finding class token + status -> severity -> escalation path), alert records as append-only revision chains with idempotent deduplication, escalation outcomes bound to verifiable W003 gateway decisions, and typed notifications over the closed neutral channel vocabulary. JSON Schema projection under schemas/; runtime validators in @epoch/alerts.",
+  "dataTypes": [
+    "AlertId",
+    "AlertPolicyId",
+    "AlertsPrincipalId",
+    "EscalationOutcomeId",
+    "FindingClassToken",
+    "FindingIdMirror",
+    "NotificationId",
+    "PolicyRuleId",
+    "SubjectKindToken",
+    "NotificationTarget",
+    "EscalationPath",
+    "PolicyRule",
+    "EscalationPolicyContent",
+    "SealedEscalationPolicy",
+    "AlertFindingSummary",
+    "AlertRecordContent",
+    "SealedAlertRecord",
+    "EscalationOutcomeContent",
+    "SealedEscalationOutcome",
+    "NotificationRecordContent",
+    "SealedNotificationRecord"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical ordering, chain checks, digest verification) are enforced by the runtime validators in @epoch/alerts and are not represented in the JSON Schema files",
+  "emittedBy": "renderAlertsContractFiles() in @epoch/alerts (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "AlertId",
+      "file": "alert-id.schema.json",
+      "sha256": "86a7715c3399461e7f402d3a418ade6ba6b8fb7776406fc2c34139826d2ae530"
+    },
+    {
+      "type": "AlertPolicyId",
+      "file": "alert-policy-id.schema.json",
+      "sha256": "f7b36af56a8ef93744f2c196f0151c4243d8bc779ba67cc7efd5ac65321f9ee2"
+    },
+    {
+      "type": "AlertsPrincipalId",
+      "file": "alerts-principal-id.schema.json",
+      "sha256": "164cf57317cd4120ed03fad37a2db74d367ef8b3239c5f587e85bf88ca2ff9dc"
+    },
+    {
+      "type": "EscalationOutcomeId",
+      "file": "escalation-outcome-id.schema.json",
+      "sha256": "4b0e628e89ffea35dc954f004bbb5a4f72e1cfd25d77293dec26d1afa32360b7"
+    },
+    {
+      "type": "FindingClassToken",
+      "file": "finding-class-token.schema.json",
+      "sha256": "9b92532b527f392ca7537e204a3d953506408ac4f6b39398ef6457c14ca91833"
+    },
+    {
+      "type": "FindingIdMirror",
+      "file": "finding-id-mirror.schema.json",
+      "sha256": "fa04e0bd3f7fdc01c219c2adb219cb77d9ccafa3c0ea669cee671ada87b68f7a"
+    },
+    {
+      "type": "NotificationId",
+      "file": "notification-id.schema.json",
+      "sha256": "72fc97664ccd8348f314aa857375a3a6a1933d2bcb4730ae164d6fa45dcdfdff"
+    },
+    {
+      "type": "PolicyRuleId",
+      "file": "policy-rule-id.schema.json",
+      "sha256": "b133c219d77335bf51c0250078b97b73d477117546d26afc8642d99190bdccd1"
+    },
+    {
+      "type": "SubjectKindToken",
+      "file": "subject-kind-token.schema.json",
+      "sha256": "17a6e1734a22c103263168535b0c5867c6b843bb917e40563860a441ce09661d"
+    },
+    {
+      "type": "NotificationTarget",
+      "file": "notification-target.schema.json",
+      "sha256": "9550b02ec7ecf80cd62a0b7f36fb14d07415444e8fa02580165bd892a021880b"
+    },
+    {
+      "type": "EscalationPath",
+      "file": "escalation-path.schema.json",
+      "sha256": "ed5c0b783eb4ef66d6253191a3da2d2d0842ed7e3ec612fa876c6b3a1d0e4e97"
+    },
+    {
+      "type": "PolicyRule",
+      "file": "policy-rule.schema.json",
+      "sha256": "8c3361c900cfd76578b90a614076f0dea8c2bb30848f89e8e2bfc12e301aac11"
+    },
+    {
+      "type": "EscalationPolicyContent",
+      "file": "escalation-policy-content.schema.json",
+      "sha256": "2aa97ede7da573bddde5f81053b35fedd671cf35967c1094e466f0f6db447768"
+    },
+    {
+      "type": "SealedEscalationPolicy",
+      "file": "sealed-escalation-policy.schema.json",
+      "sha256": "90423ea740f471c800e4eb20c4e8f4135386d4e11ab59ea18f65a62b25953de2"
+    },
+    {
+      "type": "AlertFindingSummary",
+      "file": "alert-finding-summary.schema.json",
+      "sha256": "a8701b871295aa38950df78e66ad360be30ee9589498f046e7991774dde5478c"
+    },
+    {
+      "type": "AlertRecordContent",
+      "file": "alert-record-content.schema.json",
+      "sha256": "093fead834b63801e5362e060dd266999529d3e4a28b49bbed86db41bb4a3c5f"
+    },
+    {
+      "type": "SealedAlertRecord",
+      "file": "sealed-alert-record.schema.json",
+      "sha256": "ad1b61716a2a149bb6cb8ef8584213831df5cacc1cee7535f5f1c08235c45dee"
+    },
+    {
+      "type": "EscalationOutcomeContent",
+      "file": "escalation-outcome-content.schema.json",
+      "sha256": "f7d99ea2eb7c0583e80de513b551234daebeb4a863ef309e2b9dcad7c3c7179d"
+    },
+    {
+      "type": "SealedEscalationOutcome",
+      "file": "sealed-escalation-outcome.schema.json",
+      "sha256": "9656b54875bf42128bff7a2b703a67b73f46fbf3f835b75e6ae9214ec1504216"
+    },
+    {
+      "type": "NotificationRecordContent",
+      "file": "notification-record-content.schema.json",
+      "sha256": "4a96e8e46f0c1268a9f0a65f297f60af14ba95aeeb53e65cb5d0d5fab43be1c3"
+    },
+    {
+      "type": "SealedNotificationRecord",
+      "file": "sealed-notification-record.schema.json",
+      "sha256": "ec85948f335d378a8a6cd1d2a761773d99f616548ad304d89b7d4d7f2d5ff8a3"
+    }
+  ]
+}

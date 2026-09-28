@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/supervision": ["../../packages/supervision/src/index.ts"],
+      "@epoch/alerts": ["../../packages/alerts/src/index.ts"],
+      "@epoch/world-contracts": ["../../contracts/world/src/index.ts"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "../../contracts/supervision/index.d.ts",
+    "../../contracts/supervision/parity.ts"
+  ]
+}

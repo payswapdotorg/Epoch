@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/IssueSummaryId",
+  "$defs": {
+    "IssueSummaryId": {
+      "type": "string",
+      "pattern": "^(change|delay|rework|defect|blocker):[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "IssueSummaryId",
+      "description": "Opaque execution-issue summary identity mirroring the W038 families: \"change:|delay:|rework:|defect:|blocker:<slug>\"."
+    }
+  },
+  "$id": "urn:epoch:supervision:issue-summary-id:1.0.0"
+}

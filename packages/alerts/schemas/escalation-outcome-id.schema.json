@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EscalationOutcomeId",
+  "$defs": {
+    "EscalationOutcomeId": {
+      "type": "string",
+      "pattern": "^escalation:[a-z0-9][a-z0-9-]{0,58}$",
+      "title": "EscalationOutcomeId",
+      "description": "Opaque escalation-outcome identity: \"escalation:<slug>\"."
+    }
+  },
+  "$id": "urn:epoch:alerts:escalation-outcome-id:1.0.0"
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProvenanceSource",
+  "$defs": {
+    "ProvenanceSource": {
+      "readOnly": true,
+      "title": "ProvenanceSource",
+      "description": "One exact-revision provenance source of a supervision finding: the record kind, its opaque id, and its SHA-256 content digest.",
+      "type": "object",
+      "properties": {
+        "referenceKind": {
+          "$ref": "#/$defs/ProvenanceReferenceKind"
+        },
+        "referenceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "referenceKind",
+        "referenceId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "ProvenanceReferenceKind": {
+      "type": "string",
+      "enum": [
+        "program",
+        "delivery",
+        "activity",
+        "work-package",
+        "milestone",
+        "gate",
+        "execution-issue",
+        "lead-time-record",
+        "info-request",
+        "distinction-record"
+      ],
+      "title": "ProvenanceReferenceKind",
+      "description": "The kind of sealed record a finding source points at (the W006 exact-revision convention)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:supervision:provenance-source:1.0.0"
+}
