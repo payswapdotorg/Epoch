@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SettlementResult",
+  "$defs": {
+    "SettlementResult": {
+      "type": "string",
+      "enum": [
+        "settled",
+        "unpaid",
+        "declined"
+      ],
+      "title": "SettlementResult",
+      "description": "Closed settlement check result vocabulary: settled, unpaid, or declined."
+    }
+  },
+  "$id": "urn:epoch:entitlements:settlement-result:1.0.0"
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@epoch/billing-host",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Billing HOST (W024, service layer) — the thin typed runtime facade over the @epoch/entitlements kernel: billing-account sessions (idempotent opening; one settlement currency per account), W023 entitlement grant/revocation adoption (verified through the REAL marketplace validators; idempotent by entitlement id), W036 sealed-delivery registration (verified at admission; only VALIDATED actuals ever bill), sealed usage-event intake (idempotent by (stream, sequence); folded through the REAL marketplace fold), seat assignment/release operations (kernel admission: capacity, duplicates, revocation; events on the entitlement stream), invoice draft -> issued -> settled | void sessions with kernel-derived lines (one-time / subscription / seat / usage / delivery-actual; exact decimal arithmetic), settlement-port registration and check passthrough (the port outcome proposes the settled transition — the invoice record is the authority, never the port state), tenant-scoped reads (R12), and health/liveness as typed data. The W009 authorization gate denies unauthorized operations BEFORE any kernel admission; every lifecycle step emits billing:*/entitlements:* events (W010-shaped, one stream per billing account / per entitlement, digests sealed by the kernel). NO persistence, NO network, NO real processes, NO wall-clock, NO randomness — every instant is caller-supplied.",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/entitlements": "workspace:*",
+    "@epoch/marketplace": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

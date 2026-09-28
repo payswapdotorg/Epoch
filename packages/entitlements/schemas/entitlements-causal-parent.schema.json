@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EntitlementsCausalParent",
+  "$defs": {
+    "EntitlementsCausalParent": {
+      "readOnly": true,
+      "title": "EntitlementsCausalParent",
+      "description": "Causal parent of an entitlements/billing event: an earlier event in the same stream (the W010 shape).",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BillingStreamId"
+            },
+            {
+              "$ref": "#/$defs/EntitlementsStreamId"
+            }
+          ]
+        },
+        "sequence": {
+          "$ref": "#/$defs/EntitlementsEventSequence"
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "BillingStreamId": {
+      "type": "string",
+      "pattern": "^stream:billing-[a-z0-9][a-z0-9-]{0,51}$",
+      "title": "BillingStreamId",
+      "description": "Opaque billing-stream identity: \"stream:billing-\" followed by a lowercase slug (the W010 stream grammar; one stream per billing account)."
+    },
+    "EntitlementsStreamId": {
+      "type": "string",
+      "pattern": "^stream:entitlements-[a-z0-9][a-z0-9-]{0,48}$",
+      "title": "EntitlementsStreamId",
+      "description": "Opaque entitlements-stream identity: \"stream:entitlements-\" followed by a lowercase slug (the W010 stream grammar; one stream per entitlement)."
+    },
+    "EntitlementsEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "EntitlementsEventSequence",
+      "description": "One entitlements/billing event sequence number: 1-based, contiguous per stream."
+    }
+  },
+  "$id": "urn:epoch:entitlements:entitlements-causal-parent:1.0.0"
+}

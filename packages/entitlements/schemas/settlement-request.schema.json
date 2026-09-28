@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SettlementRequest",
+  "$defs": {
+    "SettlementRequest": {
+      "readOnly": true,
+      "title": "SettlementRequest",
+      "description": "Settlement check request: the exact invoice being settled, the tenant, and the invoice amount and currency (typed data in, record-shaped check out).",
+      "type": "object",
+      "properties": {
+        "invoiceId": {
+          "$ref": "#/$defs/InvoiceId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "amount": {
+          "$ref": "#/$defs/NonNegativeDecimal"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        }
+      },
+      "required": [
+        "invoiceId",
+        "tenantId",
+        "amount",
+        "currency"
+      ],
+      "additionalProperties": false
+    },
+    "InvoiceId": {
+      "type": "string",
+      "pattern": "^invoice:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "InvoiceId",
+      "description": "Opaque invoice identity: \"invoice:\" followed by a lowercase slug."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    }
+  },
+  "$id": "urn:epoch:entitlements:settlement-request:1.0.0"
+}

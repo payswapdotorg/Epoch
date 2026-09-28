@@ -1,0 +1,198 @@
+{
+  "contract": "epoch/entitlements",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Billing + Entitlements contract surface (W024): entitlement resolution riding the W009 tenancy seams over W023 grant records; seat-assignment accounting; billing accounts; sealed invoices with the typed lifecycle draft -> issued -> settled | voided; billable lines derived from the W023 pricing vocabulary, usage accounts, and W036 validated actuals; the SettlementPort seam (checks + record-shaped outcomes only); and entitlements:*/billing:* events over the W010 event shapes. JSON Schema projection under schemas/; runtime validators in @epoch/entitlements.",
+  "dataTypes": [
+    "SeatAssignmentId",
+    "SeatReleaseId",
+    "BillingAccountId",
+    "InvoiceId",
+    "LineItemId",
+    "SettlementId",
+    "SettlementPortId",
+    "EntitlementsStreamId",
+    "BillingStreamId",
+    "SeatAssignmentContent",
+    "SealedSeatAssignment",
+    "SeatReleaseContent",
+    "SealedSeatRelease",
+    "BillingAccountContent",
+    "SealedBillingAccount",
+    "InvoiceLifecycleState",
+    "BillingLineBasis",
+    "DeliveryActualReference",
+    "InvoiceLine",
+    "InvoiceContent",
+    "SealedInvoice",
+    "SettlementResult",
+    "SettlementRequest",
+    "SettlementOutcome",
+    "UnitRate",
+    "EntitlementsEventSequence",
+    "EntitlementsCausalParent",
+    "EntitlementsEventDiscriminator",
+    "EntitlementsEventPayload",
+    "EntitlementsEventContent",
+    "SealedEntitlementsEvent"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/entitlements and are not represented in the JSON Schema files",
+  "emittedBy": "renderEntitlementsContractFiles() in @epoch/entitlements (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "SeatAssignmentId",
+      "file": "seat-assignment-id.schema.json",
+      "sha256": "25bfdbfe82c82c50c24f9543cf635179736cafbbc3d32e7ebc19beae46693882"
+    },
+    {
+      "type": "SeatReleaseId",
+      "file": "seat-release-id.schema.json",
+      "sha256": "4f4259f91cdc074e9a52ee14e7c4db57c7d337ca0e8bbd1b083b39ea7c997d37"
+    },
+    {
+      "type": "BillingAccountId",
+      "file": "billing-account-id.schema.json",
+      "sha256": "ec5d0589a7c191ab5706d21a0212d1aa339523259bdb54ae816232b365747cbb"
+    },
+    {
+      "type": "InvoiceId",
+      "file": "invoice-id.schema.json",
+      "sha256": "b363fa2d34d8b2ae273024d6c41ffd0fda2edcf221006b2b9be75a7133a575b7"
+    },
+    {
+      "type": "LineItemId",
+      "file": "line-item-id.schema.json",
+      "sha256": "4f3a359eaacdb073b1702ff833e0539774e6b70ac7ee67a1ba01526320e5bfcc"
+    },
+    {
+      "type": "SettlementId",
+      "file": "settlement-id.schema.json",
+      "sha256": "51de3a40547ed49d6a5aa7ae13aa5f94566cdf6ddb232a362fa4f3ed3d020ab1"
+    },
+    {
+      "type": "SettlementPortId",
+      "file": "settlement-port-id.schema.json",
+      "sha256": "8742f17fbe21a07c2460c39b098d4bff4ed793e3ba5f0e5ad07d989bb45202ee"
+    },
+    {
+      "type": "EntitlementsStreamId",
+      "file": "entitlements-stream-id.schema.json",
+      "sha256": "c83e3a215a14072635caf684f25261baff1b4938bc00e7d2f0750854139ff915"
+    },
+    {
+      "type": "BillingStreamId",
+      "file": "billing-stream-id.schema.json",
+      "sha256": "54c7e4b226a49d9e55a31018d744d5adb0c42a70f5883adc5c7f55b362c67e51"
+    },
+    {
+      "type": "SeatAssignmentContent",
+      "file": "seat-assignment-content.schema.json",
+      "sha256": "3619fd12a2c2ad3dccb3d0a587a8c4ab33fafce7c0a42a0932049bd9792e5244"
+    },
+    {
+      "type": "SealedSeatAssignment",
+      "file": "sealed-seat-assignment.schema.json",
+      "sha256": "e1aae455b5634f90cf25df0a0278058c2c5bf3eea26e9bd8dc970773aedfc185"
+    },
+    {
+      "type": "SeatReleaseContent",
+      "file": "seat-release-content.schema.json",
+      "sha256": "d7528680b78597439a27b63c5837117b1bdd1c118de98e6b6db9c0d0ee076ffd"
+    },
+    {
+      "type": "SealedSeatRelease",
+      "file": "sealed-seat-release.schema.json",
+      "sha256": "0b0d1b9a68a33e507c09f052921784a0f94cd0ad771045f4f4e5b0b15632479a"
+    },
+    {
+      "type": "BillingAccountContent",
+      "file": "billing-account-content.schema.json",
+      "sha256": "860c10f112e5113ff9d91813487d51f95bcc5eb9cc4b2069c9d819437a5ad254"
+    },
+    {
+      "type": "SealedBillingAccount",
+      "file": "sealed-billing-account.schema.json",
+      "sha256": "f4f9d64a0d6ea2ca842ab75a8e039e636d23f0cc22fe97ab4c7525efcad3bf8a"
+    },
+    {
+      "type": "InvoiceLifecycleState",
+      "file": "invoice-lifecycle-state.schema.json",
+      "sha256": "236637863aa2ec38909eddea272d6a411baf17dc4931a435ce01a71565813ac7"
+    },
+    {
+      "type": "BillingLineBasis",
+      "file": "billing-line-basis.schema.json",
+      "sha256": "cbe013af57a3f3c6d04d5f4d0b451ccda882ebdcca0722a85101e5e268ebb7f9"
+    },
+    {
+      "type": "DeliveryActualReference",
+      "file": "delivery-actual-reference.schema.json",
+      "sha256": "4482451c49df18cd6457c9c89dce1bf081d7a8eddf4590aaa45cb238ec2b08b3"
+    },
+    {
+      "type": "InvoiceLine",
+      "file": "invoice-line.schema.json",
+      "sha256": "de6ae7ead42e8edc22a25fac83d9ca012e1f37f46db58fa6837574511ece9923"
+    },
+    {
+      "type": "InvoiceContent",
+      "file": "invoice-content.schema.json",
+      "sha256": "c8e4cf21b953e6fc4f8d1a672c8e2e75f258e7ade7a05340bb0d269a53d933de"
+    },
+    {
+      "type": "SealedInvoice",
+      "file": "sealed-invoice.schema.json",
+      "sha256": "98210775ec34bcba1c7dc0ed2e63eacce2531b442d6823b8b34626bd103b71f0"
+    },
+    {
+      "type": "SettlementResult",
+      "file": "settlement-result.schema.json",
+      "sha256": "940546078615156eb80659f00417fada8bb31365d5337a723e6d1f6e8d0ed6ca"
+    },
+    {
+      "type": "SettlementRequest",
+      "file": "settlement-request.schema.json",
+      "sha256": "3a0552a4e4d8a323afd95b03035e282e6d74c99f0be77777b0ac2fbad3c7ec87"
+    },
+    {
+      "type": "SettlementOutcome",
+      "file": "settlement-outcome.schema.json",
+      "sha256": "f81a72cf1a03e0cbd2dec5e44b7ba8bc7d13effc7f7c73a3757e8a980b192b46"
+    },
+    {
+      "type": "UnitRate",
+      "file": "unit-rate.schema.json",
+      "sha256": "53b5f16bf1ddc282bb8f3ca27456225afbf49b1ab5593b196eede7f6fde6ffc9"
+    },
+    {
+      "type": "EntitlementsEventSequence",
+      "file": "entitlements-event-sequence.schema.json",
+      "sha256": "71c43fe812a33e54bee032f5cef153f850dffd661ea261eabdceb07ff928ee3e"
+    },
+    {
+      "type": "EntitlementsCausalParent",
+      "file": "entitlements-causal-parent.schema.json",
+      "sha256": "6e691e5049ebd4b53fea43bee8a8669bad812f50c4c65a3225c7cdaa80eeced6"
+    },
+    {
+      "type": "EntitlementsEventDiscriminator",
+      "file": "entitlements-event-discriminator.schema.json",
+      "sha256": "d02a721652a778e3a350d60270ed7d73c06202d9d1f4b2361b8facd258576b23"
+    },
+    {
+      "type": "EntitlementsEventPayload",
+      "file": "entitlements-event-payload.schema.json",
+      "sha256": "b3d1746d1643313c1b5d45c778aa1d01ff6e0ce486ebe5da62830c7ebc1856e5"
+    },
+    {
+      "type": "EntitlementsEventContent",
+      "file": "entitlements-event-content.schema.json",
+      "sha256": "51f3da159fc0cbc3c59cadff7ac037aa05bde34b5e7ea3e3c3129e4dfd038463"
+    },
+    {
+      "type": "SealedEntitlementsEvent",
+      "file": "sealed-entitlements-event.schema.json",
+      "sha256": "cf75225d526a8f361886a4c51c0ddca064db69f8d4a1aef1e5b44799319c7358"
+    }
+  ]
+}

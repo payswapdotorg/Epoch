@@ -1,0 +1,36 @@
+{
+  "name": "@epoch/entitlements",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Billing + Entitlements kernel (W024) — the typed domain model for entitlement RESOLUTION and BILLING records (architecture.md, binding: 'Epoch owns listings, trust metadata, versions, entitlements, usage accounting, and developer revenue records. Payment processors are adapters.'; architecture lock rule 11: 'Marketplace entitlement is separate from payment processor state.'): entitlement resolution RIDES the W009 tenancy containment seams and DELEGATES grant matching to the W023 @epoch/marketplace checkEntitlement authority (never redefined); seat-assignment accounting over W023 grants (sealed records, pure admission, deterministic folds); billing accounts and IMMUTABLE, content-addressed INVOICE records with the typed lifecycle draft -> issued -> settled | voided and exact decimal totals; PURE line derivation from the W023 pricing vocabulary, W023 usage accounts, and W036 SealedDeliveryRecord VALIDATED actuals (only digest-verified accepted-observation-derived actuals may bill); the provider-neutral SettlementPort seam expressing CHECKS and record-shaped outcomes ONLY (in-memory reference implementation — no charge execution, no credentials, no network); and the entitlements:*/billing:* event vocabulary over the W010 event shapes (structural mirror, devDep parity — never a runtime edge). NO persistence, NO UI, NO clocks, NO randomness.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/marketplace": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/authorization": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/BillingStreamId",
+  "$defs": {
+    "BillingStreamId": {
+      "type": "string",
+      "pattern": "^stream:billing-[a-z0-9][a-z0-9-]{0,51}$",
+      "title": "BillingStreamId",
+      "description": "Opaque billing-stream identity: \"stream:billing-\" followed by a lowercase slug (the W010 stream grammar; one stream per billing account)."
+    }
+  },
+  "$id": "urn:epoch:entitlements:billing-stream-id:1.0.0"
+}
