@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SecurityPolicyId",
+  "$defs": {
+    "SecurityPolicyId": {
+      "type": "string",
+      "pattern": "^security-policy:[a-z0-9][a-z0-9-]{0,49}$",
+      "title": "SecurityPolicyId",
+      "description": "Opaque security-policy identity: \"security-policy:<slug>\", caller-supplied."
+    }
+  },
+  "$id": "urn:epoch:observability:security-policy-id:1.0.0"
+}

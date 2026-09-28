@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/HostFunctionToken",
+  "$defs": {
+    "HostFunctionToken": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "title": "HostFunctionToken",
+      "description": "One host-function token of a sandbox grant (validated against the W008 vocabulary by the isolation check)."
+    }
+  },
+  "$id": "urn:epoch:observability:host-function-token:1.0.0"
+}

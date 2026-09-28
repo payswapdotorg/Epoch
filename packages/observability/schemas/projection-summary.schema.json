@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProjectionSummary",
+  "$defs": {
+    "ProjectionSummary": {
+      "readOnly": true,
+      "title": "ProjectionSummary",
+      "description": "The mirrored W041 authorized-projection summary the audit family verifies: record identity + digest, released/redacted path sets, decision + policy linkage.",
+      "type": "object",
+      "properties": {
+        "objectId": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 256
+        },
+        "objectDigest": {
+          "$ref": "#/$defs/ObservabilitySha256Hex"
+        },
+        "releasedPaths": {
+          "readOnly": true,
+          "maxItems": 1024,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "redactedPaths": {
+          "readOnly": true,
+          "maxItems": 1024,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "decisionDigest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ObservabilitySha256Hex"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "policyId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "objectId",
+        "objectDigest",
+        "releasedPaths",
+        "redactedPaths",
+        "decisionDigest",
+        "policyId"
+      ],
+      "additionalProperties": false
+    },
+    "ObservabilitySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "ObservabilitySha256Hex",
+      "description": "SHA-256 digest over canonical JSON: the exact-revision content address of a security record."
+    }
+  },
+  "$id": "urn:epoch:observability:projection-summary:1.0.0"
+}

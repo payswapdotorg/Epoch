@@ -1,0 +1,86 @@
+{
+  "extends": "@epoch/tsconfig/library.json",
+  "compilerOptions": {
+    "lib": [
+      "ES2022"
+    ],
+    "noEmit": true,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "../../services/security/node_modules/@types"
+    ],
+    "paths": {
+      "@epoch/access-projection": [
+        "../../packages/access-projection/src/index.ts"
+      ],
+      "@epoch/action-protocol": [
+        "../../packages/action-protocol/src/index.ts"
+      ],
+      "@epoch/action-gateway": [
+        "../../services/action-gateway/src/index.ts"
+      ],
+      "@epoch/agent-orchestration": [
+        "../../packages/agent-orchestration/src/index.ts"
+      ],
+      "@epoch/agent-runtime": [
+        "../../services/agent-runtime/src/index.ts"
+      ],
+      "@epoch/authorization": [
+        "../../packages/authorization/src/index.ts"
+      ],
+      "@epoch/capability-registry": [
+        "../../packages/capability-registry/src/index.ts"
+      ],
+      "@epoch/event-log": [
+        "../../packages/event-log/src/index.ts"
+      ],
+      "@epoch/extension-runtime": [
+        "../../packages/extension-runtime/src/index.ts"
+      ],
+      "@epoch/marketplace": [
+        "../../packages/marketplace/src/index.ts"
+      ],
+      "@epoch/observability": [
+        "../../packages/observability/src/index.ts"
+      ],
+      "@epoch/policy-contracts": [
+        "../../packages/policy-contracts/src/index.ts"
+      ],
+      "@epoch/security-runtime": [
+        "../../services/security/src/index.ts"
+      ],
+      "@epoch/simulation-fabric": [
+        "../../packages/simulation-fabric/src/index.ts"
+      ],
+      "@epoch/simulation-protocol": [
+        "../../packages/simulation-protocol/src/index.ts"
+      ],
+      "@epoch/solution-delivery": [
+        "../../packages/solution-delivery/src/index.ts"
+      ],
+      "@epoch/tenancy": [
+        "../../packages/tenancy/src/index.ts"
+      ],
+      "@epoch/world-contracts": [
+        "../../contracts/world/src/index.ts"
+      ],
+      "@epoch/world-model": [
+        "../../packages/world-model/src/index.ts"
+      ],
+      "vitest": [
+        "../../services/security/node_modules/vitest/dist/index.d.ts"
+      ],
+      "zod": [
+        "../../services/security/node_modules/zod"
+      ]
+    }
+  },
+  "include": [
+    "test/**/*.ts",
+    "scenarios/**/*.ts",
+    "vitest.config.mts",
+    "eslint.config.mjs"
+  ]
+}

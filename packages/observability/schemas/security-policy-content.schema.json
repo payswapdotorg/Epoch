@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SecurityPolicyContent",
+  "$defs": {
+    "SecurityPolicyContent": {
+      "readOnly": true,
+      "title": "SecurityPolicyContent",
+      "description": "Immutable content of one security policy: tenant-scoped isolation profile + observability thresholds + lifecycle status (policy is data).",
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.observability.security-policy"
+        },
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "policyId": {
+          "$ref": "#/$defs/SecurityPolicyId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/ObservabilityTenantId"
+        },
+        "revision": {
+          "$ref": "#/$defs/ObservabilitySemverCore"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "isolation": {
+          "$ref": "#/$defs/IsolationProfile"
+        },
+        "thresholds": {
+          "$ref": "#/$defs/SecurityThresholds"
+        },
+        "status": {
+          "$ref": "#/$defs/PolicyStatus"
+        },
+        "activatedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "activatedBy": {
+          "$ref": "#/$defs/ObservabilityPrincipalId"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "schema",
+        "schemaVersion",
+        "policyId",
+        "tenantId",
+        "revision",
+        "displayName",
+        "isolation",
+        "thresholds",
+        "status",
+        "activatedAt",
+        "activatedBy"
+      ],
+      "additionalProperties": false
+    },
+    "SecurityPolicyId": {
+      "type": "string",
+      "pattern": "^security-policy:[a-z0-9][a-z0-9-]{0,49}$",
+      "title": "SecurityPolicyId",
+      "description": "Opaque security-policy identity: \"security-policy:<slug>\", caller-supplied."
+    },
+    "ObservabilityTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ObservabilityTenantId",
+      "description": "Opaque tenant identity of the security domain: \"tenant:<slug>\" (the W009 grammar)."
+    },
+    "ObservabilitySemverCore": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$",
+      "title": "ObservabilitySemverCore",
+      "description": "Semantic-version core string (MAJOR.MINOR.PATCH)."
+    },
+    "IsolationProfile": {
+      "readOnly": true,
+      "title": "IsolationProfile",
+      "description": "The sandbox-admission half of a security policy: maximum admitted trust class, admitted flavors, admitted data-handling classifications, listing requirement, quarantine-on-violation.",
+      "type": "object",
+      "properties": {
+        "maxTrustClass": {
+          "type": "string",
+          "pattern": "^t[0-4]$"
+        },
+        "allowedFlavors": {
+          "minItems": 1,
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "declarative",
+              "ui",
+              "wasm",
+              "remote"
+            ]
+          }
+        },
+        "allowedDataHandling": {
+          "minItems": 1,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "sandbox-only",
+              "tenant-scoped",
+              "external-transfer"
+            ]
+          }
+        },
+        "requireMarketplaceListing": {
+          "type": "boolean"
+        },
+        "quarantineOnViolation": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "maxTrustClass",
+        "allowedFlavors",
+        "allowedDataHandling",
+        "requireMarketplaceListing",
+        "quarantineOnViolation"
+      ],
+      "additionalProperties": false
+    },
+    "SecurityThresholds": {
+      "readOnly": true,
+      "title": "SecurityThresholds",
+      "description": "The health-projection thresholds of a security policy: critical-violation counts flipping health to degraded then critical.",
+      "type": "object",
+      "properties": {
+        "degradedAtCriticalViolations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "criticalAtCriticalViolations": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "degradedAtCriticalViolations",
+        "criticalAtCriticalViolations"
+      ],
+      "additionalProperties": false
+    },
+    "PolicyStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "retired"
+      ],
+      "title": "PolicyStatus",
+      "description": "The security-policy lifecycle status: active (enforced) or retired (history only)."
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "ObservabilityPrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ObservabilityPrincipalId",
+      "description": "Opaque acting principal of the security domain: \"principal:<slug>\" (the W009 grammar)."
+    }
+  },
+  "$id": "urn:epoch:observability:security-policy-content:1.0.0"
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@epoch/security-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Security Runtime service (W030): the thin typed HOST FACADE over the @epoch/observability kernel \u2014 sandbox admission verification (REAL W008 SandboxSurfaceDescription validation + the isolation check + deny-by-default quarantine), marketplace listing trust verification (the REAL W023 sealed listing versions), security policy registration (policy as data), the observation intake from the W020/W021/W022 execution surfaces (mirrored summaries, devDep parity), the quarantine lifecycle, the audit passes (tenant-boundary + W041 projection invariants), the derived security-health projection + tenant-scoped reads \u2014 every operation behind the W009 authorization gate. In-memory reference behavior: NO persistence, NO network, NO SIEM vendor; zero wall-clock, zero randomness \u2014 instants are caller-supplied.",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/authorization": "workspace:*",
+    "@epoch/extension-runtime": "workspace:*",
+    "@epoch/marketplace": "workspace:*",
+    "@epoch/observability": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/access-projection": "workspace:*",
+    "@epoch/action-gateway": "workspace:*",
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/agent-orchestration": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/agent-runtime": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/simulation-fabric": "workspace:*",
+    "@epoch/simulation-protocol": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

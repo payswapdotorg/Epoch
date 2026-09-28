@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SandboxGrant",
+  "$defs": {
+    "SandboxGrant": {
+      "readOnly": true,
+      "title": "SandboxGrant",
+      "description": "One sandbox grant (the W008 shape): the capability it grounds plus the host functions and resource scopes it requests.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128
+        },
+        "hostFunctions": {
+          "readOnly": true,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HostFunctionToken"
+          }
+        },
+        "resourceScopes": {
+          "readOnly": true,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResourceScopeToken"
+          }
+        }
+      },
+      "required": [
+        "capabilityId",
+        "hostFunctions",
+        "resourceScopes"
+      ],
+      "additionalProperties": false
+    },
+    "HostFunctionToken": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "title": "HostFunctionToken",
+      "description": "One host-function token of a sandbox grant (validated against the W008 vocabulary by the isolation check)."
+    },
+    "ResourceScopeToken": {
+      "readOnly": true,
+      "title": "ResourceScopeToken",
+      "description": "One (resource, access) scope token of a sandbox grant (validated against the W008 legal table by the isolation check).",
+      "type": "object",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "access": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        }
+      },
+      "required": [
+        "resource",
+        "access"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:observability:sandbox-grant:1.0.0"
+}

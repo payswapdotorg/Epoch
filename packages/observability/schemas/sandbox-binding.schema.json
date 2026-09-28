@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SandboxBinding",
+  "$defs": {
+    "SandboxBinding": {
+      "readOnly": true,
+      "title": "SandboxBinding",
+      "description": "One resolved capability binding of a sandbox subject (an opaque typed reference into the W007 registry).",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "$ref": "#/$defs/CapabilityBindingToken"
+        }
+      },
+      "required": [
+        "capabilityId"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityBindingToken": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "title": "CapabilityBindingToken",
+      "description": "One opaque capability-binding reference of a sandbox subject (capability ids resolve in the W007 registry)."
+    }
+  },
+  "$id": "urn:epoch:observability:sandbox-binding:1.0.0"
+}
