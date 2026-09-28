@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SelectionId",
+  "$defs": {
+    "SelectionId": {
+      "type": "string",
+      "pattern": "^ras-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SelectionId",
+      "description": "Opaque adapter-selection id (ras-<slug>)."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:selection-id:1.0.0"
+}

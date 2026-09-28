@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PresentationFit",
+  "$defs": {
+    "PresentationFit": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.presentation-fit"
+        },
+        "protocolVersion": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "requirementId": {
+          "$ref": "#/$defs/PresentationRequirementId"
+        },
+        "device": {
+          "$ref": "#/$defs/DeviceDescriptor"
+        },
+        "fits": {
+          "type": "boolean"
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityGap"
+          }
+        },
+        "digest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "requirementId",
+        "device",
+        "fits",
+        "gaps",
+        "digest"
+      ],
+      "additionalProperties": false,
+      "title": "PresentationFit",
+      "description": "The typed fit verdict of one presentation requirement against one W011 device descriptor: fits flag plus the explicit gap list."
+    },
+    "PresentationRequirementId": {
+      "type": "string",
+      "pattern": "^prr-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PresentationRequirementId",
+      "description": "Opaque presentation-requirement id (prr-<slug>)."
+    },
+    "DeviceDescriptor": {
+      "type": "object",
+      "properties": {
+        "descriptorVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "deviceClass": {
+          "$ref": "#/$defs/DeviceClass"
+        },
+        "interaction": {
+          "minItems": 1,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionModality"
+          }
+        },
+        "display": {
+          "$ref": "#/$defs/DeviceDisplayCapabilities"
+        },
+        "spatial": {
+          "$ref": "#/$defs/DeviceSpatialCapabilities"
+        },
+        "latencyBudgetMs": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "descriptorVersion",
+        "deviceClass",
+        "interaction",
+        "display",
+        "spatial"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceDescriptor",
+      "description": "Abstract, provider-neutral device descriptor: capabilities and budgets as typed data; filled/adapted by renderer/device adaptation (W019)."
+    },
+    "DeviceClass": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "laptop",
+        "tablet",
+        "phone",
+        "headset",
+        "wall-display"
+      ],
+      "title": "DeviceClass",
+      "description": "Neutral device class of a device descriptor (never a vendor product)."
+    },
+    "InteractionModality": {
+      "type": "string",
+      "enum": [
+        "gamepad",
+        "gaze",
+        "gesture",
+        "keyboard",
+        "pointer",
+        "touch",
+        "voice"
+      ],
+      "title": "InteractionModality",
+      "description": "Neutral interaction modality of a device."
+    },
+    "DeviceDisplayCapabilities": {
+      "type": "object",
+      "properties": {
+        "stereoscopic": {
+          "type": "boolean"
+        },
+        "maxPixels": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "refreshHz": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "colorDepthBits": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "stereoscopic"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceDisplayCapabilities",
+      "description": "Neutral display capabilities and budgets of a device descriptor."
+    },
+    "DeviceSpatialCapabilities": {
+      "type": "object",
+      "properties": {
+        "poseTracking": {
+          "$ref": "#/$defs/PoseTrackingKind"
+        },
+        "worldAnchored": {
+          "type": "boolean"
+        },
+        "maxTriangles": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maxTextureBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "poseTracking",
+        "worldAnchored"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceSpatialCapabilities",
+      "description": "Neutral spatial capabilities and budgets of a device descriptor."
+    },
+    "PoseTrackingKind": {
+      "type": "string",
+      "enum": [
+        "none",
+        "3dof",
+        "6dof"
+      ],
+      "title": "PoseTrackingKind",
+      "description": "Neutral pose-tracking capability of a device."
+    },
+    "CapabilityGap": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/CapabilityGapKind"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "encountered": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "required": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "modality": {
+          "type": "string",
+          "enum": [
+            "gamepad",
+            "gaze",
+            "gesture",
+            "keyboard",
+            "pointer",
+            "touch",
+            "voice"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "path"
+      ],
+      "additionalProperties": false,
+      "title": "CapabilityGap",
+      "description": "One typed capability gap: kind, device path, encountered vs required values, and the missing modality when applicable."
+    },
+    "CapabilityGapKind": {
+      "type": "string",
+      "enum": [
+        "modality-gap",
+        "pixel-budget-shortfall",
+        "pose-tracking-insufficient",
+        "stereoscopic-mismatch",
+        "texture-budget-shortfall",
+        "triangle-budget-shortfall"
+      ],
+      "title": "CapabilityGapKind",
+      "description": "Typed kind of one presentation-requirement gap: which capability axis fell short."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:device-capabilities:presentation-fit:1.0.0"
+}

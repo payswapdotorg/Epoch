@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TechniqueSelectedData",
+  "$defs": {
+    "TechniqueSelectedData": {
+      "type": "object",
+      "properties": {
+        "selectionId": {
+          "$ref": "#/$defs/SelectionId"
+        },
+        "rendererSessionId": {
+          "type": "string",
+          "pattern": "^rs-[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "technique": {
+          "$ref": "#/$defs/RendererTechnique"
+        },
+        "reason": {
+          "$ref": "#/$defs/SelectionReason"
+        },
+        "bindingDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "assessmentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "selectionId",
+        "rendererSessionId",
+        "technique",
+        "reason",
+        "bindingDigest",
+        "assessmentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "TechniqueSelectedData",
+      "description": "Typed payload data of one renderer-adapter:technique-selected event."
+    },
+    "SelectionId": {
+      "type": "string",
+      "pattern": "^ras-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SelectionId",
+      "description": "Opaque adapter-selection id (ras-<slug>)."
+    },
+    "RendererTechnique": {
+      "type": "string",
+      "enum": [
+        "immediate-2d",
+        "remote-stream",
+        "retained-scene-3d",
+        "stereoscopic-compositor"
+      ],
+      "title": "RendererTechnique",
+      "description": "Neutral renderer technique: immediate-2d, remote-stream, retained-scene-3d, or stereoscopic-compositor (a technique, never a vendor/engine)."
+    },
+    "SelectionReason": {
+      "type": "string",
+      "enum": [
+        "flat-kinds",
+        "local-technique-unavailable",
+        "remote-assist-recommended",
+        "spatial-kinds-local",
+        "spatial-kinds-local-degraded",
+        "stereoscopic-negotiated"
+      ],
+      "title": "SelectionReason",
+      "description": "Typed reason the deterministic adapter selection chose a technique."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:technique-selected-data:1.0.0"
+}

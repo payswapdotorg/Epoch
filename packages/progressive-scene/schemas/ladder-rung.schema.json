@@ -1,0 +1,271 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LadderRung",
+  "$defs": {
+    "LadderRung": {
+      "type": "object",
+      "properties": {
+        "rungIndex": {
+          "$ref": "#/$defs/RungIndex"
+        },
+        "stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReductionStageKind"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "graphDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "parentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "usage": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "nodes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "edges": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "estimatedTriangles": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "assetBytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "nodes",
+            "edges",
+            "estimatedTriangles",
+            "assetBytes"
+          ],
+          "additionalProperties": false
+        },
+        "reduction": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RungReduction"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "rungIndex",
+        "stage",
+        "graphDigest",
+        "parentDigest",
+        "usage",
+        "reduction"
+      ],
+      "additionalProperties": false,
+      "title": "LadderRung",
+      "description": "One progressive-scene ladder rung: index, producing stage, sealed-graph digest, parent digest, usage estimate, and explicit reduction manifest."
+    },
+    "RungIndex": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "RungIndex",
+      "description": "One progressive-scene ladder rung index (0 = the source graph)."
+    },
+    "ReductionStageKind": {
+      "type": "string",
+      "enum": [
+        "downgrade-expensive-primitives",
+        "drop-animation-clips",
+        "prune-control-nodes",
+        "prune-presence-cursors",
+        "prune-presence-seats",
+        "prune-shape-nodes",
+        "prune-spatial-nodes",
+        "prune-timeline-markers",
+        "prune-timeline-tracks",
+        "prune-to-minimal-core",
+        "substitute-mesh-proxies"
+      ],
+      "title": "ReductionStageKind",
+      "description": "Typed reduction stage of the progressive-scene ladder (canonical order: animation first, geometry proxies next, supplementary nodes, then the 2D fallback, then the minimal core)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "RungReduction": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "enum": [
+            "downgrade-expensive-primitives",
+            "drop-animation-clips",
+            "prune-control-nodes",
+            "prune-presence-cursors",
+            "prune-presence-seats",
+            "prune-shape-nodes",
+            "prune-spatial-nodes",
+            "prune-timeline-markers",
+            "prune-timeline-tracks",
+            "prune-to-minimal-core",
+            "substitute-mesh-proxies"
+          ]
+        },
+        "prunedNodeIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "substitutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PrimitiveSubstitution"
+          }
+        },
+        "droppedEdgeCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "usageBefore": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "nodes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "edges": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "estimatedTriangles": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "assetBytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "nodes",
+            "edges",
+            "estimatedTriangles",
+            "assetBytes"
+          ],
+          "additionalProperties": false
+        },
+        "usageAfter": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "nodes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "edges": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "estimatedTriangles": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "assetBytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "nodes",
+            "edges",
+            "estimatedTriangles",
+            "assetBytes"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "stage",
+        "prunedNodeIds",
+        "substitutions",
+        "droppedEdgeCount",
+        "usageBefore",
+        "usageAfter"
+      ],
+      "additionalProperties": false,
+      "title": "RungReduction",
+      "description": "The explicit reduction manifest of one progressive-scene rung: stage, pruned nodes, substitutions, dropped edges, and usage before/after (never silent)."
+    },
+    "PrimitiveSubstitution": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fromPrimitive": {
+          "type": "string",
+          "enum": [
+            "box",
+            "cone",
+            "cylinder",
+            "mesh",
+            "plane",
+            "sphere"
+          ]
+        },
+        "toPrimitive": {
+          "type": "string",
+          "enum": [
+            "box",
+            "cone",
+            "cylinder",
+            "mesh",
+            "plane",
+            "sphere"
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "fromPrimitive",
+        "toPrimitive"
+      ],
+      "additionalProperties": false,
+      "title": "PrimitiveSubstitution",
+      "description": "One explicit primitive substitution: node id, source primitive, proxy primitive."
+    }
+  },
+  "$id": "urn:epoch:progressive-scene:ladder-rung:1.0.0"
+}

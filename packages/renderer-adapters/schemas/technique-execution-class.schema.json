@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TechniqueExecutionClass",
+  "$defs": {
+    "TechniqueExecutionClass": {
+      "type": "string",
+      "enum": [
+        "local",
+        "remote"
+      ],
+      "title": "TechniqueExecutionClass",
+      "description": "Where a renderer technique executes: locally on the device, or remotely with streamed results."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:technique-execution-class:1.0.0"
+}

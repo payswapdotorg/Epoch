@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererTechnique",
+  "$defs": {
+    "RendererTechnique": {
+      "type": "string",
+      "enum": [
+        "immediate-2d",
+        "remote-stream",
+        "retained-scene-3d",
+        "stereoscopic-compositor"
+      ],
+      "title": "RendererTechnique",
+      "description": "Neutral renderer technique: immediate-2d, remote-stream, retained-scene-3d, or stereoscopic-compositor (a technique, never a vendor/engine)."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:renderer-technique:1.0.0"
+}

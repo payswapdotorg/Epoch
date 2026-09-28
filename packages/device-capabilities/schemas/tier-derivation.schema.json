@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TierDerivation",
+  "$defs": {
+    "TierDerivation": {
+      "type": "object",
+      "properties": {
+        "budgetFloorTier": {
+          "$ref": "#/$defs/DeviceAdaptationTier"
+        },
+        "classCeilingTier": {
+          "$ref": "#/$defs/DeviceAdaptationTier"
+        },
+        "derivedTier": {
+          "$ref": "#/$defs/DeviceAdaptationTier"
+        },
+        "guidedFidelity": {
+          "$ref": "#/$defs/GuidedFidelityLevel"
+        },
+        "remoteAssistRecommended": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "budgetFloorTier",
+        "classCeilingTier",
+        "derivedTier",
+        "guidedFidelity",
+        "remoteAssistRecommended"
+      ],
+      "additionalProperties": false,
+      "title": "TierDerivation",
+      "description": "The deterministic tier-derivation trace: budget-floor tier, class ceiling, derived tier, guided fidelity level, and the remote-assist recommendation."
+    },
+    "DeviceAdaptationTier": {
+      "type": "string",
+      "enum": [
+        "field",
+        "full",
+        "normal",
+        "reduced"
+      ],
+      "title": "DeviceAdaptationTier",
+      "description": "Typed device adaptation tier derived from the W011 device descriptor: full, normal, field, or reduced (same semantics, different fidelity)."
+    },
+    "GuidedFidelityLevel": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "low",
+        "mobile",
+        "remote",
+        "web"
+      ],
+      "title": "GuidedFidelityLevel",
+      "description": "Fidelity-level guidance vocabulary (structural mirror of the W016 WorldFidelityLevel; the host remains the chooser)."
+    }
+  },
+  "$id": "urn:epoch:device-capabilities:tier-derivation:1.0.0"
+}

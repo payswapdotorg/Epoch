@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SelectionTraceEntry",
+  "$defs": {
+    "SelectionTraceEntry": {
+      "type": "object",
+      "properties": {
+        "technique": {
+          "$ref": "#/$defs/RendererTechnique"
+        },
+        "eligible": {
+          "type": "boolean"
+        },
+        "reason": {
+          "$ref": "#/$defs/EligibilityReason"
+        }
+      },
+      "required": [
+        "technique",
+        "eligible",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "title": "SelectionTraceEntry",
+      "description": "One decision-trace entry: candidate technique, eligibility, and the typed verdict."
+    },
+    "RendererTechnique": {
+      "type": "string",
+      "enum": [
+        "immediate-2d",
+        "remote-stream",
+        "retained-scene-3d",
+        "stereoscopic-compositor"
+      ],
+      "title": "RendererTechnique",
+      "description": "Neutral renderer technique: immediate-2d, remote-stream, retained-scene-3d, or stereoscopic-compositor (a technique, never a vendor/engine)."
+    },
+    "EligibilityReason": {
+      "type": "string",
+      "enum": [
+        "kind-not-hosted",
+        "not-preferred",
+        "stereoscopic-unmatched",
+        "stereoscopic-unsupported"
+      ],
+      "title": "EligibilityReason",
+      "description": "Typed eligibility verdict of one candidate technique in the selection decision trace."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:selection-trace-entry:1.0.0"
+}

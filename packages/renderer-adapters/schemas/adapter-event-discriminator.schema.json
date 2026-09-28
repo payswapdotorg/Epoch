@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AdapterEventDiscriminator",
+  "$defs": {
+    "AdapterEventDiscriminator": {
+      "type": "string",
+      "enum": [
+        "renderer-adapter:mount-planned",
+        "renderer-adapter:technique-selected"
+      ],
+      "title": "AdapterEventDiscriminator",
+      "description": "Typed discriminator of one renderer-adapter adaptation event (the W010 open namespace)."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:adapter-event-discriminator:1.0.0"
+}

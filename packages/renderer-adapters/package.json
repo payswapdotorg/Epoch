@@ -1,0 +1,36 @@
+{
+  "name": "@epoch/renderer-adapters",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Renderer Adapters kernel (W019, experience layer) — the renderer-side half of Renderer/Device Adaptation: the provider-neutral ADAPTER SEAM the W013 renderer-runtime pin reserved for this Work Order (\"concrete engines are future adapters behind the descriptor contract\"). Ships a neutral renderer-TECHNIQUE vocabulary and catalog (immediate-2d, retained-scene-3d, stereoscopic-compositor, remote-stream, reduced-2d — techniques, never vendors/engines/APIs), typed renderer-adapter descriptors declaring which W013 RendererDescriptor family an adapter serves, deterministic adapter selection over a sealed W013 RendererBinding plus a W019 DeviceCapabilityAssessment (chosen technique + ordered fallback chain + typed per-candidate rejections — the decision trace is data), typed mount plans for W013 mount-graph invocations, and an append-only adaptation-event vocabulary over the mirrored W010 event shapes (`renderer-adapter:*` namespace; event-log stays a devDep — type parity, never a runtime edge). Zero engine imports, zero GPU code, zero UI-framework dependencies, zero wall-clock, zero randomness.",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/device-capabilities": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "@epoch/renderer-runtime": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/experience-runtime": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/world-experience": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

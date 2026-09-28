@@ -1,0 +1,209 @@
+{
+  "contract": "epoch/renderer-adapters",
+  "contractVersion": "1.0.0",
+  "protocolVersion": "1.0.0",
+  "description": "Typed, versioned, provider-neutral renderer-adapters contract (W019, renderer-side adaptation): the neutral technique vocabulary and catalog, deterministic adapter selections over W013 bindings and W019 assessments (full decision traces), mount plans projected onto W013 mount-graph envelopes, and the append-only adaptation-event vocabulary over the mirrored W010 shapes (renderer-adapter:* namespace). JSON Schema projection under schemas/; runtime validators in @epoch/renderer-adapters.",
+  "dataTypes": [
+    "AdapterActor",
+    "AdapterCausalParent",
+    "AdapterEvent",
+    "AdapterEventContent",
+    "AdapterEventDiscriminator",
+    "AdapterEventPayload",
+    "AdapterEventSequence",
+    "AdapterId",
+    "AdapterStreamId",
+    "AdapterTenantId",
+    "AdapterTimestamp",
+    "EligibilityReason",
+    "MountPlanId",
+    "MountPlanStep",
+    "MountPlannedData",
+    "RendererAdapterSelection",
+    "RendererAdapterSelectionContent",
+    "RendererAdaptersError",
+    "RendererAdaptersErrorCode",
+    "RendererAdaptersIssue",
+    "RendererAdaptersProtocolVersion",
+    "RendererMountPlan",
+    "RendererMountPlanContent",
+    "RendererTechnique",
+    "RendererTechniqueRecord",
+    "SelectionId",
+    "SelectionReason",
+    "SelectionTraceEntry",
+    "Sha256Hex",
+    "TechniqueExecutionClass",
+    "TechniqueSelectedData",
+    "TenantScope"
+  ],
+  "documentKinds": [
+    "renderer-adapters.adapter-descriptor",
+    "renderer-adapters.mount-plan",
+    "renderer-adapters.selection"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (trace consistency, canonical step order, digest chaining) are enforced by the runtime validators in @epoch/renderer-adapters and are not represented in the JSON Schema files",
+  "emittedBy": "renderRendererAdaptersContractFiles() in @epoch/renderer-adapters (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "AdapterActor",
+      "file": "adapter-actor.schema.json",
+      "sha256": "d47cad882d5d33067abcf44c6e6abf5cb52f43f31827d1829a2d96f39991caf4"
+    },
+    {
+      "type": "AdapterCausalParent",
+      "file": "adapter-causal-parent.schema.json",
+      "sha256": "48dcdf4b3cd008ccdf8afbc91d85842e942a50f264c929697fc2fe70f50f2d41"
+    },
+    {
+      "type": "AdapterEvent",
+      "file": "adapter-event.schema.json",
+      "sha256": "8136bb4e2fd7d25f8ca51358b1a6834a6edb2aa3d13c769c486a0bba9ee4c10a"
+    },
+    {
+      "type": "AdapterEventContent",
+      "file": "adapter-event-content.schema.json",
+      "sha256": "93c523febda61e3bf2dc8796ee5868333ac8c9577d8938de2fe8ad958ca72c7c"
+    },
+    {
+      "type": "AdapterEventDiscriminator",
+      "file": "adapter-event-discriminator.schema.json",
+      "sha256": "fb4815c1db35bfae498b4554a5725af3ffddfe966dd5e2b6c3aa2cd6d342d5e8"
+    },
+    {
+      "type": "AdapterEventPayload",
+      "file": "adapter-event-payload.schema.json",
+      "sha256": "944d49b5db7d88cf89e014c800388a84eff0f5b7904cb8bfbf7592bb9b7a6ef7"
+    },
+    {
+      "type": "AdapterEventSequence",
+      "file": "adapter-event-sequence.schema.json",
+      "sha256": "eef29dd63d0e18807be139db357c9b66600362d3073e46ea6a3d742cc1dbfd50"
+    },
+    {
+      "type": "AdapterId",
+      "file": "adapter-id.schema.json",
+      "sha256": "70b82c2eda36a699c998fb321e4ba979aa7014dbefd5305da4d1b58190013ab0"
+    },
+    {
+      "type": "AdapterStreamId",
+      "file": "adapter-stream-id.schema.json",
+      "sha256": "e4ecf7670de008823f4c48e3ab299c9f50977c2fdf2f81c80c8e16620272da8b"
+    },
+    {
+      "type": "AdapterTenantId",
+      "file": "adapter-tenant-id.schema.json",
+      "sha256": "b1903429984d0401b98edb9a4d0092039a0559bb0b4aaf4bac4ca18938c479aa"
+    },
+    {
+      "type": "AdapterTimestamp",
+      "file": "adapter-timestamp.schema.json",
+      "sha256": "8fc64f98d821d56aa2cdc1bf33240cb6fcd24bd6edb06cef1654a02dfeffda8f"
+    },
+    {
+      "type": "EligibilityReason",
+      "file": "eligibility-reason.schema.json",
+      "sha256": "874b17bd88cf922ac07cc916b144274c4006a2bf2ba95d019e8164ed2a37893a"
+    },
+    {
+      "type": "MountPlanId",
+      "file": "mount-plan-id.schema.json",
+      "sha256": "5005f67a1fc5d79f7cfca6af4df0e269e473a2c93dfd1af6ca0f6cb6fdd1e404"
+    },
+    {
+      "type": "MountPlanStep",
+      "file": "mount-plan-step.schema.json",
+      "sha256": "0445d892c27405e12afed6f9276e14815cb649546e472a778cd320f3e1b332f1"
+    },
+    {
+      "type": "MountPlannedData",
+      "file": "mount-planned-data.schema.json",
+      "sha256": "ebef0b9b7f2ed5b9379ab6fcc6c2c89f9029f178cf9e405deffad5ccc8fd79b5"
+    },
+    {
+      "type": "RendererAdapterSelection",
+      "file": "renderer-adapter-selection.schema.json",
+      "sha256": "613255f108b170d1b5e8b1cc823ef493e3487ff5ed9c67437d3c355a8c389924"
+    },
+    {
+      "type": "RendererAdapterSelectionContent",
+      "file": "renderer-adapter-selection-content.schema.json",
+      "sha256": "27356ac376fea203e19981ca4d3fa6bbd4eaf93093592bd31ed5ce91cd21aa01"
+    },
+    {
+      "type": "RendererAdaptersError",
+      "file": "renderer-adapters-error.schema.json",
+      "sha256": "4cbabceae9025538f31ff0943f8208a5a644eca74adf18a06a9c4e71006cc725"
+    },
+    {
+      "type": "RendererAdaptersErrorCode",
+      "file": "renderer-adapters-error-code.schema.json",
+      "sha256": "2e3fdad79979cf31947552e1b4593ea435ce3ffeb71dca9e935ebf3f378c3ca3"
+    },
+    {
+      "type": "RendererAdaptersIssue",
+      "file": "renderer-adapters-issue.schema.json",
+      "sha256": "d78e6ce2549fd3c66babc5bcd42e3f8a9c99cd86975f3101360239c3f5e7b319"
+    },
+    {
+      "type": "RendererAdaptersProtocolVersion",
+      "file": "renderer-adapters-protocol-version.schema.json",
+      "sha256": "fbf57f8445b8cc1aa693966c060b8cd636930bae52ae4760974c61432af189a5"
+    },
+    {
+      "type": "RendererMountPlan",
+      "file": "renderer-mount-plan.schema.json",
+      "sha256": "1c5ec3196cb5d59858ee7b01655360ecde471fc3d4895c0d8cf6ce8ac854abe4"
+    },
+    {
+      "type": "RendererMountPlanContent",
+      "file": "renderer-mount-plan-content.schema.json",
+      "sha256": "bfdbdf44c8ce70721c94966fd10d8db0ec870ff79224f0f9d701995ae6d6c6ba"
+    },
+    {
+      "type": "RendererTechnique",
+      "file": "renderer-technique.schema.json",
+      "sha256": "ce7b2ecb3dcf78e8128a777d2c371ef7c49bb016bdc63120c65d412b98198c6e"
+    },
+    {
+      "type": "RendererTechniqueRecord",
+      "file": "renderer-technique-record.schema.json",
+      "sha256": "830a9239bf2356e8b6a5755c44bdce23fed3f1e4d3e130ea52b0e96008e5c572"
+    },
+    {
+      "type": "SelectionId",
+      "file": "selection-id.schema.json",
+      "sha256": "c27a25d6254f79def29595e73f533dbd29e8a4567fa08685ce2243639832f17c"
+    },
+    {
+      "type": "SelectionReason",
+      "file": "selection-reason.schema.json",
+      "sha256": "a5f4c3bd493bc2162ce1dcfa0f31af24b3ab51aa4e24eabc4361a2d053ff9a75"
+    },
+    {
+      "type": "SelectionTraceEntry",
+      "file": "selection-trace-entry.schema.json",
+      "sha256": "100b6f1fadba3bbd6792dac5969482090373be94049d8f57768a3d7f3305bae2"
+    },
+    {
+      "type": "Sha256Hex",
+      "file": "sha256-hex.schema.json",
+      "sha256": "50cb3391cc65df3094e52c20e46a4a3239d8e5d9340c73d0ff3bc04e55a90017"
+    },
+    {
+      "type": "TechniqueExecutionClass",
+      "file": "technique-execution-class.schema.json",
+      "sha256": "05afd64697cd05b26ed5a925f6fe99e445c44eba92aa6524b832252dbb5c33ed"
+    },
+    {
+      "type": "TechniqueSelectedData",
+      "file": "technique-selected-data.schema.json",
+      "sha256": "38e77f8e96e83e3da70839cb45caa54815745786996c7dc4487edd79c8907dba"
+    },
+    {
+      "type": "TenantScope",
+      "file": "tenant-scope.schema.json",
+      "sha256": "70bb4eb6cc7a77d7e968b439eb529855a4dc8096f72750fc6171518bd248c961"
+    }
+  ]
+}

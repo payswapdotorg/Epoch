@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AdapterCausalParent",
+  "$defs": {
+    "AdapterCausalParent": {
+      "readOnly": true,
+      "title": "AdapterCausalParent",
+      "description": "Causal parent of an adaptation event: an earlier event in the same stream (the W010 shape).",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "$ref": "#/$defs/AdapterStreamId"
+        },
+        "sequence": {
+          "$ref": "#/$defs/AdapterEventSequence"
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "AdapterStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AdapterStreamId",
+      "description": "Mirrored W010 event stream id (stream:<slug>)."
+    },
+    "AdapterEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "AdapterEventSequence",
+      "description": "One adaptation-event sequence number: 1-based, contiguous per stream."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:adapter-causal-parent:1.0.0"
+}

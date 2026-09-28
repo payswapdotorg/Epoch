@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererAdaptersIssue",
+  "$defs": {
+    "RendererAdaptersIssue": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "RendererAdaptersIssue",
+      "description": "One typed diagnostic issue: dotted path plus message."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:renderer-adapters-issue:1.0.0"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/LadderId",
+  "$defs": {
+    "LadderId": {
+      "type": "string",
+      "pattern": "^psl-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "LadderId",
+      "description": "Opaque progressive-scene ladder id (psl-<slug>)."
+    }
+  },
+  "$id": "urn:epoch:progressive-scene:ladder-id:1.0.0"
+}

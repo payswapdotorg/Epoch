@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AdapterEventPayload",
+  "$defs": {
+    "AdapterEventPayload": {
+      "readOnly": true,
+      "title": "AdapterEventPayload",
+      "description": "The namespaced payload of one adaptation event (the W010 payload shape).",
+      "type": "object",
+      "properties": {
+        "discriminator": {
+          "type": "string",
+          "pattern": "^renderer-adapter:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "data": {
+          "readOnly": true,
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "discriminator",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:adapter-event-payload:1.0.0"
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/GuidedFidelityLevel",
+  "$defs": {
+    "GuidedFidelityLevel": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "low",
+        "mobile",
+        "remote",
+        "web"
+      ],
+      "title": "GuidedFidelityLevel",
+      "description": "Fidelity-level guidance vocabulary (structural mirror of the W016 WorldFidelityLevel; the host remains the chooser)."
+    }
+  },
+  "$id": "urn:epoch:device-capabilities:guided-fidelity-level:1.0.0"
+}

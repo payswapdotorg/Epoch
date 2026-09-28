@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AdapterEventContent",
+  "$defs": {
+    "AdapterEventContent": {
+      "readOnly": true,
+      "title": "AdapterEventContent",
+      "description": "Immutable content of one adaptation event (structural mirror of the W010 EventContent): stream, sequence, tenant, actor, causal parent, namespaced payload, producer-supplied instant.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "streamId": {
+          "$ref": "#/$defs/AdapterStreamId"
+        },
+        "sequence": {
+          "$ref": "#/$defs/AdapterEventSequence"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/AdapterTenantId"
+        },
+        "actor": {
+          "$ref": "#/$defs/AdapterActor"
+        },
+        "causalParent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AdapterCausalParent"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload": {
+          "$ref": "#/$defs/AdapterEventPayload"
+        },
+        "occurredAt": {
+          "$ref": "#/$defs/AdapterTimestamp"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "streamId",
+        "sequence",
+        "tenantId",
+        "actor",
+        "causalParent",
+        "payload",
+        "occurredAt"
+      ],
+      "additionalProperties": false
+    },
+    "AdapterStreamId": {
+      "type": "string",
+      "pattern": "^stream:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AdapterStreamId",
+      "description": "Mirrored W010 event stream id (stream:<slug>)."
+    },
+    "AdapterEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "AdapterEventSequence",
+      "description": "One adaptation-event sequence number: 1-based, contiguous per stream."
+    },
+    "AdapterTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AdapterTenantId",
+      "description": "Mirrored W010 event tenant id (tenant:<slug> — the W009 tenancy grammar)."
+    },
+    "AdapterActor": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AdapterActor",
+      "description": "Mirrored W010 event actor (principal:<slug> — the W009 identity grammar)."
+    },
+    "AdapterCausalParent": {
+      "readOnly": true,
+      "title": "AdapterCausalParent",
+      "description": "Causal parent of an adaptation event: an earlier event in the same stream (the W010 shape).",
+      "type": "object",
+      "properties": {
+        "streamId": {
+          "$ref": "#/$defs/AdapterStreamId"
+        },
+        "sequence": {
+          "$ref": "#/$defs/AdapterEventSequence"
+        }
+      },
+      "required": [
+        "streamId",
+        "sequence"
+      ],
+      "additionalProperties": false
+    },
+    "AdapterEventPayload": {
+      "readOnly": true,
+      "title": "AdapterEventPayload",
+      "description": "The namespaced payload of one adaptation event (the W010 payload shape).",
+      "type": "object",
+      "properties": {
+        "discriminator": {
+          "type": "string",
+          "pattern": "^renderer-adapter:[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "data": {
+          "readOnly": true,
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      },
+      "required": [
+        "discriminator",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "AdapterTimestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "AdapterTimestamp",
+      "description": "Mirrored W010 event timestamp (millisecond-precision UTC ISO — producer-supplied)."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:adapter-event-content:1.0.0"
+}

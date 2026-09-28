@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererMountPlan",
+  "$defs": {
+    "RendererMountPlan": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-mount-plan"
+        },
+        "protocolVersion": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "planId": {
+          "$ref": "#/$defs/MountPlanId"
+        },
+        "invocationId": {
+          "type": "string",
+          "pattern": "^inv-[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "rendererSessionId": {
+          "type": "string",
+          "pattern": "^rs-[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "selectionDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "technique": {
+          "$ref": "#/$defs/RendererTechnique"
+        },
+        "graphDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "graphKind": {
+          "$ref": "#/$defs/ExperienceGraphKind"
+        },
+        "declaredTriangles": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000000
+        },
+        "declaredTextureBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1099511627776
+        },
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "steps": {
+          "readOnly": true,
+          "minItems": 3,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MountPlanStep"
+          }
+        },
+        "digest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "planId",
+        "invocationId",
+        "tenantScope",
+        "rendererSessionId",
+        "selectionDigest",
+        "technique",
+        "graphDigest",
+        "graphKind",
+        "atMs",
+        "steps",
+        "digest"
+      ],
+      "additionalProperties": false,
+      "title": "RendererMountPlan",
+      "description": "The sealed renderer mount plan: adaptation data for mounting one content revision through the W013 hosting surface, content-addressed by canonical SHA-256."
+    },
+    "MountPlanId": {
+      "type": "string",
+      "pattern": "^rmp-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "MountPlanId",
+      "description": "Opaque renderer-mount-plan id (rmp-<slug>)."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "RendererTechnique": {
+      "type": "string",
+      "enum": [
+        "immediate-2d",
+        "remote-stream",
+        "retained-scene-3d",
+        "stereoscopic-compositor"
+      ],
+      "title": "RendererTechnique",
+      "description": "Neutral renderer technique: immediate-2d, remote-stream, retained-scene-3d, or stereoscopic-compositor (a technique, never a vendor/engine)."
+    },
+    "ExperienceGraphKind": {
+      "type": "string",
+      "enum": [
+        "2d",
+        "3d",
+        "animation",
+        "narrative",
+        "timeline-replay",
+        "presence",
+        "controls"
+      ],
+      "title": "ExperienceGraphKind",
+      "description": "Presentation projection of an Experience Graph: 2D, 3D, animation, narrative, timeline/replay, presence, or controls."
+    },
+    "MountPlanStep": {
+      "type": "string",
+      "enum": [
+        "activate-presentation",
+        "prepare-surface",
+        "stage-content"
+      ],
+      "title": "MountPlanStep",
+      "description": "One typed mount step of a renderer mount plan (data, never execution)."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:renderer-mount-plan:1.0.0"
+}

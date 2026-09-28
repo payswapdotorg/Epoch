@@ -1,0 +1,124 @@
+{
+  "contract": "epoch/device-capabilities",
+  "contractVersion": "1.0.0",
+  "protocolVersion": "1.0.0",
+  "description": "Typed, versioned, provider-neutral device-capabilities contract (W019, device-side adaptation): canonical device-class profiles filling the W011 device slot, deterministic sealed capability assessments (adaptation tier + derivation trace), and presentation fit/gap analysis. JSON Schema projection under schemas/; runtime validators in @epoch/device-capabilities.",
+  "dataTypes": [
+    "AssessmentId",
+    "CapabilityGap",
+    "CapabilityGapKind",
+    "DeviceAdaptationTier",
+    "DeviceCapabilitiesErrorCode",
+    "DeviceCapabilitiesProtocolVersion",
+    "DeviceCapabilityAssessment",
+    "DeviceCapabilityAssessmentContent",
+    "DeviceClassProfile",
+    "DisplayAxis",
+    "GuidedFidelityLevel",
+    "ModalityCoverage",
+    "PresentationFit",
+    "PresentationRequirement",
+    "PresentationRequirementId",
+    "Sha256Hex",
+    "SpatialAxis",
+    "TierDerivation"
+  ],
+  "documentKinds": [
+    "device-capabilities.assessment",
+    "device-capabilities.presentation-fit"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical set ordering, derivation consistency) are enforced by the runtime validators in @epoch/device-capabilities and are not represented in the JSON Schema files",
+  "emittedBy": "renderDeviceCapabilitiesContractFiles() in @epoch/device-capabilities (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "AssessmentId",
+      "file": "assessment-id.schema.json",
+      "sha256": "4b685903259404465b51b03d416fcd2e5191b51c0cc7e1738dc1dbeb8a01c1ba"
+    },
+    {
+      "type": "CapabilityGap",
+      "file": "capability-gap.schema.json",
+      "sha256": "7f510273767044d3723076963d53a6a6041d1ce445b50b65a3abe8238bfbaac0"
+    },
+    {
+      "type": "CapabilityGapKind",
+      "file": "capability-gap-kind.schema.json",
+      "sha256": "103e34494aa61facb19131439bf44ad72a927823cdfe30750ccff6d47db39af9"
+    },
+    {
+      "type": "DeviceAdaptationTier",
+      "file": "device-adaptation-tier.schema.json",
+      "sha256": "4610c15bb17f07ac0cf3cc664a097b5ec49b4d0c0c08900ff6dcc875f19a59be"
+    },
+    {
+      "type": "DeviceCapabilitiesErrorCode",
+      "file": "device-capabilities-error-code.schema.json",
+      "sha256": "9e61995fcb54ab8269d499f143b8cb1d269df1a278fbd8067a51fd0427ef9da1"
+    },
+    {
+      "type": "DeviceCapabilitiesProtocolVersion",
+      "file": "device-capabilities-protocol-version.schema.json",
+      "sha256": "620b57272b5aab0b3852e564c80bd18019a9aa3b2ff4646fce4f24c2c4a33ada"
+    },
+    {
+      "type": "DeviceCapabilityAssessment",
+      "file": "device-capability-assessment.schema.json",
+      "sha256": "d8d905ef0e15127e48f16ea74de9ad86761a370c70a465a11b643acfe4d1a5d0"
+    },
+    {
+      "type": "DeviceCapabilityAssessmentContent",
+      "file": "device-capability-assessment-content.schema.json",
+      "sha256": "34d94e02b1c0c456c21e29a5326ac5306a430881b4cd44b71b9b26aaa48a2f3a"
+    },
+    {
+      "type": "DeviceClassProfile",
+      "file": "device-class-profile.schema.json",
+      "sha256": "60d2690cbf10540eee873d76a619f126c558913c2cc7abd8b52b7693e397c646"
+    },
+    {
+      "type": "DisplayAxis",
+      "file": "display-axis.schema.json",
+      "sha256": "9791aa57f65cbe784795f0c2bffd0fa8279b634e46aa165019fa7da9e8aed25e"
+    },
+    {
+      "type": "GuidedFidelityLevel",
+      "file": "guided-fidelity-level.schema.json",
+      "sha256": "9673b7ad068f37d10315bf863e30c710b6329a476b084f87397e35bf4620b2ac"
+    },
+    {
+      "type": "ModalityCoverage",
+      "file": "modality-coverage.schema.json",
+      "sha256": "65eab116c6bc71952f5eb4a73485f76400da347a004a676511d9813a59c6d226"
+    },
+    {
+      "type": "PresentationFit",
+      "file": "presentation-fit.schema.json",
+      "sha256": "cc1f687fefe11a80a355b82ec8d998206e377594e7606ff9ae5d989cd01edda9"
+    },
+    {
+      "type": "PresentationRequirement",
+      "file": "presentation-requirement.schema.json",
+      "sha256": "78d3861f5b5dd9b590275bc2ffbfa5757aa46aa71dd2bca882daf75344344ef0"
+    },
+    {
+      "type": "PresentationRequirementId",
+      "file": "presentation-requirement-id.schema.json",
+      "sha256": "4afed4a6cd1cd1f179fe777f2694f1905ffa4e832b61528fc58b1365d7974373"
+    },
+    {
+      "type": "Sha256Hex",
+      "file": "sha256-hex.schema.json",
+      "sha256": "4c9a49a3212d264eb7a5977861f9a8b391db5b56545aecc6281613c2a60f58fe"
+    },
+    {
+      "type": "SpatialAxis",
+      "file": "spatial-axis.schema.json",
+      "sha256": "a515d5a756ccc55bf07081566d2e2b85b059e3738b0bf6b2ce7457240035528b"
+    },
+    {
+      "type": "TierDerivation",
+      "file": "tier-derivation.schema.json",
+      "sha256": "9aa8834bbca0b37ebcac8cb8663632faaa52d5f0d27aaf5a05b2be5ab0e60a1b"
+    }
+  ]
+}
