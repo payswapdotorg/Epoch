@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EligibilityReason",
+  "$defs": {
+    "EligibilityReason": {
+      "type": "string",
+      "enum": [
+        "kind-not-hosted",
+        "not-preferred",
+        "stereoscopic-unmatched",
+        "stereoscopic-unsupported"
+      ],
+      "title": "EligibilityReason",
+      "description": "Typed eligibility verdict of one candidate technique in the selection decision trace."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:eligibility-reason:1.0.0"
+}

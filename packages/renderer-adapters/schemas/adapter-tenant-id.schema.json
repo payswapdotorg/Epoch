@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AdapterTenantId",
+  "$defs": {
+    "AdapterTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AdapterTenantId",
+      "description": "Mirrored W010 event tenant id (tenant:<slug> — the W009 tenancy grammar)."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:adapter-tenant-id:1.0.0"
+}

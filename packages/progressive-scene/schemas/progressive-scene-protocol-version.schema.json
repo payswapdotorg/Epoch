@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ProgressiveSceneProtocolVersion",
+  "$defs": {
+    "ProgressiveSceneProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "ProgressiveSceneProtocolVersion",
+      "description": "Exact progressive-scene protocol version admitted by this release (\"1.0.0\")."
+    }
+  },
+  "$id": "urn:epoch:progressive-scene:progressive-scene-protocol-version:1.0.0"
+}

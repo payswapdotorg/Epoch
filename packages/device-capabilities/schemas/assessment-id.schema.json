@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AssessmentId",
+  "$defs": {
+    "AssessmentId": {
+      "type": "string",
+      "pattern": "^dca-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AssessmentId",
+      "description": "Opaque device-capability assessment id (dca-<slug>)."
+    }
+  },
+  "$id": "urn:epoch:device-capabilities:assessment-id:1.0.0"
+}

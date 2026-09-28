@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SpatialAxis",
+  "$defs": {
+    "SpatialAxis": {
+      "type": "object",
+      "properties": {
+        "poseTracking": {
+          "type": "string",
+          "enum": [
+            "none",
+            "3dof",
+            "6dof"
+          ]
+        },
+        "worldAnchored": {
+          "type": "boolean"
+        },
+        "maxTriangles": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maxTextureBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "poseTracking",
+        "worldAnchored"
+      ],
+      "additionalProperties": false,
+      "title": "SpatialAxis",
+      "description": "The spatial-axis snapshot of a device capability assessment."
+    }
+  },
+  "$id": "urn:epoch:device-capabilities:spatial-axis:1.0.0"
+}

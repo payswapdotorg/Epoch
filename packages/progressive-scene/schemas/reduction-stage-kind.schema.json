@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ReductionStageKind",
+  "$defs": {
+    "ReductionStageKind": {
+      "type": "string",
+      "enum": [
+        "downgrade-expensive-primitives",
+        "drop-animation-clips",
+        "prune-control-nodes",
+        "prune-presence-cursors",
+        "prune-presence-seats",
+        "prune-shape-nodes",
+        "prune-spatial-nodes",
+        "prune-timeline-markers",
+        "prune-timeline-tracks",
+        "prune-to-minimal-core",
+        "substitute-mesh-proxies"
+      ],
+      "title": "ReductionStageKind",
+      "description": "Typed reduction stage of the progressive-scene ladder (canonical order: animation first, geometry proxies next, supplementary nodes, then the 2D fallback, then the minimal core)."
+    }
+  },
+  "$id": "urn:epoch:progressive-scene:reduction-stage-kind:1.0.0"
+}

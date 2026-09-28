@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/MalformedRecordError"
+    },
+    {
+      "$ref": "#/$defs/VersionUnsupportedError"
+    },
+    {
+      "$ref": "#/$defs/DigestMismatchError"
+    },
+    {
+      "$ref": "#/$defs/CrossTenantDeniedError"
+    },
+    {
+      "$ref": "#/$defs/AssessmentDeviceMismatchError"
+    },
+    {
+      "$ref": "#/$defs/NoEligibleTechniqueError"
+    }
+  ],
+  "$defs": {
+    "MalformedRecordError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "malformed-record"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issues": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RendererAdaptersIssue"
+          }
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "issues"
+      ],
+      "additionalProperties": false,
+      "title": "MalformedRecordError"
+    },
+    "RendererAdaptersIssue": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "RendererAdaptersIssue",
+      "description": "One typed diagnostic issue: dotted path plus message."
+    },
+    "VersionUnsupportedError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "version-unsupported"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected": {
+          "type": "string",
+          "minLength": 1
+        },
+        "encountered": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "expected",
+        "encountered"
+      ],
+      "additionalProperties": false,
+      "title": "VersionUnsupportedError"
+    },
+    "DigestMismatchError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "digest-mismatch"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "expected": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "encountered": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "path",
+        "expected",
+        "encountered"
+      ],
+      "additionalProperties": false,
+      "title": "DigestMismatchError"
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "CrossTenantDeniedError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "cross-tenant-denied"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "expectedTenantId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "encounteredTenantId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "path",
+        "expectedTenantId",
+        "encounteredTenantId"
+      ],
+      "additionalProperties": false,
+      "title": "CrossTenantDeniedError"
+    },
+    "AssessmentDeviceMismatchError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "assessment-device-mismatch"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "AssessmentDeviceMismatchError"
+    },
+    "NoEligibleTechniqueError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "no-eligible-technique"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effectiveGraphKinds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "effectiveGraphKinds"
+      ],
+      "additionalProperties": false,
+      "title": "NoEligibleTechniqueError"
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:renderer-adapters-error:1.0.0"
+}

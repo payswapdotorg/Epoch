@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/MountPlannedData",
+  "$defs": {
+    "MountPlannedData": {
+      "type": "object",
+      "properties": {
+        "planId": {
+          "$ref": "#/$defs/MountPlanId"
+        },
+        "invocationId": {
+          "type": "string",
+          "pattern": "^inv-[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "rendererSessionId": {
+          "type": "string",
+          "pattern": "^rs-[a-z0-9][a-z0-9-]{0,62}$"
+        },
+        "technique": {
+          "$ref": "#/$defs/RendererTechnique"
+        },
+        "selectionDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "graphDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "graphKind": {
+          "type": "string",
+          "enum": [
+            "2d",
+            "3d",
+            "animation",
+            "controls",
+            "narrative",
+            "presence",
+            "timeline-replay"
+          ]
+        }
+      },
+      "required": [
+        "planId",
+        "invocationId",
+        "rendererSessionId",
+        "technique",
+        "selectionDigest",
+        "graphDigest",
+        "graphKind"
+      ],
+      "additionalProperties": false,
+      "title": "MountPlannedData",
+      "description": "Typed payload data of one renderer-adapter:mount-planned event."
+    },
+    "MountPlanId": {
+      "type": "string",
+      "pattern": "^rmp-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "MountPlanId",
+      "description": "Opaque renderer-mount-plan id (rmp-<slug>)."
+    },
+    "RendererTechnique": {
+      "type": "string",
+      "enum": [
+        "immediate-2d",
+        "remote-stream",
+        "retained-scene-3d",
+        "stereoscopic-compositor"
+      ],
+      "title": "RendererTechnique",
+      "description": "Neutral renderer technique: immediate-2d, remote-stream, retained-scene-3d, or stereoscopic-compositor (a technique, never a vendor/engine)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:mount-planned-data:1.0.0"
+}

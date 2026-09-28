@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/MountPlanStep",
+  "$defs": {
+    "MountPlanStep": {
+      "type": "string",
+      "enum": [
+        "activate-presentation",
+        "prepare-surface",
+        "stage-content"
+      ],
+      "title": "MountPlanStep",
+      "description": "One typed mount step of a renderer mount plan (data, never execution)."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:mount-plan-step:1.0.0"
+}

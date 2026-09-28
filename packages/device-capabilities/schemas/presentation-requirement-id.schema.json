@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PresentationRequirementId",
+  "$defs": {
+    "PresentationRequirementId": {
+      "type": "string",
+      "pattern": "^prr-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PresentationRequirementId",
+      "description": "Opaque presentation-requirement id (prr-<slug>)."
+    }
+  },
+  "$id": "urn:epoch:device-capabilities:presentation-requirement-id:1.0.0"
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererTechniqueRecord",
+  "$defs": {
+    "RendererTechniqueRecord": {
+      "type": "object",
+      "properties": {
+        "technique": {
+          "$ref": "#/$defs/RendererTechnique"
+        },
+        "graphKinds": {
+          "minItems": 1,
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExperienceGraphKind"
+          }
+        },
+        "stereoscopic": {
+          "type": "boolean"
+        },
+        "executionClass": {
+          "$ref": "#/$defs/TechniqueExecutionClass"
+        }
+      },
+      "required": [
+        "technique",
+        "graphKinds",
+        "stereoscopic",
+        "executionClass"
+      ],
+      "additionalProperties": false,
+      "title": "RendererTechniqueRecord",
+      "description": "One neutral renderer technique as typed data: hosted graph kinds (sorted set), stereoscopic output, and execution class (pure catalog data — never an engine)."
+    },
+    "RendererTechnique": {
+      "type": "string",
+      "enum": [
+        "immediate-2d",
+        "remote-stream",
+        "retained-scene-3d",
+        "stereoscopic-compositor"
+      ],
+      "title": "RendererTechnique",
+      "description": "Neutral renderer technique: immediate-2d, remote-stream, retained-scene-3d, or stereoscopic-compositor (a technique, never a vendor/engine)."
+    },
+    "ExperienceGraphKind": {
+      "type": "string",
+      "enum": [
+        "2d",
+        "3d",
+        "animation",
+        "narrative",
+        "timeline-replay",
+        "presence",
+        "controls"
+      ],
+      "title": "ExperienceGraphKind",
+      "description": "Presentation projection of an Experience Graph: 2D, 3D, animation, narrative, timeline/replay, presence, or controls."
+    },
+    "TechniqueExecutionClass": {
+      "type": "string",
+      "enum": [
+        "local",
+        "remote"
+      ],
+      "title": "TechniqueExecutionClass",
+      "description": "Where a renderer technique executes: locally on the device, or remotely with streamed results."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:renderer-technique-record:1.0.0"
+}

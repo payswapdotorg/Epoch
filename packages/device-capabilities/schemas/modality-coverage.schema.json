@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ModalityCoverage",
+  "$defs": {
+    "ModalityCoverage": {
+      "maxItems": 7,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "gamepad",
+          "gaze",
+          "gesture",
+          "keyboard",
+          "pointer",
+          "touch",
+          "voice"
+        ]
+      },
+      "title": "ModalityCoverage",
+      "description": "The sorted interaction-modality coverage snapshot of an assessment."
+    }
+  },
+  "$id": "urn:epoch:device-capabilities:modality-coverage:1.0.0"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/MountPlanId",
+  "$defs": {
+    "MountPlanId": {
+      "type": "string",
+      "pattern": "^rmp-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "MountPlanId",
+      "description": "Opaque renderer-mount-plan id (rmp-<slug>)."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:mount-plan-id:1.0.0"
+}

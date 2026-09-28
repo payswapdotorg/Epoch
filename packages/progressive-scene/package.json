@@ -1,0 +1,36 @@
+{
+  "name": "@epoch/progressive-scene",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Progressive Scene kernel (W019, experience layer) — the content-side half of Renderer/Device Adaptation: deterministic progressive refinement of sealed W011 Experience Graphs into ordered LOD ladders that fit the W013 renderer hosting budgets. A typed progression policy (animation clips dropped first, mesh primitives substituted by lower-cost neutral proxies, non-essential nodes pruned in canonical priority order, minimal core last) derives a sealed ProgressiveSceneLadder whose every rung is a re-sealed W011 graph (content-addressed, mountable through the unchanged W013 mount-graph path) plus an EXPLICIT reduction manifest — same semantics, different fidelity, never silent degradation (the W016 fidelity discipline). Rungs chain by digest so the derivation history is tamper-evident; fitGraphToLimits proves rung 0 fits or selects the first fitting rung or yields a typed un-fittable rejection. Pure typed data: zero wall-clock, zero randomness, zero I/O, zero engine/vendor vocabulary.",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "@epoch/renderer-runtime": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/device-capabilities": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/experience-compiler": "workspace:*",
+    "@epoch/experience-runtime": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/world-experience": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

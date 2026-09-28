@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererAdaptersProtocolVersion",
+  "$defs": {
+    "RendererAdaptersProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RendererAdaptersProtocolVersion",
+      "description": "Exact renderer-adapters protocol version admitted by this release (\"1.0.0\")."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:renderer-adapters-protocol-version:1.0.0"
+}

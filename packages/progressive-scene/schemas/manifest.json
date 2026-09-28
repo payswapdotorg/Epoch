@@ -1,0 +1,94 @@
+{
+  "contract": "epoch/progressive-scene",
+  "contractVersion": "1.0.0",
+  "protocolVersion": "1.0.0",
+  "description": "Typed, versioned, provider-neutral progressive-scene contract (W019, content-side adaptation): deterministic LOD ladders of W011 Experience Graphs with explicit reduction manifests, digest-chained rungs, and budget fitting against the W013 effective limits. JSON Schema projection under schemas/; runtime validators in @epoch/progressive-scene.",
+  "dataTypes": [
+    "LadderId",
+    "LadderRung",
+    "PrimitiveSubstitution",
+    "ProgressiveSceneErrorCode",
+    "ProgressiveSceneLadder",
+    "ProgressiveSceneLadderContent",
+    "ProgressiveSceneProtocolVersion",
+    "ReductionStageKind",
+    "RungIndex",
+    "RungReduction",
+    "SceneFit",
+    "SceneUsage",
+    "Sha256Hex"
+  ],
+  "documentKinds": [
+    "progressive-scene.fit",
+    "progressive-scene.ladder"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (rung chaining, digest consistency, contiguous indices) are enforced by the runtime validators in @epoch/progressive-scene and are not represented in the JSON Schema files",
+  "emittedBy": "renderProgressiveSceneContractFiles() in @epoch/progressive-scene (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "LadderId",
+      "file": "ladder-id.schema.json",
+      "sha256": "e0db7bda5d68a514fb0b159138a825c2f0bc618f3aa5bc503ea08b4b55bd81c5"
+    },
+    {
+      "type": "LadderRung",
+      "file": "ladder-rung.schema.json",
+      "sha256": "8b345f782eb4ed06ea82bbbcd74e8292f493e5fc8f7a1a37ce1876efc8927f19"
+    },
+    {
+      "type": "PrimitiveSubstitution",
+      "file": "primitive-substitution.schema.json",
+      "sha256": "bc2a737b22b29631a747d76f3c5c1079a51d84e257bd04c4c94cc7655016ea3d"
+    },
+    {
+      "type": "ProgressiveSceneErrorCode",
+      "file": "progressive-scene-error-code.schema.json",
+      "sha256": "d94108f2268a74dbcda473492aef0d73eb4e42a25a7b67f7264c3e638e8c1f50"
+    },
+    {
+      "type": "ProgressiveSceneLadder",
+      "file": "progressive-scene-ladder.schema.json",
+      "sha256": "3822d58a00de257758fb09f4b55ac1504136a2140c255321617c70396885d374"
+    },
+    {
+      "type": "ProgressiveSceneLadderContent",
+      "file": "progressive-scene-ladder-content.schema.json",
+      "sha256": "0c04f7a3df5247f319e535ab0590fde4de2e00765eeb1a50fdb83a1f323e218b"
+    },
+    {
+      "type": "ProgressiveSceneProtocolVersion",
+      "file": "progressive-scene-protocol-version.schema.json",
+      "sha256": "6523ed5d0629037492324071b546391870c4771255f3a394efb6092041491368"
+    },
+    {
+      "type": "ReductionStageKind",
+      "file": "reduction-stage-kind.schema.json",
+      "sha256": "f1c1de40f35f10cfc1f23f37c3d541746b3d08a57a7501c1effd9794eeabca3b"
+    },
+    {
+      "type": "RungIndex",
+      "file": "rung-index.schema.json",
+      "sha256": "d9a5a8186ccdf9724bcccabc3d68c6bf737dd5548af55001319fa93710258a1d"
+    },
+    {
+      "type": "RungReduction",
+      "file": "rung-reduction.schema.json",
+      "sha256": "61e3ae399be9bb71fb4fe566b94b60a7cd5fa50c55ba87848206390fd348a2c3"
+    },
+    {
+      "type": "SceneFit",
+      "file": "scene-fit.schema.json",
+      "sha256": "d294c2f9c44d0a713f2777ad46fd578a3fdeb594241fa9a60c7fa6c4ae4cb327"
+    },
+    {
+      "type": "SceneUsage",
+      "file": "scene-usage.schema.json",
+      "sha256": "06484750f209fbc385865308ecc40ffee92c3c98be85e60bdf7b6903759280ec"
+    },
+    {
+      "type": "Sha256Hex",
+      "file": "sha256-hex.schema.json",
+      "sha256": "76c8875c60f1fa1aa0b0f9c8244191449972019037ae4c64b7ef3d8a95a7b826"
+    }
+  ]
+}

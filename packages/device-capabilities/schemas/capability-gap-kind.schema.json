@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityGapKind",
+  "$defs": {
+    "CapabilityGapKind": {
+      "type": "string",
+      "enum": [
+        "modality-gap",
+        "pixel-budget-shortfall",
+        "pose-tracking-insufficient",
+        "stereoscopic-mismatch",
+        "texture-budget-shortfall",
+        "triangle-budget-shortfall"
+      ],
+      "title": "CapabilityGapKind",
+      "description": "Typed kind of one presentation-requirement gap: which capability axis fell short."
+    }
+  },
+  "$id": "urn:epoch:device-capabilities:capability-gap-kind:1.0.0"
+}

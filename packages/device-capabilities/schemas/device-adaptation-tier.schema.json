@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DeviceAdaptationTier",
+  "$defs": {
+    "DeviceAdaptationTier": {
+      "type": "string",
+      "enum": [
+        "field",
+        "full",
+        "normal",
+        "reduced"
+      ],
+      "title": "DeviceAdaptationTier",
+      "description": "Typed device adaptation tier derived from the W011 device descriptor: full, normal, field, or reduced (same semantics, different fidelity)."
+    }
+  },
+  "$id": "urn:epoch:device-capabilities:device-adaptation-tier:1.0.0"
+}

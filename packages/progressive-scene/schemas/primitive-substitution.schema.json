@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PrimitiveSubstitution",
+  "$defs": {
+    "PrimitiveSubstitution": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fromPrimitive": {
+          "type": "string",
+          "enum": [
+            "box",
+            "cone",
+            "cylinder",
+            "mesh",
+            "plane",
+            "sphere"
+          ]
+        },
+        "toPrimitive": {
+          "type": "string",
+          "enum": [
+            "box",
+            "cone",
+            "cylinder",
+            "mesh",
+            "plane",
+            "sphere"
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "fromPrimitive",
+        "toPrimitive"
+      ],
+      "additionalProperties": false,
+      "title": "PrimitiveSubstitution",
+      "description": "One explicit primitive substitution: node id, source primitive, proxy primitive."
+    }
+  },
+  "$id": "urn:epoch:progressive-scene:primitive-substitution:1.0.0"
+}

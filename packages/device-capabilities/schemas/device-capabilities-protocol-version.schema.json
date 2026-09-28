@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DeviceCapabilitiesProtocolVersion",
+  "$defs": {
+    "DeviceCapabilitiesProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "DeviceCapabilitiesProtocolVersion",
+      "description": "Exact device-capabilities protocol version admitted by this release (\"1.0.0\")."
+    }
+  },
+  "$id": "urn:epoch:device-capabilities:device-capabilities-protocol-version:1.0.0"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SelectionReason",
+  "$defs": {
+    "SelectionReason": {
+      "type": "string",
+      "enum": [
+        "flat-kinds",
+        "local-technique-unavailable",
+        "remote-assist-recommended",
+        "spatial-kinds-local",
+        "spatial-kinds-local-degraded",
+        "stereoscopic-negotiated"
+      ],
+      "title": "SelectionReason",
+      "description": "Typed reason the deterministic adapter selection chose a technique."
+    }
+  },
+  "$id": "urn:epoch:renderer-adapters:selection-reason:1.0.0"
+}

@@ -1,0 +1,34 @@
+{
+  "name": "@epoch/device-capabilities",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Device Capabilities kernel (W019, experience layer) — the device-side half of Renderer/Device Adaptation (R29 device-aware fidelity): the canonical device-class profile table that FILLS the abstract W011 device-descriptor slot (a host that knows only a device class gets a valid, provider-neutral DeviceDescriptor), deterministic sealed DeviceCapabilityAssessment records deriving the typed adaptation tier (desktop=full, laptop/web=normal, tablet/phone=field, low capability=reduced, remote assist optional) plus axis flags and modality coverage from descriptor data alone, and presentation fit/gap analysis comparing a descriptor against declared presentation requirements (typed budget shortfalls, modality gaps, stereoscopic and tracking mismatches). Pure typed data: zero wall-clock, zero randomness, zero I/O, zero engine/vendor vocabulary; assessments are content-addressed canonical SHA-256 records.",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/experience-runtime": "workspace:*",
+    "@epoch/renderer-runtime": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/world-experience": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

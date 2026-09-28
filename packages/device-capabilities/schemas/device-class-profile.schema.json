@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DeviceClassProfile",
+  "$defs": {
+    "DeviceClassProfile": {
+      "type": "object",
+      "properties": {
+        "deviceClass": {
+          "$ref": "#/$defs/DeviceClass"
+        },
+        "interaction": {
+          "minItems": 1,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionModality"
+          }
+        },
+        "display": {
+          "type": "object",
+          "properties": {
+            "stereoscopic": {
+              "type": "boolean"
+            },
+            "maxPixels": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "refreshHz": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "colorDepthBits": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "stereoscopic",
+            "maxPixels",
+            "refreshHz",
+            "colorDepthBits"
+          ],
+          "additionalProperties": false
+        },
+        "spatial": {
+          "type": "object",
+          "properties": {
+            "poseTracking": {
+              "type": "string",
+              "enum": [
+                "none",
+                "3dof",
+                "6dof"
+              ]
+            },
+            "worldAnchored": {
+              "type": "boolean"
+            },
+            "maxTriangles": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "maxTextureBytes": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "poseTracking",
+            "worldAnchored",
+            "maxTriangles",
+            "maxTextureBytes"
+          ],
+          "additionalProperties": false
+        },
+        "latencyBudgetMs": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "tierCeiling": {
+          "$ref": "#/$defs/DeviceAdaptationTier"
+        }
+      },
+      "required": [
+        "deviceClass",
+        "interaction",
+        "display",
+        "spatial",
+        "latencyBudgetMs",
+        "tierCeiling"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceClassProfile",
+      "description": "The canonical baseline of one neutral device class: interaction set, display and spatial budgets, latency budget, and tier ceiling (pure data — fills the W011 device slot)."
+    },
+    "DeviceClass": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "laptop",
+        "tablet",
+        "phone",
+        "headset",
+        "wall-display"
+      ],
+      "title": "DeviceClass",
+      "description": "Neutral device class of a device descriptor (never a vendor product)."
+    },
+    "InteractionModality": {
+      "type": "string",
+      "enum": [
+        "gamepad",
+        "gaze",
+        "gesture",
+        "keyboard",
+        "pointer",
+        "touch",
+        "voice"
+      ],
+      "title": "InteractionModality",
+      "description": "Neutral interaction modality of a device."
+    },
+    "DeviceAdaptationTier": {
+      "type": "string",
+      "enum": [
+        "field",
+        "full",
+        "normal",
+        "reduced"
+      ],
+      "title": "DeviceAdaptationTier",
+      "description": "Typed device adaptation tier derived from the W011 device descriptor: full, normal, field, or reduced (same semantics, different fidelity)."
+    }
+  },
+  "$id": "urn:epoch:device-capabilities:device-class-profile:1.0.0"
+}

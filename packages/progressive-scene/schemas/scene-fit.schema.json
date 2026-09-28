@@ -1,0 +1,319 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SceneFit",
+  "$defs": {
+    "SceneFit": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.progressive-scene-fit"
+        },
+        "protocolVersion": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "sourceGraphDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "ladderDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "rungIndex": {
+          "$ref": "#/$defs/RungIndex"
+        },
+        "rungGraphDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "usage": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "nodes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "edges": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "estimatedTriangles": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "assetBytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "nodes",
+            "edges",
+            "estimatedTriangles",
+            "assetBytes"
+          ],
+          "additionalProperties": false
+        },
+        "reductions": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RungReduction"
+          }
+        },
+        "limits": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "maxGraphNodes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maxGraphEdges": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "maxTriangles": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "maxTextureBytes": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "maxGraphNodes",
+            "maxGraphEdges"
+          ],
+          "additionalProperties": false
+        },
+        "digest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "tenantScope",
+        "sourceGraphDigest",
+        "ladderDigest",
+        "rungIndex",
+        "rungGraphDigest",
+        "usage",
+        "reductions",
+        "limits",
+        "digest"
+      ],
+      "additionalProperties": false,
+      "title": "SceneFit",
+      "description": "The typed fit verdict of a progressive-scene ladder against a W013 budget envelope: fitting rung, usage, and the full reduction trace."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "RungIndex": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "RungIndex",
+      "description": "One progressive-scene ladder rung index (0 = the source graph)."
+    },
+    "RungReduction": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "enum": [
+            "downgrade-expensive-primitives",
+            "drop-animation-clips",
+            "prune-control-nodes",
+            "prune-presence-cursors",
+            "prune-presence-seats",
+            "prune-shape-nodes",
+            "prune-spatial-nodes",
+            "prune-timeline-markers",
+            "prune-timeline-tracks",
+            "prune-to-minimal-core",
+            "substitute-mesh-proxies"
+          ]
+        },
+        "prunedNodeIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "substitutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PrimitiveSubstitution"
+          }
+        },
+        "droppedEdgeCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "usageBefore": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "nodes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "edges": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "estimatedTriangles": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "assetBytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "nodes",
+            "edges",
+            "estimatedTriangles",
+            "assetBytes"
+          ],
+          "additionalProperties": false
+        },
+        "usageAfter": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "nodes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "edges": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "estimatedTriangles": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "assetBytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "nodes",
+            "edges",
+            "estimatedTriangles",
+            "assetBytes"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "stage",
+        "prunedNodeIds",
+        "substitutions",
+        "droppedEdgeCount",
+        "usageBefore",
+        "usageAfter"
+      ],
+      "additionalProperties": false,
+      "title": "RungReduction",
+      "description": "The explicit reduction manifest of one progressive-scene rung: stage, pruned nodes, substitutions, dropped edges, and usage before/after (never silent)."
+    },
+    "PrimitiveSubstitution": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fromPrimitive": {
+          "type": "string",
+          "enum": [
+            "box",
+            "cone",
+            "cylinder",
+            "mesh",
+            "plane",
+            "sphere"
+          ]
+        },
+        "toPrimitive": {
+          "type": "string",
+          "enum": [
+            "box",
+            "cone",
+            "cylinder",
+            "mesh",
+            "plane",
+            "sphere"
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "fromPrimitive",
+        "toPrimitive"
+      ],
+      "additionalProperties": false,
+      "title": "PrimitiveSubstitution",
+      "description": "One explicit primitive substitution: node id, source primitive, proxy primitive."
+    }
+  },
+  "$id": "urn:epoch:progressive-scene:scene-fit:1.0.0"
+}
