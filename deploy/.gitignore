@@ -1,0 +1,5 @@
+# W033 deploy/ — the tree is NOT a pnpm importer (no package.json by policy);
+# node_modules/ here can only be tool-cache droppings (e.g. the vitest
+# transform cache created when the suite borrows the @epoch/test-harness
+# toolchain). Never commit.
+node_modules/

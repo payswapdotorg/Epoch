@@ -1,0 +1,2 @@
+# W033 ops/ — same policy as deploy/: not a pnpm importer, no package.json.
+node_modules/
