@@ -1657,6 +1657,52 @@ importers:
         specifier: 'catalog:'
         version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
 
+  packages/observability:
+    dependencies:
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../agent-protocol
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/access-projection':
+        specifier: workspace:*
+        version: link:../access-projection
+      '@epoch/authorization':
+        specifier: workspace:*
+        version: link:../authorization
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@epoch/event-log':
+        specifier: workspace:*
+        version: link:../event-log
+      '@epoch/extension-runtime':
+        specifier: workspace:*
+        version: link:../extension-runtime
+      '@epoch/identity':
+        specifier: workspace:*
+        version: link:../identity
+      '@epoch/tenancy':
+        specifier: workspace:*
+        version: link:../tenancy
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
+
   packages/performance:
     dependencies:
       '@epoch/agent-protocol':
@@ -2900,6 +2946,82 @@ importers:
       '@epoch/verification':
         specifier: workspace:*
         version: link:../../packages/verification
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
+
+  services/security:
+    dependencies:
+      '@epoch/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@epoch/extension-runtime':
+        specifier: workspace:*
+        version: link:../../packages/extension-runtime
+      '@epoch/marketplace':
+        specifier: workspace:*
+        version: link:../../packages/marketplace
+      '@epoch/observability':
+        specifier: workspace:*
+        version: link:../../packages/observability
+      '@epoch/tenancy':
+        specifier: workspace:*
+        version: link:../../packages/tenancy
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/access-projection':
+        specifier: workspace:*
+        version: link:../../packages/access-projection
+      '@epoch/action-gateway':
+        specifier: workspace:*
+        version: link:../action-gateway
+      '@epoch/action-protocol':
+        specifier: workspace:*
+        version: link:../../packages/action-protocol
+      '@epoch/agent-orchestration':
+        specifier: workspace:*
+        version: link:../../packages/agent-orchestration
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../../packages/agent-protocol
+      '@epoch/agent-runtime':
+        specifier: workspace:*
+        version: link:../agent-runtime
+      '@epoch/capability-registry':
+        specifier: workspace:*
+        version: link:../../packages/capability-registry
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@epoch/event-log':
+        specifier: workspace:*
+        version: link:../../packages/event-log
+      '@epoch/policy-contracts':
+        specifier: workspace:*
+        version: link:../../packages/policy-contracts
+      '@epoch/simulation-fabric':
+        specifier: workspace:*
+        version: link:../../packages/simulation-fabric
+      '@epoch/simulation-protocol':
+        specifier: workspace:*
+        version: link:../../packages/simulation-protocol
+      '@epoch/solution-delivery':
+        specifier: workspace:*
+        version: link:../../packages/solution-delivery
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
       '@types/node':
         specifier: 'catalog:'
         version: 22.20.4
