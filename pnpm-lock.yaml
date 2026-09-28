@@ -1094,6 +1094,52 @@ importers:
         specifier: 'catalog:'
         version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
 
+  packages/entitlements:
+    dependencies:
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../agent-protocol
+      '@epoch/marketplace':
+        specifier: workspace:*
+        version: link:../marketplace
+      '@epoch/solution-delivery':
+        specifier: workspace:*
+        version: link:../solution-delivery
+      '@epoch/tenancy':
+        specifier: workspace:*
+        version: link:../tenancy
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/authorization':
+        specifier: workspace:*
+        version: link:../authorization
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@epoch/event-log':
+        specifier: workspace:*
+        version: link:../event-log
+      '@epoch/identity':
+        specifier: workspace:*
+        version: link:../identity
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
+
   packages/eslint-config:
     devDependencies:
       '@eslint/js':
@@ -2590,6 +2636,52 @@ importers:
       '@epoch/world-model':
         specifier: workspace:*
         version: link:../../packages/world-model
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
+
+  services/billing:
+    dependencies:
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../../packages/agent-protocol
+      '@epoch/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@epoch/entitlements':
+        specifier: workspace:*
+        version: link:../../packages/entitlements
+      '@epoch/marketplace':
+        specifier: workspace:*
+        version: link:../../packages/marketplace
+      '@epoch/solution-delivery':
+        specifier: workspace:*
+        version: link:../../packages/solution-delivery
+      '@epoch/tenancy':
+        specifier: workspace:*
+        version: link:../../packages/tenancy
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@epoch/event-log':
+        specifier: workspace:*
+        version: link:../../packages/event-log
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
       '@types/node':
         specifier: 'catalog:'
         version: 22.20.4
