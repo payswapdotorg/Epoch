@@ -1,0 +1,270 @@
+{
+  "contract": "epoch/observability",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Security/Isolation/Observability contract surface (W030, in-package full surface): sealed security observations (content-addressed, exact-revision provenance), security policies as data (isolation profiles + thresholds), the W008-mirrored sandbox subject + isolation check inputs, quarantine facts, the security:* event vocabulary over the W010 shapes, and the audit-family mirrors (projection summaries + canonical object references). JSON Schema projection under schemas/; runtime validators in @epoch/observability.",
+  "dataTypes": [
+    "ObservationId",
+    "QuarantineId",
+    "SecurityPolicyId",
+    "SecurityStreamId",
+    "SecurityHostStreamId",
+    "SubjectId",
+    "ObservabilityTenantId",
+    "ObservabilityPrincipalId",
+    "HostFunctionToken",
+    "ResourceScopeToken",
+    "CapabilityBindingToken",
+    "ObservationSubjectKind",
+    "ObservationClass",
+    "ObservationOutcome",
+    "ObservationSeverity",
+    "ObservationProvenance",
+    "ObservationContent",
+    "SealedObservation",
+    "IsolationProfile",
+    "PolicyStatus",
+    "SecurityThresholds",
+    "SecurityPolicyContent",
+    "SealedSecurityPolicy",
+    "SandboxBinding",
+    "SandboxGrant",
+    "SandboxSubject",
+    "QuarantineFactKind",
+    "QuarantineFactContent",
+    "SealedQuarantineFact",
+    "SecurityEventSequence",
+    "SecurityCausalParent",
+    "SecurityEventPayload",
+    "SecurityEventContent",
+    "SealedSecurityEvent",
+    "PolicyRegisteredData",
+    "ObservationRecordedData",
+    "ViolationDetectedData",
+    "QuarantineImposedData",
+    "QuarantineReleasedData",
+    "HealthProjectedData",
+    "AuditRecordedData",
+    "ProjectionSummary",
+    "CanonicalObjectRef"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical ordering, digest verification, tenant checks, ceiling conformance) are enforced by the runtime validators in @epoch/observability and are not represented in the JSON Schema files",
+  "emittedBy": "renderObservabilityContractFiles() in @epoch/observability (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "ObservationId",
+      "file": "observation-id.schema.json",
+      "sha256": "b2513af17b6d917764230c19cd143fc8e76e5b516b56afd17440f70718011202"
+    },
+    {
+      "type": "QuarantineId",
+      "file": "quarantine-id.schema.json",
+      "sha256": "7329ae01d0b6ecad80fad57ca36578739b4fc1f9dcc12db2c624d677f05afb24"
+    },
+    {
+      "type": "SecurityPolicyId",
+      "file": "security-policy-id.schema.json",
+      "sha256": "cdd3514e656fd98213341ffe3e3d39b7962c787cebc74afcfc15b425c56f7fb9"
+    },
+    {
+      "type": "SecurityStreamId",
+      "file": "security-stream-id.schema.json",
+      "sha256": "28d14d981cb7913e0e1a701ead259eb1a1d839cd7db337ad9ea70b1c13915b66"
+    },
+    {
+      "type": "SecurityHostStreamId",
+      "file": "security-host-stream-id.schema.json",
+      "sha256": "705d559d9ffb2035c98fd5de71bb5e31a530650ad42da78f8bd331566252e22f"
+    },
+    {
+      "type": "SubjectId",
+      "file": "subject-id.schema.json",
+      "sha256": "8a9b9fa66747c805f90305db2fe36e44de4356d639ace1ef64f4c2fda8f1cbb2"
+    },
+    {
+      "type": "ObservabilityTenantId",
+      "file": "observability-tenant-id.schema.json",
+      "sha256": "fa1cf1409ec337726c7b2b1306277c55c64d013fe6bd81d8d19519438ad18ba3"
+    },
+    {
+      "type": "ObservabilityPrincipalId",
+      "file": "observability-principal-id.schema.json",
+      "sha256": "b072098d0cc2dfd803ddb3132009a06637fb396b064af8db9c4dade6f4d3bbe8"
+    },
+    {
+      "type": "HostFunctionToken",
+      "file": "host-function-token.schema.json",
+      "sha256": "feada7c8596c98ded84af490a10a87a532350e65dc412b5a05305496b5d7f54b"
+    },
+    {
+      "type": "ResourceScopeToken",
+      "file": "resource-scope-token.schema.json",
+      "sha256": "05d3a329286cbff40c76e113b0bd1a1678d42fe939a672e1e8988d01dffd0a8f"
+    },
+    {
+      "type": "CapabilityBindingToken",
+      "file": "capability-binding-token.schema.json",
+      "sha256": "98512c3ef2f646b9948b69e49b1b5699b7558c019e3ad1b383ddf366cf76c727"
+    },
+    {
+      "type": "ObservationSubjectKind",
+      "file": "observation-subject-kind.schema.json",
+      "sha256": "94ad0ef84df7bb25e5423cbbbe5fa427f39b1217436a128f6c1106e2d8fa8152"
+    },
+    {
+      "type": "ObservationClass",
+      "file": "observation-class.schema.json",
+      "sha256": "42b53f3cac03d1125e44f92ab245e0dc88909b42064f24ef3a5b8f38f2387fd2"
+    },
+    {
+      "type": "ObservationOutcome",
+      "file": "observation-outcome.schema.json",
+      "sha256": "ef2b21f43ccd67060b02c06de09a8c457e00c738cc6e96fdaa0bc5722c0aebb9"
+    },
+    {
+      "type": "ObservationSeverity",
+      "file": "observation-severity.schema.json",
+      "sha256": "a137c6a306f3f08d04eeaf0bb98ea87da999ffa5675fbb6b726632ecc7c03750"
+    },
+    {
+      "type": "ObservationProvenance",
+      "file": "observation-provenance.schema.json",
+      "sha256": "8cf8a2c0a0cb66b5a5c25347e9f2278c7772eb97d547c08034a2df377cba4cd6"
+    },
+    {
+      "type": "ObservationContent",
+      "file": "observation-content.schema.json",
+      "sha256": "b50caadb260a699af6bd40a02c7964a97510cbf58af8d6f12885ca731c832a59"
+    },
+    {
+      "type": "SealedObservation",
+      "file": "sealed-observation.schema.json",
+      "sha256": "28d43230f4ad2429a4912222ec9561b4d41673bf8c8873755b716e47e2e14cf4"
+    },
+    {
+      "type": "IsolationProfile",
+      "file": "isolation-profile.schema.json",
+      "sha256": "7bfe7b8c84350bafb380285ac1514d96dae18152126051173cafd62b6c762d40"
+    },
+    {
+      "type": "PolicyStatus",
+      "file": "policy-status.schema.json",
+      "sha256": "56993fa75115180f152b132684146285933aa2168c77428dff830fdd8feea264"
+    },
+    {
+      "type": "SecurityThresholds",
+      "file": "security-thresholds.schema.json",
+      "sha256": "cbd60495c84f5f8f6711788b21ca806b1d4a877bae415849a47a8790b61ae333"
+    },
+    {
+      "type": "SecurityPolicyContent",
+      "file": "security-policy-content.schema.json",
+      "sha256": "cd6e945948886df24bb599270bdb68599fedad8770fb0c80cbafac2fa8dffbd3"
+    },
+    {
+      "type": "SealedSecurityPolicy",
+      "file": "sealed-security-policy.schema.json",
+      "sha256": "1f35ebdc7a16dd6047fd4c18c6bb436bd0eb882e7a9c83aedb92021ace14a040"
+    },
+    {
+      "type": "SandboxBinding",
+      "file": "sandbox-binding.schema.json",
+      "sha256": "2ed360f266868cf7096510796a709851a898bcb7b803c57f362c46b1a4dc5905"
+    },
+    {
+      "type": "SandboxGrant",
+      "file": "sandbox-grant.schema.json",
+      "sha256": "178302f4f4f51057457fe6abd2942dadcf16ba57ff468e80f5d6dba0d66b0844"
+    },
+    {
+      "type": "SandboxSubject",
+      "file": "sandbox-subject.schema.json",
+      "sha256": "303b04584b47a0c2a08942f550479e41ed28ba2db67b24365282f3400d3f4bf0"
+    },
+    {
+      "type": "QuarantineFactKind",
+      "file": "quarantine-fact-kind.schema.json",
+      "sha256": "04844aceb2a1184c35537e54c7a6fdd9bb63552c668031ce8744ce2f4f92f7fa"
+    },
+    {
+      "type": "QuarantineFactContent",
+      "file": "quarantine-fact-content.schema.json",
+      "sha256": "27726ef6682f3f8719d089cf0783c78b64260d6da3669ee333b4c09193841265"
+    },
+    {
+      "type": "SealedQuarantineFact",
+      "file": "sealed-quarantine-fact.schema.json",
+      "sha256": "8ccf8d84b69b01ba3456757789a1566874bb573d3e80acd4d134f1d7f3e6bc2f"
+    },
+    {
+      "type": "SecurityEventSequence",
+      "file": "security-event-sequence.schema.json",
+      "sha256": "25e2a32a6103e2d7e60f83ece7467fc11184a734218b7b32acd8d2d0d8700ce5"
+    },
+    {
+      "type": "SecurityCausalParent",
+      "file": "security-causal-parent.schema.json",
+      "sha256": "3817704c56d3d8f6091ea823f2d8cf6c0332b8a0787773b3e2dbc250a78c0e56"
+    },
+    {
+      "type": "SecurityEventPayload",
+      "file": "security-event-payload.schema.json",
+      "sha256": "888ec7914a78a46f777dd6eaa38fe0b4875e2f38b28677b2c77040ead67040a2"
+    },
+    {
+      "type": "SecurityEventContent",
+      "file": "security-event-content.schema.json",
+      "sha256": "55ab1d8bc810b4694679e9b6cf3c720bbc17cd434918fa7e29c381034968c34e"
+    },
+    {
+      "type": "SealedSecurityEvent",
+      "file": "sealed-security-event.schema.json",
+      "sha256": "ba17e8a5c37fe39da3b4923d536217c30f6980f746c4fb55383d8a6f7daa2945"
+    },
+    {
+      "type": "PolicyRegisteredData",
+      "file": "policy-registered-data.schema.json",
+      "sha256": "f0e627247fff00209f936a58e009b55f6d902fc3e79b7174ad12d010ac5f82f2"
+    },
+    {
+      "type": "ObservationRecordedData",
+      "file": "observation-recorded-data.schema.json",
+      "sha256": "c39c01a452f1b4a1ea02908aa7dc7a614b9bb4f9b8dfcc04d29c413f823757af"
+    },
+    {
+      "type": "ViolationDetectedData",
+      "file": "violation-detected-data.schema.json",
+      "sha256": "e7573bb22104c9bf99ccd019b9598f1cd79f6ca26588be32d33d9da16ea3f780"
+    },
+    {
+      "type": "QuarantineImposedData",
+      "file": "quarantine-imposed-data.schema.json",
+      "sha256": "ae88086f3416087b732a2a3eea70989647cfc213728d9ce8c202f56b24831ad7"
+    },
+    {
+      "type": "QuarantineReleasedData",
+      "file": "quarantine-released-data.schema.json",
+      "sha256": "6fc73ee035a0ef105ead8dc986a7f769853f105a891246279065798346600592"
+    },
+    {
+      "type": "HealthProjectedData",
+      "file": "health-projected-data.schema.json",
+      "sha256": "54952fe257cfee580ba8ed2a131299e12717bab58bad4e538a333d5f233e198d"
+    },
+    {
+      "type": "AuditRecordedData",
+      "file": "audit-recorded-data.schema.json",
+      "sha256": "cd882065abe794da3efc2269eac23288f82e98cc4f94dba188231c5f295d4f1f"
+    },
+    {
+      "type": "ProjectionSummary",
+      "file": "projection-summary.schema.json",
+      "sha256": "1b9e46db24543c11e185bbb7b3ec91fe28d80fdfcc3deb26da90ee60350471ad"
+    },
+    {
+      "type": "CanonicalObjectRef",
+      "file": "canonical-object-ref.schema.json",
+      "sha256": "c7dfbecac28cc6baf81b247d07197f4b6c74cab0fef371dbd49af43965af5a51"
+    }
+  ]
+}

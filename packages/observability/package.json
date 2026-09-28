@@ -1,0 +1,36 @@
+{
+  "name": "@epoch/observability",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Observability kernel (W030) — the security-domain observation model: typed, versioned, sealed SECURITY OBSERVATIONS (content-addressed, W006 exact-revision provenance) over the execution surfaces; SECURITY POLICY as data (tenant-scoped isolation profiles + audit thresholds; swapping a policy revision changes enforcement with zero code change); the W008-mirrored SANDBOX ISOLATION CHECK (trust-class ceilings, legal grant tables, flavor/data-handling admission, listing requirements — parity-pinned, never a runtime edge); the QUARANTINE fact model (append-only impose/release records, deny-by-default); the deterministic metrics fold + security-health projection; the AUDIT FAMILIES (tenant-boundary breach detection + W041 access-projection invariant verification); and the security:* event vocabulary over the W010 event shapes. NO persistence, NO UI, NO provider vocabulary; zero wall-clock, zero randomness — instants are caller-supplied.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/access-projection": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/extension-runtime": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

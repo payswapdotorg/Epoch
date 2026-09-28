@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ObservationSubjectKind",
+  "$defs": {
+    "ObservationSubjectKind": {
+      "type": "string",
+      "enum": [
+        "extension",
+        "agent-session",
+        "simulation-run",
+        "action",
+        "principal",
+        "workspace",
+        "tenant",
+        "security-policy"
+      ],
+      "title": "ObservationSubjectKind",
+      "description": "What a security observation is about: extension, agent-session, simulation-run, action, principal, workspace, tenant, security-policy."
+    }
+  },
+  "$id": "urn:epoch:observability:observation-subject-kind:1.0.0"
+}

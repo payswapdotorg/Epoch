@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ObservationClass",
+  "$defs": {
+    "ObservationClass": {
+      "type": "string",
+      "enum": [
+        "sandbox-admission",
+        "sandbox-invocation",
+        "sandbox-violation",
+        "authorization-decision",
+        "tenant-boundary-check",
+        "agent-session",
+        "simulation-run",
+        "action-dispatch",
+        "security-audit"
+      ],
+      "title": "ObservationClass",
+      "description": "The security-relevant fact family: sandbox-admission, sandbox-invocation, sandbox-violation, authorization-decision, tenant-boundary-check, agent-session, simulation-run, action-dispatch, security-audit."
+    }
+  },
+  "$id": "urn:epoch:observability:observation-class:1.0.0"
+}

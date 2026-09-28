@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SecurityEventSequence",
+  "$defs": {
+    "SecurityEventSequence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "SecurityEventSequence",
+      "description": "One security-event sequence number: 1-based, contiguous per security stream."
+    }
+  },
+  "$id": "urn:epoch:observability:security-event-sequence:1.0.0"
+}

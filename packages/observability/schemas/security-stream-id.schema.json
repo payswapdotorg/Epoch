@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SecurityStreamId",
+  "$defs": {
+    "SecurityStreamId": {
+      "type": "string",
+      "pattern": "^stream:security-[a-z0-9][a-z0-9._-]{0,52}$",
+      "title": "SecurityStreamId",
+      "description": "Opaque security-stream identity: \"stream:security-<suffix>\" (one stream per observed subject)."
+    }
+  },
+  "$id": "urn:epoch:observability:security-stream-id:1.0.0"
+}

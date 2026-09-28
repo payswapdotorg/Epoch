@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SecurityHostStreamId",
+  "$defs": {
+    "SecurityHostStreamId": {
+      "type": "string",
+      "pattern": "^stream:security-host-[a-z0-9][a-z0-9._-]{0,47}$",
+      "title": "SecurityHostStreamId",
+      "description": "Opaque security host-stream identity: \"stream:security-host-<suffix>\" (tenant-level host steps)."
+    }
+  },
+  "$id": "urn:epoch:observability:security-host-stream-id:1.0.0"
+}

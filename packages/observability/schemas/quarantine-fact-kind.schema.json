@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/QuarantineFactKind",
+  "$defs": {
+    "QuarantineFactKind": {
+      "type": "string",
+      "enum": [
+        "quarantine-imposed",
+        "quarantine-released"
+      ],
+      "title": "QuarantineFactKind",
+      "description": "The quarantine fact kind: quarantine-imposed (deny-by-default) or quarantine-released (explicit, gated)."
+    }
+  },
+  "$id": "urn:epoch:observability:quarantine-fact-kind:1.0.0"
+}

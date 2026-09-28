@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/IsolationProfile",
+  "$defs": {
+    "IsolationProfile": {
+      "readOnly": true,
+      "title": "IsolationProfile",
+      "description": "The sandbox-admission half of a security policy: maximum admitted trust class, admitted flavors, admitted data-handling classifications, listing requirement, quarantine-on-violation.",
+      "type": "object",
+      "properties": {
+        "maxTrustClass": {
+          "type": "string",
+          "pattern": "^t[0-4]$"
+        },
+        "allowedFlavors": {
+          "minItems": 1,
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "declarative",
+              "ui",
+              "wasm",
+              "remote"
+            ]
+          }
+        },
+        "allowedDataHandling": {
+          "minItems": 1,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "sandbox-only",
+              "tenant-scoped",
+              "external-transfer"
+            ]
+          }
+        },
+        "requireMarketplaceListing": {
+          "type": "boolean"
+        },
+        "quarantineOnViolation": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "maxTrustClass",
+        "allowedFlavors",
+        "allowedDataHandling",
+        "requireMarketplaceListing",
+        "quarantineOnViolation"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:observability:isolation-profile:1.0.0"
+}

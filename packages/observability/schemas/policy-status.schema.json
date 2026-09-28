@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PolicyStatus",
+  "$defs": {
+    "PolicyStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "retired"
+      ],
+      "title": "PolicyStatus",
+      "description": "The security-policy lifecycle status: active (enforced) or retired (history only)."
+    }
+  },
+  "$id": "urn:epoch:observability:policy-status:1.0.0"
+}

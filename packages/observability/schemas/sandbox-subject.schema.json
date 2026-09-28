@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SandboxSubject",
+  "$defs": {
+    "SandboxSubject": {
+      "readOnly": true,
+      "title": "SandboxSubject",
+      "description": "The sandbox admission subject (the W008 SandboxSurfaceDescription shape mirrored): extension identity + version + manifest digest + flavor + trust class + capability bindings + grants + data-handling classification + optional marketplace listing reference.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "extensionId": {
+          "$ref": "#/$defs/SubjectId"
+        },
+        "extensionVersion": {
+          "$ref": "#/$defs/ObservabilitySemverCore"
+        },
+        "extensionManifestDigest": {
+          "$ref": "#/$defs/ObservabilitySha256Hex"
+        },
+        "flavor": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "trustClass": {
+          "type": "string",
+          "pattern": "^t[0-4]$"
+        },
+        "bindings": {
+          "readOnly": true,
+          "maxItems": 32,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SandboxBinding"
+          }
+        },
+        "grants": {
+          "readOnly": true,
+          "maxItems": 32,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SandboxGrant"
+          }
+        },
+        "dataHandling": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "listingId": {
+          "type": "string",
+          "pattern": "^listing:[a-z0-9][a-z0-9-]{0,62}$"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "extensionId",
+        "extensionVersion",
+        "extensionManifestDigest",
+        "flavor",
+        "trustClass",
+        "bindings",
+        "grants",
+        "dataHandling"
+      ],
+      "additionalProperties": false
+    },
+    "SubjectId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,31}:[a-z0-9][a-z0-9._-]{0,95}$",
+      "title": "SubjectId",
+      "description": "Opaque observation-subject identity: \"<kind>:<slug>\" (extension, session, simrun, action, principal, tenant, workspace, security-policy families)."
+    },
+    "ObservabilitySemverCore": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$",
+      "title": "ObservabilitySemverCore",
+      "description": "Semantic-version core string (MAJOR.MINOR.PATCH)."
+    },
+    "ObservabilitySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "ObservabilitySha256Hex",
+      "description": "SHA-256 digest over canonical JSON: the exact-revision content address of a security record."
+    },
+    "SandboxBinding": {
+      "readOnly": true,
+      "title": "SandboxBinding",
+      "description": "One resolved capability binding of a sandbox subject (an opaque typed reference into the W007 registry).",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "$ref": "#/$defs/CapabilityBindingToken"
+        }
+      },
+      "required": [
+        "capabilityId"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityBindingToken": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "title": "CapabilityBindingToken",
+      "description": "One opaque capability-binding reference of a sandbox subject (capability ids resolve in the W007 registry)."
+    },
+    "SandboxGrant": {
+      "readOnly": true,
+      "title": "SandboxGrant",
+      "description": "One sandbox grant (the W008 shape): the capability it grounds plus the host functions and resource scopes it requests.",
+      "type": "object",
+      "properties": {
+        "capabilityId": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128
+        },
+        "hostFunctions": {
+          "readOnly": true,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HostFunctionToken"
+          }
+        },
+        "resourceScopes": {
+          "readOnly": true,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResourceScopeToken"
+          }
+        }
+      },
+      "required": [
+        "capabilityId",
+        "hostFunctions",
+        "resourceScopes"
+      ],
+      "additionalProperties": false
+    },
+    "HostFunctionToken": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "title": "HostFunctionToken",
+      "description": "One host-function token of a sandbox grant (validated against the W008 vocabulary by the isolation check)."
+    },
+    "ResourceScopeToken": {
+      "readOnly": true,
+      "title": "ResourceScopeToken",
+      "description": "One (resource, access) scope token of a sandbox grant (validated against the W008 legal table by the isolation check).",
+      "type": "object",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "access": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        }
+      },
+      "required": [
+        "resource",
+        "access"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:observability:sandbox-subject:1.0.0"
+}

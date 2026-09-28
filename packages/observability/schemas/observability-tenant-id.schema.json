@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ObservabilityTenantId",
+  "$defs": {
+    "ObservabilityTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ObservabilityTenantId",
+      "description": "Opaque tenant identity of the security domain: \"tenant:<slug>\" (the W009 grammar)."
+    }
+  },
+  "$id": "urn:epoch:observability:observability-tenant-id:1.0.0"
+}

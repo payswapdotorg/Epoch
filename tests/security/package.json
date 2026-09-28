@@ -1,0 +1,37 @@
+{
+  "name": "@epoch/security-evidence",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "W030 Security/Isolation/Observability evidence suite: the cross-surface end-to-end scenario over the REAL kernels \u2014 a REAL W009 tenancy + authorization gate, a REAL W023 marketplace listing (sealed + verified), a REAL W008-mirrored sandbox admission through the REAL W008 ceiling differential, a REAL W020 agent session + REAL W021 simulation run + REAL W022 gateway action feeding the observation intake, a REAL W041 authorized projection audited by the projection-invariant family, and the security:* events verified through the REAL W010 sealEvent. Positive (the golden admission-to-recovery path), negative (fail-closed admission, isolation violations, cross-tenant denials, tampered digests, authority-conflict injection) and recovery (quarantine release + re-admission + health restoration) evidence, plus determinism (byte-identical replays). NOT a pnpm workspace importer: tests/security sits outside the pnpm-workspace.yaml globs (owned surface, root manifests frozen), so this manifest DECLARES the frozen devDependency policy while import resolution happens via vitest resolve.alias + tsconfig paths. Run via: pnpm --filter @epoch/security-runtime exec vitest run --root ../../tests/security.",
+  "epoch": {
+    "layer": "service"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@epoch/access-projection": "workspace:*",
+    "@epoch/action-gateway": "workspace:*",
+    "@epoch/action-protocol": "workspace:*",
+    "@epoch/agent-orchestration": "workspace:*",
+    "@epoch/agent-runtime": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/extension-runtime": "workspace:*",
+    "@epoch/marketplace": "workspace:*",
+    "@epoch/observability": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/security-runtime": "workspace:*",
+    "@epoch/simulation-fabric": "workspace:*",
+    "@epoch/simulation-protocol": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

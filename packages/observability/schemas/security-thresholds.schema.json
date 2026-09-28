@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SecurityThresholds",
+  "$defs": {
+    "SecurityThresholds": {
+      "readOnly": true,
+      "title": "SecurityThresholds",
+      "description": "The health-projection thresholds of a security policy: critical-violation counts flipping health to degraded then critical.",
+      "type": "object",
+      "properties": {
+        "degradedAtCriticalViolations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "criticalAtCriticalViolations": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "degradedAtCriticalViolations",
+        "criticalAtCriticalViolations"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:observability:security-thresholds:1.0.0"
+}
