@@ -1317,6 +1317,58 @@ importers:
         specifier: 'catalog:'
         version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
 
+  packages/learning-calibration:
+    dependencies:
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../agent-protocol
+      '@epoch/solution-delivery':
+        specifier: workspace:*
+        version: link:../solution-delivery
+      '@epoch/tenancy':
+        specifier: workspace:*
+        version: link:../tenancy
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/actualization':
+        specifier: workspace:*
+        version: link:../actualization
+      '@epoch/capability-registry':
+        specifier: workspace:*
+        version: link:../capability-registry
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@epoch/evaluation-protocol':
+        specifier: workspace:*
+        version: link:../evaluation-protocol
+      '@epoch/event-log':
+        specifier: workspace:*
+        version: link:../event-log
+      '@epoch/evidence':
+        specifier: workspace:*
+        version: link:../evidence
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@epoch/variance':
+        specifier: workspace:*
+        version: link:../variance
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
+
   packages/marketplace:
     dependencies:
       '@epoch/agent-protocol':
@@ -2256,6 +2308,49 @@ importers:
       '@epoch/verification':
         specifier: workspace:*
         version: link:../../packages/verification
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4))
+
+  services/learning-calibration:
+    dependencies:
+      '@epoch/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@epoch/learning-calibration':
+        specifier: workspace:*
+        version: link:../../packages/learning-calibration
+      '@epoch/tenancy':
+        specifier: workspace:*
+        version: link:../../packages/tenancy
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/capability-registry':
+        specifier: workspace:*
+        version: link:../../packages/capability-registry
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@epoch/event-log':
+        specifier: workspace:*
+        version: link:../../packages/event-log
+      '@epoch/solution-delivery':
+        specifier: workspace:*
+        version: link:../../packages/solution-delivery
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
       '@types/node':
         specifier: 'catalog:'
         version: 22.20.4
