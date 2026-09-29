@@ -1,0 +1,278 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RoleProposal",
+  "$defs": {
+    "RoleProposal": {
+      "readOnly": true,
+      "title": "RoleProposal",
+      "description": "A candidate role synthesized by the universal compiler from demand evidence (no predefined role/model pair; slug derived from member operations, never a model name).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/CapabilityDiscoveryRecordVersion"
+        },
+        "roleProposalId": {
+          "$ref": "#/$defs/RoleProposalId"
+        },
+        "roleSlug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,79}$"
+        },
+        "mission": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "satisfiesDemands": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityDemandId"
+          }
+        },
+        "inputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RoleInterfaceEntry"
+          }
+        },
+        "outputs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RoleInterfaceEntry"
+          }
+        },
+        "knowledgeRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "toolRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "planningBehavior": {
+          "$ref": "#/$defs/RolePlanningBehavior"
+        },
+        "authorityBoundary": {
+          "$ref": "#/$defs/RoleAuthorityBoundary"
+        },
+        "evidenceRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "environmentRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "evaluationSuiteRef": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "provenance": {
+          "$ref": "#/$defs/RoleProvenance"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "roleProposalId",
+        "roleSlug",
+        "mission",
+        "satisfiesDemands",
+        "inputs",
+        "outputs",
+        "knowledgeRequirements",
+        "toolRequirements",
+        "planningBehavior",
+        "authorityBoundary",
+        "evidenceRequirements",
+        "environmentRequirements",
+        "confidence",
+        "provenance"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityDiscoveryRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "CapabilityDiscoveryRecordVersion",
+      "description": "Version discriminator carried by every serialized discovery record (currently 1)."
+    },
+    "RoleProposalId": {
+      "type": "string",
+      "pattern": "^drole:[0-9a-f]{16}$",
+      "title": "RoleProposalId",
+      "description": "Content-addressed role proposal id: \"drole:\" + 16 hex characters."
+    },
+    "CapabilityDemandId": {
+      "type": "string",
+      "pattern": "^demand:[0-9a-f]{16}$",
+      "title": "CapabilityDemandId",
+      "description": "Content-addressed capability demand id: \"demand:\" + 16 hex characters."
+    },
+    "RoleInterfaceEntry": {
+      "readOnly": true,
+      "title": "RoleInterfaceEntry",
+      "description": "A role interface entry (derived from member demand contracts): name + representation kind.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/RepresentationKind"
+        }
+      },
+      "required": [
+        "name",
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "RepresentationKind": {
+      "type": "string",
+      "enum": [
+        "text",
+        "numeric",
+        "tabular",
+        "geometry",
+        "image",
+        "signal",
+        "document",
+        "structured",
+        "code"
+      ],
+      "title": "RepresentationKind",
+      "description": "Neutral representation/modality kind: text, numeric, tabular, geometry, image, signal, document, structured, code."
+    },
+    "RolePlanningBehavior": {
+      "type": "string",
+      "enum": [
+        "single-step",
+        "multi-step",
+        "supervised-multi-step"
+      ],
+      "title": "RolePlanningBehavior",
+      "description": "Derived planning/delegation behavior of a candidate role."
+    },
+    "RoleAuthorityBoundary": {
+      "readOnly": true,
+      "title": "RoleAuthorityBoundary",
+      "description": "The authority boundary of a synthesized role: executionAuthority admits exactly \"none\" (the W003 convention — discovery never grants execution authority).",
+      "type": "object",
+      "properties": {
+        "executionAuthority": {
+          "type": "string",
+          "const": "none"
+        },
+        "requiresHumanCosign": {
+          "type": "boolean"
+        },
+        "proposableOperations": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OperationRef"
+          }
+        }
+      },
+      "required": [
+        "executionAuthority",
+        "requiresHumanCosign",
+        "proposableOperations"
+      ],
+      "additionalProperties": false
+    },
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    },
+    "RoleProvenance": {
+      "readOnly": true,
+      "title": "RoleProvenance",
+      "description": "Provenance of a synthesized role: member demands, consulted/overridden pack templates, compiler version.",
+      "type": "object",
+      "properties": {
+        "derivedFromDemands": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityDemandId"
+          }
+        },
+        "consultedTemplates": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "overriddenTemplates": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "compilerVersion": {
+          "$ref": "#/$defs/DiscoveryCompilerVersion"
+        }
+      },
+      "required": [
+        "derivedFromDemands",
+        "consultedTemplates",
+        "overriddenTemplates",
+        "compilerVersion"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoveryCompilerVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "DiscoveryCompilerVersion",
+      "description": "Version of the universal demand compiler + role synthesizer."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:role-proposal:1.0.0"
+}

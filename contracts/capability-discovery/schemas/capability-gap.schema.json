@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityGap",
+  "$defs": {
+    "CapabilityGap": {
+      "readOnly": true,
+      "title": "CapabilityGap",
+      "description": "An explicit capability gap with the ARCD1.0 lifecycle and an append-only, tamper-detecting transition chain.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/CapabilityDiscoveryRecordVersion"
+        },
+        "gapId": {
+          "$ref": "#/$defs/CapabilityGapId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/DiscoveryTenantId"
+        },
+        "operation": {
+          "$ref": "#/$defs/OperationRef"
+        },
+        "demandSummary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "lifecycleStage": {
+          "$ref": "#/$defs/UniversalLifecycleStage"
+        },
+        "state": {
+          "$ref": "#/$defs/CapabilityGapState"
+        },
+        "originatingRunId": {
+          "$ref": "#/$defs/DiscoveryRunId"
+        },
+        "triggeringSignalIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "firstObservedAt": {
+          "$ref": "#/$defs/DiscoveryTimestamp"
+        },
+        "notes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        },
+        "transitions": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GapTransition"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "gapId",
+        "tenantId",
+        "operation",
+        "demandSummary",
+        "lifecycleStage",
+        "state",
+        "triggeringSignalIds",
+        "firstObservedAt",
+        "notes",
+        "transitions"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityDiscoveryRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "CapabilityDiscoveryRecordVersion",
+      "description": "Version discriminator carried by every serialized discovery record (currently 1)."
+    },
+    "CapabilityGapId": {
+      "type": "string",
+      "pattern": "^gap:[0-9a-f]{16}$",
+      "title": "CapabilityGapId",
+      "description": "Content-addressed capability gap id: \"gap:\" + 16 hex characters."
+    },
+    "DiscoveryTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DiscoveryTenantId",
+      "description": "Tenant identifier: \"tenant:\" + lowercase slug (the W009 grammar, mirrored)."
+    },
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    },
+    "UniversalLifecycleStage": {
+      "type": "string",
+      "enum": [
+        "understand",
+        "decide",
+        "plan",
+        "acquire",
+        "realize",
+        "observe",
+        "actualize",
+        "verify",
+        "forecast",
+        "close",
+        "learn"
+      ],
+      "title": "UniversalLifecycleStage",
+      "description": "The eleven universal lifecycle stages (USL1.0, mirrored closed union)."
+    },
+    "CapabilityGapState": {
+      "type": "string",
+      "enum": [
+        "UNSATISFIED",
+        "CANDIDATE_FOUND",
+        "EVALUATED",
+        "VERIFIED",
+        "DEGRADED",
+        "REQUIRES_HUMAN"
+      ],
+      "title": "CapabilityGapState",
+      "description": "Capability-gap lifecycle: UNSATISFIED, CANDIDATE_FOUND, EVALUATED, VERIFIED, DEGRADED, REQUIRES_HUMAN."
+    },
+    "DiscoveryRunId": {
+      "type": "string",
+      "pattern": "^discrun:[0-9a-f]{16}$",
+      "title": "DiscoveryRunId",
+      "description": "Content-addressed discovery run id: \"discrun:\" + 16 hex characters."
+    },
+    "DiscoveryTimestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "DiscoveryTimestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (caller-supplied; never wall-clock)."
+    },
+    "GapTransition": {
+      "readOnly": true,
+      "title": "GapTransition",
+      "description": "One append-only, hash-linked capability-gap state transition (content-addressed).",
+      "type": "object",
+      "properties": {
+        "toState": {
+          "$ref": "#/$defs/CapabilityGapState"
+        },
+        "at": {
+          "$ref": "#/$defs/DiscoveryTimestamp"
+        },
+        "cause": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "evidenceDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        },
+        "actorRef": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "previousTransitionDigest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DiscoverySha256Hex"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transitionDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        }
+      },
+      "required": [
+        "toState",
+        "at",
+        "cause",
+        "previousTransitionDigest",
+        "transitionDigest"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoverySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "DiscoverySha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:capability-gap:1.0.0"
+}

@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EcosystemScanReport",
+  "$defs": {
+    "EcosystemScanReport": {
+      "readOnly": true,
+      "title": "EcosystemScanReport",
+      "description": "The per-run view of an ecosystem scan (stream B): adapters, operations, ingested candidates, duplicates.",
+      "type": "object",
+      "properties": {
+        "adapterIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "scannedOperations": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OperationRef"
+          }
+        },
+        "ingestedCandidateIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CandidateId"
+          }
+        },
+        "duplicateArtifactDigests": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DiscoverySha256Hex"
+          }
+        }
+      },
+      "required": [
+        "adapterIds",
+        "scannedOperations",
+        "ingestedCandidateIds",
+        "duplicateArtifactDigests"
+      ],
+      "additionalProperties": false
+    },
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    },
+    "CandidateId": {
+      "type": "string",
+      "pattern": "^cand:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "CandidateId",
+      "description": "Candidate id: \"cand:\" + lowercase slug."
+    },
+    "DiscoverySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "DiscoverySha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:ecosystem-scan-report:1.0.0"
+}

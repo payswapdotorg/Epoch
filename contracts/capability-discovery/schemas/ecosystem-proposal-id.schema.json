@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EcosystemProposalId",
+  "$defs": {
+    "EcosystemProposalId": {
+      "type": "string",
+      "pattern": "^ecoprop:[0-9a-f]{16}$",
+      "title": "EcosystemProposalId",
+      "description": "Content-addressed ecosystem proposal id: \"ecoprop:\" + 16 hex characters."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:ecosystem-proposal-id:1.0.0"
+}

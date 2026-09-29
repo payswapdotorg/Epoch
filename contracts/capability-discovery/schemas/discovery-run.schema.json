@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DiscoveryRun",
+  "$defs": {
+    "DiscoveryRun": {
+      "readOnly": true,
+      "title": "DiscoveryRun",
+      "description": "One reproducible discovery run with a content-addressed id and digest-chained lineage (verified end-to-end by verifyDiscoveryRun).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/CapabilityDiscoveryRecordVersion"
+        },
+        "runId": {
+          "$ref": "#/$defs/DiscoveryRunId"
+        },
+        "runKind": {
+          "$ref": "#/$defs/DiscoveryRunKind"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/DiscoveryTenantId"
+        },
+        "compilerVersion": {
+          "$ref": "#/$defs/DiscoveryCompilerVersion"
+        },
+        "contractVersion": {
+          "$ref": "#/$defs/CapabilityDiscoveryContractVersion"
+        },
+        "trigger": {
+          "$ref": "#/$defs/DiscoveryRunTrigger"
+        },
+        "inputDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        },
+        "stages": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DiscoveryStageLink"
+          }
+        },
+        "createdAt": {
+          "$ref": "#/$defs/DiscoveryTimestamp"
+        },
+        "templateOverrideRejections": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "runId",
+        "runKind",
+        "tenantId",
+        "compilerVersion",
+        "contractVersion",
+        "trigger",
+        "inputDigest",
+        "stages",
+        "createdAt",
+        "templateOverrideRejections"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityDiscoveryRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "CapabilityDiscoveryRecordVersion",
+      "description": "Version discriminator carried by every serialized discovery record (currently 1)."
+    },
+    "DiscoveryRunId": {
+      "type": "string",
+      "pattern": "^discrun:[0-9a-f]{16}$",
+      "title": "DiscoveryRunId",
+      "description": "Content-addressed discovery run id: \"discrun:\" + 16 hex characters."
+    },
+    "DiscoveryRunKind": {
+      "type": "string",
+      "enum": [
+        "problem-driven",
+        "ecosystem"
+      ],
+      "title": "DiscoveryRunKind",
+      "description": "Discovery run kind: problem-driven (stream A) or ecosystem (stream B)."
+    },
+    "DiscoveryTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DiscoveryTenantId",
+      "description": "Tenant identifier: \"tenant:\" + lowercase slug (the W009 grammar, mirrored)."
+    },
+    "DiscoveryCompilerVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "DiscoveryCompilerVersion",
+      "description": "Version of the universal demand compiler + role synthesizer."
+    },
+    "CapabilityDiscoveryContractVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "CapabilityDiscoveryContractVersion",
+      "description": "Version of the published capability-discovery contract surface."
+    },
+    "DiscoveryRunTrigger": {
+      "readOnly": true,
+      "title": "DiscoveryRunTrigger",
+      "description": "The trigger record on a run (manual, gap, scheduled, or event).",
+      "type": "object",
+      "properties": {
+        "trigger": {
+          "$ref": "#/$defs/DiscoveryTrigger"
+        },
+        "invokedBy": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        }
+      },
+      "required": [
+        "trigger"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoveryTrigger": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "gap",
+        "scheduled",
+        "event"
+      ],
+      "title": "DiscoveryTrigger",
+      "description": "What triggered a discovery run: manual, gap, scheduled, or event."
+    },
+    "DiscoverySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "DiscoverySha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "DiscoveryStageLink": {
+      "readOnly": true,
+      "title": "DiscoveryStageLink",
+      "description": "One link of a run's digest chain: stage name, stage digest, previous stage digest.",
+      "type": "object",
+      "properties": {
+        "stage": {
+          "$ref": "#/$defs/DiscoveryStageName"
+        },
+        "stageDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        },
+        "previousStageDigest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DiscoverySha256Hex"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "stage",
+        "stageDigest",
+        "previousStageDigest"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoveryStageName": {
+      "type": "string",
+      "enum": [
+        "inputs",
+        "demands",
+        "roles",
+        "resolution",
+        "organizations",
+        "evaluation",
+        "selection",
+        "candidates",
+        "gap-updates",
+        "promotions"
+      ],
+      "title": "DiscoveryStageName",
+      "description": "Lineage stage name: inputs, demands, roles, resolution, organizations, evaluation, selection, candidates, gap-updates, promotions."
+    },
+    "DiscoveryTimestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "DiscoveryTimestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (caller-supplied; never wall-clock)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:discovery-run:1.0.0"
+}

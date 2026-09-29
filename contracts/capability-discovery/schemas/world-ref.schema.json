@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldRef",
+  "$defs": {
+    "WorldRef": {
+      "readOnly": true,
+      "title": "WorldRef",
+      "description": "Opaque reference to an affected world/solution/delivery identity (id + content digest; never an embedded copy).",
+      "type": "object",
+      "properties": {
+        "refId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "refId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoverySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "DiscoverySha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:world-ref:1.0.0"
+}

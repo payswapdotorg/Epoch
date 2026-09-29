@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DiscoveryStageLink",
+  "$defs": {
+    "DiscoveryStageLink": {
+      "readOnly": true,
+      "title": "DiscoveryStageLink",
+      "description": "One link of a run's digest chain: stage name, stage digest, previous stage digest.",
+      "type": "object",
+      "properties": {
+        "stage": {
+          "$ref": "#/$defs/DiscoveryStageName"
+        },
+        "stageDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        },
+        "previousStageDigest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DiscoverySha256Hex"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "stage",
+        "stageDigest",
+        "previousStageDigest"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoveryStageName": {
+      "type": "string",
+      "enum": [
+        "inputs",
+        "demands",
+        "roles",
+        "resolution",
+        "organizations",
+        "evaluation",
+        "selection",
+        "candidates",
+        "gap-updates",
+        "promotions"
+      ],
+      "title": "DiscoveryStageName",
+      "description": "Lineage stage name: inputs, demands, roles, resolution, organizations, evaluation, selection, candidates, gap-updates, promotions."
+    },
+    "DiscoverySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "DiscoverySha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:discovery-stage-link:1.0.0"
+}

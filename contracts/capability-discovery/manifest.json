@@ -1,0 +1,570 @@
+{
+  "contract": "epoch/capability-discovery",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Capability Discovery contract surface (W045, ACR-004): capability demands, role proposals, candidate profiles, capability gaps, organization proposals + evaluation, content-addressed discovery runs, source-adapter artifacts, promotion records, ecosystem proposals, schedules. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "dataTypes": [
+    "CapabilityDiscoveryContractVersion",
+    "CapabilityDiscoveryRecordVersion",
+    "DiscoveryCompilerVersion",
+    "DiscoveryTimestamp",
+    "DiscoverySha256Hex",
+    "DiscoveryTenantId",
+    "DiscoveryRunId",
+    "CapabilityDemandId",
+    "RoleProposalId",
+    "CandidateId",
+    "CapabilityGapId",
+    "OrganizationId",
+    "EcosystemProposalId",
+    "PromotionId",
+    "UniversalLifecycleStage",
+    "TaskSignalKind",
+    "RepresentationKind",
+    "CapabilityGapState",
+    "CandidateKind",
+    "CandidateEvaluationState",
+    "ClaimBasis",
+    "EvaluationCriterionKind",
+    "EvaluationMetric",
+    "DiscoveryRunKind",
+    "DiscoveryTrigger",
+    "DiscoveryStageName",
+    "EcosystemProposalKind",
+    "EcosystemProposalStatus",
+    "DiscoverySourceKind",
+    "DiscoveryCadenceKind",
+    "OperationRef",
+    "QualityTarget",
+    "MoneyAmount",
+    "WorldRef",
+    "EvidenceSignal",
+    "ConstraintSignal",
+    "TaskSignal",
+    "TaskDescription",
+    "TemplateApplicability",
+    "CapabilityDemandTemplate",
+    "RoleTemplate",
+    "TaskSignalBinding",
+    "DomainPackContribution",
+    "DiscoveryInput",
+    "OutputContractEntry",
+    "CapabilityDemand",
+    "CapabilityDemandSet",
+    "RoleInterfaceEntry",
+    "RolePlanningBehavior",
+    "RoleAuthorityBoundary",
+    "RoleProvenance",
+    "RoleProposal",
+    "ClaimedCapability",
+    "LatencyClaim",
+    "CostClaim",
+    "CandidateProvenance",
+    "CandidateSecurity",
+    "CandidateProfile",
+    "HumanDeclaration",
+    "CandidateMatch",
+    "CandidateAssignment",
+    "RoleResolution",
+    "GapTransition",
+    "CapabilityGap",
+    "EcosystemDiscoveryRequest",
+    "OrganizationRoleBinding",
+    "HandoffEdge",
+    "SupervisionEdge",
+    "OrganizationEstimates",
+    "OrganizationProposal",
+    "EvaluationCriterion",
+    "CriterionResult",
+    "OrganizationEvaluation",
+    "OrganizationSelection",
+    "DiscoveryStageLink",
+    "DiscoveryRunTrigger",
+    "DiscoveryRun",
+    "DiscoveryRunArtifact",
+    "SourceArtifact",
+    "SourceScanQuery",
+    "SourceScanResult",
+    "SandboxReport",
+    "CandidateEvaluationEvidence",
+    "PolicyApproval",
+    "PromotionRecord",
+    "EcosystemScanReport",
+    "EcosystemProposalEvidence",
+    "DomainPackProposalDetail",
+    "EcosystemProposal",
+    "DiscoverySchedule",
+    "DueDiscoveryRun",
+    "DiscoveryIssue",
+    "DiscoveryError"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/capability-discovery and are not represented in the JSON Schema files",
+  "emittedBy": "renderCapabilityDiscoveryContractFiles() in @epoch/capability-discovery (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "CapabilityDiscoveryContractVersion",
+      "file": "schemas/capability-discovery-contract-version.schema.json",
+      "sha256": "15c77bba8cd9b811a140318be86162101da544e9f73453a7f0c8b9ebceb710ae"
+    },
+    {
+      "type": "CapabilityDiscoveryRecordVersion",
+      "file": "schemas/capability-discovery-record-version.schema.json",
+      "sha256": "2cff47b5496658da5516b7c74e416f9eb40d264287b4b66651d8c4c93b03ff46"
+    },
+    {
+      "type": "DiscoveryCompilerVersion",
+      "file": "schemas/discovery-compiler-version.schema.json",
+      "sha256": "80bfb14272af0f72895fbdd1939f9308f2e98071f5aff86659ebf8ab3242c6cf"
+    },
+    {
+      "type": "DiscoveryTimestamp",
+      "file": "schemas/discovery-timestamp.schema.json",
+      "sha256": "a3f037dab6fc90a4fcd9d2b1d8dbac171455a844199eb3154d582826c11825d8"
+    },
+    {
+      "type": "DiscoverySha256Hex",
+      "file": "schemas/discovery-sha256-hex.schema.json",
+      "sha256": "060d27cf40ad64641bcbff7e8c41c8ef2414517730bfb7e36b8d96c57c59296e"
+    },
+    {
+      "type": "DiscoveryTenantId",
+      "file": "schemas/discovery-tenant-id.schema.json",
+      "sha256": "ed400d0f82e044c73c2448356a80028877cc8f78e2e1363352ac79eac79fb28e"
+    },
+    {
+      "type": "DiscoveryRunId",
+      "file": "schemas/discovery-run-id.schema.json",
+      "sha256": "bf577d2b645f27e68db82740c4b8e17c257dbc8b8442a01bdae7c9e3c0b332d5"
+    },
+    {
+      "type": "CapabilityDemandId",
+      "file": "schemas/capability-demand-id.schema.json",
+      "sha256": "91a1bcd5e6f49b59af19678198c2d2efee1980cb37eaa053e7486f7dca59518f"
+    },
+    {
+      "type": "RoleProposalId",
+      "file": "schemas/role-proposal-id.schema.json",
+      "sha256": "d9c92ca6a866a0e2ad949c9207cb0e886ccdf414570dd99848695cf308d9c3e0"
+    },
+    {
+      "type": "CandidateId",
+      "file": "schemas/candidate-id.schema.json",
+      "sha256": "ded60933f08ec156c4cbd34506f4a6daa1f7f08a0e2bc2b342e67ea6d24d6ff3"
+    },
+    {
+      "type": "CapabilityGapId",
+      "file": "schemas/capability-gap-id.schema.json",
+      "sha256": "7a60f13d9daae2fe063678ef7fd3093eb7a597a20105f6b77e54cfdb3837dac8"
+    },
+    {
+      "type": "OrganizationId",
+      "file": "schemas/organization-id.schema.json",
+      "sha256": "1c66579f5bd13f05079662fe33181699da7903c3cd038117b0245ed508d53a8e"
+    },
+    {
+      "type": "EcosystemProposalId",
+      "file": "schemas/ecosystem-proposal-id.schema.json",
+      "sha256": "c90b56f65db94361420d7d48ff728f96e968aa4b11af8a9d1f8bc1bea7b5f8b5"
+    },
+    {
+      "type": "PromotionId",
+      "file": "schemas/promotion-id.schema.json",
+      "sha256": "4ef80c7cc20f72c319927ab7ead692a4f9e5feccd0873df8ed35617ef4c13891"
+    },
+    {
+      "type": "UniversalLifecycleStage",
+      "file": "schemas/universal-lifecycle-stage.schema.json",
+      "sha256": "a5bbf8efc35f74560d881234bece7e03b9b389572489ad29d6d7e180d1f3b507"
+    },
+    {
+      "type": "TaskSignalKind",
+      "file": "schemas/task-signal-kind.schema.json",
+      "sha256": "6283829090a36dfdce72b36e29eb5faea861faa090873284d5bd903bfaf40501"
+    },
+    {
+      "type": "RepresentationKind",
+      "file": "schemas/representation-kind.schema.json",
+      "sha256": "6644c23c82d0e9af138dee89f3549a71c170733ead17a4cac81c2cf93e6d119e"
+    },
+    {
+      "type": "CapabilityGapState",
+      "file": "schemas/capability-gap-state.schema.json",
+      "sha256": "5daa3f5b5f5f638c94cd0711a882f8a7be6d0d367c2daaa397bbde5fadd64323"
+    },
+    {
+      "type": "CandidateKind",
+      "file": "schemas/candidate-kind.schema.json",
+      "sha256": "5f80da8b1183a27e3d1e1a2ad2cc6ab16489f5759798a90bf943fe6c60c752f0"
+    },
+    {
+      "type": "CandidateEvaluationState",
+      "file": "schemas/candidate-evaluation-state.schema.json",
+      "sha256": "9ad04925f8069de8f6891f2f4684f551e81815b0f742116f5b46a07778455c79"
+    },
+    {
+      "type": "ClaimBasis",
+      "file": "schemas/claim-basis.schema.json",
+      "sha256": "7a72e96e9d47cf26ee7c9e687bdfe1dcf2b1e9f5251290244558705046ef0059"
+    },
+    {
+      "type": "EvaluationCriterionKind",
+      "file": "schemas/evaluation-criterion-kind.schema.json",
+      "sha256": "9f6c9b6070c56844adfab923d65f4226b2ad96a2998321e31df736d9081081cf"
+    },
+    {
+      "type": "EvaluationMetric",
+      "file": "schemas/evaluation-metric.schema.json",
+      "sha256": "2f4ee2428fc5d96b41944e31c46e2c6c9d875b8b874b64ca75271154cd078df5"
+    },
+    {
+      "type": "DiscoveryRunKind",
+      "file": "schemas/discovery-run-kind.schema.json",
+      "sha256": "e36ee98a718b0dbb704e98f5ab9d09d367a5fcfb4c0997f97f6febbea22a29a6"
+    },
+    {
+      "type": "DiscoveryTrigger",
+      "file": "schemas/discovery-trigger.schema.json",
+      "sha256": "080166a110d21b64ef6d611df54b78438a74bb23399f18df004540908dd48130"
+    },
+    {
+      "type": "DiscoveryStageName",
+      "file": "schemas/discovery-stage-name.schema.json",
+      "sha256": "8ada9829a205af04e3ad8793d6661ae688336f94d328de06a1d52cdb88d6d2ef"
+    },
+    {
+      "type": "EcosystemProposalKind",
+      "file": "schemas/ecosystem-proposal-kind.schema.json",
+      "sha256": "0ce6e5b4678fac623333806d031edab20eef390bb2e7321133139bd89d097bc5"
+    },
+    {
+      "type": "EcosystemProposalStatus",
+      "file": "schemas/ecosystem-proposal-status.schema.json",
+      "sha256": "919f6b668a4c5cf643d946f3b2d9b1bd8bad24290e69301694566280ea479cdb"
+    },
+    {
+      "type": "DiscoverySourceKind",
+      "file": "schemas/discovery-source-kind.schema.json",
+      "sha256": "985200073a4adaffb709a8c1df704c5976f9e9f00e0990aef3a436ab73fac0b1"
+    },
+    {
+      "type": "DiscoveryCadenceKind",
+      "file": "schemas/discovery-cadence-kind.schema.json",
+      "sha256": "af014f063f1aea4b2aaf957c8bc5258a351e33294415aad464523246512529d0"
+    },
+    {
+      "type": "OperationRef",
+      "file": "schemas/operation-ref.schema.json",
+      "sha256": "294b2bbcc4df26c78dce833bdf6ed2b63bcd27416a74721115502800ab6ee482"
+    },
+    {
+      "type": "QualityTarget",
+      "file": "schemas/quality-target.schema.json",
+      "sha256": "7fc33912a56ce50fce78adc3e6eb7df373753bc94d67209261eb95bc60a2415c"
+    },
+    {
+      "type": "MoneyAmount",
+      "file": "schemas/money-amount.schema.json",
+      "sha256": "ee305f09d7134c70ecf8a89a41d5c0b18afb4048e2def849719818c4bb79d2e5"
+    },
+    {
+      "type": "WorldRef",
+      "file": "schemas/world-ref.schema.json",
+      "sha256": "05102c6d72ba0ca9134a26afb62a7899c15ee7647ad810a306efd18683b3d14d"
+    },
+    {
+      "type": "EvidenceSignal",
+      "file": "schemas/evidence-signal.schema.json",
+      "sha256": "74d3e97fa4506e221f2c732c362a46db6b4a9dfe955b3caabb00eb520294a838"
+    },
+    {
+      "type": "ConstraintSignal",
+      "file": "schemas/constraint-signal.schema.json",
+      "sha256": "e4af447cd3bee3b09ec89ef2dda212ba91d2e29bed17e257eb8451e6b61ffb0b"
+    },
+    {
+      "type": "TaskSignal",
+      "file": "schemas/task-signal.schema.json",
+      "sha256": "8edd655c021ead5c0dbe0fde9f237fdb203b0f124a695c92c83dcd4dd35af9dc"
+    },
+    {
+      "type": "TaskDescription",
+      "file": "schemas/task-description.schema.json",
+      "sha256": "e3d33f07fe518d18512c571d9c031c71ad555abcc3cc9f289982006b11a8eb56"
+    },
+    {
+      "type": "TemplateApplicability",
+      "file": "schemas/template-applicability.schema.json",
+      "sha256": "aad8ddfd57b7fc76b1ec37ae4a70565eae846ab71dbcb28b4d069db8e43b8b22"
+    },
+    {
+      "type": "CapabilityDemandTemplate",
+      "file": "schemas/capability-demand-template.schema.json",
+      "sha256": "23ecea21ac26046a6032b342f847696a1b042733ca0192261b8378818caaf621"
+    },
+    {
+      "type": "RoleTemplate",
+      "file": "schemas/role-template.schema.json",
+      "sha256": "1fc223e739cfe61a275600bd5f1d60163a21dc87200c056a67f6543b8ef43e8b"
+    },
+    {
+      "type": "TaskSignalBinding",
+      "file": "schemas/task-signal-binding.schema.json",
+      "sha256": "cda930b3de07dbef5182bbd485ed15abe5a74ed1188594179cc6e08e2cd5aaae"
+    },
+    {
+      "type": "DomainPackContribution",
+      "file": "schemas/domain-pack-contribution.schema.json",
+      "sha256": "f1df307e5e79dcf4183c94e02428aa7e541b3f774c076dd5c8cffcbf3ab13004"
+    },
+    {
+      "type": "DiscoveryInput",
+      "file": "schemas/discovery-input.schema.json",
+      "sha256": "a8e3efa79a10addf1ecf26905b1d79bb841327b5e847d4fe2b5220c726a86758"
+    },
+    {
+      "type": "OutputContractEntry",
+      "file": "schemas/output-contract-entry.schema.json",
+      "sha256": "643728df35eb816a5819789964abc48b83c08c4b31bff2909cef66bb88b932cd"
+    },
+    {
+      "type": "CapabilityDemand",
+      "file": "schemas/capability-demand.schema.json",
+      "sha256": "c8979d19653b2306c4d0ee8a10e43b3cd0687e8ec98934de310e678a23e4881d"
+    },
+    {
+      "type": "CapabilityDemandSet",
+      "file": "schemas/capability-demand-set.schema.json",
+      "sha256": "ede22142273b257c7da7af12de84444ef3914e2bf734b34f8bd547fcef1891f0"
+    },
+    {
+      "type": "RoleInterfaceEntry",
+      "file": "schemas/role-interface-entry.schema.json",
+      "sha256": "dd2834c36f2fa47aaf07c9346eda8954f3bfee94020970753cc2a80bcb6f47cd"
+    },
+    {
+      "type": "RolePlanningBehavior",
+      "file": "schemas/role-planning-behavior.schema.json",
+      "sha256": "74781f1a4a11a96e8215362b33c119d5680e09b3268aeccd5de8301b337a12a2"
+    },
+    {
+      "type": "RoleAuthorityBoundary",
+      "file": "schemas/role-authority-boundary.schema.json",
+      "sha256": "6251ccd6dea969b2c2e2b8180d7f687a9cce883e7dbedb6ffaab9166e8538450"
+    },
+    {
+      "type": "RoleProvenance",
+      "file": "schemas/role-provenance.schema.json",
+      "sha256": "a4d2301b65863156223761b7252bbe56e4830bf55e6cce3982680fb4717f3519"
+    },
+    {
+      "type": "RoleProposal",
+      "file": "schemas/role-proposal.schema.json",
+      "sha256": "f6e0d4da4180dad41311372036ff4d10283c91d4cdff17b2cb49edaa7efaeaf6"
+    },
+    {
+      "type": "ClaimedCapability",
+      "file": "schemas/claimed-capability.schema.json",
+      "sha256": "d74f2317382039d9885294487a7a20ad081127ac406722a8c3abd8a8d1dcc3e2"
+    },
+    {
+      "type": "LatencyClaim",
+      "file": "schemas/latency-claim.schema.json",
+      "sha256": "3e13d68b24a5cd0668212a78ce85ea0ee2f1190d555242827ecb170a934371e4"
+    },
+    {
+      "type": "CostClaim",
+      "file": "schemas/cost-claim.schema.json",
+      "sha256": "f82006759bdad2c3a3d1af8b26273cfd379c0461c5e756735e45cb6b8f4913fe"
+    },
+    {
+      "type": "CandidateProvenance",
+      "file": "schemas/candidate-provenance.schema.json",
+      "sha256": "8d07ac1dc1e5a9304d1c5ce3a58d4c16728da0a7a0a9daf42729cd008d192085"
+    },
+    {
+      "type": "CandidateSecurity",
+      "file": "schemas/candidate-security.schema.json",
+      "sha256": "dff672a41678c169f4c959fc7ba4bfc1f7f1502569f54a20ac288934a6f4b481"
+    },
+    {
+      "type": "CandidateProfile",
+      "file": "schemas/candidate-profile.schema.json",
+      "sha256": "436ce21acda3fa80ca24c52999e1901ecbdb56d6bcb7ffc8b9d2bcb22f4a5e66"
+    },
+    {
+      "type": "HumanDeclaration",
+      "file": "schemas/human-declaration.schema.json",
+      "sha256": "d4586b727efadf99e4b25f0c8f643a562ef5afdbd2b36218ae6a610139c9ecbf"
+    },
+    {
+      "type": "CandidateMatch",
+      "file": "schemas/candidate-match.schema.json",
+      "sha256": "7715b993490a9af5f668216e8d1d165d158272dd1ef00f851aadddd64229048b"
+    },
+    {
+      "type": "CandidateAssignment",
+      "file": "schemas/candidate-assignment.schema.json",
+      "sha256": "b8c0cad4360af742a551a26dfbaa1cd0d91d05e9ff128df25c9b87201e76e7ec"
+    },
+    {
+      "type": "RoleResolution",
+      "file": "schemas/role-resolution.schema.json",
+      "sha256": "15c066db17e05f21c9fb4608a39f73db207487e531e5830d847afdd52193fd9e"
+    },
+    {
+      "type": "GapTransition",
+      "file": "schemas/gap-transition.schema.json",
+      "sha256": "71dfde889134780eebbf22b8aa58aabd034346bead94d752c1062b653475fa9f"
+    },
+    {
+      "type": "CapabilityGap",
+      "file": "schemas/capability-gap.schema.json",
+      "sha256": "bdac1340b34e19cdfc3a138c08ccc8b93832de5d17787c77cdb0a6da95354d11"
+    },
+    {
+      "type": "EcosystemDiscoveryRequest",
+      "file": "schemas/ecosystem-discovery-request.schema.json",
+      "sha256": "62ea45cfbfee471437bd8423ca4e3a861031301819d8bfd2d6ce378d2e3c5940"
+    },
+    {
+      "type": "OrganizationRoleBinding",
+      "file": "schemas/organization-role-binding.schema.json",
+      "sha256": "44c6d7b15b5411aed27110add0bd86fba32f76bdd9aef62e33e14893da1d06e9"
+    },
+    {
+      "type": "HandoffEdge",
+      "file": "schemas/handoff-edge.schema.json",
+      "sha256": "e0339e8bb5cc93bcceca2d150b4c543faa742791ca71d8246ddd1dfb47822450"
+    },
+    {
+      "type": "SupervisionEdge",
+      "file": "schemas/supervision-edge.schema.json",
+      "sha256": "3a890c35bc95d2c3d6a519281f876af323dd741991f0aa22e70168d8957e7a53"
+    },
+    {
+      "type": "OrganizationEstimates",
+      "file": "schemas/organization-estimates.schema.json",
+      "sha256": "6befcac0a029a9d69e4cf98fa95ad05e6dd5bafc19031648f46a68b95eddf72f"
+    },
+    {
+      "type": "OrganizationProposal",
+      "file": "schemas/organization-proposal.schema.json",
+      "sha256": "2745debdc0b49916c48194f0f6453759a1a95fe74f32ed382de1239886f74030"
+    },
+    {
+      "type": "EvaluationCriterion",
+      "file": "schemas/evaluation-criterion.schema.json",
+      "sha256": "5393f6fed5a5b3cc5b44f9491bbc7fecdf6ec64302bcc49fd800fa1211379085"
+    },
+    {
+      "type": "CriterionResult",
+      "file": "schemas/criterion-result.schema.json",
+      "sha256": "18ddd51fe1352419ee7364a4fc941521de062b884c3c1124e4648392ab938065"
+    },
+    {
+      "type": "OrganizationEvaluation",
+      "file": "schemas/organization-evaluation.schema.json",
+      "sha256": "23b91afd33f8ff426771cedce5269f744b961e46370c1f48be4290b8f4d8db4a"
+    },
+    {
+      "type": "OrganizationSelection",
+      "file": "schemas/organization-selection.schema.json",
+      "sha256": "b69b179fbd6ada42652082a17a1081e597bd4c0a659e97fb9ad6f1aef33859c2"
+    },
+    {
+      "type": "DiscoveryStageLink",
+      "file": "schemas/discovery-stage-link.schema.json",
+      "sha256": "883ca4cfa77958cbdac2d4a918d5e9c551daa4d9a5e013ea5a21bbf586b1f6bf"
+    },
+    {
+      "type": "DiscoveryRunTrigger",
+      "file": "schemas/discovery-run-trigger.schema.json",
+      "sha256": "efbe0ee78a65518d9b3d71aaf8523004a6956483b3e5cabc02d814fa08952cf7"
+    },
+    {
+      "type": "DiscoveryRun",
+      "file": "schemas/discovery-run.schema.json",
+      "sha256": "454ed517009bd224b56b45b912c43e1abeae9fc7761087537a8c1b4887b0d81a"
+    },
+    {
+      "type": "DiscoveryRunArtifact",
+      "file": "schemas/discovery-run-artifact.schema.json",
+      "sha256": "f58582db4f63f10489bf4d33ea52a6cfd452712999e7dc3e81ee2266429406ca"
+    },
+    {
+      "type": "SourceArtifact",
+      "file": "schemas/source-artifact.schema.json",
+      "sha256": "1cb78e754ec4eb27355db59af07f1a044766c54dfcfd3170b1d31a367ce6b8bf"
+    },
+    {
+      "type": "SourceScanQuery",
+      "file": "schemas/source-scan-query.schema.json",
+      "sha256": "d0deb1c18612333de497742c59953f902bfcfb032d14200a2ee9a8ae99f08cf4"
+    },
+    {
+      "type": "SourceScanResult",
+      "file": "schemas/source-scan-result.schema.json",
+      "sha256": "d702f0a2e7076d689e3f1b47b2a6f5da9279186a12415daeb05657d125d77f78"
+    },
+    {
+      "type": "SandboxReport",
+      "file": "schemas/sandbox-report.schema.json",
+      "sha256": "31d551a3f08e50d81f1554510d639a8a6e2a17f84ffe35dc85bb3affd33f1f73"
+    },
+    {
+      "type": "CandidateEvaluationEvidence",
+      "file": "schemas/candidate-evaluation-evidence.schema.json",
+      "sha256": "522de0c918624709c14ae03822f97cf7ff8a21258288c82907c4d59aed20f28e"
+    },
+    {
+      "type": "PolicyApproval",
+      "file": "schemas/policy-approval.schema.json",
+      "sha256": "df722eb58b957a8074da6251b25a3062deb561b12223a3f69d64df63b9aa2b5f"
+    },
+    {
+      "type": "PromotionRecord",
+      "file": "schemas/promotion-record.schema.json",
+      "sha256": "978be534f9cdd1717e8a402aa5b725654cf70c8dd1131665145f70d6edeba10c"
+    },
+    {
+      "type": "EcosystemScanReport",
+      "file": "schemas/ecosystem-scan-report.schema.json",
+      "sha256": "b611c6dd32d641ee5d7b789e8bd807432b96f042f147b154374fd5aa944cd712"
+    },
+    {
+      "type": "EcosystemProposalEvidence",
+      "file": "schemas/ecosystem-proposal-evidence.schema.json",
+      "sha256": "59f0791000f2ad1f8d78a69aeb2bd84caf465ae433ecd3dc2db2b10b9ce5a874"
+    },
+    {
+      "type": "DomainPackProposalDetail",
+      "file": "schemas/domain-pack-proposal-detail.schema.json",
+      "sha256": "b0d1b35636ed0ce0b46039b7e320fbe5eebcf01cc6af30d80e5182ef13659de1"
+    },
+    {
+      "type": "EcosystemProposal",
+      "file": "schemas/ecosystem-proposal.schema.json",
+      "sha256": "34026e8a9fd7718bf5b69c22e17aedc66487b67460b7629469c5501b590790ea"
+    },
+    {
+      "type": "DiscoverySchedule",
+      "file": "schemas/discovery-schedule.schema.json",
+      "sha256": "96f3039071cf54e8914716bbc283b7426526c845e5cb0c66321d8737e2a0adf1"
+    },
+    {
+      "type": "DueDiscoveryRun",
+      "file": "schemas/due-discovery-run.schema.json",
+      "sha256": "3dad73fa21fb3d85456ae115bc3e148e7bf7c5f4d0f26aa5f2755d6d0229424c"
+    },
+    {
+      "type": "DiscoveryIssue",
+      "file": "schemas/discovery-issue.schema.json",
+      "sha256": "b25c411b8434dc0a7bf5e67ef64d7a978f8e18211edca8be3d4d84e725ac7d56"
+    },
+    {
+      "type": "DiscoveryError",
+      "file": "schemas/discovery-error.schema.json",
+      "sha256": "c2975354b5142bccb65ba7f96b681d71a2c21fac80758dd9f098e7f916089eb2"
+    }
+  ]
+}

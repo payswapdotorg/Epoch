@@ -1,0 +1,35 @@
+{
+  "name": "@epoch/capability-discovery-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Capability Discovery service (W045): the typed HOST FACADE composing the @epoch/capability-discovery kernel — the full problem-driven discovery workflow, the ecosystem scan workflow (gap/scheduled/event triggered), the external-candidate promotion workflow, the ecosystem-proposal workflow and the deployment-neutral scheduler invocation — every operation behind a fail-closed caller-supplied authorization gate (authorization is NOT owned here; lock rule 12) and a REAL @epoch/tenancy tenant-scope validation (R12: cross-tenant access is the typed cross-tenant-denied rejection). Discovery never grants execution authority and never mutates authoritative world/solution/delivery state: the service holds ONLY discovery-plane records and references canonical state opaquely. In-memory reference behavior: NO persistence, NO network, NO source-registry integration (the static fixture adapter only); zero wall-clock, zero randomness — instants are caller-supplied.",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-discovery": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

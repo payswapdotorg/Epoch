@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OperationRef",
+  "$defs": {
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:operation-ref:1.0.0"
+}

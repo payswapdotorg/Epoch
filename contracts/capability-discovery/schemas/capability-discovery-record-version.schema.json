@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityDiscoveryRecordVersion",
+  "$defs": {
+    "CapabilityDiscoveryRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "CapabilityDiscoveryRecordVersion",
+      "description": "Version discriminator carried by every serialized discovery record (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:capability-discovery-record-version:1.0.0"
+}

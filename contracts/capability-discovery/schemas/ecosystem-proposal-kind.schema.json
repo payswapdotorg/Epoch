@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EcosystemProposalKind",
+  "$defs": {
+    "EcosystemProposalKind": {
+      "type": "string",
+      "enum": [
+        "adapter",
+        "extension",
+        "domain-pack"
+      ],
+      "title": "EcosystemProposalKind",
+      "description": "Ecosystem proposal kind: adapter, extension, or domain-pack."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:ecosystem-proposal-kind:1.0.0"
+}

@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityDemandTemplate",
+  "$defs": {
+    "CapabilityDemandTemplate": {
+      "readOnly": true,
+      "title": "CapabilityDemandTemplate",
+      "description": "Reusable capability-demand template from a domain pack (a PRIOR: may only add demands or tighten universal facets; never overrides).",
+      "type": "object",
+      "properties": {
+        "templateId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "operation": {
+          "$ref": "#/$defs/OperationRef"
+        },
+        "inputRepresentations": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RepresentationKind"
+          }
+        },
+        "outputKinds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RepresentationKind"
+          }
+        },
+        "qualityTarget": {
+          "$ref": "#/$defs/QualityTarget"
+        },
+        "evidenceRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "requiresHumanCosign": {
+          "type": "boolean"
+        },
+        "notes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        },
+        "applicability": {
+          "$ref": "#/$defs/TemplateApplicability"
+        }
+      },
+      "required": [
+        "templateId",
+        "summary",
+        "operation",
+        "applicability"
+      ],
+      "additionalProperties": false
+    },
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    },
+    "RepresentationKind": {
+      "type": "string",
+      "enum": [
+        "text",
+        "numeric",
+        "tabular",
+        "geometry",
+        "image",
+        "signal",
+        "document",
+        "structured",
+        "code"
+      ],
+      "title": "RepresentationKind",
+      "description": "Neutral representation/modality kind: text, numeric, tabular, geometry, image, signal, document, structured, code."
+    },
+    "QualityTarget": {
+      "readOnly": true,
+      "title": "QualityTarget",
+      "description": "Quality/fidelity target: metric, threshold, unit, and direction (min/max).",
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "threshold": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "min",
+            "max"
+          ]
+        }
+      },
+      "required": [
+        "metric",
+        "threshold",
+        "unit",
+        "direction"
+      ],
+      "additionalProperties": false
+    },
+    "TemplateApplicability": {
+      "readOnly": true,
+      "title": "TemplateApplicability",
+      "description": "When a domain-pack template applies (matched against task signal kinds, domain refs, lifecycle stages).",
+      "type": "object",
+      "properties": {
+        "signalKinds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TaskSignalKind"
+          }
+        },
+        "domainRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "lifecycleStages": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/UniversalLifecycleStage"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "TaskSignalKind": {
+      "type": "string",
+      "enum": [
+        "operation",
+        "decision",
+        "verification",
+        "artifact",
+        "quality",
+        "unknown",
+        "failure",
+        "work",
+        "budget",
+        "environment",
+        "authority",
+        "dependency",
+        "outcome"
+      ],
+      "title": "TaskSignalKind",
+      "description": "Universal task/problem signal kind: operation, decision, verification, artifact, quality, unknown, failure, work, budget, environment, authority, dependency, outcome."
+    },
+    "UniversalLifecycleStage": {
+      "type": "string",
+      "enum": [
+        "understand",
+        "decide",
+        "plan",
+        "acquire",
+        "realize",
+        "observe",
+        "actualize",
+        "verify",
+        "forecast",
+        "close",
+        "learn"
+      ],
+      "title": "UniversalLifecycleStage",
+      "description": "The eleven universal lifecycle stages (USL1.0, mirrored closed union)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:capability-demand-template:1.0.0"
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/UniversalLifecycleStage",
+  "$defs": {
+    "UniversalLifecycleStage": {
+      "type": "string",
+      "enum": [
+        "understand",
+        "decide",
+        "plan",
+        "acquire",
+        "realize",
+        "observe",
+        "actualize",
+        "verify",
+        "forecast",
+        "close",
+        "learn"
+      ],
+      "title": "UniversalLifecycleStage",
+      "description": "The eleven universal lifecycle stages (USL1.0, mirrored closed union)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:universal-lifecycle-stage:1.0.0"
+}

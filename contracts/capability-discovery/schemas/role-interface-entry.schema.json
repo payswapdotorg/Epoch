@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RoleInterfaceEntry",
+  "$defs": {
+    "RoleInterfaceEntry": {
+      "readOnly": true,
+      "title": "RoleInterfaceEntry",
+      "description": "A role interface entry (derived from member demand contracts): name + representation kind.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/RepresentationKind"
+        }
+      },
+      "required": [
+        "name",
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "RepresentationKind": {
+      "type": "string",
+      "enum": [
+        "text",
+        "numeric",
+        "tabular",
+        "geometry",
+        "image",
+        "signal",
+        "document",
+        "structured",
+        "code"
+      ],
+      "title": "RepresentationKind",
+      "description": "Neutral representation/modality kind: text, numeric, tabular, geometry, image, signal, document, structured, code."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:role-interface-entry:1.0.0"
+}

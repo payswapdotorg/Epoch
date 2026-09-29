@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EvidenceSignal",
+  "$defs": {
+    "EvidenceSignal": {
+      "readOnly": true,
+      "title": "EvidenceSignal",
+      "description": "Evidence signal: a content-addressed observation about the problem (digest + kind + subjects).",
+      "type": "object",
+      "properties": {
+        "evidenceDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "failure",
+            "verification-gap",
+            "unknown",
+            "measurement",
+            "observation",
+            "outcome"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "subjectRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        }
+      },
+      "required": [
+        "evidenceDigest",
+        "kind",
+        "summary",
+        "subjectRefs"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoverySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "DiscoverySha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:evidence-signal:1.0.0"
+}

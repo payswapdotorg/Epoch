@@ -1,0 +1,365 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityDemandSet",
+  "$defs": {
+    "CapabilityDemandSet": {
+      "readOnly": true,
+      "title": "CapabilityDemandSet",
+      "description": "The sealed, canonically-ordered demand set of one run (content-addressed set digest).",
+      "type": "object",
+      "properties": {
+        "demands": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityDemand"
+          }
+        },
+        "setDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        }
+      },
+      "required": [
+        "demands",
+        "setDigest"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityDemand": {
+      "readOnly": true,
+      "title": "CapabilityDemand",
+      "description": "Provider-neutral capability demand: operation, outcome, I/O representations, quality target, uncertainty, evidence, tools, environment, budgets, authority constraints, dependencies, stage, affected identities, derivation provenance.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/CapabilityDiscoveryRecordVersion"
+        },
+        "demandId": {
+          "$ref": "#/$defs/CapabilityDemandId"
+        },
+        "operation": {
+          "$ref": "#/$defs/OperationRef"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "requiredOutcome": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "inputRepresentations": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RepresentationKind"
+          }
+        },
+        "outputContract": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OutputContractEntry"
+          }
+        },
+        "qualityTarget": {
+          "$ref": "#/$defs/QualityTarget"
+        },
+        "units": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "acceptableUncertaintyConfidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidenceRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "verificationRequired": {
+          "type": "boolean"
+        },
+        "toolRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "environmentRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "latencyBudgetMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "costBudget": {
+          "$ref": "#/$defs/MoneyAmount"
+        },
+        "authorityConstraints": {
+          "$ref": "#/$defs/DemandAuthorityConstraints"
+        },
+        "dependsOnOperations": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OperationRef"
+          }
+        },
+        "lifecycleStage": {
+          "$ref": "#/$defs/UniversalLifecycleStage"
+        },
+        "domainRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "affectedRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "derivedFromSignals": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "derivedFromTemplates": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "demandId",
+        "operation",
+        "summary",
+        "requiredOutcome",
+        "inputRepresentations",
+        "outputContract",
+        "evidenceRequirements",
+        "verificationRequired",
+        "toolRequirements",
+        "environmentRequirements",
+        "authorityConstraints",
+        "dependsOnOperations",
+        "lifecycleStage",
+        "domainRefs",
+        "affectedRefs",
+        "derivedFromSignals",
+        "derivedFromTemplates"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityDiscoveryRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "CapabilityDiscoveryRecordVersion",
+      "description": "Version discriminator carried by every serialized discovery record (currently 1)."
+    },
+    "CapabilityDemandId": {
+      "type": "string",
+      "pattern": "^demand:[0-9a-f]{16}$",
+      "title": "CapabilityDemandId",
+      "description": "Content-addressed capability demand id: \"demand:\" + 16 hex characters."
+    },
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    },
+    "RepresentationKind": {
+      "type": "string",
+      "enum": [
+        "text",
+        "numeric",
+        "tabular",
+        "geometry",
+        "image",
+        "signal",
+        "document",
+        "structured",
+        "code"
+      ],
+      "title": "RepresentationKind",
+      "description": "Neutral representation/modality kind: text, numeric, tabular, geometry, image, signal, document, structured, code."
+    },
+    "OutputContractEntry": {
+      "readOnly": true,
+      "title": "OutputContractEntry",
+      "description": "One entry of a demand output contract: name + representation kind.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/RepresentationKind"
+        }
+      },
+      "required": [
+        "name",
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "QualityTarget": {
+      "readOnly": true,
+      "title": "QualityTarget",
+      "description": "Quality/fidelity target: metric, threshold, unit, and direction (min/max).",
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "threshold": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "min",
+            "max"
+          ]
+        }
+      },
+      "required": [
+        "metric",
+        "threshold",
+        "unit",
+        "direction"
+      ],
+      "additionalProperties": false
+    },
+    "MoneyAmount": {
+      "readOnly": true,
+      "title": "MoneyAmount",
+      "description": "Cost budget/estimate: ISO 4217 currency code + non-negative decimal amount string.",
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        }
+      },
+      "required": [
+        "currency",
+        "amount"
+      ],
+      "additionalProperties": false
+    },
+    "DemandAuthorityConstraints": {
+      "readOnly": true,
+      "title": "DemandAuthorityConstraints",
+      "description": "Authority constraints on a demand: executionAuthority admits exactly \"none\" (structurally inexpressible); optional human-cosign requirement.",
+      "type": "object",
+      "properties": {
+        "executionAuthority": {
+          "type": "string",
+          "const": "none"
+        },
+        "requiresHumanCosign": {
+          "type": "boolean"
+        },
+        "notes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        }
+      },
+      "required": [
+        "executionAuthority",
+        "requiresHumanCosign",
+        "notes"
+      ],
+      "additionalProperties": false
+    },
+    "UniversalLifecycleStage": {
+      "type": "string",
+      "enum": [
+        "understand",
+        "decide",
+        "plan",
+        "acquire",
+        "realize",
+        "observe",
+        "actualize",
+        "verify",
+        "forecast",
+        "close",
+        "learn"
+      ],
+      "title": "UniversalLifecycleStage",
+      "description": "The eleven universal lifecycle stages (USL1.0, mirrored closed union)."
+    },
+    "DiscoverySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "DiscoverySha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:capability-demand-set:1.0.0"
+}

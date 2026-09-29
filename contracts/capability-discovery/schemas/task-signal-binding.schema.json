@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TaskSignalBinding",
+  "$defs": {
+    "TaskSignalBinding": {
+      "readOnly": true,
+      "title": "TaskSignalBinding",
+      "description": "Domain-pack binding: this signal kind (+ optional domain) implies this demand template.",
+      "type": "object",
+      "properties": {
+        "bindingId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "signalKind": {
+          "$ref": "#/$defs/TaskSignalKind"
+        },
+        "domainRef": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "impliesDemandTemplate": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        }
+      },
+      "required": [
+        "bindingId",
+        "signalKind",
+        "impliesDemandTemplate"
+      ],
+      "additionalProperties": false
+    },
+    "TaskSignalKind": {
+      "type": "string",
+      "enum": [
+        "operation",
+        "decision",
+        "verification",
+        "artifact",
+        "quality",
+        "unknown",
+        "failure",
+        "work",
+        "budget",
+        "environment",
+        "authority",
+        "dependency",
+        "outcome"
+      ],
+      "title": "TaskSignalKind",
+      "description": "Universal task/problem signal kind: operation, decision, verification, artifact, quality, unknown, failure, work, budget, environment, authority, dependency, outcome."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:task-signal-binding:1.0.0"
+}

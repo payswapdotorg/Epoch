@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CandidateEvaluationState",
+  "$defs": {
+    "CandidateEvaluationState": {
+      "type": "string",
+      "enum": [
+        "discovered",
+        "ingested",
+        "sandboxed",
+        "profiled",
+        "evaluated",
+        "verified",
+        "deprecated",
+        "retired"
+      ],
+      "title": "CandidateEvaluationState",
+      "description": "Candidate evaluation lifecycle (CC1.0): discovered, ingested, sandboxed, profiled, evaluated, verified, deprecated, retired."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:candidate-evaluation-state:1.0.0"
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OrganizationSelection",
+  "$defs": {
+    "OrganizationSelection": {
+      "readOnly": true,
+      "title": "OrganizationSelection",
+      "description": "The selection (or staging) outcome over evaluated organizations.",
+      "type": "object",
+      "properties": {
+        "selectedOrganizationId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OrganizationId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stagedOrganizationIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OrganizationId"
+          }
+        },
+        "rejected": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "readOnly": true,
+            "type": "object",
+            "properties": {
+              "organizationId": {
+                "$ref": "#/$defs/OrganizationId"
+              },
+              "reasons": {
+                "readOnly": true,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                }
+              }
+            },
+            "required": [
+              "organizationId",
+              "reasons"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "selectedOrganizationId",
+        "stagedOrganizationIds",
+        "rejected",
+        "rationale"
+      ],
+      "additionalProperties": false
+    },
+    "OrganizationId": {
+      "type": "string",
+      "pattern": "^org:[0-9a-f]{16}$",
+      "title": "OrganizationId",
+      "description": "Content-addressed organization proposal id: \"org:\" + 16 hex characters."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:organization-selection:1.0.0"
+}

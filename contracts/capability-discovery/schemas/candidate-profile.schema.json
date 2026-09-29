@@ -1,0 +1,382 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CandidateProfile",
+  "$defs": {
+    "CandidateProfile": {
+      "readOnly": true,
+      "title": "CandidateProfile",
+      "description": "Provider-neutral candidate profile: claimed capabilities + provenance only (never a name-to-role mapping); external candidates are non-consequential until the promotion gates pass.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/CapabilityDiscoveryRecordVersion"
+        },
+        "candidateId": {
+          "$ref": "#/$defs/CandidateId"
+        },
+        "kind": {
+          "$ref": "#/$defs/CandidateKind"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "claimedCapabilities": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ClaimedCapability"
+          }
+        },
+        "runtimeRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "environmentRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "latency": {
+          "$ref": "#/$defs/LatencyClaim"
+        },
+        "cost": {
+          "$ref": "#/$defs/CostClaim"
+        },
+        "provenance": {
+          "$ref": "#/$defs/CandidateProvenance"
+        },
+        "evaluationState": {
+          "$ref": "#/$defs/CandidateEvaluationState"
+        },
+        "security": {
+          "$ref": "#/$defs/CandidateSecurity"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "candidateId",
+        "kind",
+        "displayName",
+        "summary",
+        "claimedCapabilities",
+        "runtimeRequirements",
+        "environmentRequirements",
+        "provenance",
+        "evaluationState",
+        "security"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityDiscoveryRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "CapabilityDiscoveryRecordVersion",
+      "description": "Version discriminator carried by every serialized discovery record (currently 1)."
+    },
+    "CandidateId": {
+      "type": "string",
+      "pattern": "^cand:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "CandidateId",
+      "description": "Candidate id: \"cand:\" + lowercase slug."
+    },
+    "CandidateKind": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "human",
+        "capability",
+        "external"
+      ],
+      "title": "CandidateKind",
+      "description": "Candidate nature: agent, human, capability, or external."
+    },
+    "ClaimedCapability": {
+      "readOnly": true,
+      "title": "ClaimedCapability",
+      "description": "A candidate's claim to one operation, with neutral input/output representation kinds and quality claim basis.",
+      "type": "object",
+      "properties": {
+        "operation": {
+          "$ref": "#/$defs/OperationRef"
+        },
+        "inputKinds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RepresentationKind"
+          }
+        },
+        "outputKinds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RepresentationKind"
+          }
+        },
+        "quality": {
+          "$ref": "#/$defs/QualityTarget"
+        },
+        "claimBasis": {
+          "$ref": "#/$defs/ClaimBasis"
+        }
+      },
+      "required": [
+        "operation",
+        "inputKinds",
+        "outputKinds",
+        "claimBasis"
+      ],
+      "additionalProperties": false
+    },
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    },
+    "RepresentationKind": {
+      "type": "string",
+      "enum": [
+        "text",
+        "numeric",
+        "tabular",
+        "geometry",
+        "image",
+        "signal",
+        "document",
+        "structured",
+        "code"
+      ],
+      "title": "RepresentationKind",
+      "description": "Neutral representation/modality kind: text, numeric, tabular, geometry, image, signal, document, structured, code."
+    },
+    "QualityTarget": {
+      "readOnly": true,
+      "title": "QualityTarget",
+      "description": "Quality/fidelity target: metric, threshold, unit, and direction (min/max).",
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "threshold": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "min",
+            "max"
+          ]
+        }
+      },
+      "required": [
+        "metric",
+        "threshold",
+        "unit",
+        "direction"
+      ],
+      "additionalProperties": false
+    },
+    "ClaimBasis": {
+      "type": "string",
+      "enum": [
+        "measured",
+        "declared"
+      ],
+      "title": "ClaimBasis",
+      "description": "Basis of a capability claim: measured or declared."
+    },
+    "LatencyClaim": {
+      "readOnly": true,
+      "title": "LatencyClaim",
+      "description": "Declared latency characteristics in whole milliseconds (p95 >= p50).",
+      "type": "object",
+      "properties": {
+        "p50Milliseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "p95Milliseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "p50Milliseconds",
+        "p95Milliseconds"
+      ],
+      "additionalProperties": false
+    },
+    "CostClaim": {
+      "readOnly": true,
+      "title": "CostClaim",
+      "description": "Declared cost characteristics: ISO 4217 currency, decimal amount, neutral basis.",
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "basis": {
+          "type": "string",
+          "enum": [
+            "per-task",
+            "per-hour",
+            "per-run",
+            "none"
+          ]
+        }
+      },
+      "required": [
+        "currency",
+        "amount",
+        "basis"
+      ],
+      "additionalProperties": false
+    },
+    "CandidateProvenance": {
+      "readOnly": true,
+      "title": "CandidateProvenance",
+      "description": "Where a candidate comes from (source class + content digest; provider identity stays adapter metadata).",
+      "type": "object",
+      "properties": {
+        "sourceKind": {
+          "type": "string",
+          "enum": [
+            "agent-protocol",
+            "capability-registry",
+            "human-declaration",
+            "external-source"
+          ]
+        },
+        "sourceRef": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        },
+        "external": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "adapterId": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+            },
+            "artifactId": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+            }
+          },
+          "required": [
+            "adapterId",
+            "artifactId"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "sourceKind",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoverySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "DiscoverySha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "CandidateEvaluationState": {
+      "type": "string",
+      "enum": [
+        "discovered",
+        "ingested",
+        "sandboxed",
+        "profiled",
+        "evaluated",
+        "verified",
+        "deprecated",
+        "retired"
+      ],
+      "title": "CandidateEvaluationState",
+      "description": "Candidate evaluation lifecycle (CC1.0): discovered, ingested, sandboxed, profiled, evaluated, verified, deprecated, retired."
+    },
+    "CandidateSecurity": {
+      "readOnly": true,
+      "title": "CandidateSecurity",
+      "description": "Security posture at the ingestion boundary: sandbox requirement, trust domain, notes.",
+      "type": "object",
+      "properties": {
+        "sandboxRequired": {
+          "type": "boolean"
+        },
+        "trustDomain": {
+          "type": "string",
+          "enum": [
+            "external",
+            "epoch-verified"
+          ]
+        },
+        "notes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        }
+      },
+      "required": [
+        "sandboxRequired",
+        "trustDomain",
+        "notes"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:candidate-profile:1.0.0"
+}

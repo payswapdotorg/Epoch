@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CandidateEvaluationEvidence",
+  "$defs": {
+    "CandidateEvaluationEvidence": {
+      "readOnly": true,
+      "title": "CandidateEvaluationEvidence",
+      "description": "Evaluation evidence required by the evaluated promotion step (content-addressed).",
+      "type": "object",
+      "properties": {
+        "operation": {
+          "$ref": "#/$defs/OperationRef"
+        },
+        "metric": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "passed": {
+          "type": "boolean"
+        },
+        "evidenceDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        }
+      },
+      "required": [
+        "operation",
+        "metric",
+        "value",
+        "unit",
+        "passed",
+        "evidenceDigest"
+      ],
+      "additionalProperties": false
+    },
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoverySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "DiscoverySha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:candidate-evaluation-evidence:1.0.0"
+}

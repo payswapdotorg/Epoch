@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CandidateSecurity",
+  "$defs": {
+    "CandidateSecurity": {
+      "readOnly": true,
+      "title": "CandidateSecurity",
+      "description": "Security posture at the ingestion boundary: sandbox requirement, trust domain, notes.",
+      "type": "object",
+      "properties": {
+        "sandboxRequired": {
+          "type": "boolean"
+        },
+        "trustDomain": {
+          "type": "string",
+          "enum": [
+            "external",
+            "epoch-verified"
+          ]
+        },
+        "notes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        }
+      },
+      "required": [
+        "sandboxRequired",
+        "trustDomain",
+        "notes"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:candidate-security:1.0.0"
+}

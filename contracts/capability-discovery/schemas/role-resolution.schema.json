@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RoleResolution",
+  "$defs": {
+    "RoleResolution": {
+      "readOnly": true,
+      "title": "RoleResolution",
+      "description": "The resolution of one role proposal against the candidate pool (assignments + unmet demands + opened gaps).",
+      "type": "object",
+      "properties": {
+        "roleProposalId": {
+          "$ref": "#/$defs/RoleProposalId"
+        },
+        "assignments": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CandidateAssignment"
+          }
+        },
+        "unmetDemandIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityDemandId"
+          }
+        },
+        "gapIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityGapId"
+          }
+        }
+      },
+      "required": [
+        "roleProposalId",
+        "assignments",
+        "unmetDemandIds",
+        "gapIds"
+      ],
+      "additionalProperties": false
+    },
+    "RoleProposalId": {
+      "type": "string",
+      "pattern": "^drole:[0-9a-f]{16}$",
+      "title": "RoleProposalId",
+      "description": "Content-addressed role proposal id: \"drole:\" + 16 hex characters."
+    },
+    "CandidateAssignment": {
+      "readOnly": true,
+      "title": "CandidateAssignment",
+      "description": "One candidate bound to one role across matched/claimed/incompatible demands with a deterministic score.",
+      "type": "object",
+      "properties": {
+        "candidateId": {
+          "$ref": "#/$defs/CandidateId"
+        },
+        "matchedDemandIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityDemandId"
+          }
+        },
+        "claimedDemandIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityDemandId"
+          }
+        },
+        "incompatibleDemandIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityDemandId"
+          }
+        },
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "candidateId",
+        "matchedDemandIds",
+        "claimedDemandIds",
+        "incompatibleDemandIds",
+        "score"
+      ],
+      "additionalProperties": false
+    },
+    "CandidateId": {
+      "type": "string",
+      "pattern": "^cand:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "CandidateId",
+      "description": "Candidate id: \"cand:\" + lowercase slug."
+    },
+    "CapabilityDemandId": {
+      "type": "string",
+      "pattern": "^demand:[0-9a-f]{16}$",
+      "title": "CapabilityDemandId",
+      "description": "Content-addressed capability demand id: \"demand:\" + 16 hex characters."
+    },
+    "CapabilityGapId": {
+      "type": "string",
+      "pattern": "^gap:[0-9a-f]{16}$",
+      "title": "CapabilityGapId",
+      "description": "Content-addressed capability gap id: \"gap:\" + 16 hex characters."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:role-resolution:1.0.0"
+}

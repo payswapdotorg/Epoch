@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PolicyApproval",
+  "$defs": {
+    "PolicyApproval": {
+      "readOnly": true,
+      "title": "PolicyApproval",
+      "description": "The human policy approval required by the verified promotion step (security stays OUTSIDE model prompts).",
+      "type": "object",
+      "properties": {
+        "approvedBy": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "policyRef": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "approvedBy",
+        "policyRef"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:policy-approval:1.0.0"
+}

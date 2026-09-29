@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/HandoffEdge",
+  "$defs": {
+    "HandoffEdge": {
+      "readOnly": true,
+      "title": "HandoffEdge",
+      "description": "A handoff edge between two roles (one output feeding one input of a shared representation kind).",
+      "type": "object",
+      "properties": {
+        "fromRoleProposalId": {
+          "$ref": "#/$defs/RoleProposalId"
+        },
+        "toRoleProposalId": {
+          "$ref": "#/$defs/RoleProposalId"
+        },
+        "outputName": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "inputName": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/RepresentationKind"
+        }
+      },
+      "required": [
+        "fromRoleProposalId",
+        "toRoleProposalId",
+        "outputName",
+        "inputName",
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "RoleProposalId": {
+      "type": "string",
+      "pattern": "^drole:[0-9a-f]{16}$",
+      "title": "RoleProposalId",
+      "description": "Content-addressed role proposal id: \"drole:\" + 16 hex characters."
+    },
+    "RepresentationKind": {
+      "type": "string",
+      "enum": [
+        "text",
+        "numeric",
+        "tabular",
+        "geometry",
+        "image",
+        "signal",
+        "document",
+        "structured",
+        "code"
+      ],
+      "title": "RepresentationKind",
+      "description": "Neutral representation/modality kind: text, numeric, tabular, geometry, image, signal, document, structured, code."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:handoff-edge:1.0.0"
+}

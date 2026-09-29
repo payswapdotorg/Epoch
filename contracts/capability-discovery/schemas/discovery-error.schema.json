@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "readOnly": true,
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "validation"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "issues": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DiscoveryIssue"
+          }
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "issues"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "readOnly": true,
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "unknown-run",
+            "unknown-gap",
+            "unknown-candidate",
+            "unknown-template",
+            "unknown-schedule",
+            "duplicate-run",
+            "duplicate-candidate",
+            "duplicate-schedule",
+            "gap-transition-conflict",
+            "candidate-state-conflict",
+            "promotion-gate-rejected",
+            "template-override-rejected",
+            "organization-composition-rejected",
+            "cross-tenant-denied",
+            "authorization-rejected"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "readOnly": true,
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "const": "lineage-mismatch"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "brokenStages": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DiscoveryStageName"
+          }
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "brokenStages"
+      ],
+      "additionalProperties": false
+    }
+  ],
+  "$defs": {
+    "DiscoveryIssue": {
+      "readOnly": true,
+      "title": "DiscoveryIssue",
+      "description": "One flattened validation issue (dotted path + message).",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoveryStageName": {
+      "type": "string",
+      "enum": [
+        "inputs",
+        "demands",
+        "roles",
+        "resolution",
+        "organizations",
+        "evaluation",
+        "selection",
+        "candidates",
+        "gap-updates",
+        "promotions"
+      ],
+      "title": "DiscoveryStageName",
+      "description": "Lineage stage name: inputs, demands, roles, resolution, organizations, evaluation, selection, candidates, gap-updates, promotions."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:discovery-error:1.0.0"
+}

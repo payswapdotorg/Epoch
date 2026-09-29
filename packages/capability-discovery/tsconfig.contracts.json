@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/capability-discovery": ["./src/index.ts"]
+    }
+  },
+  "include": [
+    "../../contracts/capability-discovery/index.d.ts",
+    "../../contracts/capability-discovery/parity.ts"
+  ]
+}

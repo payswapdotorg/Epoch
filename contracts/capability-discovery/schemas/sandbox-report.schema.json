@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SandboxReport",
+  "$defs": {
+    "SandboxReport": {
+      "readOnly": true,
+      "title": "SandboxReport",
+      "description": "The sandbox report required by the sandboxed promotion step.",
+      "type": "object",
+      "properties": {
+        "passed": {
+          "type": "boolean"
+        },
+        "isolationLevel": {
+          "type": "string",
+          "enum": [
+            "none",
+            "process",
+            "vm",
+            "network-isolated"
+          ]
+        },
+        "findings": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        }
+      },
+      "required": [
+        "passed",
+        "isolationLevel",
+        "findings"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:sandbox-report:1.0.0"
+}

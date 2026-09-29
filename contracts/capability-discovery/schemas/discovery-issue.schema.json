@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DiscoveryIssue",
+  "$defs": {
+    "DiscoveryIssue": {
+      "readOnly": true,
+      "title": "DiscoveryIssue",
+      "description": "One flattened validation issue (dotted path + message).",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:discovery-issue:1.0.0"
+}

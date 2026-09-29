@@ -1,0 +1,31 @@
+{
+  "name": "@epoch/capability-discovery",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Capability Discovery kernel (W045, ACR-004) — the universal Role & Capability Discovery Plane: a provider-neutral task-signal -> capability-demand compiler, universal role-proposal synthesis (no predefined role/model pairs; domain-pack templates are priors, never a second compiler authority), candidate resolution over agent registrations / human declarations / capability-registry records / external candidate profiles, capability-gap lifecycle (UNSATISFIED -> CANDIDATE_FOUND -> EVALUATED -> VERIFIED/DEGRADED/REQUIRES_HUMAN), candidate-organization composition and declared-criteria evaluation, content-addressed reproducible discovery-run lineage (digest chains inputs -> demands -> roles -> resolution -> organizations -> evaluation -> selection, with a tamper-detecting verify function), the deployment-neutral ecosystem-discovery scheduler contract with an in-memory reference driver, a provider-neutral source-adapter interface with a static-catalog fixture adapter, the safe ingestion/sandbox/profile/evaluation/promotion boundary for external candidates (discovery never grants execution authority, never mutates authoritative state), and the ecosystem proposal mechanism for adapters/extensions/new domain packs. Deterministic: zero wall-clock, zero randomness — instants are caller-supplied. NO persistence, NO network, NO provider vocabulary.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

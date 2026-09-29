@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CandidateKind",
+  "$defs": {
+    "CandidateKind": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "human",
+        "capability",
+        "external"
+      ],
+      "title": "CandidateKind",
+      "description": "Candidate nature: agent, human, capability, or external."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:candidate-kind:1.0.0"
+}

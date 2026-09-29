@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CriterionResult",
+  "$defs": {
+    "CriterionResult": {
+      "readOnly": true,
+      "title": "CriterionResult",
+      "description": "The computed value of one criterion for one organization (null value when undeclared).",
+      "type": "object",
+      "properties": {
+        "criterionId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "metric": {
+          "$ref": "#/$defs/EvaluationMetric"
+        },
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "thresholdMet": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "criterionId",
+        "metric",
+        "value",
+        "thresholdMet"
+      ],
+      "additionalProperties": false
+    },
+    "EvaluationMetric": {
+      "type": "string",
+      "enum": [
+        "demand-coverage",
+        "unmet-demand-count",
+        "evidence-coverage",
+        "redundancy-coverage",
+        "estimated-latency",
+        "estimated-cost",
+        "gap-count",
+        "critical-single-point-count"
+      ],
+      "title": "EvaluationMetric",
+      "description": "Deterministic organization-evaluation metric: demand-coverage, unmet-demand-count, evidence-coverage, redundancy-coverage, estimated-latency, estimated-cost, gap-count, critical-single-point-count."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:criterion-result:1.0.0"
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RoleProvenance",
+  "$defs": {
+    "RoleProvenance": {
+      "readOnly": true,
+      "title": "RoleProvenance",
+      "description": "Provenance of a synthesized role: member demands, consulted/overridden pack templates, compiler version.",
+      "type": "object",
+      "properties": {
+        "derivedFromDemands": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityDemandId"
+          }
+        },
+        "consultedTemplates": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "overriddenTemplates": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "compilerVersion": {
+          "$ref": "#/$defs/DiscoveryCompilerVersion"
+        }
+      },
+      "required": [
+        "derivedFromDemands",
+        "consultedTemplates",
+        "overriddenTemplates",
+        "compilerVersion"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityDemandId": {
+      "type": "string",
+      "pattern": "^demand:[0-9a-f]{16}$",
+      "title": "CapabilityDemandId",
+      "description": "Content-addressed capability demand id: \"demand:\" + 16 hex characters."
+    },
+    "DiscoveryCompilerVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "DiscoveryCompilerVersion",
+      "description": "Version of the universal demand compiler + role synthesizer."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:role-provenance:1.0.0"
+}

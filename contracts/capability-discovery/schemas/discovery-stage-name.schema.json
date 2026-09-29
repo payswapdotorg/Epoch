@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DiscoveryStageName",
+  "$defs": {
+    "DiscoveryStageName": {
+      "type": "string",
+      "enum": [
+        "inputs",
+        "demands",
+        "roles",
+        "resolution",
+        "organizations",
+        "evaluation",
+        "selection",
+        "candidates",
+        "gap-updates",
+        "promotions"
+      ],
+      "title": "DiscoveryStageName",
+      "description": "Lineage stage name: inputs, demands, roles, resolution, organizations, evaluation, selection, candidates, gap-updates, promotions."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:discovery-stage-name:1.0.0"
+}

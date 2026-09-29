@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TaskDescription",
+  "$defs": {
+    "TaskDescription": {
+      "readOnly": true,
+      "title": "TaskDescription",
+      "description": "The task heading a discovery input: summary, universal lifecycle stage, domain refs, objectives.",
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "lifecycleStage": {
+          "$ref": "#/$defs/UniversalLifecycleStage"
+        },
+        "domainRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "objectives": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        }
+      },
+      "required": [
+        "summary",
+        "lifecycleStage",
+        "domainRefs",
+        "objectives"
+      ],
+      "additionalProperties": false
+    },
+    "UniversalLifecycleStage": {
+      "type": "string",
+      "enum": [
+        "understand",
+        "decide",
+        "plan",
+        "acquire",
+        "realize",
+        "observe",
+        "actualize",
+        "verify",
+        "forecast",
+        "close",
+        "learn"
+      ],
+      "title": "UniversalLifecycleStage",
+      "description": "The eleven universal lifecycle stages (USL1.0, mirrored closed union)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:task-description:1.0.0"
+}

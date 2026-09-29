@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ClaimBasis",
+  "$defs": {
+    "ClaimBasis": {
+      "type": "string",
+      "enum": [
+        "measured",
+        "declared"
+      ],
+      "title": "ClaimBasis",
+      "description": "Basis of a capability claim: measured or declared."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:claim-basis:1.0.0"
+}

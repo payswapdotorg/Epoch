@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityDiscoveryContractVersion",
+  "$defs": {
+    "CapabilityDiscoveryContractVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "CapabilityDiscoveryContractVersion",
+      "description": "Version of the published capability-discovery contract surface."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:capability-discovery-contract-version:1.0.0"
+}

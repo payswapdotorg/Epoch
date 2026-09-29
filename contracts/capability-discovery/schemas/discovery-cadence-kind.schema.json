@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DiscoveryCadenceKind",
+  "$defs": {
+    "DiscoveryCadenceKind": {
+      "type": "string",
+      "enum": [
+        "weekly",
+        "interval",
+        "event"
+      ],
+      "title": "DiscoveryCadenceKind",
+      "description": "Scheduler cadence kind: weekly, interval, or event."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:discovery-cadence-kind:1.0.0"
+}

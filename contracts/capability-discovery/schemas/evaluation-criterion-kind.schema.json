@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EvaluationCriterionKind",
+  "$defs": {
+    "EvaluationCriterionKind": {
+      "type": "string",
+      "enum": [
+        "hard-constraint",
+        "objective",
+        "evidence-coverage"
+      ],
+      "title": "EvaluationCriterionKind",
+      "description": "Declared evaluation criterion kind: hard-constraint, objective, or evidence-coverage."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:evaluation-criterion-kind:1.0.0"
+}

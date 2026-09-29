@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CandidateProvenance",
+  "$defs": {
+    "CandidateProvenance": {
+      "readOnly": true,
+      "title": "CandidateProvenance",
+      "description": "Where a candidate comes from (source class + content digest; provider identity stays adapter metadata).",
+      "type": "object",
+      "properties": {
+        "sourceKind": {
+          "type": "string",
+          "enum": [
+            "agent-protocol",
+            "capability-registry",
+            "human-declaration",
+            "external-source"
+          ]
+        },
+        "sourceRef": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        },
+        "external": {
+          "readOnly": true,
+          "type": "object",
+          "properties": {
+            "adapterId": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+            },
+            "artifactId": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+            }
+          },
+          "required": [
+            "adapterId",
+            "artifactId"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "sourceKind",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoverySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "DiscoverySha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:candidate-provenance:1.0.0"
+}
