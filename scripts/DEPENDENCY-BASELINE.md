@@ -22,6 +22,9 @@ Declared in `pnpm-workspace.yaml` under `catalog:` — exact pins, no ranges:
 | `react` / `react-dom`  | 19.3.0        | `apps/web`                           |
 | `@types/react` / `@types/react-dom` | 19.3.0 | `apps/web`                |
 | `@types/node`          | 22.20.4       | node-targeting packages (CI runs Node 22) |
+| `pg`                   | 8.23.0        | `services/application-gateway` PostgreSQL binding (W046; service layer only — kernel packages stay stdlib+zod) |
+| `@types/pg`            | 8.23.1        | dev/types for `pg` consumers (W046) |
+| `@electric-sql/pglite` | 0.5.8         | TEST-ONLY (W046): embedded real-PostgreSQL (wasm) for deterministic adapter tests without a server; never a runtime dep |
 
 Package manager: `pnpm@10.34.5` (pinned exactly in root `package.json`
 `packageManager`; CI activates it via `corepack enable pnpm`). CI runs on
