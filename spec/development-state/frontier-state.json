@@ -1,7 +1,5 @@
 {
- "eligible": [
-  "W045"
- ],
+ "eligible": [],
  "inFlight": [],
  "blocked": [],
  "maxConcurrentWorkers": 3

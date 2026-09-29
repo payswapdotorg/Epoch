@@ -4,9 +4,7 @@
   "workOrderVersion": "WO1.0",
   "defaultBranch": "main",
   "maxConcurrentWorkers": 3,
-  "active": [
-    "W045"
-  ],
+  "active": [],
   "completed": [
     "W001",
     "W002",
@@ -51,9 +49,10 @@
     "W041",
     "W042",
     "W043",
-    "W044"
+    "W044",
+    "W045"
   ],
   "blocked": [],
-  "lastMergeSha": "8569b09a1a3b54fc9d72a2f2d3f089d4757c0c86",
-  "lastAction": "PR #76 merged (squash 8569b09a): ACR-004 ratified + W045 defined + architecture lock transition recorded (ACR-001/002/003 delivered+effective, ACR-004 effective). W045 AUTHORIZED for dispatch at base 8569b09a."
+  "lastMergeSha": "4332228c422c7677f2eeff2476629f753154faec",
+  "lastAction": "W045 COMPLETE (PR #95 squash 4332228c; reviewed head 8e357361; battery reproduced exactly; 7-gate all green) + lockfile reconcile PR #96 (1ddb200d). 45/45 \u2014 W001-W044 delivery program + ACR-004/W045. ROADMAP COMPLETE; frontier drained."
 }

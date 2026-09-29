@@ -1,8 +1,8 @@
 {
-  "baselineSha": "8569b09a1a3b54fc9d72a2f2d3f089d4757c0c86",
-  "status": "W045_AUTHORIZED",
-  "next": "W045 (Autonomous Role & Capability Discovery) AUTHORIZED at base 8569b09a. Dispatch next; on delivery run the 7-gate review, merge, then post-program closure (archive worker chats/sandboxes, final worklog closure).",
-  "verification": "PR #93 7-GATE ALL GREEN: G1 67/67 EXACT owned surfaces (services/developer-portal 53 + apps/web/src/features/developers 14, zero out-of-scope, all additions 9,448 insertions 0 deletions); G2 0 secrets (350,622-char diff, 10 patterns); G3 install clean, Lead lockfile reconcile +43 importer lines (5e9f1be); G4 governance+boundary PASS on merge preview (after Lead consistency fix: inFlight subset of active); G5 battery 220/220 turbo tasks / exit=0 (--concurrency=1 --force) on branch+main merge tree; G6 CI fresh-run SUCCESS on current merge ref (run 36504497450; original failure root-caused to stale pinned merge ref carrying the pre-fix c7d4fe8 governance state \u2014 resolved by close/reopen re-trigger); G7 report complete verbatim in PR body (12,978 chars, dispatch base ad8c00a verbatim, head dcdc79ed, END marker, evidence mapping, honest limitations, 0 ACRs; note: report's \"61 files\" services sub-count is an arithmetic slip \u2014 actual 53, total 67 exact).",
-  "lastMergeSha": "8569b09a1a3b54fc9d72a2f2d3f089d4757c0c86",
-  "lastAction": "PR #76 merged (ACR-004 + W045 + lock transition). Governance advance: W045 AUTHORIZED."
+  "baselineSha": "1ddb200d6d914e801ee240cd962acd5866a2d3c6",
+  "status": "ROADMAP_COMPLETE_45_45",
+  "next": "ROADMAP COMPLETE: all 45 work orders merged (W001-W044 + W045), all four ACRs effective, frontier drained. Post-program closure: archive worker chats/sandboxes, final worklog closure. New work requires a new ACR + Work Order program per the architecture lock.",
+  "verification": "PR #95 7-GATE ALL GREEN: G1 158/158 owned (contracts 97 + packages 45 + services 13 + docs 3, +25852 -0); G2 0 secrets (945,952-char diff); G3 clean install (new-package protocol; reconcile PR #96 +74 lockfile lines); G4 governance+boundary PASS; G5 battery serialized typecheck 77/77 + lint 74/74 + test 77/77 + build 3/3 \u2014 exact match with the worker report (kernel 191 tests/16 files, service 19/4); G6 CI 4/4 (push + pull_request); G7 report verified against the tree (runtime deps exactly per pin, provider blocklist real, digest-chain + verifyDiscoveryRun real, 0 merge conflicts).",
+  "lastMergeSha": "4332228c422c7677f2eeff2476629f753154faec",
+  "lastAction": "W045 merged (PR #95 squash -> 4332228c) + reconcile (PR #96 -> 1ddb200d). ROADMAP COMPLETE 45/45."
 }
