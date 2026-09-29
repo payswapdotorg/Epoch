@@ -13,6 +13,14 @@ Typed property/relationship graph with entities, relations, assertions, state, b
 ## Task-Sufficient Reconstruction
 Reconstruct only what can materially affect feasible solutions, predicted effects, or verification. Acquire missing information when uncertainty could change the decision.
 
+## Autonomous role and capability discovery
+
+Epoch contains a provider-neutral Role & Capability Discovery Plane above the Agent Protocol and Capability Registry. It derives task-specific capability demands from reconstructed world state, constraints, unresolved unknowns, failures, delivery/work state and verification requirements; synthesizes candidate roles; resolves agents, humans, skills, extensions and model substrates; constructs candidate organizations; and evaluates them before assignment.
+
+A role is a task specialization, not a professional qualification. A model or provider name never establishes role suitability; model selection follows measured capability compatibility and evaluation.
+
+Canonical contracts: spec/autonomous-role-capability-discovery.md and spec/capability-contribution-contract.md.
+
 ## Actions
 Typed interventions have target, parameters, preconditions, predicted effects, side effects, reversibility and authority requirements. Agents propose; the Action Gateway authorizes execution.
 
@@ -54,6 +62,17 @@ Examples include:
 - Assimp and format-specific adapters for asset ingestion.
 
 Provider-native files, scene graphs, repositories, solver state and workspaces are linked artifacts, not Epoch semantic authority. Forks require an approved Architecture Change Request and an explicit license, dependency, isolation, divergence and upstream/reconciliation plan.
+
+## Autonomous ecosystem discovery
+
+Epoch supports a deployment-neutral scheduled discovery workflow. The default policy is a weekly scan of authorized public/private source adapters plus problem-driven discovery from known capability gaps, weak evaluations and recurring failures.
+
+Workflow:
+Scheduler -> source adapters -> candidate ingestion -> sandbox/profile -> capability mapping -> evaluation -> registry proposal -> role/organization availability.
+
+External model/code artifacts remain untrusted until the applicable sandbox, profiling, security, evaluation and promotion gates pass. New domain packs are proposed from recurring task/capability clusters rather than silently activated.
+
+The scheduler is deployment-neutral; Temporal or another authorized scheduler may invoke the same contract. Hugging Face, GitHub, research indexes and engineering software catalogs are source adapters, not kernel dependencies.
 
 ## Experience Runtime
 Consumes world/task/agent/evidence/device/capability state and produces Experience Graphs for 2D, 3D, animation, narrative, timeline/replay, presence and controls. It is never semantic authority. The Solution Navigator presents synchronized Design, Program of Work, BOQ, Procurement, Execution, Verification, Forecast, Outcome and Learning projections.

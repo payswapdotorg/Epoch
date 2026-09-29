@@ -36,3 +36,12 @@ R33 tenant-controlled installation
 R34 private enterprise extensions
 
 Non-goals v1: universal CAD kernel, universal physics engine, universal LLM, proprietary rasterizer, vertical replacement of every incumbent, unrestricted public arbitrary code execution.
+
+R35 autonomous role/capability discovery from task, world, evidence and constraint signals
+R36 task-specific organization construction across human, AI, tool and specialist agents
+R37 model/substrate selection by measured capability compatibility rather than hard-coded role/provider pairing
+R38 external capability/model discovery with sandboxing, evaluation, provenance and promotion gates
+R39 scheduled ecosystem discovery plus problem-driven discovery from observed capability gaps
+R40 domain-pack role templates and capability-demand templates are reusable priors, not mandatory assignments
+R41 discovery can propose new adapters, extensions and domain packs without silently changing semantic authority
+R42 discovery history, candidate/rejection evidence and evaluation lineage are durable and reproducible

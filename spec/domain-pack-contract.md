@@ -24,7 +24,18 @@ A pack may specialize:
 - outcome schemas;
 - learning features.
 
-A pack must reference canonical universal object identities and lifecycle states.
+A pack must reference canonical universal object identities and lifecycle states. Role/capability templates are reusable priors; the universal Role & Capability Discovery Plane may compose, split or ignore them based on task evidence.
+
+## Role and capability demand profile
+
+A production pack should expose machine-readable reusable discovery knowledge where applicable:
+- `roleTemplates`;
+- `capabilityDemandTemplates`;
+- `taskSignals`;
+- `evaluationSuites`;
+- `requiredAuthority`.
+
+These declarations must remain provider-neutral. They do not force a role assignment; the universal discovery plane owns the task-specific organization decision.
 
 ## Pack profile
 

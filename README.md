@@ -19,12 +19,14 @@ The repository is authoritative; chat is not. Start with:
 12. spec/domain-pack-contract.md
 13. spec/solution-navigator-architecture.md
 14. spec/capability-foundation-policy.md
+15. spec/autonomous-role-capability-discovery.md
+16. spec/capability-contribution-contract.md
 
 ## Product architecture
 
-World Model + Agent System + Constraints + Actions + Simulation/Evaluation + Verification/Evidence + Solution Delivery + Outcome/Learning, wrapped by a shared Experience Runtime and Capability/Adapter Fabric.
+World Model + Agent System + Role/Capability Discovery + Constraints + Actions + Simulation/Evaluation + Verification/Evidence + Solution Delivery + Outcome/Learning, wrapped by a shared Experience Runtime and Capability/Adapter Fabric.
 
-Epoch is the semantic and lifecycle authority. Mature external engineering software is integrated as replaceable capability through provider-neutral adapters, sandboxed extensions, or optional client surfaces. The canonical rule is **integrate first, contribute upstream where useful, fork last**.
+Epoch is the semantic and lifecycle authority. Mature external engineering software and future models are integrated as replaceable capabilities through provider-neutral adapters, sandboxed extensions, or optional client surfaces. Epoch can derive task-specific roles and capability demands and search compatible agents/models rather than requiring hard-coded role/model pairings. The canonical rule is **integrate first, contribute upstream where useful, fork last**.
 
 ## Domain examples
 
@@ -42,6 +44,6 @@ Foundation-backed desktop tools may provide specialized authoring or analysis, b
 
 ## Development
 
-Current authorized Work Orders are W009 (Tenancy/Identity/Authorization) and W011 (Experience Protocol). They remain governed by E1.0/X1.0. W036-W044 are dependency-gated successor work and require the explicit ACR-001/ACR-002/ACR-003 lock transition after the current wave stabilizes.
+Current authorized Work Order is W029. W045 is defined but blocked pending the applicable architecture-lock transition. The live frontier is determined from repository state; do not rely on historical wave labels.
 
 One Work Order = one branch = one PR. Maximum three concurrent workers. The Tech Lead/Architect derives eligibility from the dependency graph and enforces pairwise-disjoint write surfaces.

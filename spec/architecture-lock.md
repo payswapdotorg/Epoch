@@ -17,7 +17,7 @@
 15. PostgreSQL is durable authoritative state for v1.
 16. One responsibility has one authority.
 
-## Approved but not-yet-effective architecture targets
+## Approved architecture targets and lock transition record
 
 ACR-001 was approved on 2026-09-24. It adds Solution Delivery, Program of Work, Resource Acquisition/Procurement, Realization/Execution, Actualization, Outcome Learning, Fine-Grained Access Projections, Supervision/Alerts and an optional provider-neutral External Event Bridge with an Aurum Chat reference adapter.
 
@@ -25,7 +25,12 @@ ACR-002 clarifies the same target as a universal engineering lifecycle and Solut
 
 ACR-003 was approved on 2026-09-24. It establishes the Capability Foundation Policy: mature open-source engineering products are replaceable capabilities behind the Capability/Adapter Fabric, not Epoch semantic authorities. Integrate before forking; any fork requires an Architecture Change Request plus explicit license/dependency, isolation, divergence and upstream/reconciliation planning.
 
-This architecture lock remains E1.0/X1.0 for the currently authorized W009/W011 wave. The ACR-001/ACR-002/ACR-003 targets become binding for new implementation only when the Tech Lead/Architect records the explicit lock transition and corresponding frontier update after the current wave is stabilized.
+### Lock transition — recorded 2026-09-29 (Tech Lead, with the ACR-004 review-rebase of PR #76)
+
+1. The ACR-001/ACR-002/ACR-003 targets are DELIVERED: their implementation program W036-W044 is complete on main (final merge W025, PR #93 squash cfaf5c42; program 44/44; all CI green). The E1.0/X1.0 numbered invariants above remain binding — the ACR targets extend them and introduce no second authority.
+2. The ACR-001/ACR-002/ACR-003 targets are EFFECTIVE for all new implementation from this transition forward. The historical gating text ("remains E1.0/X1.0 for the currently authorized W009/W011 wave") is superseded and retired.
+3. ACR-004 (approved 2026-09-27, ratified by this review) is EFFECTIVE at this same transition. Its implementation entry point is W045 (Autonomous Role & Capability Discovery), defined in spec/work-orders/W045-autonomous-role-capability-discovery.md with all dependencies complete. Frontier update: W045 ELIGIBLE.
+4. ACR-003's capability-foundation policy is binding capability policy from this transition (as required at the original approval).
 
 Forbidden without an Architecture Change Request:
 - second world database/ledger/lifecycle authority;
@@ -38,6 +43,8 @@ Forbidden without an Architecture Change Request:
 - promotion of a third-party editor/CAD/game/simulation/IDE project into Epoch's semantic authority;
 - source-level fork of a third-party foundation without the ACR-003 fork gate.
 
+ACR-004 was approved on 2026-09-27. It establishes the universal Role & Capability Discovery Plane and scheduled ecosystem discovery. It adds no lifecycle authority.
+
 An Architecture Change Request requires impact analysis, revised acceptance criteria, version/lock update, and frontier update before implementation.
 
 ## Universal-domain invariants
@@ -48,3 +55,11 @@ An Architecture Change Request requires impact analysis, revised acceptance crit
 - The Solution Navigator is a synchronized projection, not a new semantic store.
 - Third-party foundations remain capability providers behind declared boundaries.
 - Provider-native project files, scene graphs, repositories, solver state and editor timelines are not Epoch semantic authority.
+
+## Autonomous-discovery invariants
+
+- Task-specific roles are derived from evidence and capability demands, not model names.
+- Domain packs may provide reusable role/capability templates, but the universal discovery plane owns task-specific organization construction.
+- External discovery may enrich candidate capability knowledge but may not alter authoritative state merely from external claims.
+- Untrusted model/code artifacts remain outside the Epoch trust domain until applicable sandbox/security gates pass.
+- Discovery does not grant execution authority.
