@@ -1,98 +1,57 @@
 # Epoch Architecture E1.0 / Experience X1.0
 
 ## Core model
+
 Problem = (World, Agents, Constraints, Actions, Evaluators, Verification, Feedback)
 
 Runtime: Observe -> Reconstruct -> assess Decision Sufficiency -> Acquire Information -> Generate -> Constrain -> Simulate -> Evaluate -> Verify -> Approve -> Baseline -> Plan -> Acquire -> Realize -> Observe -> Actualize -> Verify -> Forecast -> Close -> Learn.
 
-Universal lifecycle: Understand -> Decide -> Plan -> Acquire -> Realize -> Observe/Actualize -> Verify -> Forecast -> Close -> Learn. Procurement is an Acquire projection; execution is a Realize projection.
+Universal lifecycle: Understand -> Decide -> Plan -> Acquire -> Realize -> Observe/Actualize -> Verify -> Forecast -> Close -> Learn.
 
 ## World Model
-Typed property/relationship graph with entities, relations, assertions, state, behavior, temporal history, actors, resources, evidence, uncertainty, models and events. Assertions retain source, timestamp, provenance, confidence and validity. External standards map into the model.
 
-## Task-Sufficient Reconstruction
-Reconstruct only what can materially affect feasible solutions, predicted effects, or verification. Acquire missing information when uncertainty could change the decision.
+Typed property/relationship graph with entities, relations, assertions, state, behavior, temporal history, actors, resources, evidence, uncertainty, models and events.
 
 ## Autonomous role and capability discovery
 
 Epoch contains a provider-neutral Role & Capability Discovery Plane above the Agent Protocol and Capability Registry. It derives task-specific capability demands from reconstructed world state, constraints, unresolved unknowns, failures, delivery/work state and verification requirements; synthesizes candidate roles; resolves agents, humans, skills, extensions and model substrates; constructs candidate organizations; and evaluates them before assignment.
 
-A role is a task specialization, not a professional qualification. A model or provider name never establishes role suitability; model selection follows measured capability compatibility and evaluation.
+A model/provider name never establishes role suitability.
 
-Canonical contracts: spec/autonomous-role-capability-discovery.md and spec/capability-contribution-contract.md.
+## Actions / Agents / Constraints
 
-## Actions
-Typed interventions have target, parameters, preconditions, predicted effects, side effects, reversibility and authority requirements. Agents propose; the Action Gateway authorizes execution.
-
-## Agents
-Registered agents declare capabilities, tools, authority, cost/latency and evidence requirements. Frameworks/models are implementation details behind the protocol.
-
-## Constraints
-ECL supports hard, soft, resource, safety/regulatory, epistemic/evidence and authority/governance constraints. Natural language may author constraints; deterministic compiled enforcement is preferred.
-
-## Simulation / Evaluation
-Simulation predicts; evaluation judges. Simulator contracts declare inputs, outputs, fidelity, validity domain, assumptions, reproducibility, cost and latency.
-
-## Verification / Evidence
-Requirement -> Claim -> Method -> Run -> Evidence -> Result -> Approval. Verification and validation are distinct. Evidence is exact-revision addressable.
+Agents propose. Action Gateway authorizes execution. Constraints are authoritative in the Constraint Engine. Simulation predicts; evaluation judges; verification/evidence proves.
 
 ## Solution Delivery
-An approved solution may instantiate a DeliveryRecord that follows acquisition, realization, verification, payment and outcome. The baseline remains immutable; live actuals, commitments and forecasts are separate records. The universal schedule is the Program of Work. Construction renders quantities/cost/work relationships as an interactive BOQ; other domains render equivalent solution schedules.
 
-The canonical universal lifecycle and domain adaptation rules are defined in spec/universal-solution-lifecycle.md, spec/domain-pack-contract.md, and spec/solution-navigator-architecture.md.
+An approved solution may instantiate DeliveryRecord following acquisition, realization, verification, payment and outcome. ProgramOfWork is the universal schedule dimension.
 
-Detailed contracts are defined by the approved ACR-001 target architecture. That target is not effective for new implementation until the architecture lock transition is recorded.
+## Domain Packs / Capability Fabric
 
-## Domain Packs
-Domain packs teach Epoch how a domain expresses the universal lifecycle. They may add terminology, measurements, calculations, simulations, verification methods and projections, but may not define a competing lifecycle, baseline ledger, delivery ledger or authority. See spec/domain-pack-contract.md.
-
-## Capability Fabric
-Registered adapter categories: source, semantic, reconstruction, visualization, simulation, evaluator, action, verification. Sources include first-party, community, external software, and provisional document-derived mappings.
-
-Mature open-source engineering systems are capabilities behind this fabric, not kernel authorities. The canonical policy is spec/capability-foundation-policy.md and ACR-003. Prefer the narrowest viable boundary:
-library/API -> provider-neutral adapter -> sandboxed extension/plugin -> optional client surface -> fork.
-
-Examples include:
-- FreeCAD / BRL-CAD / OpenSCAD for precision or scripted geometry;
-- Blender for DCC, scene processing and rendering;
-- O3DE / Godot for interactive world/runtime capabilities;
-- SALOME / ParaView for specialized simulation and result visualization;
-- Three.js / Babylon.js / CesiumJS for web/spatial visualization;
-- Theia / Monaco / LSP / Git integrations for software engineering workspaces;
-- Assimp and format-specific adapters for asset ingestion.
-
-Provider-native files, scene graphs, repositories, solver state and workspaces are linked artifacts, not Epoch semantic authority. Forks require an approved Architecture Change Request and an explicit license, dependency, isolation, divergence and upstream/reconciliation plan.
+Domain packs specialize the universal lifecycle and must not create competing authorities. Mature third-party engineering systems remain capabilities behind adapters or client seams.
 
 ## Autonomous ecosystem discovery
 
-Epoch supports a deployment-neutral scheduled discovery workflow. The default policy is a weekly scan of authorized public/private source adapters plus problem-driven discovery from known capability gaps, weak evaluations and recurring failures.
-
-Workflow:
-Scheduler -> source adapters -> candidate ingestion -> sandbox/profile -> capability mapping -> evaluation -> registry proposal -> role/organization availability.
-
-External model/code artifacts remain untrusted until the applicable sandbox, profiling, security, evaluation and promotion gates pass. New domain packs are proposed from recurring task/capability clusters rather than silently activated.
-
-The scheduler is deployment-neutral; Temporal or another authorized scheduler may invoke the same contract. Hugging Face, GitHub, research indexes and engineering software catalogs are source adapters, not kernel dependencies.
+Scheduled discovery uses authorized source adapters and sandbox/profile/evaluation/promotion boundaries. External claims never directly mutate canonical state or grant execution authority.
 
 ## Experience Runtime
-Consumes world/task/agent/evidence/device/capability state and produces Experience Graphs for 2D, 3D, animation, narrative, timeline/replay, presence and controls. It is never semantic authority. The Solution Navigator presents synchronized Design, Program of Work, BOQ, Procurement, Execution, Verification, Forecast, Outcome and Learning projections.
 
-## Extensions
-Declarative manifest/schema + TypeScript/React + Wasm Component Model + remote service adapter. Public extensions are sandboxed and capability-scoped.
-
-## Tenancy
-Platform -> Tenant -> Workspace -> Project -> World/Scenario/Evidence. Identity != tenancy != authorization != policy.
+Consumes world/task/agent/evidence/device/capability state and produces 2D/3D/animation/narrative/timeline/control projections. Experience and clients are never semantic authority.
 
 ## Persistence
-PostgreSQL authoritative durable state; object storage for bytes; Arrow/Parquet for analytical data; NATS for event distribution; Temporal for durable workflows.
 
-## External event bridge
-External systems can provide authorized normalized observations/events and receive typed information requests, status checks and alerts. Provider-specific semantics remain behind adapters. Aurum Chat is an optional reference adapter, never an Epoch prerequisite.
+PostgreSQL is authoritative durable state; object storage holds bytes; event/workflow infrastructure remains provider-neutral.
 
 ## Clients
-Web canonical. Tauri 2 desktop/mobile clients share semantic contracts; mobile is optimized for field capture/review/approval.
 
-Desktop may expose optional foundation-backed authoring surfaces, but their native timelines/documents/projects remain projections and working artifacts. The web experience stays web-native and canonical.
+Web canonical. Desktop power client. Mobile field client.
 
-## Marketplace
-Epoch owns listings, trust metadata, versions, entitlements, usage accounting, and developer revenue records. Payment processors are adapters.
+Productization architecture is governed by ACR-005:
+- shared Application Gateway;
+- real web product;
+- Tauri 2 desktop host for Linux/Windows/macOS;
+- Expo/React Native mobile host for Android/iOS;
+- cross-device continuity;
+- mandatory real-artifact journey validation.
+
+See spec/productization-architecture.md and spec/journey-validation.md.
