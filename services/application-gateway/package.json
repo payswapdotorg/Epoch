@@ -1,0 +1,54 @@
+{
+  "name": "@epoch/application-gateway",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Application Gateway service (W046, ACR-005) \u2014 the client-facing facade that COMPOSES the existing authoritative Epoch kernels/services (it orchestrates; it decides NOTHING semantic): the typed operation dispatch over the frozen @epoch/client-runtime vocabulary (session/context gates, tenant-safe W009 authorization propagation on every mutating call, correlation ledger, typed IdempotentReplay wrapping every mutating operation with durable records through the @epoch/persistence SPI), the authority map as a first-class artifact (every gateway operation -> the existing kernel/service that owns its semantics; the walk test fails on any unmapped operation), the session-mirror + idempotency + correlation persistence bindings (in-memory default; PostgreSQL durable when the pg 8.23.0 driver pool is bound \u2014 THIS package is the ONLY pg binding point, enforced by the W046 pg-boundary test), the digest-addressed evidence intake through @epoch/object-storage, the offline queue recovery.replay drain (every replay through the Action Gateway path with idempotency keys), and the deterministic construction/software product fixtures (J07/J08/J11 scenario scripts, byte-stable). The pglite real-engine suite (TEST-ONLY) auto-activates when @electric-sql/pglite materializes in the catalog (Tech Lead reconcile pending \u2014 see docs/product-runtime/limitations.md).",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/access-projection": "workspace:*",
+    "@epoch/action-gateway": "workspace:*",
+    "@epoch/actualization": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/alerts": "workspace:*",
+    "@epoch/authentication": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/capability-discovery": "workspace:*",
+    "@epoch/client-runtime": "workspace:*",
+    "@epoch/constraint-language": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/execution-tracking": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/learning-calibration": "workspace:*",
+    "@epoch/marketplace": "workspace:*",
+    "@epoch/object-storage": "workspace:*",
+    "@epoch/persistence": "workspace:*",
+    "@epoch/procurement": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/supervision": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/verification": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

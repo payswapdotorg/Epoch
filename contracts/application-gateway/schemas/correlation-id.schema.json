@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CorrelationId",
+  "$defs": {
+    "CorrelationId": {
+      "type": "string",
+      "pattern": "^corr:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "CorrelationId"
+    }
+  },
+  "$id": "urn:epoch:application-gateway:correlation-id:1.0.0"
+}

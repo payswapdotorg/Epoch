@@ -1,0 +1,210 @@
+{
+  "contract": "epoch/application-gateway",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Application Gateway contract surface (W046, ACR-005): the client-facing operation vocabulary + request/response envelopes, the recoverable client error taxonomy, correlation, the typed IdempotentReplay, offline admission (pending projections only, five named negatives), session references and the projection cache — shared by web/desktop/mobile. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "dataTypes": [
+    "ApplicationGatewayContractVersion",
+    "ClientRuntimeRecordVersion",
+    "ClientRuntimeContractVersion",
+    "GatewayOrigin",
+    "GatewayOperationKind",
+    "GatewayOperationName",
+    "GatewayOperationVocabulary",
+    "GatewayOperation",
+    "OfflineAdmissionCode",
+    "OfflineIntentState",
+    "GatewayErrorClass",
+    "GatewayErrorCode",
+    "GatewayValidationIssue",
+    "GatewayError",
+    "ClientRecoveryAction",
+    "CorrelationId",
+    "CausationId",
+    "RequestCorrelation",
+    "ClientSessionState",
+    "SessionId",
+    "ClientSession",
+    "SessionRef",
+    "IdempotencyKey",
+    "RequestFingerprint",
+    "IdempotencyAddress",
+    "IdempotencyRecord",
+    "IdempotentReplay",
+    "OfflineQueueScope",
+    "QueuedIntent",
+    "TenantScope",
+    "GatewayRequestEnvelope",
+    "GatewayOutcome",
+    "ProjectionCacheEntry"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements are enforced by the runtime validators in @epoch/client-runtime and are not represented in the JSON Schema files",
+  "emittedBy": "renderApplicationGatewayContractFiles() in @epoch/client-runtime (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "ApplicationGatewayContractVersion",
+      "file": "schemas/application-gateway-contract-version.schema.json",
+      "sha256": "aadb3c6f32c05375ad6195a9d0611171b7b26ed02d56483dff5c2fe4ef98bf74"
+    },
+    {
+      "type": "ClientRuntimeRecordVersion",
+      "file": "schemas/client-runtime-record-version.schema.json",
+      "sha256": "1eacb01b3f69d6b9ebc50010eca2235044055ca535fa5aea298ff18e509f6604"
+    },
+    {
+      "type": "ClientRuntimeContractVersion",
+      "file": "schemas/client-runtime-contract-version.schema.json",
+      "sha256": "b22f9014d83a6030bc33ff64988ad1fd0a4e835c4309a72662a4e7347f0b8f83"
+    },
+    {
+      "type": "GatewayOrigin",
+      "file": "schemas/gateway-origin.schema.json",
+      "sha256": "c6dbed870fec0f8988be4b42b8118e8f68423a4582a460119a706f6333903698"
+    },
+    {
+      "type": "GatewayOperationKind",
+      "file": "schemas/gateway-operation-kind.schema.json",
+      "sha256": "f8fb4bf6e105549dd1c74dd9cf4d4ed0131bba6acf77cd796368e34e7dc4fc19"
+    },
+    {
+      "type": "GatewayOperationName",
+      "file": "schemas/gateway-operation-name.schema.json",
+      "sha256": "8db9ed2d40d150f55196d2c0982b69364aaab2a939aa8cca2f89ce63671a4038"
+    },
+    {
+      "type": "GatewayOperationVocabulary",
+      "file": "schemas/gateway-operation-vocabulary.schema.json",
+      "sha256": "9e96953a82d8c996963be788b7f733dfce56e8adfb6f2661db8d5ca04c41a882"
+    },
+    {
+      "type": "GatewayOperation",
+      "file": "schemas/gateway-operation.schema.json",
+      "sha256": "d5c55ecbc8fc8e2c910dc1aceb83aedd9b15e90469baf2a55fc8c0b63ffd3752"
+    },
+    {
+      "type": "OfflineAdmissionCode",
+      "file": "schemas/offline-admission-code.schema.json",
+      "sha256": "c0660494fa66c44124feb42c37200c0b13dea0b7788c5f24a2132119440ab4dc"
+    },
+    {
+      "type": "OfflineIntentState",
+      "file": "schemas/offline-intent-state.schema.json",
+      "sha256": "febb6361eea85fae52024066fc6828e3ff3b9a9b7dafbffd92226ddfb5a5919a"
+    },
+    {
+      "type": "GatewayErrorClass",
+      "file": "schemas/gateway-error-class.schema.json",
+      "sha256": "ec9ddea02d5a8fe25ddb05f6141147af865459a8c953c5fb99b9b5852ed06982"
+    },
+    {
+      "type": "GatewayErrorCode",
+      "file": "schemas/gateway-error-code.schema.json",
+      "sha256": "c80e8d47f4a9df649b7df14717ab20aa02a55c536a25ae60e7329db3ce6845df"
+    },
+    {
+      "type": "GatewayValidationIssue",
+      "file": "schemas/gateway-validation-issue.schema.json",
+      "sha256": "1bc05eed14c3f64bccf0a3d2c1ed233cc8af0dd4e5a69be95be61c5520248204"
+    },
+    {
+      "type": "GatewayError",
+      "file": "schemas/gateway-error.schema.json",
+      "sha256": "c598db4b60f25a7aad695269bb8aa9cbcbb5de03940812baf1b2bb844740ecd9"
+    },
+    {
+      "type": "ClientRecoveryAction",
+      "file": "schemas/client-recovery-action.schema.json",
+      "sha256": "2919ae3e8635be086299f6ff11f176988d91d32c18711f5c73ea3e6a156d6848"
+    },
+    {
+      "type": "CorrelationId",
+      "file": "schemas/correlation-id.schema.json",
+      "sha256": "165219e7de1c0fa28a95798706be5407dae201dfe7b0c8047af5eb9ed99a95f6"
+    },
+    {
+      "type": "CausationId",
+      "file": "schemas/causation-id.schema.json",
+      "sha256": "08727039ce1e41d4724c217c88aad12e274f39bf79d8c4b3f5b6e51619e62438"
+    },
+    {
+      "type": "RequestCorrelation",
+      "file": "schemas/request-correlation.schema.json",
+      "sha256": "b9d096a190897fa9d70ef6f66a4bb359efe31b45add12a62cb6366e5f347319e"
+    },
+    {
+      "type": "ClientSessionState",
+      "file": "schemas/client-session-state.schema.json",
+      "sha256": "9c3250ef9f92188ab6c8e97cb3de1aa8b22fb0b4e9fe05a283f4d5f6407dcc5b"
+    },
+    {
+      "type": "SessionId",
+      "file": "schemas/session-id.schema.json",
+      "sha256": "8da188fb0e4234af792ba6654cb1dad94301c9cee593b4cc36941181e0eeeaa8"
+    },
+    {
+      "type": "ClientSession",
+      "file": "schemas/client-session.schema.json",
+      "sha256": "6366068c28f0d3829444e8180b56083277544eab08ea616f99f5320c89509005"
+    },
+    {
+      "type": "SessionRef",
+      "file": "schemas/session-ref.schema.json",
+      "sha256": "15cdb3b2bfda8d304359ba3d3883a182ad659d4afea6c4046ed57b13ba3c036c"
+    },
+    {
+      "type": "IdempotencyKey",
+      "file": "schemas/idempotency-key.schema.json",
+      "sha256": "4c7e38121dbf51bf0b631a139dc65685eda50e06a2f2c6225a1ada7128bd4ebc"
+    },
+    {
+      "type": "RequestFingerprint",
+      "file": "schemas/request-fingerprint.schema.json",
+      "sha256": "aef2d762dc582a97c55423c7f7243cf637962561c1f1d271f063108565c9a8b4"
+    },
+    {
+      "type": "IdempotencyAddress",
+      "file": "schemas/idempotency-address.schema.json",
+      "sha256": "799cf9fd6c34e05b7de19d59b1016bd4755e718efe9c58739b89353221f427fc"
+    },
+    {
+      "type": "IdempotencyRecord",
+      "file": "schemas/idempotency-record.schema.json",
+      "sha256": "7da92e97d95fd01a639f078040b8da33eaef719322e8c6971330a4e444c8754d"
+    },
+    {
+      "type": "IdempotentReplay",
+      "file": "schemas/idempotent-replay.schema.json",
+      "sha256": "773387015249fb24c6819423038b1393a36a8d799cbbfa340e8ac7a02a188405"
+    },
+    {
+      "type": "OfflineQueueScope",
+      "file": "schemas/offline-queue-scope.schema.json",
+      "sha256": "786a1ffbac10e52d2623d384a9195dc921b88f920046d2821c0eea7e4dcade81"
+    },
+    {
+      "type": "QueuedIntent",
+      "file": "schemas/queued-intent.schema.json",
+      "sha256": "6cdf0a8ea5684c3fc3bdeb5e6627c3bd9764a4301f8c503ea3982ad3d64085a5"
+    },
+    {
+      "type": "TenantScope",
+      "file": "schemas/tenant-scope.schema.json",
+      "sha256": "c3fb33ab0cddb6c9258ba96215ba24783dbc3f1855b9a041ac21c8eda5e05386"
+    },
+    {
+      "type": "GatewayRequestEnvelope",
+      "file": "schemas/gateway-request-envelope.schema.json",
+      "sha256": "00bbacb2188bae19ea780cceb265bfc1c95619527ac41926cb92ed7dd9dff8be"
+    },
+    {
+      "type": "GatewayOutcome",
+      "file": "schemas/gateway-outcome.schema.json",
+      "sha256": "60c9e4bb02dc82cd7f92b3ff79be21e178b332ebe49fb49369ddc36a0f3fd520"
+    },
+    {
+      "type": "ProjectionCacheEntry",
+      "file": "schemas/projection-cache-entry.schema.json",
+      "sha256": "880edf01390ccee902e29ecd92d6de2c190fff025d5abe33fbc434ee098942eb"
+    }
+  ]
+}

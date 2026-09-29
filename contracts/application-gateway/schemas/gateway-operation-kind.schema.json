@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/GatewayOperationKind",
+  "$defs": {
+    "GatewayOperationKind": {
+      "type": "string",
+      "enum": [
+        "read",
+        "mutate"
+      ],
+      "title": "GatewayOperationKind"
+    }
+  },
+  "$id": "urn:epoch:application-gateway:gateway-operation-kind:1.0.0"
+}

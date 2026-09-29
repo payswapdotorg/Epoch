@@ -1,0 +1,33 @@
+{
+  "name": "@epoch/authentication",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Authentication/Session Seam (W046, ACR-005) — the provider-neutral session layer over the W009 identity/tenancy/authorization kernels: session issuance projected from VERIFIED @epoch/identity authentication results (content-addressed session ids from caller-supplied entropy — zero randomness), the session lifecycle (active -> expired / revoked, evaluated against caller-supplied instants — zero wall-clock), digest-disciplined session records (immutable content + lifecycle state + SHA-256 content address; lifecycle transitions never rewrite the digest), deterministic snapshots + restore-from-durable-records (the service layer mirrors records through the persistence SPI), and the tenant-safe authorization propagation helper (AuthorizationRequest construction from a session scope; decisions stay @epoch/authorization's fail-closed evaluator — this seam NEVER decides). NO IdP, NO network, NO secret storage: assertions are descriptors; tokens are never modeled.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

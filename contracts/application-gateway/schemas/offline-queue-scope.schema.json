@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OfflineQueueScope",
+  "$defs": {
+    "OfflineQueueScope": {
+      "readOnly": true,
+      "title": "OfflineQueueScope",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "sessionId": {
+          "$ref": "#/$defs/SessionId"
+        },
+        "principalId": {
+          "$ref": "#/$defs/PrincipalId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/WorkspaceId"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "sessionId",
+        "principalId",
+        "tenantId"
+      ],
+      "additionalProperties": false
+    },
+    "SessionId": {
+      "type": "string",
+      "pattern": "^session:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SessionId"
+    },
+    "PrincipalId": {
+      "type": "string",
+      "pattern": "^principal:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "PrincipalId",
+      "description": "Opaque, prefixed principal identity: \"principal:\" followed by a lowercase slug. Never encodes a tenant, provider, or credential."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "WorkspaceId": {
+      "type": "string",
+      "pattern": "^workspace:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkspaceId",
+      "description": "Opaque workspace identity: \"workspace:\" followed by a lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:application-gateway:offline-queue-scope:1.0.0"
+}

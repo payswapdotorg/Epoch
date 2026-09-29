@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OfflineAdmissionCode",
+  "$defs": {
+    "OfflineAdmissionCode": {
+      "type": "string",
+      "enum": [
+        "local-approval-not-authority",
+        "local-semantic-mutation-rejected",
+        "local-identity-minting-rejected",
+        "local-digest-forgery-rejected",
+        "idempotency-key-required"
+      ],
+      "title": "OfflineAdmissionCode"
+    }
+  },
+  "$id": "urn:epoch:application-gateway:offline-admission-code:1.0.0"
+}

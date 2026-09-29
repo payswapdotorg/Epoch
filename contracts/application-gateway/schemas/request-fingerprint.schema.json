@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RequestFingerprint",
+  "$defs": {
+    "RequestFingerprint": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "RequestFingerprint"
+    }
+  },
+  "$id": "urn:epoch:application-gateway:request-fingerprint:1.0.0"
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/GatewayErrorCode",
+  "$defs": {
+    "GatewayErrorCode": {
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "network-unavailable",
+            "connector-unavailable",
+            "gateway-overloaded",
+            "deadline-exceeded"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "session-expired",
+            "session-revoked",
+            "session-unknown",
+            "principal-authentication-required"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "idempotency-fingerprint-mismatch",
+            "idempotency-key-reuse",
+            "version-conflict",
+            "duplicate-submission"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "request-validation",
+            "request-envelope-malformed",
+            "operation-unknown",
+            "idempotency-key-required",
+            "tenant-scope-mismatch"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "authority-denied",
+            "authority-rejected-input"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "contract-version-unsupported",
+            "internal-invariant-violated",
+            "response-malformed"
+          ]
+        }
+      ],
+      "title": "GatewayErrorCode"
+    }
+  },
+  "$id": "urn:epoch:application-gateway:gateway-error-code:1.0.0"
+}

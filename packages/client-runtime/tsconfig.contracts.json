@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@epoch/client-runtime": ["./src/index.ts"]
+    }
+  },
+  "include": [
+    "../../contracts/application-gateway/index.d.ts",
+    "../../contracts/application-gateway/parity.ts"
+  ]
+}

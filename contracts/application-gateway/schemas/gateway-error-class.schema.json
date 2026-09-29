@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/GatewayErrorClass",
+  "$defs": {
+    "GatewayErrorClass": {
+      "type": "string",
+      "enum": [
+        "transient",
+        "auth-session-expired",
+        "conflict",
+        "validation",
+        "authority-rejected",
+        "unrecoverable"
+      ],
+      "title": "GatewayErrorClass"
+    }
+  },
+  "$id": "urn:epoch:application-gateway:gateway-error-class:1.0.0"
+}

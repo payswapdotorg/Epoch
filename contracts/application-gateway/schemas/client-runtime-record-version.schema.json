@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ClientRuntimeRecordVersion",
+  "$defs": {
+    "ClientRuntimeRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "ClientRuntimeRecordVersion",
+      "description": "Version discriminator carried by every serialized client-runtime record (currently 1)."
+    }
+  },
+  "$id": "urn:epoch:application-gateway:client-runtime-record-version:1.0.0"
+}
