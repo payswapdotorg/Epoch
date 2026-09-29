@@ -21,29 +21,36 @@ The repository is authoritative; chat is not. Start with:
 14. spec/capability-foundation-policy.md
 15. spec/autonomous-role-capability-discovery.md
 16. spec/capability-contribution-contract.md
+17. spec/productization-architecture.md
+18. spec/journey-validation.md
 
 ## Product architecture
 
 World Model + Agent System + Role/Capability Discovery + Constraints + Actions + Simulation/Evaluation + Verification/Evidence + Solution Delivery + Outcome/Learning, wrapped by a shared Experience Runtime and Capability/Adapter Fabric.
 
-Epoch is the semantic and lifecycle authority. Mature external engineering software and future models are integrated as replaceable capabilities through provider-neutral adapters, sandboxed extensions, or optional client surfaces. Epoch can derive task-specific roles and capability demands and search compatible agents/models rather than requiring hard-coded role/model pairings. The canonical rule is **integrate first, contribute upstream where useful, fork last**.
-
-## Domain examples
-
-Construction: interactive world + synchronized BOQ/ProgramOfWork + procurement + execution + verification + forecast + learning.
-
-Software: solution architecture + release ProgramOfWork + repository/cloud/license acquisition + implementation/deployment + telemetry/verification + learning.
-
-Mechanical/electrical/infrastructure: domain-specific geometry, simulation, workspace and spatial capabilities projected onto the same universal lifecycle.
+Epoch is the semantic and lifecycle authority. Mature external engineering software and future models are integrated as replaceable capabilities through provider-neutral adapters, sandboxed extensions, or optional client surfaces. Epoch can derive task-specific roles and capability demands and search compatible agents/models rather than requiring hard-coded role/model pairings. The canonical rule is integrate first; contribute upstream where useful; fork last.
 
 ## Clients
 
-Web is canonical. Desktop is the power client. Mobile is the field client. All clients share semantic contracts and Experience Protocol.
+Web is the canonical client. Desktop is the power client. Mobile is the field client. All clients share semantic contracts and Experience Protocol.
 
-Foundation-backed desktop tools may provide specialized authoring or analysis, but provider-native projects, editor timelines and files remain linked artifacts rather than Epoch semantic authority.
+Current implementation status:
+- Web: application shell and multiple feature/projection surfaces exist; W047 productization is still pending.
+- Desktop: W017 typed reference host exists; W048 will create the real Tauri 2 Linux/Windows/macOS application.
+- Mobile: W018 typed reference field host exists; W049 will create the real Expo/React Native Android/iOS application.
+
+Do not interpret W017/W018 completion as native application distribution.
 
 ## Development
 
-Current authorized Work Order is W029. W045 is defined but blocked pending the applicable architecture-lock transition. The live frontier is determined from repository state; do not rely on historical wave labels.
+W001-W045 are complete (45/45). ACR-005 is effective and defines W046-W050.
 
-One Work Order = one branch = one PR. Maximum three concurrent workers. The Tech Lead/Architect derives eligibility from the dependency graph and enforces pairwise-disjoint write surfaces.
+Current frontier is authoritative only in spec/development-state/program-state.json and frontier-state.json.
+
+Initial dispatch:
+- W046 active.
+- W047/W048/W049/W050 blocked by dependency.
+
+After W046 is merged and reconciled, W047/W048/W049 run concurrently (maximum three workers). W050 is serialized after all three.
+
+One Work Order = one branch = one PR. Workers never merge. Root manifests and lockfiles are Tech Lead serial work.
