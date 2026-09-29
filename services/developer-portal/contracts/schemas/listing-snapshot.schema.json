@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ListingSnapshot",
+  "$defs": {
+    "ListingSnapshot": {
+      "readOnly": true,
+      "title": "ListingSnapshot",
+      "description": "One developer-owned listing snapshot: derived listing id, developer tenant, lifecycle, visibility, display name, published-version count, and head version pin.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "listingId": {
+          "$ref": "#/$defs/ListingId"
+        },
+        "developerTenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "lifecycle": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "submitted",
+            "published",
+            "retired"
+          ]
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "public",
+            "private"
+          ]
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "publishedVersionCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "headVersion": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d+\\.\\d+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "headDigest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Sha256Hex"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "listingId",
+        "developerTenantId",
+        "lifecycle",
+        "visibility",
+        "displayName",
+        "publishedVersionCount",
+        "headVersion",
+        "headDigest"
+      ],
+      "additionalProperties": false
+    },
+    "ListingId": {
+      "type": "string",
+      "pattern": "^listing:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ListingId",
+      "description": "Opaque marketplace listing identity: \"listing:\" followed by a lowercase slug (stable across versions)."
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:developer-portal:listing-snapshot:1.0.0"
+}

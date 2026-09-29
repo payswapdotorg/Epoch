@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DeveloperDashboard",
+  "$defs": {
+    "DeveloperDashboard": {
+      "readOnly": true,
+      "title": "DeveloperDashboard",
+      "description": "The Developer Portal dashboard of one developer tenant: listing/lifecycle counts, published-version total, adopted entitlement analytics (active vs revoked via the REAL marketplace check), revenue folds per currency, the adopted payout account, and registry/stream counters.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "developerTenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "listingCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "listingsByLifecycle": {
+          "readOnly": true,
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "publishedVersionCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "adoptedGrantCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "activeEntitlementCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "revokedEntitlementCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "revenueRecordCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "revenueByCurrency": {
+          "readOnly": true,
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/NonNegativeDecimal"
+          }
+        },
+        "payoutAccount": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PayoutAccountSummary"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "registeredCapabilityCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "eventCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "developerTenantId",
+        "listingCount",
+        "listingsByLifecycle",
+        "publishedVersionCount",
+        "adoptedGrantCount",
+        "activeEntitlementCount",
+        "revokedEntitlementCount",
+        "revenueRecordCount",
+        "revenueByCurrency",
+        "payoutAccount",
+        "registeredCapabilityCount",
+        "eventCount"
+      ],
+      "additionalProperties": false
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "NonNegativeDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "title": "NonNegativeDecimal",
+      "description": "Non-negative decimal amount as a canonical string (digest-safe, no exponent form)."
+    },
+    "PayoutAccountSummary": {
+      "readOnly": true,
+      "title": "PayoutAccountSummary",
+      "description": "The developer tenant's adopted W024 billing-account summary (where marketplace revenue settles): account id, settlement currency, display name, opening instant, and content digest.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "accountId": {
+          "type": "string",
+          "pattern": "^billing-account:[a-z0-9][a-z0-9-]{0,54}$"
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyCode"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "openedAt": {
+          "type": "string"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "accountId",
+        "currency",
+        "displayName",
+        "openedAt",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:developer-portal:developer-dashboard:1.0.0"
+}

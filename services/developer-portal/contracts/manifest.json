@@ -1,0 +1,150 @@
+{
+  "contract": "epoch/developer-portal",
+  "contractVersion": "1.0.0",
+  "recordVersion": 1,
+  "description": "Typed, versioned, provider-neutral Developer Portal contract surface (W025): the portal-owned host records (listing snapshots, publication/adoption receipts, the developer dashboard, health/describe) and the portal:* event vocabulary over the W010 event shapes. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/. Upstream records (W007 capability records, W023 sealed listing versions, W024 billing accounts) stay the owning packages' contracts.",
+  "dataTypes": [
+    "PortalEventSequence",
+    "PortalCausalParent",
+    "PortalEventPayload",
+    "PortalEventContent",
+    "SealedPortalEvent",
+    "ListingCreatedData",
+    "DraftUpdatedData",
+    "ListingSubmittedData",
+    "VersionPublishedData",
+    "ListingRetiredData",
+    "GrantAdoptedData",
+    "GrantRevokedData",
+    "RevenueAdoptedData",
+    "BillingAccountAdoptedData",
+    "ListingCreationReceipt",
+    "PublicationReceipt",
+    "AdoptionReceipt",
+    "ListingSnapshot",
+    "ChainSummary",
+    "PayoutAccountSummary",
+    "DeveloperDashboard",
+    "HealthReport",
+    "ServiceDescription"
+  ],
+  "jsonSchemaFidelity": "structural-only: zod refinements (the same-stream strictly-earlier causal parent) are enforced by the runtime validators in @epoch/developer-portal-host and are not represented in the JSON Schema files",
+  "emittedBy": "renderDeveloperPortalContractFiles() in @epoch/developer-portal-host (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
+  "schemas": [
+    {
+      "type": "PortalEventSequence",
+      "file": "schemas/portal-event-sequence.schema.json",
+      "sha256": "21b4932e197b40f2ee0c4a1d2603b06a285d90ec3d4b5d1bd1df93f4001948d2"
+    },
+    {
+      "type": "PortalCausalParent",
+      "file": "schemas/portal-causal-parent.schema.json",
+      "sha256": "ae3466b07ccd372775f38cafde567601a60a92ce8a05859565a90a79612f3539"
+    },
+    {
+      "type": "PortalEventPayload",
+      "file": "schemas/portal-event-payload.schema.json",
+      "sha256": "c9a560a1dfcd5ba33b7f5c74f5009d7d0260395c366441d20c94df530eae9c59"
+    },
+    {
+      "type": "PortalEventContent",
+      "file": "schemas/portal-event-content.schema.json",
+      "sha256": "d44a0c42e9e2b6ede61c907fa8179938db46db1cac3bf9fc2611b68ce949ab3f"
+    },
+    {
+      "type": "SealedPortalEvent",
+      "file": "schemas/sealed-portal-event.schema.json",
+      "sha256": "92f3b7778d25d74be18ce618cb54380eea0e8fdc5c67eb21e0be29f73790192b"
+    },
+    {
+      "type": "ListingCreatedData",
+      "file": "schemas/listing-created-data.schema.json",
+      "sha256": "de850f2b8dcc1a4f3f3691eae04f10844fc5f700df128f21b89901258c5d8e22"
+    },
+    {
+      "type": "DraftUpdatedData",
+      "file": "schemas/draft-updated-data.schema.json",
+      "sha256": "e765a81b165f7bd941e5ce0a87eb1f012faf72dfd5d08cf0b777c44eb5e8769c"
+    },
+    {
+      "type": "ListingSubmittedData",
+      "file": "schemas/listing-submitted-data.schema.json",
+      "sha256": "f85f375bf333d6fb26f78a87e14d9f4cf5612e00220d7b9596e9c9fbe8f621bc"
+    },
+    {
+      "type": "VersionPublishedData",
+      "file": "schemas/version-published-data.schema.json",
+      "sha256": "e642662e4423629e531328a3ab6eda7616a3d19fb6a026ebfc541f8b22faed8a"
+    },
+    {
+      "type": "ListingRetiredData",
+      "file": "schemas/listing-retired-data.schema.json",
+      "sha256": "4fa1eb8cd5b5d24be6eb7eda614ac7b807c0c20ae8a16c01d09f4d4b6d4ee4b2"
+    },
+    {
+      "type": "GrantAdoptedData",
+      "file": "schemas/grant-adopted-data.schema.json",
+      "sha256": "99b938cc929464382e5be1021826ad4128234bdc5e8c97f1eaf2e54856c638b3"
+    },
+    {
+      "type": "GrantRevokedData",
+      "file": "schemas/grant-revoked-data.schema.json",
+      "sha256": "fc4ebe74a2178e74344aa951c523702c45328eaddbe1b970c991bbf158553e78"
+    },
+    {
+      "type": "RevenueAdoptedData",
+      "file": "schemas/revenue-adopted-data.schema.json",
+      "sha256": "4c61df89873091eb3b3b55a0ea35832e150c59d1783b94082d0b07df54e6b628"
+    },
+    {
+      "type": "BillingAccountAdoptedData",
+      "file": "schemas/billing-account-adopted-data.schema.json",
+      "sha256": "32632961934b9b7359cb17ec2fb06f8007e61b25d0286d04ae085a6da994e628"
+    },
+    {
+      "type": "ListingCreationReceipt",
+      "file": "schemas/listing-creation-receipt.schema.json",
+      "sha256": "3e7aa935e12db78da0f75b277743e55e3a2717a020a4375d9d4a20bc0fb2de9b"
+    },
+    {
+      "type": "PublicationReceipt",
+      "file": "schemas/publication-receipt.schema.json",
+      "sha256": "6053aa369975fb3e23576cc4afde33ba232e876a419bd29d82b8d0e5e5641eb5"
+    },
+    {
+      "type": "AdoptionReceipt",
+      "file": "schemas/adoption-receipt.schema.json",
+      "sha256": "357ae0fc82b665f5ec642577ade11c5adb6fbbe7ef8918f53f953ec5f5695277"
+    },
+    {
+      "type": "ListingSnapshot",
+      "file": "schemas/listing-snapshot.schema.json",
+      "sha256": "f96e06165aab1da321457c5533ed5285e20512945d681716a20fe815a3b9711b"
+    },
+    {
+      "type": "ChainSummary",
+      "file": "schemas/chain-summary.schema.json",
+      "sha256": "2623e898ea7cce6fd04282bee00bb9ffc32ddef4b6eaeb35393cad111e065e22"
+    },
+    {
+      "type": "PayoutAccountSummary",
+      "file": "schemas/payout-account-summary.schema.json",
+      "sha256": "2e3d40b96692cff3caaee3d7b59b530c23d9072043d7742837ba3dd88bf1a5c1"
+    },
+    {
+      "type": "DeveloperDashboard",
+      "file": "schemas/developer-dashboard.schema.json",
+      "sha256": "4bc45c0fcbbbc0dd6065595c506968a9e4af0ce58ef559930e71092cdf99cb2c"
+    },
+    {
+      "type": "HealthReport",
+      "file": "schemas/health-report.schema.json",
+      "sha256": "53ce16597c77336126648bac832ee0599bfe6c2554a49f06a473bcda2f67d6a3"
+    },
+    {
+      "type": "ServiceDescription",
+      "file": "schemas/service-description.schema.json",
+      "sha256": "d81527101d9db281d66938567640ec972615e6c988a529f8ec0c5ce1ae1374fa"
+    }
+  ]
+}

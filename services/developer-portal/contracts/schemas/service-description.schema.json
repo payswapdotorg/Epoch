@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ServiceDescription",
+  "$defs": {
+    "ServiceDescription": {
+      "readOnly": true,
+      "title": "ServiceDescription",
+      "description": "The typed Developer Portal service surface: identity, contract version, operation list, and enforced invariants.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "service": {
+          "type": "string",
+          "const": "epoch.developer-portal-host"
+        },
+        "contractVersion": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "operations": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "invariants": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "service",
+        "contractVersion",
+        "operations",
+        "invariants"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:developer-portal:service-description:1.0.0"
+}
