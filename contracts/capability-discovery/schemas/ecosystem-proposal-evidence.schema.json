@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EcosystemProposalEvidence",
+  "$defs": {
+    "EcosystemProposalEvidence": {
+      "readOnly": true,
+      "title": "EcosystemProposalEvidence",
+      "description": "Evidence carried by an ecosystem proposal (gap references, task examples, missing semantics).",
+      "type": "object",
+      "properties": {
+        "gapIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityGapId"
+          }
+        },
+        "taskExamples": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        },
+        "missingSemantics": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        },
+        "recurringGapCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "gapIds",
+        "taskExamples",
+        "missingSemantics",
+        "recurringGapCount"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityGapId": {
+      "type": "string",
+      "pattern": "^gap:[0-9a-f]{16}$",
+      "title": "CapabilityGapId",
+      "description": "Content-addressed capability gap id: \"gap:\" + 16 hex characters."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:ecosystem-proposal-evidence:1.0.0"
+}

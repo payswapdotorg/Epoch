@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SourceScanQuery",
+  "$defs": {
+    "SourceScanQuery": {
+      "readOnly": true,
+      "title": "SourceScanQuery",
+      "description": "A scan query: the gap operations an adapter should try to satisfy, plus a result limit.",
+      "type": "object",
+      "properties": {
+        "operations": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OperationRef"
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        }
+      },
+      "required": [
+        "operations",
+        "limit"
+      ],
+      "additionalProperties": false
+    },
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:source-scan-query:1.0.0"
+}

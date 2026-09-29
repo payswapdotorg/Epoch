@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EcosystemProposalStatus",
+  "$defs": {
+    "EcosystemProposalStatus": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "under-review",
+        "accepted",
+        "rejected"
+      ],
+      "title": "EcosystemProposalStatus",
+      "description": "Ecosystem proposal review status: proposed, under-review, accepted, rejected."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:ecosystem-proposal-status:1.0.0"
+}

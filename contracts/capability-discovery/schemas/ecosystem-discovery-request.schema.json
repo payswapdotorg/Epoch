@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EcosystemDiscoveryRequest",
+  "$defs": {
+    "EcosystemDiscoveryRequest": {
+      "readOnly": true,
+      "title": "EcosystemDiscoveryRequest",
+      "description": "A request for ecosystem discovery derived from unsatisfied capability gaps.",
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "gapIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityGapId"
+          }
+        },
+        "operations": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OperationRef"
+          }
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "requestId",
+        "gapIds",
+        "operations",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityGapId": {
+      "type": "string",
+      "pattern": "^gap:[0-9a-f]{16}$",
+      "title": "CapabilityGapId",
+      "description": "Content-addressed capability gap id: \"gap:\" + 16 hex characters."
+    },
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:ecosystem-discovery-request:1.0.0"
+}

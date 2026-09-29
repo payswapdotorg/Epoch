@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CandidateMatch",
+  "$defs": {
+    "CandidateMatch": {
+      "readOnly": true,
+      "title": "CandidateMatch",
+      "description": "The outcome of matching one demand against one candidate: satisfied, claimed (unverified), or incompatible.",
+      "type": "object",
+      "properties": {
+        "demandId": {
+          "$ref": "#/$defs/CapabilityDemandId"
+        },
+        "candidateId": {
+          "$ref": "#/$defs/CandidateId"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "satisfied",
+            "claimed",
+            "incompatible"
+          ]
+        },
+        "reasons": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        }
+      },
+      "required": [
+        "demandId",
+        "candidateId",
+        "outcome",
+        "reasons"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityDemandId": {
+      "type": "string",
+      "pattern": "^demand:[0-9a-f]{16}$",
+      "title": "CapabilityDemandId",
+      "description": "Content-addressed capability demand id: \"demand:\" + 16 hex characters."
+    },
+    "CandidateId": {
+      "type": "string",
+      "pattern": "^cand:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "CandidateId",
+      "description": "Candidate id: \"cand:\" + lowercase slug."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:candidate-match:1.0.0"
+}

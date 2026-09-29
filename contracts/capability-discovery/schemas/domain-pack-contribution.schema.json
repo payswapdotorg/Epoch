@@ -1,0 +1,335 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DomainPackContribution",
+  "$defs": {
+    "DomainPackContribution": {
+      "readOnly": true,
+      "title": "DomainPackContribution",
+      "description": "A domain pack's reusable discovery knowledge (demand templates, role templates, signal bindings) — compiler priors, never a second compiler authority.",
+      "type": "object",
+      "properties": {
+        "packId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "packVersion": {
+          "type": "string"
+        },
+        "demandTemplates": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityDemandTemplate"
+          }
+        },
+        "roleTemplates": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RoleTemplate"
+          }
+        },
+        "taskSignalBindings": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TaskSignalBinding"
+          }
+        }
+      },
+      "required": [
+        "packId",
+        "packVersion",
+        "demandTemplates",
+        "roleTemplates",
+        "taskSignalBindings"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityDemandTemplate": {
+      "readOnly": true,
+      "title": "CapabilityDemandTemplate",
+      "description": "Reusable capability-demand template from a domain pack (a PRIOR: may only add demands or tighten universal facets; never overrides).",
+      "type": "object",
+      "properties": {
+        "templateId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "operation": {
+          "$ref": "#/$defs/OperationRef"
+        },
+        "inputRepresentations": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RepresentationKind"
+          }
+        },
+        "outputKinds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RepresentationKind"
+          }
+        },
+        "qualityTarget": {
+          "$ref": "#/$defs/QualityTarget"
+        },
+        "evidenceRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "requiresHumanCosign": {
+          "type": "boolean"
+        },
+        "notes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        },
+        "applicability": {
+          "$ref": "#/$defs/TemplateApplicability"
+        }
+      },
+      "required": [
+        "templateId",
+        "summary",
+        "operation",
+        "applicability"
+      ],
+      "additionalProperties": false
+    },
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    },
+    "RepresentationKind": {
+      "type": "string",
+      "enum": [
+        "text",
+        "numeric",
+        "tabular",
+        "geometry",
+        "image",
+        "signal",
+        "document",
+        "structured",
+        "code"
+      ],
+      "title": "RepresentationKind",
+      "description": "Neutral representation/modality kind: text, numeric, tabular, geometry, image, signal, document, structured, code."
+    },
+    "QualityTarget": {
+      "readOnly": true,
+      "title": "QualityTarget",
+      "description": "Quality/fidelity target: metric, threshold, unit, and direction (min/max).",
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "threshold": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "min",
+            "max"
+          ]
+        }
+      },
+      "required": [
+        "metric",
+        "threshold",
+        "unit",
+        "direction"
+      ],
+      "additionalProperties": false
+    },
+    "TemplateApplicability": {
+      "readOnly": true,
+      "title": "TemplateApplicability",
+      "description": "When a domain-pack template applies (matched against task signal kinds, domain refs, lifecycle stages).",
+      "type": "object",
+      "properties": {
+        "signalKinds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TaskSignalKind"
+          }
+        },
+        "domainRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "lifecycleStages": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/UniversalLifecycleStage"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "TaskSignalKind": {
+      "type": "string",
+      "enum": [
+        "operation",
+        "decision",
+        "verification",
+        "artifact",
+        "quality",
+        "unknown",
+        "failure",
+        "work",
+        "budget",
+        "environment",
+        "authority",
+        "dependency",
+        "outcome"
+      ],
+      "title": "TaskSignalKind",
+      "description": "Universal task/problem signal kind: operation, decision, verification, artifact, quality, unknown, failure, work, budget, environment, authority, dependency, outcome."
+    },
+    "UniversalLifecycleStage": {
+      "type": "string",
+      "enum": [
+        "understand",
+        "decide",
+        "plan",
+        "acquire",
+        "realize",
+        "observe",
+        "actualize",
+        "verify",
+        "forecast",
+        "close",
+        "learn"
+      ],
+      "title": "UniversalLifecycleStage",
+      "description": "The eleven universal lifecycle stages (USL1.0, mirrored closed union)."
+    },
+    "RoleTemplate": {
+      "readOnly": true,
+      "title": "RoleTemplate",
+      "description": "Reusable role template from a domain pack: proposes a grouping of demand templates (considered by the universal compiler, never authoritative).",
+      "type": "object",
+      "properties": {
+        "templateId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "mission": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "demandTemplateRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "knowledgeRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "applicability": {
+          "$ref": "#/$defs/TemplateApplicability"
+        }
+      },
+      "required": [
+        "templateId",
+        "summary",
+        "mission",
+        "demandTemplateRefs",
+        "applicability"
+      ],
+      "additionalProperties": false
+    },
+    "TaskSignalBinding": {
+      "readOnly": true,
+      "title": "TaskSignalBinding",
+      "description": "Domain-pack binding: this signal kind (+ optional domain) implies this demand template.",
+      "type": "object",
+      "properties": {
+        "bindingId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "signalKind": {
+          "$ref": "#/$defs/TaskSignalKind"
+        },
+        "domainRef": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "impliesDemandTemplate": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        }
+      },
+      "required": [
+        "bindingId",
+        "signalKind",
+        "impliesDemandTemplate"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:domain-pack-contribution:1.0.0"
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RoleProposalId",
+  "$defs": {
+    "RoleProposalId": {
+      "type": "string",
+      "pattern": "^drole:[0-9a-f]{16}$",
+      "title": "RoleProposalId",
+      "description": "Content-addressed role proposal id: \"drole:\" + 16 hex characters."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:role-proposal-id:1.0.0"
+}

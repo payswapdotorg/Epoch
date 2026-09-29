@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/TemplateApplicability",
+  "$defs": {
+    "TemplateApplicability": {
+      "readOnly": true,
+      "title": "TemplateApplicability",
+      "description": "When a domain-pack template applies (matched against task signal kinds, domain refs, lifecycle stages).",
+      "type": "object",
+      "properties": {
+        "signalKinds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TaskSignalKind"
+          }
+        },
+        "domainRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "lifecycleStages": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/UniversalLifecycleStage"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "TaskSignalKind": {
+      "type": "string",
+      "enum": [
+        "operation",
+        "decision",
+        "verification",
+        "artifact",
+        "quality",
+        "unknown",
+        "failure",
+        "work",
+        "budget",
+        "environment",
+        "authority",
+        "dependency",
+        "outcome"
+      ],
+      "title": "TaskSignalKind",
+      "description": "Universal task/problem signal kind: operation, decision, verification, artifact, quality, unknown, failure, work, budget, environment, authority, dependency, outcome."
+    },
+    "UniversalLifecycleStage": {
+      "type": "string",
+      "enum": [
+        "understand",
+        "decide",
+        "plan",
+        "acquire",
+        "realize",
+        "observe",
+        "actualize",
+        "verify",
+        "forecast",
+        "close",
+        "learn"
+      ],
+      "title": "UniversalLifecycleStage",
+      "description": "The eleven universal lifecycle stages (USL1.0, mirrored closed union)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:template-applicability:1.0.0"
+}

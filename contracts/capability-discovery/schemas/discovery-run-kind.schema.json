@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DiscoveryRunKind",
+  "$defs": {
+    "DiscoveryRunKind": {
+      "type": "string",
+      "enum": [
+        "problem-driven",
+        "ecosystem"
+      ],
+      "title": "DiscoveryRunKind",
+      "description": "Discovery run kind: problem-driven (stream A) or ecosystem (stream B)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:discovery-run-kind:1.0.0"
+}

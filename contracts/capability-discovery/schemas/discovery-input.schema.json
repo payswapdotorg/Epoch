@@ -1,0 +1,704 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DiscoveryInput",
+  "$defs": {
+    "DiscoveryInput": {
+      "readOnly": true,
+      "title": "DiscoveryInput",
+      "description": "The complete provider-neutral discovery input (task/world/evidence/constraint signals + pack contributions); every derivation is a deterministic function of this document.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/CapabilityDiscoveryRecordVersion"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/DiscoveryTenantId"
+        },
+        "task": {
+          "$ref": "#/$defs/TaskDescription"
+        },
+        "worldRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldRef"
+          }
+        },
+        "evidenceSignals": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceSignal"
+          }
+        },
+        "constraintSignals": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConstraintSignal"
+          }
+        },
+        "taskSignals": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TaskSignal"
+          }
+        },
+        "packContributions": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DomainPackContribution"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "tenantId",
+        "task",
+        "worldRefs",
+        "evidenceSignals",
+        "constraintSignals",
+        "taskSignals",
+        "packContributions"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityDiscoveryRecordVersion": {
+      "type": "number",
+      "const": 1,
+      "title": "CapabilityDiscoveryRecordVersion",
+      "description": "Version discriminator carried by every serialized discovery record (currently 1)."
+    },
+    "DiscoveryTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DiscoveryTenantId",
+      "description": "Tenant identifier: \"tenant:\" + lowercase slug (the W009 grammar, mirrored)."
+    },
+    "TaskDescription": {
+      "readOnly": true,
+      "title": "TaskDescription",
+      "description": "The task heading a discovery input: summary, universal lifecycle stage, domain refs, objectives.",
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "lifecycleStage": {
+          "$ref": "#/$defs/UniversalLifecycleStage"
+        },
+        "domainRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "objectives": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        }
+      },
+      "required": [
+        "summary",
+        "lifecycleStage",
+        "domainRefs",
+        "objectives"
+      ],
+      "additionalProperties": false
+    },
+    "UniversalLifecycleStage": {
+      "type": "string",
+      "enum": [
+        "understand",
+        "decide",
+        "plan",
+        "acquire",
+        "realize",
+        "observe",
+        "actualize",
+        "verify",
+        "forecast",
+        "close",
+        "learn"
+      ],
+      "title": "UniversalLifecycleStage",
+      "description": "The eleven universal lifecycle stages (USL1.0, mirrored closed union)."
+    },
+    "WorldRef": {
+      "readOnly": true,
+      "title": "WorldRef",
+      "description": "Opaque reference to an affected world/solution/delivery identity (id + content digest; never an embedded copy).",
+      "type": "object",
+      "properties": {
+        "refId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "refId",
+        "contentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoverySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "DiscoverySha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "EvidenceSignal": {
+      "readOnly": true,
+      "title": "EvidenceSignal",
+      "description": "Evidence signal: a content-addressed observation about the problem (digest + kind + subjects).",
+      "type": "object",
+      "properties": {
+        "evidenceDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "failure",
+            "verification-gap",
+            "unknown",
+            "measurement",
+            "observation",
+            "outcome"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "subjectRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        }
+      },
+      "required": [
+        "evidenceDigest",
+        "kind",
+        "summary",
+        "subjectRefs"
+      ],
+      "additionalProperties": false
+    },
+    "ConstraintSignal": {
+      "readOnly": true,
+      "title": "ConstraintSignal",
+      "description": "Constraint signal: a provider-neutral constraint binding on the task (hard/soft/authority/budget/quality/interface).",
+      "type": "object",
+      "properties": {
+        "constraintId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "hard",
+            "soft",
+            "authority",
+            "budget",
+            "quality",
+            "interface"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "subjectRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "parameters": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": [
+              "number",
+              "string"
+            ]
+          }
+        }
+      },
+      "required": [
+        "constraintId",
+        "kind",
+        "summary",
+        "subjectRefs"
+      ],
+      "additionalProperties": false
+    },
+    "TaskSignal": {
+      "readOnly": true,
+      "title": "TaskSignal",
+      "description": "One universal task/problem signal (kind + summary + operation pin + subject/evidence/constraint references + neutral hints and kind-specific payloads).",
+      "type": "object",
+      "properties": {
+        "signalId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "kind": {
+          "$ref": "#/$defs/TaskSignalKind"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "operationRef": {
+          "$ref": "#/$defs/OperationRef"
+        },
+        "subjectRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "evidenceRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DiscoverySha256Hex"
+          }
+        },
+        "constraintRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "representationHints": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RepresentationKind"
+          }
+        },
+        "outputHints": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RepresentationKind"
+          }
+        },
+        "artifactKind": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "qualityTarget": {
+          "$ref": "#/$defs/QualityTarget"
+        },
+        "latencyBudgetMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "costBudget": {
+          "$ref": "#/$defs/MoneyAmount"
+        },
+        "uncertaintyConfidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "requirementSlugs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "dependsOnOperation": {
+          "$ref": "#/$defs/OperationRef"
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "signalId",
+        "kind",
+        "summary",
+        "subjectRefs",
+        "evidenceRefs",
+        "constraintRefs"
+      ],
+      "additionalProperties": false
+    },
+    "TaskSignalKind": {
+      "type": "string",
+      "enum": [
+        "operation",
+        "decision",
+        "verification",
+        "artifact",
+        "quality",
+        "unknown",
+        "failure",
+        "work",
+        "budget",
+        "environment",
+        "authority",
+        "dependency",
+        "outcome"
+      ],
+      "title": "TaskSignalKind",
+      "description": "Universal task/problem signal kind: operation, decision, verification, artifact, quality, unknown, failure, work, budget, environment, authority, dependency, outcome."
+    },
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    },
+    "RepresentationKind": {
+      "type": "string",
+      "enum": [
+        "text",
+        "numeric",
+        "tabular",
+        "geometry",
+        "image",
+        "signal",
+        "document",
+        "structured",
+        "code"
+      ],
+      "title": "RepresentationKind",
+      "description": "Neutral representation/modality kind: text, numeric, tabular, geometry, image, signal, document, structured, code."
+    },
+    "QualityTarget": {
+      "readOnly": true,
+      "title": "QualityTarget",
+      "description": "Quality/fidelity target: metric, threshold, unit, and direction (min/max).",
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "threshold": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "min",
+            "max"
+          ]
+        }
+      },
+      "required": [
+        "metric",
+        "threshold",
+        "unit",
+        "direction"
+      ],
+      "additionalProperties": false
+    },
+    "MoneyAmount": {
+      "readOnly": true,
+      "title": "MoneyAmount",
+      "description": "Cost budget/estimate: ISO 4217 currency code + non-negative decimal amount string.",
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        }
+      },
+      "required": [
+        "currency",
+        "amount"
+      ],
+      "additionalProperties": false
+    },
+    "DomainPackContribution": {
+      "readOnly": true,
+      "title": "DomainPackContribution",
+      "description": "A domain pack's reusable discovery knowledge (demand templates, role templates, signal bindings) — compiler priors, never a second compiler authority.",
+      "type": "object",
+      "properties": {
+        "packId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "packVersion": {
+          "type": "string"
+        },
+        "demandTemplates": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityDemandTemplate"
+          }
+        },
+        "roleTemplates": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RoleTemplate"
+          }
+        },
+        "taskSignalBindings": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TaskSignalBinding"
+          }
+        }
+      },
+      "required": [
+        "packId",
+        "packVersion",
+        "demandTemplates",
+        "roleTemplates",
+        "taskSignalBindings"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilityDemandTemplate": {
+      "readOnly": true,
+      "title": "CapabilityDemandTemplate",
+      "description": "Reusable capability-demand template from a domain pack (a PRIOR: may only add demands or tighten universal facets; never overrides).",
+      "type": "object",
+      "properties": {
+        "templateId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "operation": {
+          "$ref": "#/$defs/OperationRef"
+        },
+        "inputRepresentations": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RepresentationKind"
+          }
+        },
+        "outputKinds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RepresentationKind"
+          }
+        },
+        "qualityTarget": {
+          "$ref": "#/$defs/QualityTarget"
+        },
+        "evidenceRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "requiresHumanCosign": {
+          "type": "boolean"
+        },
+        "notes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        },
+        "applicability": {
+          "$ref": "#/$defs/TemplateApplicability"
+        }
+      },
+      "required": [
+        "templateId",
+        "summary",
+        "operation",
+        "applicability"
+      ],
+      "additionalProperties": false
+    },
+    "TemplateApplicability": {
+      "readOnly": true,
+      "title": "TemplateApplicability",
+      "description": "When a domain-pack template applies (matched against task signal kinds, domain refs, lifecycle stages).",
+      "type": "object",
+      "properties": {
+        "signalKinds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TaskSignalKind"
+          }
+        },
+        "domainRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "lifecycleStages": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/UniversalLifecycleStage"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "RoleTemplate": {
+      "readOnly": true,
+      "title": "RoleTemplate",
+      "description": "Reusable role template from a domain pack: proposes a grouping of demand templates (considered by the universal compiler, never authoritative).",
+      "type": "object",
+      "properties": {
+        "templateId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "mission": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "demandTemplateRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "knowledgeRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "applicability": {
+          "$ref": "#/$defs/TemplateApplicability"
+        }
+      },
+      "required": [
+        "templateId",
+        "summary",
+        "mission",
+        "demandTemplateRefs",
+        "applicability"
+      ],
+      "additionalProperties": false
+    },
+    "TaskSignalBinding": {
+      "readOnly": true,
+      "title": "TaskSignalBinding",
+      "description": "Domain-pack binding: this signal kind (+ optional domain) implies this demand template.",
+      "type": "object",
+      "properties": {
+        "bindingId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "signalKind": {
+          "$ref": "#/$defs/TaskSignalKind"
+        },
+        "domainRef": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "impliesDemandTemplate": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        }
+      },
+      "required": [
+        "bindingId",
+        "signalKind",
+        "impliesDemandTemplate"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:discovery-input:1.0.0"
+}

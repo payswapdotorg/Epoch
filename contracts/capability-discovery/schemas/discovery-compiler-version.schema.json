@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DiscoveryCompilerVersion",
+  "$defs": {
+    "DiscoveryCompilerVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "DiscoveryCompilerVersion",
+      "description": "Version of the universal demand compiler + role synthesizer."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:discovery-compiler-version:1.0.0"
+}

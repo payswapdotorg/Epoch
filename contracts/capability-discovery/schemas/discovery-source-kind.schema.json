@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DiscoverySourceKind",
+  "$defs": {
+    "DiscoverySourceKind": {
+      "type": "string",
+      "enum": [
+        "public-catalog",
+        "private-catalog",
+        "internal",
+        "fixture"
+      ],
+      "title": "DiscoverySourceKind",
+      "description": "Provider-neutral discovery source class: public-catalog, private-catalog, internal, fixture."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:discovery-source-kind:1.0.0"
+}

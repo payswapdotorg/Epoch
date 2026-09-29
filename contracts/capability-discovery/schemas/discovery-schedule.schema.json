@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DiscoverySchedule",
+  "$defs": {
+    "DiscoverySchedule": {
+      "readOnly": true,
+      "title": "DiscoverySchedule",
+      "description": "A registered ecosystem-discovery schedule (tenant-scoped; weekly default cadence).",
+      "type": "object",
+      "properties": {
+        "scheduleId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/DiscoveryTenantId"
+        },
+        "cadence": {
+          "oneOf": [
+            {
+              "readOnly": true,
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "weekly"
+                }
+              },
+              "required": [
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "readOnly": true,
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "interval"
+                },
+                "intervalDays": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 365
+                }
+              },
+              "required": [
+                "kind",
+                "intervalDays"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "readOnly": true,
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "event"
+                }
+              },
+              "required": [
+                "kind"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "adapterIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "lastRunAt": {
+          "$ref": "#/$defs/DiscoveryTimestamp"
+        }
+      },
+      "required": [
+        "scheduleId",
+        "tenantId",
+        "cadence",
+        "adapterIds",
+        "enabled"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoveryTenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DiscoveryTenantId",
+      "description": "Tenant identifier: \"tenant:\" + lowercase slug (the W009 grammar, mirrored)."
+    },
+    "DiscoveryTimestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "DiscoveryTimestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (caller-supplied; never wall-clock)."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:discovery-schedule:1.0.0"
+}

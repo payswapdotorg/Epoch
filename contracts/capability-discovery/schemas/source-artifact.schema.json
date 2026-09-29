@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SourceArtifact",
+  "$defs": {
+    "SourceArtifact": {
+      "readOnly": true,
+      "title": "SourceArtifact",
+      "description": "One artifact discovered by a source adapter (provider-neutral claims only).",
+      "type": "object",
+      "properties": {
+        "artifactId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/DiscoverySha256Hex"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "claimedCapabilities": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ClaimedCapability"
+          }
+        },
+        "licenseNote": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "environmentNotes": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        }
+      },
+      "required": [
+        "artifactId",
+        "contentDigest",
+        "summary",
+        "claimedCapabilities",
+        "environmentNotes"
+      ],
+      "additionalProperties": false
+    },
+    "DiscoverySha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "DiscoverySha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "ClaimedCapability": {
+      "readOnly": true,
+      "title": "ClaimedCapability",
+      "description": "A candidate's claim to one operation, with neutral input/output representation kinds and quality claim basis.",
+      "type": "object",
+      "properties": {
+        "operation": {
+          "$ref": "#/$defs/OperationRef"
+        },
+        "inputKinds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RepresentationKind"
+          }
+        },
+        "outputKinds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RepresentationKind"
+          }
+        },
+        "quality": {
+          "$ref": "#/$defs/QualityTarget"
+        },
+        "claimBasis": {
+          "$ref": "#/$defs/ClaimBasis"
+        }
+      },
+      "required": [
+        "operation",
+        "inputKinds",
+        "outputKinds",
+        "claimBasis"
+      ],
+      "additionalProperties": false
+    },
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    },
+    "RepresentationKind": {
+      "type": "string",
+      "enum": [
+        "text",
+        "numeric",
+        "tabular",
+        "geometry",
+        "image",
+        "signal",
+        "document",
+        "structured",
+        "code"
+      ],
+      "title": "RepresentationKind",
+      "description": "Neutral representation/modality kind: text, numeric, tabular, geometry, image, signal, document, structured, code."
+    },
+    "QualityTarget": {
+      "readOnly": true,
+      "title": "QualityTarget",
+      "description": "Quality/fidelity target: metric, threshold, unit, and direction (min/max).",
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "threshold": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "min",
+            "max"
+          ]
+        }
+      },
+      "required": [
+        "metric",
+        "threshold",
+        "unit",
+        "direction"
+      ],
+      "additionalProperties": false
+    },
+    "ClaimBasis": {
+      "type": "string",
+      "enum": [
+        "measured",
+        "declared"
+      ],
+      "title": "ClaimBasis",
+      "description": "Basis of a capability claim: measured or declared."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:source-artifact:1.0.0"
+}

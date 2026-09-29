@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RoleAuthorityBoundary",
+  "$defs": {
+    "RoleAuthorityBoundary": {
+      "readOnly": true,
+      "title": "RoleAuthorityBoundary",
+      "description": "The authority boundary of a synthesized role: executionAuthority admits exactly \"none\" (the W003 convention — discovery never grants execution authority).",
+      "type": "object",
+      "properties": {
+        "executionAuthority": {
+          "type": "string",
+          "const": "none"
+        },
+        "requiresHumanCosign": {
+          "type": "boolean"
+        },
+        "proposableOperations": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OperationRef"
+          }
+        }
+      },
+      "required": [
+        "executionAuthority",
+        "requiresHumanCosign",
+        "proposableOperations"
+      ],
+      "additionalProperties": false
+    },
+    "OperationRef": {
+      "readOnly": true,
+      "title": "OperationRef",
+      "description": "Provider-neutral operation reference: dot-namespaced qualified id plus a version constraint (semver core or \"*\").",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "versionConstraint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "versionConstraint"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:role-authority-boundary:1.0.0"
+}

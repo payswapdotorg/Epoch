@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PromotionId",
+  "$defs": {
+    "PromotionId": {
+      "type": "string",
+      "pattern": "^promo:[0-9a-f]{16}$",
+      "title": "PromotionId",
+      "description": "Content-addressed promotion record id: \"promo:\" + 16 hex characters."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:promotion-id:1.0.0"
+}

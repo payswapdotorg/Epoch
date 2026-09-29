@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OrganizationId",
+  "$defs": {
+    "OrganizationId": {
+      "type": "string",
+      "pattern": "^org:[0-9a-f]{16}$",
+      "title": "OrganizationId",
+      "description": "Content-addressed organization proposal id: \"org:\" + 16 hex characters."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:organization-id:1.0.0"
+}

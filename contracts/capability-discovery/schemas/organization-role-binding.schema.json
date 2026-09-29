@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OrganizationRoleBinding",
+  "$defs": {
+    "OrganizationRoleBinding": {
+      "readOnly": true,
+      "title": "OrganizationRoleBinding",
+      "description": "One role binding inside a candidate organization: primary candidate, backups, carried gaps.",
+      "type": "object",
+      "properties": {
+        "roleProposalId": {
+          "$ref": "#/$defs/RoleProposalId"
+        },
+        "primaryCandidateId": {
+          "$ref": "#/$defs/CandidateId"
+        },
+        "backupCandidateIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CandidateId"
+          }
+        },
+        "carriedGapIds": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityGapId"
+          }
+        }
+      },
+      "required": [
+        "roleProposalId",
+        "primaryCandidateId",
+        "backupCandidateIds",
+        "carriedGapIds"
+      ],
+      "additionalProperties": false
+    },
+    "RoleProposalId": {
+      "type": "string",
+      "pattern": "^drole:[0-9a-f]{16}$",
+      "title": "RoleProposalId",
+      "description": "Content-addressed role proposal id: \"drole:\" + 16 hex characters."
+    },
+    "CandidateId": {
+      "type": "string",
+      "pattern": "^cand:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "CandidateId",
+      "description": "Candidate id: \"cand:\" + lowercase slug."
+    },
+    "CapabilityGapId": {
+      "type": "string",
+      "pattern": "^gap:[0-9a-f]{16}$",
+      "title": "CapabilityGapId",
+      "description": "Content-addressed capability gap id: \"gap:\" + 16 hex characters."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:organization-role-binding:1.0.0"
+}

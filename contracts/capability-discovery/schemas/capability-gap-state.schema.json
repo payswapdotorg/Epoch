@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CapabilityGapState",
+  "$defs": {
+    "CapabilityGapState": {
+      "type": "string",
+      "enum": [
+        "UNSATISFIED",
+        "CANDIDATE_FOUND",
+        "EVALUATED",
+        "VERIFIED",
+        "DEGRADED",
+        "REQUIRES_HUMAN"
+      ],
+      "title": "CapabilityGapState",
+      "description": "Capability-gap lifecycle: UNSATISFIED, CANDIDATE_FOUND, EVALUATED, VERIFIED, DEGRADED, REQUIRES_HUMAN."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:capability-gap-state:1.0.0"
+}

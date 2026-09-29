@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DiscoveryRunId",
+  "$defs": {
+    "DiscoveryRunId": {
+      "type": "string",
+      "pattern": "^discrun:[0-9a-f]{16}$",
+      "title": "DiscoveryRunId",
+      "description": "Content-addressed discovery run id: \"discrun:\" + 16 hex characters."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:discovery-run-id:1.0.0"
+}

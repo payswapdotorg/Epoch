@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/DomainPackProposalDetail",
+  "$defs": {
+    "DomainPackProposalDetail": {
+      "readOnly": true,
+      "title": "DomainPackProposalDetail",
+      "description": "Domain-pack detail carried when the proposal kind is \"domain-pack\" (activation stays Epoch governance).",
+      "type": "object",
+      "properties": {
+        "proposedPackId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "requiredVocabulary": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "worldModelBindings": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "capabilityDependencies": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "evaluationRequirements": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "uxProjections": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        }
+      },
+      "required": [
+        "proposedPackId",
+        "requiredVocabulary",
+        "worldModelBindings",
+        "capabilityDependencies",
+        "evaluationRequirements",
+        "uxProjections"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:domain-pack-proposal-detail:1.0.0"
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RolePlanningBehavior",
+  "$defs": {
+    "RolePlanningBehavior": {
+      "type": "string",
+      "enum": [
+        "single-step",
+        "multi-step",
+        "supervised-multi-step"
+      ],
+      "title": "RolePlanningBehavior",
+      "description": "Derived planning/delegation behavior of a candidate role."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:role-planning-behavior:1.0.0"
+}

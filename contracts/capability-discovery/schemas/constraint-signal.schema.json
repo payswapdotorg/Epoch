@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ConstraintSignal",
+  "$defs": {
+    "ConstraintSignal": {
+      "readOnly": true,
+      "title": "ConstraintSignal",
+      "description": "Constraint signal: a provider-neutral constraint binding on the task (hard/soft/authority/budget/quality/interface).",
+      "type": "object",
+      "properties": {
+        "constraintId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "hard",
+            "soft",
+            "authority",
+            "budget",
+            "quality",
+            "interface"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "subjectRefs": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        "parameters": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": [
+              "number",
+              "string"
+            ]
+          }
+        }
+      },
+      "required": [
+        "constraintId",
+        "kind",
+        "summary",
+        "subjectRefs"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:constraint-signal:1.0.0"
+}

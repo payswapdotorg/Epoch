@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/EvaluationMetric",
+  "$defs": {
+    "EvaluationMetric": {
+      "type": "string",
+      "enum": [
+        "demand-coverage",
+        "unmet-demand-count",
+        "evidence-coverage",
+        "redundancy-coverage",
+        "estimated-latency",
+        "estimated-cost",
+        "gap-count",
+        "critical-single-point-count"
+      ],
+      "title": "EvaluationMetric",
+      "description": "Deterministic organization-evaluation metric: demand-coverage, unmet-demand-count, evidence-coverage, redundancy-coverage, estimated-latency, estimated-cost, gap-count, critical-single-point-count."
+    }
+  },
+  "$id": "urn:epoch:capability-discovery:evaluation-metric:1.0.0"
+}
