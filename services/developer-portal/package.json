@@ -1,0 +1,35 @@
+{
+  "name": "@epoch/developer-portal-host",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Developer Portal HOST (W025, service layer) — the thin typed runtime facade for Developer Portal/Publishing: capability browsing over the REAL W007 registry (deterministic filtered listings + version-constrained resolution — the registry stays the authority), listing authoring/publishing sessions over the REAL W023 marketplace kernel admission (draft probe validation, sealed content-addressed immutable listing versions, hash chains, dangling-reference rejection, idempotent publication with typed version-conflict on mutation), developer analytics adoption of W023 entitlement grant/revocation records, W023 developer revenue records, and the W024 sealed billing account (all verified through the REAL upstream validators; idempotent with typed idempotency-conflict), a deterministic developer dashboard projection (active entitlements via the REAL marketplace check, revenue folds per currency, payout account), tenant-scoped reads (R12), and health/liveness as typed data. Every operation sits behind the W009 authorization gate (fail-closed) and every lifecycle step emits portal:* events over the W010 event shapes (one stream per listing, one developer stream per tenant; digests sealed in-package and parity-pinned against the REAL W010 sealEvent via devDependency tests). Declaration-only public contract tree under contracts/ (index.d.ts + manifest.json + parity.ts + schemas/, NO package.json — the W012 convention). NO persistence, NO network, NO wall-clock, NO randomness — every instant is caller-supplied.",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/entitlements": "workspace:*",
+    "@epoch/marketplace": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

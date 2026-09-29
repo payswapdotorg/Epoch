@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PublicationReceipt",
+  "$defs": {
+    "PublicationReceipt": {
+      "readOnly": true,
+      "title": "PublicationReceipt",
+      "description": "Receipt of a Developer Portal listing-version publication: the sealed version, its chain link, the verified chain length, and the idempotency marker.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "listingId": {
+          "$ref": "#/$defs/ListingId"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "previousVersionDigest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Sha256Hex"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "chainLength": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "duplicate": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "listingId",
+        "version",
+        "contentDigest",
+        "previousVersionDigest",
+        "chainLength",
+        "duplicate"
+      ],
+      "additionalProperties": false
+    },
+    "ListingId": {
+      "type": "string",
+      "pattern": "^listing:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ListingId",
+      "description": "Opaque marketplace listing identity: \"listing:\" followed by a lowercase slug (stable across versions)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  },
+  "$id": "urn:epoch:developer-portal:publication-receipt:1.0.0"
+}

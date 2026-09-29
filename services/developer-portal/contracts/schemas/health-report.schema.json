@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/HealthReport",
+  "$defs": {
+    "HealthReport": {
+      "readOnly": true,
+      "title": "HealthReport",
+      "description": "Developer Portal health/liveness as typed data: a pure deterministic state projection (no wall clock, no randomness, deterministic key order).",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "service": {
+          "type": "string",
+          "const": "epoch.developer-portal-host"
+        },
+        "status": {
+          "type": "string",
+          "const": "ready"
+        },
+        "listingCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "listingsByLifecycle": {
+          "readOnly": true,
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "publishedVersionCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "adoptedGrantCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "adoptedRevocationCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "adoptedRevenueCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "adoptedBillingAccountCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "registrySize": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "eventCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "service",
+        "status",
+        "listingCount",
+        "listingsByLifecycle",
+        "publishedVersionCount",
+        "adoptedGrantCount",
+        "adoptedRevocationCount",
+        "adoptedRevenueCount",
+        "adoptedBillingAccountCount",
+        "registrySize",
+        "eventCount"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:developer-portal:health-report:1.0.0"
+}

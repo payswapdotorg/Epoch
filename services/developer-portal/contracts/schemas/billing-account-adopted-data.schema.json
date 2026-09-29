@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "readOnly": true,
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "pattern": "^billing-account:[a-z0-9][a-z0-9-]{0,54}$"
+    },
+    "accountDigest": {
+      "$ref": "#/$defs/Sha256Hex"
+    },
+    "currency": {
+      "$ref": "#/$defs/CurrencyCode"
+    }
+  },
+  "required": [
+    "accountId",
+    "accountDigest",
+    "currency"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "title": "CurrencyCode",
+      "description": "ISO 4217 currency code (three uppercase letters)."
+    }
+  },
+  "$id": "urn:epoch:developer-portal:billing-account-adopted-data:1.0.0"
+}

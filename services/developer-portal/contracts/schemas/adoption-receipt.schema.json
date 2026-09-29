@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/AdoptionReceipt",
+  "$defs": {
+    "AdoptionReceipt": {
+      "readOnly": true,
+      "title": "AdoptionReceipt",
+      "description": "Receipt of a Developer Portal analytics-record adoption (W023 grant/revocation/revenue, W024 billing account): the adopted record id, its kind, and the idempotency marker.",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "recordId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "recordKind": {
+          "type": "string",
+          "enum": [
+            "entitlement-grant",
+            "entitlement-revocation",
+            "revenue-record",
+            "billing-account"
+          ]
+        },
+        "duplicate": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "recordId",
+        "recordKind",
+        "duplicate"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "urn:epoch:developer-portal:adoption-receipt:1.0.0"
+}
