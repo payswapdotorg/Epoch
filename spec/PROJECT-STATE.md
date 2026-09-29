@@ -1,6 +1,6 @@
 # Epoch Project State
 
-Architecture: E1.0 / X1.0 (ACR-001 + ACR-002 + ACR-003 targets pending lock transition)
+Architecture: E1.0/X1.0 base lock with ACR-001/002/003 targets DELIVERED (W036-W044) and ACR-004 approved — lock reconciliation recorded 2026-09-29 (this PR)
 Work Order schema: WO1.0
 Default branch: main
 Max concurrent workers: 3
@@ -18,8 +18,8 @@ Current frontier:
 - W007 COMPLETE (PR #16, squash 000fcdd7; reviewed head 01b59838; 270 new tests: 135 capability-registry + 135 adapter-sdk; 95 files, 100% in owned trees; 7/7 review gates + independent battery reproduction)
 - Foundation maintenance COMPLETE (PR #17, squash 5a5a1e24: wave-3 lockfile reconcile, +71/-0, 2 new importers)
 - W008 COMPLETE (PR #22, squash 24eb076c; reviewed head fd1ba567; CI run 69 success; 146 files in owned trees; 284 new tests reported)
-- W009/W011 ACTIVE — wave 4, two workers remaining; W010 waits on W009; W012/W013 wait on W011
-- W010 WAITING_ON_DEPENDENCIES (needs W009); all others WAITING_ON_DEPENDENCIES
+- PROGRAM COMPLETE 44/44: W001-W044 all merged (final W025, PR #93 squash cfaf5c42 + reconcile 5e9f1bea; main db06e384). Frontier drained; no work order in flight.
+- W045 (Autonomous Role & Capability Discovery) defined by ACR-004; all its dependencies complete; ELIGIBLE at this PR's merge
 - PR #21 merged (squash b2bebc38): ACR-001 approved architecture target and W036-W044 delivery program added
 - Foundation maintenance COMPLETE (PR #24, squash 803a1989): post-W008 pnpm-lock.yaml reconcile
 - Architect architecture PR #27 MERGED (squash 8bfd14a7): universal lifecycle + Solution Navigator + domain-pack contract + delivery Work Order reconciliation
@@ -54,7 +54,7 @@ ACR-001/ACR-002/ACR-003 are not effective for new implementation yet. The curren
 
 W036-W044 are defined and dependency-gated; none is currently authorized.
 
-Current main head: e09f530926e4fa2c0e7de317a86d6d13013559f8.
+Current main head at review-rebase: db06e384 (44/44 governance advance). The PR's original base 34081bff was stale (pre-endgame); stale-base artifacts stripped in review.
 
 Every merge must update this file before advancing.
 
@@ -129,3 +129,17 @@ Target clarification: the universal lifecycle is Understand -> Decide -> Plan ->
 - Frontier (W021 complete): eligible unchanged — W017/W018/W019/W022/W024/W026/W027/W037/W038/W041. W022 (Action Gateway) is the critical-path gate for W029/W030/W031. Platform: GLM-5.3 capacity window rotated ~05:53Z — W022's 05:49:48Z landing (chat f0a637dc, SENT-VERIFIED) was reaped by the rotation; backend probe DOWN at 07:01:59Z; §16 hourly probe watch armed (freeze_probe_watch, next ~08:02Z); W022 re-dispatch is the first action on HEALTHY, then W037 paced +15 min.
 - W022 COMPLETE (PR #65, squash ec1d9ace76; reviewed head dd9f97c5; 49 files 100% in owned trees packages/action-policy + services/action-gateway; battery 118/118; CI 2x success; 4 non-blocking architecture questions recorded in the merge commit). Post-W022 reconcile PR #66 (3c7e3590). 22/44; W029/W030 newly eligible. Worker dispatched 07:44Z, delivered 09:22Z (~98 min through a capacity-era stream wedge — GitHub was the completion oracle).
 - W037 COMPLETE (PR #67, squash 6781701c06; worker head 6f02227 review-rebased to fb2acde — stale-base artifacts stripped; 159 files 100% in owned trees packages/procurement + services/procurement + contracts/procurement; battery 124/124; CI 2x success). Post-W037 reconcile PR #68. 23/44; W038 newly dispatchable (W039 needs W037+W038; W043 needs W038). Worker dispatched 09:32Z via sandbox-protected chat b4346e62, delivered 11:11Z (~99 min). Governance invariant fix ebdbdf7 (program-state active/completed/lastMergeSha — missed in c2318b6, CI had green-washed the direct push).
+
+## ACR-004 — Autonomous role and ecosystem discovery (2026-09-27)
+- Approved architecture addition: universal Role & Capability Discovery Plane.
+- Canonical contracts: spec/autonomous-role-capability-discovery.md and spec/capability-contribution-contract.md.
+- W045 is the sole implementation entry point.
+- Discovery has two streams: problem-driven capability/role discovery and scheduled ecosystem discovery (weekly default).
+- External source adapters may scan model registries, code repositories, research indexes and engineering software catalogs. Untrusted artifacts remain outside the Epoch trust domain until sandbox/profile/security/evaluation gates pass.
+- Domain packs contribute reusable role/capability-demand templates and evaluation suites, but the universal discovery plane owns task-specific organization construction.
+- W045 was blocked pending the formal successor architecture lock reconciliation; that reconciliation is RECORDED in this PR (see the lock-transition section in spec/architecture-lock.md). W045 becomes ELIGIBLE at merge.
+
+## Program completion + architecture lock transition (2026-09-29, Tech Lead)
+- W038-W044 endgame merges (after the wave-11 narrative above): W038 (PR #69), W039 (PR #70-class), W040, W041 (PR #72-class), W042 (PR #84), W017/W018 (desktop/mobile clients), W026/W027 (construction + software packs), W029/W031/W032 (adapters, E2E slices, integration harness), W033 (PR #85), W043 (PR #86), W034 (PR #87), W035 (PR #88), W019 (PR #89), W044 finale (PR #90), W024 (PR #91), W030 (PR #92, Lead salvage merge), W025 final (PR #93). All 7-gate reviewed with lockfile reconciles; final governance advance db06e384: 44/44 PROGRAM COMPLETE, frontier drained. Verification baseline at completion: battery 220/220 turbo tasks on the W025 merge tree.
+- ACR-001/002/003 lock transition RECORDED (spec/architecture-lock.md): targets delivered via W036-W044 and effective for all new implementation; E1.0/X1.0 numbered invariants remain binding.
+- ACR-004 ratified by Tech Lead review (this PR): universal Role & Capability Discovery Plane; W045 ELIGIBLE (all dependencies complete). Frontier after this merge: eligible [W045], nothing in flight, nothing blocked.

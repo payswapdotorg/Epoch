@@ -51,6 +51,7 @@ The Tech Lead derives the live frontier from dependencies. Up to three READY ite
 | W042 | Provider-neutral external event bridge + optional Aurum Chat adapter | W007,W010,W036,W041 | packages/external-event-bridge/*, adapters/aurum-chat/*, contracts/external-event-bridge/*, docs/integrations/aurum-chat/* |
 | W043 | Delivery supervision + alerts | W020,W022,W036,W038 | packages/supervision/*, services/supervision/*, packages/alerts/*, contracts/supervision/* |
 | W044 | Delivery-to-learning construction E2E fixture | W026,W031,W037,W038,W039,W040,W041,W042,W043 | examples/delivery-e2e/*, tests/delivery-e2e/*, docs/delivery-e2e/* |
+| W045 | Autonomous Role & Capability Discovery: capability-demand compiler, role proposals, organization search, external model/capability discovery, scheduled ecosystem scan | W002,W003,W004,W006,W007,W009,W010,W011,W020 | packages/capability-discovery/*, services/capability-discovery/*, contracts/capability-discovery/*, docs/capability-discovery/* |
 
 ## Approved successor architecture program
 
@@ -81,3 +82,13 @@ Every domain pack must conform to spec/domain-pack-contract.md, bind to the univ
 
 ## Capability-foundation acceptance
 Every third-party foundation integration must conform to spec/capability-foundation-policy.md. Provider-native files/projects remain linked artifacts, not the Epoch semantic database. Any fork requires ACR approval plus documented license/dependency, security/isolation, divergence, upstream/reintegration, update and exit planning.
+
+## ACR-004 autonomous discovery program
+
+ACR-004 introduces the universal Role & Capability Discovery Plane defined in spec/autonomous-role-capability-discovery.md and the universal contribution boundary in spec/capability-contribution-contract.md.
+
+W045 is the implementation entry point. It intentionally unifies problem-driven organization search and scheduled ecosystem discovery because both streams share capability-demand, candidate-evaluation, provenance and promotion machinery.
+
+Problem-driven discovery handles concrete capability gaps in a task/project. Ecosystem-driven discovery runs on a schedule (weekly by default) and scans authorized public/private sources through adapters. No source, model or provider becomes a kernel dependency.
+
+W045 is gated by its dependency set and by the explicit architecture-lock transition for successor architecture. It must not disturb currently in-flight Work Orders.
