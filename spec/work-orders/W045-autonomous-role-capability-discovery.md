@@ -1,6 +1,6 @@
 # W045 — Autonomous Role & Capability Discovery
 
-Status: READY_AFTER_DEPENDENCIES
+Status: AUTHORIZED (base 8569b09a, 2026-09-29)
 Wave: successor architecture
 Depends On: W002, W003, W004, W006, W007, W009, W010, W011, W020
 Worker Count: 1
