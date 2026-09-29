@@ -1,10 +1,12 @@
 {
   "architectureVersion": "E1.0",
   "experienceVersion": "X1.0",
-  "workOrderVersion": "WO1.0",
+  "workOrderVersion": "WO2.0",
   "defaultBranch": "main",
   "maxConcurrentWorkers": 3,
-  "active": [],
+  "active": [
+    "W046"
+  ],
   "completed": [
     "W001",
     "W002",
@@ -52,7 +54,12 @@
     "W044",
     "W045"
   ],
-  "blocked": [],
-  "lastMergeSha": "4332228c422c7677f2eeff2476629f753154faec",
-  "lastAction": "W045 COMPLETE (PR #95 squash 4332228c; reviewed head 8e357361; battery reproduced exactly; 7-gate all green) + lockfile reconcile PR #96 (1ddb200d). 45/45 \u2014 W001-W044 delivery program + ACR-004/W045. ROADMAP COMPLETE; frontier drained."
+  "blocked": [
+    "W047",
+    "W048",
+    "W049",
+    "W050"
+  ],
+  "lastMergeSha": "6912e4af4bab7a77e43d835b6bfc573aacee81f6",
+  "lastAction": "ACR-005 EFFECTIVE; W046 AUTHORIZED as sole initial worker. After W046 merge + Tech Lead reconciliation, W047/W048/W049 unlock concurrently; W050 unlocks after all three."
 }

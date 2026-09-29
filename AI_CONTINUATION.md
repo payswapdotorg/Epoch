@@ -1,35 +1,88 @@
-# Epoch Stateless Continuation
+# Epoch Stateless Continuation — CURRENT
 
-Fresh-session rule: recover the project from repository state and live GitHub state only.
+Fresh-session rule: recover project state from repository state and live GitHub state only.
 
-Current:
-- default branch: main
-- architecture lock: E1.0 / X1.0
-- work-order schema: WO1.0
-- maximum concurrent workers: 3
-- current authorized item: W029
-- current main head: 34081bff7a84b15c9d81a9d89bd0df0a70d0f470
-- PR #21 merged: ACR-001 target architecture and W036-W044 delivery program recorded
-- PR #22 merged: W008 Extension SDK + Wasm
-- PR #24 merged: post-W008 lockfile reconciliation
-- PR #27 merged: universal Solution Navigator, lifecycle and domain-pack architecture
-- PR #29 merged: Capability Foundation Policy and upstream integration/fork governance
-- ACR-004 branch prepared against live main; supersedes stale PR #75
+## Current authoritative baseline
 
-Approved architecture change:
-- ACR-001 + ACR-002 + ACR-003 approved 2026-09-24.
-- ACR-004 approved 2026-09-27.
-- Target adds live Solution Delivery, Program of Work, universal Acquire/Realize actualization, outcome learning/calibration, fine-grained access projections, supervision/alerts and an optional provider-neutral External Event Bridge with an Aurum Chat reference adapter. Universal lifecycle and domain-pack/Navigator rules are canonical in spec/universal-solution-lifecycle.md, spec/domain-pack-contract.md and spec/solution-navigator-architecture.md. Capability foundation and upstream/fork policy is canonical in spec/capability-foundation-policy.md and spec/architecture-change-requests/ACR-003-capability-foundations.md. Autonomous discovery is canonical in spec/autonomous-role-capability-discovery.md and spec/capability-contribution-contract.md.
-- ACR-001/ACR-002/ACR-003 targets are recorded but not effective for new implementation until W009/W011 are stabilized and the lock transition is recorded.
-- W036-W044 continue according to live dependency state; W045 is blocked pending formal architecture-lock reconciliation.
+- main baseline: 6912e4af4bab7a77e43d835b6bfc573aacee81f6
+- W001-W045 complete: 45/45
+- architecture: E1.0/X1.0 with ACR-001/002/003/004 effective
+- successor program: ACR-005 / WO2.0
+- max concurrent workers: 3
+- current work: W046 authorized/active
+- W047/W048/W049/W050 blocked by dependency
 
-Recovery rule:
-After the current wave is merged and reconciled, the Architect/Tech Lead must do not authorize W045 until the applicable successor architecture lock/reconciliation state is explicit. Then re-derive READY items from the dependency graph and select at most three pairwise-disjoint work orders. W036 is the sole entry point to the delivery program; its descendants must not bypass it.
+## Recovery reading order
 
-Aurum rule:
-Aurum Chat is optional. Epoch must remain complete for manual, file, and other-provider observation and communication paths. Never place Aurum-specific types in Epoch kernel contracts.
+1. AGENTS.md
+2. spec/architecture-lock.md
+3. spec/architecture-change-requests/ACR-005-productization-native-clients.md
+4. spec/productization-architecture.md
+5. spec/journey-validation.md
+6. spec/PROJECT-STATE.md
+7. spec/work-items.md
+8. spec/dependency-graph.md
+9. spec/worker-runbook.md
+10. assigned Work Order
+11. live GitHub state
 
-docs/LLM-ARCHITECT-HANDOFF.md supplements but never overrides the architecture lock, Work Orders, actual Git ancestry, and verified CI/evidence.
+## Dispatch
+
+W046 first.
+
+After W046 acceptance and any required lockfile reconciliation:
+W047 | W048 | W049 concurrently.
+
+After all three merge:
+W050.
+
+One Work Order = one branch = one PR. Workers never merge. Maximum three concurrent workers. Concurrent surfaces must be pairwise-disjoint. Root manifests/lockfiles are serial Tech Lead work.
+
+## Productization reality
+
+apps/web is not yet the finished product.
+apps/desktop is a typed reference host, not a downloadable native app.
+apps/mobile is a typed reference host, not a downloadable native app.
+
+W047/W048/W049 must turn these into real products and execute the visible UI journeys defined in spec/journey-validation.md.
+
+## Product journey rule
+
+A passing unit/integration suite is necessary but insufficient.
+
+Every platform run follows:
+Observe -> record -> reproduce -> regression test -> fix -> rerun -> close.
+
+Journey evidence lives under docs/journeys/. Large binary traces stay in CI artifacts.
+
+## Architecture invariants
+
+World Model = semantic authority.
+Solution/Delivery/ProgramOfWork = their existing authoritative records.
+Constraint Engine = constraint authority.
+Action Gateway = execution authority.
+Simulation = prediction.
+Evaluation = judgment.
+Verification/Evidence = proof.
+Experience/client state = projection.
+Local cache/queue = replay/session/projection only.
+
+No second lifecycle, semantic ledger, or client authority.
+
+## Platform choices
+
+Web: existing Next.js/React.
+Desktop: Tauri 2 around W017.
+Mobile: Expo + React Native around W018.
+
+Platform toolchains are adapters, not semantic authorities.
+
+## Scope discipline
+
+W045 advisory questions are not part of ACR-005.
+Any new semantic subsystem requires a new ACR + Work Order program.
+
+Git + CI + journey evidence, not chat, is the completion oracle.
 
 
-Domain-pack rule: future packs must adapt the universal lifecycle and expose domain schedules/BOQs/BOMs/roadmaps as projections. They may not create parallel lifecycle, baseline, delivery, actualization, verification or learning authorities.
+Historical recovery notes from earlier waves remain in PROJECT-STATE.md and Git history.

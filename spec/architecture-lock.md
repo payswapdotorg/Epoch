@@ -63,3 +63,14 @@ An Architecture Change Request requires impact analysis, revised acceptance crit
 - External discovery may enrich candidate capability knowledge but may not alter authoritative state merely from external claims.
 - Untrusted model/code artifacts remain outside the Epoch trust domain until applicable sandbox/security gates pass.
 - Discovery does not grant execution authority.
+
+
+## ACR-005 — Productization, Native Clients & Journey Validation
+
+ACR-005 is EFFECTIVE (2026-09-29). It introduces no semantic authority. It productizes the existing architecture through one client-facing Application Gateway, authoritative persistence adapters, the canonical web application, native desktop/mobile hosts, release automation and mandatory real-product journey validation.
+
+Binding implementation: W046-W050. W046 freezes shared client/runtime contracts; W047/W048/W049 are pairwise-disjoint platform implementations; W050 is serialized cross-platform hardening and release closure.
+
+Platform technologies are adapters, not semantic authorities: Next.js/React remains the canonical web client; Tauri 2 hosts desktop; Expo/React Native hosts mobile. E1.0/X1.0 authority invariants remain binding.
+
+A client cache/queue is projection/replay state only. A UI/native host may not become a second World, Solution, Delivery, Verification or Learning authority. Journey closure requires a built/running artifact plus reproduce -> regression test -> fix -> rerun evidence.

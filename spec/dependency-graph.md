@@ -60,3 +60,23 @@ Shared contracts are sequenced before consumers. Concurrent workers never edit t
 
 ## Universal domain-pack rule
 W026/W027 and every future domain pack depend on W036 for the universal lifecycle contracts. They may not proceed with a local lifecycle authority. Domain specialization is validated against `spec/domain-pack-contract.md`.
+
+# ACR-005 Productization Graph
+
+W001-W045 -> W046
+W046 -> W047/W048/W049
+W047/W048/W049 -> W050
+
+## Safe concurrency
+
+W047 | W048 | W049
+
+W050 is serialized after all three client work orders complete.
+
+## No-rebase invariant
+
+W046 freezes the Application Gateway/client-runtime contract before W047-W049. W047/W048/W049 own disjoint client surfaces. Root manifests/lockfiles remain Tech Lead-owned serial work. W050 is the only cross-platform implementation owner after all three client workers merge.
+
+## Journey invariant
+
+A client Work Order closes only after real-product journey evidence passes and discovered P0/P1 defects are fixed and rerun. W050 closes cross-platform/release defects.
