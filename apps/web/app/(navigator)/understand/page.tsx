@@ -1,9 +1,8 @@
-import { referenceShell } from '../../../src/shell/bootstrap';
-import { NavigatorStageRoute, stageMetadata } from '../../../src/shell/route-surfaces';
+import { StageRoute } from '../../../src/product/stage-route';
 
-export const metadata = stageMetadata('understand');
+export const metadata = { title: 'Understand — Epoch' };
 
-/** The 'understand' navigator stage route: the shell frame with empty mounted surfaces. */
+/** The 'understand' navigator stage route. */
 export default function Page() {
-  return <NavigatorStageRoute shell={referenceShell} stage="understand" />;
+  return <StageRoute stage="understand" />;
 }

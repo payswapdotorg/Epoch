@@ -1,9 +1,8 @@
-import { referenceShell } from '../../../src/shell/bootstrap';
-import { NavigatorStageRoute, stageMetadata } from '../../../src/shell/route-surfaces';
+import { StageRoute } from '../../../src/product/stage-route';
 
-export const metadata = stageMetadata('observe');
+export const metadata = { title: 'Observe / Actualize — Epoch' };
 
-/** The 'observe' navigator stage route: the shell frame with empty mounted surfaces. */
+/** The 'observe' navigator stage route. */
 export default function Page() {
-  return <NavigatorStageRoute shell={referenceShell} stage="observe" />;
+  return <StageRoute stage="observe" />;
 }

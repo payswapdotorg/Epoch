@@ -1,9 +1,8 @@
-import { referenceShell } from '../../../src/shell/bootstrap';
-import { NavigatorStageRoute, stageMetadata } from '../../../src/shell/route-surfaces';
+import { StageRoute } from '../../../src/product/stage-route';
 
-export const metadata = stageMetadata('verify');
+export const metadata = { title: 'Verify — Epoch' };
 
-/** The 'verify' navigator stage route: the shell frame with empty mounted surfaces. */
+/** The 'verify' navigator stage route. */
 export default function Page() {
-  return <NavigatorStageRoute shell={referenceShell} stage="verify" />;
+  return <StageRoute stage="verify" />;
 }

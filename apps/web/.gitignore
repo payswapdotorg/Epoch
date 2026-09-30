@@ -1,0 +1,8 @@
+# Build output
+.next/
+out/
+
+# Playwright: binary traces/screenshots + run results stay local (the
+# journey EVIDENCE is the committed record set under qa/web/ + the specs;
+# large binary traces are never committed per docs/journeys/README.md).
+e2e-results/

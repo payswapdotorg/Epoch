@@ -2,7 +2,7 @@
   "name": "@epoch/web",
   "version": "0.0.0",
   "private": true,
-  "description": "Epoch web app shell (W014): the composition layer that hosts projections — navigation frame, tenant/session providers, typed feature mounting points, and App Router wiring. The shell adds no domain model of its own (architecture lock rules 8/16).",
+  "description": "Epoch web product (W047, ACR-005): the canonical usable Epoch web client. The app layer hosts the Application Gateway transport (every server-facing mutation flows through Gateway envelopes over the frozen @epoch/client-runtime vocabulary \u2014 never kernel internals), projects the World Model, unknowns/evidence, capability discovery, solution decide/approve, Program of Work/BOQ, acquisition, delivery/realization, verification, forecast, marketplace/developer surfaces, the offline queue with idempotent replay, and cross-device handoff. The web app adds no domain model of its own (architecture lock rules 8/16).",
   "epoch": {
     "layer": "app"
   },
@@ -12,25 +12,43 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@epoch/action-gateway": "workspace:*",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/alerts": "workspace:*",
+    "@epoch/application-gateway": "workspace:*",
+    "@epoch/authentication": "workspace:*",
+    "@epoch/authorization": "workspace:*",
+    "@epoch/client-runtime": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/object-storage": "workspace:*",
+    "@epoch/persistence": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/procurement": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/supervision": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "@epoch/world-model": "workspace:*",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
   },
   "devDependencies": {
-    "@epoch/authorization": "workspace:*",
     "@epoch/eslint-config": "workspace:*",
     "@epoch/experience-compiler": "workspace:*",
     "@epoch/experience-protocol": "workspace:*",
-    "@epoch/identity": "workspace:*",
-    "@epoch/tenancy": "workspace:*",
     "@epoch/tsconfig": "workspace:*",
+    "@playwright/test": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "eslint": "catalog:",
+    "playwright": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }
