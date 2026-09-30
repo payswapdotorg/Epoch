@@ -33,7 +33,6 @@
     }
   },
   "include": [
-    "../../qa/desktop/**/*.ts",
     "app/**/*.ts",
     "app/**/*.tsx",
     "next-env.d.ts",
@@ -49,9 +48,7 @@
     "node_modules",
     "out",
     ".next",
-    "src-tauri/target",
-    "../../qa/desktop/wdio.desktop.conf.ts",
-    "../../qa/desktop/e2e/tauri.spec.ts"
+    "src-tauri/target"
   ]
 }
 

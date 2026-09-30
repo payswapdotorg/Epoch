@@ -12,8 +12,8 @@
     "./native": "./src/native/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json",
-    "lint": "eslint . && cd ../../qa/desktop && eslint . --config eslint.config.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p ../../qa/desktop/tsconfig.json",
+    "lint": "eslint . && node scripts/link-qa-harness.mjs && cd ../../qa/desktop && eslint . --config eslint.config.mjs",
     "test": "vitest run",
     "dev": "next dev -p 4310",
     "build": "node scripts/sync-fixtures.mjs && next build",
@@ -28,8 +28,8 @@
     "sync-fixtures": "node scripts/sync-fixtures.mjs",
     "audit:toolchain": "node scripts/check-toolchain.mjs",
     "desktop:journeys": "vitest run ../../qa/desktop/journeys/desktop-journeys.test.ts",
-    "e2e:web": "playwright test -c ../../qa/desktop/e2e/playwright.config.ts",
-    "e2e:tauri": "wdio run ../../qa/desktop/wdio.desktop.conf.ts"
+    "e2e:web": "node scripts/link-qa-harness.mjs && playwright test -c ../../qa/desktop/e2e/playwright.config.ts",
+    "e2e:tauri": "node scripts/link-qa-harness.mjs && wdio run ../../qa/desktop/wdio.desktop.conf.ts"
   },
   "dependencies": {
     "@epoch/action-gateway": "workspace:*",
