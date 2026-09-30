@@ -7,8 +7,8 @@ Work Order schema: WO2.0.
 Default branch: main.
 Current main baseline before ACR-005 program: 6912e4af4bab7a77e43d835b6bfc573aacee81f6.
 W001-W045: COMPLETE (45/45).
-Current frontier: W046 ACTIVE; W047/W048/W049/W050 dependency-blocked.
-After W046 acceptance + Tech Lead reconciliation: W047/W048/W049 become concurrently dispatchable.
+Current frontier: W047/W048/W049 ELIGIBLE (concurrent, disjoint surfaces); W050 blocked until all three merge.
+W046 complete (2026-09-30): PR #100 -> a4990a6b + reconcile PR #101 -> 648f1f5b; dispatch base for the client wave = 648f1f5b.
 After W047/W048/W049: W050 becomes dispatchable.
 Maximum concurrent workers: 3.
 
@@ -116,3 +116,10 @@ Historical state and verification notes follow.
 - W045 (Autonomous Role & Capability Discovery): PR #95 squash-merged -> 4332228c; reviewed head 8e357361; reconcile PR #96 -> 1ddb200d. 7-gate ALL GREEN with exact battery reproduction (typecheck 77/77, lint 74/74, test 77/77, build 3/3; kernel 191 tests/16 files, service 19/4). Delivers: universal capability-demand compiler, role synthesis, candidate resolution over real W003/W007/human surfaces, capability-gap lifecycle, organization composition + evaluation, content-addressed discovery-run lineage with full re-derivation verification, ecosystem stream + scheduler contract, ingestion/promotion boundary, proposal mechanism, provider-neutral source-adapter seam. Runtime deps exactly per pin. In-chat stream froze client-side (W021 pattern — sandbox loop delivered; GitHub = completion oracle).
 - 4 advisory architecture questions recorded in the merge body (scheduler run-history; per-claim evidence digests; representation-kind richness; composition search).
 - Frontier drained: eligible/inFlight/blocked all empty. W001-W044 delivery program + ACR-004/W045 = ROADMAP COMPLETE (45/45). All four ACRs effective. Post-program: archive worker chats/sandboxes, final worklog closure. New work requires a new ACR + Work Order program per the architecture lock.
+
+## W046 complete — ACR-005 productization runtime delivered (2026-09-30, Tech Lead)
+- W046 (Shared Product Runtime + Application Gateway): PR #100 squash-merged -> a4990a6b (worker head 547d8f22, dispatch base c538fb7fcd verified unstale). 7-gate ALL GREEN: 143 files 100% in the nine owned trees (+13,802/-0); 0 secrets; governance+boundary PASS; independent battery exact match (typecheck 82/82, lint 79/79, test 82/82, build 3/3; +224 new tests); CI 4/4 on the head; report complete with advisory questions + honest limitations.
+- Delivers: the frozen 32-operation Application Gateway vocabulary + envelopes (contracts/application-gateway emitted W045-style: manifest + 33 schema digests + parity); @epoch/client-runtime (error taxonomy, correlation, typed IdempotentReplay, offline admission with the 5 named negatives, projection cache); @epoch/authentication (session seam over identity/authorization kernels); @epoch/persistence (provider-neutral SPI + in-memory + PostgreSQL adapter + shared 14-case conformance + golden-SQL corpus); @epoch/object-storage (digest-addressed SPI); @epoch/application-gateway service (authority map walk-test-enforced over 24 existing kernels, idempotency/session/correlation durable bindings, pg service-layer-only boundary, deterministic construction/software fixtures + J07/J08/J11 scripts); docs/product-runtime complete.
+- Worker-side discovery: PR #99's catalog pins were doc-only (never landed in pnpm-workspace.yaml). Resolved protocol-cleanly by the worker (driver-neutral zero-dep seams + real-engine proof in a throwaway replica) and remediated by the Lead in PR #101 (catalog entries + pglite devDep + lockfile reconcile + post-reconcile guard + CI timeouts): frozen install re-armed (PASS), pglite real-engine suite LIVE (3/3 against real embedded PostgreSQL, zero code changes).
+- 5 advisory questions recorded in the PR #100 merge body (catalog gap remediation; frozen-install protocol for new-package PRs; delegation-contract depth for 9 operations — deep happy paths deferred to W047+ wiring; event-log read-only design; policy-contracts devDep parity).
+- Program: 46/50. Frontier: W047/W048/W049 eligible concurrently (client trees are disjoint); W050 serialized after all three. Client wave dispatch base: 648f1f5b.
