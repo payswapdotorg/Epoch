@@ -1,8 +1,8 @@
 {
   "baselineSha": "6912e4af4bab7a77e43d835b6bfc573aacee81f6",
-  "status": "ACR005_W046_AUTHORIZED",
-  "next": "W046 is sole authorized worker. After W046 merge + reconciliation dispatch W047/W048/W049 concurrently. After all three merge dispatch W050 for final cross-platform release/journey closure.",
+  "status": "ACR005_W046_COMPLETE_W047_W049_AUTHORIZED",
+  "next": "W047/W048/W049 dispatchable concurrently (disjoint surfaces; max 3 workers). After all three merge + Tech Lead reconciliation, dispatch W050 (final cross-platform release + journey closure; the only WO that may edit all three client trees).",
   "verification": "Repository-level ACR-005, productization architecture, journey-validation contract, W046-W050 Work Orders and dependency state are authoritative.",
-  "lastMergeSha": "6912e4af4bab7a77e43d835b6bfc573aacee81f6",
-  "lastAction": "ACR-005 effective; W046 authorized."
+  "lastMergeSha": "648f1f5b13c2263d6cbd13cde01ccd87e76f8770",
+  "lastAction": "W046 merged (a4990a6b, PR #100) + lockfile reconcile/catalog intake (648f1f5b, PR #101); 7-gate all green."
 }
