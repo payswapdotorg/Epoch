@@ -1,0 +1,1295 @@
+{
+  "description": "W048 desktop journey records (headless product-logic runs over the embedded gateway + real fixtures)",
+  "records": [
+    {
+      "journeyId": "J01",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "authenticate (session.issue)",
+        "enter the project (context.resolve + world.snapshot)",
+        "record the W017 shell session snapshot"
+      ],
+      "expectedOutcome": "session issued; project node resolved; world digest equals the fixture registry digest; W017 shell session snapshot recorded",
+      "observedOutcome": "session=true; worldDigest=52b9c01cd891b37ed96c8226ed0c969bd08c57ba6e0d0cdb9a0e2c656ff2e33f; registry=52b9c01cd891b37ed96c8226ed0c969bd08c57ba6e0d0cdb9a0e2c656ff2e33f; shellSnapshot=true",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j01"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J01, construction)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Onboard/project entry) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j01-1-authenticate",
+          "action": "session.issue",
+          "expected": "a session issues from the fixture authentication result",
+          "observed": "session issued",
+          "result": "pass"
+        },
+        {
+          "stepId": "j01-2-enter-project",
+          "action": "context.resolve + world.snapshot",
+          "expected": "the project node resolves and the world digest matches the fixture registry",
+          "observed": "node=project worldDigest=52b9c01cd891b37ed96c8226ed0c969bd08c57ba6e0d0cdb9a0e2c656ff2e33f",
+          "result": "pass"
+        },
+        {
+          "stepId": "j01-3-shell-session",
+          "action": "W017 shell session-open + window-open + snapshot",
+          "expected": "the W017 shell records a content-addressed session snapshot",
+          "observed": "snapshotDigest=787f1da7d8fe67bfdaaf7bf4863fa42fe24268ed15fc55a4bb927c4c739f0d15",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J02",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "inspect the world (world.entities + world.snapshot)",
+        "read the fixture evidence (evidence.get)",
+        "intake new evidence (evidence.intake)"
+      ],
+      "expectedOutcome": "world entities + fixture evidence render; new evidence intakes with an authority-computed digest",
+      "observedOutcome": "entities=8; intake=ok; unknowns=1",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j02"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J02, construction)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Understand/reconstruct, inspect known/unknowns, acquire missing information) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j02-1-inspect",
+          "action": "world.entities + world.snapshot + evidence.get",
+          "expected": "entities project; the fixture evidence record resolves",
+          "observed": "entities=8",
+          "result": "pass"
+        },
+        {
+          "stepId": "j02-2-intake",
+          "action": "evidence.intake",
+          "expected": "new evidence bytes are digested by the authority (digest recomputed server-side)",
+          "observed": "objectDigest=cde56892bbeb…",
+          "result": "pass"
+        },
+        {
+          "stepId": "j02-3-known-unknowns",
+          "action": "known/unknown inspection",
+          "expected": "the view model separates knowns from unknowns",
+          "observed": "unknowns=1",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J03",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "run problem-driven capability/role discovery (discovery.run)"
+      ],
+      "expectedOutcome": "discovery.run answers through the capability-discovery authority",
+      "observedOutcome": "run recorded (runId=null…)",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j03"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J03, construction)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Capability/role discovery and organization composition) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j03-1-discovery-run",
+          "action": "discovery.run",
+          "expected": "the discovery authority answers with a run record (no hard-coded model->role mapping)",
+          "observed": "runId=null",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J04",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "evaluate the constraint",
+        "validate the verification chain",
+        "submit the action proposal",
+        "approve it (human approval)",
+        "execute it through the Action Gateway",
+        "read the action status"
+      ],
+      "expectedOutcome": "constraint + verification evaluate; the action submits, gains human approval, executes and reports status — all through the Action Gateway",
+      "observedOutcome": "submitted -> approved -> executed; status=executed",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j04"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J04, construction)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Alternatives, constraints, evaluation, verification and Action Gateway approval) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j04-1-constraints",
+          "action": "constraints.evaluate",
+          "expected": "the constraint authority evaluates the compiled constraint",
+          "observed": "constraint evaluated",
+          "result": "pass"
+        },
+        {
+          "stepId": "j04-2-verification",
+          "action": "verification.validateChain",
+          "expected": "the verification authority validates the chain",
+          "observed": "chain validated",
+          "result": "pass"
+        },
+        {
+          "stepId": "j04-3-action-cycle",
+          "action": "action.submit -> action.approve -> action.execute -> action.status",
+          "expected": "the action runs ONLY through the Action Gateway (submit -> human approval -> execute)",
+          "observed": "steps=submitted>approved>executed, status=executed",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J05",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "seal the solution version",
+        "approve the baseline",
+        "fold the program schedule/BOQ",
+        "seal + admit the procurement quote"
+      ],
+      "expectedOutcome": "solution re-seals to the fixture digest; baseline approves; schedule folds; the quote admits through the procurement authority",
+      "observedOutcome": "solutionDigest=dbcfae24405b92b0ce3d57d4c2e7d6a6529d305f74f41e9c3380a402745720c6; registry=dbcfae24405b92b0ce3d57d4c2e7d6a6529d305f74f41e9c3380a402745720c6; quantityRows=3; quoteId=quote:desktop-journey-steel",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j05"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J05, construction)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Program of Work, BOQ/domain schedule and acquisition/procurement) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j05-1-solution",
+          "action": "solution.sealVersion + solution.approveBaseline",
+          "expected": "the solution seals (digest matches the fixture) and the baseline approves",
+          "observed": "solutionDigest=dbcfae24405b…",
+          "result": "pass"
+        },
+        {
+          "stepId": "j05-2-schedule",
+          "action": "program.schedule",
+          "expected": "the BOQ/schedule folds project (quantity/cost/milestones)",
+          "observed": "quantityRows=3, milestones=2",
+          "result": "pass"
+        },
+        {
+          "stepId": "j05-3-procurement",
+          "action": "procurement.quote",
+          "expected": "the supplier quote seals + admits through the procurement authority",
+          "observed": "quoteId=quote:desktop-journey-steel",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J06",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "open the delivery record",
+        "intake two field observations",
+        "roll the forecast",
+        "validate the verification chain",
+        "close the delivery"
+      ],
+      "expectedOutcome": "delivery opens; two field observations intake; the forecast rolls; verification validates; the delivery closes",
+      "observedOutcome": "observations=2; closed=true",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j06"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J06, construction)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Realize, field observation, actualization, verification and forecast) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j06-1-open",
+          "action": "delivery.open",
+          "expected": "the delivery record opens through the solution-delivery authority",
+          "observed": "delivery opened",
+          "result": "pass"
+        },
+        {
+          "stepId": "j06-2-observe",
+          "action": "delivery.observe x2",
+          "expected": "both field observations intake through the execution-tracking authority",
+          "observed": "observations=2",
+          "result": "pass"
+        },
+        {
+          "stepId": "j06-3-forecast",
+          "action": "actualization.forecast",
+          "expected": "the rolling forecast computes through the actualization authority",
+          "observed": "forecast rolled",
+          "result": "pass"
+        },
+        {
+          "stepId": "j06-4-verify-close",
+          "action": "verification.validateChain + delivery.close",
+          "expected": "the chain validates and the delivery closes",
+          "observed": "closed=true",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J07",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "go offline",
+        "enqueue the field-observation intent",
+        "attempt the offline drain",
+        "reconnect and drain through the gateway",
+        "replay the same idempotency key",
+        "audit the durable store"
+      ],
+      "expectedOutcome": "pending projection survives offline; the drain fails transiently; reconnect drains exactly once; the replay returns the recorded outcome; no local semantic store",
+      "observedOutcome": "j07-1-enqueue=pass, j07-2-drain-offline=pass, j07-3-reconnect-drain=pass, j07-4-idempotent-replay=pass, j07-5-no-second-store=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j07"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J07, construction)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Offline work, queue, reconnect, idempotent sync) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j07-1-enqueue",
+          "action": "offline admission",
+          "expected": "the intent is admitted as a PENDING projection (never applied locally)",
+          "observed": "queueId=queue:construction-j07-1",
+          "result": "pass"
+        },
+        {
+          "stepId": "j07-2-drain-offline",
+          "action": "offline drain attempt",
+          "expected": "the drain fails transiently; the intent stays pending",
+          "observed": "stillPending=1",
+          "result": "pass"
+        },
+        {
+          "stepId": "j07-3-reconnect-drain",
+          "action": "queue drain through the gateway",
+          "expected": "the intent drains through the Action Gateway path with its idempotency key (exactly once)",
+          "observed": "drained=1, pending=0",
+          "result": "pass"
+        },
+        {
+          "stepId": "j07-4-idempotent-replay",
+          "action": "recovery.replay with the same key",
+          "expected": "the replay returns the RECORDED outcome (replayed: true) — never double-apply",
+          "observed": "status=drained, replayed=true",
+          "result": "pass"
+        },
+        {
+          "stepId": "j07-5-no-second-store",
+          "action": "durable store audit",
+          "expected": "the local durable store holds ONLY projection/queue records — no world/solution/delivery truth",
+          "observed": "projectionWrites=3, nonProjectionWrites=0",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J08",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "resolve the world snapshot",
+        "validate the session scope",
+        "admit the server projection into the cache",
+        "export/import the handoff descriptor"
+      ],
+      "expectedOutcome": "identical authoritative state across devices (digest equality with the registry); identical session scope; the server projection admits into the read-only cache",
+      "observedOutcome": "digestsMatch=true; cached=true",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j08"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J08, construction)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Cross-device handoff) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j08-1-world-digest",
+          "action": "world.snapshot",
+          "expected": "the desktop receives the SAME world digest as the web product (the fixture registry anchor)",
+          "observed": "digest=52b9c01cd891…",
+          "result": "pass"
+        },
+        {
+          "stepId": "j08-2-session-scope",
+          "action": "session.validate",
+          "expected": "the session scope (principal + tenant) is identical across devices",
+          "observed": "scope=tenant:nordstrand",
+          "result": "pass"
+        },
+        {
+          "stepId": "j08-3-projection-cache",
+          "action": "runtime.admitServerProjection",
+          "expected": "the local projection cache admits the server projection by digest (read-only, immutable)",
+          "observed": "cached=52b9c01cd891…",
+          "result": "pass"
+        },
+        {
+          "stepId": "j08-4-export-import",
+          "action": "native export/import handoff",
+          "expected": "the handoff descriptor exports through the file picker and re-imports with the same digest",
+          "observed": "covered by native-handoff test + E2E",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J09",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "run the supervision check over the fixture program + delivery",
+        "raise the supervision alert"
+      ],
+      "expectedOutcome": "the supervision pass evaluates over the fixture program/delivery; the alert raises through the alert authority",
+      "observedOutcome": "check ok; alertId=alert:desktop-journey-1",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j09"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J09, construction)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Agent supervision/intervention) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j09-1-supervision-check",
+          "action": "supervision.check",
+          "expected": "the supervision authority evaluates the pass over the fixture program + delivery",
+          "observed": "pass evaluated",
+          "result": "pass"
+        },
+        {
+          "stepId": "j09-2-alert",
+          "action": "alerts.raise",
+          "expected": "the alert authority raises the supervision alert",
+          "observed": "alertId=alert:desktop-journey-1",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J11",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "call without a session (expiry)",
+        "re-authenticate",
+        "go offline (connector failure)",
+        "retry online",
+        "submit an invalid action proposal",
+        "read the recovery event log"
+      ],
+      "expectedOutcome": "session expiry -> re-authentication; connector failure -> retry-with-backoff; retry succeeds; the authority rejection rides verbatim",
+      "observedOutcome": "j11-1-no-session=pass, j11-2-reauthenticate=pass, j11-3-connector-failure=pass, j11-4-retry-succeeds=pass, j11-5-authority-rejection=pass, j11-6-recovery-log=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j11"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J11, construction)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Recovery from network/session/input/action/connector/evidence failures) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j11-1-no-session",
+          "action": "call without a session",
+          "expected": "the typed auth-session-expired error surfaces; the recovery action is re-authenticate",
+          "observed": "auth-session-expired; action=re-authenticate",
+          "result": "pass"
+        },
+        {
+          "stepId": "j11-2-reauthenticate",
+          "action": "session.issue",
+          "expected": "a fresh session issues from the verified authentication result",
+          "observed": "session re-issued",
+          "result": "pass"
+        },
+        {
+          "stepId": "j11-3-connector-failure",
+          "action": "offline read",
+          "expected": "the transient error class surfaces; the recovery action is retry-with-backoff",
+          "observed": "transient/network-unavailable; action=retry-with-backoff",
+          "result": "pass"
+        },
+        {
+          "stepId": "j11-4-retry-succeeds",
+          "action": "retried call online",
+          "expected": "the retried call succeeds through the same bridge",
+          "observed": "project entered",
+          "result": "pass"
+        },
+        {
+          "stepId": "j11-5-authority-rejection",
+          "action": "invalid action proposal",
+          "expected": "the authority rejection surfaces with the authority error verbatim (never a client-local semantic error)",
+          "observed": "authority-rejected/authority-denied; action=surface-authority-rejection",
+          "result": "pass"
+        },
+        {
+          "stepId": "j11-6-recovery-log",
+          "action": "recovery event log",
+          "expected": "every failure maps to a typed recovery event",
+          "observed": "events=3",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J12",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "launch and work",
+        "snapshot + persist (close)",
+        "relaunch (restore session/queue)",
+        "check a compatible update",
+        "refuse an incompatible update",
+        "drain the surviving queue"
+      ],
+      "expectedOutcome": "launch -> work -> close -> relaunch restores session + queue; the compatible update passes; the incompatible one is refused; the queue drains exactly once after relaunch",
+      "observedOutcome": "j12-1-launch-work=pass, j12-2-close=pass, j12-3-relaunch-restore=pass, j12-4-update-compatible=pass, j12-5-update-refusal=pass, j12-6-queue-survives=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j12"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J12, construction)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Install -> launch -> work -> close -> relaunch -> update) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j12-1-launch-work",
+          "action": "authenticate + enter project",
+          "expected": "the product launches, authenticates and works (project entered)",
+          "observed": "worked",
+          "result": "pass"
+        },
+        {
+          "stepId": "j12-2-close",
+          "action": "session snapshot + persisted state",
+          "expected": "the session snapshot records; queue + session persist for relaunch",
+          "observed": "snapshot=true",
+          "result": "pass"
+        },
+        {
+          "stepId": "j12-3-relaunch-restore",
+          "action": "session/queue restore",
+          "expected": "the relaunch restores the session and the pending offline queue from durable state",
+          "observed": "session=true, queue=1",
+          "result": "pass"
+        },
+        {
+          "stepId": "j12-4-update-compatible",
+          "action": "update compatibility check",
+          "expected": "the compatible candidate passes the protocol gate",
+          "observed": "updateCheck=compatible",
+          "result": "pass"
+        },
+        {
+          "stepId": "j12-5-update-refusal",
+          "action": "incompatible update refusal",
+          "expected": "the incompatible protocol envelope is REFUSED (never opened)",
+          "observed": "updateCheck=refused, reason=gateway-contract-unsupported",
+          "result": "pass"
+        },
+        {
+          "stepId": "j12-6-queue-survives",
+          "action": "post-relaunch drain",
+          "expected": "the pending intent survives the relaunch and drains exactly once",
+          "observed": "pending=0",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J01",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-software-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "authenticate (session.issue)",
+        "enter the project (context.resolve + world.snapshot)",
+        "record the W017 shell session snapshot"
+      ],
+      "expectedOutcome": "session issued; project node resolved; world digest equals the fixture registry digest; W017 shell session snapshot recorded",
+      "observedOutcome": "session=true; worldDigest=9306022e9f0c189ca1d0f8c95057e67d0d6a80c797317e1b5f17d44efe3726f8; registry=9306022e9f0c189ca1d0f8c95057e67d0d6a80c797317e1b5f17d44efe3726f8; shellSnapshot=true",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j01"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J01, software)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Onboard/project entry) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j01-1-authenticate",
+          "action": "session.issue",
+          "expected": "a session issues from the fixture authentication result",
+          "observed": "session issued",
+          "result": "pass"
+        },
+        {
+          "stepId": "j01-2-enter-project",
+          "action": "context.resolve + world.snapshot",
+          "expected": "the project node resolves and the world digest matches the fixture registry",
+          "observed": "node=project worldDigest=9306022e9f0c189ca1d0f8c95057e67d0d6a80c797317e1b5f17d44efe3726f8",
+          "result": "pass"
+        },
+        {
+          "stepId": "j01-3-shell-session",
+          "action": "W017 shell session-open + window-open + snapshot",
+          "expected": "the W017 shell records a content-addressed session snapshot",
+          "observed": "snapshotDigest=f6b33c8e8f5c0c56d78368332e1eb6dd7c02ca145287e937876937dc2c79aa98",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J02",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-software-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "inspect the world (world.entities + world.snapshot)",
+        "read the fixture evidence (evidence.get)",
+        "intake new evidence (evidence.intake)"
+      ],
+      "expectedOutcome": "world entities + fixture evidence render; new evidence intakes with an authority-computed digest",
+      "observedOutcome": "entities=6; intake=ok; unknowns=3",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j02"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J02, software)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Understand/reconstruct, inspect known/unknowns, acquire missing information) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j02-1-inspect",
+          "action": "world.entities + world.snapshot + evidence.get",
+          "expected": "entities project; the fixture evidence record resolves",
+          "observed": "entities=6",
+          "result": "pass"
+        },
+        {
+          "stepId": "j02-2-intake",
+          "action": "evidence.intake",
+          "expected": "new evidence bytes are digested by the authority (digest recomputed server-side)",
+          "observed": "objectDigest=cde56892bbeb…",
+          "result": "pass"
+        },
+        {
+          "stepId": "j02-3-known-unknowns",
+          "action": "known/unknown inspection",
+          "expected": "the view model separates knowns from unknowns",
+          "observed": "unknowns=3",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J03",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-software-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "run problem-driven capability/role discovery (discovery.run)"
+      ],
+      "expectedOutcome": "discovery.run answers through the capability-discovery authority",
+      "observedOutcome": "run recorded (runId=null…)",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j03"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J03, software)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Capability/role discovery and organization composition) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j03-1-discovery-run",
+          "action": "discovery.run",
+          "expected": "the discovery authority answers with a run record (no hard-coded model->role mapping)",
+          "observed": "runId=null",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J04",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-software-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "evaluate the constraint",
+        "validate the verification chain",
+        "submit the action proposal",
+        "approve it (human approval)",
+        "execute it through the Action Gateway",
+        "read the action status"
+      ],
+      "expectedOutcome": "constraint + verification evaluate; the action submits, gains human approval, executes and reports status — all through the Action Gateway",
+      "observedOutcome": "submitted -> approved -> executed; status=executed",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j04"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J04, software)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Alternatives, constraints, evaluation, verification and Action Gateway approval) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j04-1-constraints",
+          "action": "constraints.evaluate",
+          "expected": "the constraint authority evaluates the compiled constraint",
+          "observed": "constraint evaluated",
+          "result": "pass"
+        },
+        {
+          "stepId": "j04-2-verification",
+          "action": "verification.validateChain",
+          "expected": "the verification authority validates the chain",
+          "observed": "chain validated",
+          "result": "pass"
+        },
+        {
+          "stepId": "j04-3-action-cycle",
+          "action": "action.submit -> action.approve -> action.execute -> action.status",
+          "expected": "the action runs ONLY through the Action Gateway (submit -> human approval -> execute)",
+          "observed": "steps=submitted>approved>executed, status=executed",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J05",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-software-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "seal the solution version",
+        "approve the baseline",
+        "fold the program schedule/BOQ",
+        "seal + admit the procurement quote"
+      ],
+      "expectedOutcome": "solution re-seals to the fixture digest; baseline approves; schedule folds; the quote admits through the procurement authority",
+      "observedOutcome": "solutionDigest=76d21a70626fbd1bd418d2bdd048d3b9326e593b277f4a60b1d7b0e35c545e29; registry=76d21a70626fbd1bd418d2bdd048d3b9326e593b277f4a60b1d7b0e35c545e29; quantityRows=3; quoteId=quote:desktop-journey-release",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j05"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J05, software)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Program of Work, BOQ/domain schedule and acquisition/procurement) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j05-1-solution",
+          "action": "solution.sealVersion + solution.approveBaseline",
+          "expected": "the solution seals (digest matches the fixture) and the baseline approves",
+          "observed": "solutionDigest=76d21a70626f…",
+          "result": "pass"
+        },
+        {
+          "stepId": "j05-2-schedule",
+          "action": "program.schedule",
+          "expected": "the BOQ/schedule folds project (quantity/cost/milestones)",
+          "observed": "quantityRows=3, milestones=2",
+          "result": "pass"
+        },
+        {
+          "stepId": "j05-3-procurement",
+          "action": "procurement.quote",
+          "expected": "the supplier quote seals + admits through the procurement authority",
+          "observed": "quoteId=quote:desktop-journey-release",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J06",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-software-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "open the delivery record",
+        "intake two field observations",
+        "roll the forecast",
+        "validate the verification chain",
+        "close the delivery"
+      ],
+      "expectedOutcome": "delivery opens; two field observations intake; the forecast rolls; verification validates; the delivery closes",
+      "observedOutcome": "observations=2; closed=true",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j06"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J06, software)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Realize, field observation, actualization, verification and forecast) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j06-1-open",
+          "action": "delivery.open",
+          "expected": "the delivery record opens through the solution-delivery authority",
+          "observed": "delivery opened",
+          "result": "pass"
+        },
+        {
+          "stepId": "j06-2-observe",
+          "action": "delivery.observe x2",
+          "expected": "both field observations intake through the execution-tracking authority",
+          "observed": "observations=2",
+          "result": "pass"
+        },
+        {
+          "stepId": "j06-3-forecast",
+          "action": "actualization.forecast",
+          "expected": "the rolling forecast computes through the actualization authority",
+          "observed": "forecast rolled",
+          "result": "pass"
+        },
+        {
+          "stepId": "j06-4-verify-close",
+          "action": "verification.validateChain + delivery.close",
+          "expected": "the chain validates and the delivery closes",
+          "observed": "closed=true",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J07",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-software-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "go offline",
+        "enqueue the field-observation intent",
+        "attempt the offline drain",
+        "reconnect and drain through the gateway",
+        "replay the same idempotency key",
+        "audit the durable store"
+      ],
+      "expectedOutcome": "pending projection survives offline; the drain fails transiently; reconnect drains exactly once; the replay returns the recorded outcome; no local semantic store",
+      "observedOutcome": "j07-1-enqueue=pass, j07-2-drain-offline=pass, j07-3-reconnect-drain=pass, j07-4-idempotent-replay=pass, j07-5-no-second-store=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j07"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J07, software)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Offline work, queue, reconnect, idempotent sync) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j07-1-enqueue",
+          "action": "offline admission",
+          "expected": "the intent is admitted as a PENDING projection (never applied locally)",
+          "observed": "queueId=queue:software-j07-1",
+          "result": "pass"
+        },
+        {
+          "stepId": "j07-2-drain-offline",
+          "action": "offline drain attempt",
+          "expected": "the drain fails transiently; the intent stays pending",
+          "observed": "stillPending=1",
+          "result": "pass"
+        },
+        {
+          "stepId": "j07-3-reconnect-drain",
+          "action": "queue drain through the gateway",
+          "expected": "the intent drains through the Action Gateway path with its idempotency key (exactly once)",
+          "observed": "drained=1, pending=0",
+          "result": "pass"
+        },
+        {
+          "stepId": "j07-4-idempotent-replay",
+          "action": "recovery.replay with the same key",
+          "expected": "the replay returns the RECORDED outcome (replayed: true) — never double-apply",
+          "observed": "status=drained, replayed=true",
+          "result": "pass"
+        },
+        {
+          "stepId": "j07-5-no-second-store",
+          "action": "durable store audit",
+          "expected": "the local durable store holds ONLY projection/queue records — no world/solution/delivery truth",
+          "observed": "projectionWrites=3, nonProjectionWrites=0",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J08",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-software-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "resolve the world snapshot",
+        "validate the session scope",
+        "admit the server projection into the cache",
+        "export/import the handoff descriptor"
+      ],
+      "expectedOutcome": "identical authoritative state across devices (digest equality with the registry); identical session scope; the server projection admits into the read-only cache",
+      "observedOutcome": "digestsMatch=true; cached=true",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j08"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J08, software)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Cross-device handoff) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j08-1-world-digest",
+          "action": "world.snapshot",
+          "expected": "the desktop receives the SAME world digest as the web product (the fixture registry anchor)",
+          "observed": "digest=9306022e9f0c…",
+          "result": "pass"
+        },
+        {
+          "stepId": "j08-2-session-scope",
+          "action": "session.validate",
+          "expected": "the session scope (principal + tenant) is identical across devices",
+          "observed": "scope=tenant:lightspeed",
+          "result": "pass"
+        },
+        {
+          "stepId": "j08-3-projection-cache",
+          "action": "runtime.admitServerProjection",
+          "expected": "the local projection cache admits the server projection by digest (read-only, immutable)",
+          "observed": "cached=9306022e9f0c…",
+          "result": "pass"
+        },
+        {
+          "stepId": "j08-4-export-import",
+          "action": "native export/import handoff",
+          "expected": "the handoff descriptor exports through the file picker and re-imports with the same digest",
+          "observed": "covered by native-handoff test + E2E",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J09",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-software-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "run the supervision check over the fixture program + delivery",
+        "raise the supervision alert"
+      ],
+      "expectedOutcome": "the supervision pass evaluates over the fixture program/delivery; the alert raises through the alert authority",
+      "observedOutcome": "check ok; alertId=alert:desktop-journey-sw-1",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j09"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J09, software)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Agent supervision/intervention) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j09-1-supervision-check",
+          "action": "supervision.check",
+          "expected": "the supervision authority evaluates the pass over the fixture program + delivery",
+          "observed": "pass evaluated",
+          "result": "pass"
+        },
+        {
+          "stepId": "j09-2-alert",
+          "action": "alerts.raise",
+          "expected": "the alert authority raises the supervision alert",
+          "observed": "alertId=alert:desktop-journey-sw-1",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J11",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-software-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "call without a session (expiry)",
+        "re-authenticate",
+        "go offline (connector failure)",
+        "retry online",
+        "submit an invalid action proposal",
+        "read the recovery event log"
+      ],
+      "expectedOutcome": "session expiry -> re-authentication; connector failure -> retry-with-backoff; retry succeeds; the authority rejection rides verbatim",
+      "observedOutcome": "j11-1-no-session=pass, j11-2-reauthenticate=pass, j11-3-connector-failure=pass, j11-4-retry-succeeds=pass, j11-5-authority-rejection=pass, j11-6-recovery-log=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j11"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J11, software)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Recovery from network/session/input/action/connector/evidence failures) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j11-1-no-session",
+          "action": "call without a session",
+          "expected": "the typed auth-session-expired error surfaces; the recovery action is re-authenticate",
+          "observed": "auth-session-expired; action=re-authenticate",
+          "result": "pass"
+        },
+        {
+          "stepId": "j11-2-reauthenticate",
+          "action": "session.issue",
+          "expected": "a fresh session issues from the verified authentication result",
+          "observed": "session re-issued",
+          "result": "pass"
+        },
+        {
+          "stepId": "j11-3-connector-failure",
+          "action": "offline read",
+          "expected": "the transient error class surfaces; the recovery action is retry-with-backoff",
+          "observed": "transient/network-unavailable; action=retry-with-backoff",
+          "result": "pass"
+        },
+        {
+          "stepId": "j11-4-retry-succeeds",
+          "action": "retried call online",
+          "expected": "the retried call succeeds through the same bridge",
+          "observed": "project entered",
+          "result": "pass"
+        },
+        {
+          "stepId": "j11-5-authority-rejection",
+          "action": "invalid action proposal",
+          "expected": "the authority rejection surfaces with the authority error verbatim (never a client-local semantic error)",
+          "observed": "authority-rejected/authority-denied; action=surface-authority-rejection",
+          "result": "pass"
+        },
+        {
+          "stepId": "j11-6-recovery-log",
+          "action": "recovery event log",
+          "expected": "every failure maps to a typed recovery event",
+          "observed": "events=3",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "J12",
+      "platform": "linux",
+      "persona": "delivery lead (desktop product user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
+      "fixtureId": "epoch-fixture-software-v1.0.0",
+      "preconditions": [
+        "the W046 product fixtures (registry-verified digests)",
+        "the embedded fixture-backed Application Gateway (W046 single-process composition)"
+      ],
+      "actions": [
+        "launch and work",
+        "snapshot + persist (close)",
+        "relaunch (restore session/queue)",
+        "check a compatible update",
+        "refuse an incompatible update",
+        "drain the surviving queue"
+      ],
+      "expectedOutcome": "launch -> work -> close -> relaunch restores session + queue; the compatible update passes; the incompatible one is refused; the queue drains exactly once after relaunch",
+      "observedOutcome": "j12-1-launch-work=pass, j12-2-close=pass, j12-3-relaunch-restore=pass, j12-4-update-compatible=pass, j12-5-update-refusal=pass, j12-6-queue-survives=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/journey-records.json#journey-j12"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "apps/desktop/test/desktop-journeys.test.ts (J12, software)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Install -> launch -> work -> close -> relaunch -> update) — headless product-logic run over the embedded gateway + real fixtures; native shell covered by config validation (see environment)",
+      "steps": [
+        {
+          "stepId": "j12-1-launch-work",
+          "action": "authenticate + enter project",
+          "expected": "the product launches, authenticates and works (project entered)",
+          "observed": "worked",
+          "result": "pass"
+        },
+        {
+          "stepId": "j12-2-close",
+          "action": "session snapshot + persisted state",
+          "expected": "the session snapshot records; queue + session persist for relaunch",
+          "observed": "snapshot=true",
+          "result": "pass"
+        },
+        {
+          "stepId": "j12-3-relaunch-restore",
+          "action": "session/queue restore",
+          "expected": "the relaunch restores the session and the pending offline queue from durable state",
+          "observed": "session=true, queue=1",
+          "result": "pass"
+        },
+        {
+          "stepId": "j12-4-update-compatible",
+          "action": "update compatibility check",
+          "expected": "the compatible candidate passes the protocol gate",
+          "observed": "updateCheck=compatible",
+          "result": "pass"
+        },
+        {
+          "stepId": "j12-5-update-refusal",
+          "action": "incompatible update refusal",
+          "expected": "the incompatible protocol envelope is REFUSED (never opened)",
+          "observed": "updateCheck=refused, reason=gateway-contract-unsupported",
+          "result": "pass"
+        },
+        {
+          "stepId": "j12-6-queue-survives",
+          "action": "post-relaunch drain",
+          "expected": "the pending intent survives the relaunch and drains exactly once",
+          "observed": "pending=0",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    }
+  ]
+}

@@ -1,36 +1,76 @@
 {
   "name": "@epoch/desktop",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Epoch desktop client (W017): the typed reference implementation of the desktop host shell — the window/session model, the versioned content-addressed host↔shell envelope seam (the IPC contract a native wrapper backend carries), the full-fidelity desktop DeviceDescriptor (W011 slot), experience mounting through W012 compiled artifacts into W013 renderer invocations (admitInvocation-enforced, never bypassed), foundation-backed authoring projections (typed proposals, zero shell authority), and content-addressed offline/session caches with freshness/invalidation records. Pure typed data: no native bundling, no engine, no UI-framework dependency; the future native shell embeds this contract.",
+  "description": "Epoch desktop client: the W017 typed reference host (window/session model, host-shell IPC envelopes, experience mounting, offline/session caches \u2014 pure typed data) TURNED INTO the native desktop product by W048: a Tauri 2 application around the W017 experience surface with a typed IPC/envelope bridge over the frozen 32-operation Application Gateway vocabulary (@epoch/client-runtime), platform-safe session storage, durable offline queue + projection cache through the client-runtime seams, an embedded fixture-backed Application Gateway binding for packaged local validation plus a remote HTTP transport for deployed gateways, and per-OS packaging configs (Linux AppImage+deb, Windows NSIS, macOS DMG/app). The library surface (src/index.ts) keeps the W017 runtime pin; src/native/** is the W048 native adapter zone (lock rule 13: platform toolchains are adapters, never semantic authorities).",
   "epoch": {
     "layer": "app"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./native": "./src/native/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "lint": "eslint .",
-    "test": "vitest run"
+    "lint": "eslint . && cd ../../qa/desktop && eslint . --config eslint.config.mjs",
+    "test": "vitest run",
+    "dev": "next dev -p 4310",
+    "build": "node scripts/sync-fixtures.mjs && next build",
+    "build:web": "node scripts/sync-fixtures.mjs && next build",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
+    "tauri:build:linux": "tauri build --bundles appimage,deb",
+    "tauri:build:windows": "tauri build --bundles nsis",
+    "tauri:build:macos": "tauri build --bundles dmg,app",
+    "icons": "node scripts/generate-icons.mjs",
+    "sync-fixtures": "node scripts/sync-fixtures.mjs",
+    "audit:toolchain": "node scripts/check-toolchain.mjs",
+    "desktop:journeys": "vitest run ../../qa/desktop/journeys/desktop-journeys.test.ts",
+    "e2e:web": "playwright test -c ../../qa/desktop/e2e/playwright.config.ts",
+    "e2e:tauri": "wdio run ../../qa/desktop/wdio.desktop.conf.ts"
   },
   "dependencies": {
+    "@epoch/action-gateway": "workspace:*",
     "@epoch/agent-protocol": "workspace:*",
+    "@epoch/application-gateway": "workspace:*",
+    "@epoch/authentication": "workspace:*",
+    "@epoch/client-runtime": "workspace:*",
+    "@epoch/event-log": "workspace:*",
+    "@epoch/evidence": "workspace:*",
     "@epoch/experience-protocol": "workspace:*",
+    "@epoch/object-storage": "workspace:*",
+    "@epoch/persistence": "workspace:*",
     "@epoch/renderer-runtime": "workspace:*",
     "@epoch/tenancy": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "@tauri-apps/api": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@epoch/alerts": "workspace:*",
     "@epoch/authorization": "workspace:*",
     "@epoch/eslint-config": "workspace:*",
     "@epoch/experience-compiler": "workspace:*",
     "@epoch/identity": "workspace:*",
+    "@epoch/policy-contracts": "workspace:*",
+    "@epoch/procurement": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/supervision": "workspace:*",
     "@epoch/tsconfig": "workspace:*",
+    "@playwright/test": "catalog:",
+    "@tauri-apps/cli": "catalog:",
     "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "eslint": "catalog:",
+    "playwright": "catalog:",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "webdriverio": "catalog:"
   }
 }

@@ -93,3 +93,78 @@ pins, never runtime couplings (the W014 app pattern).
 - `pnpm test` — the vitest evidence battery (positive, negative,
   boundary; every acceptance criterion of the Work Order maps to a named
   test — see the PR body).
+
+---
+
+# W048 — the native desktop product
+
+W048 turns this package into the real Tauri 2 application around the W017
+experience surface (no fork: `src/index.ts` keeps the W017 runtime pin and
+the reference host untouched; the neutrality pins now scope by zone —
+`test/neutrality.test.ts`).
+
+## Zones
+
+- **`src/native/**`** — the W048 native adapter zone:
+  - `ipc/` — the typed IPC/envelope bridge over the frozen 32-operation
+    Application Gateway vocabulary (`ipc/surface.ts` is the named-negative
+    (a) artifact: EXACTLY the frozen vocabulary, nothing else), the two
+    sanctioned transports (embedded in-process; Tauri remote forwarding),
+    and the host command port (memory / browser / Tauri implementations).
+  - `runtime/` — the product composition root: platform-safe session
+    store (secure seam only), durable offline queue + projection cache
+    (client-runtime seams; the named negative (b): no second semantic
+    store), the protocol gate (the named negative (c): incompatible
+    protocol envelopes are refused, never opened), and the W017 shell
+    embedding (session-open/window-open/snapshots through the reference
+    host).
+  - `embedded/` — the W046 single-process Application Gateway binding
+    over the REAL authorities restored from the deterministic fixtures
+    (Node source for tooling; `web-fixture-source.ts` for the webview —
+    sha256 re-verified at load).
+  - `web.ts` — the webview-safe barrel the frontend imports.
+- **`app/`** — the Next.js static-export frontend (`output: 'export'` →
+  `out/` is the Tauri webview payload; dev server on port 4310). It
+  drives the SAME product methods the journey runner drives.
+- **`src-tauri/`** — the Rust native host: EXACTLY the frozen
+  `epoch_*` command surface (`src/commands.rs`), the 32-operation
+  forwarding allowlist (`src/operations.rs`), the OS-keychain secure
+  store (`keyring`), durable local projections in the app-data dir,
+  native file dialogs (`tauri-plugin-dialog`), and the per-OS packaging
+  matrix in `tauri.conf.json` (Linux AppImage+deb, Windows NSIS with
+  signing-ready fields, macOS DMG/app with notarization-ready fields).
+- **`qa/desktop/`** — the journey harness (runner + scenario inputs over
+  the real kernels), the WebdriverIO/tauri-driver config for the
+  packaged app, and the Playwright dev-server web E2E.
+
+## Scripts (W048 additions)
+
+- `pnpm build` / `pnpm build:web` — sync the registry-verified fixtures
+  into `public/fixtures` and statically export the webview payload.
+- `pnpm dev` — the dev server (port 4310) the Tauri dev shell targets.
+- `pnpm audit:toolchain` — the honest native-toolchain audit
+  (cargo/rustc/webkit2gtk presence; never a silent claim).
+- `pnpm icons` — regenerate the deterministic icon set (PNG/ICO/ICNS).
+- `pnpm desktop:journeys` — the J01–J09/J11/J12 journey suite (both
+  fixture domains; `EPOCH_EMIT_JOURNEY_RECORDS=1` emits the committed
+  evidence records).
+- `pnpm e2e:web` — the visible-UI Playwright E2E (dev-server mode).
+- `pnpm e2e:tauri` — the packaged-app WebdriverIO harness (requires the
+  built binary + tauri-driver; see qa/desktop/wdio.desktop.conf.ts).
+- `pnpm tauri:build:linux` / `:windows` / `:macos` — the per-OS bundle
+  matrix (AppImage+deb / NSIS / DMG+app).
+
+## The verification battery (W048)
+
+`test/native-ipc-surface.test.ts` (the named negative (a) + the config
+surface), `test/native-offline-queue.test.ts` (the named negative (b):
+exactly-once drain, RECORDED-outcome replay, projection-only durable
+writes), `test/native-protocol-gate.test.ts` (the named negative (c)),
+`test/native-session-store.test.ts` (the secure-seam-only pin +
+plaintext scan), `test/desktop-journeys.test.ts` (the full journey set),
+plus the W017 battery unchanged. Journey evidence:
+`qa/desktop/journeys/records/journey-records.json`; the platform records:
+`docs/journeys/desktop-{linux,windows,macos}.md` (honest environment
+audit included — this repository's build sandbox has no Rust toolchain,
+so the native shell is config-validated there, with the packaged-binary
+runbook delivered).

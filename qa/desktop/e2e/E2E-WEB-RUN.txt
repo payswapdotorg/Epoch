@@ -1,0 +1,7 @@
+  ✓  1 ../../qa/desktop/e2e/desktop-web.spec.ts:16:5 › J01 — the app loads and onboards into an active session (1.6s)
+  ✓  2 ../../qa/desktop/e2e/desktop-web.spec.ts:29:5 › J01 — project entry resolves the registry-verified world digest (1.9s)
+  ✓  3 ../../qa/desktop/e2e/desktop-web.spec.ts:39:5 › J02 — understand/reconstruct inspects the world entities (1.7s)
+  ✓  4 ../../qa/desktop/e2e/desktop-web.spec.ts:48:5 › J07 — offline: enqueue, reconnect, drain with exactly-once semantics (1.9s)
+  ✓  5 ../../qa/desktop/e2e/desktop-web.spec.ts:69:5 › the domain switch rebuilds the product over the software fixtures (2.3s)
+  5 passed (10.0s)
+run at 2026-09-30T21:52:40Z, chromium, 5/5 passed
