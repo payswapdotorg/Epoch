@@ -124,5 +124,5 @@ describe('the pglite real-engine suite (embedded real PostgreSQL; TEST-ONLY)', (
       await session.query(SQL_BEGIN.sql, SQL_BEGIN.params);
       await session.query(SQL_COMMIT.sql, SQL_COMMIT.params);
     });
-  });
+  }, 120_000);
 });

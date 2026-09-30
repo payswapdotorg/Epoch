@@ -60,11 +60,15 @@ describe('the frozen runtime dependency policy (W046 pin)', () => {
     expect(manifest.dependencies.zod).toBe('catalog:');
   });
 
-  it('NO pg / @types/pg / @electric-sql/pglite reference anywhere (structural binding until the catalog materializes)', () => {
+  it('pg / @types/pg NEVER referenced (structural runtime binding — the driver is injected); @electric-sql/pglite is the catalog-pinned TEST-ONLY real engine (post-reconcile state)', () => {
     const all = { ...manifest.dependencies, ...manifest.devDependencies };
     for (const specifier of Object.keys(all)) {
-      expect(['pg', '@types/pg', '@electric-sql/pglite'].includes(specifier), `${specifier} must not be referenced (catalog pin pending Tech Lead reconcile)`).toBe(false);
+      expect(['pg', '@types/pg'].includes(specifier), `${specifier} must never be a package dependency (structural binding only)`).toBe(false);
     }
+    // The Tech Lead reconcile (PR #101) materialized the catalog pin: the
+    // real-engine suite is now LIVE. pg/pglite in the catalog, pglite here as
+    // a TEST-ONLY devDep; pg itself stays structural (bindPgPool injects it).
+    expect(manifest.devDependencies['@electric-sql/pglite']).toBe('catalog:');
   });
 
   it('all @epoch runtime deps use workspace: protocol + catalog pins only (no version literals)', () => {
