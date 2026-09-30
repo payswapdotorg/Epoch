@@ -6,7 +6,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-construction-v1.0.0",
       "preconditions": [
@@ -59,7 +59,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-construction-v1.0.0",
       "preconditions": [
@@ -112,7 +112,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-construction-v1.0.0",
       "preconditions": [
@@ -149,7 +149,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-construction-v1.0.0",
       "preconditions": [
@@ -205,7 +205,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-construction-v1.0.0",
       "preconditions": [
@@ -259,7 +259,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-construction-v1.0.0",
       "preconditions": [
@@ -321,7 +321,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-construction-v1.0.0",
       "preconditions": [
@@ -391,7 +391,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-construction-v1.0.0",
       "preconditions": [
@@ -452,7 +452,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-construction-v1.0.0",
       "preconditions": [
@@ -497,7 +497,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-construction-v1.0.0",
       "preconditions": [
@@ -574,7 +574,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-construction-v1.0.0",
       "preconditions": [
@@ -651,7 +651,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-software-v1.0.0",
       "preconditions": [
@@ -704,7 +704,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-software-v1.0.0",
       "preconditions": [
@@ -757,7 +757,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-software-v1.0.0",
       "preconditions": [
@@ -794,7 +794,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-software-v1.0.0",
       "preconditions": [
@@ -850,7 +850,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-software-v1.0.0",
       "preconditions": [
@@ -904,7 +904,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-software-v1.0.0",
       "preconditions": [
@@ -966,7 +966,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-software-v1.0.0",
       "preconditions": [
@@ -1036,7 +1036,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-software-v1.0.0",
       "preconditions": [
@@ -1097,7 +1097,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-software-v1.0.0",
       "preconditions": [
@@ -1142,7 +1142,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-software-v1.0.0",
       "preconditions": [
@@ -1219,7 +1219,7 @@
       "platform": "linux",
       "persona": "delivery lead (desktop product user)",
       "productVersion": "1.0.0",
-      "sourceCommit": "58232493133514b9bc244a59a8b17ea9451782b1",
+      "sourceCommit": "66ff17973e979ad33d792a9b2412e89b641c5087",
       "environment": "Node/vitest headless product-logic run: embedded fixture-backed Application Gateway (W046 single-process composition) + memory host (durable store semantics) + frozen journey clock; native Tauri shell covered by config validation (no cargo/webkit2gtk in this environment)",
       "fixtureId": "epoch-fixture-software-v1.0.0",
       "preconditions": [
