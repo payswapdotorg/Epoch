@@ -6,10 +6,11 @@ Architecture: E1.0/X1.0 with ACR-001/002/003/004 effective; ACR-005 productizati
 Work Order schema: WO2.0.
 Default branch: main.
 Current main baseline before ACR-005 program: 6912e4af4bab7a77e43d835b6bfc573aacee81f6.
-W001-W045: COMPLETE (45/45).
-Current frontier: W047/W048/W049 ELIGIBLE (concurrent, disjoint surfaces); W050 blocked until all three merge.
+W001-W046 + W049: COMPLETE (47/50).
+Current frontier: W047/W048 IN FLIGHT (concurrent, disjoint surfaces; dispatched at base 5823249); W050 blocked until both merge.
 W046 complete (2026-09-30): PR #100 -> a4990a6b + reconcile PR #101 -> 648f1f5b; dispatch base for the client wave = 648f1f5b.
-After W047/W048/W049: W050 becomes dispatchable.
+W049 complete (2026-09-30): PR #104 -> 19cc2fbb + reconcile PR #105 -> 821156d3.
+After W047/W048: W050 becomes dispatchable (serialized last).
 Maximum concurrent workers: 3.
 
 Current client reality:
@@ -123,3 +124,9 @@ Historical state and verification notes follow.
 - Worker-side discovery: PR #99's catalog pins were doc-only (never landed in pnpm-workspace.yaml). Resolved protocol-cleanly by the worker (driver-neutral zero-dep seams + real-engine proof in a throwaway replica) and remediated by the Lead in PR #101 (catalog entries + pglite devDep + lockfile reconcile + post-reconcile guard + CI timeouts): frozen install re-armed (PASS), pglite real-engine suite LIVE (3/3 against real embedded PostgreSQL, zero code changes).
 - 5 advisory questions recorded in the PR #100 merge body (catalog gap remediation; frozen-install protocol for new-package PRs; delegation-contract depth for 9 operations — deep happy paths deferred to W047+ wiring; event-log read-only design; policy-contracts devDep parity).
 - Program: 46/50. Frontier: W047/W048/W049 eligible concurrently (client trees are disjoint); W050 serialized after all three. Client wave dispatch base: 648f1f5b.
+
+## W049 complete — mobile native product delivered (2026-09-30, Tech Lead)
+- W049 (Mobile Native Product + Mobile Journey Validation): PR #104 squash-merged -> 19cc2fbb (worker head aedf01b9 after the in-flight J08 CI fix; the report body cites 7d59223e — reviewed and merged at the final head). Reconcile PR #105 -> 821156d3 (mobile importer + client-wave snapshots; frozen install verified). 7-gate ALL GREEN: 63 files 100% in the owned trees (+7,222/-70); 0 secrets; install PASS (catalog-only resolution, pins exact: expo 57.0.26 / react-native 0.87.1 / detox 20.51.4); independent battery exact match (typecheck 83/83, lint 79/79, test 82/82, build 4/4, serialized); CI 4/4 on the head; report complete (5 advisory questions + honest limitations: no Android/iOS toolchains in the Linux sandbox — config-delivered builds + detox harness unit-validated per the sandbox-honesty rule).
+- Delivers: the W018 typed mobile host as the real Expo + React Native Android/iOS field product on the W046 shared runtime — typed client bridge over the frozen 32-operation gateway vocabulary; offline queue holds pending projections only and replays exactly-once (content-derived idempotency keys, replayed=true/digestStable=true/duplicateSideEffects=0); digest-before-upload evidence (pure-TS FIPS 180-4 SHA-256, NIST-pinned); secure-store seam persistence; approvals a strict gateway subset with no local settlement (structural assertions); detox E2E harness (4 apps, 3 devices, 5 configurations, 9 journey specs) under qa/mobile.
+- 5 advisory questions recorded in the PR #104 merge body (expo platform-module pinning; capture-id unification; idempotency-key collision semantics — W050 hardening note; qa/* workspace discipline; neutrality adapter-scoping for desktop).
+- Program: 47/50. Frontier: W047/W048 in flight (generation resumed through the 2026-09-30 evening platform incident via the §8 stop/continue cure + persistent SSE holders). W050 serialized after both merge.
