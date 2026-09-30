@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ClientRuntimeContractVersion",
+  "$defs": {
+    "ClientRuntimeContractVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "ClientRuntimeContractVersion",
+      "description": "Version of the client-runtime machinery (queues, replay, projection cache)."
+    }
+  },
+  "$id": "urn:epoch:application-gateway:client-runtime-contract-version:1.0.0"
+}

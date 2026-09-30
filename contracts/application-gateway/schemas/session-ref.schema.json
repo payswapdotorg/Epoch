@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SessionRef",
+  "$defs": {
+    "SessionRef": {
+      "readOnly": true,
+      "title": "SessionRef",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "sessionId": {
+          "$ref": "#/$defs/SessionId"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "sessionId"
+      ],
+      "additionalProperties": false
+    },
+    "SessionId": {
+      "type": "string",
+      "pattern": "^session:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SessionId"
+    }
+  },
+  "$id": "urn:epoch:application-gateway:session-ref:1.0.0"
+}

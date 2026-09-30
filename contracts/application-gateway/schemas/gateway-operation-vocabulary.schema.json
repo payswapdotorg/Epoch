@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/GatewayOperationVocabulary",
+  "$defs": {
+    "GatewayOperationVocabulary": {
+      "readOnly": true,
+      "title": "GatewayOperationVocabulary",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GatewayOperationName"
+      }
+    },
+    "GatewayOperationName": {
+      "type": "string",
+      "title": "GatewayOperationName"
+    }
+  },
+  "$id": "urn:epoch:application-gateway:gateway-operation-vocabulary:1.0.0"
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@epoch/client-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Shared Client Runtime (W046, ACR-005) — the client-facing contract spine shared by all three product clients (web/desktop/mobile): the typed Application Gateway operation vocabulary + request/response envelopes, the recoverable client error taxonomy (transient / auth-session-expired / conflict / validation / authority-rejected / unrecoverable) with typed discriminators that map to UI recovery states (offline queue vs. re-auth vs. hard failure), correlation ids propagated through gateway -> kernel calls, the typed IdempotentReplay (operation key + request fingerprint + recorded outcome — replays never double-apply), the offline admission queue holding PENDING PROJECTIONS of user intent only (the five named admission negatives: no local approval authority, no local semantic-truth mutation, no local identity minting, no local digest/verification forgery, replay must go through the Action Gateway with idempotency keys or be rejected), the read-only projection cache, and the deterministic emission of contracts/application-gateway (manifest + per-contract digests + parity). Deterministic: zero wall-clock, zero randomness — instants are caller-supplied. NO client transport implementation, NO UI, NO semantic authority.",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.contracts.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/identity": "workspace:*",
+    "@epoch/tenancy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

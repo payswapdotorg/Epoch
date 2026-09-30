@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/IdempotencyAddress",
+  "$defs": {
+    "IdempotencyAddress": {
+      "readOnly": true,
+      "title": "IdempotencyAddress",
+      "type": "object",
+      "properties": {
+        "operationKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/IdempotencyKey"
+        },
+        "requestFingerprint": {
+          "$ref": "#/$defs/RequestFingerprint"
+        }
+      },
+      "required": [
+        "operationKey",
+        "idempotencyKey",
+        "requestFingerprint"
+      ],
+      "additionalProperties": false
+    },
+    "IdempotencyKey": {
+      "type": "string",
+      "pattern": "^idem:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "IdempotencyKey"
+    },
+    "RequestFingerprint": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "RequestFingerprint"
+    }
+  },
+  "$id": "urn:epoch:application-gateway:idempotency-address:1.0.0"
+}

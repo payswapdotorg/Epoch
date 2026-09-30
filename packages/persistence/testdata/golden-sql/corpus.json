@@ -1,0 +1,141 @@
+{
+  "corpusVersion": 1,
+  "entries": [
+    {
+      "operation": "migrate.createTable",
+      "input": {
+        "table": "gateway_sessions"
+      },
+      "statement": {
+        "sql": "CREATE TABLE IF NOT EXISTS \"gateway_sessions\" (\"key\" TEXT PRIMARY KEY, \"value\" JSONB NOT NULL)",
+        "params": []
+      }
+    },
+    {
+      "operation": "insert",
+      "input": {
+        "table": "gateway_idempotency",
+        "key": "idem:golden-1",
+        "value": {
+          "sessionId": "session:golden",
+          "attempts": 2,
+          "replayed": true,
+          "meta": {
+            "origin": "web"
+          }
+        }
+      },
+      "statement": {
+        "sql": "INSERT INTO \"gateway_idempotency\" (\"key\", \"value\") VALUES ($1, $2) ON CONFLICT (\"key\") DO NOTHING",
+        "params": [
+          "idem:golden-1",
+          "{\"attempts\":2,\"meta\":{\"origin\":\"web\"},\"replayed\":true,\"sessionId\":\"session:golden\"}"
+        ]
+      }
+    },
+    {
+      "operation": "insert.unicode",
+      "input": {
+        "table": "gateway_correlations",
+        "key": "corr:golden-unicode",
+        "value": {
+          "city": "Zürich — 東京 🏗️"
+        }
+      },
+      "statement": {
+        "sql": "INSERT INTO \"gateway_correlations\" (\"key\", \"value\") VALUES ($1, $2) ON CONFLICT (\"key\") DO NOTHING",
+        "params": [
+          "corr:golden-unicode",
+          "{\"city\":\"Zürich — 東京 🏗️\"}"
+        ]
+      }
+    },
+    {
+      "operation": "put",
+      "input": {
+        "table": "gateway_idempotency",
+        "key": "idem:golden-1",
+        "value": {
+          "attempts": 3
+        }
+      },
+      "statement": {
+        "sql": "INSERT INTO \"gateway_idempotency\" (\"key\", \"value\") VALUES ($1, $2) ON CONFLICT (\"key\") DO UPDATE SET \"value\" = EXCLUDED.\"value\"",
+        "params": [
+          "idem:golden-1",
+          "{\"attempts\":3}"
+        ]
+      }
+    },
+    {
+      "operation": "get",
+      "input": {
+        "table": "gateway_idempotency",
+        "key": "idem:golden-1"
+      },
+      "statement": {
+        "sql": "SELECT \"value\" FROM \"gateway_idempotency\" WHERE \"key\" = $1",
+        "params": [
+          "idem:golden-1"
+        ]
+      }
+    },
+    {
+      "operation": "delete",
+      "input": {
+        "table": "gateway_objects",
+        "key": "obj:golden-9"
+      },
+      "statement": {
+        "sql": "DELETE FROM \"gateway_objects\" WHERE \"key\" = $1",
+        "params": [
+          "obj:golden-9"
+        ]
+      }
+    },
+    {
+      "operation": "list",
+      "input": {
+        "table": "gateway_idempotency"
+      },
+      "statement": {
+        "sql": "SELECT \"key\", \"value\" FROM \"gateway_idempotency\" ORDER BY \"key\" ASC",
+        "params": []
+      }
+    },
+    {
+      "operation": "transaction.begin",
+      "input": {},
+      "statement": {
+        "sql": "BEGIN",
+        "params": []
+      }
+    },
+    {
+      "operation": "transaction.commit",
+      "input": {},
+      "statement": {
+        "sql": "COMMIT",
+        "params": []
+      }
+    },
+    {
+      "operation": "transaction.rollback",
+      "input": {},
+      "statement": {
+        "sql": "ROLLBACK",
+        "params": []
+      }
+    },
+    {
+      "operation": "maintenance.dropTable",
+      "input": {
+        "table": "gateway_objects"
+      },
+      "statement": {
+        "sql": "DROP TABLE IF EXISTS \"gateway_objects\"",
+        "params": []
+      }
+    }
+  ]
+}

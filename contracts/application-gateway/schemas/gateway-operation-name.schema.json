@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/GatewayOperationName",
+  "$defs": {
+    "GatewayOperationName": {
+      "type": "string",
+      "title": "GatewayOperationName"
+    }
+  },
+  "$id": "urn:epoch:application-gateway:gateway-operation-name:1.0.0"
+}

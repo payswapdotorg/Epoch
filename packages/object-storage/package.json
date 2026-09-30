@@ -1,0 +1,29 @@
+{
+  "name": "@epoch/object-storage",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Object-Storage SPI (W046, ACR-005) — the byte/evidence/asset store seam: content-addressed bytes (SHA-256 digest keys, idempotent put-by-digest), typed neutral object metadata (kind, tenant scope, evidence linkage descriptors — never vendor fields), digest-verified retrieval, and the reference in-memory implementation. Object storage holds BYTES by reference/digest (ACR-005); semantic records stay in the authoritative stores — this seam NEVER stores semantics, only evidence/assets addressed by their content digest. Deterministic: zero wall-clock, zero randomness, deterministic listing order. The real object-store adapter binding (S3-compatible etc.) is future service-layer work behind the same ObjectStore port.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

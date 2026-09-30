@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ClientRecoveryAction",
+  "$defs": {
+    "ClientRecoveryAction": {
+      "type": "string",
+      "enum": [
+        "retry-with-backoff",
+        "requeue-offline",
+        "re-authenticate",
+        "surface-conflict",
+        "surface-input",
+        "surface-authority-rejection",
+        "surface-failure"
+      ],
+      "title": "ClientRecoveryAction"
+    }
+  },
+  "$id": "urn:epoch:application-gateway:client-recovery-action:1.0.0"
+}

@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/GatewayError",
+  "$defs": {
+    "GatewayError": {
+      "readOnly": true,
+      "title": "GatewayError",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "class": {
+          "$ref": "#/$defs/GatewayErrorClass"
+        },
+        "code": {
+          "$ref": "#/$defs/GatewayErrorCode"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "correlationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "details": {
+          "$ref": "#/$defs/GatewayErrorDetails"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "class",
+        "code",
+        "message",
+        "operation",
+        "correlationId",
+        "retryable"
+      ],
+      "additionalProperties": false
+    },
+    "GatewayErrorClass": {
+      "type": "string",
+      "enum": [
+        "transient",
+        "auth-session-expired",
+        "conflict",
+        "validation",
+        "authority-rejected",
+        "unrecoverable"
+      ],
+      "title": "GatewayErrorClass"
+    },
+    "GatewayErrorCode": {
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "network-unavailable",
+            "connector-unavailable",
+            "gateway-overloaded",
+            "deadline-exceeded"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "session-expired",
+            "session-revoked",
+            "session-unknown",
+            "principal-authentication-required"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "idempotency-fingerprint-mismatch",
+            "idempotency-key-reuse",
+            "version-conflict",
+            "duplicate-submission"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "request-validation",
+            "request-envelope-malformed",
+            "operation-unknown",
+            "idempotency-key-required",
+            "tenant-scope-mismatch"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "authority-denied",
+            "authority-rejected-input"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "contract-version-unsupported",
+            "internal-invariant-violated",
+            "response-malformed"
+          ]
+        }
+      ],
+      "title": "GatewayErrorCode"
+    },
+    "GatewayErrorDetails": {
+      "readOnly": true,
+      "title": "GatewayErrorDetails",
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 64
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      }
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:application-gateway:gateway-error:1.0.0"
+}

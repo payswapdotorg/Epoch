@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/GatewayOutcome",
+  "$defs": {
+    "GatewayOutcome": {
+      "readOnly": true,
+      "title": "GatewayOutcome",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "correlationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "outcomeDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "result": {
+          "$ref": "#/$defs/JsonValue"
+        },
+        "replayed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "correlationId",
+        "outcomeDigest",
+        "result",
+        "replayed"
+      ],
+      "additionalProperties": false
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex"
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:application-gateway:gateway-outcome:1.0.0"
+}

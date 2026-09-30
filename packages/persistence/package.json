@@ -1,0 +1,29 @@
+{
+  "name": "@epoch/persistence",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Provider-Neutral Persistence SPI (W046, ACR-005) — the durable-state seam between the application gateway and PostgreSQL: the typed record-store primitives (insert/get/put/delete/list, transactions with all-or-nothing commit/rollback, idempotent versioned migrations) with TWO implementations of the SAME contract — the deterministic in-memory reference and the real PostgreSQL adapter (complete wire-protocol SQL emission: exact statement text, $n placeholders, canonical-JSON value encoding, BEGIN/COMMIT/ROLLBACK transaction driving, JSONB DDL) over an injected PostgresWirePort that structurally matches the pg 8.23.0 driver API. THIS PACKAGE NEVER IMPORTS THE DRIVER (pg binding is service-layer only — enforced by the W046 pg-boundary test); the shared conformance suite runs identically against both implementations, and the golden-SQL corpus (testdata/golden-sql) pins the exact SQL every SPI operation emits — deterministic, zero timestamps, zero ordering noise. PostgreSQL is the durable authority when the adapter is bound (ACR-005); object bytes stay in @epoch/object-storage.",
+  "epoch": {
+    "layer": "kernel"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

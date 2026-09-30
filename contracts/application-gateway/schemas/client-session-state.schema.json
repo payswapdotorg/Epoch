@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ClientSessionState",
+  "$defs": {
+    "ClientSessionState": {
+      "type": "string",
+      "enum": [
+        "active",
+        "expired",
+        "revoked"
+      ],
+      "title": "ClientSessionState"
+    }
+  },
+  "$id": "urn:epoch:application-gateway:client-session-state:1.0.0"
+}

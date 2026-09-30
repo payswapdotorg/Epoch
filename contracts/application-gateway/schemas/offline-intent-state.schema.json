@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/OfflineIntentState",
+  "$defs": {
+    "OfflineIntentState": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "draining",
+        "drained",
+        "rejected"
+      ],
+      "title": "OfflineIntentState"
+    }
+  },
+  "$id": "urn:epoch:application-gateway:offline-intent-state:1.0.0"
+}

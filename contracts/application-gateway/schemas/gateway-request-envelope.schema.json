@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/GatewayRequestEnvelope",
+  "$defs": {
+    "GatewayRequestEnvelope": {
+      "readOnly": true,
+      "title": "GatewayRequestEnvelope",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "contractVersion": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "operation": {
+          "$ref": "#/$defs/GatewayOperationName"
+        },
+        "session": {
+          "$ref": "#/$defs/SessionRef"
+        },
+        "correlation": {
+          "$ref": "#/$defs/RequestCorrelation"
+        },
+        "tenant": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "idempotencyKey": {
+          "$ref": "#/$defs/IdempotencyKey"
+        },
+        "payload": {
+          "$ref": "#/$defs/JsonValue"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contractVersion",
+        "operation",
+        "session",
+        "correlation",
+        "tenant",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "GatewayOperationName": {
+      "type": "string",
+      "title": "GatewayOperationName"
+    },
+    "SessionRef": {
+      "readOnly": true,
+      "title": "SessionRef",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "sessionId": {
+          "$ref": "#/$defs/SessionId"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "sessionId"
+      ],
+      "additionalProperties": false
+    },
+    "SessionId": {
+      "type": "string",
+      "pattern": "^session:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SessionId"
+    },
+    "RequestCorrelation": {
+      "readOnly": true,
+      "title": "RequestCorrelation",
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "correlationId": {
+          "$ref": "#/$defs/CorrelationId"
+        },
+        "causationId": {
+          "$ref": "#/$defs/CausationId"
+        },
+        "origin": {
+          "$ref": "#/$defs/GatewayOrigin"
+        },
+        "issuedAt": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "correlationId",
+        "origin",
+        "issuedAt"
+      ],
+      "additionalProperties": false
+    },
+    "CorrelationId": {
+      "type": "string",
+      "pattern": "^corr:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "CorrelationId"
+    },
+    "CausationId": {
+      "type": "string",
+      "pattern": "^corr:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "CausationId"
+    },
+    "GatewayOrigin": {
+      "type": "string",
+      "enum": [
+        "web",
+        "desktop",
+        "mobile",
+        "server"
+      ],
+      "title": "GatewayOrigin"
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$",
+      "title": "Timestamp",
+      "description": "UTC instant in canonical form YYYY-MM-DDTHH:MM:SS.mmmZ (exactly three fractional digits, Z suffix)."
+    },
+    "TenantScope": {
+      "readOnly": true,
+      "title": "TenantScope",
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/TenantId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/WorkspaceId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/ProjectId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false
+    },
+    "TenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "TenantId",
+      "description": "Opaque tenant identity: \"tenant:\" followed by a lowercase slug."
+    },
+    "WorkspaceId": {
+      "type": "string",
+      "pattern": "^workspace:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorkspaceId",
+      "description": "Opaque workspace identity: \"workspace:\" followed by a lowercase slug."
+    },
+    "ProjectId": {
+      "type": "string",
+      "pattern": "^project:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "ProjectId",
+      "description": "Opaque project identity: \"project:\" followed by a lowercase slug."
+    },
+    "IdempotencyKey": {
+      "type": "string",
+      "pattern": "^idem:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "IdempotencyKey"
+    },
+    "JsonValue": {
+      "title": "JsonValue",
+      "description": "JSON-representable value (finite numbers only).",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "urn:epoch:application-gateway:gateway-request-envelope:1.0.0"
+}
