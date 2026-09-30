@@ -20,6 +20,8 @@
 // actions, expected/observed outcomes, evidence digests, disposition).
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 import { MOBILE_PRODUCT_IDENTITY } from '../../native/identifiers';
 import { buildFieldReviewActionPayload } from '../../src/product/approval-pipeline';
@@ -53,6 +55,9 @@ const ENVIRONMENT = {
 } as const;
 
 /** The product version + source commit of the record. */
+const here = path.dirname(fileURLToPath(import.meta.url));
+const REPO_ROOT = path.resolve(here, '..', '..', '..', '..');
+
 const PRODUCT_VERSION = MOBILE_PRODUCT_IDENTITY.productVersion;
 const SOURCE_COMMIT = (() => {
   try {
@@ -413,14 +418,14 @@ describe('J08 — cross-device handoff', () => {
     if (crossDevice.ok) {
       // The registry anchor: what the web/desktop products resolve.
       const registry = JSON.parse(
-        readFileSync('/home/z/epoch/qa/fixtures/registry.json', 'utf8'),
+        readFileSync(path.join(REPO_ROOT, 'qa', 'fixtures', 'registry.json'), 'utf8'),
       ) as { domains: { domain: string; worldDigest: string; programContentDigest: string; deliveryContentDigest: string }[] };
       const construction = registry.domains.find((domain) => domain.domain === 'construction')!;
       expect(crossDevice.value.worldDigest).toBe(construction.worldDigest);
       expect(crossDevice.value.programContentDigest).toBe(construction.programContentDigest);
       // The same digest the bundled native app pins.
       const bundled = JSON.parse(
-        readFileSync('/home/z/epoch/apps/mobile/native/fixtures/world.json', 'utf8'),
+        readFileSync(path.join(REPO_ROOT, 'apps', 'mobile', 'native', 'fixtures', 'world.json'), 'utf8'),
       ) as { digest: string };
       expect(crossDevice.value.worldDigest).toBe(bundled.digest);
     }
