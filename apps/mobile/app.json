@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "Epoch Field",
+    "slug": "epoch-field",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "epochfield",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#ffffff",
+    "description": "The Epoch field product: capture, evidence, approval and offline sync against the Epoch Application Gateway.",
+    "android": {
+      "package": "org.payswapdotorg.epoch",
+      "versionCode": 1
+    },
+    "ios": {
+      "bundleIdentifier": "org.payswapdotorg.epoch",
+      "buildNumber": "1",
+      "supportsTablet": true
+    }
+  }
+}
