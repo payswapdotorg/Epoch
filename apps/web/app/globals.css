@@ -1,0 +1,45 @@
+/* Epoch web product (W047) — global interaction styles.
+ *
+ * The product's visual system is the W014 token set (inline styles); this
+ * sheet carries ONLY the interaction states inline styles cannot express:
+ * visible focus (WCAG 2.4.7 / 2.4.11), reduced-motion respect, and the
+ * base document reset. No framework, no vendor vocabulary. */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #f8f7f4;
+  color: #1c1917;
+}
+
+*:focus-visible {
+  outline: 2px solid #1c1917;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+a:focus-visible {
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Keyboard-scrollable regions stay visible when focused. */
+[tabindex]:focus {
+  outline: none;
+}
+
+[tabindex]:focus-visible {
+  outline: 2px solid #1c1917;
+  outline-offset: 2px;
+}

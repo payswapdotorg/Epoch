@@ -85,18 +85,29 @@ describe('shell provider neutrality', () => {
     expect(offenders).toEqual([]);
   });
 
-  it('the runtime dependency surface stays exactly the frozen app catalog (next/react/react-dom)', () => {
-    // Provider neutrality in dependency form: the ONLY runtime dependencies
-    // are the app framework trio; every @epoch/* reference is a
-    // devDependency parity pin, never a runtime coupling.
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  it('the runtime dependency surface stays within the W047 pin (next/react/react-dom + @epoch workspace packages)', () => {
+    // Provider neutrality in dependency form (W047 pin 8): runtime deps
+    // stay minimal — the app framework trio plus @epoch/* workspace
+    // packages (the product runtime composition + the frozen client
+    // contract surface). NO third-party runtime dependency may appear;
+    // every @epoch/* reference (runtime or dev) is a workspace link.
     const manifest = JSON.parse(
       readFileSync(join(WEB_ROOT, 'package.json'), 'utf8'),
     ) as Record<string, Record<string, string>>;
-    expect(Object.keys(manifest.dependencies ?? {}).sort()).toEqual(['next', 'react', 'react-dom']);
+    const runtime = Object.keys(manifest.dependencies ?? {}).sort();
+    expect(runtime.length).toBeGreaterThan(0);
+    for (const dep of runtime) {
+      if (dep.startsWith('@epoch/')) {
+        expect(manifest.dependencies?.[dep]).toBe('workspace:*');
+      } else {
+        expect(['next', 'react', 'react-dom']).toContain(dep);
+      }
+    }
     for (const dep of Object.keys(manifest.devDependencies ?? {})) {
       if (dep.startsWith('@epoch/')) {
         expect(manifest.devDependencies[dep]).toBe('workspace:*');
+      } else if (dep.startsWith('@playwright')) {
+        expect(manifest.devDependencies[dep]).toBe('catalog:');
       }
     }
     // The layer marker stays.

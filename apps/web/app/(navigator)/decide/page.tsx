@@ -1,9 +1,8 @@
-import { referenceShell } from '../../../src/shell/bootstrap';
-import { NavigatorStageRoute, stageMetadata } from '../../../src/shell/route-surfaces';
+import { StageRoute } from '../../../src/product/stage-route';
 
-export const metadata = stageMetadata('decide');
+export const metadata = { title: 'Decide — Epoch' };
 
-/** The 'decide' navigator stage route: the shell frame with empty mounted surfaces. */
+/** The 'decide' navigator stage route. */
 export default function Page() {
-  return <NavigatorStageRoute shell={referenceShell} stage="decide" />;
+  return <StageRoute stage="decide" />;
 }
