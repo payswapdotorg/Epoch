@@ -6,11 +6,12 @@ Architecture: E1.0/X1.0 with ACR-001/002/003/004 effective; ACR-005 productizati
 Work Order schema: WO2.0.
 Default branch: main.
 Current main baseline before ACR-005 program: 6912e4af4bab7a77e43d835b6bfc573aacee81f6.
-W001-W046 + W049: COMPLETE (47/50).
-Current frontier: W047/W048 IN FLIGHT (concurrent, disjoint surfaces; dispatched at base 5823249); W050 blocked until both merge.
+W001-W046 + W047 + W049: COMPLETE (48/50).
+Current frontier: W048 IN FLIGHT (REQUIRE-CHANGES iteration at PR #109 — desktop typecheck/build harness-resolution fix; dispatched at base 5823249); W050 blocked until W048 merges.
 W046 complete (2026-09-30): PR #100 -> a4990a6b + reconcile PR #101 -> 648f1f5b; dispatch base for the client wave = 648f1f5b.
 W049 complete (2026-09-30): PR #104 -> 19cc2fbb + reconcile PR #105 -> 821156d3.
-After W047/W048: W050 becomes dispatchable (serialized last).
+W047 complete (2026-09-30): PR #107 -> 25481690 + reconcile PR #108 (web importer).
+After W048: W050 becomes dispatchable (serialized last).
 Maximum concurrent workers: 3.
 
 Current client reality:
@@ -130,3 +131,8 @@ Historical state and verification notes follow.
 - Delivers: the W018 typed mobile host as the real Expo + React Native Android/iOS field product on the W046 shared runtime — typed client bridge over the frozen 32-operation gateway vocabulary; offline queue holds pending projections only and replays exactly-once (content-derived idempotency keys, replayed=true/digestStable=true/duplicateSideEffects=0); digest-before-upload evidence (pure-TS FIPS 180-4 SHA-256, NIST-pinned); secure-store seam persistence; approvals a strict gateway subset with no local settlement (structural assertions); detox E2E harness (4 apps, 3 devices, 5 configurations, 9 journey specs) under qa/mobile.
 - 5 advisory questions recorded in the PR #104 merge body (expo platform-module pinning; capture-id unification; idempotency-key collision semantics — W050 hardening note; qa/* workspace discipline; neutrality adapter-scoping for desktop).
 - Program: 47/50. Frontier: W047/W048 in flight (generation resumed through the 2026-09-30 evening platform incident via the §8 stop/continue cure + persistent SSE holders). W050 serialized after both merge.
+
+## W047 complete — web product delivered (2026-09-30, Tech Lead)
+- W047 (Web Product + Browser Journey Validation): PR #107 squash-merged -> 25481690 (worker head 718374af; branch also self-carried D-01..D-08 + SM-1/SM-2 fixes through a mid-wave sandbox tool-layer failure — recovered via the §8 stop/continue + persistent-holder cure without re-dispatch). Reconcile PR #108 (apps/web importer: 19 workspace links + playwright/@playwright/test catalog resolution). 7-gate ALL GREEN: 65 owned files (+7,812/-148; apps/web/* + qa/web/* + docs/journeys/web.md); 0 secrets; install PASS (catalog-only); independent battery EXACT (typecheck 82/82, lint 79/79, test 82/82 with apps/web 139/139, build 3/3, serialized; governance+boundary PASS); CI 4/4 on head; report complete.
+- Delivers: apps/web as the canonical Epoch web product on the W046 Application Gateway (envelope-only POST /api/gateway + identity boundary + session-gated bootstrap); per-tenant fixture-verified product runtime; the full projection surface set; provider-scoped offline queue with exactly-once replay; production-build Playwright browser battery J01-J12 (24/24, digest-anchored fixtures, one worker); defect ledger 5 P1 + 5 P2 all closed with regression coverage (approval-authority surfacing D-02, provider-scoped queue D-03, network-vs-expiry session guard D-07, process-group server lifecycle D-08).
+- Program: 48/50. W048 in REQUIRE-CHANGES iteration (qa/desktop e2e harness @playwright/test resolution — the app tsconfig include made typechecking environment-dependent; fix + full battery re-run in flight). W050 serialized last (packet staged).
