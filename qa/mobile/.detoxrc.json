@@ -1,0 +1,80 @@
+{
+  "testRunner": {
+    "args": {
+      "$0": "jest",
+      "config": "e2e/jest.config.js"
+    },
+    "jest": {
+      "setupTimeout": 180000
+    }
+  },
+  "apps": {
+    "android.debug": {
+      "type": "android.apk",
+      "binaryPath": "../../apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk",
+      "testBinaryPath": "../../apps/mobile/android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+      "build": "cd ../../apps/mobile && npx expo prebuild --platform android --no-install && cd android && ./gradlew assembleDebug assembleAndroidTest"
+    },
+    "android.release": {
+      "type": "android.apk",
+      "binaryPath": "../../apps/mobile/android/app/build/outputs/apk/release/app-release.apk",
+      "testBinaryPath": "../../apps/mobile/android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk",
+      "build": "cd ../../apps/mobile && npx expo prebuild --platform android --no-install && cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release"
+    },
+    "ios.debug": {
+      "type": "ios.app",
+      "binaryPath": "../../apps/mobile/ios/build/Build/Products/Debug-iphonesimulator/EpochField.app",
+      "build": "cd ../../apps/mobile && npx expo prebuild --platform ios --no-install && xcodebuild -workspace ios/EpochField.xcworkspace -scheme EpochField -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build"
+    },
+    "ios.release": {
+      "type": "ios.app",
+      "binaryPath": "../../apps/mobile/ios/build/Build/Products/Release-iphonesimulator/EpochField.app",
+      "build": "cd ../../apps/mobile && npx expo prebuild --platform ios --no-install && xcodebuild -workspace ios/EpochField.xcworkspace -scheme EpochField -configuration Release -sdk iphonesimulator -derivedDataPath ios/build"
+    }
+  },
+  "devices": {
+    "android.emulator": {
+      "type": "android.emulator",
+      "device": {
+        "avdName": "Pixel_8_API_35"
+      }
+    },
+    "android.attached": {
+      "type": "android.attached",
+      "device": {
+        "adbName": ".*"
+      }
+    },
+    "ios.simulator": {
+      "type": "ios.simulator",
+      "device": {
+        "type": "iPhone 16"
+      }
+    }
+  },
+  "configurations": {
+    "android.emulator.debug": {
+      "device": "android.emulator",
+      "app": "android.debug"
+    },
+    "android.emulator.release": {
+      "device": "android.emulator",
+      "app": "android.release"
+    },
+    "android.attached.release": {
+      "device": "android.attached",
+      "app": "android.release"
+    },
+    "ios.simulator.debug": {
+      "device": "ios.simulator",
+      "app": "ios.debug"
+    },
+    "ios.simulator.release": {
+      "device": "ios.simulator",
+      "app": "ios.release"
+    }
+  },
+  "artifacts": {
+    "rootDir": "artifacts"
+  }
+}

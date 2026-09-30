@@ -3,35 +3,49 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Epoch Mobile Field Client (W018) — the typed field-shell architecture plus an in-memory reference host for the mobile field client (architecture.md §Clients: \"mobile is optimized for field capture/review/approval\"). Field sessions are tenant-scoped (W099 grammar via @epoch/tenancy); capture envelopes are versioned, content-addressed, replay-safe channels carrying photo/sensor/note references as W006-convention evidence references BY DIGEST (never embedded payloads); quantity/progress observations are shaped as W036 Observation-distinction records with the MANDATORY uncertainty state and unambiguous work-package linkage by opaque id (ambiguity is a typed rejection, never a guess); field review/approval surfaces are W003 typed proposals through the W022 action-gateway seam — the client holds no credentials, executes nothing, and receives gateway decision records (allow/deny/requires-approval); the offline queue stores typed, content-addressed, idempotent records (duplicate capture = sealed prior record) and sync admission replays through the kernel seams with provenance — never a second semantic store (lock rules 8/16). REFERENCE IMPLEMENTATION discipline (the W020/W022/W029 precedent): no real native bundling, no new third-party runtime dependencies, zero wall-clock, zero randomness, instants caller-supplied.",
+  "description": "Epoch Mobile Field Client (W018) -> Epoch Mobile Native Product (W049, ACR-005). The Expo + React Native Android/iOS field application around the W018 typed field-shell contracts, bound to the W046 shared product runtime: the app renders the W018 field surface (tenant-scoped capture sessions, versioned content-addressed replay-safe capture envelopes with MANDATORY uncertainty and unambiguous work-package linkage, photo/sensor/note evidence references by digest, field review/approval as W003 typed proposals) and talks to the SAME frozen 32-operation Application Gateway vocabulary through a typed client bridge (@epoch/client-runtime envelopes + the in-process @epoch/application-gateway binding; HTTP transport is the documented deployment seam). No second semantic store: observation/approval state flows through Gateway envelopes + client-runtime persistence/session seams; the offline queue holds PENDING PROJECTIONS of user intent only (the five W046 named negatives) and replays through the Action Gateway path with idempotency keys \u2014 exactly once. Session tokens persist ONLY through the platform secure store seam (never AsyncStorage/plaintext); camera/evidence capture is digest-addressed (the digest is computed BEFORE upload and the authority recomputes it server-side). Provider neutrality + determinism are preserved: zero wall-clock, zero randomness, instants caller-supplied. Mobile stack pinned by the Tech Lead via the workspace catalog: expo 57.0.26, react-native 0.87.1, detox 20.51.4 (catalog: protocol; the root manifest/lockfile are NEVER touched by this Work Order).",
   "epoch": {
     "layer": "app"
   },
+  "main": "./index.ts",
   "exports": {
     ".": "./src/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "eslint .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "build": "expo config --type public > /dev/null"
   },
   "dependencies": {
+    "@epoch/action-gateway": "workspace:*",
     "@epoch/action-protocol": "workspace:*",
     "@epoch/agent-protocol": "workspace:*",
+    "@epoch/application-gateway": "workspace:*",
+    "@epoch/authentication": "workspace:*",
+    "@epoch/client-runtime": "workspace:*",
+    "@epoch/evidence": "workspace:*",
+    "@epoch/event-log": "workspace:*",
     "@epoch/experience-protocol": "workspace:*",
+    "@epoch/object-storage": "workspace:*",
     "@epoch/solution-delivery": "workspace:*",
     "@epoch/tenancy": "workspace:*",
+    "@epoch/world-model": "workspace:*",
+    "expo": "catalog:",
+    "react": "catalog:",
+    "react-native": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@epoch/action-policy": "workspace:*",
     "@epoch/authorization": "workspace:*",
-    "@epoch/evidence": "workspace:*",
     "@epoch/eslint-config": "workspace:*",
     "@epoch/identity": "workspace:*",
     "@epoch/renderer-runtime": "workspace:*",
     "@epoch/tsconfig": "workspace:*",
     "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "detox": "catalog:",
     "eslint": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
