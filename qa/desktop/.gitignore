@@ -1,0 +1,3 @@
+# The apps/desktop module-graph symlink (scripts/link-qa-harness.mjs recreates it;
+# never committed).
+node_modules

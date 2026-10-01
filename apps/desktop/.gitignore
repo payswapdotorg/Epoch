@@ -1,0 +1,8 @@
+# W048 generated artifacts (built at package time, never committed):
+# the Next.js static export (the Tauri webview payload)...
+out/
+# ...and the synced fixture copy (scripts/sync-fixtures.mjs regenerates it
+# from qa/fixtures with registry digest verification).
+public/fixtures/
+# TypeScript incremental state.
+tsconfig.tsbuildinfo

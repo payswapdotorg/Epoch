@@ -1,10 +1,22 @@
-// W017 acceptance: provider neutrality (lock rule 13) — no
-// engine/vendor/framework/native-toolkit vocabulary in desktop source
-// (the reference host is engine-free), and the runtime dependency
-// surface stays exactly the frozen W017 pin. The architecture-level
-// client-family designation (spec/architecture.md "Clients" + this
-// package's README) is the one locked seam where the native-wrapper
-// vendor name may appear — src/ and test/ carry none of it.
+// W017 + W048 acceptance: provider neutrality (lock rule 13).
+//
+// W017 pinned the whole package engine-free: no vendor vocabulary in
+// source, the runtime dependency surface exactly the five-package pin.
+// W048 turns the package into the native PRODUCT around the SAME W017
+// experience surface — the discipline now scopes by zone:
+//
+//  - the W017 LIBRARY zone (src minus src/native): the original pin holds
+//    UNCHANGED — engine-free, the frozen five-package runtime surface,
+//    imports within the pin (the experience surface is not forked; the
+//    reference host stays the typed contract);
+//  - the W048 NATIVE ADAPTER zone (src/native): platform toolchains are
+//    ADAPTERS, never semantic authorities — vendor vocabulary may appear
+//    ONLY in the two declared adapter modules (ipc/host.ts, the host
+//    command port, and ipc/transport.ts, the gateway transports); the
+//    rest of the native zone (runtime/embedded/bridge) stays vendor-free;
+//    the import surface stays within the W048 product pin (client-runtime
+//    + the sanctioned composition set + @tauri-apps/api behind the
+//    adapter modules only).
 import { describe, expect, it } from 'vitest';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
@@ -12,7 +24,10 @@ import { fileURLToPath } from 'node:url';
 
 const here = resolve(fileURLToPath(import.meta.url), '..');
 const DESKTOP_ROOT = resolve(here, '..');
-const OWNED_TREES = [resolve(DESKTOP_ROOT, 'src')];
+const LIBRARY_ZONE = resolve(DESKTOP_ROOT, 'src');
+const NATIVE_ZONE = resolve(DESKTOP_ROOT, 'src', 'native');
+/** The ONLY native-zone modules where vendor vocabulary may appear. */
+const NATIVE_ADAPTER_MODULES = ['ipc/host.ts', 'ipc/transport.ts'];
 
 const SOURCE_EXTENSIONS = new Set(['.ts', '.tsx', '.mts', '.cts', '.js', '.jsx', '.mjs', '.cjs']);
 
@@ -83,19 +98,22 @@ function isTestArtifact(file: string): boolean {
   return base.includes('.test.') || base.includes('.types.');
 }
 
+/** The files of one zone with the other zone excluded. */
+function zoneFiles(root: string, exclude?: string): string[] {
+  return listSourceFiles(root).filter((file) => exclude === undefined || !file.startsWith(exclude));
+}
+
 describe('desktop provider neutrality (lock rule 13)', () => {
-  it('no vendor identifiers appear in owned source (the reference host is engine-free)', () => {
+  it('no vendor identifiers appear in the W017 library zone (the reference host stays engine-free)', () => {
     const offenders: string[] = [];
     let scanned = 0;
-    for (const tree of OWNED_TREES) {
-      for (const file of listSourceFiles(tree)) {
-        if (isTestArtifact(file)) continue; // the denylist lives in tests
-        scanned += 1;
-        const text = readFileSync(file, 'utf-8').toLowerCase();
-        for (const token of VENDOR_TOKENS) {
-          if (text.includes(token)) {
-            offenders.push(`${file}: ${token}`);
-          }
+    for (const file of zoneFiles(LIBRARY_ZONE, NATIVE_ZONE)) {
+      if (isTestArtifact(file)) continue; // the denylist lives in tests
+      scanned += 1;
+      const text = readFileSync(file, 'utf-8').toLowerCase();
+      for (const token of VENDOR_TOKENS) {
+        if (text.includes(token)) {
+          offenders.push(`${file}: ${token}`);
         }
       }
     }
@@ -103,10 +121,44 @@ describe('desktop provider neutrality (lock rule 13)', () => {
     expect(offenders).toEqual([]);
   });
 
-  it('the runtime dependency surface stays exactly the frozen W017 pin', () => {
-    // Provider neutrality in dependency form: the ONLY runtime
-    // dependencies are the five pinned packages; every other @epoch/*
-    // reference is a devDependency parity pin, never a runtime coupling.
+  it('vendor identifiers appear ONLY in the declared native adapter modules (never in the native runtime)', () => {
+    // The native-zone discipline tests COUPLING, not prose: docs may NAME
+    // the platform toolkit (the adapter-zone comments say "Tauri"), but a
+    // vendor IMPORT or dynamic vendor load may exist ONLY inside the two
+    // declared adapter modules — the native runtime itself stays
+    // engine-free exactly like the W017 library zone.
+    const VENDOR_PACKAGE_PREFIXES = ['@tauri-apps', 'tauri', 'electron', 'webkit', 'gtk'];
+    const offenders: string[] = [];
+    let scanned = 0;
+    for (const file of zoneFiles(NATIVE_ZONE)) {
+      if (isTestArtifact(file)) continue;
+      const relative = file.slice(NATIVE_ZONE.length + 1).split('\\').join('/');
+      const isAdapter = NATIVE_ADAPTER_MODULES.includes(relative);
+      scanned += 1;
+      const text = readFileSync(file, 'utf-8');
+      const specs = [
+        ...[...text.matchAll(/\bfrom\s*['"]([^'"\n]+)['"]/g)].map((m) => m[1] ?? ''),
+        ...[...text.matchAll(/import\(\s*['"]([^'"\n]+)['"]/g)].map((m) => m[1] ?? ''),
+        ...[...text.matchAll(/\brequire\(\s*['"]([^'"\n]+)['"]/g)].map((m) => m[1] ?? ''),
+      ];
+      for (const spec of specs) {
+        if (spec.startsWith('.') || spec.startsWith('node:')) continue;
+        const isVendor = VENDOR_PACKAGE_PREFIXES.some((prefix) => spec === prefix || spec.startsWith(`${prefix}/`) || spec.startsWith(`${prefix}.`));
+        if (isVendor && !isAdapter) {
+          offenders.push(`${relative}: ${spec}`);
+        }
+      }
+    }
+    expect(scanned).toBeGreaterThan(10); // the native zone is real
+    expect(offenders).toEqual([]);
+    // And the adapter modules themselves exist (the declaration is live)
+    // with their vendor coupling declared.
+    for (const module of NATIVE_ADAPTER_MODULES) {
+      expect(readFileSync(join(NATIVE_ZONE, module), 'utf-8').length).toBeGreaterThan(0);
+    }
+  });
+
+  it('the runtime dependency surface is the frozen W017 pin PLUS the declared W048 product pin', () => {
     const manifest = JSON.parse(
       readFileSync(join(DESKTOP_ROOT, 'package.json'), 'utf-8'),
     ) as {
@@ -114,11 +166,27 @@ describe('desktop provider neutrality (lock rule 13)', () => {
       devDependencies?: Record<string, string>;
       epoch?: { layer?: string };
     };
+    // The W017 library pin (src/index.ts + the reference host) plus the
+    // W048 product pin: the gateway vocabulary, the composition
+    // authorities (embedded mode), the webview vendor trio, and zod.
     expect(Object.keys(manifest.dependencies ?? {}).sort()).toEqual([
+      '@epoch/action-gateway',
       '@epoch/agent-protocol',
+      '@epoch/application-gateway',
+      '@epoch/authentication',
+      '@epoch/client-runtime',
+      '@epoch/event-log',
+      '@epoch/evidence',
       '@epoch/experience-protocol',
+      '@epoch/object-storage',
+      '@epoch/persistence',
       '@epoch/renderer-runtime',
       '@epoch/tenancy',
+      '@epoch/world-model',
+      '@tauri-apps/api',
+      'next',
+      'react',
+      'react-dom',
       'zod',
     ]);
     const devDeps = Object.keys(manifest.devDependencies ?? {}).sort();
@@ -134,9 +202,7 @@ describe('desktop provider neutrality (lock rule 13)', () => {
     expect(manifest.epoch?.layer).toBe('app');
   });
 
-  it('runtime source imports stay within the runtime dependency set (no devDep runtime coupling)', () => {
-    // Scan src/ import specifiers: only the five pinned packages plus
-    // relative imports may appear.
+  it('library-zone imports stay within the W017 pin (the experience surface is not forked)', () => {
     const allowed = new Set([
       '@epoch/agent-protocol',
       '@epoch/experience-protocol',
@@ -145,7 +211,7 @@ describe('desktop provider neutrality (lock rule 13)', () => {
       'zod',
     ]);
     const offenders: string[] = [];
-    for (const file of listSourceFiles(resolve(DESKTOP_ROOT, 'src'))) {
+    for (const file of zoneFiles(LIBRARY_ZONE, NATIVE_ZONE)) {
       const text = readFileSync(file, 'utf-8');
       const specs = [...text.matchAll(/\bfrom\s*['"]([^'"\n]+)['"]/g)].map((m) => m[1]);
       for (const spec of specs) {
@@ -154,6 +220,42 @@ describe('desktop provider neutrality (lock rule 13)', () => {
         if (!allowed.has(base)) {
           offenders.push(`${file}: ${spec}`);
         }
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+
+  it('native-zone imports stay within the W048 product pin (adapters carry the vendor, never the runtime)', () => {
+    // The native zone: client-runtime (the bridge), the composition
+    // authorities (embedded mode), tenancy (the W017 runtime pin the shell
+    // resolves scopes through), and @tauri-apps/api ONLY inside the two
+    // adapter modules.
+    const nativeAllowed = new Set([
+      '@epoch/agent-protocol',
+      '@epoch/client-runtime',
+      '@epoch/action-gateway',
+      '@epoch/application-gateway',
+      '@epoch/authentication',
+      '@epoch/authorization',
+      '@epoch/event-log',
+      '@epoch/evidence',
+      '@epoch/object-storage',
+      '@epoch/persistence',
+      '@epoch/tenancy',
+      '@epoch/world-model',
+    ]);
+    const offenders: string[] = [];
+    for (const file of zoneFiles(NATIVE_ZONE)) {
+      const relative = file.slice(NATIVE_ZONE.length + 1).split('\\').join('/');
+      const isAdapter = NATIVE_ADAPTER_MODULES.includes(relative);
+      const text = readFileSync(file, 'utf-8');
+      const specs = [...text.matchAll(/\bfrom\s*['"]([^'"\n]+)['"]/g)].map((m) => m[1]);
+      for (const spec of specs) {
+        if (spec.startsWith('.') || spec.startsWith('node:')) continue;
+        const base = spec.startsWith('@') ? spec.split('/').slice(0, 2).join('/') : spec.split('/')[0];
+        if (nativeAllowed.has(base)) continue;
+        if (base === '@tauri-apps/api' && isAdapter) continue; // the declared adapter boundary
+        offenders.push(`${relative}: ${spec}`);
       }
     }
     expect(offenders).toEqual([]);

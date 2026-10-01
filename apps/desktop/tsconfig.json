@@ -1,10 +1,54 @@
 {
-  "extends": "@epoch/tsconfig/library.json",
+  "extends": "@epoch/tsconfig/app.json",
   "compilerOptions": {
-    "types": ["node"],
+    "target": "ES2022",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "types": [
+      "node"
+    ],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "paths": {
-      "@epoch/world-contracts": ["../../contracts/world/src/index.ts"]
+      "@epoch/world-contracts": [
+        "../../contracts/world/src/index.ts"
+      ]
     }
   },
-  "include": ["src/**/*.ts", "test/**/*.ts", "vitest.config.mts"]
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "next-env.d.ts",
+    "next.config.ts",
+    "scripts/**/*.mjs",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "test/**/*.ts",
+    "vitest.config.mts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "out",
+    ".next",
+    "src-tauri/target"
+  ]
 }
+

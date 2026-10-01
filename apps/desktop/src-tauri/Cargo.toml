@@ -1,0 +1,47 @@
+# W048 — the Epoch desktop native host (Tauri 2).
+#
+# The Rust shell around the W017 experience surface: the frozen 14-command
+# host surface (metadata, OS-keychain secure store, durable local
+# projections, native dialogs, file import/export, local-state wipe) plus
+# the `epoch_gateway_call` forwarder (remote-gateway mode, defense-in-depth
+# allowlist of the 32 frozen Application Gateway operations).
+#
+# Platform toolchains are ADAPTERS, never semantic authorities (lock rule
+# 13): nothing in this crate computes semantic state. Build matrix:
+#   Linux:   cargo tauri build --bundles appimage,deb
+#   Windows: cargo tauri build --bundles nsis
+#   macOS:   cargo tauri build --bundles dmg,app
+[package]
+name = "epoch-desktop"
+version = "1.0.0"
+description = "Epoch — the native desktop product (W048: Tauri 2 shell around the W017 experience surface)"
+authors = ["Epoch"]
+edition = "2021"
+rust-version = "1.77"
+default-run = "epoch-desktop"
+
+[lib]
+name = "epoch_desktop_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Platform-safe credential storage (W048 pin 5): the OS keychain —
+# Secret Service on Linux, Credential Manager on Windows, Keychain on macOS.
+keyring = "3"
+# The remote-gateway forwarder (epoch_gateway_call): blocking HTTPS with
+# rustls (no native OpenSSL linkage — reproducible per-OS builds).
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "rustls-tls"] }
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true

@@ -1,0 +1,11 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "The Epoch desktop capability: the main window may use the core runtime + the dialog plugin (the native file pickers behind epoch_pick_open_file / epoch_pick_save_file). Application-defined commands (the frozen epoch_* surface) are app commands; plugin commands are permission-gated here.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "dialog:allow-open",
+    "dialog:allow-save"
+  ]
+}

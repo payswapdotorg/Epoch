@@ -1,0 +1,69 @@
+{
+  "//": "W048 — the desktop journey harness's OWN type-checked validation path. qa/desktop is NOT a pnpm workspace package (pnpm-workspace.yaml is frozen), so these files have no node_modules chain of their own. apps/desktop/tsconfig.json no longer includes ../../qa/desktop/** (that include made the desktop typecheck/build depend on untracked generated state: the scripts/link-qa-harness.mjs symlink, which only exists after a test run). This config restores the SAME type bar for the harness files — the app-tier strictness (identical extends chain: packages/tsconfig/app.json -> base.json) — with FULLY declarative resolution: every bare import is mapped to its real location (workspace sources, apps/desktop's pinned dependency type entries, apps/desktop's @types). Nothing here depends on the qa/desktop/node_modules symlink; a fresh checkout type-checks cold. Invoked from apps/desktop's `typecheck` script (the same reach-through pattern its `lint` script already uses for this harness, and the same own-config pattern qa/mobile's jest harness uses). The wdio pair (wdio.desktop.conf.ts + e2e/tauri.spec.ts) stays OUT of static typechecking exactly as in the delivery: their identifiers (Options from @wdio/types, the mocha describe/it/$/$$/browser globals) are injected by the wdio runtime on provisioned machines, and @wdio/types is not in the W048 pin set as a direct dependency (adding it would touch the frozen lockfile).",
+  "extends": "../../packages/tsconfig/app.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": false,
+    "types": [
+      "node"
+    ],
+    "baseUrl": ".",
+    "typeRoots": [
+      "../../apps/desktop/node_modules/@types"
+    ],
+    "paths": {
+      "@epoch/alerts": [
+        "../../packages/alerts/src/index.ts"
+      ],
+      "@epoch/desktop/native": [
+        "../../apps/desktop/src/native/index.ts"
+      ],
+      "@epoch/policy-contracts": [
+        "../../packages/policy-contracts/src/index.ts"
+      ],
+      "@epoch/procurement": [
+        "../../packages/procurement/src/index.ts"
+      ],
+      "@epoch/solution-delivery": [
+        "../../packages/solution-delivery/src/index.ts"
+      ],
+      "@epoch/supervision": [
+        "../../packages/supervision/src/index.ts"
+      ],
+      "@epoch/tenancy": [
+        "../../packages/tenancy/src/index.ts"
+      ],
+      "@epoch/world-contracts": [
+        "../../contracts/world/src/index.ts"
+      ],
+      "@playwright/test": [
+        "../../apps/desktop/node_modules/@playwright/test/index.d.ts"
+      ],
+      "vitest": [
+        "../../apps/desktop/node_modules/vitest/dist/index.d.ts"
+      ]
+    }
+  },
+  "include": [
+    "e2e/**/*.ts",
+    "journeys/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "e2e/tauri.spec.ts",
+    "wdio.desktop.conf.ts"
+  ]
+}
