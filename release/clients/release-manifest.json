@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "releaseId": "epoch-clients-v1.0.0",
+  "version": "1.0.0",
+  "sourceCommit": "39cc9c84e554cf51b0a301f532e19c0deba7b903",
+  "description": "The client release identity record set (W050): every artifact records source commit, version/profile, target platform and checksum (spec/productization-architecture.md). Config-delivered platforms declare their environment gaps \u2014 never silent.",
+  "clients": [
+    {
+      "platform": "web",
+      "version": "1.0.0",
+      "profile": "production",
+      "artifact": {
+        "kind": "next-production-build (next build -> next start; the canonical web client)",
+        "definitionFiles": [
+          "apps/web/package.json",
+          "apps/web/next.config.ts",
+          "apps/web/tsconfig.json",
+          "apps/web/vitest.config.mts",
+          "apps/web/playwright.config.ts"
+        ],
+        "definitionTreeSha": "5985043aee6821a820f4934f36b5a337e118460c",
+        "checksums": {
+          "apps/web/package.json": "ac22a48aa25278e90c2fdf70be13ef9eec736a2d2eb92da80e1f4ecb99748ec1",
+          "apps/web/next.config.ts": "b9ed807b06d018a3b190914e965247d2999d38e2dcbfea85f11eb4845c9a9132",
+          "apps/web/tsconfig.json": "f35c6b95fd13351b89e5c8582f421dadc8fdaac2760fdc85b64321cd9618ad31",
+          "apps/web/vitest.config.mts": "57539e3dbd699f32e07707f73ee140f9605ae4fd7d6a319ee82f263e6591d7da",
+          "apps/web/playwright.config.ts": "cad7f4eb764c8e26d0f0dc0b24d1c6126a32685c7fe935460d61c517a50a2515"
+        }
+      },
+      "buildStatus": {
+        "status": "built-in-sandbox",
+        "evidence": "the CI battery (turbo build) builds the production web artifact at every push/PR; the W047 journey battery ran the production build through J01-J12 (docs/journeys/web.md)",
+        "environmentGap": null
+      },
+      "journeys": "docs/journeys/web.md"
+    },
+    {
+      "platform": "desktop-linux",
+      "version": "1.0.0",
+      "profile": "production",
+      "artifact": {
+        "kind": "tauri appimage + deb (tauri build --bundles appimage,deb)",
+        "definitionFiles": [
+          "apps/desktop/package.json",
+          "apps/desktop/src-tauri/tauri.conf.json",
+          "apps/desktop/src-tauri/Cargo.toml",
+          "apps/desktop/tsconfig.json"
+        ],
+        "definitionTreeSha": "ecc27fb6b7dd38490a1e707f5fde939960880011",
+        "checksums": {
+          "apps/desktop/package.json": "a3a4a8d8e2b7f333359cd4ab55393a6b9a77ea1735740f6e4eecaf1b7fdad022",
+          "apps/desktop/src-tauri/tauri.conf.json": "79d64b54d5d47d39ee59ae582110d80186bfdeb078a34ef9de6e7786c10d67e9",
+          "apps/desktop/src-tauri/Cargo.toml": "38aafe55f158fbbf30939b6a53ca2006d3261e4313b3a2ab90de0ec783e79642",
+          "apps/desktop/tsconfig.json": "b0144421b233bc84ff97e3569622029e9d77d780c7a8e6f124db19302fd2ed65"
+        }
+      },
+      "buildStatus": {
+        "status": "config-delivered",
+        "evidence": "the Tauri 2 host is config-complete and structurally pinned (qa/desktop native battery; the webview payload builds via pnpm build; the packaged-binary runbook is qa/desktop/wdio.desktop.conf.ts + pnpm run tauri:build:linux)",
+        "environmentGap": "the Linux sandbox has no cargo/rustc, no webkit2gtk-4.1, no libayatana-appindicator \u2014 the AppImage/deb packaging cannot run here (docs/journeys/desktop-linux.md toolchain audit)"
+      },
+      "journeys": "docs/journeys/desktop-linux.md"
+    },
+    {
+      "platform": "desktop-windows",
+      "version": "1.0.0",
+      "profile": "production",
+      "artifact": {
+        "kind": "tauri nsis installer (tauri build --bundles nsis)",
+        "definitionFiles": [
+          "apps/desktop/package.json",
+          "apps/desktop/src-tauri/tauri.conf.json",
+          "apps/desktop/src-tauri/Cargo.toml",
+          "apps/desktop/tsconfig.json"
+        ],
+        "definitionTreeSha": "ecc27fb6b7dd38490a1e707f5fde939960880011",
+        "checksums": {
+          "apps/desktop/package.json": "a3a4a8d8e2b7f333359cd4ab55393a6b9a77ea1735740f6e4eecaf1b7fdad022",
+          "apps/desktop/src-tauri/tauri.conf.json": "79d64b54d5d47d39ee59ae582110d80186bfdeb078a34ef9de6e7786c10d67e9",
+          "apps/desktop/src-tauri/Cargo.toml": "38aafe55f158fbbf30939b6a53ca2006d3261e4313b3a2ab90de0ec783e79642",
+          "apps/desktop/tsconfig.json": "b0144421b233bc84ff97e3569622029e9d77d780c7a8e6f124db19302fd2ed65"
+        }
+      },
+      "buildStatus": {
+        "status": "config-delivered",
+        "evidence": "the Windows bundle matrix is committed in tauri.conf.json; the same Rust host + webview payload as Linux (one artifact definition family)",
+        "environmentGap": "Windows packaging requires a Windows host with the MSVC toolchain \u2014 not present in this Linux sandbox (docs/journeys/desktop-windows.md)"
+      },
+      "journeys": "docs/journeys/desktop-windows.md"
+    },
+    {
+      "platform": "desktop-macos",
+      "version": "1.0.0",
+      "profile": "production",
+      "artifact": {
+        "kind": "tauri dmg + app bundle (tauri build --bundles dmg,app)",
+        "definitionFiles": [
+          "apps/desktop/package.json",
+          "apps/desktop/src-tauri/tauri.conf.json",
+          "apps/desktop/src-tauri/Cargo.toml",
+          "apps/desktop/tsconfig.json"
+        ],
+        "definitionTreeSha": "ecc27fb6b7dd38490a1e707f5fde939960880011",
+        "checksums": {
+          "apps/desktop/package.json": "a3a4a8d8e2b7f333359cd4ab55393a6b9a77ea1735740f6e4eecaf1b7fdad022",
+          "apps/desktop/src-tauri/tauri.conf.json": "79d64b54d5d47d39ee59ae582110d80186bfdeb078a34ef9de6e7786c10d67e9",
+          "apps/desktop/src-tauri/Cargo.toml": "38aafe55f158fbbf30939b6a53ca2006d3261e4313b3a2ab90de0ec783e79642",
+          "apps/desktop/tsconfig.json": "b0144421b233bc84ff97e3569622029e9d77d780c7a8e6f124db19302fd2ed65"
+        }
+      },
+      "buildStatus": {
+        "status": "config-delivered",
+        "evidence": "the macOS bundle matrix is committed in tauri.conf.json (signing/notarization-ready structure); the same Rust host + webview payload as Linux (one artifact definition family)",
+        "environmentGap": "macOS packaging requires a macOS host with Xcode \u2014 not present in this Linux sandbox (docs/journeys/desktop-macos.md)"
+      },
+      "journeys": "docs/journeys/desktop-macos.md"
+    },
+    {
+      "platform": "mobile-android",
+      "version": "1.0.0",
+      "profile": "production",
+      "artifact": {
+        "kind": "expo android release build \u2014 apk/aab (eas build --platform android)",
+        "definitionFiles": [
+          "apps/mobile/package.json",
+          "apps/mobile/app.json",
+          "apps/mobile/eas.json",
+          "apps/mobile/tsconfig.json"
+        ],
+        "definitionTreeSha": "9750dc94afd815a28bd0b23694f43b7bb8e4f5a5",
+        "checksums": {
+          "apps/mobile/package.json": "924b54b45ad0d340c9b43143992ebb4db17d3e565996db974c9737b388b22dab",
+          "apps/mobile/app.json": "c5248cdc14b223fcc88190b0bbc79a84c975c580f31044e6d82abad65120a64c",
+          "apps/mobile/eas.json": "b42fa2f68954f6d64f634e7b23774f3cec9e73a9c87d7aa0cac46fe424fc2960",
+          "apps/mobile/tsconfig.json": "ec8aa9eb36fb050a43d5339de0033e9ebc895e411ea6eb4230b09ca437fffcdc"
+        }
+      },
+      "buildStatus": {
+        "status": "config-delivered",
+        "evidence": "the Expo/EAS build profiles are committed (eas.json: the production release profile); the detox E2E harness is complete under qa/mobile (runnable on infra with the mobile toolchains); the product engine is journey-validated in-sandbox (apps/mobile test battery + docs/journeys/mobile-android.md)",
+        "environmentGap": "the Linux sandbox has no Android SDK \u2014 device/emulator runs and the apk/aab packaging cannot run here (docs/journeys/mobile-android.md honest environment record)"
+      },
+      "journeys": "docs/journeys/mobile-android.md"
+    },
+    {
+      "platform": "mobile-ios",
+      "version": "1.0.0",
+      "profile": "production",
+      "artifact": {
+        "kind": "expo ios release build \u2014 simulator/device archive, TestFlight-ready (eas build --platform ios)",
+        "definitionFiles": [
+          "apps/mobile/package.json",
+          "apps/mobile/app.json",
+          "apps/mobile/eas.json",
+          "apps/mobile/tsconfig.json"
+        ],
+        "definitionTreeSha": "9750dc94afd815a28bd0b23694f43b7bb8e4f5a5",
+        "checksums": {
+          "apps/mobile/package.json": "924b54b45ad0d340c9b43143992ebb4db17d3e565996db974c9737b388b22dab",
+          "apps/mobile/app.json": "c5248cdc14b223fcc88190b0bbc79a84c975c580f31044e6d82abad65120a64c",
+          "apps/mobile/eas.json": "b42fa2f68954f6d64f634e7b23774f3cec9e73a9c87d7aa0cac46fe424fc2960",
+          "apps/mobile/tsconfig.json": "ec8aa9eb36fb050a43d5339de0033e9ebc895e411ea6eb4230b09ca437fffcdc"
+        }
+      },
+      "buildStatus": {
+        "status": "config-delivered",
+        "evidence": "the Expo/EAS build profiles are committed (eas.json: the production release profile); the detox E2E harness is complete under qa/mobile (runnable on infra with the mobile toolchains); the product engine is journey-validated in-sandbox (apps/mobile test battery + docs/journeys/mobile-ios.md)",
+        "environmentGap": "the Linux sandbox has no Xcode \u2014 iOS builds require a macOS build host (docs/journeys/mobile-ios.md honest environment record)"
+      },
+      "journeys": "docs/journeys/mobile-ios.md"
+    }
+  ]
+}

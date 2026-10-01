@@ -15,3 +15,5 @@ Expected records:
 - defect-ledger.md
 
 Each record identifies exact source commit/build/version/fixture and links to CI artifacts where available. Never commit secrets or large binary traces.
+
+**W050 closure: the expected record set is COMPLETE** (all eight records committed; the consolidated ledger's release-gate verdict is recorded in `defect-ledger.md`).
