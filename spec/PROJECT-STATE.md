@@ -6,12 +6,13 @@ Architecture: E1.0/X1.0 with ACR-001/002/003/004 effective; ACR-005 productizati
 Work Order schema: WO2.0.
 Default branch: main.
 Current main baseline before ACR-005 program: 6912e4af4bab7a77e43d835b6bfc573aacee81f6.
-W001-W046 + W047 + W049: COMPLETE (48/50).
-Current frontier: W048 IN FLIGHT (REQUIRE-CHANGES iteration at PR #109 — desktop typecheck/build harness-resolution fix; dispatched at base 5823249); W050 blocked until W048 merges.
+W001-W049: COMPLETE (49/50).
+Current frontier: W050 ELIGIBLE (cross-platform release + journey closure — serialized last, the only WO allowed to repair all three client trees).
 W046 complete (2026-09-30): PR #100 -> a4990a6b + reconcile PR #101 -> 648f1f5b; dispatch base for the client wave = 648f1f5b.
 W049 complete (2026-09-30): PR #104 -> 19cc2fbb + reconcile PR #105 -> 821156d3.
 W047 complete (2026-09-30): PR #107 -> 25481690 + reconcile PR #108 (web importer).
-After W048: W050 becomes dispatchable (serialized last).
+W048 complete (2026-10-01): PR #109 -> 792643cf (one require-changes cycle: the qa/desktop e2e harness gained its own declaratively-resolved type-checked validation path after the app-tsconfig include proved environment-dependent) + reconcile PR #111 (desktop importer).
+After W050: ROADMAP COMPLETE 50/50 — post-program requires a new ACR per the architecture lock.
 Maximum concurrent workers: 3.
 
 Current client reality:
@@ -136,3 +137,9 @@ Historical state and verification notes follow.
 - W047 (Web Product + Browser Journey Validation): PR #107 squash-merged -> 25481690 (worker head 718374af; branch also self-carried D-01..D-08 + SM-1/SM-2 fixes through a mid-wave sandbox tool-layer failure — recovered via the §8 stop/continue + persistent-holder cure without re-dispatch). Reconcile PR #108 (apps/web importer: 19 workspace links + playwright/@playwright/test catalog resolution). 7-gate ALL GREEN: 65 owned files (+7,812/-148; apps/web/* + qa/web/* + docs/journeys/web.md); 0 secrets; install PASS (catalog-only); independent battery EXACT (typecheck 82/82, lint 79/79, test 82/82 with apps/web 139/139, build 3/3, serialized; governance+boundary PASS); CI 4/4 on head; report complete.
 - Delivers: apps/web as the canonical Epoch web product on the W046 Application Gateway (envelope-only POST /api/gateway + identity boundary + session-gated bootstrap); per-tenant fixture-verified product runtime; the full projection surface set; provider-scoped offline queue with exactly-once replay; production-build Playwright browser battery J01-J12 (24/24, digest-anchored fixtures, one worker); defect ledger 5 P1 + 5 P2 all closed with regression coverage (approval-authority surfacing D-02, provider-scoped queue D-03, network-vs-expiry session guard D-07, process-group server lifecycle D-08).
 - Program: 48/50. W048 in REQUIRE-CHANGES iteration (qa/desktop e2e harness @playwright/test resolution — the app tsconfig include made typechecking environment-dependent; fix + full battery re-run in flight). W050 serialized last (packet staged).
+
+## W048 complete — desktop native product delivered (2026-10-01, Tech Lead)
+- W048 (Desktop Native Product + Desktop Journey Validation): PR #109 squash-merged -> 792643cf (final head ba346d4e after one require-changes cycle; the worker also self-caught and reverted a root-lockfile violation mid-delivery). Reconcile PR #111 (apps/desktop importer: @tauri-apps/* + webdriverio + playwright catalog trees). 7-gate ALL GREEN at the final head: 94 owned files (+~15.0K/-262; apps/desktop/* + qa/desktop/* + docs/journeys/desktop-{linux,windows,macos}.md); 0 secrets; install PASS (catalog-only); independent battery EXACT (typecheck 83/83, lint 79/79, test 82/82 with apps/desktop 189/18, build 4/4 fresh; governance+boundary PASS); CI 4/4; report complete.
+- Delivers: the W017 typed desktop host as the real Tauri 2 desktop product (Linux/Windows/macOS configs; native IPC bridge around the embedded W046 gateway; deterministic per-domain product roots), the qa/desktop journey harness (playwright web-mode + wdio native-mode configs; own type-checked validation path — fully declarative resolution, cold-checkout verified), journey records + defect ledger, and the sandbox-honesty record (no cargo/webkit2gtk in-sandbox — config-delivered native builds, honestly recorded).
+- Review doctrine from the cycle: battery claims must be reproduced at the FINAL head (the original claims predated the harness commits and passed only via a generated symlink present in the worker's environment); CI independently confirmed the failure; the fix (own tsconfig for the harness, wired into the app typecheck gate) preserves the type bar without environment dependence.
+- Program: 49/50. W050 ELIGIBLE (serialized last; repairs all three client trees; packet staged by the Tech Lead).
