@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
+  "records": [
+    {
+      "checkId": "X-01",
+      "platforms": [
+        "web",
+        "desktop-linux",
+        "mobile-android",
+        "mobile-ios"
+      ],
+      "persona": "the same fixture principal on every platform",
+      "productVersion": "1.0.0 (all three clients)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the W046 fixtures restore byte-exactly on every platform (registry-verified)"
+      ],
+      "actions": [
+        "boot the web product runtime",
+        "enter the project on the desktop product",
+        "sign in on the mobile field host",
+        "read the world digest every platform projects"
+      ],
+      "expected": [
+        "every platform projects the registry-anchored world digest"
+      ],
+      "observed": [
+        "web=52b9c01cd891b37e…",
+        "desktop=52b9c01cd891b37e…",
+        "mobile=registry-anchored (construction)",
+        "registry=52b9c01cd891b37e…"
+      ],
+      "evidence": [
+        "qa/cross-platform/cross-platform.test.ts (X-01)",
+        "qa/fixtures/registry.json"
+      ],
+      "defects": "none",
+      "disposition": "pass — summary-level semantic continuity across platforms",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
+      "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
+      "overall": "pass"
+    },
+    {
+      "checkId": "X-01",
+      "platforms": [
+        "web",
+        "desktop-linux",
+        "desktop-windows",
+        "desktop-macos"
+      ],
+      "persona": "the same fixture principal on every platform",
+      "productVersion": "1.0.0 (web + desktop)",
+      "fixtureId": "epoch-fixture-software-v1.0.0",
+      "preconditions": [
+        "the W046 fixtures restore byte-exactly on every platform (registry-verified)"
+      ],
+      "actions": [
+        "boot the web product runtime",
+        "enter the project on the desktop product",
+        "read the world digest every platform projects"
+      ],
+      "expected": [
+        "every platform projects the registry-anchored world digest"
+      ],
+      "observed": [
+        "web=9306022e9f0c189c…",
+        "desktop=9306022e9f0c189c…",
+        "registry=9306022e9f0c189c…"
+      ],
+      "evidence": [
+        "qa/cross-platform/cross-platform.test.ts (X-01)",
+        "qa/fixtures/registry.json"
+      ],
+      "defects": "none",
+      "disposition": "pass — summary-level semantic continuity across platforms (the mobile field product runs the construction domain; see the construction record)",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
+      "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
+      "overall": "pass"
+    },
+    {
+      "checkId": "X-02",
+      "platforms": [
+        "web",
+        "desktop-linux",
+        "mobile-android",
+        "mobile-ios"
+      ],
+      "persona": "the fixture domain lead (the same human, three devices)",
+      "productVersion": "1.0.0 (all three clients)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the fixture identity registry is restored on every platform"
+      ],
+      "actions": [
+        "sign in on the web client",
+        "authenticate on the desktop client",
+        "sign in on the mobile field client (construction)"
+      ],
+      "expected": [
+        "the same principal id and tenant id resolve on every platform",
+        "sessions issue through the same gateway session seam",
+        "the world digest is unchanged (sign-ins never mutate semantics)"
+      ],
+      "observed": [
+        "principal=principal:delivery-lead",
+        "tenant=tenant:nordstrand",
+        "worldDigest unchanged (52b9c01cd891b37e…)"
+      ],
+      "evidence": [
+        "qa/cross-platform/cross-platform.test.ts (X-02)"
+      ],
+      "defects": "none",
+      "disposition": "pass — cross-device continuity through the shared authority",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
+      "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
+      "overall": "pass"
+    },
+    {
+      "checkId": "X-02",
+      "platforms": [
+        "web",
+        "desktop-linux",
+        "desktop-windows",
+        "desktop-macos"
+      ],
+      "persona": "the fixture domain lead (the same human, three devices)",
+      "productVersion": "1.0.0 (all three clients)",
+      "fixtureId": "epoch-fixture-software-v1.0.0",
+      "preconditions": [
+        "the fixture identity registry is restored on every platform"
+      ],
+      "actions": [
+        "sign in on the web client",
+        "authenticate on the desktop client",
+        "sign in on the mobile field client (construction)"
+      ],
+      "expected": [
+        "the same principal id and tenant id resolve on every platform",
+        "sessions issue through the same gateway session seam",
+        "the world digest is unchanged (sign-ins never mutate semantics)"
+      ],
+      "observed": [
+        "principal=principal:tech-lead",
+        "tenant=tenant:lightspeed",
+        "worldDigest unchanged (9306022e9f0c189c…)"
+      ],
+      "evidence": [
+        "qa/cross-platform/cross-platform.test.ts (X-02)"
+      ],
+      "defects": "none",
+      "disposition": "pass — cross-device continuity through the shared authority",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
+      "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
+      "overall": "pass"
+    },
+    {
+      "checkId": "X-03",
+      "platforms": [
+        "web",
+        "desktop-linux",
+        "desktop-windows",
+        "desktop-macos",
+        "mobile-android",
+        "mobile-ios"
+      ],
+      "persona": "principal:delivery-lead (captures on mobile, inspects everywhere)",
+      "productVersion": "1.0.0 (all three clients)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "the fixture object bytes are the shared field-capture artifact",
+        "the registry anchors their digest"
+      ],
+      "actions": [
+        "capture evidence on the mobile field device (digest computed BEFORE upload)",
+        "intake the same bytes on the desktop client (the authority recomputes the digest)",
+        "run the web evidence capture path (the record binds the same subject digest)"
+      ],
+      "expected": [
+        "every platform derives the SAME digest for the SAME bytes",
+        "the digest equals the registry anchor (content-addressing discipline)"
+      ],
+      "observed": [
+        "mobile (digest-before-upload)=ba53fe3e981cd35e…",
+        "desktop (authority-recomputed)=ba53fe3e981cd35e…",
+        "web (record subject digest)=ba53fe3e981cd35e…",
+        "registry=ba53fe3e981cd35e…"
+      ],
+      "evidence": [
+        "qa/cross-platform/cross-platform.test.ts (X-03)",
+        "qa/fixtures/registry.json (objectBytesDigest)"
+      ],
+      "defects": "none",
+      "disposition": "pass — capture-on-mobile, inspect-on-web/desktop with byte-identical content addressing",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
+      "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
+      "overall": "pass"
+    },
+    {
+      "checkId": "X-04",
+      "platforms": [
+        "web",
+        "desktop-linux",
+        "desktop-windows",
+        "desktop-macos",
+        "mobile-android",
+        "mobile-ios"
+      ],
+      "persona": "principal:chief-engineer (approver) via the delivery-lead session",
+      "productVersion": "1.0.0 (all three clients)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "a valid action proposal with an under-limit constraint evaluation",
+        "the fixture approval policy set"
+      ],
+      "actions": [
+        "submit the action on mobile (field review)",
+        "submit the action on web (the Decide stage)",
+        "run the full approval cycle on desktop",
+        "approve where permitted (human approval)",
+        "execute through the Action Gateway"
+      ],
+      "expected": [
+        "every submission lands awaiting-approval (the authority decides)",
+        "approval applies only through action.approve",
+        "execution happens only through action.execute",
+        "one status vocabulary across platforms"
+      ],
+      "observed": [
+        "mobile: awaiting-approval -> authorized",
+        "web: awaiting-approval -> authorized -> executed",
+        "desktop: submitted -> approved -> executed (status=executed)"
+      ],
+      "evidence": [
+        "qa/cross-platform/cross-platform.test.ts (X-04)"
+      ],
+      "defects": "none",
+      "disposition": "pass — approve-where-permitted through the shared Action Gateway authority",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
+      "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
+      "overall": "pass"
+    },
+    {
+      "checkId": "X-05",
+      "platforms": [
+        "mobile-android",
+        "mobile-ios"
+      ],
+      "persona": "principal:delivery-lead (field engineer, two devices)",
+      "productVersion": "1.0.0 (the mobile field product; the web/desktop offline queues are journey-proven per platform — docs/journeys/web.md J07, docs/journeys/desktop-linux.md J07)",
+      "fixtureId": "epoch-fixture-construction-v1.0.0",
+      "preconditions": [
+        "two field devices over the same fixture authorities",
+        "the network seam allows the offline interval on device B"
+      ],
+      "actions": [
+        "capture the SAME observation content on device A (online)",
+        "capture the same content on device B (offline — queues as a pending projection)",
+        "reconnect device B and sync"
+      ],
+      "expected": [
+        "device B drains exactly once (zero duplicate side effects)",
+        "the replay is digest-stable (the RECORDED outcome, never re-executed)",
+        "the offline outcome digest EQUALS the online outcome digest (no semantic fork)"
+      ],
+      "observed": [
+        "online outcomeDigest=0cf34155ebe94ddb…",
+        "offline drain: 1 drained, 0 pending, duplicateSideEffects=0",
+        "replay: replayed=true digestStable=true outcomeDigest=0cf34155ebe94ddb…"
+      ],
+      "evidence": [
+        "qa/cross-platform/cross-platform.test.ts (X-05)",
+        "apps/mobile/test/product/journeys.test.ts (J07 — the per-platform proof)"
+      ],
+      "defects": "none",
+      "disposition": "pass — offline queues hold pending projections only; the authoritative state resolves identically",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
+      "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
+      "overall": "pass"
+    },
+    {
+      "checkId": "X-06",
+      "platforms": [
+        "web",
+        "desktop-linux",
+        "desktop-windows",
+        "desktop-macos",
+        "mobile-android",
+        "mobile-ios"
+      ],
+      "persona": "the release engineer (Tech Lead)",
+      "productVersion": "1.0.0",
+      "fixtureId": "n/a (release identity check)",
+      "preconditions": [
+        "the six client platforms shipped by W047-W049",
+        "the release/clients record set committed"
+      ],
+      "actions": [
+        "parse the release manifest",
+        "verify the six-platform coverage",
+        "recompute every definition-file checksum",
+        "verify the git tree identities"
+      ],
+      "expected": [
+        "every artifact records source commit, version/profile, target platform and checksum",
+        "config-delivered platforms declare their environment gap"
+      ],
+      "observed": [
+        "platforms: desktop-linux, desktop-macos, desktop-windows, mobile-android, mobile-ios, web",
+        "checksums: all recomputed over the working tree",
+        "git tree identities verified: 6/6 (when the release commit is present)"
+      ],
+      "evidence": [
+        "release/clients/release-manifest.json",
+        "qa/cross-platform/cross-platform.test.ts (X-06)"
+      ],
+      "defects": "none",
+      "disposition": "pass — release identity complete and verifiable",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
+      "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
+      "overall": "pass"
+    }
+  ]
+}

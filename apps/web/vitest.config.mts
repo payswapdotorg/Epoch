@@ -10,10 +10,16 @@ import { defineConfig } from 'vitest/config';
 // - `oxc.jsx: 'react-jsx'` — the app tsconfig keeps Next's `jsx:
 //   'preserve'`, which a JS transformer cannot execute; the automatic
 //   React runtime is used for tests only (Vite 8 transforms with Oxc).
+// - W050: the qa/cross-platform harness zone rides this config (the
+//   harness owns apps/web as the canonical client, so its tests execute
+//   under apps/web's vitest exactly like qa/desktop rides apps/desktop).
+//   The globalSetup link script creates the harness's node_modules symlink
+//   after a fresh install (idempotent, gitignored, CI-safe).
 export default defineConfig({
   oxc: { jsx: 'react-jsx' },
   test: {
     environment: 'node',
-    include: ['app/**/*.test.{ts,tsx}', 'src/**/*.test.{ts,tsx}'],
+    include: ['app/**/*.test.{ts,tsx}', 'src/**/*.test.{ts,tsx}', '../../qa/cross-platform/*.test.ts'],
+    globalSetup: ['./scripts/link-cross-harness.mjs'],
   },
 });

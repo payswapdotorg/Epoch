@@ -27,6 +27,7 @@ record is content-addressed (canonical-JSON SHA-256 over
 | [`release-process.md`](./release-process.md) | The typed pipeline: scope → checklist → evidence → evaluation → manifest → notes → events, and how it composes the W033 deploy model |
 | [`readiness-gate-policy.md`](./readiness-gate-policy.md) | The readiness gate: what blocks a release, the evidence admission rules, the recovery contract |
 | [`release-notes-e1.md`](./release-notes-e1.md) | The reference release notes of the E1.0/X1.0 program release (the projection of the typed notes record) |
+| [`client-release-process.md`](./client-release-process.md) | The client release process (W050): artifact identity for the six client platforms — source commit, version/profile, checksums, honest build status (`release/clients/`) |
 
 ## The one-page orientation
 

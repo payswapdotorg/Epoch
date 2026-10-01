@@ -1,0 +1,46 @@
+{
+  "//": "W050 — the cross-platform journey harness's OWN type-checked validation path (the W048 qa/desktop doctrine). qa/cross-platform is NOT a pnpm workspace package (pnpm-workspace.yaml is frozen), so these files have no node_modules chain of their own. apps/web's `typecheck` script invokes this config; NOTHING here depends on the qa/cross-platform/node_modules symlink (created at test time by apps/web's vitest globalSetup): every bare import the harness files make DIRECTLY is mapped to its real location, and every product module is imported RELATIVELY so each file resolves its own dependencies through its own app's node_modules (real install state, never generated state). A fresh checkout type-checks cold.",
+  "extends": "../../packages/tsconfig/app.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": false,
+    "types": [
+      "node"
+    ],
+    "baseUrl": ".",
+    "typeRoots": [
+      "../../apps/web/node_modules/@types"
+    ],
+    "paths": {
+      "vitest": [
+        "../../apps/web/node_modules/vitest/dist/index.d.ts"
+      ],
+      "@epoch/tenancy": [
+        "../../packages/tenancy/src/index.ts"
+      ],
+      "@epoch/world-contracts": [
+        "../../contracts/world/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "records"
+  ]
+}
