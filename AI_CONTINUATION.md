@@ -4,13 +4,11 @@ Fresh-session rule: recover project state from repository state and live GitHub 
 
 ## Current authoritative baseline
 
-- main baseline: 6912e4af4bab7a77e43d835b6bfc573aacee81f6
-- W001-W045 complete: 45/45
-- architecture: E1.0/X1.0 with ACR-001/002/003/004 effective
-- successor program: ACR-005 / WO2.0
-- max concurrent workers: 3
-- current work: W046 authorized/active
-- W047/W048/W049/W050 blocked by dependency
+- main baseline: the ACR-005 productization program is COMPLETE (W001-W050, 50/50; W050 merged as 4ae6545e via PR #113 + this governance advance)
+- architecture: E1.0/X1.0 with ACR-001/002/003/004/005 effective
+- frontier: EMPTY — no active, eligible or blocked work orders
+- max concurrent workers: 3 (moot — program complete)
+- current work: NONE. Post-program work requires a NEW ACR per spec/architecture-lock.md; until one is approved and recorded, there is nothing to dispatch.
 
 ## Recovery reading order
 
@@ -28,13 +26,7 @@ Fresh-session rule: recover project state from repository state and live GitHub 
 
 ## Dispatch
 
-W046 first.
-
-After W046 acceptance and any required lockfile reconciliation:
-W047 | W048 | W049 concurrently.
-
-After all three merge:
-W050.
+NONE — the roadmap is complete (50/50). A future program requires a new ACR (spec/architecture-change-requests/) with its own Work Order table before anything becomes dispatchable.
 
 One Work Order = one branch = one PR. Workers never merge. Maximum three concurrent workers. Concurrent surfaces must be pairwise-disjoint. Root manifests/lockfiles are serial Tech Lead work.
 
