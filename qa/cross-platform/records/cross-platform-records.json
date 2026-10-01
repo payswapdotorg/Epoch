@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "39cc9c84e554cf51b0a301f532e19c0deba7b903",
+  "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
   "records": [
     {
       "checkId": "X-01",
@@ -37,7 +37,7 @@
       ],
       "defects": "none",
       "disposition": "pass — summary-level semantic continuity across platforms",
-      "sourceCommit": "39cc9c84e554cf51b0a301f532e19c0deba7b903",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
       "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
       "overall": "pass"
     },
@@ -74,7 +74,7 @@
       ],
       "defects": "none",
       "disposition": "pass — summary-level semantic continuity across platforms (the mobile field product runs the construction domain; see the construction record)",
-      "sourceCommit": "39cc9c84e554cf51b0a301f532e19c0deba7b903",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
       "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
       "overall": "pass"
     },
@@ -112,7 +112,7 @@
       ],
       "defects": "none",
       "disposition": "pass — cross-device continuity through the shared authority",
-      "sourceCommit": "39cc9c84e554cf51b0a301f532e19c0deba7b903",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
       "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
       "overall": "pass"
     },
@@ -150,7 +150,7 @@
       ],
       "defects": "none",
       "disposition": "pass — cross-device continuity through the shared authority",
-      "sourceCommit": "39cc9c84e554cf51b0a301f532e19c0deba7b903",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
       "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
       "overall": "pass"
     },
@@ -192,7 +192,7 @@
       ],
       "defects": "none",
       "disposition": "pass — capture-on-mobile, inspect-on-web/desktop with byte-identical content addressing",
-      "sourceCommit": "39cc9c84e554cf51b0a301f532e19c0deba7b903",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
       "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
       "overall": "pass"
     },
@@ -236,7 +236,7 @@
       ],
       "defects": "none",
       "disposition": "pass — approve-where-permitted through the shared Action Gateway authority",
-      "sourceCommit": "39cc9c84e554cf51b0a301f532e19c0deba7b903",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
       "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
       "overall": "pass"
     },
@@ -274,7 +274,7 @@
       ],
       "defects": "none",
       "disposition": "pass — offline queues hold pending projections only; the authoritative state resolves identically",
-      "sourceCommit": "39cc9c84e554cf51b0a301f532e19c0deba7b903",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
       "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
       "overall": "pass"
     },
@@ -316,7 +316,7 @@
       ],
       "defects": "none",
       "disposition": "pass — release identity complete and verifiable",
-      "sourceCommit": "39cc9c84e554cf51b0a301f532e19c0deba7b903",
+      "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
       "environment": "linux-debian-13 sandbox; the REAL product engines in-process (web product runtime / DesktopProduct / MobileFieldHost) over the W046 fixture-backed Application Gateway; no native packaging toolchains (honest environment record)",
       "overall": "pass"
     }

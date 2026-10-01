@@ -3,7 +3,7 @@
 Platform: Web (canonical) + Desktop (Linux/Windows/macOS) + Mobile (Android/iOS) — the six-platform release
 Persona: delivery lead / field engineer / chief engineer (construction), tech lead / staff engineer (software), release engineer (Tech Lead)
 Product version: 1.0.0 (all three client products on the W046 Application Gateway)
-Source commit: `39cc9c84e554cf51b0a301f532e19c0deba7b903` (dispatch base; evidence re-emitted at the W050 delivery head)
+Source commit: dispatch base `39cc9c84e554cf51b0a301f532e19c0deba7b903`; evidence commit `907b8fca7422adcb76f52d15ad4d361362410d0d` (the definitions commit — the manifest and the committed records are stamped at it)
 Environment: Node 24 / pnpm 10.34.5 / Linux (debian-family container) — the REAL product engines in-process: the web server product runtime (`apps/web/src/server/product-runtime`), the `DesktopProduct` composition root the Tauri webview drives (`apps/desktop/src/native`), and the `MobileFieldHost` the React Native app hosts (`apps/mobile/src/product`), each over the W046 fixture-backed Application Gateway with the deterministic W046 fixtures
 Fixture: `epoch-fixture-construction-v1.0.0` (tenant:nordstrand), `epoch-fixture-software-v1.0.0` (tenant:lightspeed) — registry-verified against `qa/fixtures/registry.json`
 

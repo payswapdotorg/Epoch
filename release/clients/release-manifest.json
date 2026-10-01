@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "releaseId": "epoch-clients-v1.0.0",
   "version": "1.0.0",
-  "sourceCommit": "39cc9c84e554cf51b0a301f532e19c0deba7b903",
+  "sourceCommit": "907b8fca7422adcb76f52d15ad4d361362410d0d",
   "description": "The client release identity record set (W050): every artifact records source commit, version/profile, target platform and checksum (spec/productization-architecture.md). Config-delivered platforms declare their environment gaps \u2014 never silent.",
   "clients": [
     {
@@ -18,7 +18,7 @@
           "apps/web/vitest.config.mts",
           "apps/web/playwright.config.ts"
         ],
-        "definitionTreeSha": "5985043aee6821a820f4934f36b5a337e118460c",
+        "definitionTreeSha": "df6d2396e1b173b322313099f0a67dbe25e2bab2",
         "checksums": {
           "apps/web/package.json": "ac22a48aa25278e90c2fdf70be13ef9eec736a2d2eb92da80e1f4ecb99748ec1",
           "apps/web/next.config.ts": "b9ed807b06d018a3b190914e965247d2999d38e2dcbfea85f11eb4845c9a9132",
