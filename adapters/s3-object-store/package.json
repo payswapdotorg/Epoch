@@ -1,0 +1,30 @@
+{
+  "name": "@epoch/adapter-s3-object-store",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch S3-compatible object-store adapter (W051, ACR-006) \u2014 the implementation of the frozen @epoch/object-storage ObjectStore SPI (put/get/has/list/size) over ANY S3-compatible endpoint (Cloudflare R2 is the production target; AWS S3/MinIO/B2 work by endpoint change). AWS SigV4 request signing implemented with node:crypto + the platform fetch (ZERO new dependencies). Digest addressing stays authoritative in the SPI (digests are recomputed server-side; claimed digests are never trusted; retrieval is digest-verified). Layout: bytes at objects/<sha256>, neutral metadata sidecars at meta/<sha256>.json (S3 listings do not return user metadata; the sidecar is the single metadata source). Infrastructure failures return the typed 'unavailable' error code (W051 additive seam) \u2014 never raw provider errors, never thrown. R2 stores BYTES ONLY, never semantic truth (architecture lock, ACR-006).",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/object-storage": "workspace:*",
+    "@epoch/tsconfig": "workspace:*"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

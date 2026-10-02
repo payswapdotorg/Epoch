@@ -23,6 +23,13 @@ export const OBJECT_STORAGE_ERROR_CODES = [
   'validation',
   'object-not-found',
   'digest-mismatch',
+  /**
+   * Infrastructure unavailability (W051, ACR-006 — additive): remote
+   * object-store backends (S3-compatible adapters) fail observably with
+   * this code instead of masquerading as validation errors or throwing.
+   * The in-memory reference never returns it.
+   */
+  'unavailable',
 ] as const;
 
 /** One typed object-store error code. */

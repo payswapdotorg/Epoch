@@ -105,6 +105,12 @@ import {
   SessionMirror,
   migrateGatewayTables,
 } from './persistence-binding';
+import {
+  guardFailureDecision,
+  type GuardRequestContext,
+  type RateLimitDecision,
+  type RequestGuard,
+} from './rate-limit';
 import { AUTHORITY_BY_OPERATION } from './authority-map';
 
 /** The caller-supplied deterministic clock (zero wall-clock in src). */
@@ -162,6 +168,13 @@ export interface ApplicationGatewayOptions {
   readonly persistence?: PersistenceSession | undefined;
   /** The idempotency store (default: the persisted store over `persistence`). */
   readonly idempotency?: IdempotencyStore | undefined;
+  /**
+   * Request guards applied at the boundary (W051, ACR-006): after
+   * envelope validation, BEFORE the session gate. Guards are abuse
+   * control — they never bypass or weaken the session/tenant/
+   * authorization gates. Denials map to `transient`/`gateway-overloaded`.
+   */
+  readonly guards?: readonly RequestGuard[] | undefined;
 }
 
 /** The dispatch context handed to every operation handler. */
@@ -188,6 +201,7 @@ export class ApplicationGateway {
   private readonly idempotency: IdempotencyStore;
   private readonly correlationLedger: CorrelationLedger;
   private readonly sessionMirror: SessionMirror;
+  private readonly guards: readonly RequestGuard[];
   private readonly storeCache: KernelStoreCache = { tracking: new Map(), learning: new Map() };
   private migrated = false;
 
@@ -198,6 +212,7 @@ export class ApplicationGateway {
     this.idempotency = options.idempotency ?? new PersistedIdempotencyStore(this.persistence);
     this.correlationLedger = new CorrelationLedger(this.persistence);
     this.sessionMirror = new SessionMirror(this.persistence);
+    this.guards = options.guards ?? [];
   }
 
   /** The typed client->gateway call seam (the ApplicationGatewayPort contract). */
@@ -209,6 +224,51 @@ export class ApplicationGateway {
     const parsed = parseGatewayRequestEnvelope(request);
     if (!parsed.ok) {
       return { ok: false, error: withCorrelation(parsed.error, correlationId) };
+    }
+
+    // 1.5 Request guards (W051, ACR-006): abuse control after envelope
+    // validation, before the session gate. Guards never weaken the
+    // security gates below; a denial is typed `transient`/
+    // `gateway-overloaded` (retryable with backoff). A thrown guard
+    // error resolves per the guard's declared failure policy.
+    if (this.guards.length > 0) {
+      const nowEpochMs = Date.parse(at);
+      const guardContext: GuardRequestContext = {
+        operation: request.operation,
+        tenantId: request.tenant.tenantId,
+        sessionId: request.session.sessionId,
+        correlationId,
+        nowEpochMs,
+      };
+      for (const guard of this.guards) {
+        let decision: RateLimitDecision;
+        try {
+          decision = await guard.check(guardContext);
+        } catch {
+          decision = guardFailureDecision(guard, 0);
+        }
+        if (!decision.allowed) {
+          return {
+            ok: false,
+            error: gatewayError({
+              class: 'transient',
+              code: 'gateway-overloaded',
+              message: `rate limit exceeded for guard ${guard.guardId}: retry after ${decision.retryAfterMs}ms`,
+              operation: request.operation,
+              correlationId,
+              details: {
+                rateLimit: {
+                  guardId: guard.guardId,
+                  limit: decision.limit,
+                  remaining: decision.remaining,
+                  retryAfterMs: decision.retryAfterMs,
+                  degraded: decision.degraded,
+                },
+              },
+            }),
+          };
+        }
+      }
     }
 
     // 2. Session gate (bootstrap exception: session.issue).

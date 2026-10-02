@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "@epoch/action-gateway": "workspace:*",
+    "@epoch/adapter-s3-object-store": "workspace:*",
+    "@epoch/adapter-upstash-redis": "workspace:*",
     "@epoch/agent-protocol": "workspace:*",
     "@epoch/alerts": "workspace:*",
     "@epoch/application-gateway": "workspace:*",

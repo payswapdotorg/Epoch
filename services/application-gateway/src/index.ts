@@ -72,6 +72,26 @@ export type {
   PgliteEngineLike,
 } from './postgres-binding';
 
+// Request guards (W051, ACR-006): the provider-neutral rate-limit port
+// + the in-memory reference implementation (Upstash adapter lives in
+// adapters/upstash-redis).
+export {
+  fixedWindowIndex,
+  fixedWindowKey,
+  guardFailureDecision,
+  InMemoryRequestGuard,
+  validateFixedWindowBudget,
+} from './rate-limit';
+export type {
+  GatewayGuardScope,
+  GuardCounterSnapshot,
+  GuardRequestContext,
+  InMemoryRequestGuardOptions,
+  RateLimitDecision,
+  RequestGuard,
+  RequestGuardFailurePolicy,
+} from './rate-limit';
+
 // Deterministic product fixtures (construction + software domains).
 export {
   PRODUCT_FIXTURE_VERSION,

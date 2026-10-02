@@ -1,0 +1,29 @@
+{
+  "name": "@epoch/adapter-upstash-redis",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Upstash Redis adapter (W051, ACR-006) \u2014 the EPHEMERAL-ONLY implementation of the W051 RequestGuard port over the Upstash REST API: fixed-window rate-limit counters (1 EVAL command per check: INCR + EXPIRE NX inside one atomic Lua script), epoch-anchored windows via the gateway's canonical fixedWindowKey math (semantically aligned with the in-memory reference), bearer-token REST auth, caller-supplied fetch (injectable for test doubles), timeout + typed failure resolution per the declared failure policy (fail-open default: rate limiting is abuse control, NEVER authorization; fail-closed available). ZERO new dependencies (platform fetch). NEVER authoritative durable state \u2014 Redis holds ephemeral counters only (architecture lock, ACR-006).",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/application-gateway": "workspace:*",
+    "@epoch/tsconfig": "workspace:*"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

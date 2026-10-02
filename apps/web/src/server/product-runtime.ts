@@ -39,12 +39,11 @@ import { IdentityRegistry, authenticationResultRecordFor, sealPrincipal } from '
 import { WorldModel } from '@epoch/world-model';
 import { EvidenceStore } from '@epoch/evidence';
 import { EventLog } from '@epoch/event-log';
-import { InMemoryObjectStore } from '@epoch/object-storage';
-import { InMemoryPersistence } from '@epoch/persistence';
 import { ActionGateway } from '@epoch/action-gateway';
 import { SessionManager } from '@epoch/authentication';
 import { ApplicationGateway } from '@epoch/application-gateway';
 import type { AuthorizationContext } from '@epoch/authorization';
+import { getProductionBindings, type ProductionBindings } from './production-binding';
 import { compiledConstraintOf } from './product-config';
 import {
   fixtureObjectBytes,
@@ -116,6 +115,7 @@ async function buildEnvironment(
     readonly evidenceDigest: string;
     readonly objectBytesDigest: string;
   },
+  bindings: ProductionBindings,
 ): Promise<TenantEnvironment> {
   // World: restore the exact snapshot (integrity-checked by the kernel).
   const world = WorldModel.fromSnapshot(
@@ -138,7 +138,10 @@ async function buildEnvironment(
       `evidence digest mismatch for ${bundle.domain}: registry ${anchors.evidenceDigest}, actual ${receipt.receipt.digest}`,
     );
   }
-  const objects = new InMemoryObjectStore();
+  // The bound object store (W051: S3-compatible/R2 when configured,
+  // in-memory reference otherwise). The fixture restore flows through
+  // the SAME store as production uploads — one digest-addressed truth.
+  const objects = bindings.objectStore;
   const bytes = fixtureObjectBytes(bundle.domain);
   const stored = await objects.put(bytes, {
     schemaVersion: 1,
@@ -198,7 +201,8 @@ async function buildEnvironment(
           : undefined,
       authorizationFacts,
     },
-    persistence: new InMemoryPersistence(),
+    persistence: bindings.persistence,
+    guards: bindings.guards,
   });
   const prepared = await gateway.prepare();
   if (!prepared.ok) throw new Error(`gateway migrations failed: ${prepared.error.message}`);
@@ -227,6 +231,10 @@ export interface ProductRuntime {
 }
 
 async function buildRuntime(): Promise<ProductRuntime> {
+  // The production bindings (W051, ACR-006): fail-closed on production
+  // critical issues BEFORE any tenant environment is built; degraded
+  // states (in-memory fallbacks) surface through readiness.
+  const bindings = await getProductionBindings();
   const bundles = loadFixtureBundles();
   const anchors = registryAnchors(bundles);
   const environments = new Map<string, TenantEnvironment>();
@@ -234,7 +242,7 @@ async function buildRuntime(): Promise<ProductRuntime> {
     const bundle = bundles.get(domain);
     const anchor = anchors.get(domain);
     if (bundle === undefined || anchor === undefined) throw new Error(`missing fixture bundle for ${domain}`);
-    const environment = await buildEnvironment(bundle, anchor);
+    const environment = await buildEnvironment(bundle, anchor, bindings);
     environments.set(environment.tenantId, environment);
   }
   return {
