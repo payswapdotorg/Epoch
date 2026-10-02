@@ -35,22 +35,17 @@ Epoch is the semantic and lifecycle authority. Mature external engineering softw
 Web is the canonical client. Desktop is the power client. Mobile is the field client. All clients share semantic contracts and Experience Protocol.
 
 Current implementation status:
-- Web: application shell and multiple feature/projection surfaces exist; W047 productization is still pending.
-- Desktop: W017 typed reference host exists; W048 will create the real Tauri 2 Linux/Windows/macOS application.
-- Mobile: W018 typed reference field host exists; W049 will create the real Expo/React Native Android/iOS application.
-
-Do not interpret W017/W018 completion as native application distribution.
+- Web: canonical Next.js/React product; W047 and browser journey validation are complete.
+- Desktop: Tauri 2 Linux/Windows/macOS product is implemented and journey-validated; native binary packaging is recorded as config-delivered where host toolchains were unavailable.
+- Mobile: Expo/React Native Android/iOS product is implemented and journey-validated; mobile release packaging is recorded as config-delivered where SDK/Xcode toolchains were unavailable.
+- ACR-005 W046-W050 is complete (50/50); the roadmap is closed until a new ACR authorizes another program.
 
 ## Development
 
-W001-W045 are complete (45/45). ACR-005 is effective and defines W046-W050.
+W001-W050 are complete (50/50). ACR-005 is complete.
 
-Current frontier is authoritative only in spec/development-state/program-state.json and frontier-state.json.
+Current frontier is authoritative in spec/development-state/program-state.json, frontier-state.json and dependency-state.json: EMPTY.
 
-Initial dispatch:
-- W046 active.
-- W047/W048/W049/W050 blocked by dependency.
-
-After W046 is merged and reconciled, W047/W048/W049 run concurrently (maximum three workers). W050 is serialized after all three.
+No Work Order is currently dispatchable. Any new implementation requires a new Architecture Change Request and Work Order program.
 
 One Work Order = one branch = one PR. Workers never merge. Root manifests and lockfiles are Tech Lead serial work.
