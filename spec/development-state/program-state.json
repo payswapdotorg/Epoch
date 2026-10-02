@@ -56,9 +56,12 @@
     "W048",
     "W049",
     "W050",
-    "W051"
+    "W051",
+    "W052",
+    "W053",
+    "W054"
   ],
   "blocked": [],
   "lastMergeSha": "598210a2aed97c7a971c2bbdc2341133a987b137",
-  "lastAction": "ACR-006 W051 COMPLETE (production deployment foundation: PR #117 -> 9dff75e, + the pg foundation intake PR #116 -> 2b3ab89 and the lockfile reconcile PR #118 -> 2e4aafd). W052/W053/W054 are ELIGIBLE concurrently (pairwise-disjoint surfaces per the ACR-006 section of spec/work-items.md); W055 unlocks after all three merge."
+  "lastAction": "ACR-006 wave 1 COMPLETE: W052 (PR #122 -> 2f57e8d), W053 (PR #121 -> 938016e), W054 (PR #120 -> 8f5d90c) + the lockfile reconcile (PR #124 -> 3165bc1). W055 (serialized production closure) is ELIGIBLE \u2014 the only remaining work order."
 }
