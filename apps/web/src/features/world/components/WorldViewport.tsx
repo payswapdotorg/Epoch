@@ -3,18 +3,39 @@
  * renderer-agnostic spatial projection of the canonical scene entities.
  *
  * The active presenter is mounted BEHIND this component through the
- * RendererFabric seam (the contract-only reference presenter by default;
- * W058/W059's real engines occupy the same mount). What renders HERE is
- * the structured spatial canvas of the presenter's projection: entity
- * glyphs at their projected viewport positions (NDC), focus/isolation/
- * visibility state, applied overlays (measurements, annotations,
- * highlights), agent presence markers, the navigation HUD (orbit/pan/zoom
- * + desktop keys), and the renderer health/fallback banner.
+ * RendererFabric seam. What renders HERE depends on the presenter class
+ * (W061):
+ *
+ * - `spatialOverlay="reference"` (the contract-only reference presenter):
+ *   the structured spatial SVG canvas of the presenter's projection —
+ *   entity glyphs at their projected viewport positions (NDC),
+ *   focus/isolation/visibility state, applied overlays (measurements,
+ *   annotations, highlights), agent presence markers, the navigation HUD
+ *   (orbit/pan/zoom + desktop keys), and the renderer health/fallback
+ *   banner.
+ * - `spatialOverlay="engine"` (a REAL engine presenter — W058 Three.js /
+ *   W059 Babylon.js): the `engineStage` layer renders the engine's REAL
+ *   pixels (the injected GL canvas of the active adapter) behind this
+ *   chrome, and the engine itself presents the spatial world (its own
+ *   scene graph carries the entity meshes, overlays, focus decorations
+ *   and agent representations — see the adapter docs). The SVG then
+ *   renders ONLY the non-positional chrome: the world-digest banner, the
+ *   navigation HUD, presence chips and the health/failure banners — the
+ *   engine's projection is the spatial truth, so the reference projection
+ *   (a DIFFERENT camera convention by design — Z-up vs the engine's own)
+ *   never draws beside it.
+ *
+ * Pointer input normalizes against the `pointerBounds` element when one is
+ * supplied (the engine stage — the square region the engines present
+ * under aspect 1), else the SVG canvas itself. The normalized pointer is
+ * dispatched through the fabric seam: the ACTIVE adapter hit-tests it
+ * (Raycaster / Babylon scene.pick) into the semantic entity id — the
+ * engine never receives DOM events directly.
  *
  * Pure presentational component: a function of its props, no hooks, no
  * client state; the host wires the handlers (workspace-handlers.ts).
  */
-import type { ReactNode } from 'react';
+import type { ReactNode, RefObject } from 'react';
 import type {
   NavigationStateInput,
   ViewportAgentInput,
@@ -291,13 +312,31 @@ export interface WorldViewportProps {
   readonly fallbackApplied: boolean;
   readonly failure: { readonly code: string; readonly message: string } | null;
   readonly handlers: WorkspaceHandlers;
+  /**
+   * The engine stage layer rendered BEHIND the spatial overlay (W061): the
+   * REAL engine pixels of the active presenter. Absent in reference mode.
+   */
+  readonly engineStage?: ReactNode | undefined;
+  /**
+   * Which surface presents the SPATIAL world: the reference projection
+   * (this SVG) or the REAL engine (the engineStage layer; the SVG keeps
+   * only non-positional chrome). Defaults to 'reference'.
+   */
+  readonly spatialOverlay?: 'reference' | 'engine' | undefined;
+  /**
+   * The element pointer input normalizes against (the engine stage in
+   * engine mode — the square region both engines present under aspect 1).
+   * Defaults to the SVG canvas itself (reference mode).
+   */
+  readonly pointerBounds?: RefObject<HTMLElement | null> | undefined;
 }
 
 /**
  * The world viewport. The input surface reports pointer/wheel/key events
  * through the handlers (normalized into the fabric seam or the
- * presentation-only navigation state); the spatial projection renders the
- * canonical scene entities the active presenter presents.
+ * presentation-only navigation state); the spatial world is presented by
+ * the active presenter (the engine stage's real pixels in engine mode, the
+ * structured SVG projection in reference mode).
  */
 export function WorldViewport({
   viewport,
@@ -305,12 +344,17 @@ export function WorldViewport({
   fallbackApplied,
   failure,
   handlers,
+  engineStage,
+  spatialOverlay = 'reference',
+  pointerBounds,
 }: WorldViewportProps): ReactNode {
+  const referenceOverlay = spatialOverlay === 'reference';
   return (
     <div
       data-viewport="world"
       data-health={health.state}
       data-fallback-applied={fallbackApplied ? 'true' : 'false'}
+      data-spatial-overlay={spatialOverlay}
       role="application"
       aria-label={`Interactive world viewport — ${viewport.sceneName}`}
       tabIndex={0}
@@ -329,12 +373,23 @@ export function WorldViewport({
         outline: 'none',
       }}
     >
+      {/* The REAL ENGINE STAGE (W061): the active presenter's GL pixels,
+          centered and square (both engines present under aspect 1). */}
+      {engineStage}
       <svg
-        data-viewport-canvas="reference-presenter"
+        data-viewport-canvas={spatialOverlay}
         viewBox={`0 0 ${VIEWBOX.width} ${VIEWBOX.height}`}
-        style={{ display: 'block', width: '100%', height: 'auto', userSelect: 'none' }}
+        style={{
+          display: 'block',
+          width: '100%',
+          height: 'auto',
+          userSelect: 'none',
+          position: engineStage === undefined ? undefined : 'relative',
+          zIndex: engineStage === undefined ? undefined : 1,
+        }}
         onPointerDown={(event) => {
-          const bounds = event.currentTarget.getBoundingClientRect();
+          const boundsElement = pointerBounds?.current ?? event.currentTarget;
+          const bounds = boundsElement.getBoundingClientRect();
           handlers.onViewportPointerDown(
             normalizePointer(
               { width: bounds.width, height: bounds.height },
@@ -344,36 +399,43 @@ export function WorldViewport({
         }}
       >
         <HealthBanner viewport={viewport} />
-        {/* The spatial ground grid (presentation-only, no semantic claim). */}
-        <g data-viewport-grid="" opacity={0.35}>
-          {[0, 1, 2, 3, 4].map((row) =>
-            [0, 1, 2, 3, 4].map((column) => (
-              <rect
-                key={`${row}-${column}`}
-                x={150 + column * 130}
-                y={140 + row * 74}
-                width={118}
-                height={62}
-                rx={6}
-                fill="none"
-                stroke="#d6d3d1"
-                strokeDasharray="3 6"
-              />
-            )),
-          )}
-        </g>
-        {viewport.overlays.map((overlay) => {
-          if (overlay.overlayKind === 'measurement') {
-            return <MeasurementOverlay key={overlay.overlayId} overlay={overlay} entities={viewport.entities} />;
-          }
-          if (overlay.overlayKind === 'annotation') {
-            return <AnnotationOverlay key={overlay.overlayId} overlay={overlay} entities={viewport.entities} />;
-          }
-          return <HighlightOverlay key={overlay.overlayId} overlay={overlay} entities={viewport.entities} />;
-        })}
-        {viewport.entities.map((entity) => (
-          <EntityGlyph key={entity.entityId} entity={entity} />
-        ))}
+        {/* The reference presenter's spatial projection (position glyphs,
+            overlays, ground grid) — suppressed when a REAL engine presents
+            the spatial world (its scene graph carries all of these). */}
+        {referenceOverlay ? (
+          <>
+            {/* The spatial ground grid (presentation-only, no semantic claim). */}
+            <g data-viewport-grid="" opacity={0.35}>
+              {[0, 1, 2, 3, 4].map((row) =>
+                [0, 1, 2, 3, 4].map((column) => (
+                  <rect
+                    key={`${row}-${column}`}
+                    x={150 + column * 130}
+                    y={140 + row * 74}
+                    width={118}
+                    height={62}
+                    rx={6}
+                    fill="none"
+                    stroke="#d6d3d1"
+                    strokeDasharray="3 6"
+                  />
+                )),
+              )}
+            </g>
+            {viewport.overlays.map((overlay) => {
+              if (overlay.overlayKind === 'measurement') {
+                return <MeasurementOverlay key={overlay.overlayId} overlay={overlay} entities={viewport.entities} />;
+              }
+              if (overlay.overlayKind === 'annotation') {
+                return <AnnotationOverlay key={overlay.overlayId} overlay={overlay} entities={viewport.entities} />;
+              }
+              return <HighlightOverlay key={overlay.overlayId} overlay={overlay} entities={viewport.entities} />;
+            })}
+            {viewport.entities.map((entity) => (
+              <EntityGlyph key={entity.entityId} entity={entity} />
+            ))}
+          </>
+        ) : null}
         <PresenceMarkers agents={viewport.agents} />
         <NavigationHud navigation={viewport.navigation} cameraMode={viewport.cameraMode} />
       </svg>
@@ -409,6 +471,13 @@ export function WorldViewport({
           right: 12,
           display: 'flex',
           gap: 6,
+          // Stack ABOVE the pointer-capture SVG (zIndex 1): the controls
+          // are viewport chrome, not world surface — without this the SVG
+          // subtree intercepts the pointer events and the controls are
+          // unclickable in the real engine composition (the W061 leg-3
+          // defect: observe -> reproduce -> fix -> regression-pinned by
+          // the E2E battery's own reset-camera click).
+          zIndex: 2,
         }}
       >
         <button

@@ -21,7 +21,7 @@
  * input → the fabric seam; workspace commands → existing typed Epoch
  * intents). The host owns the driver lifecycle (open/close/host loop).
  */
-import { useCallback, useMemo, useState, type ReactNode } from 'react';
+import { useCallback, useMemo, useState, type ReactNode, type RefObject } from 'react';
 import type { WorldWorkspaceDriver, WorkspaceViewModelInput } from '../workspace-contracts';
 import { createWorkspaceHandlers } from '../workspace-handlers';
 import { WorldViewport } from './WorldViewport';
@@ -41,10 +41,22 @@ export interface WorldWorkspaceProps {
   readonly driver: WorldWorkspaceDriver;
   /** The current view model (defaults to the driver's own projection). */
   readonly viewModel?: WorkspaceViewModelInput | undefined;
+  /** The engine stage layer forwarded to the viewport (W061; see WorldViewport). */
+  readonly engineStage?: ReactNode | undefined;
+  /** Which surface presents the spatial world (W061; defaults to 'reference'). */
+  readonly spatialOverlay?: 'reference' | 'engine' | undefined;
+  /** The element pointer input normalizes against (W061; the engine stage). */
+  readonly pointerBounds?: RefObject<HTMLElement | null> | undefined;
 }
 
 /** The world workspace: the primary spatial surface + secondary panels. */
-export function WorldWorkspace({ driver, viewModel }: WorldWorkspaceProps): ReactNode {
+export function WorldWorkspace({
+  driver,
+  viewModel,
+  engineStage,
+  spatialOverlay,
+  pointerBounds,
+}: WorldWorkspaceProps): ReactNode {
   const [view, setView] = useState<WorkspaceViewModelInput>(() => viewModel ?? driver.viewModel());
   const [annotationDraft, setAnnotationDraft] = useState('');
 
@@ -98,6 +110,9 @@ export function WorldWorkspace({ driver, viewModel }: WorldWorkspaceProps): Reac
           fallbackApplied={current.renderers.fallbackApplied}
           failure={current.renderers.lastFailure}
           handlers={handlers}
+          engineStage={engineStage}
+          spatialOverlay={spatialOverlay}
+          pointerBounds={pointerBounds}
         />
         <WorldTimelineBar timeline={current.timeline} handlers={handlers} />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 12 }}>

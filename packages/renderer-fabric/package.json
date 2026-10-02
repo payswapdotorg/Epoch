@@ -11,8 +11,8 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p ../../qa/renderer-conformance/tsconfig.json",
-    "lint": "eslint . && node scripts/link-conformance-harness.mjs && cd ../../qa/renderer-conformance && eslint . --config eslint.config.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p ../../qa/renderer-conformance/tsconfig.json && tsc --noEmit -p ../../qa/rendering/tsconfig.json",
+    "lint": "eslint . && node scripts/link-conformance-harness.mjs && node scripts/link-rendering-harness.mjs && cd ../../qa/renderer-conformance && eslint . --config eslint.config.mjs && cd ../../qa/rendering && eslint . --config eslint.config.mjs",
     "test": "vitest run"
   },
   "dependencies": {

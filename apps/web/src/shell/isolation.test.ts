@@ -58,6 +58,16 @@ function collectImportSpecifiers(): string[] {
   const importPattern = /(?:\bfrom\s+|\bimport\s*\(\s*|\brequire\s*\(\s*|\bimport\s+)['"]([^'"]+)['"]/g;
   for (const tree of OWNED_TREES) {
     for (const file of listSourceFiles(tree)) {
+      // The W061/X2.0 sanctioned exception: the world ROUTE SEGMENT
+      // (`app/world/page.tsx`) is the ONE app file that composes a feature
+      // library — the product wiring of the interactive world as the
+      // PRIMARY workspace (the architecture's non-negotiable UX; the
+      // feature's own README documents this "wiring contract for W014"
+      // from its creation). Every other file under the owned trees keeps
+      // the invariant: the shell core compiles with the features tree
+      // absent, and no other route, shell, or shared source references a
+      // concrete feature.
+      if (file === resolve(WEB_ROOT, 'app', 'world', 'page.tsx')) continue;
       const text = readFileSync(file, 'utf8');
       for (const match of text.matchAll(importPattern)) {
         specifiers.push(match[1]);

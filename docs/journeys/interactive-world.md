@@ -1,125 +1,137 @@
-# Journey: The Interactive World Workspace (W057)
+# Journey: The Interactive World Workspace — the FINAL closure record (W061)
 
-Platform: web (feature components + shell world route/mount) and desktop
-(Tauri host, world section) — the workspaces driven by the
-`@epoch/world-runtime` over the W056 `RendererFabric`.
-Persona: an Epoch problem-solver (engineer/coordinator) working a real
-fixture problem IN the spatial world.
-Product version: ACR-007 / X2.0 (W057 — interactive world workspace).
-Source commit: this branch (`work/W057-interactive-world-workspace`).
-Environment: deterministic node test batteries (vitest) — no GPU, no
-browser; the reference presenter is contract-only by design (W056).
-Fixture: the Riverside plant-room riser coordination problem
-(`qa/world-experience/world-fixture.ts`; the compact desktop slice at
+Platform: web (the `/world` App Router page + `WorldWorkspaceHost` over the
+REAL `@epoch/world-runtime` and the REAL `RendererFabric`) and desktop (the
+Tauri world section, the same runtime/host wiring) — plus, at closure, the
+REAL browser E2E battery over real software GL.
+Product version: ACR-007 / X2.0 closed (W061 — multi-renderer interactive
+world closure).
+Source commit: this branch (`work/W061-multi-renderer-closure`), the
+save-point chain `a9e743f` (web /world host + desktop real-renderer
+registration) → `21b7d49` (qa/rendering engine-pair + degradation ladder) →
+`c90badb` (the j13-world E2E battery + two P1 fixes) → this commit (the
+final record set).
+Engines: Three.js `three@0.186.1` (MIT) and Babylon.js
+`@babylonjs/core@9.29.0` (Apache-2.0) — both embedded behind the frozen W056
+`RendererAdapter` seam (`contracts/renderers` v1.1.0), with the
+contract-only reference adapter as the declared fallback; the Blender
+sidecar and the glTF 2.0 interchange bridge (W060) behind the same seam.
+Environment (recorded exactly): deterministic vitest batteries (Node 22)
+for the runtime/host batteries; the closure E2E legs run in REAL Chromium
+over REAL software GL — ANGLE/SwiftShader (`--use-angle=swiftshader
+--enable-unsafe-swiftshader`), Playwright 1.63.0, production build (`next
+build` + `next start -p 3210`, the free private port of
+`apps/web/playwright.world.config.ts`). Real-browser real-GL evidence,
+honestly presented as SOFTWARE rasterization: no GPU exists in this sandbox
+and nothing here is claimed as a GPU run.
+Fixture: the Riverside plant-room riser coordination problem (the compact
+canonical slice shared by every battery — `qa/world-experience` /
+`apps/web/src/features/world/host/world-fixture.ts` /
 `apps/desktop/app/components/world-host/world-fixture.ts`).
 
 ## The journey thesis (the work-order acceptance)
 
 A user can enter a real fixture problem and **solve it through the
-spatial world** — the viewport is the PRIMARY problem-solving surface
-(the lifecycle/project panels are secondary context) — and **every
-interaction produces an EXISTING typed Epoch intent**
+spatial world** — the viewport is the PRIMARY problem-solving surface —
+**switch the real engine underneath without leaving Epoch**, and close the
+loop through the canonical authorities (Action Gateway included). Every
+interaction produces an EXISTING typed Epoch intent
 (`epoch.world.interaction.*`, the W016 vocabulary), admitted and applied
-through the canonical authorities. No table/status representation is
-required to work the problem.
+through the canonical boundaries. No table/status representation is
+required to work the problem; no vendor UI is required for any leg.
 
-## Preconditions
+## The FINAL battery: 18 legs, per-leg verdicts and evidence
 
-- The canonical W016 world scene (the fixture problem) is admitted and
-  sealed; the RendererFabric holds two registered reference renderers
-  (full + reduced) behind the frozen W056 seam.
-- The web shell registers the world route (`/world`) and the world
-  feature mounts (scene + controls); the desktop product opens the
-  world section as its DEFAULT surface.
+| # | Leg (work-order battery) | Verdict | Evidence |
+|---|---|---|---|
+| 1 | enter a real fixture problem | PASS | `apps/web/e2e/j13-world.spec.ts` leg 1 — `/world` reaches `data-world-phase=ready`; banner carries the problem name + tenant; the world digest equals the sealed fixture digest; Three.js active with both real engines + the reference fallback listed, healthy. Shot `e2e-results/world-legs/leg01-enter.png` |
+| 2 | render a real spatial world | PASS | leg 2 — REAL GL pixels: `data-gl-three=true`, engine canvas visible, and the battery asserts the actual WebGL renderer STRING contains `SwiftShader` (software GL pinned, never claimed as GPU). Shot `leg02-render-three.png` |
+| 3 | orbit/move/zoom | PASS | leg 3 — real keyboard orbit (`q`), pan (`w`), wheel zoom; the typed `zoom` intent lands in the journal and the navigation HUD moves. Shot `leg03-orbit-zoom.png` |
+| 4 | select a semantic entity | PASS | leg 4 — a real mouse click at the entity's DERIVED projected position (the adapters' own projection helpers, the honest pointer basis) through the Three.js Raycaster; `select:applied` in the journal; inspect panel shows the entity |
+| 5 | inspect it | PASS | leg 5 — the typed `inspect` intent (effect-only): `inspect:normalized` + the `inspect-requested` effect awaits the world model; never executed by the UI |
+| 6 | isolate/reveal a layer | PASS | leg 6 — `layer-isolate-lyr-mep` issues the typed `filter` intent; a pick on a hidden-layer entity honestly resolves `select:no-target`; reveal-all issues `show` and the world returns |
+| 7 | measure | PASS | leg 7 — the documented FOUR-pick cadence over the REAL engine affordance (adapter anchor → runtime arm → adapter re-anchor → compose): four journal entries ending in the `measure-requested` effect; identical to the desktop world-host battery and the workspace module docs |
+| 8 | annotate | PASS | leg 8 — the typed `annotate` intent enters the CANONICAL revision: the world digest changes (asserted) |
+| 9 | see and follow an agent | PASS | leg 9 — both agents present in the presence panel; `follow-agent:applied`; the HUD shows the `follow-agent` camera mode; the followed marker is pinned |
+| 10 | replay/seek | PASS | leg 10 — track scrub (typed `replay`), pause/resume transport; the branch-point marker is presented |
+| 11 | branch/simulate | PASS | leg 11 — the scene controls issue the typed `branch`/`simulate` intents; their request effects await their authorities; the scene is NOT mutated |
+| 12 | switch Three.js → Babylon.js without leaving Epoch | PASS | leg 12 — the direct switch with world digest + tenant continuity (asserted), the Babylon GL surface live at its first session, the switch receipt surfaced, and a semantic pick through the REAL Babylon `scene.pick` on the switched session |
+| 13 | switch back | PASS | leg 13 — the reverse switch with the same invariants; a semantic pick through the real Three.js Raycaster after the round trip |
+| 14 | exercise the external foundation path without separate vendor UI | NOT-RUNNABLE (honest) | the recorded skip test in `j13-world.spec.ts` carries the exact reasons: (1) `bindAsset` is adapter-seam-scoped in the frozen RendererAdapter contract v1.1.0 (the W060 advisory: a fabric-level asset-binding orchestration would be a CONTRACT CHANGE), so the `/world` host composition exposes no in-page path to the glTF bridge; (2) the Blender real-binary battery is env-gated and NO Blender binary exists in this sandbox. The path IS proven at its real surface: `qa/foundation-renderers` (glTF → validate → binding → `bindAsset` on a REAL Three.js adapter session + the Blender-double subprocess round-trip — 84/84 + the 15-test battery). Closing commands: `EPOCH_BLENDER_LIVE=1 EPOCH_BLENDER_PATH=<blender> corepack pnpm --filter @epoch/adapter-renderer-blender test` and `corepack pnpm --filter @epoch/adapter-foundation-gltf test` |
+| 15 | verify world digest/entity continuity | PASS | asserted inside legs 12/13 (the digest before each switch equals the digest after; entity picks resolve through each engine's own hit-test surface) and pinned deterministically by `qa/rendering/engine-pair.test.ts` (digest/tenant/portable-state continuity across the direct cross-engine switch) |
+| 16 | force renderer degradation/failure and verify declared fallback | PASS | `apps/web/e2e/j13-world-degradation.spec.ts` (the `chromium-no-gl` project — WebGL disabled at launch, the forced condition asserted REAL: no WebGL context exists): both engine probes honestly report `false`, the session stays healthy on the real adapters' declared headless cores, the declared fallback surface is the contract-only reference projection (`data-spatial-overlay=reference`) drawing every visible entity, and the degraded world stays fully interactive (a real pick resolves through the headless hit-test core). The fabric-level forced ladder (declared degradations, undeclared typed refusals, ordered fallback, abort-with-retention) is pinned deterministically by `qa/rendering/degradation-fallback.test.ts`. Shot `leg16-degraded-reference.png` |
+| 17 | approve an actual action through the Action Gateway | PASS | `j13-world.spec.ts` test 2 — the real decision surface: seal → constraint evaluate → chain validate → baseline approve → submit (`awaiting-approval`) → APPROVE → execute, all through the REAL Action Gateway (Epoch's only execution path). Shot `leg17-18-action-gateway.png` |
+| 18 | verify resulting state/evidence in Epoch | PASS | same test — the executed action's terminal status re-resolves from the authoritative action stream on the Developers surface (`executed` in the action-status table) |
 
-## Steps
+E2E result (recorded): **3 passed / 2 honest skips** (the leg-14 skip and
+the degradation-leg project scoping), 23.9s total at the c90badb save
+point; the battery starts its own production server on the free port 3210.
 
-| # | User action | Expected | Observed | Result |
+## Defect ledger (the discipline chain: observe → record → reproduce → regression-test → fix → rerun → close)
+
+| Defect | Severity | Chain | Regression pin | Status |
 |---|---|---|---|---|
-| 1 | Enter the fixture problem (open the workspace) | The canonical revision presents: 7 entities across 3 semantic layers, the world digest + tenant in the viewport banner, healthy session | `world-journey.test.ts` "opens the workspace…" — session active on the full renderer, digest = the sealed scene digest, layers derived, both renderers listed | PASS |
-| 2 | Orbit / pan / zoom / desktop keys | The presentation camera moves; the canonical camera record is untouched; wheel zoom issues the typed `zoom` intent | "orbit/pan/zoom…" — azimuth/elevation/target change, `camera` equals the fixture record, journal carries `zoom:applied`; keys W/A/S/D/Q/E/R/F/+/- mapped | PASS |
-| 3 | Pick an entity in the viewport | The pick resolves the CANONICAL semantic entity through the fabric seam (adapter hit-test → W016 admission → W013 receipt) | "picks the CANONICAL semantic entity…" — receipt names the entity + `epoch.world.interaction.select`, focus moves spatially | PASS |
-| 4 | Inspect the picked entity | The canonical record (id/type/digest/position/visibility) shows in the inspect panel; an `inspect-requested` effect is surfaced for the world model — never executed by the UI | "inspects the picked entity…" — effect present, scene revision unchanged, panel shows canonical data | PASS |
-| 5 | Isolate / reveal layers | ONLY a layer's entities stay visible (the typed `filter` intent); reveal restores the world (`show`) | "isolates and reveals…" — MEP isolation shows exactly the MEP entities, the HIDDEN legacy duct (the clash risk) returns to the world, journal carries `filter`/`show` | PASS |
-| 6 | Measure (two picks) | The typed `measure` intent composes between the two picks; the declared measurement overlay applies in the world | "measures the riser run…" — `measure-requested` effect + the ruled overlay `ovl-measure-riser-run` renders between panel and riser | PASS |
-| 7 | Annotate | The typed `annotate` intent adds the annotation overlay to the canonical revision | "annotates…" — the annotation pin renders on the focused entity; journal `annotate:applied` | PASS |
-| 8 | See and follow an agent | Presence markers show the agents; follow issues the typed `follow-agent` intent (the canonical camera switches) | "sees and follows…" — both agents visible; camera mode `follow-agent`, marker marked following | PASS |
-| 9 | Replay/seek the timeline | Scrub issues the typed `replay` intent; pause/resume toggle; branch-point marker presented; out-of-bounds scrub is a typed rejection | "scrubs, pauses, and resumes…" — position/paused state moves through intents; `invalid-replay-position` on 999999ms | PASS |
-| 10 | Branch / simulate entry | The scene controls issue the typed `branch`/`simulate` intents and surface their request effects — the scene is NOT mutated | "enters branch and simulation…" — `branch-requested@5000` + `simulate-requested` effects; digest unchanged | PASS |
-| 11 | Switch renderers (both ways) | The REAL fabric switching invariant: world digest carries, portable fields restore, undeclared fields are skipped (typed, listed) | "switches renderers…" — full→reduced→full with digest continuity, camera skipped on reduced / restored on full, switch receipt surfaced | PASS |
-| 12 | Watch the world live (host loop) | The wall-clock host loop advances the presentation clock + frames while the canonical timeline moves ONLY through typed intents | "the wall-clock host loop…" — presentation clock advances, canonical position unchanged | PASS |
-| 13 | Trust the architecture | The input scene is never mutated; every journal entry is an existing typed intent; effects await their authorities; sessions are ephemeral | "the architectural invariants…" — fixture object unchanged, all journal ids match `epoch.world.interaction.*`, effects all `*-requested` | PASS |
+| The viewport controls rendered BELOW the pointer-capture SVG (`zIndex 1`): the reset-camera button was intercepted and UNCLICKABLE in the real engine composition | P1 (observed at the first real-engine E2E bring-up) | observed (leg 3 could not focus the viewport) → recorded → reproduced (pointer events intercepted by the capture layer) → fixed (`WorldViewport.tsx`: controls stack at `zIndex 2`) → rerun green | leg 3 itself (reset-camera click + keyboard navigation through the focused viewport) | CLOSED at `c90badb` |
+| The stage's GL-liveness state was captured ONCE at mount: the lazy engines (constructed at their FIRST session, not at mount) left `data-gl-babylon` stale forever after a switch | P1 (observed when leg 12's GL assertion could never go live) | observed → recorded → reproduced (the probe state never refreshed) → fixed (`world-host.tsx`: the probes refresh on every view-model tick) → rerun green | leg 12 (`data-gl-babylon=true` on the switched session) + leg 16 (both probes honestly `false` without GL) | CLOSED at `c90badb` |
+| W016 marker-time ordering compares `${atMs}\0${markerId}` LEXICOGRAPHICALLY: mixed-width times (5000 vs 12000) fail admission — numerically ASCENDING timelines are refused, and the mirrored numerically DESCENDING order is admitted with a WRONG timeline end bound | P2 (the W057-discovered defect) | observed (W057 journey bring-up) → recorded (the W057 defect table + the harness README advisory) → REPRODUCED precisely at the REAL W016 surface (`admitWorldScene`) in `qa/world-experience/w016-marker-time-known-issue.test.ts` (3 tests, pinned so the future fix FLIPS them) | the known-issue battery above (advisory-only: `packages/world-experience` is the W016 surface, NOT a W061 surface) | LEDGERED — advisory to the TL: the suggested fix is a numeric-aware comparator (compare `atMs` numerically, tie-break on `markerId`) in a future ACR on the W016 surface |
+| (W057, carried in the closure record) hiding the layer of the FOCUSED entity killed the renderer session | high (W057) | fixed at W057 (`portableViewStateOf` carries the focus MINUS the hidden set) | `packages/world-runtime/test/workspace-runtime.test.ts` | CLOSED at W057 |
+| (W057) the W050 release-identity checksums pinned the pre-W057 desktop `package.json` | medium (W057) | fixed at W057 by the sanctioned manifest re-stamp; re-stamped again at W061 (see below) | the X-06 cross-platform battery | CLOSED at W061 (re-stamp disclosed in the PR) |
 
-Web parity (the same journey through the REAL web component):
-`web-driver-parity.test.ts` renders `WorldWorkspace` (apps/web) with the
-REAL runtime driver — the spatial glyphs/focus/overlays/presence/
-selector render from the canonical view model, re-render after real
-interactions (pick/isolate/annotate) and after a real renderer switch.
+## Evidence set
 
-Desktop parity (the same wiring in the Tauri host): the world section
-(`apps/desktop/app/components/sections/world-section.tsx`) composes the
-real runtime with `SystemHostClock` + `TimeoutFrameScheduler` (the
-wall-clock host loop) over the full-fidelity desktop device descriptor;
-`apps/desktop/test/world-host.test.ts` drives its interaction script.
-
-## Defects
-
-| Defect | Severity | Reproduction | Fix | Regression test | Status |
-|---|---|---|---|---|---|
-| Hiding the layer of the FOCUSED entity killed the renderer session (`invalid-fabric-record`: the portable view state forbids focus∩hidden while the canonical W016 projection permits it) | high (found by this journey's invariant battery) | pick an entity, then toggle its layer off | `portableViewStateOf` now carries the focus MINUS the hidden set (presented focus); canonical focus untouched | `workspace-runtime.test.ts` "hiding the layer of the FOCUSED entity keeps the session live" | FIXED |
-| Mixed-width marker times (e.g. 5000 vs 12000) fail W016 scene admission — the marker ordering compares `${atMs}\0${markerId}` LEXICOGRAPHICALLY | low (fixture authoring trap; W016 surface, not fixable here) | build a scene with markers at 5000 and 12000 | fixture uses same-digit-width times; advisory filed for the TL | `world-fixture.ts` (TRACK note) | ADVISORY |
-| The W050 release-identity checksums (X-06, `qa/cross-platform`) pinned the pre-W057 `apps/desktop/package.json`, so this work order's legitimate desktop dependency additions (`@epoch/world-runtime`, `@epoch/renderer-fabric`, `@epoch/world-experience`, `@epoch/capability-registry`) broke the three desktop-platform checksum recomputations | medium (cross-surface: `release/clients` is W050's surface; the trigger is W057's own) | `corepack pnpm --filter @epoch/web... run test` → X-06 "release identity" fails on `apps/desktop/package.json` sha256 | regenerated `release/clients/release-manifest.json` with W050's own deterministic generator (`generate-manifest.py <W057-commit>`) at the W057 commit — checksums, tree SHAs and sourceCommit re-stamped mechanically | X-06 re-run green ("the release/clients record set…" passes) | FIXED (flagged for TL review — unowned-surface touch) |
-
-## Evidence
-
-- Runtime battery: `packages/world-runtime` — 51 tests (mount, picking,
-  layers, measurement/annotation, presence, timeline, controls,
-  switching/fallback, host loop, invariants).
-- Journey + parity batteries: `qa/world-experience` — 16 tests
-  (13 journey + 3 web-driver parity) via
+- **Browser E2E (the closure battery):** `apps/web/playwright.world.config.ts`
+  (production build, free port 3210, `chromium` with REAL software GL via
+  SwiftShader ANGLE, `chromium-no-gl` for the degradation leg) +
+  `apps/web/e2e/j13-world.spec.ts` + `j13-world-degradation.spec.ts`.
+  Visual evidence convention: per-leg full-page screenshots under
+  `apps/web/e2e-results/world-legs/` (gitignored run artifacts — binary
+  evidence stays local by the repo's artifact policy; the committed
+  evidence is the spec set + this record).
+- **Deterministic engine battery:** `qa/rendering`
+  (`engine-pair.test.ts` — the direct Three⇄Babylon cross-switch over the
+  SHARED canonical fixture; `degradation-fallback.test.ts` — the forced
+  ladder), riding `corepack pnpm --filter @epoch/renderer-fabric test`.
+- **Journey + parity batteries:** `qa/world-experience`
+  (`world-journey.test.ts` 13 tests, `web-driver-parity.test.ts` 3 tests,
+  `w016-marker-time-known-issue.test.ts` 3 tests) via
   `corepack pnpm --filter @epoch/world-runtime test`.
-- Web feature battery: `apps/web/src/features/world/workspace.test.tsx`
-  (9 tests) + the shell world route/mount tests (4 tests).
-- Desktop wiring battery: `apps/desktop/test/world-host.test.ts`
-  (3 tests) inside the 192-test desktop suite.
+- **Host batteries:** `apps/web/src/features/world/host/world-engines.test.ts`
+  (4 — the real-engine headless battery) + `world-host.test.tsx` (3) + the
+  W057 feature/route batteries; `apps/desktop/test/world-host.test.ts`
+  (3 — re-pinned to the REAL adapters) inside the 192-test desktop suite.
+- **Scoped frozen baselines (regression):** renderer-fabric pipeline 36/36
+  (the 27-test W056 baseline + the 9-test W061 qa/rendering battery riding
+  it), renderer-runtime 227/227, threejs adapter 58/58, babylonjs adapter
+  64/64, gltf 84/84, blender 40 passed + 3 env-gated live skips.
 
-## What is test-proven vs. what awaits later waves (honest scope)
+## What is test-proven vs. what remains NOT-VERIFIED-live (the honest split)
 
-**Test-proven now (deterministic, no engines):** the complete workspace
-loop — enter a real fixture problem, navigate (orbit/pan/zoom/keys),
-semantic picking, inspect, layer isolation/reveal (including the hidden
-clash-risk discovery), measurement (with the declared overlay),
-annotation, agent presence/follow, timeline scrub/pause/resume,
-branch/simulation entry, renderer switching with digest continuity and
-typed fallback, the wall-clock host loop, and the architecture
-invariants (no second semantic store, no direct durable mutation, typed
-intents only) — all through the REAL fabric seam, the REAL W016
-admission/reducer, and the REAL web/desktop presenters over the
-contract-only reference adapter.
+**Test-proven (deterministic + real browser):** the complete 18-leg loop
+above — through the REAL fabric seam, the REAL W016 admission/reducer, the
+REAL web/desktop presenters, and (legs 1-13, 15-18) a REAL Chromium over
+REAL software GL with both real engines live.
 
-**Awaiting later waves (exactly their surfaces):**
-- real GPU rendering — W058 (Three.js) and W059 (Babylon.js) adapters
-  slot into the same fabric registry mount; the reference presenter
-  draws no pixels;
-- the external foundation path — W060 (Blender sidecar, interchange);
-- browser/desktop E2E over real pixels and input — W061 (visual smoke,
-  Playwright/wdio), including the Action-Gateway approval leg of the
-  closure battery;
-- the web App Router PAGE for `/world` — the app-owner surface
-  (W014/W047 conventions; the shell route/mount + the feature component
-  are the W057 surfaces, and the page is one thin segment that composes
-  them — W061 closes it);
-- lockfile registration of `@epoch/world-runtime` (+ the four
-  `apps/desktop` dependency additions) — a serialized TL pass
-  (the repo precedent: CI regenerates the lockfile per run, so CI is
-  green; frozen installs on main need the registration). The W050
-  release-identity manifest was re-stamped in this PR for the desktop
-  definition-file change (see Defects);
+**NOT-VERIFIED-live (recorded honestly, never fabricated):**
+- the Blender REAL binary — the live battery is env-gated
+  (`EPOCH_BLENDER_LIVE=1` + `EPOCH_BLENDER_PATH`); no Blender binary
+  exists in this sandbox (CI-verified evidence is the committed Node CLI
+  double — a real subprocess boundary, doubled engine);
+- any leg-14 in-page path — blocked on the frozen contract's
+  adapter-seam-scoped `bindAsset` (a fabric-level orchestration would be a
+  contract change for a future ACR, per the W060 advisory);
+- GPU rasterization — SwiftShader ANGLE is REAL browser GL but
+  software-rasterized; no GPU exists in this sandbox and no run here is
+  presented as one.
 
 ## Rerun
 
-Result: all listed batteries green on this branch (see the PR body for
-the exact commands and pass counts).
-Notes: rerun with
-`corepack pnpm --filter @epoch/world-runtime test` (the qa harness rides
-the runtime's vitest via the idempotent node_modules link script).
+```
+# the deterministic batteries
+corepack pnpm --filter @epoch/world-runtime test        # 70/70 (51 runtime + 19 qa/world-experience)
+corepack pnpm --filter @epoch/renderer-fabric test      # 36/36 (incl. the 9-test qa/rendering battery)
+# the browser closure battery (production build on the free port 3210)
+cd apps/web && npx playwright test --config playwright.world.config.ts
+```
+
+Result: all listed batteries green on this branch (see the PR body for the
+exact commands and pass counts).

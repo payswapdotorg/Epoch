@@ -1,10 +1,8 @@
 {
   "version": "X2.0",
-  "completed": 60,
-  "completedThrough": "W060",
-  "active": [
-    "W061"
-  ],
+  "completed": 61,
+  "completedThrough": "W061",
+  "active": [],
   "eligible": [],
   "blocked": [],
   "dependencyProgram": {
@@ -31,9 +29,7 @@
   },
   "concurrency": {
     "maxWorkers": 3,
-    "current": [
-      "W061"
-    ],
+    "current": [],
     "next": []
   }
 }

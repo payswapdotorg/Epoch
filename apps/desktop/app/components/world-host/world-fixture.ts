@@ -17,9 +17,16 @@
  */
 import { sealCapabilityManifest } from '@epoch/capability-registry';
 import {
+  BABYLONJS_RENDERER_ID,
+  BabylonRendererAdapter,
+  nullEngineHost,
+} from '@epoch/adapter-renderer-babylonjs';
+import { THREE_RENDERER_ID, ThreeJsRendererAdapter } from '@epoch/adapter-renderer-threejs';
+import {
   ReferenceRendererAdapter,
   RendererFabric,
   rendererCapabilityManifestOf,
+  type RendererAdapter,
 } from '@epoch/renderer-fabric';
 import type {
   DeviceSessionSnapshot,
@@ -333,41 +340,84 @@ const CAPABILITIES_REDUCED: RendererCapabilitySet = {
   assetKinds: [],
 };
 
-/** Build the desktop world fabric: both reference renderers registered. */
-export function buildWorldFabric(): RendererFabric {
+/** The W013 renderer ids of the REAL engine adapters (re-exported for the section). */
+export { THREE_RENDERER_ID } from '@epoch/adapter-renderer-threejs';
+export { BABYLONJS_RENDERER_ID } from '@epoch/adapter-renderer-babylonjs';
+
+/** The renderer ids whose presenters draw real engine pixels. */
+export const ENGINE_RENDERER_IDS: readonly string[] = [THREE_RENDERER_ID, BABYLONJS_RENDERER_ID];
+
+/** Whether one renderer id presents through a real engine (pixels). */
+export function isEngineRenderer(rendererId: string): boolean {
+  return (ENGINE_RENDERER_IDS as readonly string[]).includes(rendererId);
+}
+
+/** The construction inputs of the desktop world fabric (real engines + fallbacks). */
+export interface DesktopWorldFabricOptions {
+  /** The REAL Three.js adapter (the section injects the browser GL surface). */
+  readonly three: ThreeJsRendererAdapter;
+  /** The REAL Babylon.js adapter (the section injects the browser engine host). */
+  readonly babylon: BabylonRendererAdapter;
+}
+
+/** The built fabric + its real adapters (evidence helpers for the section/tests). */
+export interface DesktopWorldFabric {
+  readonly fabric: RendererFabric;
+  readonly three: ThreeJsRendererAdapter;
+  readonly babylon: BabylonRendererAdapter;
+}
+
+/**
+ * Build the desktop world fabric (W061): the REAL Three.js and Babylon.js
+ * renderers registered through the REAL capability registry ahead of the
+ * contract-only reference pair (the declared fallback chain of the desktop
+ * world host). The REAL adapters register under their OWN capability
+ * identities (`epoch.renderer.three` / `epoch.renderer.babylonjs` — the
+ * registry requires the manifest capability id to equal the adapter
+ * identity's); the reference pair keeps its host-scoped identities.
+ */
+export function buildWorldFabric(
+  options?: DesktopWorldFabricOptions,
+): DesktopWorldFabric {
+  const three = options?.three ?? new ThreeJsRendererAdapter();
+  const babylon =
+    options?.babylon ?? new BabylonRendererAdapter({ host: nullEngineHost() });
   const fabric = new RendererFabric();
-  const entries = [
+  const entries: readonly { readonly adapter: RendererAdapter }[] = [
+    { adapter: three },
+    { adapter: babylon },
     {
-      capabilityId: 'epoch.renderer.desktop-world-full',
-      rendererId: FULL_RENDERER_ID,
-      displayName: 'World Full (reference)',
-      descriptor: DESCRIPTOR_FULL,
-      capabilities: CAPABILITIES_FULL,
+      adapter: new ReferenceRendererAdapter({
+        identity: {
+          capabilityId: 'epoch.renderer.desktop-world-full',
+          rendererId: FULL_RENDERER_ID,
+          displayName: 'World Full (reference)',
+        },
+        descriptor: DESCRIPTOR_FULL,
+        capabilities: CAPABILITIES_FULL,
+      }),
     },
     {
-      capabilityId: 'epoch.renderer.desktop-world-reduced',
-      rendererId: REDUCED_RENDERER_ID,
-      displayName: 'World Reduced (reference)',
-      descriptor: DESCRIPTOR_REDUCED,
-      capabilities: CAPABILITIES_REDUCED,
+      adapter: new ReferenceRendererAdapter({
+        identity: {
+          capabilityId: 'epoch.renderer.desktop-world-reduced',
+          rendererId: REDUCED_RENDERER_ID,
+          displayName: 'World Reduced (reference)',
+        },
+        descriptor: DESCRIPTOR_REDUCED,
+        capabilities: CAPABILITIES_REDUCED,
+      }),
     },
   ] as const;
   for (const entry of entries) {
-    const adapter = new ReferenceRendererAdapter({
-      identity: {
-        capabilityId: entry.capabilityId,
-        rendererId: entry.rendererId,
-        displayName: entry.displayName,
-      },
-      descriptor: entry.descriptor,
-      capabilities: entry.capabilities,
-    });
+    const identity = entry.adapter.identity();
     const manifest = rendererCapabilityManifestOf({
-      capabilityId: entry.capabilityId,
+      capabilityId: identity.capabilityId,
       version: '1.0.0',
-      descriptor: entry.descriptor,
-      capabilities: entry.capabilities,
-      displayName: entry.displayName,
+      descriptor: entry.adapter.descriptor(),
+      capabilities: entry.adapter.capabilities(),
+      displayName: identity.displayName,
+      description: identity.description,
     });
     const sealed = sealCapabilityManifest(manifest);
     if (!sealed.ok) {
@@ -376,17 +426,23 @@ export function buildWorldFabric(): RendererFabric {
     const registered = fabric.adapters.register({
       manifest: sealed.value.manifest,
       digest: sealed.value.digest,
-      adapter,
+      adapter: entry.adapter,
     });
     if (!registered.ok) {
       throw new Error(`world-host renderer failed to register: ${registered.error.message}`);
     }
   }
-  return fabric;
+  return { fabric, three, babylon };
 }
 
 /**
- * The ordered renderer preference of the desktop world host: the full
- * reference first, the reduced one as the fallback chain.
+ * The ordered renderer preference of the desktop world host (W061): the
+ * REAL Three.js renderer first, the REAL Babylon.js renderer second, the
+ * contract-only reference pair as the declared fallback chain.
  */
-export const RENDERER_PREFERENCE: readonly string[] = [FULL_RENDERER_ID, REDUCED_RENDERER_ID];
+export const RENDERER_PREFERENCE: readonly string[] = [
+  THREE_RENDERER_ID,
+  BABYLONJS_RENDERER_ID,
+  FULL_RENDERER_ID,
+  REDUCED_RENDERER_ID,
+];

@@ -1,0 +1,26 @@
+{
+  "//": "W061 — the qa/rendering battery's OWN type-checked validation path (the W048/W050 cold-checkout doctrine, mirroring qa/renderer-conformance). qa/rendering is NOT a pnpm workspace package (pnpm-workspace.yaml is frozen), so these files have no node_modules chain of their own. @epoch/renderer-fabric's `typecheck` script invokes this config; NOTHING here depends on the qa/rendering/node_modules symlink (created at test time by the fabric's vitest globalSetup): every bare import the battery files make DIRECTLY is mapped to its real location, and every product module (the fabric, renderer-runtime, world-experience, capability-registry, and BOTH real engine adapters) is imported RELATIVELY so each file resolves its own dependencies through its own package's node_modules (real install state, never generated state — the adapters' engine imports resolve through their OWN registered packages — DOM is in lib exactly like the W059 babylon battery tsconfig, because the Babylon engine options type extends the DOM WebGLContextAttributes the browser host constructs). A fresh checkout type-checks cold.",
+  "extends": "../../packages/tsconfig/library.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "lib": ["ES2022", "DOM"],
+    "typeRoots": [
+      "../../packages/renderer-fabric/node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "vitest": [
+        "../../packages/renderer-fabric/node_modules/vitest/dist/index.d.ts"
+      ],
+      "@epoch/world-contracts": [
+        "../../contracts/world/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

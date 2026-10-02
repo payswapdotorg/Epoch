@@ -1,0 +1,8 @@
+# W061 — the rendering battery's runtime-only link state. The battery is
+# NOT a pnpm workspace package (pnpm-workspace.yaml is frozen), so
+# packages/renderer-fabric's link script creates
+# node_modules -> ../../packages/renderer-fabric/node_modules at test time
+# (idempotent; see packages/renderer-fabric/scripts/link-rendering-harness.mjs).
+# The repository-wide `node_modules/` pattern only matches directories, so
+# this SYMLINK needs its own ignore entry. Nothing here is ever committed.
+node_modules

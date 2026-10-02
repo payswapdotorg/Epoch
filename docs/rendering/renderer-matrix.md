@@ -1,11 +1,16 @@
 # Epoch Renderer Matrix
 
+> Program status: CLOSED at W061 (ACR-007/X2.0). The closure record — the
+> final matrix, the real-browser software-GL evidence statement, and the
+> E2E battery summary — is [closure.md](./closure.md).
+
 ## Primary interactive backends
 
-| Backend | Role | Host mode | Initial program |
-|---|---|---|---|
-| Three.js | general interactive 3D | embedded in Epoch viewport | W058 |
-| Babylon.js | general interactive 3D | embedded in Epoch viewport | W059 |
+| Backend | Role | Host mode | Initial program | Closure status |
+|---|---|---|---|---|
+| Three.js | general interactive 3D | embedded in Epoch viewport | W058 | live in the real-browser E2E battery (W061) |
+| Babylon.js | general interactive 3D | embedded in Epoch viewport | W059 | live in the real-browser E2E battery (W061) |
+| Reference adapter | contract presenter + declared fallback | embedded in Epoch viewport | W056 | the declared no-GL fallback surface (proven, W061 leg 16) |
 
 ## External/specialized foundations
 

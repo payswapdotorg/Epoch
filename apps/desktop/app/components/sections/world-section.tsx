@@ -31,6 +31,8 @@ import {
   type WorldWorkspaceInput,
   type WorkspaceViewModel,
 } from '@epoch/world-runtime';
+import { ThreeJsRendererAdapter, THREE_RENDERER_ID } from '@epoch/adapter-renderer-threejs';
+import { BabylonRendererAdapter, BABYLONJS_RENDERER_ID } from '@epoch/adapter-renderer-babylonjs';
 import {
   ActionButton,
   Badge,
@@ -42,12 +44,18 @@ import {
 } from '../ui-kit';
 import { COLORS, FONTS, RADII, SPACE, TYPE } from '../ui-tokens';
 import {
+  ENGINE_CANVAS_SIZE,
+  webBabylonEngineHost,
+  webThreeSurfaceFactory,
+} from '../world-host/browser-gl';
+import {
   BRANCH_AT_MS,
   DEVICE,
   ONTOLOGY,
   RENDERER_PREFERENCE,
   SCENE,
   buildWorldFabric,
+  isEngineRenderer,
 } from '../world-host/world-fixture';
 
 type ComposePhase =
@@ -85,16 +93,33 @@ export function WorldSection(): ReactNode {
   const [phase, setPhase] = useState<ComposePhase>({ phase: 'composing' });
   const [view, setView] = useState<WorkspaceViewModel | null>(null);
   const [annotationDraft, setAnnotationDraft] = useState('');
+  const [glLive, setGlLive] = useState<{ readonly three: boolean; readonly babylon: boolean }>({
+    three: false,
+    babylon: false,
+  });
   const runtimeRef = useRef<WorldWorkspaceRuntime | null>(null);
   const dragRef = useRef<{ x: number; y: number } | null>(null);
+  const threeCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const babylonCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const stageRef = useRef<HTMLDivElement | null>(null);
 
   // Compose the workspace ONCE per mount (client-side only — the static
-  // export prerenders the composing state), then run the host loop.
+  // export prerenders the composing state), then run the host loop. The
+  // REAL renderers (W061: Three.js first, Babylon.js second, the reference
+  // pair as the declared fallback chain) register behind the REAL fabric;
+  // the engines' GL objects are constructed over the section's canvases
+  // ONLY here, in the webview (SSR composes no engine state).
   useEffect(() => {
     let cancelled = false;
+    const threeSurface = webThreeSurfaceFactory(threeCanvasRef.current);
+    const babylonSurface = webBabylonEngineHost(babylonCanvasRef.current);
+    const { fabric } = buildWorldFabric({
+      three: new ThreeJsRendererAdapter({ surfaceFactory: threeSurface.factory }),
+      babylon: new BabylonRendererAdapter({ host: babylonSurface.host }),
+    });
     const runtime = new WorldWorkspaceRuntime({
       slug: 'desktop-world',
-      fabric: buildWorldFabric(),
+      fabric,
       scene: SCENE,
       ontology: ONTOLOGY,
       device: DEVICE,
@@ -113,6 +138,7 @@ export function WorldSection(): ReactNode {
         setPhase({ phase: 'failed', message: `${opened.error.code}: ${opened.error.message}` });
         return;
       }
+      setGlLive({ three: threeSurface.probe.glActive, babylon: babylonSurface.probe.glActive });
       setView(runtime.viewModel());
       setPhase({ phase: 'ready' });
       runtime.startHostLoop();
@@ -171,6 +197,64 @@ export function WorldSection(): ReactNode {
   const tool = view.viewport.activeTool;
   const timeline = view.timeline;
   const span = Math.max(1, timeline.trackEndMs - timeline.trackStartMs);
+  // The engine stage (W061): when the active presenter is a REAL engine
+  // with a live GL surface, its pixels ARE the spatial world (the engine's
+  // scene graph carries the entities, overlays and focus decorations) and
+  // the SVG keeps only the non-positional chrome; the reference projection
+  // renders otherwise (never a blank square presented as a world).
+  const activeRendererId = view.renderers.activeRendererId;
+  const threeActive = activeRendererId === THREE_RENDERER_ID;
+  const babylonActive = activeRendererId === BABYLONJS_RENDERER_ID;
+  const engineSpatial =
+    isEngineRenderer(activeRendererId) &&
+    ((threeActive && glLive.three) || (babylonActive && glLive.babylon));
+  const engineStage = (
+    <div
+      ref={stageRef}
+      data-engine-stage=""
+      data-testid="desktop-world-engine-stage"
+      data-active-renderer={activeRendererId}
+      data-gl-three={glLive.three ? 'true' : 'false'}
+      data-gl-babylon={glLive.babylon ? 'true' : 'false'}
+      style={{
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: `min(100%, ${ENGINE_CANVAS_SIZE}px)`,
+        aspectRatio: '1 / 1',
+        background: '#0b0f14',
+        overflow: 'hidden',
+      }}
+    >
+      <canvas
+        ref={threeCanvasRef}
+        data-engine-canvas={THREE_RENDERER_ID}
+        width={ENGINE_CANVAS_SIZE}
+        height={ENGINE_CANVAS_SIZE}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          display: threeActive ? 'block' : 'none',
+        }}
+      />
+      <canvas
+        ref={babylonCanvasRef}
+        data-engine-canvas={BABYLONJS_RENDERER_ID}
+        width={ENGINE_CANVAS_SIZE}
+        height={ENGINE_CANVAS_SIZE}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          display: babylonActive ? 'block' : 'none',
+        }}
+      />
+    </div>
+  );
 
   return (
     <>
@@ -180,6 +264,8 @@ export function WorldSection(): ReactNode {
       >
         <div
           data-testid="desktop-world-viewport"
+          data-spatial-overlay={engineSpatial ? 'engine' : 'reference'}
+          data-engine-spatial={engineSpatial ? 'true' : 'false'}
           role="application"
           aria-label={`Interactive world viewport — ${view.viewport.sceneName}`}
           tabIndex={0}
@@ -203,13 +289,18 @@ export function WorldSection(): ReactNode {
             cursor: 'crosshair',
           }}
         >
+          {engineStage}
           <svg
             data-testid="desktop-world-canvas"
             viewBox={`0 0 ${VIEWBOX.width} ${VIEWBOX.height}`}
-            style={{ display: 'block', width: '100%', height: 'auto', userSelect: 'none', touchAction: 'none' }}
+            style={{ display: 'block', width: '100%', height: 'auto', userSelect: 'none', touchAction: 'none', position: 'relative', zIndex: 1 }}
             onPointerDown={(event) => {
               (event.target as Element).setPointerCapture?.(event.pointerId);
-              const bounds = event.currentTarget.getBoundingClientRect();
+              // Pointer input normalizes against the ENGINE STAGE when a
+              // real engine presents (the square region the engines present
+              // under aspect 1), else the SVG canvas itself.
+              const bounds = (engineSpatial ? stageRef.current : event.currentTarget)?.getBoundingClientRect()
+                ?? event.currentTarget.getBoundingClientRect();
               dragRef.current = { x: event.clientX, y: event.clientY };
               const pointer = normalizePointer(
                 { width: bounds.width, height: bounds.height },

@@ -46,8 +46,15 @@ the real W016 admission) with
   models are the web view-model records; (runtime) the web
   `WorldWorkspace` component renders the REAL driver's spatial world
   and re-renders after real interactions and a real renderer switch.
+- `w016-marker-time-known-issue.test.ts` — the KNOWN-ISSUE record
+  (W061, ledgered): the precise repro of the W016 mixed-width
+  marker-time ordering defect against the REAL `admitWorldScene`
+  surface. It deliberately PINS the current (defective) behavior so it
+  is green while the defect stands; the W016 comparator fix (a future
+  ACR on the `packages/world-experience` surface) flips it and forces
+  the ledger update.
 
-## Honest scope (what is test-proven vs. what awaits later waves)
+## Honest scope (what is test-proven here vs. what the later waves closed)
 
 Proven here, deterministically, without engines: the full workspace
 loop — mount, present, navigate, pick, inspect, isolate/reveal,
@@ -55,14 +62,13 @@ measure, annotate, follow, replay, branch/simulate entry, renderer
 switch/fallback, digest continuity — through the REAL fabric seam and
 the REAL W016 admission/reducer, rendered by the REAL web component.
 
-NOT claimed here (exactly the later waves' surfaces): real GPU
-rendering (W058 Three.js, W059 Babylon.js adapters slot into the same
-fabric registry), the external foundation path (W060), browser/desktop
-E2E over real pixels (W061), and the Action-Gateway approval leg of the
-closure battery (W061). The reference presenter draws no pixels; its
-"presentation" is the typed in-memory index the fabric contract
-defines, and the spatial projection the components render is the
-structured SVG projection of the canonical scene.
+Closed by the later waves (their surfaces): real engine rendering —
+W058 (Three.js) and W059 (Babylon.js) adapters slotted into the same
+fabric registry mount; the external foundation path — W060 (the
+Blender sidecar + the glTF interchange bridge); browser E2E over real
+pixels, the Action-Gateway approval legs, and the program closure —
+W061 (the `j13-world` battery over real software GL; see
+`docs/journeys/interactive-world.md` and `docs/rendering/closure.md`).
 
 ## Running
 
@@ -87,9 +93,11 @@ corepack pnpm --filter @epoch/world-runtime typecheck
 - **W016 marker ordering is lexicographic**: the scene-timeline
   refinement compares `${atMs}\u0000${markerId}` as STRINGS, so marker
   times of mixed digit width (e.g. 5000 vs 12000) mis-sort and fail
-  admission. The fixture uses same-digit-width marker times; the W016
-  package is frozen to this Work Order, so the quirk is documented
-  rather than fixed here.
+  admission. The fixture uses same-digit-width marker times; the
+  PRECISE REPRO (both symptoms: ascending refused + descending admitted
+  with a wrong end bound) is `w016-marker-time-known-issue.test.ts`;
+  the fix belongs to the W016 package surface (a future ACR — advisory
+  only for W061).
 - The journey battery found and pinned a real world-runtime defect
   (portable focus/hidden disjointness) — see the regression test in
   `packages/world-runtime/test/workspace-runtime.test.ts` and the
