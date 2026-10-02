@@ -104,3 +104,34 @@ W052 executes the production web journeys against the real deployed site (P01-P1
 ## Credential-boundary invariant
 
 Real provider provisioning (Vercel/Neon/R2/Upstash/Apify accounts) requires operator-owned credentials. Work orders deliver all engineering up to that boundary, record honest VERIFIED/NOT-VERIFIED states, and never claim deployment without a real public endpoint.
+
+
+# ACR-007 Interactive World + Renderer Fabric Graph
+
+ACR-006/W055 -> W056
+W056 -> W057/W058/W059
+W057 + W058 + W059 -> W060
+W060 -> W061
+
+## Safe concurrency
+
+W057|W058|W059
+
+W060 is serialized after W057/W058/W059.
+W061 is serialized after W060.
+
+## Surface discipline
+
+W057 owns the world workspace/UX.
+W058 owns the Three.js adapter.
+W059 owns the Babylon.js adapter.
+W060 owns external foundation/interchange adapters.
+W061 is the only cross-client closure owner after the preceding work has merged.
+
+## Renderer invariant
+
+All renderer implementations consume the same canonical World Experience projection and Renderer Fabric contracts. Renderer switching cannot create a second semantic world, lifecycle, solution/delivery or evidence ledger.
+
+## Product invariant
+
+Interactive-world completion requires a real renderer surface and real user interaction. Tables, scene summaries and status panels are supporting projections, not substitutes for the world.
