@@ -16,6 +16,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@epoch/adapter-apify": "workspace:*",
     "@epoch/agent-protocol": "workspace:*",
     "@epoch/capability-discovery": "workspace:*",
     "@epoch/capability-registry": "workspace:*",
