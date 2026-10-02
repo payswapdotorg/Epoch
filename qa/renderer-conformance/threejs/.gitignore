@@ -1,0 +1,9 @@
+# W058 — the Three.js conformance battery's runtime-only link state.
+# This directory is NOT a pnpm workspace package (pnpm-workspace.yaml is
+# frozen), so the owning adapter package's link script creates
+# node_modules -> ../../../adapters/renderers/threejs/node_modules at test
+# time (idempotent; see adapters/renderers/threejs/scripts/link-local.mjs).
+# The parent harness's `node_modules` pattern (no trailing slash) covers
+# this symlink at any depth; this entry is defensive documentation so the
+# link state is never committed.
+node_modules
