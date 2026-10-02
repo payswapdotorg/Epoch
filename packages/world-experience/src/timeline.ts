@@ -84,9 +84,17 @@ export const SceneTimelineSchema = z
     position: SceneTimelinePositionSchema,
   })
   .superRefine((timeline, ctx) => {
-    const keys = timeline.markers.map((m) => `${m.atMs}\u0000${m.markerId}`);
-    for (let i = 1; i < keys.length; i += 1) {
-      if (keys[i] <= keys[i - 1]) {
+    // Numeric (atMs, markerId) ordering (the specified intent, restored by
+    // ACR-008/W062): `atMs` compares NUMERICALLY — both values are
+    // schema-validated non-negative integers, so mixed digit widths
+    // (5000 vs 12000) order by value, never lexicographically; equal
+    // `atMs` tie-breaks on `markerId` with the specified string ordering;
+    // an EQUAL pair is a duplicate (still refused).
+    for (let i = 1; i < timeline.markers.length; i += 1) {
+      const previous = timeline.markers[i - 1];
+      const current = timeline.markers[i];
+      const byAtMs = current.atMs < previous.atMs ? -1 : current.atMs > previous.atMs ? 1 : 0;
+      if (byAtMs < 0 || (byAtMs === 0 && current.markerId <= previous.markerId)) {
         ctx.addIssue({
           code: 'custom',
           message:
