@@ -1,0 +1,29 @@
+{
+  "name": "@epoch/adapter-apify",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Apify acquisition adapter (W054, ACR-006) — the external-source implementation of the FROZEN W045 DiscoverySourceAdapter contract over the Apify REST API: runs the PINNED actor (EPOCH_APIFY_ACTOR_ID) via POST /v2/acts/{actorId}/run-sync-get-dataset-items (fetch-ahead at an EXPLICIT caller-invoked refresh — never a timer, never wall-clock; scan() stays SYNCHRONOUS over the cached dataset like the StaticCatalogSourceAdapter reference), maps dataset items to provider-neutral SourceArtifact records (candidate observations ONLY — claims, never executable artifacts, never authority) with FULL provenance (adapter id, source kind, actor id, content-addressed acquisition-run id, provider run id when returned, fetched-at, raw-result digest), typed failure semantics (unauthorized/payment-required/not-found/rate-limited/timeout/malformed-response/unavailable as typed values — never raw provider errors, never throws), and a deterministic per-day quota guard (EPOCH_APIFY_MAX_RUNS_PER_DAY, default 1; epoch-day window, in-memory per instance by design — a cost guard, not a security boundary). ZERO new dependencies (platform fetch + the frozen kernel contract; injectable fetch for test doubles).",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/capability-discovery": "workspace:*",
+    "@epoch/tsconfig": "workspace:*"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

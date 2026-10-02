@@ -17,6 +17,22 @@ export {
 export { CapabilityDiscoveryService } from './runtime';
 export type { CapabilityDiscoveryServiceOptions } from './runtime';
 
+// W054 (ACR-006) — the production ecosystem-discovery trigger (production
+// wiring ONLY; the frozen scheduler contract + discovery semantics are
+// untouched — see src/production.ts).
+export {
+  acquisitionConfigFromEnv,
+  acquisitionConfigured,
+  runProductionEcosystemDiscovery,
+} from './production';
+export type {
+  ProductionAcquisitionConfig,
+  ProductionAcquisitionInput,
+  ProductionAcquisitionState,
+  ProductionEcosystemDiscoveryInput,
+  ProductionEcosystemDiscoveryOutcome,
+} from './production';
+
 export type {
   AuthorizationDecision,
   EcosystemProposalRequest,
