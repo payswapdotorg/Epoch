@@ -15,11 +15,15 @@ import { defineConfig } from 'vitest/config';
 //   under apps/web's vitest exactly like qa/desktop rides apps/desktop).
 //   The globalSetup link script creates the harness's node_modules symlink
 //   after a fresh install (idempotent, gitignored, CI-safe).
+// - W052: the qa/production journey harness (the P01-P18 production
+//   journeys against a BASE_URL deployment) rides this config too. The
+//   suite skips itself unless EPOCH_PRODUCTION_BASE_URL/BASE_URL is set,
+//   so the hermetic battery never depends on a deployment.
 export default defineConfig({
   oxc: { jsx: 'react-jsx' },
   test: {
     environment: 'node',
-    include: ['app/**/*.test.{ts,tsx}', 'src/**/*.test.{ts,tsx}', '../../qa/cross-platform/*.test.ts'],
+    include: ['app/**/*.test.{ts,tsx}', 'src/**/*.test.{ts,tsx}', 'qa/**/*.test.ts', '../../qa/cross-platform/*.test.ts'],
     globalSetup: ['./scripts/link-cross-harness.mjs'],
   },
 });

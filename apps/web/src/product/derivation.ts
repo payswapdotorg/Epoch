@@ -210,23 +210,39 @@ export function constraintEvaluationPayload(
   };
 }
 
-/** The verification.validateChain payload over the current evidence. */
+/**
+ * The verification.validateChain payload over the committed field evidence.
+ *
+ * The chain the verification authority ADMITS (the W052 production journey
+ * P06 surfaced that the earlier projection submitted a chain the authority
+ * REJECTED — evidence-run-mismatch / evidence-not-produced-by-run /
+ * evidence-digest-mismatch — because it fabricated a web run claiming the
+ * fixture evidence and cited the solution digest as unproduced evidence).
+ * The honest chain grounds every link on the fixture run that ACTUALLY
+ * produced the evidence (the record's own `producedBy`): the method's run
+ * is the producing run, and the result cites exactly the evidence that run
+ * produced — nothing else. The verification authority re-validates the
+ * whole linkage on submission; the client never invents a verdict.
+ */
 export function verificationChainPayload(
   configuration: ProductConfiguration,
   input: {
     readonly evidenceRecord: JsonValue;
     readonly evidenceDigest: string;
     readonly solutionId: string;
-    readonly solutionDigest: string;
     readonly approverId: string;
   },
 ): JsonValue {
   void configuration;
+  const record = asRecord(input.evidenceRecord);
+  const producedBy = asRecord(record['producedBy']);
+  const producedAt = str(record['observedAt']);
+  const producingRunId = str(producedBy['runId']);
+  const producingActor = str(producedBy['actorId']);
   const now = new Date().toISOString().replace(/\.\d{3}Z$/, '.000Z');
   const requirementId = `req:${input.solutionId}-baseline-sealed`;
   const claimId = `claim:${input.solutionId}-baseline-verified`;
   const methodId = `method:${input.solutionId}-digest-anchored`;
-  const runId = `run:${input.solutionId}-baseline-check`;
   const resultId = `result:${input.solutionId}-baseline-pass`;
   const approvalId = `approval:${input.solutionId}-baseline-approved`;
   return {
@@ -236,7 +252,7 @@ export function verificationChainPayload(
         {
           schemaVersion: 1,
           requirementId,
-          statement: 'The approved solution baseline is sealed and referenced by its content digest.',
+          statement: 'The delivery decision is grounded in committed, digest-anchored field evidence.',
         },
         {
           schemaVersion: 1,
@@ -249,7 +265,7 @@ export function verificationChainPayload(
           schemaVersion: 1,
           claimId,
           requirementId,
-          statement: 'The baseline solution version is sealed with digest anchoring.',
+          statement: 'The baseline decision is grounded in the committed field evidence, anchored by its content digest.',
           stage: 'verification',
         },
       ],
@@ -259,20 +275,20 @@ export function verificationChainPayload(
           methodId,
           claimId,
           stage: 'verification',
-          description: 'Digest-anchored record verification over the sealed baseline and evidence.',
+          description: 'Digest-anchored verification over the committed field-evidence record and its producing run.',
           deterministic: true,
         },
       ],
       runs: [
         {
           schemaVersion: 1,
-          runId,
+          runId: producingRunId,
           methodId,
           stage: 'verification',
-          executedBy: 'system:epoch-web',
-          executedByKind: 'system',
-          startedAt: now,
-          endedAt: now,
+          executedBy: producingActor,
+          executedByKind: 'person',
+          startedAt: producedAt,
+          endedAt: producedAt,
           status: 'completed',
           producedEvidence: [input.evidenceDigest],
         },
@@ -282,13 +298,13 @@ export function verificationChainPayload(
           schemaVersion: 1,
           resultId,
           claimId,
-          runId,
+          runId: producingRunId,
           stage: 'verification',
           outcome: 'pass',
-          evidenceDigests: [input.evidenceDigest, input.solutionDigest],
+          evidenceDigests: [input.evidenceDigest],
           confidence: { distribution: { kind: 'point', value: 0.95 } },
           decidedAt: now,
-          rationale: 'The sealed baseline digest and the field evidence both resolve.',
+          rationale: 'The committed field evidence resolves by digest and was produced by the citing run.',
         },
       ],
       evidence: [input.evidenceRecord],

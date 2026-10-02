@@ -119,18 +119,21 @@ describe('the decision journey payloads (J04) through the real gateway', () => {
     // The authority's own verdict surfaces verbatim (not gateway-invented).
     expect(over).toBeDefined();
 
-    // Verification chain over the sealed baseline.
+    // Verification chain over the sealed baseline — the W052 P06
+    // regression: the authority must ADMIT the derived chain (the earlier
+    // projection was rejected with evidence-run-mismatch /
+    // evidence-not-produced-by-run / evidence-digest-mismatch).
     const evidenceFile = configuration.records.evidence as Record<string, unknown>;
     const chain = unwrap(
       await gateway.call(envelope('verification.validateChain', sessionId, tenantId, verificationChainPayload(configuration, {
         evidenceRecord: evidenceFile['record'] as never,
         evidenceDigest: String(evidenceFile['evidenceDigest']),
         solutionId: String((configuration.records.solution as Record<string, unknown>)['solutionId']),
-        solutionDigest: digests[0]!,
         approverId: 'principal:chief-engineer',
       }), `chain-${Date.now().toString(36)}`)),
     );
-    expect(chain).toBeDefined();
+    expect(chain['ok']).toBe(true);
+    expect(chain['issues']).toBeUndefined();
 
     // Baseline approval (the solution-delivery authority) over the SEALED record.
     const approved = unwrap(
