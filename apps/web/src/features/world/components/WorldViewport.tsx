@@ -471,6 +471,13 @@ export function WorldViewport({
           right: 12,
           display: 'flex',
           gap: 6,
+          // Stack ABOVE the pointer-capture SVG (zIndex 1): the controls
+          // are viewport chrome, not world surface — without this the SVG
+          // subtree intercepts the pointer events and the controls are
+          // unclickable in the real engine composition (the W061 leg-3
+          // defect: observe -> reproduce -> fix -> regression-pinned by
+          // the E2E battery's own reset-camera click).
+          zIndex: 2,
         }}
       >
         <button

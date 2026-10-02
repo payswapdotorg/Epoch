@@ -100,6 +100,15 @@ export function WorldWorkspaceHost(): ReactNode {
     runtime.setViewModelObserver((viewModel) => {
       if (!cancelled) {
         setView(viewModel);
+        // Refresh the GL liveness on every view-model tick: the engines
+        // are constructed LAZILY at their first session (the preferred
+        // renderer at open(), the others at their first switch), so the
+        // probes captured at mount time are stale until then — the stage
+        // must present the live surface mode, not the mount-time one.
+        setGlLive({
+          three: threeSurface.probe.glActive,
+          babylon: babylonSurface.probe.glActive,
+        });
       }
     });
     void (async () => {
