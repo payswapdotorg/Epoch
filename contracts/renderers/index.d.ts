@@ -9,8 +9,11 @@
  * directory proves at compile time that the implementation's zod-inferred
  * types are identical to these declarations.
  *
- * Contract version: 1.0.0 (see manifest.json)
- * Protocol version: 1.0.0 (carried by every binding, invocation, and receipt)
+ * Contract version: 1.1.0 (see manifest.json — W056 bumped 1.0.0 -> 1.1.0
+ * ADDITIVELY; every W013 type below is unchanged)
+ * Protocol version: 1.0.0 (carried by every W013 binding, invocation, and
+ * receipt — unchanged)
+ * Fabric protocol version: 1.0.0 (carried by every W056 fabric document)
  *
  * Provider neutrality (architecture lock rule 13): renderer descriptors
  * are ABSTRACT typed data (kind + capabilities + budgets); concrete
@@ -515,3 +518,685 @@ export type RendererRuntimeError =
       expected: string;
       encountered: string;
     };
+
+// ---------------------------------------------------------------------------
+// W056 — the Renderer Fabric contract (additive; every W013 type above is
+// unchanged).
+//
+// The fabric concepts freeze the seam W057-W059 build against: renderer
+// capability sets, ephemeral non-authoritative sessions, portable
+// view-state snapshots, renderer switching (request + receipt), frame and
+// input envelopes, intent receipts, typed failures/degradation/fallback,
+// health, content-addressed asset bindings, and conformance results. All
+// documents carry the fabric protocol version ("1.0.0"); embedded W013
+// records keep their own protocol version. ZERO engine imports, ZERO GPU
+// code, ZERO UI-framework dependencies — concrete engines are W058/W059
+// adapters behind this contract.
+// ---------------------------------------------------------------------------
+
+/** Exact renderer-fabric protocol version admitted by contract version 1.1.0. */
+export type RendererFabricProtocolVersion = '1.0.0';
+
+/** Lifecycle state of a renderer fabric session (disposed is terminal). */
+export type RendererSessionState =
+  | 'active'
+  | 'created'
+  | 'degraded'
+  | 'disposed'
+  | 'suspended';
+
+/** Health state of a renderer adapter or session. */
+export type RendererHealthState = 'degraded' | 'failed' | 'healthy' | 'unavailable';
+
+/** Typed presentation-fidelity degradation (never a semantic change). */
+export type RendererDegradationKind =
+  | 'none'
+  | 'reduced-fidelity'
+  | 'static-frame'
+  | 'wireframe';
+
+/** Raw input kind of a renderer input envelope. */
+export type RendererInputKind =
+  | 'key-down'
+  | 'key-up'
+  | 'pointer-down'
+  | 'pointer-move'
+  | 'pointer-up'
+  | 'wheel';
+
+/** One portable view-state field a renderer can restore across a switch. */
+export type PortableViewStateField =
+  | 'camera'
+  | 'focused-entities'
+  | 'layer-visibility'
+  | 'timeline-position';
+
+/** Content-addressed asset kind a renderer can bind. */
+export type RendererAssetKind = 'animation' | 'material' | 'mesh' | 'texture';
+
+/** Trust state of a renderer asset binding. */
+export type RendererAssetTrustState = 'untrusted' | 'validated';
+
+/** Outcome of one renderer input normalization. */
+export type RendererIntentOutcome = 'no-target' | 'normalized' | 'rejected';
+
+/** One conformance check kind of the renderer conformance harness. */
+export type RendererConformanceCheckKind =
+  | 'digest-continuity'
+  | 'interaction-outcomes'
+  | 'normalized-intents'
+  | 'presentation-only-differences'
+  | 'semantic-entity-ids'
+  | 'semantic-focus-layers'
+  | 'tenant-continuity';
+
+/** Typed failure code of the renderer fabric orchestration surface. */
+export type RendererFailureCode =
+  | 'adapter-unavailable'
+  | 'asset-rejected'
+  | 'cross-tenant-denied'
+  | 'degraded'
+  | 'fallback-applied'
+  | 'input-unsupported'
+  | 'invalid-fabric-record'
+  | 'mount-failed'
+  | 'probe-rejected'
+  | 'session-disposed'
+  | 'session-failed'
+  | 'switch-aborted'
+  | 'switch-incompatible'
+  | 'unknown-session';
+
+// ---------------------------------------------------------------------------
+// W056 neutral + mirrored primitives.
+// ---------------------------------------------------------------------------
+
+/** Mirrored shared primitive (canonical home: contracts/experience, W011). */
+export type Vec3 = [number, number, number];
+
+/** Mirrored shared primitive (canonical home: contracts/experience, W011). */
+export type Quaternion = [number, number, number, number];
+
+/** Mirrored shared primitive (canonical home: contracts/experience, W011). */
+export type ReplayWindow = {
+  fromSequence: number;
+  toSequence: number;
+};
+
+/** Mirrored shared primitive (canonical home: contracts/experience, W011). */
+export type ProjectedAgentRef = {
+  kind: 'agent';
+  tenantId: OpaqueScopeId;
+  agentId: string;
+  contentDigest: Sha256Hex;
+};
+
+/** Fabric-session identifier: "fx-" + lowercase slug (ephemeral). */
+export type FabricSessionId = string;
+
+/** Renderer switch identifier: "sw-" + lowercase slug. */
+export type SwitchId = string;
+
+/** Renderer input identifier: "rin-" + lowercase slug. */
+export type InputId = string;
+
+/** Renderer asset-binding identifier: "rab-" + lowercase slug. */
+export type AssetBindingId = string;
+
+/** Semantic-layer identifier: "lyr-" + lowercase slug. */
+export type SemanticLayerId = string;
+
+/** World scene identifier (mirrored W016 grammar): "wsc-" + lowercase slug. */
+export type WorldSceneIdMirror = string;
+
+/** World entity identifier (mirrored W016 grammar): opaque bounded string. */
+export type WorldEntityIdMirror = string;
+
+/** Normalized pointer position in the renderer viewport (x/y in [0, 1]). */
+export type PointerPosition = {
+  x: number;
+  y: number;
+};
+
+/** One key input: a bounded key token plus its sorted modifier set. */
+export type InputKey = {
+  key: string;
+  modifiers: string[];
+};
+
+// ---------------------------------------------------------------------------
+// W056 the portable view state (mirrored W016 camera/timeline grammars).
+// ---------------------------------------------------------------------------
+
+/** Mirrored W016 follow-cursor state. */
+export type PortableFollowCursorState = {
+  position2d?: { x: number; y: number } | undefined;
+  position3d?: Vec3 | undefined;
+  atMs?: number | undefined;
+};
+
+/** Mirrored W016 orbit camera. */
+export type PortableOrbitCamera = {
+  mode: 'orbit';
+  position: Vec3;
+  orientation?: Quaternion | undefined;
+  target?: Vec3 | undefined;
+  fovRadians?: number | undefined;
+};
+
+/** Mirrored W016 free camera. */
+export type PortableFreeCamera = {
+  mode: 'free';
+  position: Vec3;
+  orientation?: Quaternion | undefined;
+};
+
+/** Mirrored W016 follow-agent camera. */
+export type PortableFollowAgentCamera = {
+  mode: 'follow-agent';
+  agentRef: ProjectedAgentRef;
+  followDistance?: number | undefined;
+  cursor?: PortableFollowCursorState | undefined;
+};
+
+/** Mirrored W016 camera-state union (discriminated on `mode`). */
+export type PortableCameraState =
+  | PortableFollowAgentCamera
+  | PortableFreeCamera
+  | PortableOrbitCamera;
+
+/** Mirrored W016 scene timeline/replay position. */
+export type PortableTimelinePosition = {
+  atMs: number;
+  frameIndex: number;
+  paused: boolean;
+  replayWindow?: ReplayWindow | undefined;
+};
+
+/** The visibility of one semantic layer of the world experience projection. */
+export type SemanticLayerVisibility = {
+  layerId: SemanticLayerId;
+  visible: boolean;
+};
+
+/**
+ * The portable view state of a renderer session: semantic focus, semantic
+ * layer visibility, the timeline/replay position, the hidden set, and the
+ * best-effort camera — the presentation subset represented by existing
+ * Epoch contracts that survives a renderer switch.
+ */
+export type PortableViewState = {
+  focusedEntityIds: WorldEntityIdMirror[];
+  layerVisibility: SemanticLayerVisibility[];
+  timelinePosition: PortableTimelinePosition;
+  camera?: PortableCameraState | undefined;
+  hiddenEntityIds: WorldEntityIdMirror[];
+};
+
+// ---------------------------------------------------------------------------
+// W056 the renderer capability set.
+// ---------------------------------------------------------------------------
+
+/**
+ * The fabric capability declaration of a renderer adapter: hit-testing,
+ * measurement/annotation translation, frame capture, switching/snapshot
+ * support, typed degradations, portable view-state restore fields, and
+ * bindable asset kinds (sorted deterministic sets throughout).
+ */
+export type RendererCapabilitySet = {
+  capabilityVersion: 1;
+  rendererId: RendererId;
+  hitTesting: boolean;
+  measurement: boolean;
+  annotation: boolean;
+  frameCapture: boolean;
+  sessionSwitching: boolean;
+  snapshotCapture: boolean;
+  degradation: RendererDegradationKind[];
+  portableViewState: PortableViewStateField[];
+  assetKinds: RendererAssetKind[];
+};
+
+// ---------------------------------------------------------------------------
+// W056 renderer health.
+// ---------------------------------------------------------------------------
+
+/** The typed health projection of one renderer (adapter or session). */
+export type RendererHealth = {
+  state: RendererHealthState;
+  degradation: RendererDegradationKind;
+  lastFailureCode?: RendererFailureCode | undefined;
+  detail?: string | undefined;
+  atMs: VirtualTimeMs;
+};
+
+// ---------------------------------------------------------------------------
+// W056 the typed fabric failure taxonomy.
+// ---------------------------------------------------------------------------
+
+/** The typed trigger of a chained renderer-fabric failure. */
+export type RendererFailureTrigger = {
+  code: RendererFailureCode;
+  message: string;
+};
+
+/**
+ * The typed renderer-fabric failure (discriminated on `code`). Chained
+ * fabric failures carry their trigger as a typed
+ * RendererFailureTrigger; hosting-surface failures carry the verbatim
+ * typed W013 RendererRuntimeError as `cause`/`admissionCause`.
+ */
+export type RendererFailure =
+  | {
+      code: 'adapter-unavailable';
+      message: string;
+      rendererId: string;
+      reason: string;
+    }
+  | {
+      code: 'asset-rejected';
+      message: string;
+      assetDigest: string;
+      reason: string;
+    }
+  | {
+      code: 'cross-tenant-denied';
+      message: string;
+      expectedTenantId: string;
+      encounteredTenantId: string;
+    }
+  | {
+      code: 'degraded';
+      message: string;
+      degradation: 'reduced-fidelity' | 'static-frame' | 'wireframe';
+      reason: string;
+    }
+  | {
+      code: 'fallback-applied';
+      message: string;
+      fromRendererId: string;
+      toRendererId: string;
+      trigger: RendererFailureTrigger;
+    }
+  | {
+      code: 'input-unsupported';
+      message: string;
+      inputKind: string;
+      reason: string;
+      admissionCause?: RendererRuntimeError | undefined;
+    }
+  | {
+      code: 'invalid-fabric-record';
+      message: string;
+      issues: RendererIssue[];
+    }
+  | {
+      code: 'mount-failed';
+      message: string;
+      worldDigest: string;
+      cause?: RendererRuntimeError | undefined;
+      compileMessage?: string | undefined;
+    }
+  | {
+      code: 'probe-rejected';
+      message: string;
+      rendererId: string;
+      reason: string;
+    }
+  | {
+      code: 'session-disposed';
+      message: string;
+      fabricSessionId: string;
+    }
+  | {
+      code: 'session-failed';
+      message: string;
+      fabricSessionId: string;
+      trigger?: RendererFailureTrigger | undefined;
+    }
+  | {
+      code: 'switch-aborted';
+      message: string;
+      stage: 'create' | 'mount' | 'probe' | 'resolve' | 'restore';
+      retainedFabricSessionId: string;
+      trigger: RendererFailureTrigger;
+    }
+  | {
+      code: 'switch-incompatible';
+      message: string;
+      field: 'tenant' | 'world-digest';
+      expected: string;
+      encountered: string;
+    }
+  | {
+      code: 'unknown-session';
+      message: string;
+      encounteredFabricSessionId: string;
+    };
+
+// ---------------------------------------------------------------------------
+// W056 the canonical world projection reference.
+// ---------------------------------------------------------------------------
+
+/**
+ * The canonical world projection reference: world-experience scene id,
+ * content digest of the exact scene revision, and owning tenant scope —
+ * the identity triple that survives renderer switching.
+ */
+export type WorldProjectionRef = {
+  sceneId: WorldSceneIdMirror;
+  worldDigest: Sha256Hex;
+  tenantScope: TenantScope;
+};
+
+// ---------------------------------------------------------------------------
+// W056 the ephemeral renderer session.
+// ---------------------------------------------------------------------------
+
+/**
+ * The content of an ephemeral renderer session record: identity, embedded
+ * W013 binding, capability set, world projection reference, portable view
+ * state, health, lifecycle state, and execution counters. Non-authoritative
+ * by construction: no semantic payload, never persisted by the fabric.
+ */
+export type RendererSessionContent = {
+  schema: 'epoch.renderer-session';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  fabricSessionId: FabricSessionId;
+  capabilityId: string;
+  rendererId: RendererId;
+  rendererSessionId: RendererSessionId;
+  binding: RendererBinding;
+  capabilities: RendererCapabilitySet;
+  worldProjection: WorldProjectionRef;
+  viewState: PortableViewState;
+  health: RendererHealth;
+  state: RendererSessionState;
+  createdAtMs: VirtualTimeMs;
+  mountedWorldDigest?: Sha256Hex | undefined;
+  mountedAtMs?: VirtualTimeMs | undefined;
+  lastFrameIndex?: number | undefined;
+  invocationCount: number;
+  switchCount: number;
+};
+
+/**
+ * The sealed ephemeral renderer session record: content plus its SHA-256
+ * digest over the canonical JSON of the content (the digest field
+ * excluded).
+ */
+export type RendererSession = {
+  schema: 'epoch.renderer-session';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  fabricSessionId: FabricSessionId;
+  capabilityId: string;
+  rendererId: RendererId;
+  rendererSessionId: RendererSessionId;
+  binding: RendererBinding;
+  capabilities: RendererCapabilitySet;
+  worldProjection: WorldProjectionRef;
+  viewState: PortableViewState;
+  health: RendererHealth;
+  state: RendererSessionState;
+  createdAtMs: VirtualTimeMs;
+  mountedWorldDigest?: Sha256Hex | undefined;
+  mountedAtMs?: VirtualTimeMs | undefined;
+  lastFrameIndex?: number | undefined;
+  invocationCount: number;
+  switchCount: number;
+  digest: Sha256Hex;
+};
+
+// ---------------------------------------------------------------------------
+// W056 the portable session snapshot.
+// ---------------------------------------------------------------------------
+
+/** The content of a portable renderer session snapshot. */
+export type RendererSessionSnapshotContent = {
+  schema: 'epoch.renderer-session-snapshot';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  fabricSessionId: FabricSessionId;
+  capturedFromRendererId: RendererId;
+  worldProjection: WorldProjectionRef;
+  viewState: PortableViewState;
+  invocationCount: number;
+  switchCount: number;
+  capturedAtMs: VirtualTimeMs;
+};
+
+/** The sealed portable renderer session snapshot (content + digest). */
+export type RendererSessionSnapshot = {
+  schema: 'epoch.renderer-session-snapshot';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  fabricSessionId: FabricSessionId;
+  capturedFromRendererId: RendererId;
+  worldProjection: WorldProjectionRef;
+  viewState: PortableViewState;
+  invocationCount: number;
+  switchCount: number;
+  capturedAtMs: VirtualTimeMs;
+  digest: Sha256Hex;
+};
+
+// ---------------------------------------------------------------------------
+// W056 renderer switching.
+// ---------------------------------------------------------------------------
+
+/** One renderer switch request (transient intent, never sealed). */
+export type RendererSwitchRequest = {
+  schema: 'epoch.renderer-switch-request';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  switchId: SwitchId;
+  sourceFabricSessionId: FabricSessionId;
+  targetRendererId: RendererId;
+  expectedWorldDigest: Sha256Hex;
+  expectedTenantId: string;
+  targetFabricSessionId: FabricSessionId;
+  fallbackRendererIds: RendererId[];
+  atMs: VirtualTimeMs;
+};
+
+/** The content of a renderer switch receipt (execution evidence). */
+export type RendererSwitchReceiptContent = {
+  schema: 'epoch.renderer-switch-receipt';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  switchId: SwitchId;
+  fromRendererId: RendererId;
+  toRendererId: RendererId;
+  fromFabricSessionId: FabricSessionId;
+  toFabricSessionId: FabricSessionId;
+  tenantScope: TenantScope;
+  worldDigest: Sha256Hex;
+  sourceSnapshotDigest: Sha256Hex;
+  mountedProjectionDigest: Sha256Hex;
+  restoredViewFields: PortableViewStateField[];
+  restoredViewState: PortableViewState;
+  fallbackApplied: boolean;
+  atMs: VirtualTimeMs;
+};
+
+/** The sealed renderer switch receipt (content + digest). */
+export type RendererSwitchReceipt = {
+  schema: 'epoch.renderer-switch-receipt';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  switchId: SwitchId;
+  fromRendererId: RendererId;
+  toRendererId: RendererId;
+  fromFabricSessionId: FabricSessionId;
+  toFabricSessionId: FabricSessionId;
+  tenantScope: TenantScope;
+  worldDigest: Sha256Hex;
+  sourceSnapshotDigest: Sha256Hex;
+  mountedProjectionDigest: Sha256Hex;
+  restoredViewFields: PortableViewStateField[];
+  restoredViewState: PortableViewState;
+  fallbackApplied: boolean;
+  atMs: VirtualTimeMs;
+  digest: Sha256Hex;
+};
+
+// ---------------------------------------------------------------------------
+// W056 the frame envelope.
+// ---------------------------------------------------------------------------
+
+/** One typed frame envelope (monotonic index, continuity digest, typed fidelity). */
+export type RendererFrameEnvelope = {
+  schema: 'epoch.renderer-frame-envelope';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  fabricSessionId: FabricSessionId;
+  frameIndex: number;
+  atMs: VirtualTimeMs;
+  worldDigest: Sha256Hex;
+  degradation: RendererDegradationKind;
+  admissionDigest: Sha256Hex;
+};
+
+// ---------------------------------------------------------------------------
+// W056 the input envelope + intent receipt.
+// ---------------------------------------------------------------------------
+
+/** One raw renderer input envelope (pre-normalization; discriminated on `inputKind`). */
+export type RendererInputEnvelope =
+  | {
+      schema: 'epoch.renderer-input-envelope';
+      fabricProtocolVersion: RendererFabricProtocolVersion;
+      inputId: InputId;
+      fabricSessionId: FabricSessionId;
+      atMs: VirtualTimeMs;
+      modality: InteractionModality;
+      inputKind: 'pointer-down' | 'pointer-move' | 'pointer-up';
+      pointer: PointerPosition;
+      intentHint?: { intent: ControlIntent } | undefined;
+    }
+  | {
+      schema: 'epoch.renderer-input-envelope';
+      fabricProtocolVersion: RendererFabricProtocolVersion;
+      inputId: InputId;
+      fabricSessionId: FabricSessionId;
+      atMs: VirtualTimeMs;
+      modality: InteractionModality;
+      inputKind: 'key-down' | 'key-up';
+      key: InputKey;
+    }
+  | {
+      schema: 'epoch.renderer-input-envelope';
+      fabricProtocolVersion: RendererFabricProtocolVersion;
+      inputId: InputId;
+      fabricSessionId: FabricSessionId;
+      atMs: VirtualTimeMs;
+      modality: InteractionModality;
+      inputKind: 'wheel';
+      delta: { x: number; y: number };
+    };
+
+/** The content of a renderer intent receipt (normalization evidence). */
+export type RendererIntentReceiptContent = {
+  schema: 'epoch.renderer-intent-receipt';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  inputId: InputId;
+  fabricSessionId: FabricSessionId;
+  modality: InteractionModality;
+  inputKind: RendererInputKind;
+  hitEntityId?: WorldEntityIdMirror | undefined;
+  intent?: ControlIntent | undefined;
+  intentPayloadDigest?: Sha256Hex | undefined;
+  outcome: RendererIntentOutcome;
+  admissionDigest?: Sha256Hex | undefined;
+  rejectionDetail?: string | undefined;
+  atMs: VirtualTimeMs;
+};
+
+/** The sealed renderer intent receipt (content + digest). */
+export type RendererIntentReceipt = {
+  schema: 'epoch.renderer-intent-receipt';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  inputId: InputId;
+  fabricSessionId: FabricSessionId;
+  modality: InteractionModality;
+  inputKind: RendererInputKind;
+  hitEntityId?: WorldEntityIdMirror | undefined;
+  intent?: ControlIntent | undefined;
+  intentPayloadDigest?: Sha256Hex | undefined;
+  outcome: RendererIntentOutcome;
+  admissionDigest?: Sha256Hex | undefined;
+  rejectionDetail?: string | undefined;
+  atMs: VirtualTimeMs;
+  digest: Sha256Hex;
+};
+
+// ---------------------------------------------------------------------------
+// W056 the asset binding.
+// ---------------------------------------------------------------------------
+
+/** The content of a renderer asset binding. */
+export type RendererAssetBindingContent = {
+  schema: 'epoch.renderer-asset-binding';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  bindingId: AssetBindingId;
+  fabricSessionId: FabricSessionId;
+  tenantScope: TenantScope;
+  assetDigest: Sha256Hex;
+  assetKind: RendererAssetKind;
+  byteSize: number;
+  trustState: RendererAssetTrustState;
+  validatedAtMs?: VirtualTimeMs | undefined;
+  boundAtMs: VirtualTimeMs;
+};
+
+/** The sealed renderer asset binding (content + digest). */
+export type RendererAssetBinding = {
+  schema: 'epoch.renderer-asset-binding';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  bindingId: AssetBindingId;
+  fabricSessionId: FabricSessionId;
+  tenantScope: TenantScope;
+  assetDigest: Sha256Hex;
+  assetKind: RendererAssetKind;
+  byteSize: number;
+  trustState: RendererAssetTrustState;
+  validatedAtMs?: VirtualTimeMs | undefined;
+  boundAtMs: VirtualTimeMs;
+  digest: Sha256Hex;
+};
+
+// ---------------------------------------------------------------------------
+// W056 the conformance result.
+// ---------------------------------------------------------------------------
+
+/** One conformance check entry. */
+export type RendererConformanceCheck = {
+  checkKind: RendererConformanceCheckKind;
+  rendererId: RendererId;
+  outcome: 'fail' | 'pass';
+  detail?: string | undefined;
+  evidenceDigest?: Sha256Hex | undefined;
+};
+
+/** The content of a renderer conformance result. */
+export type RendererConformanceResultContent = {
+  schema: 'epoch.renderer-conformance-result';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  runId: string;
+  renderers: RendererId[];
+  tenantScope: TenantScope;
+  worldDigest: Sha256Hex;
+  checks: RendererConformanceCheck[];
+  overallOutcome: 'fail' | 'pass';
+  startedAtMs: VirtualTimeMs;
+  completedAtMs: VirtualTimeMs;
+};
+
+/** The sealed renderer conformance result (content + digest). */
+export type RendererConformanceResult = {
+  schema: 'epoch.renderer-conformance-result';
+  fabricProtocolVersion: RendererFabricProtocolVersion;
+  runId: string;
+  renderers: RendererId[];
+  tenantScope: TenantScope;
+  worldDigest: Sha256Hex;
+  checks: RendererConformanceCheck[];
+  overallOutcome: 'fail' | 'pass';
+  startedAtMs: VirtualTimeMs;
+  completedAtMs: VirtualTimeMs;
+  digest: Sha256Hex;
+};

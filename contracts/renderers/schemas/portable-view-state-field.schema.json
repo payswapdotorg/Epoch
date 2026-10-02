@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/PortableViewStateField",
+  "$defs": {
+    "PortableViewStateField": {
+      "type": "string",
+      "enum": [
+        "camera",
+        "focused-entities",
+        "layer-visibility",
+        "timeline-position"
+      ],
+      "title": "PortableViewStateField",
+      "description": "One portable view-state field a renderer can restore across a switch: camera, focused-entities, layer-visibility, or timeline-position."
+    }
+  }
+}

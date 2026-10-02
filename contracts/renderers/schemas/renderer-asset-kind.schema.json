@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererAssetKind",
+  "$defs": {
+    "RendererAssetKind": {
+      "type": "string",
+      "enum": [
+        "animation",
+        "material",
+        "mesh",
+        "texture"
+      ],
+      "title": "RendererAssetKind",
+      "description": "Content-addressed asset kind a renderer can bind: animation, material, mesh, or texture."
+    }
+  }
+}

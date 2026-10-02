@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererConformanceCheck",
+  "$defs": {
+    "RendererConformanceCheck": {
+      "type": "object",
+      "properties": {
+        "checkKind": {
+          "$ref": "#/$defs/RendererConformanceCheckKind"
+        },
+        "rendererId": {
+          "$ref": "#/$defs/RendererId"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "fail",
+            "pass"
+          ]
+        },
+        "detail": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "evidenceDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "checkKind",
+        "rendererId",
+        "outcome"
+      ],
+      "additionalProperties": false,
+      "title": "RendererConformanceCheck",
+      "description": "One conformance check entry: check kind, renderer, typed outcome, detail, and evidence digest."
+    },
+    "RendererConformanceCheckKind": {
+      "type": "string",
+      "enum": [
+        "digest-continuity",
+        "interaction-outcomes",
+        "normalized-intents",
+        "presentation-only-differences",
+        "semantic-entity-ids",
+        "semantic-focus-layers",
+        "tenant-continuity"
+      ],
+      "title": "RendererConformanceCheckKind",
+      "description": "One renderer conformance check kind: tenant continuity, digest continuity, semantic entity ids, interaction outcomes, semantic focus/layers, normalized intents, or presentation-only differences."
+    },
+    "RendererId": {
+      "type": "string",
+      "pattern": "^rr-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RendererId",
+      "description": "Renderer-descriptor identifier: \"rr-\" followed by a lowercase slug (never a vendor product)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    }
+  }
+}

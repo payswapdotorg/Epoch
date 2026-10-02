@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererInputKind",
+  "$defs": {
+    "RendererInputKind": {
+      "type": "string",
+      "enum": [
+        "key-down",
+        "key-up",
+        "pointer-down",
+        "pointer-move",
+        "pointer-up",
+        "wheel"
+      ],
+      "title": "RendererInputKind",
+      "description": "Raw input kind of a renderer input envelope: pointer or key primitive gestures."
+    }
+  }
+}

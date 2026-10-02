@@ -1,0 +1,1007 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererFailure",
+  "$defs": {
+    "RendererFailure": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "adapter-unavailable"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "rendererId": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "rendererId",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "asset-rejected"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assetDigest": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "assetDigest",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "cross-tenant-denied"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expectedTenantId": {
+              "type": "string"
+            },
+            "encounteredTenantId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "expectedTenantId",
+            "encounteredTenantId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "degraded"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "degradation": {
+              "type": "string",
+              "enum": [
+                "reduced-fidelity",
+                "static-frame",
+                "wireframe"
+              ]
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "degradation",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "fallback-applied"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "fromRendererId": {
+              "type": "string"
+            },
+            "toRendererId": {
+              "type": "string"
+            },
+            "trigger": {
+              "$ref": "#/$defs/RendererFailureTrigger"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "fromRendererId",
+            "toRendererId",
+            "trigger"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "input-unsupported"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "inputKind": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "admissionCause": {
+              "$ref": "#/$defs/RendererRuntimeError"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "inputKind",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "invalid-fabric-record"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "issues": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/RendererIssue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "issues"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "mount-failed"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "worldDigest": {
+              "type": "string"
+            },
+            "cause": {
+              "$ref": "#/$defs/RendererRuntimeError"
+            },
+            "compileMessage": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "worldDigest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "probe-rejected"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "rendererId": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "rendererId",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "session-disposed"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "fabricSessionId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "fabricSessionId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "session-failed"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "fabricSessionId": {
+              "type": "string"
+            },
+            "trigger": {
+              "$ref": "#/$defs/RendererFailureTrigger"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "fabricSessionId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "switch-aborted"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "stage": {
+              "type": "string",
+              "enum": [
+                "create",
+                "mount",
+                "probe",
+                "resolve",
+                "restore"
+              ]
+            },
+            "retainedFabricSessionId": {
+              "type": "string"
+            },
+            "trigger": {
+              "$ref": "#/$defs/RendererFailureTrigger"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "stage",
+            "retainedFabricSessionId",
+            "trigger"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "unknown-session"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "encounteredFabricSessionId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "encounteredFabricSessionId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "switch-incompatible"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "field": {
+              "type": "string",
+              "enum": [
+                "tenant",
+                "world-digest"
+              ]
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "field",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "RendererFailure",
+      "description": "Typed, discriminated failure of the renderer fabric orchestration surface: adapter availability, probes, mounts, sessions, degradation, fallback, input normalization, asset bindings, switch compatibility, and switch aborts."
+    },
+    "RendererFailureTrigger": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/RendererFailureCode"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "RendererFailureTrigger",
+      "description": "The typed trigger of a chained renderer-fabric failure: producing code plus message."
+    },
+    "RendererFailureCode": {
+      "type": "string",
+      "enum": [
+        "adapter-unavailable",
+        "asset-rejected",
+        "cross-tenant-denied",
+        "degraded",
+        "fallback-applied",
+        "input-unsupported",
+        "invalid-fabric-record",
+        "mount-failed",
+        "probe-rejected",
+        "session-disposed",
+        "session-failed",
+        "switch-aborted",
+        "switch-incompatible",
+        "unknown-session"
+      ],
+      "title": "RendererFailureCode",
+      "description": "Typed failure code of the renderer fabric orchestration surface."
+    },
+    "RendererRuntimeError": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "budget-exceeded"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "resource": {
+              "type": "string",
+              "enum": [
+                "graph-edges",
+                "graph-nodes",
+                "texture-bytes",
+                "triangles"
+              ]
+            },
+            "limit": {
+              "type": "number"
+            },
+            "encountered": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "resource",
+            "limit",
+            "encountered"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "capability-denied"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "declared": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "declared",
+            "encountered"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "cross-tenant-denied"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "expectedTenantId": {
+              "type": "string"
+            },
+            "encounteredTenantId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "expectedTenantId",
+            "encounteredTenantId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "digest-mismatch"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "invalid-invocation"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "malformed-invocation"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "issues": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/RendererIssue"
+              }
+            },
+            "cause": {
+              "$ref": "#/$defs/ExperienceProtocolError"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "issues"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "malformed-record"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "issues": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/RendererIssue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "issues"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "session-closed"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "rendererSessionId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "rendererSessionId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "unknown-session"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expectedSessionId": {
+              "type": "string"
+            },
+            "encounteredSessionId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "expectedSessionId",
+            "encounteredSessionId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "version-unsupported"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "RendererRuntimeError",
+      "description": "Typed, discriminated renderer error of the hosting surface."
+    },
+    "RendererIssue": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "RendererIssue",
+      "description": "One flattened validation issue: dotted path (\"$\" = root) plus message."
+    },
+    "ExperienceProtocolError": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "version-unsupported"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "malformed-descriptor"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "issues": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ExperienceIssue"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "issues"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "digest-mismatch"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "expected": {
+              "type": "string"
+            },
+            "encountered": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "expected",
+            "encountered"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "cross-tenant-denied"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "expectedTenantId": {
+              "type": "string"
+            },
+            "encounteredTenantId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "expectedTenantId",
+            "encounteredTenantId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "unknown-reference"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "reference": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "path",
+            "reference"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "authority-violation"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "violations": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "key": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "key"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "violations"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "title": "ExperienceProtocolError",
+      "description": "Typed, discriminated admission error of the experience protocol."
+    },
+    "ExperienceIssue": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "ExperienceIssue",
+      "description": "One flattened validation issue: dotted path (\"$\" = root) plus message."
+    }
+  }
+}

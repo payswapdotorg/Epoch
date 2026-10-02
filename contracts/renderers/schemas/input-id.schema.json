@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/InputId",
+  "$defs": {
+    "InputId": {
+      "type": "string",
+      "pattern": "^rin-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "InputId",
+      "description": "Renderer input identifier: \"rin-\" followed by a lowercase slug."
+    }
+  }
+}

@@ -109,6 +109,21 @@ export {
   InteractionModalitySchema,
   ControlIntentSchema,
 } from './primitives';
+// Mirrored shared primitives newly consumed by the W056 fabric contract
+// (canonical home: contracts/experience, W011) — re-exported for the
+// published contract surface, exactly like the mirrors above.
+export {
+  ProjectedAgentRefSchema,
+  QuaternionSchema,
+  ReplayWindowSchema,
+  Vec3Schema,
+} from '@epoch/experience-protocol';
+export type {
+  ProjectedAgentRef,
+  Quaternion,
+  ReplayWindow,
+  Vec3,
+} from '@epoch/experience-protocol';
 export type {
   RendererId,
   RendererSessionId,
@@ -240,3 +255,227 @@ export {
 
 // Type-level helpers (compile-time parity discipline).
 export type { Equals, Expect } from './type-utils';
+
+// ---------------------------------------------------------------------------
+// W056 — the Renderer Fabric contract (additive; W013 surface unchanged).
+// ---------------------------------------------------------------------------
+
+// Fabric protocol version + vocabularies.
+export {
+  RENDERER_FABRIC_PROTOCOL_VERSION,
+  RENDERER_CAPABILITY_VERSION,
+  RENDERER_SESSION_SCHEMA_NAME,
+  RENDERER_SESSION_SNAPSHOT_SCHEMA_NAME,
+  RENDERER_SWITCH_REQUEST_SCHEMA_NAME,
+  RENDERER_SWITCH_RECEIPT_SCHEMA_NAME,
+  RENDERER_FRAME_ENVELOPE_SCHEMA_NAME,
+  RENDERER_INPUT_ENVELOPE_SCHEMA_NAME,
+  RENDERER_INTENT_RECEIPT_SCHEMA_NAME,
+  RENDERER_ASSET_BINDING_SCHEMA_NAME,
+  RENDERER_CONFORMANCE_SCHEMA_NAME,
+  RENDERER_SESSION_STATES,
+  RENDERER_HEALTH_STATES,
+  RENDERER_DEGRADATION_KINDS,
+  RENDERER_INPUT_KINDS,
+  PORTABLE_VIEW_STATE_FIELDS,
+  RENDERER_ASSET_KINDS,
+  RENDERER_ASSET_TRUST_STATES,
+  RENDERER_INTENT_OUTCOMES,
+  RENDERER_CONFORMANCE_CHECK_KINDS,
+  RENDERER_FAILURE_CODES,
+  MAX_PORTABLE_FOCUSED_ENTITIES,
+  MAX_PORTABLE_LAYERS,
+  MAX_PORTABLE_ENTITY_IDS,
+  MAX_FABRIC_DETAIL_LENGTH,
+  MAX_CONFORMANCE_CHECKS,
+  MAX_CONFORMANCE_RENDERERS,
+  MAX_SWITCH_FALLBACKS,
+  MAX_INPUT_MODIFIERS,
+  MAX_INPUT_KEY_LENGTH,
+} from './version';
+export type {
+  RendererFabricProtocolVersion,
+  RendererSessionState,
+  RendererHealthState,
+  RendererDegradationKind,
+  RendererInputKind,
+  PortableViewStateField,
+  RendererAssetKind,
+  RendererAssetTrustState,
+  RendererIntentOutcome,
+  RendererConformanceCheckKind,
+  RendererFailureCode,
+} from './version';
+export {
+  RendererFabricProtocolVersionSchema,
+  RendererSessionStateSchema,
+  RendererHealthStateSchema,
+  RendererDegradationKindSchema,
+  RendererInputKindSchema,
+  PortableViewStateFieldSchema,
+  RendererAssetKindSchema,
+  RendererAssetTrustStateSchema,
+  RendererIntentOutcomeSchema,
+  RendererConformanceCheckKindSchema,
+  RendererFailureCodeSchema,
+} from './version';
+
+// Fabric-owned + mirrored W016 id grammars and input primitives.
+export {
+  FABRIC_SESSION_ID_PATTERN,
+  SWITCH_ID_PATTERN,
+  INPUT_ID_PATTERN,
+  ASSET_BINDING_ID_PATTERN,
+  SEMANTIC_LAYER_ID_PATTERN,
+  WORLD_SCENE_ID_MIRROR_PATTERN,
+  FabricSessionIdSchema,
+  SwitchIdSchema,
+  InputIdSchema,
+  AssetBindingIdSchema,
+  SemanticLayerIdSchema,
+  WorldSceneIdMirrorSchema,
+  WorldEntityIdMirrorSchema,
+  PointerPositionSchema,
+  InputKeySchema,
+} from './fabric-primitives';
+export type {
+  FabricSessionId,
+  SwitchId,
+  InputId,
+  AssetBindingId,
+  SemanticLayerId,
+  WorldSceneIdMirror,
+  WorldEntityIdMirror,
+  PointerPosition,
+  InputKey,
+} from './fabric-primitives';
+
+// The renderer capability set.
+export { RendererCapabilitySetSchema } from './capabilities';
+export type { RendererCapabilitySet } from './capabilities';
+
+// The portable view state (mirrored W016 camera/timeline grammars).
+export {
+  PortableCameraStateSchema,
+  PortableFollowAgentCameraSchema,
+  PortableFollowCursorStateSchema,
+  PortableFreeCameraSchema,
+  PortableOrbitCameraSchema,
+  PortableTimelinePositionSchema,
+  PortableViewStateSchema,
+  SemanticLayerVisibilitySchema,
+  emptyPortableViewState,
+} from './portable-state';
+export type {
+  PortableCameraState,
+  PortableFollowAgentCamera,
+  PortableFollowCursorState,
+  PortableFreeCamera,
+  PortableOrbitCamera,
+  PortableTimelinePosition,
+  PortableViewState,
+  SemanticLayerVisibility,
+} from './portable-state';
+
+// Renderer health.
+export { RendererHealthSchema, healthyAt } from './health';
+export type { RendererHealth } from './health';
+
+// The typed fabric failure taxonomy.
+export { RendererFailureSchema, RendererFailureTriggerSchema } from './failure';
+export type {
+  RendererFailure,
+  RendererFailureTrigger,
+  FabricResult,
+} from './failure';
+
+// The canonical world projection reference.
+export { WorldProjectionRefSchema } from './world-projection';
+export type { WorldProjectionRef } from './world-projection';
+
+// The ephemeral renderer session.
+export {
+  RENDERER_SESSION_TRANSITIONS,
+  RendererSessionContentSchema,
+  RendererSessionSchema,
+  canTransitionRendererSession,
+  createRendererSessionContent,
+  sealRendererSession,
+} from './session';
+export type {
+  RendererSession,
+  RendererSessionContent,
+  CreateRendererSessionInput,
+} from './session';
+
+// The portable session snapshot.
+export {
+  RendererSessionSnapshotContentSchema,
+  RendererSessionSnapshotSchema,
+  captureSessionSnapshotContent,
+  sealRendererSessionSnapshot,
+} from './fabric-snapshot';
+export type {
+  RendererSessionSnapshot,
+  RendererSessionSnapshotContent,
+  CaptureSessionSnapshotInput,
+} from './fabric-snapshot';
+
+// Renderer switching.
+export {
+  RendererSwitchRequestSchema,
+  RendererSwitchReceiptContentSchema,
+  RendererSwitchReceiptSchema,
+  captureSwitchReceiptContent,
+  sealRendererSwitchReceipt,
+} from './switch';
+export type {
+  RendererSwitchRequest,
+  RendererSwitchReceipt,
+  RendererSwitchReceiptContent,
+  CaptureSwitchReceiptInput,
+} from './switch';
+
+// The frame envelope.
+export { RendererFrameEnvelopeSchema } from './frame';
+export type { RendererFrameEnvelope } from './frame';
+
+// The input envelope + intent receipt.
+export {
+  RendererInputEnvelopeSchema,
+  RendererIntentReceiptContentSchema,
+  RendererIntentReceiptSchema,
+  RENDERER_INTENT_OUTCOME_LIST,
+  sealRendererIntentReceipt,
+} from './input';
+export type {
+  RendererInputEnvelope,
+  PointerInputEnvelope,
+  KeyInputEnvelope,
+  RendererIntentReceipt,
+  RendererIntentReceiptContent,
+} from './input';
+
+// The asset binding.
+export {
+  RendererAssetBindingContentSchema,
+  RendererAssetBindingSchema,
+  sealRendererAssetBinding,
+} from './asset-binding';
+export type {
+  RendererAssetBinding,
+  RendererAssetBindingContent,
+} from './asset-binding';
+
+// The conformance result.
+export {
+  RendererConformanceCheckSchema,
+  RendererConformanceResultContentSchema,
+  RendererConformanceResultSchema,
+  sealRendererConformanceResult,
+} from './conformance';
+export type {
+  RendererConformanceCheck,
+  RendererConformanceResult,
+  RendererConformanceResultContent,
+} from './conformance';

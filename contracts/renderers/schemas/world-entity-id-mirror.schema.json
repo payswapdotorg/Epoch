@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldEntityIdMirror",
+  "$defs": {
+    "WorldEntityIdMirror": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "WorldEntityIdMirror",
+      "description": "World entity identifier (mirrored W016 grammar; canonical home @epoch/world-experience): opaque bounded string."
+    }
+  }
+}

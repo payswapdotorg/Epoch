@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererFrameEnvelope",
+  "$defs": {
+    "RendererFrameEnvelope": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-frame-envelope"
+        },
+        "fabricProtocolVersion": {
+          "$ref": "#/$defs/RendererFabricProtocolVersion"
+        },
+        "fabricSessionId": {
+          "$ref": "#/$defs/FabricSessionId"
+        },
+        "frameIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "atMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "worldDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "degradation": {
+          "$ref": "#/$defs/RendererDegradationKind"
+        },
+        "admissionDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "fabricProtocolVersion",
+        "fabricSessionId",
+        "frameIndex",
+        "atMs",
+        "worldDigest",
+        "degradation",
+        "admissionDigest"
+      ],
+      "additionalProperties": false,
+      "title": "RendererFrameEnvelope",
+      "description": "One typed frame envelope: session, monotonic frame index, virtual time, canonical world digest (continuity), typed presentation fidelity, and the admitting W013 frame-receipt digest."
+    },
+    "RendererFabricProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RendererFabricProtocolVersion",
+      "description": "Exact renderer-fabric protocol version admitted by this release (\"1.0.0\")."
+    },
+    "FabricSessionId": {
+      "type": "string",
+      "pattern": "^fx-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "FabricSessionId",
+      "description": "Renderer fabric-session identifier: \"fx-\" followed by a lowercase slug (ephemeral, non-authoritative)."
+    },
+    "VirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "VirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (mirrored shared primitive; canonical home @epoch/experience-runtime)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "RendererDegradationKind": {
+      "type": "string",
+      "enum": [
+        "none",
+        "reduced-fidelity",
+        "static-frame",
+        "wireframe"
+      ],
+      "title": "RendererDegradationKind",
+      "description": "Typed presentation-fidelity degradation a renderer may apply (never a semantic change): none, reduced-fidelity, static-frame, or wireframe."
+    }
+  }
+}

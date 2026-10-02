@@ -1,0 +1,464 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererSessionSnapshotContent",
+  "$defs": {
+    "RendererSessionSnapshotContent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-session-snapshot"
+        },
+        "fabricProtocolVersion": {
+          "$ref": "#/$defs/RendererFabricProtocolVersion"
+        },
+        "fabricSessionId": {
+          "$ref": "#/$defs/FabricSessionId"
+        },
+        "capturedFromRendererId": {
+          "$ref": "#/$defs/RendererId"
+        },
+        "worldProjection": {
+          "$ref": "#/$defs/WorldProjectionRef"
+        },
+        "viewState": {
+          "$ref": "#/$defs/PortableViewState"
+        },
+        "invocationCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "switchCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "capturedAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        }
+      },
+      "required": [
+        "schema",
+        "fabricProtocolVersion",
+        "fabricSessionId",
+        "capturedFromRendererId",
+        "worldProjection",
+        "viewState",
+        "invocationCount",
+        "switchCount",
+        "capturedAtMs"
+      ],
+      "additionalProperties": false,
+      "title": "RendererSessionSnapshotContent",
+      "description": "The content of a portable renderer session snapshot: source identity, canonical world projection reference, portable view state, and interaction counters."
+    },
+    "RendererFabricProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RendererFabricProtocolVersion",
+      "description": "Exact renderer-fabric protocol version admitted by this release (\"1.0.0\")."
+    },
+    "FabricSessionId": {
+      "type": "string",
+      "pattern": "^fx-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "FabricSessionId",
+      "description": "Renderer fabric-session identifier: \"fx-\" followed by a lowercase slug (ephemeral, non-authoritative)."
+    },
+    "RendererId": {
+      "type": "string",
+      "pattern": "^rr-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RendererId",
+      "description": "Renderer-descriptor identifier: \"rr-\" followed by a lowercase slug (never a vendor product)."
+    },
+    "WorldProjectionRef": {
+      "type": "object",
+      "properties": {
+        "sceneId": {
+          "$ref": "#/$defs/WorldSceneIdMirror"
+        },
+        "worldDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        }
+      },
+      "required": [
+        "sceneId",
+        "worldDigest",
+        "tenantScope"
+      ],
+      "additionalProperties": false,
+      "title": "WorldProjectionRef",
+      "description": "The canonical world projection reference: world-experience scene id, content digest of the exact scene revision, and owning tenant scope — the identity triple that survives renderer switching."
+    },
+    "WorldSceneIdMirror": {
+      "type": "string",
+      "pattern": "^wsc-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldSceneIdMirror",
+      "description": "World scene identifier (mirrored W016 grammar; canonical home @epoch/world-experience): \"wsc-\" + lowercase slug."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "PortableViewState": {
+      "type": "object",
+      "properties": {
+        "focusedEntityIds": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldEntityIdMirror"
+          }
+        },
+        "layerVisibility": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SemanticLayerVisibility"
+          }
+        },
+        "timelinePosition": {
+          "$ref": "#/$defs/PortableTimelinePosition"
+        },
+        "camera": {
+          "$ref": "#/$defs/PortableCameraState"
+        },
+        "hiddenEntityIds": {
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldEntityIdMirror"
+          }
+        }
+      },
+      "required": [
+        "focusedEntityIds",
+        "layerVisibility",
+        "timelinePosition",
+        "hiddenEntityIds"
+      ],
+      "additionalProperties": false,
+      "title": "PortableViewState",
+      "description": "The portable view state of a renderer session: semantic focus, semantic layer visibility, timeline position, hidden set, and best-effort camera — the presentation subset that survives a renderer switch."
+    },
+    "WorldEntityIdMirror": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "WorldEntityIdMirror",
+      "description": "World entity identifier (mirrored W016 grammar; canonical home @epoch/world-experience): opaque bounded string."
+    },
+    "SemanticLayerVisibility": {
+      "type": "object",
+      "properties": {
+        "layerId": {
+          "$ref": "#/$defs/SemanticLayerId"
+        },
+        "visible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "layerId",
+        "visible"
+      ],
+      "additionalProperties": false,
+      "title": "SemanticLayerVisibility",
+      "description": "The visibility of one semantic layer (vocabulary owned by the world experience projection)."
+    },
+    "SemanticLayerId": {
+      "type": "string",
+      "pattern": "^lyr-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SemanticLayerId",
+      "description": "Semantic-layer identifier: \"lyr-\" followed by a lowercase slug (vocabulary owned by the world experience projection)."
+    },
+    "PortableTimelinePosition": {
+      "type": "object",
+      "properties": {
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "frameIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "replayWindow": {
+          "$ref": "#/$defs/ReplayWindow"
+        }
+      },
+      "required": [
+        "atMs",
+        "frameIndex",
+        "paused"
+      ],
+      "additionalProperties": false,
+      "title": "PortableTimelinePosition",
+      "description": "The portable timeline/replay position (mirrored W016 grammar): virtual time, frame index, paused flag, optional replay window."
+    },
+    "ReplayWindow": {
+      "type": "object",
+      "properties": {
+        "fromSequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "toSequence": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "fromSequence",
+        "toSequence"
+      ],
+      "additionalProperties": false,
+      "title": "ReplayWindow",
+      "description": "Bounded world-model event-sequence window for timeline/replay projections (from inclusive, to exclusive)."
+    },
+    "PortableCameraState": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PortableFollowAgentCamera"
+        },
+        {
+          "$ref": "#/$defs/PortableFreeCamera"
+        },
+        {
+          "$ref": "#/$defs/PortableOrbitCamera"
+        }
+      ],
+      "title": "PortableCameraState",
+      "description": "The portable camera state (mirrored W016 grammar): orbit, free, or follow-agent."
+    },
+    "PortableFollowAgentCamera": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "const": "follow-agent"
+        },
+        "agentRef": {
+          "$ref": "#/$defs/ProjectedAgentRef"
+        },
+        "followDistance": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "cursor": {
+          "$ref": "#/$defs/PortableFollowCursorState"
+        }
+      },
+      "required": [
+        "mode",
+        "agentRef"
+      ],
+      "additionalProperties": false,
+      "title": "PortableFollowAgentCamera",
+      "description": "The follow-agent camera state (mirrored W016 grammar): the view rides a projected agent."
+    },
+    "ProjectedAgentRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "agent"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "agentId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedAgentRef",
+      "description": "Exact-revision reference to a registered agent (W003 grammar; digest of its registration canonical JSON)."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "PortableFollowCursorState": {
+      "type": "object",
+      "properties": {
+        "position2d": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "additionalProperties": false
+        },
+        "position3d": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "additionalProperties": false,
+      "title": "PortableFollowCursorState",
+      "description": "The followed agent cursor state (mirrored W016 grammar): a 2D or 3D position at a virtual time."
+    },
+    "Vec3": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3,
+      "title": "Vec3",
+      "description": "Finite 3-component numeric vector (x, y, z)."
+    },
+    "PortableFreeCamera": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "const": "free"
+        },
+        "position": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "orientation": {
+          "$ref": "#/$defs/Quaternion"
+        }
+      },
+      "required": [
+        "mode",
+        "position"
+      ],
+      "additionalProperties": false,
+      "title": "PortableFreeCamera",
+      "description": "The free camera state (mirrored W016 grammar): an unconstrained viewpoint."
+    },
+    "Quaternion": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4,
+      "title": "Quaternion",
+      "description": "Finite orientation quaternion (x, y, z, w); neutral math, renderer-normalized."
+    },
+    "PortableOrbitCamera": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "const": "orbit"
+        },
+        "position": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "orientation": {
+          "$ref": "#/$defs/Quaternion"
+        },
+        "target": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "fovRadians": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 3.141592653589793
+        }
+      },
+      "required": [
+        "mode",
+        "position"
+      ],
+      "additionalProperties": false,
+      "title": "PortableOrbitCamera",
+      "description": "The orbit camera state (mirrored W016 grammar): viewpoint, optional target and FOV."
+    },
+    "VirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "VirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (mirrored shared primitive; canonical home @epoch/experience-runtime)."
+    }
+  }
+}

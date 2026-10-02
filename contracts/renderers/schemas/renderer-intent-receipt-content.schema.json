@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererIntentReceiptContent",
+  "$defs": {
+    "RendererIntentReceiptContent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-intent-receipt"
+        },
+        "fabricProtocolVersion": {
+          "$ref": "#/$defs/RendererFabricProtocolVersion"
+        },
+        "inputId": {
+          "$ref": "#/$defs/InputId"
+        },
+        "fabricSessionId": {
+          "$ref": "#/$defs/FabricSessionId"
+        },
+        "modality": {
+          "$ref": "#/$defs/InteractionModality"
+        },
+        "inputKind": {
+          "$ref": "#/$defs/RendererInputKind"
+        },
+        "hitEntityId": {
+          "$ref": "#/$defs/WorldEntityIdMirror"
+        },
+        "intent": {
+          "$ref": "#/$defs/ControlIntent"
+        },
+        "intentPayloadDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "outcome": {
+          "$ref": "#/$defs/RendererIntentOutcome"
+        },
+        "admissionDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "rejectionDetail": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "atMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        }
+      },
+      "required": [
+        "schema",
+        "fabricProtocolVersion",
+        "inputId",
+        "fabricSessionId",
+        "modality",
+        "inputKind",
+        "outcome",
+        "atMs"
+      ],
+      "additionalProperties": false,
+      "title": "RendererIntentReceiptContent",
+      "description": "The content of a renderer intent receipt: input identity, hit-tested semantic entity, normalized typed intent (digest-addressed payload), typed outcome, and W013 admission link."
+    },
+    "RendererFabricProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RendererFabricProtocolVersion",
+      "description": "Exact renderer-fabric protocol version admitted by this release (\"1.0.0\")."
+    },
+    "InputId": {
+      "type": "string",
+      "pattern": "^rin-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "InputId",
+      "description": "Renderer input identifier: \"rin-\" followed by a lowercase slug."
+    },
+    "FabricSessionId": {
+      "type": "string",
+      "pattern": "^fx-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "FabricSessionId",
+      "description": "Renderer fabric-session identifier: \"fx-\" followed by a lowercase slug (ephemeral, non-authoritative)."
+    },
+    "InteractionModality": {
+      "type": "string",
+      "enum": [
+        "gamepad",
+        "gaze",
+        "gesture",
+        "keyboard",
+        "pointer",
+        "touch",
+        "voice"
+      ],
+      "title": "InteractionModality",
+      "description": "Neutral interaction modality of a device."
+    },
+    "RendererInputKind": {
+      "type": "string",
+      "enum": [
+        "key-down",
+        "key-up",
+        "pointer-down",
+        "pointer-move",
+        "pointer-up",
+        "wheel"
+      ],
+      "title": "RendererInputKind",
+      "description": "Raw input kind of a renderer input envelope: pointer or key primitive gestures."
+    },
+    "WorldEntityIdMirror": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "WorldEntityIdMirror",
+      "description": "World entity identifier (mirrored W016 grammar; canonical home @epoch/world-experience): opaque bounded string."
+    },
+    "ControlIntent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "ControlIntent",
+      "description": "Typed UI intent a control emits: qualified id plus semver core (shape-compatible with the action-protocol ActionTypeReference)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "RendererIntentOutcome": {
+      "type": "string",
+      "enum": [
+        "no-target",
+        "normalized",
+        "rejected"
+      ],
+      "title": "RendererIntentOutcome",
+      "description": "Outcome of one renderer input normalization: normalized, no-target, or rejected (typed)."
+    },
+    "VirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "VirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (mirrored shared primitive; canonical home @epoch/experience-runtime)."
+    }
+  }
+}

@@ -1,9 +1,11 @@
 {
   "contract": "epoch/renderers",
-  "contractVersion": "1.0.0",
+  "contractVersion": "1.1.0",
   "protocolVersion": "1.0.0",
-  "description": "Typed, versioned, provider-neutral Renderer Runtime hosting-surface contract (W013): abstract renderer descriptors (kind, capabilities, budgets), device-session snapshots over the W011 device vocabulary, negotiated bindings, invocation envelopes, and content-addressed receipts. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
+  "fabricProtocolVersion": "1.0.0",
+  "description": "Typed, versioned, provider-neutral renderer contract (W013 hosting surface + W056 fabric): abstract renderer descriptors (kind, capabilities, budgets), device-session snapshots over the W011 device vocabulary, negotiated bindings, invocation envelopes, and content-addressed receipts (W013, unchanged); plus the fabric concepts (W056, additive): renderer capability sets, ephemeral sessions, portable view-state snapshots, switch requests/receipts, frame/input envelopes, intent receipts, typed failures, health, asset bindings, and conformance results. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",
   "dataTypes": [
+    "AssetBindingId",
     "ControlIntent",
     "DeviceClass",
     "DeviceDescriptor",
@@ -15,19 +17,55 @@
     "ExperienceGraphKind",
     "ExperienceIssue",
     "ExperienceProtocolError",
+    "FabricSessionId",
+    "InputId",
+    "InputKey",
     "InteractionModality",
     "InvocationEnvelope",
     "InvocationId",
     "JsonValue",
     "OpaqueScopeId",
+    "PointerPosition",
+    "PortableCameraState",
+    "PortableFollowAgentCamera",
+    "PortableFollowCursorState",
+    "PortableFreeCamera",
+    "PortableOrbitCamera",
+    "PortableTimelinePosition",
+    "PortableViewState",
+    "PortableViewStateField",
     "PoseTrackingKind",
+    "ProjectedAgentRef",
+    "Quaternion",
+    "RendererAssetBinding",
+    "RendererAssetBindingContent",
+    "RendererAssetKind",
+    "RendererAssetTrustState",
     "RendererBinding",
     "RendererBindingContent",
     "RendererBindingState",
     "RendererBudgets",
+    "RendererCapabilitySet",
+    "RendererConformanceCheck",
+    "RendererConformanceCheckKind",
+    "RendererConformanceResult",
+    "RendererConformanceResultContent",
+    "RendererDegradationKind",
     "RendererDescriptor",
     "RendererErrorCode",
+    "RendererFabricProtocolVersion",
+    "RendererFailure",
+    "RendererFailureCode",
+    "RendererFailureTrigger",
+    "RendererFrameEnvelope",
+    "RendererHealth",
+    "RendererHealthState",
     "RendererId",
+    "RendererInputEnvelope",
+    "RendererInputKind",
+    "RendererIntentOutcome",
+    "RendererIntentReceipt",
+    "RendererIntentReceiptContent",
     "RendererInvocationKind",
     "RendererIssue",
     "RendererOutputCapabilities",
@@ -36,20 +74,50 @@
     "RendererReceiptContent",
     "RendererReceiptKind",
     "RendererRuntimeError",
+    "RendererSession",
+    "RendererSessionContent",
     "RendererSessionId",
+    "RendererSessionSnapshot",
+    "RendererSessionSnapshotContent",
+    "RendererSessionState",
+    "RendererSwitchReceipt",
+    "RendererSwitchReceiptContent",
+    "RendererSwitchRequest",
+    "ReplayWindow",
+    "SemanticLayerId",
+    "SemanticLayerVisibility",
     "Sha256Hex",
+    "SwitchId",
     "TenantScope",
-    "VirtualTimeMs"
+    "Vec3",
+    "VirtualTimeMs",
+    "WorldEntityIdMirror",
+    "WorldProjectionRef",
+    "WorldSceneIdMirror"
   ],
   "documentKinds": [
+    "renderer.asset-binding",
     "renderer.binding",
+    "renderer.conformance-result",
     "renderer.descriptor",
+    "renderer.frame-envelope",
+    "renderer.input-envelope",
+    "renderer.intent-receipt",
     "renderer.invocation",
-    "renderer.receipt"
+    "renderer.receipt",
+    "renderer.session",
+    "renderer.session-snapshot",
+    "renderer.switch-receipt",
+    "renderer.switch-request"
   ],
-  "jsonSchemaFidelity": "structural-only: zod refinements (canonical set ordering, negotiated-limit consistency) are enforced by the runtime validators in @epoch/renderer-runtime and are not represented in the JSON Schema files",
+  "jsonSchemaFidelity": "structural-only: zod refinements (canonical set ordering, negotiated-limit consistency, session/snapshot consistency) are enforced by the runtime validators in @epoch/renderer-runtime and are not represented in the JSON Schema files",
   "emittedBy": "renderRendererContractFiles() in @epoch/renderer-runtime (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes",
   "schemas": [
+    {
+      "type": "AssetBindingId",
+      "file": "schemas/asset-binding-id.schema.json",
+      "sha256": "2b61931461bbbbecb117c480e21e7c1fa2892c2e0ec85a7c06f2e69eb0192e95"
+    },
     {
       "type": "ControlIntent",
       "file": "schemas/control-intent.schema.json",
@@ -106,6 +174,21 @@
       "sha256": "d122c54d6fcaaee7fa878109d3de6e1a585e6f75281090f6737787e5d739c5f5"
     },
     {
+      "type": "FabricSessionId",
+      "file": "schemas/fabric-session-id.schema.json",
+      "sha256": "4988e2b349bac302365c1a3a859ab28874bfdac9895ed71daa8fd54f586b4b8c"
+    },
+    {
+      "type": "InputId",
+      "file": "schemas/input-id.schema.json",
+      "sha256": "4452a4a29e348832417f8e8f5f7ff05119e1a9158f412143499f353afcef494e"
+    },
+    {
+      "type": "InputKey",
+      "file": "schemas/input-key.schema.json",
+      "sha256": "6cc439b0fb08b2ce5e51b682217b21c1b5bc5dba58809309c830e9bf09266efb"
+    },
+    {
       "type": "InteractionModality",
       "file": "schemas/interaction-modality.schema.json",
       "sha256": "7c94571c739bf1eb9b84828adb675077cb2d4a28b9af7b3bd95f5bf8bb174e10"
@@ -131,9 +214,84 @@
       "sha256": "c6b38c6c40b314271d3638405933081c6ec8fb1dfff1f97ca52467ec6283e712"
     },
     {
+      "type": "PointerPosition",
+      "file": "schemas/pointer-position.schema.json",
+      "sha256": "1c45cd24a50fce14fec09e935542dc3b5ba50e18690ec0aecb703284823a0371"
+    },
+    {
+      "type": "PortableCameraState",
+      "file": "schemas/portable-camera-state.schema.json",
+      "sha256": "e7b3e1d6787d64178a17ce82f468ef7f631a38dafc410fb40a4bcdbc9e2854c5"
+    },
+    {
+      "type": "PortableFollowAgentCamera",
+      "file": "schemas/portable-follow-agent-camera.schema.json",
+      "sha256": "ad6701ff350c5c3068d8c5abb088dcc8a22229eeeb9e4679bbcfbfded57e6a8a"
+    },
+    {
+      "type": "PortableFollowCursorState",
+      "file": "schemas/portable-follow-cursor-state.schema.json",
+      "sha256": "4523fbc5b2a4a8f82beadff8392e9991ddcd3f83088da5b9441699b07f7be4a4"
+    },
+    {
+      "type": "PortableFreeCamera",
+      "file": "schemas/portable-free-camera.schema.json",
+      "sha256": "660f598a256c1c9f99b196aeb5ff4d4a09593a6bcabf36d7ebb2bb4b289874ca"
+    },
+    {
+      "type": "PortableOrbitCamera",
+      "file": "schemas/portable-orbit-camera.schema.json",
+      "sha256": "1c7d298e573f90f2e5dea650738e9ee740047bc779b8b267bda2794b55009f8e"
+    },
+    {
+      "type": "PortableTimelinePosition",
+      "file": "schemas/portable-timeline-position.schema.json",
+      "sha256": "ee34a18974d6ffda318099787e0fcae632ae38aa1e2fcd0f20f5cf8505758b67"
+    },
+    {
+      "type": "PortableViewState",
+      "file": "schemas/portable-view-state.schema.json",
+      "sha256": "9463713860ee374573e678ba58133d739f8ba96385e4c34ccc102ad66d80780e"
+    },
+    {
+      "type": "PortableViewStateField",
+      "file": "schemas/portable-view-state-field.schema.json",
+      "sha256": "2ed8faa1b5b79f8e26b29ebdd2e7e57901d8f18071de3b9e2c966b655c3dfb0e"
+    },
+    {
       "type": "PoseTrackingKind",
       "file": "schemas/pose-tracking-kind.schema.json",
       "sha256": "e18ad59e78357cc9ed9515f920dd354e9d5bae02bcebe963125f690c87afcb83"
+    },
+    {
+      "type": "ProjectedAgentRef",
+      "file": "schemas/projected-agent-ref.schema.json",
+      "sha256": "30a0c83221f580c89e22f7d784d3a6ed2aea042f5cfba44e5096f7a9078dc7b4"
+    },
+    {
+      "type": "Quaternion",
+      "file": "schemas/quaternion.schema.json",
+      "sha256": "a275112d998beea538ca110626d5f56f0ab470eecd802b4d451e9c817e366525"
+    },
+    {
+      "type": "RendererAssetBinding",
+      "file": "schemas/renderer-asset-binding.schema.json",
+      "sha256": "548e531605266838e49a9826e7b8720fbbc2381b6c54a5c7f08ca019a97a4829"
+    },
+    {
+      "type": "RendererAssetBindingContent",
+      "file": "schemas/renderer-asset-binding-content.schema.json",
+      "sha256": "63039fb4efcc707b84c10c463454e045c1ea534ea33a33fa2c5b1eab6bc6b6d3"
+    },
+    {
+      "type": "RendererAssetKind",
+      "file": "schemas/renderer-asset-kind.schema.json",
+      "sha256": "185b64cae1ee13f8c712c584f59472fc8690b378a98a362ca74fe3fd9e782f4b"
+    },
+    {
+      "type": "RendererAssetTrustState",
+      "file": "schemas/renderer-asset-trust-state.schema.json",
+      "sha256": "bea52612a0214d7d73fb650bdfe28ef32c125da2a78570fa4edee7f5802e4ab0"
     },
     {
       "type": "RendererBinding",
@@ -156,6 +314,36 @@
       "sha256": "2b5c748c98def5a6a8bc6ce35b3a07e69599b12ec2399ebad74adff668ab1344"
     },
     {
+      "type": "RendererCapabilitySet",
+      "file": "schemas/renderer-capability-set.schema.json",
+      "sha256": "2712d05fa616793ebba54aabbb9dd73a73a65936231e7144bf477b213c14c175"
+    },
+    {
+      "type": "RendererConformanceCheck",
+      "file": "schemas/renderer-conformance-check.schema.json",
+      "sha256": "3a558889917c31feed612cf7484a9f8ee6bb1973966023bc81d79241755ce7e5"
+    },
+    {
+      "type": "RendererConformanceCheckKind",
+      "file": "schemas/renderer-conformance-check-kind.schema.json",
+      "sha256": "98595798ed5b32f53cfaacf3d8ff9055aec1009e377e967bbea9eb1a5c5a991d"
+    },
+    {
+      "type": "RendererConformanceResult",
+      "file": "schemas/renderer-conformance-result.schema.json",
+      "sha256": "6c2f72c30194a49796b356953647614f2c2b53a8defb0cd886b880493ff958ff"
+    },
+    {
+      "type": "RendererConformanceResultContent",
+      "file": "schemas/renderer-conformance-result-content.schema.json",
+      "sha256": "04fc0dbe29ba0d3f647d836b1aca843a5d0a40b93f0cedf4b7cf62c439641490"
+    },
+    {
+      "type": "RendererDegradationKind",
+      "file": "schemas/renderer-degradation-kind.schema.json",
+      "sha256": "53f37be6e6acfb80dac250c97a42bda173d014adc3300d5115c69398f6713663"
+    },
+    {
       "type": "RendererDescriptor",
       "file": "schemas/renderer-descriptor.schema.json",
       "sha256": "dfaa3650c543bde86f956365073002e2a8a4172cfcbeb6abfa520e20f6d04be5"
@@ -166,9 +354,69 @@
       "sha256": "e5804c6636ea2cdef832c22d8f45db3724e786fc477ece3edd47916f0ffd5328"
     },
     {
+      "type": "RendererFabricProtocolVersion",
+      "file": "schemas/renderer-fabric-protocol-version.schema.json",
+      "sha256": "cb96c5da17acb3202d8a15aabc6f5e91d88bd44b09933ec4b07c2aae3bf38b94"
+    },
+    {
+      "type": "RendererFailure",
+      "file": "schemas/renderer-failure.schema.json",
+      "sha256": "92100cd209e2a62c3bef24f2de95e7c2aba9fc67c959cec05451041bf3e3d2ec"
+    },
+    {
+      "type": "RendererFailureCode",
+      "file": "schemas/renderer-failure-code.schema.json",
+      "sha256": "fc9e89f903d09bfe3f628f4146e43e715f7ab5c477ef044c51c9c91bfa844e7a"
+    },
+    {
+      "type": "RendererFailureTrigger",
+      "file": "schemas/renderer-failure-trigger.schema.json",
+      "sha256": "bb2ba7065aec7eb8d234a39523dae73dd5203e447304d1f747fe5d9f82cfe0ad"
+    },
+    {
+      "type": "RendererFrameEnvelope",
+      "file": "schemas/renderer-frame-envelope.schema.json",
+      "sha256": "cc96b786d32de93abd18300c7b70d260501c5dc6be0afe09882bdbd9f1b343e5"
+    },
+    {
+      "type": "RendererHealth",
+      "file": "schemas/renderer-health.schema.json",
+      "sha256": "5a4796aec126d534538843d02f8fd0e3df94d590e0520ed08b4ce437da504642"
+    },
+    {
+      "type": "RendererHealthState",
+      "file": "schemas/renderer-health-state.schema.json",
+      "sha256": "c919d98bbd67ef7a1c932831feb1c2043eb043767eccc15f89d5fc070c68def0"
+    },
+    {
       "type": "RendererId",
       "file": "schemas/renderer-id.schema.json",
       "sha256": "abbc595c344d84acd85e85ab7c8f4a536cd8b414a64244ad780d0faf1f1093fc"
+    },
+    {
+      "type": "RendererInputEnvelope",
+      "file": "schemas/renderer-input-envelope.schema.json",
+      "sha256": "4ff7000d88fdb22e00c43ecbcbfeaf3f61fdf0efb0e84acc1d311aad50ac200c"
+    },
+    {
+      "type": "RendererInputKind",
+      "file": "schemas/renderer-input-kind.schema.json",
+      "sha256": "4cd2b9ca9569b58591bccb72faa81ba60689fb44f7dfcb8ed30ea4a740f24390"
+    },
+    {
+      "type": "RendererIntentOutcome",
+      "file": "schemas/renderer-intent-outcome.schema.json",
+      "sha256": "82e556e5ba42e5ea458ada74ad22a35a53f874de1dbc4c24e19c1b53c9d6f130"
+    },
+    {
+      "type": "RendererIntentReceipt",
+      "file": "schemas/renderer-intent-receipt.schema.json",
+      "sha256": "ea118fd2f3d22a1d5d2485431cd78269862e5cfc6427d7b53cc8580b3298ee68"
+    },
+    {
+      "type": "RendererIntentReceiptContent",
+      "file": "schemas/renderer-intent-receipt-content.schema.json",
+      "sha256": "58a365791277e30b00dd611a1545e9a5fda9193461fc6c518eb2130c60029e09"
     },
     {
       "type": "RendererInvocationKind",
@@ -211,9 +459,64 @@
       "sha256": "a11a11bce35ea8e3c83ce886db1633f8d96ca6c4ae61f392e00d89ce38dc62ea"
     },
     {
+      "type": "RendererSession",
+      "file": "schemas/renderer-session.schema.json",
+      "sha256": "7c88ae661a3a93a15a860f2a21f9adadc9668c034ae02a3c043e2e2b8f38fa78"
+    },
+    {
+      "type": "RendererSessionContent",
+      "file": "schemas/renderer-session-content.schema.json",
+      "sha256": "8040be6ba985482bb692d7a94f9514f8f816a845dc50364fc88f1266fdea9170"
+    },
+    {
       "type": "RendererSessionId",
       "file": "schemas/renderer-session-id.schema.json",
       "sha256": "bbf49bbf3ef40be2e0efdc7af5efe641554dae0ad61145c926d6737a81985706"
+    },
+    {
+      "type": "RendererSessionSnapshot",
+      "file": "schemas/renderer-session-snapshot.schema.json",
+      "sha256": "a4c120cc0387f295fe2e25f460adde49bef4f5d4acab7a3f1c67a06d79d9c827"
+    },
+    {
+      "type": "RendererSessionSnapshotContent",
+      "file": "schemas/renderer-session-snapshot-content.schema.json",
+      "sha256": "d6b71dbc5efc7235117529630bb13d4dc553fe8c061aa28b222a977300bf1c86"
+    },
+    {
+      "type": "RendererSessionState",
+      "file": "schemas/renderer-session-state.schema.json",
+      "sha256": "adcc7613e9e64474e69ce33805e986793f4576f68ee4839b0f95120c56868216"
+    },
+    {
+      "type": "RendererSwitchReceipt",
+      "file": "schemas/renderer-switch-receipt.schema.json",
+      "sha256": "8211f5b2b432219e2c5105514b5ae899ccff28d37a84e78b7f6fc041bc411b61"
+    },
+    {
+      "type": "RendererSwitchReceiptContent",
+      "file": "schemas/renderer-switch-receipt-content.schema.json",
+      "sha256": "34f2b41ed053e59c4919707d369ad48311af381bdf3ef2f32492b92ea1b4319b"
+    },
+    {
+      "type": "RendererSwitchRequest",
+      "file": "schemas/renderer-switch-request.schema.json",
+      "sha256": "f1d13c14cf1e6be6cd229cd315da806dea94314f7282b4f6a9faf60b64c70f39"
+    },
+    {
+      "type": "ReplayWindow",
+      "file": "schemas/replay-window.schema.json",
+      "sha256": "c2902b2c337c156fe4d5158cc8bdb70a7b4a1bf1ef526e28aff24b87171a1120"
+    },
+    {
+      "type": "SemanticLayerId",
+      "file": "schemas/semantic-layer-id.schema.json",
+      "sha256": "d66fad68b2bc0dc5f9fd9a68d26baeeee761bbf0c1289d5ca10135afd4c056c1"
+    },
+    {
+      "type": "SemanticLayerVisibility",
+      "file": "schemas/semantic-layer-visibility.schema.json",
+      "sha256": "039f1ea6cc5ab1992795141e5ef6112155b6fd21f2f230518bd207a2495ac6bb"
     },
     {
       "type": "Sha256Hex",
@@ -221,14 +524,39 @@
       "sha256": "dd3c16f00f5118626c3edfd9fb6bfe17d46a88af26fef35ae6cf34069727fb40"
     },
     {
+      "type": "SwitchId",
+      "file": "schemas/switch-id.schema.json",
+      "sha256": "dafa71e078ae910378a3c71d4c06d81466287ce7ff20d08b9d507cc551796f8d"
+    },
+    {
       "type": "TenantScope",
       "file": "schemas/tenant-scope.schema.json",
       "sha256": "57bdb1872e6fabd039bba1622df46052ca0ab042cd722f9050118549214813b3"
     },
     {
+      "type": "Vec3",
+      "file": "schemas/vec3.schema.json",
+      "sha256": "94bd0b176b49d2ec54e31e8d6219e5c99d15bf60ed5db2101012efb62214094e"
+    },
+    {
       "type": "VirtualTimeMs",
       "file": "schemas/virtual-time-ms.schema.json",
       "sha256": "39708d1c5d0ed6cc963d43c94e8b3eb77a1790634b9f5fe1450878576bf8064a"
+    },
+    {
+      "type": "WorldEntityIdMirror",
+      "file": "schemas/world-entity-id-mirror.schema.json",
+      "sha256": "adac93155517d57242354e7dde7570ec12da8d5d8c21717ec9632040cf671e3e"
+    },
+    {
+      "type": "WorldProjectionRef",
+      "file": "schemas/world-projection-ref.schema.json",
+      "sha256": "e3e808d0e5a0ca234f62ec246c6b4daf14f509b899904bb84382aa6b52ba2dbd"
+    },
+    {
+      "type": "WorldSceneIdMirror",
+      "file": "schemas/world-scene-id-mirror.schema.json",
+      "sha256": "07201d5ac508905800c19a47fa5c4080ab64b74ae820c2ed6904ae91be9ea859"
     }
   ]
 }

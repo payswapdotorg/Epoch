@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererFailureTrigger",
+  "$defs": {
+    "RendererFailureTrigger": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/RendererFailureCode"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false,
+      "title": "RendererFailureTrigger",
+      "description": "The typed trigger of a chained renderer-fabric failure: producing code plus message."
+    },
+    "RendererFailureCode": {
+      "type": "string",
+      "enum": [
+        "adapter-unavailable",
+        "asset-rejected",
+        "cross-tenant-denied",
+        "degraded",
+        "fallback-applied",
+        "input-unsupported",
+        "invalid-fabric-record",
+        "mount-failed",
+        "probe-rejected",
+        "session-disposed",
+        "session-failed",
+        "switch-aborted",
+        "switch-incompatible",
+        "unknown-session"
+      ],
+      "title": "RendererFailureCode",
+      "description": "Typed failure code of the renderer fabric orchestration surface."
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererFailureCode",
+  "$defs": {
+    "RendererFailureCode": {
+      "type": "string",
+      "enum": [
+        "adapter-unavailable",
+        "asset-rejected",
+        "cross-tenant-denied",
+        "degraded",
+        "fallback-applied",
+        "input-unsupported",
+        "invalid-fabric-record",
+        "mount-failed",
+        "probe-rejected",
+        "session-disposed",
+        "session-failed",
+        "switch-aborted",
+        "switch-incompatible",
+        "unknown-session"
+      ],
+      "title": "RendererFailureCode",
+      "description": "Typed failure code of the renderer fabric orchestration surface."
+    }
+  }
+}

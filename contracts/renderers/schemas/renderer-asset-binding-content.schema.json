@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererAssetBindingContent",
+  "$defs": {
+    "RendererAssetBindingContent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-asset-binding"
+        },
+        "fabricProtocolVersion": {
+          "$ref": "#/$defs/RendererFabricProtocolVersion"
+        },
+        "bindingId": {
+          "$ref": "#/$defs/AssetBindingId"
+        },
+        "fabricSessionId": {
+          "$ref": "#/$defs/FabricSessionId"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "assetDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "assetKind": {
+          "$ref": "#/$defs/RendererAssetKind"
+        },
+        "byteSize": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "trustState": {
+          "$ref": "#/$defs/RendererAssetTrustState"
+        },
+        "validatedAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "boundAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        }
+      },
+      "required": [
+        "schema",
+        "fabricProtocolVersion",
+        "bindingId",
+        "fabricSessionId",
+        "tenantScope",
+        "assetDigest",
+        "assetKind",
+        "byteSize",
+        "trustState",
+        "boundAtMs"
+      ],
+      "additionalProperties": false,
+      "title": "RendererAssetBindingContent",
+      "description": "The content of a renderer asset binding: identity, session, tenant scope, content digest, typed kind, byte size, and trust state."
+    },
+    "RendererFabricProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RendererFabricProtocolVersion",
+      "description": "Exact renderer-fabric protocol version admitted by this release (\"1.0.0\")."
+    },
+    "AssetBindingId": {
+      "type": "string",
+      "pattern": "^rab-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AssetBindingId",
+      "description": "Renderer asset-binding identifier: \"rab-\" followed by a lowercase slug."
+    },
+    "FabricSessionId": {
+      "type": "string",
+      "pattern": "^fx-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "FabricSessionId",
+      "description": "Renderer fabric-session identifier: \"fx-\" followed by a lowercase slug (ephemeral, non-authoritative)."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "RendererAssetKind": {
+      "type": "string",
+      "enum": [
+        "animation",
+        "material",
+        "mesh",
+        "texture"
+      ],
+      "title": "RendererAssetKind",
+      "description": "Content-addressed asset kind a renderer can bind: animation, material, mesh, or texture."
+    },
+    "RendererAssetTrustState": {
+      "type": "string",
+      "enum": [
+        "untrusted",
+        "validated"
+      ],
+      "title": "RendererAssetTrustState",
+      "description": "Trust state of a renderer asset binding: untrusted (never mounts) or validated."
+    },
+    "VirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "VirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (mirrored shared primitive; canonical home @epoch/experience-runtime)."
+    }
+  }
+}
