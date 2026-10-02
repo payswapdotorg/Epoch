@@ -4,6 +4,7 @@ packages:
   - "services/*"
   - "packs/*"
   - "adapters/*"
+  - "adapters/renderers/*"
 
 # Epoch dependency baseline freeze (W001).
 #
