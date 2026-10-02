@@ -115,7 +115,6 @@ export function DecideStage(): ReactNode {
       evidenceRecord: evidenceFile['record'] as never,
       evidenceDigest: String(evidenceFile['evidenceDigest']),
       solutionId: String(solutionFile['solutionId']),
-      solutionDigest: sealed?.contentDigest ?? String(solutionFile['contentDigest']),
       approverId: configuration.templates.action.approverPrincipal,
     }));
     setChainResult(result);
@@ -200,7 +199,10 @@ export function DecideStage(): ReactNode {
     })();
   }, [call]);
 
-  const roles = (discovery?.['roleProposals'] as { roleId: string; mission: string; proposedOperations?: string[] }[] | undefined) ?? [];
+  // The discovery authority's own RoleProposal shape: roleProposalId
+  // (content-addressed from the demand set) + roleSlug + mission (the P05
+  // production journey surfaced the earlier roleId projection as empty).
+  const roles = (discovery?.['roleProposals'] as { roleProposalId: string; roleSlug: string; mission: string }[] | undefined) ?? [];
   const organizations = (discovery?.['organizations'] as { organizationId: string; summary?: string }[] | undefined) ?? [];
   const gaps = (discovery?.['gaps'] as { gapId: string; operation?: { id: string } }[] | undefined) ?? [];
 
@@ -252,9 +254,10 @@ export function DecideStage(): ReactNode {
                 caption="Synthesized roles"
                 testId="role-table"
                 rows={roles}
-                rowKey={(role) => role.roleId}
+                rowKey={(role) => role.roleProposalId}
                 columns={[
-                  { header: 'Role', cell: (role) => <code style={{ fontSize: '12px' }}>{role.roleId}</code> },
+                  { header: 'Role', cell: (role) => <code style={{ fontSize: '12px' }}>{role.roleProposalId}</code> },
+                  { header: 'Slug', cell: (role) => role.roleSlug },
                   { header: 'Mission', cell: (role) => role.mission },
                 ]}
               />
@@ -340,7 +343,32 @@ export function DecideStage(): ReactNode {
             </Button>
           </div>
           {chainResult === null ? null : chainResult.ok ? (
-            <SuccessNote testId="chain-success">Chain validated by the verification authority — verdict: {JSON.stringify((chainResult.value.result as Record<string, unknown>)['valid'] ?? 'returned')}.</SuccessNote>
+            (() => {
+              // The authority's own verdict decides the note — never a
+              // client-invented "validated" claim (P06 finding: the
+              // authority may REJECT a submitted chain; the verdict and its
+              // issues surface verbatim).
+              const outcome = chainResult.value.result as Record<string, unknown>;
+              const admitted = outcome['ok'] === true;
+              const issues = Array.isArray(outcome['issues']) ? (outcome['issues'] as Record<string, unknown>[]) : [];
+              if (admitted) {
+                return (
+                  <SuccessNote testId="chain-success">
+                    Chain admitted by the verification authority (requirements, claims, methods, runs, evidence, results, approvals all validated).
+                  </SuccessNote>
+                );
+              }
+              return (
+                <div data-testid="chain-rejected" style={{ padding: `${SHELL_SPACING.sm}px 0` }}>
+                  <Pill tone="negative">verification authority rejected the chain</Pill>
+                  <ul style={{ margin: `${SHELL_SPACING.xs}px 0 0`, paddingLeft: '20px', color: '#57534e', fontSize: '13px' }}>
+                    {issues.slice(0, 5).map((issue, index) => (
+                      <li key={index}><code>{String(issue['code'])}</code> — {String(issue['message'])}</li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })()
           ) : (
             <ErrorBanner error={chainResult.error} testId="chain-error" />
           )}

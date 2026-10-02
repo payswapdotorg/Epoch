@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "releaseId": "epoch-clients-v1.0.0",
   "version": "1.0.0",
-  "sourceCommit": "949ba810c9ce30c0af87c13d8a224c5c5aff985b",
+  "sourceCommit": "714900d56f24885096e548b3074df97a981b97a6",
   "description": "The client release identity record set (W050): every artifact records source commit, version/profile, target platform and checksum (spec/productization-architecture.md). Config-delivered platforms declare their environment gaps \u2014 never silent.",
   "clients": [
     {
@@ -18,12 +18,12 @@
           "apps/web/vitest.config.mts",
           "apps/web/playwright.config.ts"
         ],
-        "definitionTreeSha": "db3f513df057c1e856ac0744491782163fa23387",
+        "definitionTreeSha": "a49aeb6d806bddd9ad860c6cdfc485fd49fcf37c",
         "checksums": {
           "apps/web/package.json": "44f71369454f2a11b9927f6b87dff1868ae817693e7842a0585a4510012080ac",
           "apps/web/next.config.ts": "b9ed807b06d018a3b190914e965247d2999d38e2dcbfea85f11eb4845c9a9132",
           "apps/web/tsconfig.json": "f35c6b95fd13351b89e5c8582f421dadc8fdaac2760fdc85b64321cd9618ad31",
-          "apps/web/vitest.config.mts": "57539e3dbd699f32e07707f73ee140f9605ae4fd7d6a319ee82f263e6591d7da",
+          "apps/web/vitest.config.mts": "60ad3eba277fe30a5ea08e98fda20d85b21e2e8f83cbccb7f2e2b240217af66f",
           "apps/web/playwright.config.ts": "cad7f4eb764c8e26d0f0dc0b24d1c6126a32685c7fe935460d61c517a50a2515"
         }
       },

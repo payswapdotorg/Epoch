@@ -279,7 +279,6 @@ export function VerifyStage(): ReactNode {
         evidenceRecord: evidenceFile['record'] as never,
         evidenceDigest: String(evidenceFile['evidenceDigest']),
         solutionId: String(solutionFile['solutionId']),
-        solutionDigest: String(solutionFile['contentDigest']),
         approverId: configuration.templates.action.approverPrincipal,
       }),
     );
@@ -328,9 +327,29 @@ export function VerifyStage(): ReactNode {
           </Button>
         </div>
         {chainResult === null ? null : chainResult.ok ? (
-          <div style={{ marginTop: `${SHELL_SPACING.md}px` }}>
-            <SuccessNote testId="verify-success">The verification authority returned its chain verdict (requirements, claims, runs, evidence, approvals validated).</SuccessNote>
-          </div>
+          (() => {
+            // The authority's own verdict decides the note (P06 finding:
+            // never claim validation the authority did not grant).
+            const outcome = chainResult.value.result as Record<string, unknown>;
+            if (outcome['ok'] === true) {
+              return (
+                <div style={{ marginTop: `${SHELL_SPACING.md}px` }}>
+                  <SuccessNote testId="verify-success">Chain admitted by the verification authority (requirements, claims, methods, runs, evidence, results, approvals all validated).</SuccessNote>
+                </div>
+              );
+            }
+            const issues = Array.isArray(outcome['issues']) ? (outcome['issues'] as Record<string, unknown>[]) : [];
+            return (
+              <div data-testid="verify-rejected" style={{ marginTop: `${SHELL_SPACING.md}px` }}>
+                <Pill tone="negative">verification authority rejected the chain</Pill>
+                <ul style={{ margin: `${SHELL_SPACING.xs}px 0 0`, paddingLeft: '20px', color: '#57534e', fontSize: '13px' }}>
+                  {issues.slice(0, 5).map((issue, index) => (
+                    <li key={index}><code>{String(issue['code'])}</code> — {String(issue['message'])}</li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })()
         ) : (
           <div style={{ marginTop: `${SHELL_SPACING.md}px` }}>
             <ErrorBanner error={chainResult.error} testId="verify-error" />
