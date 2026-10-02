@@ -59,9 +59,10 @@
     "W051",
     "W052",
     "W053",
-    "W054"
+    "W054",
+    "W055"
   ],
   "blocked": [],
   "lastMergeSha": "598210a2aed97c7a971c2bbdc2341133a987b137",
-  "lastAction": "ACR-006 wave 1 COMPLETE: W052 (PR #122 -> 2f57e8d), W053 (PR #121 -> 938016e), W054 (PR #120 -> 8f5d90c) + the lockfile reconcile (PR #124 -> 3165bc1). W055 (serialized production closure) is ELIGIBLE \u2014 the only remaining work order."
+  "lastAction": "ACR-006 W055 COMPLETE: the serialized production closure (the F-1 tenant-binding fix, journey consolidation, the S1-S19 security review, the CI deployment-config gate, state reconciliation). The program is COMPLETE at the credential boundary: every seam is real and tested; live deployment verification executes when the operator provides provider credentials (Vercel/Neon/R2/Apify) per docs/journeys/production.md. Frontier EMPTY; post-program work requires a new ACR."
 }

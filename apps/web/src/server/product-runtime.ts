@@ -40,7 +40,7 @@ import { WorldModel } from '@epoch/world-model';
 import { EvidenceStore } from '@epoch/evidence';
 import { EventLog } from '@epoch/event-log';
 import { ActionGateway } from '@epoch/action-gateway';
-import { SessionManager } from '@epoch/authentication';
+import { SessionManager, type SessionRecord } from '@epoch/authentication';
 import { ApplicationGateway } from '@epoch/application-gateway';
 import type { AuthorizationContext } from '@epoch/authorization';
 import { getProductionBindings, type ProductionBindings } from './production-binding';
@@ -185,7 +185,17 @@ async function buildEnvironment(
   const gateway = new ApplicationGateway({
     clock: productClock,
     authorities: {
-      sessions: new SessionManager({ expectedTenantId: bundle.tenantId }),
+      // W055 (F-1 closure): the tenant-scoped session authority — a
+      // session may only be issued from an authentication result minted
+      // by THIS tenant environment's identity boundary (the committed
+      // fixture result for the domain lead, or this environment's
+      // `fixture-auth-<domain>-…` derivation). A verified result from
+      // another tenant's boundary no longer issues a session here (the
+      // W052 P18 finding: the frozen SessionManager validates
+      // principal↔result and tenant↔manager scope, but not
+      // result↔tenant-identity-registry; the mutation path already failed
+      // closed through the W009 gate — this closes the read path too).
+      sessions: tenantScopedSessionManager(new SessionManager({ expectedTenantId: bundle.tenantId }), bundle),
       tenancy: restoreTenancy(bundle),
       worlds: world,
       evidence,
@@ -266,6 +276,101 @@ const GLOBAL_KEY = '__epoch_web_product_runtime__' as const;
 
 declare global {
   var __epoch_web_product_runtime__: ProductRuntime | undefined;
+}
+
+/**
+ * The tenant-scoped session authority (W055, F-1): wraps the W046
+ * SessionManager seam so `session.issue` additionally REJECTS any
+ * authentication result this environment did not mint. The frozen
+ * SessionManager/api contracts are untouched — this is a deployment
+ * composition decision (which results this deployment's identity
+ * boundary produced), exactly the seam the authority bundle provides.
+ */
+class TenantScopedSessionManager extends SessionManager {
+  private readonly ownResultIds: ReadonlySet<string>;
+
+  constructor(
+    inner: SessionManager,
+    own: {
+      readonly committedResultId: string;
+      readonly fixtureAuthPrefix: string;
+      readonly registeredPrincipalIds: ReadonlySet<string>;
+    },
+  ) {
+    // The inner manager's options (the tenant scope) carry over because
+    // this wrapper delegates every call; only issueSession gains the
+    // result-provenance gate.
+    super();
+    this.inner = inner;
+    this.ownResultIds = new Set([own.committedResultId]);
+    this.fixtureAuthPrefix = own.fixtureAuthPrefix;
+    this.registeredPrincipalIds = own.registeredPrincipalIds;
+  }
+
+  private readonly inner: SessionManager;
+  private readonly fixtureAuthPrefix: string;
+  private readonly registeredPrincipalIds: ReadonlySet<string>;
+
+  override issueSession(input: Parameters<SessionManager['issueSession']>[0]): ReturnType<SessionManager['issueSession']> {
+    const resultId = input.authentication.resultId;
+    const isOwn =
+      this.ownResultIds.has(resultId) ||
+      (typeof resultId === 'string' && resultId.startsWith(this.fixtureAuthPrefix));
+    if (!isOwn) {
+      return {
+        ok: false,
+        error: {
+          code: 'authentication-tenant-mismatch',
+          message: `the authentication result "${resultId}" was not issued by this tenant's identity boundary (R12 tenant isolation)`,
+        },
+      };
+    }
+    // Registered-principal guard: the authenticated principal must be
+    // registered in THIS environment's identity registry.
+    if (!this.registeredPrincipalIds.has(input.principalId)) {
+      return {
+        ok: false,
+        error: {
+          code: 'authentication-tenant-mismatch',
+          message: `the principal "${input.principalId}" is not registered in this tenant's identity registry (R12 tenant isolation)`,
+        },
+      };
+    }
+    return this.inner.issueSession(input);
+  }
+
+  // Every other gateway-used method delegates to the inner manager (its
+  // sessions map is the live state; this wrapper adds ONLY the issuance
+  // provenance gate).
+  override validateSession(sessionId: string, at: Timestamp): ReturnType<SessionManager['validateSession']> {
+    return this.inner.validateSession(sessionId, at);
+  }
+
+  override isUsable(record: SessionRecord, at: Timestamp): boolean {
+    return this.inner.isUsable(record, at);
+  }
+
+  override revokeSession(sessionId: string, at: Timestamp): ReturnType<SessionManager['revokeSession']> {
+    return this.inner.revokeSession(sessionId, at);
+  }
+}
+
+/** Build the tenant-scoped session authority for one fixture bundle. */
+function tenantScopedSessionManager(
+  inner: SessionManager,
+  bundle: FixtureBundle,
+): SessionManager {
+  const identity = asRecord(bundle.files['identity.json']!);
+  const registered = new Set<string>(
+    (identity['principals'] as readonly JsonValue[]).map(
+      (entry) => asRecord(asRecord(entry)['principal']!)['principalId'] as string,
+    ),
+  );
+  return new TenantScopedSessionManager(inner, {
+    committedResultId: bundle.committedAuthentication.resultId,
+    fixtureAuthPrefix: `fixture-auth-${bundle.domain}-`,
+    registeredPrincipalIds: registered,
+  });
 }
 
 /** The process-wide product runtime singleton (async, cached). */
