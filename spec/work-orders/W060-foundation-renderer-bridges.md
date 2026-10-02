@@ -1,6 +1,6 @@
 # W060 — Foundation Renderer & Asset Bridges
 
-Status: STAGED
+Status: AUTHORIZED
 Wave: ACR-007 / foundation bridges (serialized after the wave)
 Depends On: W057, W058, W059
 Worker Count: 1
