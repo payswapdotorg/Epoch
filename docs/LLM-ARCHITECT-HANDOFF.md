@@ -10,8 +10,9 @@ Epoch's ACR-005 productization program is complete (W001-W050, 50/50). ACR-006 (
 - Work Order schema: WO2.0.
 - W001-W050: COMPLETE (50/50).
 - ACR-005 completion anchor: W050 + governance advance `598210a2aed97c7a971c2bbdc2341133a987b137`; state-cleanup baseline at ACR-006 approval: `d77915ee8b0cbd596ed84be6b6ac2cc414afe962`.
-- Frontier: eligible=[W051]; blocked=[W052, W053, W054, W055].
-- Dispatch: W051 (serialized Tech Lead foundation) -> W052/W053/W054 concurrent (max 3, pairwise-disjoint) -> W055 (serialized closure).
+- Frontier: eligible=[W052, W053, W054]; blocked=[W055].
+- Dispatch: W052/W053/W054 concurrent NOW (max 3, pairwise-disjoint) -> W055 (serialized closure after all three).
+- W051 COMPLETE at 9dff75e (+ intake 2b3ab89 + reconcile 2e4aafd): every deployment seam is real and tested — the environment contract, guard port + S3/Upstash adapters, the binding layer, health/readyz, vercel.json, the six production specs, the verified cost contract.
 - Credential boundary: real provider provisioning (Vercel/Neon/R2/Upstash/Apify) requires operator-owned credentials; record VERIFIED/NOT-VERIFIED honestly; never fabricate deployment URLs.
 
 ## Read first

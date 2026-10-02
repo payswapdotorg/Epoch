@@ -55,9 +55,10 @@
     "W047",
     "W048",
     "W049",
-    "W050"
+    "W050",
+    "W051"
   ],
   "blocked": [],
   "lastMergeSha": "598210a2aed97c7a971c2bbdc2341133a987b137",
-  "lastAction": "ACR-006 (Public Deployment, Free-Tier Infrastructure & Production Operations) EFFECTIVE; W051 AUTHORIZED as the sole serialized foundation worker. After W051 merge + Tech Lead reconciliation, W052/W053/W054 unlock concurrently (pairwise-disjoint surfaces); W055 unlocks after all three."
+  "lastAction": "ACR-006 W051 COMPLETE (production deployment foundation: PR #117 -> 9dff75e, + the pg foundation intake PR #116 -> 2b3ab89 and the lockfile reconcile PR #118 -> 2e4aafd). W052/W053/W054 are ELIGIBLE concurrently (pairwise-disjoint surfaces per the ACR-006 section of spec/work-items.md); W055 unlocks after all three merge."
 }

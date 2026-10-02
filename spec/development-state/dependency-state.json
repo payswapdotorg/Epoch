@@ -1,15 +1,14 @@
 {
   "version": "WO2.0",
-  "completed": 50,
-  "completedThrough": "W050",
+  "completed": 51,
+  "completedThrough": "W051",
   "active": [],
   "eligible": [
-    "W051"
-  ],
-  "blocked": [
     "W052",
     "W053",
-    "W054",
+    "W054"
+  ],
+  "blocked": [
     "W055"
   ],
   "dependencyProgram": {
@@ -35,7 +34,9 @@
     "maxWorkers": 3,
     "current": [],
     "next": [
-      "W051"
+      "W052",
+      "W053",
+      "W054"
     ]
   }
 }
