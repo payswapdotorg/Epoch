@@ -596,6 +596,12 @@ importers:
       '@epoch/action-gateway':
         specifier: workspace:*
         version: link:../../services/action-gateway
+      '@epoch/adapter-renderer-babylonjs':
+        specifier: workspace:*
+        version: link:../../adapters/renderers/babylonjs
+      '@epoch/adapter-renderer-threejs':
+        specifier: workspace:*
+        version: link:../../adapters/renderers/threejs
       '@epoch/agent-protocol':
         specifier: workspace:*
         version: link:../../packages/agent-protocol
@@ -656,6 +662,9 @@ importers:
       react-dom:
         specifier: 'catalog:'
         version: 19.3.0(react@19.3.0)
+      three:
+        specifier: 'catalog:'
+        version: 0.186.1
       zod:
         specifier: 'catalog:'
         version: 4.6.5
@@ -705,6 +714,9 @@ importers:
       '@types/react-dom':
         specifier: 'catalog:'
         version: 19.3.0(@types/react@19.3.0)
+      '@types/three':
+        specifier: 'catalog:'
+        version: 0.186.0
       eslint:
         specifier: 'catalog:'
         version: 10.11.0(jiti@2.7.0)
@@ -817,6 +829,12 @@ importers:
       '@epoch/action-gateway':
         specifier: workspace:*
         version: link:../../services/action-gateway
+      '@epoch/adapter-renderer-babylonjs':
+        specifier: workspace:*
+        version: link:../../adapters/renderers/babylonjs
+      '@epoch/adapter-renderer-threejs':
+        specifier: workspace:*
+        version: link:../../adapters/renderers/threejs
       '@epoch/adapter-s3-object-store':
         specifier: workspace:*
         version: link:../../adapters/s3-object-store
@@ -838,6 +856,9 @@ importers:
       '@epoch/authorization':
         specifier: workspace:*
         version: link:../../packages/authorization
+      '@epoch/capability-registry':
+        specifier: workspace:*
+        version: link:../../packages/capability-registry
       '@epoch/client-runtime':
         specifier: workspace:*
         version: link:../../packages/client-runtime
@@ -862,6 +883,12 @@ importers:
       '@epoch/procurement':
         specifier: workspace:*
         version: link:../../packages/procurement
+      '@epoch/renderer-fabric':
+        specifier: workspace:*
+        version: link:../../packages/renderer-fabric
+      '@epoch/renderer-runtime':
+        specifier: workspace:*
+        version: link:../../packages/renderer-runtime
       '@epoch/solution-delivery':
         specifier: workspace:*
         version: link:../../packages/solution-delivery
@@ -871,9 +898,15 @@ importers:
       '@epoch/tenancy':
         specifier: workspace:*
         version: link:../../packages/tenancy
+      '@epoch/world-experience':
+        specifier: workspace:*
+        version: link:../../packages/world-experience
       '@epoch/world-model':
         specifier: workspace:*
         version: link:../../packages/world-model
+      '@epoch/world-runtime':
+        specifier: workspace:*
+        version: link:../../packages/world-runtime
       next:
         specifier: 'catalog:'
         version: 15.5.26(@playwright/test@1.63.0)(@types/node@22.20.4)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -883,6 +916,9 @@ importers:
       react-dom:
         specifier: 'catalog:'
         version: 19.3.0(react@19.3.0)
+      three:
+        specifier: 'catalog:'
+        version: 0.186.1
     devDependencies:
       '@epoch/eslint-config':
         specifier: workspace:*
@@ -908,6 +944,9 @@ importers:
       '@types/react-dom':
         specifier: 'catalog:'
         version: 19.3.0(@types/react@19.3.0)
+      '@types/three':
+        specifier: 'catalog:'
+        version: 0.186.0
       eslint:
         specifier: 'catalog:'
         version: 10.11.0(jiti@2.7.0)
