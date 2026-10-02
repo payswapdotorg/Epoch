@@ -2,8 +2,12 @@
   "version": "X2.0",
   "completed": 61,
   "completedThrough": "W061",
-  "active": [],
-  "eligible": [],
+  "active": [
+    "W062"
+  ],
+  "eligible": [
+    "W062"
+  ],
   "blocked": [],
   "dependencyProgram": {
     "W056": [
@@ -25,6 +29,9 @@
     ],
     "W061": [
       "W060"
+    ],
+    "W062": [
+      "ACR-007/W061"
     ]
   },
   "concurrency": {
