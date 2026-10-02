@@ -29,3 +29,12 @@ Implementation complete + verification green + evidence complete + Architect app
 
 ## Remediation
 Architect findings are fixed on the same branch/PR with regression evidence. Do not open replacement PRs for the same Work Order.
+
+
+## Active program: ACR-007 (X2.0)
+
+ACR-007 — Interactive World Runtime & Multi-Renderer Fabric is ACTIVE at `spec/architecture-change-requests/ACR-007-interactive-world-renderer-fabric.md`.
+
+ACR-006/W055 closed at the credential boundary (bd6bdbe). The Tech Lead recorded the X2.0 lock transition (2026-10-02): ACR-007 is EFFECTIVE; W056 is ELIGIBLE and dispatched first. The first concurrent wave after W056 is W057 | W058 | W059.
+
+The intended product requirement is non-negotiable: the central Epoch workspace is a real interactive spatial world. Third-party renderer/editor technology is hidden behind Epoch-owned adapters; no renderer becomes semantic authority.

@@ -89,3 +89,35 @@ Binding rules added by ACR-006:
 - Deployment URLs/identifiers are recorded only after verification; never fabricated.
 
 Binding implementation: W051 (serialized foundation) → W052/W053/W054 (concurrent, pairwise-disjoint) → W055 (serialized closure). See spec/architecture-change-requests/ACR-006-public-deployment.md and the ACR-006 sections of spec/work-items.md and spec/dependency-graph.md.
+
+
+## ACR-007 — Interactive World Runtime & Multi-Renderer Fabric
+
+ACR-007 is APPROVED_STAGED (2026-10-02). It targets X2.0 and activates after ACR-006/W055 completion plus a recorded lock transition.
+
+It introduces no semantic authority. It concretizes the existing Experience/Renderer capability boundary so Epoch can use interchangeable rendering foundations without exposing their applications as the primary product surface.
+
+Binding rules:
+
+- the World Model remains semantic authority;
+- World Experience remains a projection;
+- Renderer Fabric/session state is ephemeral and non-authoritative;
+- renderer switching reconstructs presentation from canonical Epoch projection data;
+- canonical world identity/digest, tenant, semantic focus/layers and portable presentation state survive switching;
+- renderer input becomes existing typed Epoch intents;
+- Action Gateway and Verification/Evidence authorities remain unchanged;
+- external foundations are provider capabilities behind adapters;
+- no vendor editor UI is required for the core user workflow;
+- renderer-specific scene graphs/caches/handles are never semantic state.
+
+Initial interactive backends: Three.js and Babylon.js embedded in the Epoch-owned surface. Blender is an external sidecar/high-fidelity capability. Godot/O3DE and other specialized foundations remain candidate capabilities subject to the existing capability-foundation/fork gates.
+
+Binding implementation: W056 -> (W057|W058|W059) -> W060 -> W061.
+
+### Lock transition — recorded 2026-10-02 (Tech Lead, X2.0 activation)
+
+1. ACR-006/W055 is COMPLETE at the credential boundary (final merge bd6bdbe; engineering complete, live deployment pending operator credentials — honestly recorded, never fabricated as deployed).
+2. The staged-successor gate in `spec/development-state/staged-successor.json` is satisfied: the Tech Lead records the **X2.0 lock transition**. The experience version is X2.0 from this transition forward. The E1.0/X1.0 numbered invariants above remain binding — ACR-007 extends them and introduces no second authority.
+3. ACR-007 is **EFFECTIVE**. Its implementation entry point is W056 (Renderer Fabric & Multi-Renderer Switching Contract), defined in `spec/work-orders/W056-renderer-fabric-foundation.md` with its dependency (ACR-006/W055) complete. Frontier update: W056 ELIGIBLE.
+4. After W056 merges, the first concurrent wave is W057 | W058 | W059 (pairwise-disjoint ownership surfaces, max three workers). W060 is serialized after all three; W061 is the serialized closure.
+5. The ACR-007 non-negotiables are binding: World Model remains semantic authority; renderer sessions are non-authoritative; renderer switching preserves canonical world identity/digest; at least two real interactive renderers; at least one external foundation path; no vendor UI as the primary Epoch surface.

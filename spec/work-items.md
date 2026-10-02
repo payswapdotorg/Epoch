@@ -144,3 +144,32 @@ Only W051 is initially authorized (Tech Lead serialized foundation). After W051 
 - Redis is non-authoritative (rate-limit/cache acceleration only); R2 stores bytes, not semantic truth; Apify output is untrusted adapter input with provenance.
 - Production profile fails closed on missing durable persistence; optional capabilities degrade gracefully; security gates never fail open.
 - Honest-blocking rule: real provider provisioning requires operator-owned credentials; work orders record VERIFIED/NOT-VERIFIED honestly and never fabricate deployment URLs or identifiers.
+
+
+# ACR-007 Interactive World + Multi-Renderer Work Orders
+
+ACR-007 is APPROVED_STAGED and becomes the successor implementation program after ACR-006/W055.
+
+| ID | Scope | Depends | Owned surfaces |
+|---|---|---|---|
+| W056 | Renderer Fabric & Multi-Renderer Switching Contract | ACR-006/W055 | contracts/renderers/*, packages/renderer-runtime/*, packages/renderer-adapters/*, packages/renderer-fabric/*, spec/renderer-fabric-architecture.md, docs/rendering/*, qa/renderer-conformance/* |
+| W057 | Interactive World Workspace & Game-like Engineering UX | W056 | packages/world-runtime/*, apps/web/src/features/world/*, apps/web/src/shell/* (world route only), apps/desktop/* (world host wiring), qa/world-experience/*, docs/journeys/interactive-world.md |
+| W058 | Three.js Embedded Interactive Renderer | W056 | adapters/renderers/threejs/*, qa/renderer-conformance/threejs/*, docs/rendering/threejs.md |
+| W059 | Babylon.js Embedded Interactive Renderer | W056 | adapters/renderers/babylonjs/*, qa/renderer-conformance/babylonjs/*, docs/rendering/babylonjs.md |
+| W060 | Foundation Renderer & Asset Bridges | W057,W058,W059 | adapters/renderers/blender/*, adapters/foundations/freecad/*, adapters/foundations/assimp/*, adapters/foundations/openusd/*, docs/rendering/*, qa/foundation-renderers/* |
+| W061 | Multi-Renderer Integration & Interactive World Closure | W060 | apps/web/*, apps/desktop/*, packages/world-runtime/*, packages/renderer-fabric/*, qa/rendering/*, qa/world-experience/*, docs/journeys/interactive-world.md, docs/rendering/*, release/clients/*, spec/PROJECT-STATE.md, spec/development-state/*, AI_CONTINUATION.md, docs/LLM-ARCHITECT-HANDOFF.md, README.md |
+
+## ACR-007 concurrency
+
+After ACR-006/W055 completion and the X2.0 lock transition:
+
+W057 | W058 | W059
+
+W060 is serialized after all three.
+W061 is serialized last.
+
+## ACR-007 completion invariant
+
+The central acceptance object is a real interactive spatial world, not a table/status substitute. At least two concrete renderers must mount the same canonical fixture and support the shared interaction battery; renderer switching must preserve semantic identity and digest; at least one external foundation path must operate behind the Epoch-owned surface.
+
+The detailed acceptance contracts live in `spec/architecture-change-requests/ACR-007-interactive-world-renderer-fabric.md` and each W056-W061 Work Order file.
