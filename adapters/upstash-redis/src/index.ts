@@ -157,13 +157,18 @@ export class UpstashRestGuard implements RequestGuard {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), this.timeoutMs);
     try {
-      const response = await this.fetchImpl(`${this.restUrl}/eval`, {
+      // BODY-STYLE REST (W053 live verification): the command is a JSON
+      // array POSTed to the REST ROOT. Posting to the `/eval` path PREFIX
+      // with a body is IGNORED by real Upstash (path-style endpoints take
+      // their arguments from the PATH) — a live-only defect the W051
+      // doubles could not see; this is the corrected, live-verified form.
+      const response = await this.fetchImpl(this.restUrl, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${this.restToken}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify([RATE_LIMIT_LUA, '1', key, String(ttlSeconds)]),
+        body: JSON.stringify(['EVAL', RATE_LIMIT_LUA, '1', key, String(ttlSeconds)]),
         signal: controller.signal,
       });
       if (!response.ok) return null;

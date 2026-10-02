@@ -92,6 +92,11 @@ export type {
   RequestGuardFailurePolicy,
 } from './rate-limit';
 
+// The reset/seed production-refusal guard (W053, ACR-006): the
+// script-layer enforcement of the production protection rules.
+export { productionHostOf, refusesProductionTarget } from './production-refusal';
+export type { ProductionTargetInput, ProductionTargetRefusal } from './production-refusal';
+
 // Deterministic product fixtures (construction + software domains).
 export {
   PRODUCT_FIXTURE_VERSION,

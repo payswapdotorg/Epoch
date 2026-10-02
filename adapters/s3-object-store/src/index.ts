@@ -362,6 +362,13 @@ export class S3ObjectStore implements ObjectStore {
     const result = await this.s3('GET', '', undefined, undefined, canonicalQuery);
     if (!result.ok) return result;
     const xml = new TextDecoder().decode(result.value);
+    // Malformed provider payload guard (the W053 negative battery): a
+    // 200 body that is not a ListBucketResult document (an HTML error
+    // page, truncated XML, garbage) must NOT masquerade as an empty
+    // listing — that would be a silent success. Typed unavailable.
+    if (!xml.includes('<ListBucketResult')) {
+      return unavailableError(`s3 listing response is not a ListBucketResult document (malformed provider payload)`);
+    }
     const entries: string[] = [];
     const contents = /<Contents>([\s\S]*?)<\/Contents>/g;
     for (const match of xml.matchAll(contents)) {

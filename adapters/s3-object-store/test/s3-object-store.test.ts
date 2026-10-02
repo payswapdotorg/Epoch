@@ -66,7 +66,9 @@ describe('signS3Request (the AWS SigV4 signer)', () => {
 });
 
 /** An in-bucket S3 fetch double (path-style; stores bytes + meta by URL). */
-function s3Double(options: { readonly failWith?: 'network' | 'status500' | 'malformedMeta' } = {}) {
+function s3Double(options: {
+  readonly failWith?: 'network' | 'status500' | 'malformedMeta' | 'garbageListings' | 'status403';
+} = {}) {
   const store = new Map<string, { readonly body: Uint8Array; readonly contentType: string }>();
   const requests: Array<{ readonly method: string; readonly url: string; readonly authorization: string }> = [];
   const fetchImpl = (async (url: string | URL | Request, init?: RequestInit) => {
@@ -78,7 +80,18 @@ function s3Double(options: { readonly failWith?: 'network' | 'status500' | 'malf
     });
     if (options.failWith === 'network') throw new Error('connection refused');
     if (options.failWith === 'status500') return new Response('boom', { status: 500 });
+    if (options.failWith === 'status403') {
+      return new Response(
+        '<?xml version="1.0"?><Error><Code>AccessDenied</Code><Message>Access Denied</Message></Error>',
+        { status: 403 },
+      );
+    }
     if (target.searchParams.get('list-type') === '2') {
+      if (options.failWith === 'garbageListings') {
+        // A 200 whose body is NOT ListBucketResult XML (an HTML error page
+        // from a broken proxy, truncated XML, garbage — the R2/HTTP reality).
+        return new Response('<html><body><h1>502 Bad Gateway</h1></body></html>', { status: 200 });
+      }
       const prefix = target.searchParams.get('prefix') ?? '';
       const keys = [...store.keys()].filter((key) => key.startsWith(prefix)).sort();
       const xml =
@@ -253,6 +266,53 @@ describe('S3ObjectStore (the SPI over the S3 double)', () => {
     expect(() => new S3ObjectStore({ ...CONFIG, endpoint: 'ftp://x' })).toThrow();
     expect(() => new S3ObjectStore({ ...CONFIG, bucket: '' })).toThrow();
     expect(() => new S3ObjectStore({ ...CONFIG, accessKeyId: '' })).toThrow();
+  });
+
+  it('NEGATIVE: invalid credentials (403 AccessDenied) → typed unavailable, never a raw provider XML error', async () => {
+    const store = createS3ObjectStore({
+      ...CONFIG,
+      fetchImpl: s3Double({ failWith: 'status403' }).fetchImpl,
+      clock: FIXED_CLOCK,
+    });
+    const put = await store.put(BYTES, METADATA);
+    expect(put.ok).toBe(false);
+    if (!put.ok) {
+      expect(put.error.code).toBe('unavailable');
+      // The provider's XML error body never crosses the SPI boundary.
+      expect(put.error.message).not.toContain('<Error>');
+      expect(put.error.message).not.toContain('AccessDenied');
+    }
+    const got = await store.get(digestOfBytes(BYTES));
+    expect(got.ok).toBe(false);
+    if (!got.ok) expect(got.error.code).toBe('unavailable');
+  });
+
+  it('NEGATIVE: malformed R2 listing payload (200 + non-XML garbage) → typed failure, never a silent empty list', async () => {
+    const double = s3Double({ failWith: 'garbageListings' });
+    const store = createS3ObjectStore({ ...CONFIG, fetchImpl: double.fetchImpl, clock: FIXED_CLOCK });
+    // The garbage-listing backend: list()/size() must fail TYPED — an
+    // empty listing would be a silent success on a malformed response.
+    await expect(store.list()).rejects.toBeInstanceOf(S3BackendUnavailableError);
+    await expect(store.list()).rejects.toThrow(/malformed provider payload/);
+    await expect(store.size()).rejects.toBeInstanceOf(S3BackendUnavailableError);
+    // The put/get paths are unaffected (they never parse listing XML).
+    const put = await store.put(BYTES, METADATA);
+    expect(put.ok).toBe(true);
+  });
+
+  it('NEGATIVE: truncated XML listing (missing root close) with valid prefix → typed failure or honest entries, never a lie', async () => {
+    // A body that HAS <ListBucketResult> but is truncated mid-entry: the
+    // regex extraction still yields well-formed <Key> entries only; a
+    // truncated entry contributes nothing (no fabricated keys).
+    const truncated =
+      '<?xml version="1.0"?><ListBucketResult><Contents><Key>meta/abc</Key></Contents><Contents><Key>meta/def';
+    const store = createS3ObjectStore({
+      ...CONFIG,
+      fetchImpl: (async () => new Response(truncated, { status: 200 })) as typeof fetch,
+      clock: FIXED_CLOCK,
+    });
+    const refs = await store.list();
+    expect(refs.length).toBe(0); // 'meta/abc' is not a digest key → skipped; nothing fabricated
   });
 
   it('key prefix support (multi-tenant bucket namespaces)', async () => {
