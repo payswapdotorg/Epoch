@@ -32,11 +32,14 @@ One Work Order = one branch = one PR. Workers never merge. Maximum three concurr
 
 ## Productization reality
 
-apps/web is not yet the finished product.
-apps/desktop is a typed reference host, not a downloadable native app.
-apps/mobile is a typed reference host, not a downloadable native app.
+ACR-005 is complete: W046-W050 all landed and the real client productization/journey-validation program is closed.
 
-W047/W048/W049 must turn these into real products and execute the visible UI journeys defined in spec/journey-validation.md.
+- Web: production product and J01-J12 browser journey validation complete.
+- Desktop: Tauri 2 product configuration and journey validation complete; native packaging is config-delivered where a Linux/Windows/macOS host toolchain was unavailable in the execution environment.
+- Mobile: Expo/React Native product configuration and journey validation complete; Android/iOS packaging is config-delivered where SDK/Xcode infrastructure was unavailable in the execution environment.
+- W050 cross-platform closure: 245/245 independent battery tasks, 4/4 CI checks in both contexts, 15 program defects closed, 0 unresolved P0/P1.
+
+See release/clients/release-manifest.json for the exact platform artifact-status records.
 
 ## Product journey rule
 
