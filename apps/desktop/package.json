@@ -33,6 +33,8 @@
   },
   "dependencies": {
     "@epoch/action-gateway": "workspace:*",
+    "@epoch/adapter-renderer-babylonjs": "workspace:*",
+    "@epoch/adapter-renderer-threejs": "workspace:*",
     "@epoch/agent-protocol": "workspace:*",
     "@epoch/application-gateway": "workspace:*",
     "@epoch/authentication": "workspace:*",
@@ -53,6 +55,7 @@
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "three": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
@@ -71,6 +74,7 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "@types/three": "catalog:",
     "eslint": "catalog:",
     "playwright": "catalog:",
     "typescript": "catalog:",

@@ -171,9 +171,19 @@ describe('desktop provider neutrality (lock rule 13)', () => {
     // authorities (embedded mode), the webview vendor trio, and zod —
     // plus the W057 world-host wiring pin (the interactive world
     // composes the real experience-layer stack: the fabric, the world
-    // runtime, the canonical projection, the capability registry).
+    // runtime, the canonical projection, the capability registry) — and
+    // the W061 closure pin: the two REAL engine renderers (the W058
+    // Three.js + W059 Babylon.js adapters behind the frozen fabric seam)
+    // plus `three` (catalog-pinned), the ONE engine runtime dependency —
+    // the GL surface the desktop world-host seam
+    // (app/components/world-host/browser-gl.ts) constructs the viewport
+    // renderer over. The Babylon engine enters through the ADAPTER's
+    // exported host factories (no @babylonjs/core import at the app
+    // layer); replaceable presentation capabilities, never authority.
     expect(Object.keys(manifest.dependencies ?? {}).sort()).toEqual([
       '@epoch/action-gateway',
+      '@epoch/adapter-renderer-babylonjs',
+      '@epoch/adapter-renderer-threejs',
       '@epoch/agent-protocol',
       '@epoch/application-gateway',
       '@epoch/authentication',
@@ -194,8 +204,10 @@ describe('desktop provider neutrality (lock rule 13)', () => {
       'next',
       'react',
       'react-dom',
+      'three',
       'zod',
     ]);
+    expect(manifest.dependencies?.three).toBe('catalog:');
     const devDeps = Object.keys(manifest.devDependencies ?? {}).sort();
     expect(devDeps).toContain('@epoch/experience-compiler');
     expect(devDeps).toContain('@epoch/identity');

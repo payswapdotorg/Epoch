@@ -5,7 +5,7 @@
 // invariants. (The full user-facing journey over the WEB feature
 // components lives in qa/world-experience.)
 import { describe, expect, it } from 'vitest';
-import { WorldWorkspaceRuntime } from '../src/workspace';
+import { WorldWorkspaceRuntime, spatialPresentationOf } from '../src/workspace';
 import { ManualFrameScheduler } from '../src/clock';
 import {
   FULL_RENDERER_ID,
@@ -32,9 +32,18 @@ describe('the workspace runtime — mount', () => {
   it('opens an active session presenting the canonical fixture revision', async () => {
     const { runtime, session } = await openWorkspace();
     expect(session.state).toBe('active');
-    expect(session.mountedWorldDigest).toBe(SCENE.digest);
+    // The session presents the SPATIAL PRESENTATION PROJECTION (W061): the
+    // derived canonical revision (host-chrome controls/narrative stay with
+    // the host) — a deterministic pure function of the canonical revision.
+    const presentation = spatialPresentationOf(SCENE);
+    expect(session.mountedWorldDigest).toBe(presentation.digest);
     expect(session.worldProjection.sceneId).toBe(SCENE_ID);
-    expect(session.worldProjection.worldDigest).toBe(SCENE.digest);
+    expect(session.worldProjection.worldDigest).toBe(presentation.digest);
+    // The projection keeps every SPATIAL entity/overlay/timeline record.
+    expect(presentation.entities).toEqual(SCENE.entities);
+    expect(presentation.controls).toEqual([]);
+    // The canonical workspace view model still reports the canonical digest.
+    expect(runtime.currentScene().digest).toBe(SCENE.digest);
     expect(runtime.session()?.rendererId).toBe(FULL_RENDERER_ID);
     await runtime.close();
   });
@@ -90,7 +99,7 @@ describe('the workspace runtime — semantic picking through the fabric seam', (
     // And the focused revision is presented by a FRESH session (digest continuity).
     const session = runtime.session();
     expect(session?.state).toBe('active');
-    expect(session?.worldProjection.worldDigest).toBe(runtime.currentScene().digest);
+    expect(session?.worldProjection.worldDigest).toBe(spatialPresentationOf(runtime.currentScene()).digest);
     await runtime.close();
   });
 
@@ -362,7 +371,7 @@ describe('the workspace runtime — renderer selector, health, fallback', () => 
     expect(switched.ok).toBe(true);
     if (!switched.ok) return;
     expect(switched.value.toRendererId).toBe(REDUCED_RENDERER_ID);
-    expect(switched.value.worldDigest).toBe(SCENE.digest);
+    expect(switched.value.worldDigest).toBe(spatialPresentationOf(SCENE).digest);
     expect(switched.value.fallbackApplied).toBe(false);
     // The reduced renderer skips the camera field (typed, listed).
     expect(switched.value.restoredViewFields).not.toContain('camera');

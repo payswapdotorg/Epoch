@@ -138,7 +138,7 @@ export type {
 } from './view-models';
 
 // The workspace runtime.
-export { WorldWorkspaceRuntime } from './workspace';
+export { WorldWorkspaceRuntime, spatialPresentationOf } from './workspace';
 export type {
   WorldWorkspaceInput,
   ViewportInputOutcome,

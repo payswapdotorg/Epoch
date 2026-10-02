@@ -14,7 +14,7 @@
 // foundation path (W060), browser/desktop E2E, and the Action Gateway
 // approval leg; this battery is the honest W057 scope.
 import { describe, expect, it } from 'vitest';
-import { navigationFromCamera } from '../../packages/world-runtime/src/index';
+import { navigationFromCamera, spatialPresentationOf } from '../../packages/world-runtime/src/index';
 import {
   AGENT_IDS,
   BRANCH_AT_MS,
@@ -354,11 +354,17 @@ describe('the world journey — enter the fixture problem through the spatial wo
     const { runtime } = await openWorkspace();
     try {
       const originalDigest = runtime.currentScene().digest;
+      // The SPATIAL PRESENTATION PROJECTION (W061): the derived canonical
+      // revision the fabric presents (host-chrome controls stay with the
+      // host) — the deterministic digest anchor of every fabric session and
+      // switch over this canonical revision.
+      const presentationDigest = spatialPresentationOf(runtime.currentScene()).digest;
+      expect(presentationDigest).not.toBe(originalDigest); // controls stripped
       const toReduced = await runtime.selectRenderer(REDUCED_RENDERER_ID);
       expect(toReduced.ok).toBe(true);
       if (toReduced.ok) {
         expect(toReduced.value.toRendererId).toBe(REDUCED_RENDERER_ID);
-        expect(toReduced.value.worldDigest).toBe(originalDigest);
+        expect(toReduced.value.worldDigest).toBe(presentationDigest);
         // The reduced renderer declares no camera portability — the skip
         // is typed and listed, never silent.
         expect(toReduced.value.skippedViewFields).toContain('camera');
@@ -370,7 +376,7 @@ describe('the world journey — enter the fixture problem through the spatial wo
       const backToFull = await runtime.selectRenderer(FULL_RENDERER_ID);
       expect(backToFull.ok).toBe(true);
       if (backToFull.ok) {
-        expect(backToFull.value.worldDigest).toBe(originalDigest);
+        expect(backToFull.value.worldDigest).toBe(presentationDigest);
         expect(backToFull.value.restoredViewFields).toContain('camera');
       }
       expect(runtime.viewModel().renderers.activeRendererId).toBe(FULL_RENDERER_ID);

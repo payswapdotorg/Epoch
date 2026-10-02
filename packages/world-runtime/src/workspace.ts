@@ -40,6 +40,24 @@
  *   same mount W058/W059's real engines occupy;
  * - it never reads the wall clock anywhere except the injected HostClock.
  *
+ * Measurement composition note (W061, the real-engine integration): the
+ * workspace's two-pick measurement composes on a NORMALIZED measure
+ * receipt. The contract-only reference adapter normalizes a measure-hinted
+ * click on EVERY pick (stateless), so two picks compose the intent there.
+ * The REAL engine adapters (W058/W059) implement a STATEFUL two-click
+ * affordance — their first measure-hinted click anchors the adapter's own
+ * measurement and returns a typed no-target receipt (the frozen receipt
+ * contract carries no hit on a no-target outcome, so the runtime cannot
+ * arm from it), so against those adapters the workspace composes on the
+ * FOURTH pick (the engines' every-second-click cadence: two adapter
+ * anchor/compose cycles). Deterministic and fully typed either way — the
+ * measure intent, its request effect and the declared overlay application
+ * are identical (see the qa/rendering cross-switch battery and the web
+ * world host tests). A receipt-vocabulary extension (a hit-carrying
+ * no-target) or stateless adapter normalization would collapse this to two
+ * picks; both surfaces are outside W061 ownership (recorded as the
+ * measure-UX advisory).
+ *
  * Scene revisions and the frozen fabric: a fabric session presents ONE
  * exact world revision (the W056 digest-continuity invariant), so every
  * canonical revision is presented by a FRESH session: capture the portable
@@ -59,10 +77,12 @@ import {
   type SwitchOutcome,
 } from '@epoch/renderer-fabric';
 import {
+  admitWorldScene,
   applySceneOverlay,
   applyWorldIntent,
   emptyWorldSceneStore,
   replaceWorldScene,
+  sealWorldSceneContent,
   type WorldIntentEffect,
   type WorldInteractionIntent,
   type WorldOntology,
@@ -150,6 +170,43 @@ export interface SwitchSummary {
   readonly skippedViewFields: readonly string[];
   readonly fallbackApplied: boolean;
   readonly worldDigest: string;
+}
+
+/**
+ * The SPATIAL PRESENTATION PROJECTION (W061): the canonical scene minus
+ * the HOST-CHROME graph kinds (`controls`, `narrativeBlocks`) — the derived
+ * canonical revision the renderer fabric presents.
+ *
+ * Why (the integration finding of mounting the REAL engines behind the
+ * W057 workspace): the W058 Three.js adapter deliberately declares only the
+ * SPATIAL hosting kinds (3d/animation/presence/timeline-replay — controls
+ * and narrative graphs are host chrome; a renderer that cannot host one
+ * must receive a typed `capability-denied` refusal, never a silent drop).
+ * The workspace's scene controls (R30) and narrative blocks are presented
+ * by the EPOCH-OWNED panels (the W057 host chrome), so the projection the
+ * engines mount is the canonical SPATIAL world — entity meshes, overlays,
+ * timeline, presence, camera — with the host-chrome kinds left to the host.
+ *
+ * Determinism: the projection is a pure function of the canonical revision
+ * (same revision -> same derived digest), so the W056 digest-continuity
+ * invariant carries across every switch and every session — the presented
+ * digest is the derived anchor of the canonical revision.
+ */
+export function spatialPresentationOf(scene: WorldScene): WorldScene {
+  if (scene.controls.length === 0 && scene.narrativeBlocks.length === 0) {
+    return scene;
+  }
+  const content = { ...scene, controls: [], narrativeBlocks: [] } as unknown as Record<string, unknown>;
+  delete content.digest;
+  const admitted = admitWorldScene(content, { expectedTenantId: scene.tenantScope.tenantId });
+  if (!admitted.ok) {
+    // The canonical revision already passed W016 admission; the stripped
+    // projection admits trivially. A failure here is a programming error.
+    throw new Error(
+      `the spatial presentation projection failed W016 admission: ${admitted.error.message}`,
+    );
+  }
+  return sealWorldSceneContent(admitted.value);
 }
 
 /** The workspace runtime. Construct per workspace mount; dispose on unmount. */
@@ -767,7 +824,11 @@ export class WorldWorkspaceRuntime {
     if (fabricSessionId === null) {
       return { ok: false, error: { code: 'unknown-session', message: 'no renderer session is open' } };
     }
-    const scene = this.currentScene();
+    // The SPATIAL PRESENTATION PROJECTION is the world every switch mounts
+    // (the derived canonical revision — host-chrome kinds stay with the
+    // host), so the digest the switch verifies and remounts is the derived
+    // anchor, identical across every renderer.
+    const scene = spatialPresentationOf(this.currentScene());
     const fallbacks = this.input.rendererPreference.filter(
       (candidate) => candidate !== targetRendererId && candidate !== this.rendererId,
     );
@@ -950,7 +1011,11 @@ export class WorldWorkspaceRuntime {
    * scene + navigation.
    */
   private async presentRevision(atMs: number): Promise<RuntimeResult<RendererSession>> {
-    const scene = this.currentScene();
+    // The SPATIAL PRESENTATION PROJECTION: the derived canonical revision
+    // the fabric presents (host-chrome kinds — controls, narrative — stay
+    // with the host; see spatialPresentationOf). One fabric session presents
+    // ONE exact derived revision (the W056 digest-continuity invariant).
+    const scene = spatialPresentationOf(this.currentScene());
     const previousSessionId = this.fabricSessionId;
     if (previousSessionId !== null) {
       await this.input.fabric.disposeSession(previousSessionId, atMs);

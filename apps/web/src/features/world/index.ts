@@ -1,10 +1,15 @@
 /**
  * The world feature module barrel (W016): typed view-model contracts,
- * pure deterministic projections, and presentational components.
+ * pure deterministic projections, presentational components — and, since
+ * W061, the REAL world host composition of the `/world` route (the
+ * @epoch/world-runtime workspace runtime over the REAL renderer fabric
+ * with the REAL Three.js/Babylon.js adapters + the reference fallback, and
+ * the browser GL surface seam).
  *
- * This module stands alone inside `apps/web` by design (see README.md):
- * no cross-package imports, no routes, no app-shell or global-provider
- * changes (W014's surface); W014 wires it to the host/API seam.
+ * The view-model/handler/component surface remains renderer- and
+ * runtime-agnostic by construction (the structural-mirror contracts the
+ * qa/world-experience harness pins); the host module is the app-owned
+ * composition layer that binds the REAL runtime + engines behind them.
  */
 export type {
   AdvanceEnvelopeInput,
@@ -101,6 +106,7 @@ export {
 export type { WorkspaceHandlers } from './workspace-handlers';
 export { WorldWorkspace } from './components/WorldWorkspace';
 export { WorldViewport } from './components/WorldViewport';
+export type { WorldViewportProps } from './components/WorldViewport';
 export {
   WorldControlsPanel,
   WorldInspectPanel,
@@ -111,3 +117,35 @@ export {
   WorldTimelineBar,
   WorldToolRail,
 } from './components/WorldWorkspacePanels';
+
+// W061 — the REAL world host: the runtime composition (the REAL engines
+// behind the REAL fabric) + the browser GL surface seam of the /world route.
+export { WorldWorkspaceHost } from './host/world-host';
+export {
+  ENGINE_CANVAS_SIZE,
+  webBabylonEngineHost,
+  webThreeSurfaceFactory,
+  type SurfaceProbe,
+} from './host/browser-gl';
+export {
+  AGENT_IDS,
+  BRANCH_AT_MS,
+  CONTROL_IDS,
+  DEVICE,
+  ENTITY_IDS,
+  ENGINE_RENDERER_IDS,
+  LAYERS,
+  ONTOLOGY,
+  OVERLAY_IDS,
+  REFERENCE_RENDERER_ID,
+  RENDERER_PREFERENCE,
+  SCENE,
+  SCENE_ID,
+  TENANT,
+  TRACK,
+  buildHeadlessWorldFabric,
+  buildWorldFabric,
+  isEngineRenderer,
+  type WebWorldFabric,
+  type WebWorldFabricOptions,
+} from './host/world-fixture';

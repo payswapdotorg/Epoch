@@ -91,6 +91,15 @@ describe('shell provider neutrality', () => {
     // packages (the product runtime composition + the frozen client
     // contract surface). NO third-party runtime dependency may appear;
     // every @epoch/* reference (runtime or dev) is a workspace link.
+    //
+    // The W061/X2.0 sanctioned exception (the world-host GL seam): `three`
+    // is the ONE non-framework runtime dependency, catalog-pinned — the
+    // engine surface the world host seam (src/features/world/host/
+    // browser-gl.ts) constructs the viewport's GL renderer over, behind
+    // the frozen renderer-fabric adapter seam (the W061 work order's
+    // engine-import discipline: engine imports live ONLY in the adapter
+    // packages and that app-level seam). It is a replaceable presentation
+    // capability, never semantic authority — the pin's substance holds.
     const manifest = JSON.parse(
       readFileSync(join(WEB_ROOT, 'package.json'), 'utf8'),
     ) as Record<string, Record<string, string>>;
@@ -99,6 +108,9 @@ describe('shell provider neutrality', () => {
     for (const dep of runtime) {
       if (dep.startsWith('@epoch/')) {
         expect(manifest.dependencies?.[dep]).toBe('workspace:*');
+      } else if (dep === 'three') {
+        // The W061 GL-seam exception: catalog-pinned, never a version literal.
+        expect(manifest.dependencies?.[dep]).toBe('catalog:');
       } else {
         expect(['next', 'react', 'react-dom']).toContain(dep);
       }
