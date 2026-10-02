@@ -1,0 +1,13 @@
+# W060 — the Blender sidecar adapter's local (pre-registration) link state.
+#
+# adapters/renderers/blender is a NESTED package path that the frozen
+# pnpm-workspace.yaml globs ("adapters/*" and "adapters/renderers/*" — one
+# level each) do not match, so until the Tech Lead's registration pass adds
+# the adapters/foundations/* + two-level renderer glob entries,
+# scripts/link-local.mjs builds a gitignored local node_modules (workspace
+# symlinks only — this package has ZERO external dependencies). Blender
+# itself is NEVER downloaded or bundled here: operators supply the binary
+# (EPOCH_BLENDER_PATH). Post-registration pnpm owns node_modules directly.
+node_modules
+.local-stage
+*.tsbuildinfo

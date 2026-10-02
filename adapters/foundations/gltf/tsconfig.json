@@ -1,0 +1,11 @@
+{
+  "//": "W060 — the glTF 2.0 asset bridge. Extends the shared library base; every bare import resolves through this package's node_modules (pnpm-managed post-registration; the gitignored local link state of scripts/link-local.mjs pre-registration — same resolution shape). The @epoch/world-contracts path mapping mirrors every workspace package's tsconfig (the kernel contract package the dependency chain type-checks through).",
+  "extends": "@epoch/tsconfig/library.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "paths": {
+      "@epoch/world-contracts": ["../../../contracts/world/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts", "vitest.config.mts"]
+}

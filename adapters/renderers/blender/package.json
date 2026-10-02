@@ -1,0 +1,35 @@
+{
+  "name": "@epoch/adapter-renderer-blender",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Blender Sidecar Renderer adapter (W060, ACR-007/X2.0) — the EXTERNAL-PROCESS foundation behind the frozen W056 RendererAdapter seam: Blender runs as a SEPARATE PROGRAM (never linked, never embedded — the GPLv2+/GPLv3 separate-executable posture recorded in docs/rendering/blender.md) driven through a TYPED process boundary (argv-array invocations ONLY, never a shell; per-invocation timeouts; stdout/stderr byte caps; scoped workspace directory with traversal-proof slugs; typed success/failure reports whose digests the adapter RE-COMPUTES — sidecar output is untrusted until verified). The sidecar job protocol: version probe, offscene/offscreen render of the canonical W016 projection (batch evidence capture — every mesh object carries its semantic entity id as a Blender custom property), and glTF/GLB export that re-enters through the @epoch/adapter-foundation-gltf bridge before anything binds (provider-native files never become Epoch authority). The adapter class is honest about being a BATCH renderer: no interactive input translation (typed refusals), no portable view state, declared mesh asset kinds only. Blender is NOT bundled: CI verifies the full boundary against a committed test double; a real Blender binary is exercised only by the ENV-GATED live battery (EPOCH_BLENDER_PATH + EPOCH_BLENDER_LIVE=1) — never fabricated as CI-verified.",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "link-local": "node scripts/link-local.mjs",
+    "typecheck": "node scripts/link-local.mjs && tsc --noEmit -p tsconfig.json",
+    "lint": "node scripts/link-local.mjs && eslint .",
+    "test": "node scripts/link-local.mjs && vitest run",
+    "test:live": "node scripts/link-local.mjs && EPOCH_BLENDER_LIVE=1 vitest run test/live-blender.test.ts"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/renderer-fabric": "workspace:*",
+    "@epoch/renderer-runtime": "workspace:*",
+    "@epoch/world-experience": "workspace:*"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

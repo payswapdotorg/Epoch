@@ -1,0 +1,25 @@
+{
+  "//": "W060 — the foundation-renderers battery's OWN type-checked validation path (the W056/W058 qa-battery doctrine, verbatim). qa/foundation-renderers is NOT a pnpm workspace package (pnpm-workspace.yaml is frozen), so these files have no pnpm-owned node_modules. The battery rides @epoch/adapter-foundation-gltf's pipeline: its `typecheck` script invokes this config; its vitest include runs the battery; its link script (the W060 chain root) creates the battery's node_modules symlink at test time. NOTHING here depends on that symlink for bare imports made DIRECTLY: 'vitest' is mapped to a REAL install location (the fabric package's install, the same pinned catalog version), and every product module (the fabric, the runtime, world-experience, the agent protocol, the shared conformance fixture, the glTF bridge, the Three.js adapter, and the Blender sidecar adapter) is imported RELATIVELY so each file resolves its own dependencies through its own package's node_modules (the adapters' local link state pre-registration; pnpm's own chain post-registration). A fresh checkout type-checks cold after the gltf bridge's `link-local` script builds the chain's link state.",
+  "extends": "../../packages/tsconfig/library.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "typeRoots": [
+      "../../packages/renderer-fabric/node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "vitest": [
+        "../../packages/renderer-fabric/node_modules/vitest/dist/index.d.ts"
+      ],
+      "@epoch/world-contracts": [
+        "../../contracts/world/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

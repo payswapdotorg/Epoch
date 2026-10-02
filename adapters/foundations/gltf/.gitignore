@@ -1,0 +1,12 @@
+# W060 — the glTF asset bridge's local (pre-registration) link state.
+#
+# adapters/foundations/gltf is a NESTED package path that the frozen
+# pnpm-workspace.yaml globs ("adapters/*" and "adapters/renderers/*" — one
+# level each) do not match, so until the Tech Lead's registration pass adds
+# the adapters/foundations/* glob entry, scripts/link-local.mjs builds a
+# gitignored local node_modules (workspace-package symlinks only — this
+# package has ZERO external dependencies). Post-registration pnpm owns
+# node_modules directly and none of this exists. Nothing here is committed.
+node_modules
+.local-stage
+*.tsbuildinfo
