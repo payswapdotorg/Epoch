@@ -59,3 +59,32 @@ A user can inspect the same project across web/desktop/mobile, capture on mobile
 
 ## Forbidden drift
 No client-owned lifecycle, no UI authority, no direct durable mutation, no provider/model semantics in kernel contracts, no Action Gateway bypass, no platform-specific semantic fork.
+
+
+## ACR-007 Interactive World Runtime & Multi-Renderer Fabric
+
+The product's primary engineering workspace is a spatial world, not a workflow table.
+
+The canonical flow is:
+
+```
+World/solution/delivery authority
+            |
+     World Experience
+            |
+      Renderer Fabric
+       /     |      \
+ Three.js  Babylon  external
+                    |
+                  Blender
+```
+
+The Renderer Fabric selects interchangeable backends by capability, task, device, fidelity and user preference. It creates ephemeral renderer sessions and translates between canonical Epoch scene/interaction contracts and renderer-native representations.
+
+Renderer switching must preserve canonical semantic identity/digest, tenant, focus/layer state and portable presentation state. Renderer-native caches, scene graphs, handles and local interpolation are disposable.
+
+Initial concrete backends are Three.js and Babylon.js as embedded interactive renderers. Blender is an external sidecar/high-fidelity capability. Godot/O3DE and specialized foundations remain candidates behind the same adapter boundary.
+
+The user should experience one Epoch application and one world workspace. Vendor editors/windows are not the normal product surface.
+
+See `spec/renderer-fabric-architecture.md`, `docs/rendering/README.md` and the ACR-007 Work Orders.
