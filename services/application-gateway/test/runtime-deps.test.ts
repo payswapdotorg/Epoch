@@ -1,9 +1,10 @@
-// RUNTIME DEPENDENCY POLICY (the W046 pin): the service's runtime
-// dependencies are EXACTLY the composed authority set + the W046 seams +
-// zod — NOTHING else. Evidence: this test reads the package manifest and
-// asserts the exact sets (the W045 pattern). No pg/pglite reference
-// exists (the binding is structural; the catalog pin is pending the Tech
-// Lead reconcile — see docs/product-runtime/limitations.md).
+// RUNTIME DEPENDENCY POLICY: the service's runtime dependencies are
+// EXACTLY the composed authority set + the W046/W051 seams + zod + the
+// pg 8.23.0 driver (materialized at its single documented binding point
+// by the W051 foundation intake — ACR-006; this package remains the ONLY
+// pg binding point, enforced by pg-boundary.test.ts). Evidence: this
+// test reads the package manifest and asserts the exact sets (the W045
+// pattern).
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -42,6 +43,7 @@ const EXPECTED_RUNTIME = [
   '@epoch/tenancy',
   '@epoch/verification',
   '@epoch/world-model',
+  'pg',
   'zod',
 ];
 
@@ -50,24 +52,23 @@ describe('the frozen runtime dependency policy (W046 pin)', () => {
     expect(Object.keys(manifest.dependencies).sort()).toEqual(EXPECTED_RUNTIME);
   });
 
-  it('no third-party dependency beyond zod (workspace @epoch deps + catalog pins only)', () => {
+  it('no third-party dependency beyond zod + pg (workspace @epoch deps + catalog pins only)', () => {
     for (const specifier of Object.keys(manifest.dependencies)) {
       expect(
-        specifier.startsWith('@epoch/') || specifier === 'zod',
+        specifier.startsWith('@epoch/') || specifier === 'zod' || specifier === 'pg',
         `${specifier} is not in the frozen policy`,
       ).toBe(true);
     }
     expect(manifest.dependencies.zod).toBe('catalog:');
+    expect(manifest.dependencies.pg).toBe('catalog:');
   });
 
-  it('pg / @types/pg NEVER referenced (structural runtime binding — the driver is injected); @electric-sql/pglite is the catalog-pinned TEST-ONLY real engine (post-reconcile state)', () => {
-    const all = { ...manifest.dependencies, ...manifest.devDependencies };
-    for (const specifier of Object.keys(all)) {
-      expect(['pg', '@types/pg'].includes(specifier), `${specifier} must never be a package dependency (structural binding only)`).toBe(false);
-    }
-    // The Tech Lead reconcile (PR #101) materialized the catalog pin: the
-    // real-engine suite is now LIVE. pg/pglite in the catalog, pglite here as
-    // a TEST-ONLY devDep; pg itself stays structural (bindPgPool injects it).
+  it('pg is catalog-pinned at its SINGLE binding point (W051 foundation, ACR-006); @types/pg types-only; @electric-sql/pglite remains the TEST-ONLY real engine', () => {
+    // The W051 foundation intake materialized the frozen pg 8.23.0 catalog
+    // pin at its documented consumer (this package). pg-boundary.test.ts
+    // still enforces that NO other package may import the driver.
+    expect(manifest.dependencies.pg).toBe('catalog:');
+    expect(manifest.devDependencies['@types/pg']).toBe('catalog:');
     expect(manifest.devDependencies['@electric-sql/pglite']).toBe('catalog:');
   });
 
