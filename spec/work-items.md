@@ -1,4 +1,4 @@
-# Epoch Work Items WO1.0
+# Epoch Work Items WO2.0
 
 One Work Order = one branch = one PR. Worker count = 1. Concurrent items must have pairwise-disjoint write surfaces. Only currently authorized items are recorded by live Work Order state.
 
