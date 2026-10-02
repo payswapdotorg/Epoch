@@ -1,13 +1,9 @@
 {
   "version": "X2.0",
-  "completed": 61,
-  "completedThrough": "W061",
-  "active": [
-    "W062"
-  ],
-  "eligible": [
-    "W062"
-  ],
+  "completed": 62,
+  "completedThrough": "W062",
+  "active": [],
+  "eligible": [],
   "blocked": [],
   "dependencyProgram": {
     "W056": [

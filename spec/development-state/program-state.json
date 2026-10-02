@@ -4,9 +4,7 @@
   "workOrderVersion": "WO2.0",
   "defaultBranch": "main",
   "maxConcurrentWorkers": 3,
-  "active": [
-    "W062"
-  ],
+  "active": [],
   "completed": [
     "W001",
     "W002",
@@ -68,9 +66,10 @@
     "W058",
     "W059",
     "W060",
-    "W061"
+    "W061",
+    "W062"
   ],
   "blocked": [],
-  "lastMergeSha": "0c17f6e0728833c35ff82d17cf85b176e32d8f8d",
-  "lastAction": "ACR-008 ACTIVATED (defect closure; no architecture change, no lock transition; E1.0/X2.0 invariants binding): the ledgered W016 marker-time P2 defect (lexicographic `${atMs}\\u0000${markerId}` string-key comparator in packages/world-experience/src/timeline.ts \u2014 mixed-digit-width marker times mis-sort: numerically ascending refused, numerically descending admitted with a wrong timeline end bound) closes through W062, the single serialized work order (numeric atMs + lexicographic markerId tie-break; the pinned known-issue battery flips into the regression record; the defect ledger closes fix->rerun->close). Authorized by the operator's standing continuation directive; the disposition was ledgered at the ACR-007/W061 closure. Standing operator inputs unchanged: provider credentials for the ACR-006 live deployment verification; a Blender binary for the env-gated live legs."
+  "lastMergeSha": "8f5eead1d952004e9ef751d765162cacb3358be4",
+  "lastAction": "ACR-008 W062 COMPLETE (defect closure executing on this branch, base main@8f5eead): the W016 marker-time P2 defect is CLOSED with the full discipline chain \u2014 the SceneTimelineSchema superRefine comparator in packages/world-experience/src/timeline.ts now compares atMs NUMERICALLY with the lexicographic markerId tie-break (the already-specified intent; strictly-ascending duplicate-free pairs unchanged; no schema/contract version bump, no second comparator, zero new dependencies); the pinned known-issue battery flipped into the closed-defect regression record (qa/world-experience/w016-marker-time-known-issue.test.ts: ascending mixed-width ADMITS with timelineEndMs 12000 and the in-track 8000ms position validating; the mirrored descending REFUSED with the typed admission error; the same-width control green \u2014 file path stable); the focused comparator regression added at the schema seam (packages/world-experience/test/timeline-ordering.test.ts, 5 tests); the defect-ledger entry closed in docs/journeys/interactive-world.md (fix -> rerun -> close with the exact evidence). Verification: world-experience typecheck+lint+268/268; world-runtime battery 70/70 (incl. the flipped record) + the qa harness cold typecheck; root governance+boundary PASS. ACR-008 closes at merge; frontier EMPTY; any further program again requires a new ACR. Standing operator inputs unchanged: provider credentials for the ACR-006 live deployment verification; a Blender binary for the env-gated live legs."
 }

@@ -1,37 +1,37 @@
-// THE KNOWN-ISSUE RECORD (W061) — the precise repro of the W057-discovered
-// W016 marker-time ordering defect, pinned against the REAL W016 admission
-// surface (`admitWorldScene` of @epoch/world-experience — the exact entry
-// point every scene producer, including the harness fixture and the web /
-// desktop world hosts, goes through).
+// THE CLOSED-DEFECT REGRESSION RECORD (W062 / ACR-008) — the same file,
+// the same discipline chain, the final links. This battery was born as the
+// W061 KNOWN-ISSUE pin against the REAL W016 admission surface
+// (`admitWorldScene` of @epoch/world-experience — the exact entry point
+// every scene producer, including the harness fixture and the web / desktop
+// world hosts, goes through), deliberately green while the defect stood so
+// it could never silently drift. W062 flipped it.
 //
-// THE DEFECT (ledgered P2, advisory-only for W061): the scene-timeline
-// refinement in packages/world-experience/src/timeline.ts compares
+// THE DEFECT (ledgered P2, CLOSED): the scene-timeline refinement in
+// packages/world-experience/src/timeline.ts compared
 // `${atMs}\u0000${markerId}` as STRINGS (lexicographic), so marker times of
-// MIXED DIGIT WIDTH mis-sort:
-//   - a numerically ASCENDING timeline (5000 then 12000) is REFUSED
+// MIXED DIGIT WIDTH mis-sorted:
+//   - a numerically ASCENDING timeline (5000 then 12000) was REFUSED
 //     ("markers must be sorted by (atMs, markerId) ascending") because
 //     "5000\0…" > "12000\0…" lexicographically — the honest scene author
-//     is rejected;
+//     was rejected;
 //   - the mirrored symptom: a numerically DESCENDING timeline (12000 then
-//     5000) is ADMITTED (because "12000\0…" < "5000\0…" lexicographically),
-//     and the admitted scene then computes a WRONG timeline end bound (the
-//     last marker's 5000 instead of the 12000 marker), rejecting in-bounds
-//     replay positions.
+//     5000) was ADMITTED, and the admitted scene computed a WRONG timeline
+//     end bound (the last marker's 5000 instead of the 12000 marker),
+//     rejecting in-bounds replay positions.
 //
-// THE DISCIPLINE CHAIN (observe -> record -> reproduce): observed during the
-// W057 journey bring-up; recorded in docs/journeys/interactive-world.md
-// (defect ledger) + the harness README advisory; REPRODUCED HERE against the
-// real W016 surface. The remaining links (fix -> rerun -> close) belong to
-// the W016 package owner (packages/world-experience is NOT a W061 surface —
-// frozen to this Work Order): the suggested fix is a numeric-aware
-// comparator (compare atMs numerically, tie-break on markerId).
-//
-// This battery deliberately PINS THE CURRENT (defective) behavior so it is
-// green while the defect stands: when the W016 comparator is fixed in a
-// future ACR, the "refused" and "wrong end bound" assertions below FLIP and
-// force the ledger update — the defect can never silently drift. The
-// harness fixture keeps working either way (it uses same-digit-width marker
-// times, the documented authoring workaround).
+// THE DISCIPLINE CHAIN (closed): observed (W057 journey bring-up) ->
+// recorded (docs/journeys/interactive-world.md defect ledger + the harness
+// README advisory) -> reproduced (this file, pinned against the real W016
+// surface while the defect stood) -> FIXED (W062 / ACR-008: the comparator
+// now compares atMs NUMERICALLY with the lexicographic markerId tie-break
+// — the ALREADY-SPECIFIED intent; no semantic change, no contract version
+// bump) -> rerun (this battery flipped green against the fixed comparator;
+// the focused comparator regression in packages/world-experience/test pins
+// the ordering at the schema seam) -> closed (the defect-ledger entry in
+// docs/journeys/interactive-world.md carries the fix -> rerun -> close
+// evidence). The same-digit-width workaround consumers (the harness
+// fixture, the W061 leg battery) are identical under both orderings and
+// stay green UNCHANGED.
 import { describe, expect, it } from 'vitest';
 import {
   admitWorldScene,
@@ -86,12 +86,11 @@ function sceneWithMarkers(markers: readonly SceneTimelineMarker[]): WorldSceneCo
   };
 }
 
-describe('KNOWN ISSUE (W016 P2, ledgered) — mixed-width marker times compare lexicographically', () => {
-  it('reproduces the refusal: a NUMERICALLY ASCENDING mixed-width timeline (5000 then 12000) fails the real W016 admission', () => {
-    // The honest author's scene: markers in ascending (atMs, markerId) order
-    // — 5000 < 12000 numerically. The lexicographic comparator
-    // ("5000\0mrk-first" > "12000\0mrk-second", because "5" > "1") rejects
-    // it with the canonical-ordering malformed-record issue.
+describe('CLOSED DEFECT (W016 P2, fixed by W062/ACR-008) — marker times now compare numerically', () => {
+  it('the fix: a NUMERICALLY ASCENDING mixed-width timeline (5000 then 12000) ADMITS through the real W016 admission', () => {
+    // The honest author's scene — 5000 < 12000 numerically — was rejected
+    // by the lexicographic comparator ("5000\0mrk-first" > "12000\0mrk-second"
+    // because "5" > "1"). The numeric comparator admits it.
     const admitted = admitWorldScene(
       sceneWithMarkers([
         { markerId: 'mrk-first', atMs: 5_000, markerKind: 'event' },
@@ -99,56 +98,77 @@ describe('KNOWN ISSUE (W016 P2, ledgered) — mixed-width marker times compare l
       ]),
       { expectedTenantId: TENANT },
     );
-    expect(admitted.ok).toBe(false);
-    if (admitted.ok || admitted.error.code !== 'malformed-record') {
-      throw new Error('the repro must fail admission under the current comparator');
+    expect(admitted.ok).toBe(true);
+    if (!admitted.ok) {
+      throw new Error(`the honest mixed-width scene must admit: ${admitted.error.message}`);
     }
-    const orderingIssue = admitted.error.issues.find((issue) =>
-      issue.message.includes('markers must be sorted by (atMs, markerId) ascending'),
-    );
-    expect(orderingIssue).toBeDefined();
-    expect(orderingIssue?.path).toBe('timeline.markers');
+    // The admitted order is the submitted (numerically ascending) order.
+    expect(admitted.value.timeline.markers.map((marker) => marker.atMs)).toEqual([5_000, 12_000]);
+    // The end bound is the LAST marker's time — the track's actual latest
+    // event (12000ms), not a lexicographic artifact.
+    expect(timelineEndMs(admitted.value.timeline)).toBe(12_000);
+    // The in-track 8000ms replay position (below the 12000ms marker)
+    // validates against the correct end bound.
+    const position = validateTimelinePosition(admitted.value.timeline, {
+      atMs: 8_000,
+      frameIndex: 1,
+      paused: false,
+    });
+    expect(position.ok).toBe(true);
   });
 
-  it('reproduces the mirror: a NUMERICALLY DESCENDING mixed-width timeline (12000 then 5000) is ADMITTED and computes a WRONG timeline end', () => {
-    // The mirrored symptom of the same comparator: "12000\0mrk-alpha" <
-    // "5000\0mrk-beta" lexicographically, so a scene whose markers run
-    // DOWNHILL in virtual time passes admission.
-    const admitted = admitWorldScene(
+  it('the mirrored fix: a NUMERICALLY DESCENDING mixed-width timeline (12000 then 5000) is REFUSED with the typed admission error — and the wrong end bound can no longer be admitted', () => {
+    // The mirrored symptom of the old comparator: "12000\0mrk-alpha" <
+    // "5000\0mrk-beta" lexicographically, so a scene whose markers ran
+    // DOWNHILL in virtual time passed admission and then computed the WRONG
+    // timeline end (5000, rejecting the in-track 8000ms position). The
+    // numeric comparator refuses it with the canonical-ordering
+    // malformed-record issue.
+    const refused = admitWorldScene(
       sceneWithMarkers([
         { markerId: 'mrk-alpha', atMs: 12_000, markerKind: 'event' },
         { markerId: 'mrk-beta', atMs: 5_000, markerKind: 'event' },
       ]),
       { expectedTenantId: TENANT },
     );
-    expect(admitted.ok).toBe(true);
-    if (!admitted.ok) {
-      throw new Error(`the mirrored scene must admit under the current comparator: ${admitted.error.message}`);
+    expect(refused.ok).toBe(false);
+    if (refused.ok || refused.error.code !== 'malformed-record') {
+      throw new Error('the mirrored scene must fail admission under the numeric comparator');
     }
-    // The admitted timeline is numerically descending — the defect made
-    // deterministic: the accepted order is the LEXICOGRAPHIC one.
-    expect(admitted.value.timeline.markers.map((marker) => marker.atMs)).toEqual([12_000, 5_000]);
-    // The wrong end bound: timelineEndMs takes the LAST marker's time (the
-    // 5000ms marker), not the track's actual latest event (12000ms).
-    expect(timelineEndMs(admitted.value.timeline)).toBe(5_000);
-    // The typed consequence: an in-bounds replay position (8000ms — inside
-    // the track, below the admitted 12000ms marker) is rejected as
-    // out-of-bounds by the replay gate.
-    const position = validateTimelinePosition(admitted.value.timeline, {
+    const orderingIssue = refused.error.issues.find((issue) =>
+      issue.message.includes('markers must be sorted by (atMs, markerId) ascending'),
+    );
+    expect(orderingIssue).toBeDefined();
+    expect(orderingIssue?.path).toBe('timeline.markers');
+    // The wrong-end-bound consequence disappears: the ONLY way this marker
+    // set enters is the honest ascending authoring, and there the end
+    // bound is the track's 12000ms event (never the old lexicographic
+    // artifact 5000ms), so the in-track 8000ms position validates.
+    const honest = admitWorldScene(
+      sceneWithMarkers([
+        { markerId: 'mrk-beta', atMs: 5_000, markerKind: 'event' },
+        { markerId: 'mrk-alpha', atMs: 12_000, markerKind: 'event' },
+      ]),
+      { expectedTenantId: TENANT },
+    );
+    expect(honest.ok).toBe(true);
+    if (!honest.ok) {
+      throw new Error(`the honest re-authoring must admit: ${honest.error.message}`);
+    }
+    expect(honest.value.timeline.markers.map((marker) => marker.atMs)).toEqual([5_000, 12_000]);
+    expect(timelineEndMs(honest.value.timeline)).toBe(12_000);
+    const position = validateTimelinePosition(honest.value.timeline, {
       atMs: 8_000,
       frameIndex: 1,
       paused: false,
     });
-    expect(position.ok).toBe(false);
-    if (position.ok) {
-      throw new Error('the wrong end bound must reject the in-track position');
-    }
-    expect(position.error.code).toBe('invalid-replay-position');
+    expect(position.ok).toBe(true);
   });
 
-  it('the control: same-digit-width marker times (5000 then 9000) admit cleanly — the trigger is exactly the mixed digit width', () => {
+  it('the control: same-digit-width marker times (5000 then 9000) admit cleanly — identical under both orderings', () => {
     // The documented authoring workaround the harness fixture relies on:
     // equal-width times sort identically lexicographically and numerically.
+    // It stays green UNCHANGED across the fix.
     const admitted = admitWorldScene(
       sceneWithMarkers([
         { markerId: 'mrk-first', atMs: 5_000, markerKind: 'event' },
