@@ -25,6 +25,7 @@ import { RENDERER_RUNTIME_SCHEMA_SURFACE } from './surface';
 import {
   RENDERER_CONTRACT_VERSION,
   RENDERER_DOCUMENT_KINDS,
+  RENDERER_FABRIC_PROTOCOL_VERSION,
   RENDERER_PROTOCOL_VERSION,
 } from './version';
 
@@ -47,12 +48,13 @@ export function renderRendererContractFiles(): Readonly<Record<string, string>> 
     contract: 'epoch/renderers',
     contractVersion: RENDERER_CONTRACT_VERSION,
     protocolVersion: RENDERER_PROTOCOL_VERSION,
+    fabricProtocolVersion: RENDERER_FABRIC_PROTOCOL_VERSION,
     description:
-      'Typed, versioned, provider-neutral Renderer Runtime hosting-surface contract (W013): abstract renderer descriptors (kind, capabilities, budgets), device-session snapshots over the W011 device vocabulary, negotiated bindings, invocation envelopes, and content-addressed receipts. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.',
+      'Typed, versioned, provider-neutral renderer contract (W013 hosting surface + W056 fabric): abstract renderer descriptors (kind, capabilities, budgets), device-session snapshots over the W011 device vocabulary, negotiated bindings, invocation envelopes, and content-addressed receipts (W013, unchanged); plus the fabric concepts (W056, additive): renderer capability sets, ephemeral sessions, portable view-state snapshots, switch requests/receipts, frame/input envelopes, intent receipts, typed failures, health, asset bindings, and conformance results. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.',
     dataTypes: RENDERER_RUNTIME_SCHEMA_SURFACE.map((entry) => entry.type),
     documentKinds: [...RENDERER_DOCUMENT_KINDS],
     jsonSchemaFidelity:
-      'structural-only: zod refinements (canonical set ordering, negotiated-limit consistency) are enforced by the runtime validators in @epoch/renderer-runtime and are not represented in the JSON Schema files',
+      'structural-only: zod refinements (canonical set ordering, negotiated-limit consistency, session/snapshot consistency) are enforced by the runtime validators in @epoch/renderer-runtime and are not represented in the JSON Schema files',
     emittedBy:
       'renderRendererContractFiles() in @epoch/renderer-runtime (z.toJSONSchema, JSON Schema draft 2020-12); digests are over the exact file bytes',
     schemas,

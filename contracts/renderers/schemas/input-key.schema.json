@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/InputKey",
+  "$defs": {
+    "InputKey": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "modifiers": {
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      },
+      "required": [
+        "key",
+        "modifiers"
+      ],
+      "additionalProperties": false,
+      "title": "InputKey",
+      "description": "One key input: a bounded key token plus its sorted modifier set."
+    }
+  }
+}

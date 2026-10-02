@@ -126,3 +126,184 @@ export type RendererIssueParity = Expect<Equals<contracts.RendererIssue, impl.Re
 export type RendererRuntimeErrorParity = Expect<
   Equals<contracts.RendererRuntimeError, impl.RendererRuntimeError>
 >;
+
+// ---------------------------------------------------------------------------
+// W056 — the Renderer Fabric contract (additive).
+// ---------------------------------------------------------------------------
+
+// Fabric protocol version + vocabularies.
+export type RendererFabricProtocolVersionParity = Expect<
+  Equals<contracts.RendererFabricProtocolVersion, impl.RendererFabricProtocolVersion>
+>;
+export type RendererSessionStateParity = Expect<
+  Equals<contracts.RendererSessionState, impl.RendererSessionState>
+>;
+export type RendererHealthStateParity = Expect<
+  Equals<contracts.RendererHealthState, impl.RendererHealthState>
+>;
+export type RendererDegradationKindParity = Expect<
+  Equals<contracts.RendererDegradationKind, impl.RendererDegradationKind>
+>;
+export type RendererInputKindParity = Expect<
+  Equals<contracts.RendererInputKind, impl.RendererInputKind>
+>;
+export type PortableViewStateFieldParity = Expect<
+  Equals<contracts.PortableViewStateField, impl.PortableViewStateField>
+>;
+export type RendererAssetKindParity = Expect<
+  Equals<contracts.RendererAssetKind, impl.RendererAssetKind>
+>;
+export type RendererAssetTrustStateParity = Expect<
+  Equals<contracts.RendererAssetTrustState, impl.RendererAssetTrustState>
+>;
+export type RendererIntentOutcomeParity = Expect<
+  Equals<contracts.RendererIntentOutcome, impl.RendererIntentOutcome>
+>;
+export type RendererConformanceCheckKindParity = Expect<
+  Equals<contracts.RendererConformanceCheckKind, impl.RendererConformanceCheckKind>
+>;
+export type RendererFailureCodeParity = Expect<
+  Equals<contracts.RendererFailureCode, impl.RendererFailureCode>
+>;
+
+// Mirrored W011 primitives newly consumed by the fabric contract.
+export type ProjectedAgentRefParity = Expect<
+  Equals<contracts.ProjectedAgentRef, impl.ProjectedAgentRef>
+>;
+export type QuaternionParity = Expect<Equals<contracts.Quaternion, impl.Quaternion>>;
+export type ReplayWindowParity = Expect<Equals<contracts.ReplayWindow, impl.ReplayWindow>>;
+export type Vec3Parity = Expect<Equals<contracts.Vec3, impl.Vec3>>;
+
+// Fabric-owned + mirrored W016 id grammars and input primitives.
+export type AssetBindingIdParity = Expect<
+  Equals<contracts.AssetBindingId, impl.AssetBindingId>
+>;
+export type FabricSessionIdParity = Expect<
+  Equals<contracts.FabricSessionId, impl.FabricSessionId>
+>;
+export type InputIdParity = Expect<Equals<contracts.InputId, impl.InputId>>;
+export type InputKeyParity = Expect<Equals<contracts.InputKey, impl.InputKey>>;
+export type PointerPositionParity = Expect<
+  Equals<contracts.PointerPosition, impl.PointerPosition>
+>;
+export type SwitchIdParity = Expect<Equals<contracts.SwitchId, impl.SwitchId>>;
+export type SemanticLayerIdParity = Expect<
+  Equals<contracts.SemanticLayerId, impl.SemanticLayerId>
+>;
+export type WorldEntityIdMirrorParity = Expect<
+  Equals<contracts.WorldEntityIdMirror, impl.WorldEntityIdMirror>
+>;
+export type WorldSceneIdMirrorParity = Expect<
+  Equals<contracts.WorldSceneIdMirror, impl.WorldSceneIdMirror>
+>;
+
+// The portable view state (mirrored W016 camera/timeline grammars).
+export type PortableCameraStateParity = Expect<
+  Equals<contracts.PortableCameraState, impl.PortableCameraState>
+>;
+export type PortableFollowAgentCameraParity = Expect<
+  Equals<contracts.PortableFollowAgentCamera, impl.PortableFollowAgentCamera>
+>;
+export type PortableFollowCursorStateParity = Expect<
+  Equals<contracts.PortableFollowCursorState, impl.PortableFollowCursorState>
+>;
+export type PortableFreeCameraParity = Expect<
+  Equals<contracts.PortableFreeCamera, impl.PortableFreeCamera>
+>;
+export type PortableOrbitCameraParity = Expect<
+  Equals<contracts.PortableOrbitCamera, impl.PortableOrbitCamera>
+>;
+export type PortableTimelinePositionParity = Expect<
+  Equals<contracts.PortableTimelinePosition, impl.PortableTimelinePosition>
+>;
+export type PortableViewStateParity = Expect<
+  Equals<contracts.PortableViewState, impl.PortableViewState>
+>;
+export type SemanticLayerVisibilityParity = Expect<
+  Equals<contracts.SemanticLayerVisibility, impl.SemanticLayerVisibility>
+>;
+
+// The renderer capability set.
+export type RendererCapabilitySetParity = Expect<
+  Equals<contracts.RendererCapabilitySet, impl.RendererCapabilitySet>
+>;
+
+// Renderer health.
+export type RendererHealthParity = Expect<
+  Equals<contracts.RendererHealth, impl.RendererHealth>
+>;
+
+// The typed fabric failure taxonomy.
+export type RendererFailureParity = Expect<
+  Equals<contracts.RendererFailure, impl.RendererFailure>
+>;
+export type RendererFailureTriggerParity = Expect<
+  Equals<contracts.RendererFailureTrigger, impl.RendererFailureTrigger>
+>;
+
+// The canonical world projection reference.
+export type WorldProjectionRefParity = Expect<
+  Equals<contracts.WorldProjectionRef, impl.WorldProjectionRef>
+>;
+
+// The ephemeral renderer session.
+export type RendererSessionContentParity = Expect<
+  Equals<contracts.RendererSessionContent, impl.RendererSessionContent>
+>;
+export type RendererSessionParity = Expect<
+  Equals<contracts.RendererSession, impl.RendererSession>
+>;
+
+// The portable session snapshot.
+export type RendererSessionSnapshotContentParity = Expect<
+  Equals<contracts.RendererSessionSnapshotContent, impl.RendererSessionSnapshotContent>
+>;
+export type RendererSessionSnapshotParity = Expect<
+  Equals<contracts.RendererSessionSnapshot, impl.RendererSessionSnapshot>
+>;
+
+// Renderer switching.
+export type RendererSwitchRequestParity = Expect<
+  Equals<contracts.RendererSwitchRequest, impl.RendererSwitchRequest>
+>;
+export type RendererSwitchReceiptContentParity = Expect<
+  Equals<contracts.RendererSwitchReceiptContent, impl.RendererSwitchReceiptContent>
+>;
+export type RendererSwitchReceiptParity = Expect<
+  Equals<contracts.RendererSwitchReceipt, impl.RendererSwitchReceipt>
+>;
+
+// The frame envelope.
+export type RendererFrameEnvelopeParity = Expect<
+  Equals<contracts.RendererFrameEnvelope, impl.RendererFrameEnvelope>
+>;
+
+// The input envelope + intent receipt.
+export type RendererInputEnvelopeParity = Expect<
+  Equals<contracts.RendererInputEnvelope, impl.RendererInputEnvelope>
+>;
+export type RendererIntentReceiptContentParity = Expect<
+  Equals<contracts.RendererIntentReceiptContent, impl.RendererIntentReceiptContent>
+>;
+export type RendererIntentReceiptParity = Expect<
+  Equals<contracts.RendererIntentReceipt, impl.RendererIntentReceipt>
+>;
+
+// The asset binding.
+export type RendererAssetBindingContentParity = Expect<
+  Equals<contracts.RendererAssetBindingContent, impl.RendererAssetBindingContent>
+>;
+export type RendererAssetBindingParity = Expect<
+  Equals<contracts.RendererAssetBinding, impl.RendererAssetBinding>
+>;
+
+// The conformance result.
+export type RendererConformanceCheckParity = Expect<
+  Equals<contracts.RendererConformanceCheck, impl.RendererConformanceCheck>
+>;
+export type RendererConformanceResultContentParity = Expect<
+  Equals<contracts.RendererConformanceResultContent, impl.RendererConformanceResultContent>
+>;
+export type RendererConformanceResultParity = Expect<
+  Equals<contracts.RendererConformanceResult, impl.RendererConformanceResult>
+>;

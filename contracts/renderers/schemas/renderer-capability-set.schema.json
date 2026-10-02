@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererCapabilitySet",
+  "$defs": {
+    "RendererCapabilitySet": {
+      "type": "object",
+      "properties": {
+        "capabilityVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "rendererId": {
+          "$ref": "#/$defs/RendererId"
+        },
+        "hitTesting": {
+          "type": "boolean"
+        },
+        "measurement": {
+          "type": "boolean"
+        },
+        "annotation": {
+          "type": "boolean"
+        },
+        "frameCapture": {
+          "type": "boolean"
+        },
+        "sessionSwitching": {
+          "type": "boolean"
+        },
+        "snapshotCapture": {
+          "type": "boolean"
+        },
+        "degradation": {
+          "minItems": 1,
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RendererDegradationKind"
+          }
+        },
+        "portableViewState": {
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PortableViewStateField"
+          }
+        },
+        "assetKinds": {
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RendererAssetKind"
+          }
+        }
+      },
+      "required": [
+        "capabilityVersion",
+        "rendererId",
+        "hitTesting",
+        "measurement",
+        "annotation",
+        "frameCapture",
+        "sessionSwitching",
+        "snapshotCapture",
+        "degradation",
+        "portableViewState",
+        "assetKinds"
+      ],
+      "additionalProperties": false,
+      "title": "RendererCapabilitySet",
+      "description": "The fabric capability declaration of a renderer adapter: hit-testing, measurement/annotation translation, frame capture, switching/snapshot support, typed degradations, portable view-state restore fields, and bindable asset kinds."
+    },
+    "RendererId": {
+      "type": "string",
+      "pattern": "^rr-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RendererId",
+      "description": "Renderer-descriptor identifier: \"rr-\" followed by a lowercase slug (never a vendor product)."
+    },
+    "RendererDegradationKind": {
+      "type": "string",
+      "enum": [
+        "none",
+        "reduced-fidelity",
+        "static-frame",
+        "wireframe"
+      ],
+      "title": "RendererDegradationKind",
+      "description": "Typed presentation-fidelity degradation a renderer may apply (never a semantic change): none, reduced-fidelity, static-frame, or wireframe."
+    },
+    "PortableViewStateField": {
+      "type": "string",
+      "enum": [
+        "camera",
+        "focused-entities",
+        "layer-visibility",
+        "timeline-position"
+      ],
+      "title": "PortableViewStateField",
+      "description": "One portable view-state field a renderer can restore across a switch: camera, focused-entities, layer-visibility, or timeline-position."
+    },
+    "RendererAssetKind": {
+      "type": "string",
+      "enum": [
+        "animation",
+        "material",
+        "mesh",
+        "texture"
+      ],
+      "title": "RendererAssetKind",
+      "description": "Content-addressed asset kind a renderer can bind: animation, material, mesh, or texture."
+    }
+  }
+}

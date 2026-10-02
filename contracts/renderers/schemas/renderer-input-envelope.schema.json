@@ -1,0 +1,297 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererInputEnvelope",
+  "$defs": {
+    "RendererInputEnvelope": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PointerInputEnvelope"
+        },
+        {
+          "$ref": "#/$defs/KeyInputEnvelope"
+        },
+        {
+          "$ref": "#/$defs/WheelInputEnvelope"
+        }
+      ],
+      "title": "RendererInputEnvelope",
+      "description": "One raw renderer input envelope (pre-normalization): pointer, key, or wheel primitive from a declared interaction modality."
+    },
+    "PointerInputEnvelope": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-input-envelope"
+        },
+        "fabricProtocolVersion": {
+          "$ref": "#/$defs/RendererFabricProtocolVersion"
+        },
+        "inputId": {
+          "$ref": "#/$defs/InputId"
+        },
+        "fabricSessionId": {
+          "$ref": "#/$defs/FabricSessionId"
+        },
+        "atMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "modality": {
+          "$ref": "#/$defs/InteractionModality"
+        },
+        "inputKind": {
+          "type": "string",
+          "enum": [
+            "pointer-down",
+            "pointer-move",
+            "pointer-up"
+          ]
+        },
+        "pointer": {
+          "$ref": "#/$defs/PointerPosition"
+        },
+        "intentHint": {
+          "type": "object",
+          "properties": {
+            "intent": {
+              "$ref": "#/$defs/ControlIntent"
+            }
+          },
+          "required": [
+            "intent"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema",
+        "fabricProtocolVersion",
+        "inputId",
+        "fabricSessionId",
+        "atMs",
+        "modality",
+        "inputKind",
+        "pointer"
+      ],
+      "additionalProperties": false,
+      "title": "PointerInputEnvelope",
+      "description": "One raw pointer input envelope: normalized viewport position plus optional intent hint."
+    },
+    "RendererFabricProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RendererFabricProtocolVersion",
+      "description": "Exact renderer-fabric protocol version admitted by this release (\"1.0.0\")."
+    },
+    "InputId": {
+      "type": "string",
+      "pattern": "^rin-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "InputId",
+      "description": "Renderer input identifier: \"rin-\" followed by a lowercase slug."
+    },
+    "FabricSessionId": {
+      "type": "string",
+      "pattern": "^fx-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "FabricSessionId",
+      "description": "Renderer fabric-session identifier: \"fx-\" followed by a lowercase slug (ephemeral, non-authoritative)."
+    },
+    "VirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "VirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (mirrored shared primitive; canonical home @epoch/experience-runtime)."
+    },
+    "InteractionModality": {
+      "type": "string",
+      "enum": [
+        "gamepad",
+        "gaze",
+        "gesture",
+        "keyboard",
+        "pointer",
+        "touch",
+        "voice"
+      ],
+      "title": "InteractionModality",
+      "description": "Neutral interaction modality of a device."
+    },
+    "PointerPosition": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "y": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "additionalProperties": false,
+      "title": "PointerPosition",
+      "description": "Normalized pointer position in the renderer viewport: x/y in [0, 1]."
+    },
+    "ControlIntent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false,
+      "title": "ControlIntent",
+      "description": "Typed UI intent a control emits: qualified id plus semver core (shape-compatible with the action-protocol ActionTypeReference)."
+    },
+    "KeyInputEnvelope": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-input-envelope"
+        },
+        "fabricProtocolVersion": {
+          "$ref": "#/$defs/RendererFabricProtocolVersion"
+        },
+        "inputId": {
+          "$ref": "#/$defs/InputId"
+        },
+        "fabricSessionId": {
+          "$ref": "#/$defs/FabricSessionId"
+        },
+        "atMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "modality": {
+          "$ref": "#/$defs/InteractionModality"
+        },
+        "inputKind": {
+          "type": "string",
+          "enum": [
+            "key-down",
+            "key-up"
+          ]
+        },
+        "key": {
+          "$ref": "#/$defs/InputKey"
+        }
+      },
+      "required": [
+        "schema",
+        "fabricProtocolVersion",
+        "inputId",
+        "fabricSessionId",
+        "atMs",
+        "modality",
+        "inputKind",
+        "key"
+      ],
+      "additionalProperties": false,
+      "title": "KeyInputEnvelope",
+      "description": "One raw key input envelope: bounded key token plus sorted modifier set."
+    },
+    "InputKey": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "modifiers": {
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      },
+      "required": [
+        "key",
+        "modifiers"
+      ],
+      "additionalProperties": false,
+      "title": "InputKey",
+      "description": "One key input: a bounded key token plus its sorted modifier set."
+    },
+    "WheelInputEnvelope": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-input-envelope"
+        },
+        "fabricProtocolVersion": {
+          "$ref": "#/$defs/RendererFabricProtocolVersion"
+        },
+        "inputId": {
+          "$ref": "#/$defs/InputId"
+        },
+        "fabricSessionId": {
+          "$ref": "#/$defs/FabricSessionId"
+        },
+        "atMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "modality": {
+          "$ref": "#/$defs/InteractionModality"
+        },
+        "inputKind": {
+          "type": "string",
+          "const": "wheel"
+        },
+        "delta": {
+          "$ref": "#/$defs/WheelDelta"
+        }
+      },
+      "required": [
+        "schema",
+        "fabricProtocolVersion",
+        "inputId",
+        "fabricSessionId",
+        "atMs",
+        "modality",
+        "inputKind",
+        "delta"
+      ],
+      "additionalProperties": false,
+      "title": "WheelInputEnvelope",
+      "description": "One raw wheel input envelope: scroll axes."
+    },
+    "WheelDelta": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "additionalProperties": false,
+      "title": "WheelDelta",
+      "description": "One wheel delta: bounded scroll axes."
+    }
+  }
+}

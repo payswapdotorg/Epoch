@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererAssetTrustState",
+  "$defs": {
+    "RendererAssetTrustState": {
+      "type": "string",
+      "enum": [
+        "untrusted",
+        "validated"
+      ],
+      "title": "RendererAssetTrustState",
+      "description": "Trust state of a renderer asset binding: untrusted (never mounts) or validated."
+    }
+  }
+}

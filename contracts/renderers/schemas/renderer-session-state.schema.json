@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererSessionState",
+  "$defs": {
+    "RendererSessionState": {
+      "type": "string",
+      "enum": [
+        "active",
+        "created",
+        "degraded",
+        "disposed",
+        "suspended"
+      ],
+      "title": "RendererSessionState",
+      "description": "Lifecycle state of a renderer fabric session: created, active, degraded, suspended, or disposed (terminal)."
+    }
+  }
+}

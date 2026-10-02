@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/WorldProjectionRef",
+  "$defs": {
+    "WorldProjectionRef": {
+      "type": "object",
+      "properties": {
+        "sceneId": {
+          "$ref": "#/$defs/WorldSceneIdMirror"
+        },
+        "worldDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        }
+      },
+      "required": [
+        "sceneId",
+        "worldDigest",
+        "tenantScope"
+      ],
+      "additionalProperties": false,
+      "title": "WorldProjectionRef",
+      "description": "The canonical world projection reference: world-experience scene id, content digest of the exact scene revision, and owning tenant scope — the identity triple that survives renderer switching."
+    },
+    "WorldSceneIdMirror": {
+      "type": "string",
+      "pattern": "^wsc-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldSceneIdMirror",
+      "description": "World scene identifier (mirrored W016 grammar; canonical home @epoch/world-experience): \"wsc-\" + lowercase slug."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    }
+  }
+}

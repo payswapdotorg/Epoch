@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererDegradationKind",
+  "$defs": {
+    "RendererDegradationKind": {
+      "type": "string",
+      "enum": [
+        "none",
+        "reduced-fidelity",
+        "static-frame",
+        "wireframe"
+      ],
+      "title": "RendererDegradationKind",
+      "description": "Typed presentation-fidelity degradation a renderer may apply (never a semantic change): none, reduced-fidelity, static-frame, or wireframe."
+    }
+  }
+}

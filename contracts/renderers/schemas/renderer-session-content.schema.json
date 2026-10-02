@@ -1,0 +1,1095 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererSessionContent",
+  "$defs": {
+    "RendererSessionContent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-session"
+        },
+        "fabricProtocolVersion": {
+          "$ref": "#/$defs/RendererFabricProtocolVersion"
+        },
+        "fabricSessionId": {
+          "$ref": "#/$defs/FabricSessionId"
+        },
+        "capabilityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "rendererId": {
+          "$ref": "#/$defs/RendererId"
+        },
+        "rendererSessionId": {
+          "$ref": "#/$defs/RendererSessionId"
+        },
+        "binding": {
+          "$ref": "#/$defs/RendererBinding"
+        },
+        "capabilities": {
+          "$ref": "#/$defs/RendererCapabilitySet"
+        },
+        "worldProjection": {
+          "$ref": "#/$defs/WorldProjectionRef"
+        },
+        "viewState": {
+          "$ref": "#/$defs/PortableViewState"
+        },
+        "health": {
+          "$ref": "#/$defs/RendererHealth"
+        },
+        "state": {
+          "$ref": "#/$defs/RendererSessionState"
+        },
+        "createdAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "mountedWorldDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "mountedAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "lastFrameIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "invocationCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "switchCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "schema",
+        "fabricProtocolVersion",
+        "fabricSessionId",
+        "capabilityId",
+        "rendererId",
+        "rendererSessionId",
+        "binding",
+        "capabilities",
+        "worldProjection",
+        "viewState",
+        "health",
+        "state",
+        "createdAtMs",
+        "invocationCount",
+        "switchCount"
+      ],
+      "additionalProperties": false,
+      "title": "RendererSessionContent",
+      "description": "The content of an ephemeral renderer session record: identity, embedded W013 binding, capability set, world projection reference, portable view state, health, lifecycle state, and execution counters."
+    },
+    "RendererFabricProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RendererFabricProtocolVersion",
+      "description": "Exact renderer-fabric protocol version admitted by this release (\"1.0.0\")."
+    },
+    "FabricSessionId": {
+      "type": "string",
+      "pattern": "^fx-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "FabricSessionId",
+      "description": "Renderer fabric-session identifier: \"fx-\" followed by a lowercase slug (ephemeral, non-authoritative)."
+    },
+    "RendererId": {
+      "type": "string",
+      "pattern": "^rr-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RendererId",
+      "description": "Renderer-descriptor identifier: \"rr-\" followed by a lowercase slug (never a vendor product)."
+    },
+    "RendererSessionId": {
+      "type": "string",
+      "pattern": "^rs-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RendererSessionId",
+      "description": "Renderer-session identifier: \"rs-\" followed by a lowercase slug."
+    },
+    "RendererBinding": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-binding"
+        },
+        "protocolVersion": {
+          "$ref": "#/$defs/RendererProtocolVersion"
+        },
+        "rendererSessionId": {
+          "$ref": "#/$defs/RendererSessionId"
+        },
+        "renderer": {
+          "$ref": "#/$defs/RendererDescriptor"
+        },
+        "device": {
+          "$ref": "#/$defs/DeviceSessionSnapshot"
+        },
+        "effective": {
+          "$ref": "#/$defs/EffectiveLimits"
+        },
+        "state": {
+          "$ref": "#/$defs/RendererBindingState"
+        },
+        "boundAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "lastFrameIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "mountedStateDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "mountedAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "invocationCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "digest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "schema",
+        "protocolVersion",
+        "rendererSessionId",
+        "renderer",
+        "device",
+        "effective",
+        "state",
+        "boundAtMs",
+        "invocationCount",
+        "digest"
+      ],
+      "additionalProperties": false,
+      "title": "RendererBinding",
+      "description": "The sealed renderer binding record: negotiated, lifecycle-tracked binding content plus its SHA-256 content digest (exact-revision addressing)."
+    },
+    "RendererProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RendererProtocolVersion",
+      "description": "Exact renderer-runtime protocol version admitted by this release (\"1.0.0\")."
+    },
+    "RendererDescriptor": {
+      "type": "object",
+      "properties": {
+        "descriptorVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "rendererId": {
+          "$ref": "#/$defs/RendererId"
+        },
+        "graphKinds": {
+          "minItems": 1,
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExperienceGraphKind"
+          }
+        },
+        "interaction": {
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionModality"
+          }
+        },
+        "output": {
+          "$ref": "#/$defs/RendererOutputCapabilities"
+        },
+        "budgets": {
+          "$ref": "#/$defs/RendererBudgets"
+        }
+      },
+      "required": [
+        "descriptorVersion",
+        "rendererId",
+        "graphKinds",
+        "interaction",
+        "output",
+        "budgets"
+      ],
+      "additionalProperties": false,
+      "title": "RendererDescriptor",
+      "description": "Abstract, provider-neutral renderer descriptor: hosting kinds, serviced modalities, output capabilities, and budgets as typed data; concrete engines are future adapters."
+    },
+    "ExperienceGraphKind": {
+      "type": "string",
+      "enum": [
+        "2d",
+        "3d",
+        "animation",
+        "narrative",
+        "timeline-replay",
+        "presence",
+        "controls"
+      ],
+      "title": "ExperienceGraphKind",
+      "description": "Presentation projection of an Experience Graph: 2D, 3D, animation, narrative, timeline/replay, presence, or controls."
+    },
+    "InteractionModality": {
+      "type": "string",
+      "enum": [
+        "gamepad",
+        "gaze",
+        "gesture",
+        "keyboard",
+        "pointer",
+        "touch",
+        "voice"
+      ],
+      "title": "InteractionModality",
+      "description": "Neutral interaction modality of a device."
+    },
+    "RendererOutputCapabilities": {
+      "type": "object",
+      "properties": {
+        "stereoscopic": {
+          "type": "boolean"
+        },
+        "maxPixels": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 268435456
+        },
+        "refreshHz": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 1000
+        },
+        "colorDepthBits": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 64
+        }
+      },
+      "required": [
+        "stereoscopic"
+      ],
+      "additionalProperties": false,
+      "title": "RendererOutputCapabilities",
+      "description": "Neutral output capabilities a renderer descriptor declares (never an engine or API surface)."
+    },
+    "RendererBudgets": {
+      "type": "object",
+      "properties": {
+        "maxGraphNodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        },
+        "maxGraphEdges": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 131072
+        },
+        "maxTriangles": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 100000000
+        },
+        "maxTextureBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 1099511627776
+        }
+      },
+      "required": [
+        "maxGraphNodes",
+        "maxGraphEdges"
+      ],
+      "additionalProperties": false,
+      "title": "RendererBudgets",
+      "description": "Neutral budgets a renderer descriptor enforces at the hosting boundary."
+    },
+    "DeviceSessionSnapshot": {
+      "type": "object",
+      "properties": {
+        "deviceSessionId": {
+          "$ref": "#/$defs/DeviceSessionId"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "device": {
+          "$ref": "#/$defs/DeviceDescriptor"
+        }
+      },
+      "required": [
+        "deviceSessionId",
+        "tenantScope",
+        "device"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceSessionSnapshot",
+      "description": "The device-session value projection a renderer binding consumes: session identity, owning tenant scope, and the W011 device descriptor (capabilities/limits as typed data)."
+    },
+    "DeviceSessionId": {
+      "type": "string",
+      "pattern": "^ds-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "DeviceSessionId",
+      "description": "Device-session identifier (mirrored shared primitive; canonical home @epoch/experience-runtime): \"ds-\" + lowercase slug."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "DeviceDescriptor": {
+      "type": "object",
+      "properties": {
+        "descriptorVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "deviceClass": {
+          "$ref": "#/$defs/DeviceClass"
+        },
+        "interaction": {
+          "minItems": 1,
+          "maxItems": 16,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionModality"
+          }
+        },
+        "display": {
+          "$ref": "#/$defs/DeviceDisplayCapabilities"
+        },
+        "spatial": {
+          "$ref": "#/$defs/DeviceSpatialCapabilities"
+        },
+        "latencyBudgetMs": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "descriptorVersion",
+        "deviceClass",
+        "interaction",
+        "display",
+        "spatial"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceDescriptor",
+      "description": "Abstract, provider-neutral device descriptor: capabilities and budgets as typed data; filled/adapted by renderer/device adaptation (W019)."
+    },
+    "DeviceClass": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "laptop",
+        "tablet",
+        "phone",
+        "headset",
+        "wall-display"
+      ],
+      "title": "DeviceClass",
+      "description": "Neutral device class of a device descriptor (never a vendor product)."
+    },
+    "DeviceDisplayCapabilities": {
+      "type": "object",
+      "properties": {
+        "stereoscopic": {
+          "type": "boolean"
+        },
+        "maxPixels": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "refreshHz": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "colorDepthBits": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "stereoscopic"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceDisplayCapabilities",
+      "description": "Neutral display capabilities and budgets of a device descriptor."
+    },
+    "DeviceSpatialCapabilities": {
+      "type": "object",
+      "properties": {
+        "poseTracking": {
+          "$ref": "#/$defs/PoseTrackingKind"
+        },
+        "worldAnchored": {
+          "type": "boolean"
+        },
+        "maxTriangles": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maxTextureBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "poseTracking",
+        "worldAnchored"
+      ],
+      "additionalProperties": false,
+      "title": "DeviceSpatialCapabilities",
+      "description": "Neutral spatial capabilities and budgets of a device descriptor."
+    },
+    "PoseTrackingKind": {
+      "type": "string",
+      "enum": [
+        "none",
+        "3dof",
+        "6dof"
+      ],
+      "title": "PoseTrackingKind",
+      "description": "Neutral pose-tracking capability of a device."
+    },
+    "EffectiveLimits": {
+      "type": "object",
+      "properties": {
+        "graphKinds": {
+          "minItems": 1,
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExperienceGraphKind"
+          }
+        },
+        "interaction": {
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InteractionModality"
+          }
+        },
+        "stereoscopic": {
+          "type": "boolean"
+        },
+        "maxGraphNodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        },
+        "maxGraphEdges": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 131072
+        },
+        "maxTriangles": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 100000000
+        },
+        "maxTextureBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 1099511627776
+        }
+      },
+      "required": [
+        "graphKinds",
+        "interaction",
+        "stereoscopic",
+        "maxGraphNodes",
+        "maxGraphEdges"
+      ],
+      "additionalProperties": false,
+      "title": "EffectiveLimits",
+      "description": "The negotiated enforcement envelope of a renderer session binding: hosting kinds, serviced modalities, stereoscopic support, and node/edge/triangle/texture budgets."
+    },
+    "RendererBindingState": {
+      "type": "string",
+      "enum": [
+        "closed",
+        "open"
+      ],
+      "title": "RendererBindingState",
+      "description": "Lifecycle state of a renderer session binding: open (admits invocations) or closed (terminal)."
+    },
+    "VirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "VirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (mirrored shared primitive; canonical home @epoch/experience-runtime)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "RendererCapabilitySet": {
+      "type": "object",
+      "properties": {
+        "capabilityVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "rendererId": {
+          "$ref": "#/$defs/RendererId"
+        },
+        "hitTesting": {
+          "type": "boolean"
+        },
+        "measurement": {
+          "type": "boolean"
+        },
+        "annotation": {
+          "type": "boolean"
+        },
+        "frameCapture": {
+          "type": "boolean"
+        },
+        "sessionSwitching": {
+          "type": "boolean"
+        },
+        "snapshotCapture": {
+          "type": "boolean"
+        },
+        "degradation": {
+          "minItems": 1,
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RendererDegradationKind"
+          }
+        },
+        "portableViewState": {
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PortableViewStateField"
+          }
+        },
+        "assetKinds": {
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RendererAssetKind"
+          }
+        }
+      },
+      "required": [
+        "capabilityVersion",
+        "rendererId",
+        "hitTesting",
+        "measurement",
+        "annotation",
+        "frameCapture",
+        "sessionSwitching",
+        "snapshotCapture",
+        "degradation",
+        "portableViewState",
+        "assetKinds"
+      ],
+      "additionalProperties": false,
+      "title": "RendererCapabilitySet",
+      "description": "The fabric capability declaration of a renderer adapter: hit-testing, measurement/annotation translation, frame capture, switching/snapshot support, typed degradations, portable view-state restore fields, and bindable asset kinds."
+    },
+    "RendererDegradationKind": {
+      "type": "string",
+      "enum": [
+        "none",
+        "reduced-fidelity",
+        "static-frame",
+        "wireframe"
+      ],
+      "title": "RendererDegradationKind",
+      "description": "Typed presentation-fidelity degradation a renderer may apply (never a semantic change): none, reduced-fidelity, static-frame, or wireframe."
+    },
+    "PortableViewStateField": {
+      "type": "string",
+      "enum": [
+        "camera",
+        "focused-entities",
+        "layer-visibility",
+        "timeline-position"
+      ],
+      "title": "PortableViewStateField",
+      "description": "One portable view-state field a renderer can restore across a switch: camera, focused-entities, layer-visibility, or timeline-position."
+    },
+    "RendererAssetKind": {
+      "type": "string",
+      "enum": [
+        "animation",
+        "material",
+        "mesh",
+        "texture"
+      ],
+      "title": "RendererAssetKind",
+      "description": "Content-addressed asset kind a renderer can bind: animation, material, mesh, or texture."
+    },
+    "WorldProjectionRef": {
+      "type": "object",
+      "properties": {
+        "sceneId": {
+          "$ref": "#/$defs/WorldSceneIdMirror"
+        },
+        "worldDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        }
+      },
+      "required": [
+        "sceneId",
+        "worldDigest",
+        "tenantScope"
+      ],
+      "additionalProperties": false,
+      "title": "WorldProjectionRef",
+      "description": "The canonical world projection reference: world-experience scene id, content digest of the exact scene revision, and owning tenant scope — the identity triple that survives renderer switching."
+    },
+    "WorldSceneIdMirror": {
+      "type": "string",
+      "pattern": "^wsc-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "WorldSceneIdMirror",
+      "description": "World scene identifier (mirrored W016 grammar; canonical home @epoch/world-experience): \"wsc-\" + lowercase slug."
+    },
+    "PortableViewState": {
+      "type": "object",
+      "properties": {
+        "focusedEntityIds": {
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldEntityIdMirror"
+          }
+        },
+        "layerVisibility": {
+          "maxItems": 256,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SemanticLayerVisibility"
+          }
+        },
+        "timelinePosition": {
+          "$ref": "#/$defs/PortableTimelinePosition"
+        },
+        "camera": {
+          "$ref": "#/$defs/PortableCameraState"
+        },
+        "hiddenEntityIds": {
+          "maxItems": 4096,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldEntityIdMirror"
+          }
+        }
+      },
+      "required": [
+        "focusedEntityIds",
+        "layerVisibility",
+        "timelinePosition",
+        "hiddenEntityIds"
+      ],
+      "additionalProperties": false,
+      "title": "PortableViewState",
+      "description": "The portable view state of a renderer session: semantic focus, semantic layer visibility, timeline position, hidden set, and best-effort camera — the presentation subset that survives a renderer switch."
+    },
+    "WorldEntityIdMirror": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "title": "WorldEntityIdMirror",
+      "description": "World entity identifier (mirrored W016 grammar; canonical home @epoch/world-experience): opaque bounded string."
+    },
+    "SemanticLayerVisibility": {
+      "type": "object",
+      "properties": {
+        "layerId": {
+          "$ref": "#/$defs/SemanticLayerId"
+        },
+        "visible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "layerId",
+        "visible"
+      ],
+      "additionalProperties": false,
+      "title": "SemanticLayerVisibility",
+      "description": "The visibility of one semantic layer (vocabulary owned by the world experience projection)."
+    },
+    "SemanticLayerId": {
+      "type": "string",
+      "pattern": "^lyr-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SemanticLayerId",
+      "description": "Semantic-layer identifier: \"lyr-\" followed by a lowercase slug (vocabulary owned by the world experience projection)."
+    },
+    "PortableTimelinePosition": {
+      "type": "object",
+      "properties": {
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "frameIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "replayWindow": {
+          "$ref": "#/$defs/ReplayWindow"
+        }
+      },
+      "required": [
+        "atMs",
+        "frameIndex",
+        "paused"
+      ],
+      "additionalProperties": false,
+      "title": "PortableTimelinePosition",
+      "description": "The portable timeline/replay position (mirrored W016 grammar): virtual time, frame index, paused flag, optional replay window."
+    },
+    "ReplayWindow": {
+      "type": "object",
+      "properties": {
+        "fromSequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "toSequence": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "fromSequence",
+        "toSequence"
+      ],
+      "additionalProperties": false,
+      "title": "ReplayWindow",
+      "description": "Bounded world-model event-sequence window for timeline/replay projections (from inclusive, to exclusive)."
+    },
+    "PortableCameraState": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PortableFollowAgentCamera"
+        },
+        {
+          "$ref": "#/$defs/PortableFreeCamera"
+        },
+        {
+          "$ref": "#/$defs/PortableOrbitCamera"
+        }
+      ],
+      "title": "PortableCameraState",
+      "description": "The portable camera state (mirrored W016 grammar): orbit, free, or follow-agent."
+    },
+    "PortableFollowAgentCamera": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "const": "follow-agent"
+        },
+        "agentRef": {
+          "$ref": "#/$defs/ProjectedAgentRef"
+        },
+        "followDistance": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "cursor": {
+          "$ref": "#/$defs/PortableFollowCursorState"
+        }
+      },
+      "required": [
+        "mode",
+        "agentRef"
+      ],
+      "additionalProperties": false,
+      "title": "PortableFollowAgentCamera",
+      "description": "The follow-agent camera state (mirrored W016 grammar): the view rides a projected agent."
+    },
+    "ProjectedAgentRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "agent"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "agentId": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "kind",
+        "tenantId",
+        "agentId",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "title": "ProjectedAgentRef",
+      "description": "Exact-revision reference to a registered agent (W003 grammar; digest of its registration canonical JSON)."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "AgentId",
+      "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "PortableFollowCursorState": {
+      "type": "object",
+      "properties": {
+        "position2d": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "additionalProperties": false
+        },
+        "position3d": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "atMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "additionalProperties": false,
+      "title": "PortableFollowCursorState",
+      "description": "The followed agent cursor state (mirrored W016 grammar): a 2D or 3D position at a virtual time."
+    },
+    "Vec3": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3,
+      "title": "Vec3",
+      "description": "Finite 3-component numeric vector (x, y, z)."
+    },
+    "PortableFreeCamera": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "const": "free"
+        },
+        "position": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "orientation": {
+          "$ref": "#/$defs/Quaternion"
+        }
+      },
+      "required": [
+        "mode",
+        "position"
+      ],
+      "additionalProperties": false,
+      "title": "PortableFreeCamera",
+      "description": "The free camera state (mirrored W016 grammar): an unconstrained viewpoint."
+    },
+    "Quaternion": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4,
+      "title": "Quaternion",
+      "description": "Finite orientation quaternion (x, y, z, w); neutral math, renderer-normalized."
+    },
+    "PortableOrbitCamera": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "const": "orbit"
+        },
+        "position": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "orientation": {
+          "$ref": "#/$defs/Quaternion"
+        },
+        "target": {
+          "$ref": "#/$defs/Vec3"
+        },
+        "fovRadians": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 3.141592653589793
+        }
+      },
+      "required": [
+        "mode",
+        "position"
+      ],
+      "additionalProperties": false,
+      "title": "PortableOrbitCamera",
+      "description": "The orbit camera state (mirrored W016 grammar): viewpoint, optional target and FOV."
+    },
+    "RendererHealth": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/RendererHealthState"
+        },
+        "degradation": {
+          "$ref": "#/$defs/RendererDegradationKind"
+        },
+        "lastFailureCode": {
+          "$ref": "#/$defs/RendererFailureCode"
+        },
+        "detail": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "atMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        }
+      },
+      "required": [
+        "state",
+        "degradation",
+        "atMs"
+      ],
+      "additionalProperties": false,
+      "title": "RendererHealth",
+      "description": "The typed health projection of a renderer adapter or session: state, active degradation, producing failure code, detail, and virtual time."
+    },
+    "RendererHealthState": {
+      "type": "string",
+      "enum": [
+        "degraded",
+        "failed",
+        "healthy",
+        "unavailable"
+      ],
+      "title": "RendererHealthState",
+      "description": "Health state of a renderer adapter or session: healthy, degraded, failed, or unavailable."
+    },
+    "RendererFailureCode": {
+      "type": "string",
+      "enum": [
+        "adapter-unavailable",
+        "asset-rejected",
+        "cross-tenant-denied",
+        "degraded",
+        "fallback-applied",
+        "input-unsupported",
+        "invalid-fabric-record",
+        "mount-failed",
+        "probe-rejected",
+        "session-disposed",
+        "session-failed",
+        "switch-aborted",
+        "switch-incompatible",
+        "unknown-session"
+      ],
+      "title": "RendererFailureCode",
+      "description": "Typed failure code of the renderer fabric orchestration surface."
+    },
+    "RendererSessionState": {
+      "type": "string",
+      "enum": [
+        "active",
+        "created",
+        "degraded",
+        "disposed",
+        "suspended"
+      ],
+      "title": "RendererSessionState",
+      "description": "Lifecycle state of a renderer fabric session: created, active, degraded, suspended, or disposed (terminal)."
+    }
+  }
+}

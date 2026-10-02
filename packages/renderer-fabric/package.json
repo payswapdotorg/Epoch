@@ -1,0 +1,34 @@
+{
+  "name": "@epoch/renderer-fabric",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Renderer Fabric (W056, ACR-007/X2.0) — the provider-neutral orchestration layer that turns the W013 renderer hosting surface into a real multi-renderer fabric: capability-registry-backed adapter resolution (visualization category), the typed RendererAdapter seam W058 (Three.js) / W059 (Babylon.js) implement behind the frozen contracts/renderers v1.1.0 contract, ephemeral NON-AUTHORITATIVE renderer sessions, canonical-projection mounting through the REAL W013 admission boundary (bind + mount-graph + advance-frame + submit-intent over W016 world-experience compilations), raw-input normalization into the EXISTING W016 world-interaction intent vocabulary (hit-test -> semantic entity id -> typed intent), and the switching invariant (snapshot -> resolve -> verify digest/tenant -> mount from canonical projection -> restore portable focus/layers/timeline -> switch receipt -> dispose previous; never durable semantic state). Zero engine imports, zero GPU code, zero UI-framework dependencies, zero wall-clock, zero randomness; ships a contract-only reference adapter proving the seam end-to-end.",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p ../../qa/renderer-conformance/tsconfig.json",
+    "lint": "eslint . && node scripts/link-conformance-harness.mjs && cd ../../qa/renderer-conformance && eslint . --config eslint.config.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "@epoch/renderer-runtime": "workspace:*",
+    "@epoch/world-experience": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

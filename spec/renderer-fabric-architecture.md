@@ -127,3 +127,35 @@ Required batteries:
 - digest continuity.
 
 A unit suite without a real renderer surface does not close a renderer Work Order.
+
+## W056 freeze record (contract + fabric + conformance; no engines)
+
+W056 froze the contract and delivered the fabric + conformance foundation
+(the shared contract W057-W059 build against). Concrete mapping (see
+`docs/rendering/renderer-fabric-contract.md` for the adapter guide):
+
+- the contract concepts live in `contracts/renderers` v1.1.0 (additive over
+  the unchanged W013 v1.0.0 hosting surface; fabric protocol version
+  `1.0.0`) as `RendererCapabilitySet`, `RendererSession`,
+  `RendererSessionSnapshot`, `RendererSwitchRequest` + receipt,
+  `RendererFrameEnvelope`, `RendererInputEnvelope`, `RendererIntentReceipt`,
+  `RendererFailure` (typed taxonomy), `RendererHealth`,
+  `RendererAssetBinding`, `RendererConformanceResult`, and the portable
+  view-state grammars mirrored member-for-member from the W016 canonical
+  home;
+- the orchestration lives in `packages/renderer-fabric`:
+  `RendererAdapter` (the seam W058/W059/W060 implement),
+  `RendererAdapterRegistry` (capability-registry integration,
+  `visualization` category, `epoch.renderers@1.1.0`),
+  `RendererFabric` (resolve -> probe -> create -> mount -> frame ->
+  input -> switch -> dispose, the REAL W013 admission boundary throughout),
+  and the contract-only `ReferenceRendererAdapter` (the seam template —
+  zero engines);
+- the conformance harness lives in `qa/renderer-conformance`: one shared
+  canonical fixture, two distinguishable renderer kinds, all seven checks,
+  positive + negative batteries.
+
+W056 scope is honestly contract + fabric + conformance: NO Three.js, NO
+Babylon.js, NO GPU code, NO browser surface (W058/W059 implement the real
+engines behind the frozen seam; the visual-smoke/E2E batteries close with
+W060/W061).

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererHealthState",
+  "$defs": {
+    "RendererHealthState": {
+      "type": "string",
+      "enum": [
+        "degraded",
+        "failed",
+        "healthy",
+        "unavailable"
+      ],
+      "title": "RendererHealthState",
+      "description": "Health state of a renderer adapter or session: healthy, degraded, failed, or unavailable."
+    }
+  }
+}

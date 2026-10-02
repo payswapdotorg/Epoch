@@ -1,0 +1,26 @@
+{
+  "//": "W056 — the renderer-conformance harness's OWN type-checked validation path (the W048/W050 cold-checkout doctrine). qa/renderer-conformance is NOT a pnpm workspace package (pnpm-workspace.yaml is frozen), so these files have no node_modules chain of their own. @epoch/renderer-fabric's `typecheck` script invokes this config; NOTHING here depends on the qa/renderer-conformance/node_modules symlink (created at test time by the fabric's vitest globalSetup): every bare import the harness files make DIRECTLY is mapped to its real location, and every product module is imported RELATIVELY so each file resolves its own dependencies through its own package's node_modules (real install state, never generated state). A fresh checkout type-checks cold.",
+  "extends": "../../packages/tsconfig/library.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "typeRoots": [
+      "../../packages/renderer-fabric/node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "vitest": [
+        "../../packages/renderer-fabric/node_modules/vitest/dist/index.d.ts"
+      ],
+      "@epoch/world-contracts": [
+        "../../contracts/world/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "records"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/SemanticLayerVisibility",
+  "$defs": {
+    "SemanticLayerVisibility": {
+      "type": "object",
+      "properties": {
+        "layerId": {
+          "$ref": "#/$defs/SemanticLayerId"
+        },
+        "visible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "layerId",
+        "visible"
+      ],
+      "additionalProperties": false,
+      "title": "SemanticLayerVisibility",
+      "description": "The visibility of one semantic layer (vocabulary owned by the world experience projection)."
+    },
+    "SemanticLayerId": {
+      "type": "string",
+      "pattern": "^lyr-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "SemanticLayerId",
+      "description": "Semantic-layer identifier: \"lyr-\" followed by a lowercase slug (vocabulary owned by the world experience projection)."
+    }
+  }
+}

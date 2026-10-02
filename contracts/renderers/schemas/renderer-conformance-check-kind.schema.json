@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererConformanceCheckKind",
+  "$defs": {
+    "RendererConformanceCheckKind": {
+      "type": "string",
+      "enum": [
+        "digest-continuity",
+        "interaction-outcomes",
+        "normalized-intents",
+        "presentation-only-differences",
+        "semantic-entity-ids",
+        "semantic-focus-layers",
+        "tenant-continuity"
+      ],
+      "title": "RendererConformanceCheckKind",
+      "description": "One renderer conformance check kind: tenant continuity, digest continuity, semantic entity ids, interaction outcomes, semantic focus/layers, normalized intents, or presentation-only differences."
+    }
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererConformanceResultContent",
+  "$defs": {
+    "RendererConformanceResultContent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.renderer-conformance-result"
+        },
+        "fabricProtocolVersion": {
+          "$ref": "#/$defs/RendererFabricProtocolVersion"
+        },
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "renderers": {
+          "minItems": 1,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RendererId"
+          }
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        },
+        "worldDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "checks": {
+          "minItems": 1,
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RendererConformanceCheck"
+          }
+        },
+        "overallOutcome": {
+          "type": "string",
+          "enum": [
+            "fail",
+            "pass"
+          ]
+        },
+        "startedAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        },
+        "completedAtMs": {
+          "$ref": "#/$defs/VirtualTimeMs"
+        }
+      },
+      "required": [
+        "schema",
+        "fabricProtocolVersion",
+        "runId",
+        "renderers",
+        "tenantScope",
+        "worldDigest",
+        "checks",
+        "overallOutcome",
+        "startedAtMs",
+        "completedAtMs"
+      ],
+      "additionalProperties": false,
+      "title": "RendererConformanceResultContent",
+      "description": "The content of a renderer conformance result: run identity, renderers under test, shared fixture identity, per-check entries, and the overall verdict."
+    },
+    "RendererFabricProtocolVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "title": "RendererFabricProtocolVersion",
+      "description": "Exact renderer-fabric protocol version admitted by this release (\"1.0.0\")."
+    },
+    "RendererId": {
+      "type": "string",
+      "pattern": "^rr-[a-z0-9][a-z0-9-]{0,62}$",
+      "title": "RendererId",
+      "description": "Renderer-descriptor identifier: \"rr-\" followed by a lowercase slug (never a vendor product)."
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
+    },
+    "OpaqueScopeId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "OpaqueScopeId",
+      "description": "Opaque scoping identifier (tenant/workspace/project/participant); bounded, neutral charset."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256Hex",
+      "description": "Lowercase hexadecimal SHA-256 digest (exactly 64 characters)."
+    },
+    "RendererConformanceCheck": {
+      "type": "object",
+      "properties": {
+        "checkKind": {
+          "$ref": "#/$defs/RendererConformanceCheckKind"
+        },
+        "rendererId": {
+          "$ref": "#/$defs/RendererId"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "fail",
+            "pass"
+          ]
+        },
+        "detail": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "evidenceDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        }
+      },
+      "required": [
+        "checkKind",
+        "rendererId",
+        "outcome"
+      ],
+      "additionalProperties": false,
+      "title": "RendererConformanceCheck",
+      "description": "One conformance check entry: check kind, renderer, typed outcome, detail, and evidence digest."
+    },
+    "RendererConformanceCheckKind": {
+      "type": "string",
+      "enum": [
+        "digest-continuity",
+        "interaction-outcomes",
+        "normalized-intents",
+        "presentation-only-differences",
+        "semantic-entity-ids",
+        "semantic-focus-layers",
+        "tenant-continuity"
+      ],
+      "title": "RendererConformanceCheckKind",
+      "description": "One renderer conformance check kind: tenant continuity, digest continuity, semantic entity ids, interaction outcomes, semantic focus/layers, normalized intents, or presentation-only differences."
+    },
+    "VirtualTimeMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "title": "VirtualTimeMs",
+      "description": "Virtual time in non-negative integer milliseconds (mirrored shared primitive; canonical home @epoch/experience-runtime)."
+    }
+  }
+}

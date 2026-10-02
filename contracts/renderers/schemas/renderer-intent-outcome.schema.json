@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/RendererIntentOutcome",
+  "$defs": {
+    "RendererIntentOutcome": {
+      "type": "string",
+      "enum": [
+        "no-target",
+        "normalized",
+        "rejected"
+      ],
+      "title": "RendererIntentOutcome",
+      "description": "Outcome of one renderer input normalization: normalized, no-target, or rejected (typed)."
+    }
+  }
+}

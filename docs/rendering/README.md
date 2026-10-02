@@ -2,6 +2,14 @@
 
 Rendering is an implementation capability of Epoch, never the source of truth.
 
+## The frozen fabric contract (W056, ACR-007/X2.0)
+
+The Renderer Fabric contract is FROZEN for W057-W059: the provider-neutral
+session/snapshot/switching contract (`contracts/renderers` v1.1.0), the
+`RendererAdapter` seam, the capability-registry registration path, and the
+shared conformance fixture. Implementation guide for adapter authors:
+[renderer-fabric-contract.md](./renderer-fabric-contract.md).
+
 ## Initial backend plan
 
 | Backend | Role | User-visible surface |
