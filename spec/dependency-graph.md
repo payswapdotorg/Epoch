@@ -152,3 +152,15 @@ W062 owns the marker-time comparator seam (`packages/world-experience/src/timeli
 ## Defect-closure invariant
 
 The fix restores ALREADY-SPECIFIED behavior (numeric `(atMs, markerId)` ascending). No semantic change, no contract bump, no second comparator. The pinned battery flips FOR THE BETTER and nothing else changes behavior.
+
+## ACR-009 / W063 — safe concurrency
+
+W063 is the single serialized work order. No concurrent wave.
+
+## ACR-009 surface discipline
+
+W063 owns the desktop src-tauri host (the D-1 fix + the Cargo.lock pin), the new dispatch-only release workflow, the release/clients re-stamp surface, the desktop journey records + defect ledger, and the governance state files. No packages/ surfaces, no apps/web, no apps/mobile, no root manifests. The pnpm workspace catalog is UNCHANGED (the dependency-baseline guard stays green); `apps/desktop/src-tauri/Cargo.lock` is a NEW derived pin inside the desktop owned surface.
+
+## Release-honesty invariant
+
+The statuses are the contract: `built-in-sandbox` / `built-in-sandbox-cross` / `ci-recipe-delivered` only, each with evidence and declared deviations; never a fabricated launch, a fabricated signature, or a fabricated DMG. The standard ci.yml battery remains the sole release gate.

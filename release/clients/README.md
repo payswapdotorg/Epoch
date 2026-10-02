@@ -15,9 +15,9 @@ identity rule of `spec/productization-architecture.md`:
 | Platform | Artifact | Build status |
 | --- | --- | --- |
 | `web` | Next.js production build (`next build` → `next start`) | **built-in-sandbox** — the CI battery builds it at every push/PR; the W047 journey battery ran the production build through J01-J12 |
-| `desktop-linux` | Tauri 2 AppImage + deb | config-delivered — no cargo/webkit2gtk in this sandbox (declared gap) |
-| `desktop-windows` | Tauri 2 NSIS installer | config-delivered — no Windows/MSVC host (declared gap) |
-| `desktop-macos` | Tauri 2 DMG + app bundle | config-delivered — no macOS/Xcode host (declared gap) |
+| `desktop-linux` | Tauri 2 AppImage + deb | **built-in-sandbox (W063)** — the real installable artifacts with sha256 records; launch-verified to the spawn boundary (Xvfb; the WebProcess EGL display boundary is declared) |
+| `desktop-windows` | Tauri 2 NSIS installer | **built-in-sandbox-cross (W063)** — mingw-w64 gnu cross-compile; every build-local deviation enumerated; the canonical msvc recipe: `.github/workflows/release-desktop-native.yml` |
+| `desktop-macos` | Tauri 2 DMG + app bundle | **ci-recipe-delivered (W063)** — the macos-14 dispatch recipe builds it at the committed profile; Linux cannot produce a DMG (hard platform boundary, declared) |
 | `mobile-android` | Expo Android release build (APK/AAB) | config-delivered — no Android SDK in this sandbox (declared gap) |
 | `mobile-ios` | Expo iOS release build (TestFlight-ready) | config-delivered — no Xcode in this sandbox (declared gap) |
 
@@ -57,3 +57,9 @@ on every config-delivered platform.
 This tree is DATA + its generator — the typed release-readiness MODEL of
 the kernel program remains `release/` (W035); nothing here contacts a
 distribution channel or executes a build.
+
+## W063 re-stamp
+
+The generator now records materialized `artifacts` (file, bytes, sha256, producedBy) for the
+desktop platforms and carries a `deviations` field in every buildStatus. Regenerate at the
+delivery head: `python3 release/clients/generate-manifest.py <head> --out release/clients/release-manifest.json`.

@@ -131,3 +131,11 @@ It closes the ledgered W016 marker-time P2 defect (observed W057; recorded in do
 The binding fix restores the ALREADY-SPECIFIED numeric `(atMs, markerId)` ordering (numeric atMs; lexicographic markerId tie-break; duplicate-free unchanged). No schema/contract version bump. The pinned known-issue battery flips by design into the regression battery; the defect-ledger entry closes with the fix -> rerun -> close chain.
 
 Binding implementation: W062 (single work order, single worker, serialized), `spec/work-orders/W062-marker-time-comparator.md`, depends on ACR-007/W061 (complete). After W062 merges, ACR-008 closes and the frontier returns to EMPTY; any further program again requires a new ACR.
+
+## ACR-009 — Desktop Installable Artifacts
+
+ACR-009 is APPROVED (2026-10-02). It is a productization/release program: NO architecture change, NO new semantic subsystem, NO lock transition. The E1.0/X2.0 numbered invariants above remain binding and unchanged. Lock rule 13 (platform toolchains are adapters, never semantic authorities) is the governing rule: everything W063 produces is packaging evidence and release identity, never semantic state.
+
+It closes the declared W048 boundary (config-delivered packaging with the environment gap honestly recorded) by provisioning the toolchains and producing the real installable artifacts for the three desktop platforms, re-stamping `release/clients/release-manifest.json` with the real records (file, bytes, sha256, producedBy, declared deviations), and delivering the canonical recipes as a dispatch-only workflow (`windows-latest` msvc NSIS, `macos-14` dmg+app) that is NOT the release gate — the standard ci.yml battery remains the sole gate.
+
+Binding implementation: W063, the single serialized work order, `spec/work-orders/W063-desktop-installable-artifacts.md`, depends on ACR-008/W062 (complete). The defects the first packaged builds exposed (D-1..D-4) close with the public discipline chain in `docs/journeys/defect-ledger.md`. The committed tree never carries build-local adaptations; every cross-compile deviation is reverted and recorded.

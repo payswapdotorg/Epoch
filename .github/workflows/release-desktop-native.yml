@@ -1,0 +1,100 @@
+name: Desktop native release builds
+
+# W063 — the canonical desktop native-build recipe.
+#
+# Why this exists: the W063 in-sandbox delivery produced real installable
+# artifacts for Linux (AppImage + deb, native toolchain provisioned
+# user-space) and Windows (NSIS, cross-compiled via the mingw-w64 gnu
+# toolchain under the sandbox's disk/RAM ceilings, with the deviations
+# recorded in release/clients/release-manifest.json). The recipes below
+# rebuild the CANONICAL artifacts on their native runners:
+#
+#   - windows-latest: the msvc toolchain with the committed release profile
+#     (LTO on, codegen-units 1, full crate-type set) — the profile the
+#     sandbox build had to relax;
+#   - macos-14: dmg + app bundles — the one desktop platform that cannot be
+#     produced from Linux at all (Apple SDK + codesigning toolchain).
+#
+# The workflow is dispatch-only (workflow_dispatch) so it never races the
+# standard ci.yml battery. It adds no dependencies (the pnpm catalog +
+# committed Cargo.lock only) and uploads the artifacts for the release
+# stamp. It is NOT the release gate: the standard ci.yml battery remains
+# the sole gate; this is the recipe that materializes the artifacts.
+
+on:
+  workflow_dispatch:
+    inputs:
+      note:
+        description: "Release note line recorded in the run summary"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  build-desktop-native:
+    name: Desktop native (${{ matrix.label }})
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: windows-nsis-msvc
+            runner: windows-latest
+            bundles: nsis
+            target: ""
+          - label: macos-dmg-app
+            runner: macos-14
+            bundles: dmg,app
+            target: ""
+    env:
+      CARGO_INCREMENTAL: "0"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        run: npm install -g pnpm@10.34.5
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri
+
+      - name: Install workspace dependencies (frozen)
+        run: pnpm install --frozen-lockfile
+
+      - name: Build the webview payload (fixtures sync + static export)
+        run: pnpm --filter @epoch/desktop run build:web
+
+      - name: Build the native bundle (tauri, committed profile)
+        working-directory: apps/desktop
+        # The committed release profile: LTO on, codegen-units 1, full
+        # crate-type set, the platform's native linker (msvc on windows,
+        # clang on macos). No sandbox deviations.
+        run: pnpm exec tauri build --bundles ${{ matrix.bundles }} ${{ matrix.target }}
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ""
+
+      - name: Collect artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/w063-artifacts"
+          mkdir -p "$out"
+          find apps/desktop/src-tauri/target -path "*bundle*" -type f \
+            \( -name "*.exe" -o -name "*.dmg" -o -name "*.app.tar.gz" \) \
+            -exec cp -v {} "$out/" \; || true
+          (cd apps/desktop/src-tauri/target && find . -maxdepth 4 -name "epoch-desktop" -type f -exec cp -v {} "$out/" \;) || true
+          ls -la "$out"
+          sha256sum "$out"/* | tee "$out/SHA256SUMS"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-native-${{ matrix.label }}
+          path: ${{ runner.temp }}/w063-artifacts
+          if-no-files-found: error

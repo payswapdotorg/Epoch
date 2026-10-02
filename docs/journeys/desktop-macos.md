@@ -44,3 +44,24 @@ No unresolved P0/P1 defects on the platform-neutral layers.
 
 Result: n/a (no macOS execution in this environment).
 Notes: the packaged-journey runbook — build the webview (`pnpm run build:web`), build the DMG/app bundle (`pnpm run tauri:build:macos`), run the WebdriverIO harness over the packaged binary (`pnpm run e2e:tauri` with tauri-driver on 127.0.0.1:4444) — executes the J01/J02/J07 visible-UI assertions against the real WKWebView shell; the manual-execution protocol (spec/journey-validation.md) covers any step automation cannot reliably drive.
+
+---
+
+# W063 — the ci-recipe-delivered status (never fabricated)
+
+Re-validation head: the W063 delivery. The W048 record above remains true as written.
+
+Linux CANNOT produce a macOS DMG — the Apple SDK and codesigning toolchain exist only on macOS
+hosts. That is a hard platform boundary. What W063 delivers instead of a fake artifact is a REAL
+recipe that materializes it on demand:
+
+`.github/workflows/release-desktop-native.yml` (workflow_dispatch):
+- macos-14 runner; rust stable; pnpm 10.34.5; frozen install; the webview payload build; then
+  `tauri build --bundles dmg,app` at the COMMITTED profile (LTO on, codegen-units 1, full
+  crate-type set) — no sandbox deviations exist on that path by construction.
+- Artifacts collected + SHA256SUMS + uploaded (actions/upload-artifact).
+- It is NOT the release gate: the standard ci.yml battery remains the sole gate.
+
+The same workflow carries the windows-latest canonical msvc NSIS job (repairing the three
+in-sandbox gnu-route deviations enumerated in desktop-windows.md). The manifest status for
+macOS is `ci-recipe-delivered` with the environmentGap stated as the platform boundary.

@@ -19,7 +19,14 @@ use tauri::Manager;
 
 /// The durable local-projection store state (client-runtime records only:
 /// sessions mirror, offline queue, projection cache — never semantic truth).
-#[derive(Default)]
+///
+/// W063 defect D-1: the unused `#[derive(Default)]` (the ONLY construction
+/// path is the explicit `setup()` wiring below, which passes the real
+/// per-OS data dir) required `DurableStore: Default` — unimplementable
+/// honestly (`DurableStore::new` needs a real data dir; a Default would be
+/// a pathless lie). The derive was dead weight and the sole compile defect
+/// of the first real `cargo build` of this crate (W048 delivered
+/// config-complete; the packaged build had never run to completion).
 pub struct DurableState {
     pub store: durable::DurableStore,
 }

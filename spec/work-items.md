@@ -190,3 +190,19 @@ W062 is the single serialized work order. No concurrent wave.
 ## ACR-008 completion invariant
 
 The central acceptance object is the closed defect with the full public discipline chain: the numeric comparator lands, the pinned known-issue battery flips into the regression record (ascending admits, descending refuses, the wrong-end-bound consequences disappear), the same-digit-width control and every same-width consumer stay green unchanged, and the defect ledger records fix -> rerun -> close with exact evidence. The detailed acceptance contract lives in `spec/architecture-change-requests/ACR-008-marker-time-comparator.md` and `spec/work-orders/W062-marker-time-comparator.md`.
+
+# ACR-009 Desktop Installable Artifacts Work Orders
+
+ACR-009 is APPROVED (2026-10-02) and is the active productization/release program after ACR-008/W062. It closes the declared W048 environment gap by provisioning the toolchains and producing the real installable desktop artifacts, re-stamping the release identity. No architecture change, no lock transition.
+
+| ID | Scope | Depends | Owned surfaces |
+|---|---|---|---|
+| W063 | Desktop installable artifacts (linux AppImage+deb built-in-sandbox; windows NSIS built-in-sandbox-cross; macos ci-recipe-delivered) + the release re-stamp | ACR-008/W062 | apps/desktop/src-tauri/** (the D-1 host fix + the committed Cargo.lock), .github/workflows/release-desktop-native.yml (new, dispatch-only), release/clients/**, docs/journeys/desktop-*.md, docs/journeys/defect-ledger.md, docs/release/client-release-process.md, spec/PROJECT-STATE.md, spec/development-state/*, AI_CONTINUATION.md, docs/LLM-ARCHITECT-HANDOFF.md |
+
+## ACR-009 concurrency
+
+W063 is the single serialized work order. No concurrent wave.
+
+## ACR-009 completion invariant
+
+Every desktop platform carries its most complete honestly-verifiable artifact in `release/clients/release-manifest.json` (file, bytes, sha256, producedBy; `deviations` declared); the committed tree carries NO build-local adaptations; every defect closed with the public discipline chain (D-1..D-4 in the defect ledger); the canonical recipes exist as a dispatch workflow that is not the release gate. The detailed acceptance contract lives in `spec/architecture-change-requests/ACR-009-desktop-installable-artifacts.md`.

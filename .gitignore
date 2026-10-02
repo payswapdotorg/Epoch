@@ -10,3 +10,6 @@ coverage/
 !.env.example
 *.log
 target/
+
+# W063: tauri-bundler derived mobile schemas (generated at build time; never committed)
+apps/desktop/src-tauri/gen/
