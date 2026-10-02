@@ -23,6 +23,14 @@ The repository is authoritative; chat is not. Start with:
 16. spec/capability-contribution-contract.md
 17. spec/productization-architecture.md
 18. spec/journey-validation.md
+19. spec/architecture-change-requests/ACR-006-public-deployment.md
+20. spec/deployment-architecture.md
+21. spec/production-environment.md
+22. spec/free-tier-infrastructure.md
+
+## Deployment status (honest)
+
+The public deployment program (ACR-006, W051-W055) is COMPLETE at the credential boundary: the production environment contract, the provider-neutral infrastructure adapters (Neon PostgreSQL via the pg seam, Cloudflare R2 via the S3-compatible adapter with AWS SigV4, Upstash Redis via REST, Apify via the discovery-adapter seam), the request-guard/rate-limit port, health/readiness endpoints, the deployment manifests and runbooks, the free-tier cost-control contract, and the P01-P18 production journey harness are all implemented, tested, and CI-gated. NO public URL exists yet: real deployment requires operator-owned provider credentials (Vercel/Neon/Cloudflare/Apify accounts) — see docs/deployment/README.md and docs/journeys/production.md (the post-credential procedure). Nothing is claimed deployed that is not verified live.
 
 ## Product architecture
 

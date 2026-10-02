@@ -60,6 +60,14 @@ export type {
   RunbookStep,
 } from './runbooks/schema';
 export { CATALOG_COMPONENTS, runbookCatalog } from './runbooks/catalog';
+// W054 (ACR-006): the acquisition runbooks are part of the ops-kit public
+// API (the serialized W055 re-export — recorded as a W054 architecture
+// question and applied here by the Tech Lead).
+export {
+  ACQUISITION_RUNBOOK_COMPONENTS,
+  ACQUISITION_RUNBOOK_IDS,
+  acquisitionRunbooks,
+} from './runbooks/acquisition';
 
 // Incident traces + the simulator.
 export {

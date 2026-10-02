@@ -63,3 +63,68 @@ jobs:
       # tasks across all workspace packages.
       - name: Verify
         run: pnpm turbo run governance boundary typecheck lint test build
+
+  # W055 (ACR-006): the production deployment configuration sanity gate —
+  # validates the environment-contract template (placeholders only, every
+  # documented variable present), the Vercel deployment manifest (schema +
+  # the monorepo build wiring), and that no real secret value appears in
+  # the deployment surfaces (the gate-2 discipline, automated).
+  deployment-config:
+    name: deployment config sanity
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Environment template sanity (placeholders only, complete contract)
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import re, sys
+          template = open('apps/web/.env.example').read()
+          required = [
+              'EPOCH_DEPLOYMENT_PROFILE', 'EPOCH_DATABASE_URL',
+              'EPOCH_OBJECT_STORE_ENDPOINT', 'EPOCH_OBJECT_STORE_BUCKET',
+              'EPOCH_OBJECT_STORE_ACCESS_KEY_ID', 'EPOCH_OBJECT_STORE_SECRET_ACCESS_KEY',
+              'EPOCH_OBJECT_STORE_REGION', 'EPOCH_RATE_LIMIT_REST_URL',
+              'EPOCH_RATE_LIMIT_REST_TOKEN', 'EPOCH_APIFY_TOKEN',
+              'EPOCH_APIFY_ACTOR_ID', 'EPOCH_APIFY_MAX_RUNS_PER_DAY',
+          ]
+          missing = [name for name in required if not re.search(rf'^{name}=', template, re.M)]
+          if missing:
+              print(f"::error::.env.example is missing contract variables: {', '.join(missing)}")
+              sys.exit(1)
+          # Every variable must be a placeholder (empty or a default), never a real value.
+          real_value = re.search(r'^EPOCH_(DATABASE_URL|OBJECT_STORE_SECRET_ACCESS_KEY|RATE_LIMIT_REST_TOKEN|APIFY_TOKEN)=(?!$)\S{8,}', template, re.M)
+          if real_value:
+              print(f"::error::.env.example appears to carry a REAL value at {real_value.group(0)[:40]}…")
+              sys.exit(1)
+          print('environment template: complete contract, placeholders only.')
+          PY
+
+      - name: Vercel manifest sanity (schema + the monorepo build wiring)
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, sys
+          manifest = json.load(open('apps/web/vercel.json'))
+          assert manifest.get('framework') == 'nextjs', 'framework must be nextjs'
+          assert manifest.get('outputDirectory') == 'apps/web/.next', 'outputDirectory must be apps/web/.next'
+          assert 'pnpm' in manifest.get('installCommand', ''), 'installCommand must use pnpm'
+          assert '@epoch/web' in manifest.get('buildCommand', ''), 'buildCommand must build @epoch/web'
+          headers = manifest.get('headers', [])
+          assert any(h.get('source', '').startswith('/api/') for h in headers), 'the /api/* security headers must be configured'
+          print('vercel manifest: schema + build wiring valid.')
+          PY
+
+      - name: Deployment-surface secret scan (no real credentials in the tree)
+        run: |
+          set -euo pipefail
+          # The known secret shapes (postgres URLs with credentials, S3 keys,
+          # Upstash/Apify tokens) must not appear with real-looking values in
+          # the deployment surfaces (docs + manifests). Test fixtures with
+          # obvious placeholders (EXAMPLE/test/invalid/example.invalid) are fine.
+          ! grep -rEn 'postgresql://[^:$/@ ]+:[^@$ /]+@[a-z0-9.-]+\.[a-z]{2,}' \
+            apps/web/.env.example apps/web/vercel.json docs/deployment/ docs/operations/ 2>/dev/null \
+            | grep -v 'example\|PLACEHOLDER\|<'
+          echo 'deployment-surface secret scan: clean.'

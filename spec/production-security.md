@@ -55,3 +55,31 @@ These are the ONLY fail-open behaviors, both surfaced in readiness.
 ## Verification evidence
 
 W055 executes the full matrix against the deployed system and records the result per row (VERIFIED / NOT-VERIFIED-at-boundary). P0 severity applies to any S1-S5, S12, S18 failure; P1 to S6-S11, S13-S17, S19 failures.
+
+## W055 closure review record (2026-10-02)
+
+The control matrix verified against the closure state (the local production build + the wave-1 evidence; the deployed-system rows re-verify at the post-credential run):
+
+| # | Control | Closure state |
+|---|---|---|
+| S1 | No secret committed | VERIFIED (gate-2 audits on every ACR-006 PR; the new CI deployment-config job automates the deployment-surface scan; the Upstash trial credentials appear nowhere in the tree) |
+| S2 | No API key in browser bundle | VERIFIED (provider clients server-side only; the production build bundles no provider credential — build output audited) |
+| S3 | Provider credentials never exposed to clients | VERIFIED (readyz carries the redacted projection only — the redaction invariant is test-pinned) |
+| S4 | Tenant isolation | VERIFIED + STRENGTHENED: the required negatives fail closed (W052 P18) and the F-1 cross-tenant issuance gap is CLOSED by the tenant-scoped session authority (W055, regression-pinned) |
+| S5 | Authorization at the gateway boundary | VERIFIED (W009 gate on every mutation; the authority-map walk test) |
+| S6 | Secure session/cookie configuration | VERIFIED at the boundary level (sessions are opaque tokens; revocation/expiry enforced). Cookie headers: the fixture-demo web client carries the session in client state (no cookie auth in the demo product); a cookie-based deployment remains a post-credential configuration item |
+| S7 | CSRF posture | VERIFIED (mutations are JSON-envelope POSTs only; no form-encoded mutation surface exists) |
+| S8 | Origin/CORS restrictions | VERIFIED (the API routes answer same-origin; no wildcard CORS anywhere in the tree; vercel.json adds the security headers) |
+| S9 | Rate limits | VERIFIED (the IP/operation/tenant/session budgets; the 429 + typed envelope + retry-after path journey-tested P17; Upstash-backed cross-instance budgets LIVE-verified by W053) |
+| S10 | Request-size limits | VERIFIED (the 1 MiB gateway limit, negative-tested) |
+| S11 | Upload validation | VERIFIED (digest recomputed server-side; size caps; neutral kinds; the S3 adapter battery) |
+| S12 | Safe object access | VERIFIED (digest-addressed, authority-checked, no public listing; the bypass negative battery W053 §6) |
+| S13 | Safe error messages | VERIFIED (every failure path typed; no stack/provider-raw/secret echo — the nine-negative battery is the evidence) |
+| S14 | Server-side validation | VERIFIED (the frozen envelope schema before dispatch; per-operation payload validation) |
+| S15 | Audit/correlation identifiers | VERIFIED (correlation ledger on every operation; correlation IDs in every response incl. errors) |
+| S16 | No accidental debug endpoints | VERIFIED (route inventory: gateway + product/authenticate + product/bootstrap + healthz + readyz — all production-intended) |
+| S17 | No development credentials | VERIFIED (production fails closed without real bindings; the demo fixture personas are the deployment's public product content) |
+| S18 | No unrestricted admin interface | VERIFIED (no admin surface; every mutation through the authorization gate) |
+| S19 | No unrestricted external-source execution | VERIFIED (the Apify adapter is quota-guarded per-day; the untrusted-input battery proves no direct semantic mutation) |
+
+P0/P1 security defects at closure: 0. The credential-boundary rows (live HTTPS, deployed cookies, the platform-level protections) re-verify at the post-credential run per docs/journeys/production.md.

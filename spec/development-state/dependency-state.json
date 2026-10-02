@@ -1,11 +1,9 @@
 {
   "version": "WO2.0",
-  "completed": 54,
-  "completedThrough": "W054",
+  "completed": 55,
+  "completedThrough": "W055",
   "active": [],
-  "eligible": [
-    "W055"
-  ],
+  "eligible": [],
   "blocked": [],
   "dependencyProgram": {
     "W051": [
@@ -29,8 +27,6 @@
   "concurrency": {
     "maxWorkers": 3,
     "current": [],
-    "next": [
-      "W055"
-    ]
+    "next": []
   }
 }

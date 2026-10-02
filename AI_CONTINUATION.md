@@ -6,8 +6,8 @@ Fresh-session rule: recover project state from repository state and live GitHub 
 
 - main state: ACR-005 productization is COMPLETE (W001-W050, 50/50; W050 merged as 4ae6545e via PR #113 + governance advance 598210a2; later commits are state/handoff cleanup only). ACR-006 (Public Deployment, Free-Tier Infrastructure & Production Operations) is now EFFECTIVE (operator directive 2026-10-02): the completed product is being made publicly deployable and actually accessible over the internet on free-tier infrastructure.
 - architecture: E1.0/X1.0 with ACR-001/002/003/004/005/006 effective (ACR-006 adds NO semantic authority — deployment/operations only)
-- frontier: eligible=[W055] (the serialized production closure); no other work orders
-- current work: ACR-006 wave 1 COMPLETE — W051 (PR #117 -> 9dff75e), W052 (PR #122 -> 2f57e8d), W053 (PR #121 -> 938016e), W054 (PR #120 -> 8f5d90c), reconciles #116/#118/#124. W055 executes: the F-1 tenant-binding fix, journey consolidation, the security review, state reconciliation. Live deployment remains gated on operator provider credentials (Vercel/Neon/R2/Apify).
+- frontier: EMPTY — the ACR-006 public deployment program is COMPLETE at the credential boundary (W051-W055 all merged and 7-gate green)
+- current work: NONE. Live deployment verification (the real public URL, the Neon/R2/Apify live connections, the deployed-URL journey runs) executes when the operator provides provider credentials, following docs/journeys/production.md §post-credential procedure. No "deployed" claim exists before that. Post-program WORK requires a NEW ACR per spec/architecture-lock.md.
 - credential boundary: NO provider credentials exist (Vercel/Neon/R2/Upstash/Apify are operator input); work orders deliver to the boundary and record VERIFIED/NOT-VERIFIED honestly; never fabricate deployment URLs.
 
 ## Recovery reading order
@@ -26,7 +26,7 @@ Fresh-session rule: recover project state from repository state and live GitHub 
 
 ## Dispatch
 
-W055 (serialized production closure — Tech Lead) is ELIGIBLE and is the LAST work order of ACR-006. After W055: the program closes with the honest credential-boundary state; live deployment verification executes when the operator provides provider credentials.
+NONE — the ACR-006 program is complete (W051-W055). The only pending action is OPERATOR INPUT: provider credentials (Vercel account/project, Neon connection string, R2 bucket + S3 keys, optionally Upstash production REST credentials + an Apify token/actor), placed through the deployment platform's secure environment per docs/deployment/*.md. The post-credential procedure is documented; it is verification of the already-built system, not new work orders.
 
 One Work Order = one branch = one PR. Workers never merge. Maximum three concurrent workers. Concurrent surfaces must be pairwise-disjoint. Root manifests/lockfiles are serial Tech Lead work.
 

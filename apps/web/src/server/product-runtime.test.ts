@@ -167,3 +167,65 @@ describe('the product runtime over the committed fixtures (W047)', () => {
     expect(ok.ok).toBe(true);
   });
 });
+
+describe('the tenant-scoped session authority (W055, F-1 closure)', () => {
+  it('REGRESSION (F-1): a foreign-domain authentication result CANNOT issue a session in another tenant', async () => {
+    const runtime = await getProductRuntime();
+    const construction = runtime.environmentForDomain('construction')!;
+    const software = runtime.environmentForDomain('software')!;
+    // The construction identity boundary mints a verified result for its
+    // own registered principal...
+    const foreignAuthentication = authenticatePrincipal(construction, 'principal:delivery-lead');
+    expect(foreignAuthentication.outcome).toBe('verified');
+    // ...which the SOFTWARE tenant's session authority must now REJECT
+    // (the W052 P18 finding: the frozen manager validated principal↔result
+    // and tenant↔manager scope but not result↔tenant identity registry).
+    const issuance = await software.gateway.call(
+      envelope('session.issue', 'session:bootstrap', software.tenantId, {
+        authentication: foreignAuthentication,
+        principalId: 'principal:delivery-lead',
+        tenantId: software.tenantId,
+        ttlMs: 3_600_000,
+        nonce: `nonce:f1-regression-${Date.now()}`,
+      }, `idem:f1-regression-${Date.now()}`),
+    );
+    expect(issuance.ok).toBe(false);
+    if (!issuance.ok) {
+      expect(issuance.error.class).toBe('authority-rejected');
+      const details = issuance.error.details as { authorityCode?: string } | null;
+      expect(details?.authorityCode).toBe('authentication-tenant-mismatch');
+    }
+  });
+
+  it('the SAME-domain authentication result still issues normally (no regression of the legitimate flow)', async () => {
+    const runtime = await getProductRuntime();
+    const construction = runtime.environmentForDomain('construction')!;
+    const authentication = authenticatePrincipal(construction, 'principal:delivery-lead');
+    const issuance = await construction.gateway.call(
+      envelope('session.issue', 'session:bootstrap', construction.tenantId, {
+        authentication,
+        principalId: 'principal:delivery-lead',
+        tenantId: construction.tenantId,
+        ttlMs: 3_600_000,
+        nonce: `nonce:f1-legit-${Date.now()}`,
+      }, `idem:f1-legit-${Date.now()}`),
+    );
+    expect(issuance.ok).toBe(true);
+  });
+
+  it('an unregistered principal cannot issue a session even with a well-formed result shape (fail-closed)', async () => {
+    const runtime = await getProductRuntime();
+    const construction = runtime.environmentForDomain('construction')!;
+    const authentication = authenticatePrincipal(construction, 'principal:delivery-lead');
+    const issuance = await construction.gateway.call(
+      envelope('session.issue', 'session:bootstrap', construction.tenantId, {
+        authentication: { ...authentication, principalId: 'principal:not-registered' },
+        principalId: 'principal:not-registered',
+        tenantId: construction.tenantId,
+        ttlMs: 3_600_000,
+        nonce: `nonce:f1-unregistered-${Date.now()}`,
+      }, `idem:f1-unregistered-${Date.now()}`),
+    );
+    expect(issuance.ok).toBe(false);
+  });
+});
