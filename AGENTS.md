@@ -31,10 +31,10 @@ Implementation complete + verification green + evidence complete + Architect app
 Architect findings are fixed on the same branch/PR with regression evidence. Do not open replacement PRs for the same Work Order.
 
 
-## Active program: ACR-007 (X2.0)
+## Active program: ACR-008 (X2.0 defect closure)
 
-ACR-007 — Interactive World Runtime & Multi-Renderer Fabric is ACTIVE at `spec/architecture-change-requests/ACR-007-interactive-world-renderer-fabric.md`.
+ACR-008 — Marker-Time Ordering Defect Closure is ACTIVE at `spec/architecture-change-requests/ACR-008-marker-time-comparator.md`.
 
-ACR-006/W055 closed at the credential boundary (bd6bdbe). The Tech Lead recorded the X2.0 lock transition (2026-10-02): ACR-007 is EFFECTIVE; W056 is ELIGIBLE and dispatched first. The first concurrent wave after W056 is W057 | W058 | W059.
+ACR-007 closed complete (W001-W061, 61/61; frontier EMPTY; f7ca304 + the 0c17f6e reconcile). The operator's standing continuation directive authorizes the ledgered "future-ACR" disposition: the W016 marker-time P2 defect closure. ACR-008 is a defect-closure program — NO architecture change, NO lock transition; E1.0/X2.0 invariants remain binding.
 
-The intended product requirement is non-negotiable: the central Epoch workspace is a real interactive spatial world. Third-party renderer/editor technology is hidden behind Epoch-owned adapters; no renderer becomes semantic authority.
+W062 is the single serialized work order (single worker): the numeric `(atMs, markerId)` comparator in `packages/world-experience/src/timeline.ts`, the pinned known-issue battery flip, and the defect-ledger closure. After W062 merges, ACR-008 closes and the frontier returns to EMPTY; any further program again requires a new ACR. The standing operator inputs remain: provider credentials (Vercel/Neon/R2/Upstash/Apify) for the ACR-006 live deployment verification; a Blender binary for the env-gated live legs.

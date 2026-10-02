@@ -1,49 +1,27 @@
 {
   "schemaVersion": 1,
   "status": "ACTIVATED",
-  "program": "ACR-007 / X2.0",
+  "program": "ACR-008 / X2.0",
   "approvedDate": "2026-10-02",
   "blockedUntil": null,
   "currentProgramRemainsAuthoritative": false,
   "nextFrontier": [
-    "W056"
+    "W062"
   ],
   "dependencyProgram": {
-    "W056": [
-      "ACR-006/W055"
-    ],
-    "W057": [
-      "W056"
-    ],
-    "W058": [
-      "W056"
-    ],
-    "W059": [
-      "W056"
-    ],
-    "W060": [
-      "W057",
-      "W058",
-      "W059"
-    ],
-    "W061": [
-      "W060"
+    "W062": [
+      "ACR-007/W061"
     ]
   },
-  "firstConcurrentWaveAfterW056": [
-    "W057",
-    "W058",
-    "W059"
-  ],
-  "requiredTransition": "Tech Lead records X2.0 lock transition and promotes W056 only after ACR-006/W055 closes.",
+  "firstConcurrentWaveAfterW056": null,
+  "requiredTransition": "None \u2014 a defect-closure ACR requires no lock transition. The Tech Lead promotes W062 directly: ACR-007/W061 is closed complete (61/61, f7ca304 + 0c17f6e reconcile), the frontier was EMPTY, and the operator's standing continuation directive authorizes the ledgered future-ACR disposition.",
   "nonNegotiables": [
-    "World Model remains semantic authority",
-    "renderer sessions are non-authoritative",
-    "renderer switching preserves canonical world identity and digest",
-    "at least two real interactive renderers",
-    "at least one external foundation path",
-    "no vendor UI as primary Epoch surface"
+    "no semantic change \u2014 the numeric ordering is the already-specified intent",
+    "no schema/contract version bump",
+    "no second comparator",
+    "the pinned battery flips FOR THE BETTER and nothing else changes behavior",
+    "same-digit-width workaround consumers stay green unchanged"
   ],
   "activatedDate": "2026-10-02",
-  "activationRecord": "ACR-006/W055 closed at bd6bdbe (credential boundary). Tech Lead recorded the X2.0 lock transition on governance/acr007-activation and promoted W056 to ELIGIBLE. First concurrent wave after W056: W057 | W058 | W059."
+  "activationRecord": "ACR-007/W061 closed complete (61/61; f7ca304 + the 0c17f6e reconcile). Frontier was EMPTY; post-program work requires a new ACR. The operator's standing continuation directive authorizes the ledgered disposition: the W016 marker-time P2 defect closure as ACR-008. Tech Lead promoted W062 to ELIGIBLE on governance/acr008-activation."
 }
