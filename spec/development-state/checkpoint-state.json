@@ -1,8 +1,8 @@
 {
-  "baselineSha": "2e4aafdb6e1b2351f2cdd625a41bafdf7f25be9a",
-  "status": "ACR006_W051_COMPLETE_W052_W054_AUTHORIZED",
-  "next": "Dispatch W052/W053/W054 concurrently (max 3 workers, pairwise-disjoint: apps/web product vs infrastructure-adapter verification vs acquisition adapter + discovery wiring). W055 is the serialized closure after all three merge. Provider credentials (Vercel/Neon/R2/Upstash/Apify) remain the honest operator-input boundary for live deployment verification.",
-  "verification": "W051 delivered and verified: the six production spec documents, the RequestGuard port + reference, the S3/Upstash adapters (SigV4 pinned by the official AWS vector), the production binding layer, health/readyz, vercel.json, the verified free-tier cost contract; CI 4/4 on every branch; governance/boundary PASS.",
-  "lastMergeSha": "2e4aafdb6e1b2351f2cdd625a41bafdf7f25be9a",
-  "lastAction": "W051 merged (PR #117 -> 9dff75e) + foundation pg intake (PR #116 -> 2b3ab89) + lockfile reconcile (PR #118 -> 2e4aafd); governance advance authorizes the concurrent wave."
+  "baselineSha": "3165bc1b43193db1e7f8e18ca55b1227263de544",
+  "status": "ACR006_WAVE1_COMPLETE_W055_AUTHORIZED",
+  "next": "Dispatch W055 (serialized production closure \u2014 Tech Lead): the F-1 tenant-binding fix (product-runtime.ts), the ops index one-liner, journey consolidation (docs/journeys/production.md), the S1-S19 security review, topology verification to the credential boundary, state reconciliation. Live deployment verification remains gated on operator provider credentials (Vercel/Neon/R2/Apify).",
+  "verification": "Wave-1 all 7-gate green: W052 (the P01-P18 public-surface journey harness + local production-build evidence; D-1/D-2 closed; F-1 escalated), W053 (the nine negative tests typed fail-safe; Upstash LIVE-verified with a real live-only defect found+fixed; pglite real-engine), W054 (the Apify adapter with quota guard + provenance + the untrusted-input negative battery).",
+  "lastMergeSha": "3165bc1b43193db1e7f8e18ca55b1227263de544",
+  "lastAction": "Wave-1 merged + lockfile reconciled; W055 authorized."
 }

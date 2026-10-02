@@ -1,16 +1,12 @@
 {
   "version": "WO2.0",
-  "completed": 51,
-  "completedThrough": "W051",
+  "completed": 54,
+  "completedThrough": "W054",
   "active": [],
   "eligible": [
-    "W052",
-    "W053",
-    "W054"
-  ],
-  "blocked": [
     "W055"
   ],
+  "blocked": [],
   "dependencyProgram": {
     "W051": [
       "ACR-006"
@@ -34,9 +30,7 @@
     "maxWorkers": 3,
     "current": [],
     "next": [
-      "W052",
-      "W053",
-      "W054"
+      "W055"
     ]
   }
 }
