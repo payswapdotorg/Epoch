@@ -15,15 +15,16 @@ This section is required by the W046 work order ("docs/product-runtime/ ... an e
 
 The persistence SPI makes PostgreSQL the durable authority for the GATEWAY's own records (sessions, idempotency, correlation) and is the proven seam for the record-store primitives. The KERNELS' semantic stores (world, solution, delivery, event log, ...) remain the W001-W045 in-memory reference implementations — binding kernel state to PostgreSQL is a FUTURE program (it requires kernel-store persistence design, not a gateway concern). "PostgreSQL is authoritative when enabled" is therefore scoped in W046 to: the gateway's durable records + the adapter + conformance/golden-SQL/real-engine proof of the seam.
 
-## 4. The pg/pglite catalog gap (structural bindings; real-engine suite deferred to the reconcile)
+## 4. The pg/pglite dependency state (RESOLVED for pglite at PR #101; RESOLVED for pg by the W051 foundation intake, ACR-006)
 
-The W046 dependency intake (PR #99) declared exact pins — `pg` 8.23.0 (service-layer driver only), `@types/pg` 8.23.1, `@electric-sql/pglite` 0.5.8 (TEST-ONLY embedded real PostgreSQL) — in `scripts/DEPENDENCY-BASELINE.md`, but the mechanical `pnpm-workspace.yaml` catalog entries did NOT land with it (PR #99 changed only the doc). Root manifests are Tech-Lead-serial and CI-protected; per the baseline's own missing-dependency procedure ("raise it as an Architecture Question in your PR"), this tree references NO npm module for the driver:
+History: the W046 dependency intake (PR #99) declared exact pins — `pg` 8.23.0 (service-layer driver only), `@types/pg` 8.23.1, `@electric-sql/pglite` 0.5.8 (TEST-ONLY embedded real PostgreSQL) — in `scripts/DEPENDENCY-BASELINE.md`; the catalog entries landed with the Tech Lead reconcile (PR #101, pglite as a TEST-ONLY devDependency) and the pg driver materialized at its single documented consumer via the W051 foundation intake (ACR-006). Current state:
 
-- the pg binding is STRUCTURAL — `bindPgPool(pool)` duck-types the pg 8.23.0 pool API; the deployment injects the instantiated driver;
-- `packages/persistence` never imports a driver at all (pg boundary test enforces this);
-- the pglite real-engine suite (`services/application-gateway/test/pglite-engine.test.ts`) is COMPLETE and wired, but loads the engine through a non-literal specifier: until the catalog entry materializes (Tech Lead foundation branch + post-merge lockfile reconcile) its engine-dependent tests report an explicit, named skip — never a silent green — and execute against real embedded PostgreSQL with zero code changes once the dependency resolves.
+- `services/application-gateway` depends on the catalog-pinned `pg` 8.23.0 and exports `connectPostgresPool(url, options?)` — the factory that instantiates the REAL driver pool (lazily; serverless-friendly). This package remains the ONLY pg binding point (pg-boundary test enforces it: no other package/app/adapter may import the driver);
+- `bindPgPool(pool)` remains the neutral wire binding — deployments call `connectPostgresPool(...)` and pass the result to `bindPgPool(...)`;
+- `packages/persistence` never imports a driver at all (the pg boundary test enforces this);
+- the pglite real-engine suite executes against real embedded PostgreSQL (TEST-ONLY devDependency).
 
-**Ad-hoc real-engine evidence (not committed):** the identical adapter + suite were executed against real `@electric-sql/pglite` 0.5.8 in a throwaway workspace replica (catalog entry + devDependency added outside the repository): the full shared conformance suite and the golden-SQL execution passed against the embedded real engine. This is recorded as PR evidence, not repo state, because the committed tree must not reference an unpinned dependency.
+**Historical ad-hoc real-engine evidence (pre-reconcile):** the identical adapter + suite were executed against real `@electric-sql/pglite` 0.5.8 in a throwaway workspace replica before the catalog entry materialized. Recorded as PR evidence of seam correctness.
 
 ## 5. Single-process composition
 

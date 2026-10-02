@@ -53,15 +53,19 @@ export {
 } from './persistence-binding';
 export type { CorrelationLedgerEntry } from './persistence-binding';
 
-// PostgreSQL driver bindings (SERVICE-LAYER ONLY; structural until the
-// catalog pin materializes — see docs/product-runtime/limitations.md).
+// PostgreSQL driver bindings (SERVICE-LAYER ONLY; the pg 8.23.0 catalog
+// pin materialized at its documented consumer by the W051 foundation
+// intake — this package remains the ONLY pg binding point).
 export {
   PG_DRIVER_MODULE,
   PGLITE_MODULE,
   bindPgPool,
   bindPgliteEngine,
+  connectPostgresPool,
 } from './postgres-binding';
 export type {
+  ConnectPostgresPoolOptions,
+  ConnectedPostgresPool,
   PgClientLike,
   PgPoolLike,
   PgQueryResultLike,

@@ -105,3 +105,59 @@ export const PG_DRIVER_MODULE = 'pg';
 
 /** The module specifier of the TEST-ONLY embedded engine (never imported here). */
 export const PGLITE_MODULE = '@electric-sql/pglite';
+
+/**
+ * A live pg pool (the structural pool shape + lifecycle close), returned
+ * by `connectPostgresPool` (W051 foundation, ACR-006).
+ */
+export interface ConnectedPostgresPool extends PgPoolLike {
+  /** Drain the pool (graceful shutdown / tests). */
+  end(): Promise<void>;
+}
+
+/** Options of `connectPostgresPool` (pass-through to the pg 8.23.0 Pool). */
+export interface ConnectPostgresPoolOptions {
+  /**
+   * Explicit TLS options. When absent, the connection string governs
+   * (Neon URLs carry their own sslmode; pg parses it).
+   */
+  readonly ssl?: boolean | { readonly rejectUnauthorized?: boolean } | undefined;
+  /** Pool sizing (defaults: the pg driver's own). */
+  readonly max?: number | undefined;
+  /** Idle timeout milliseconds (defaults: the pg driver's own). */
+  readonly idleTimeoutMillis?: number | undefined;
+  /** Connect timeout milliseconds (defaults: the pg driver's own). */
+  readonly connectionTimeoutMillis?: number | undefined;
+}
+
+/**
+ * Instantiate the REAL pg 8.23.0 pool from a connection string (W051
+ * foundation, ACR-006). The catalog pin materialized at exactly its
+ * documented consumer (this package — still the ONLY pg binding point);
+ * deployments (apps/web production binding) call this factory and pass
+ * the result to `bindPgPool`. The pool connects LAZILY (first query),
+ * so construction never performs I/O. Serverless-friendly: the caller
+ * caches the pool (e.g. on globalThis) across invocations.
+ */
+export async function connectPostgresPool(
+  connectionString: string,
+  options: ConnectPostgresPoolOptions = {},
+): Promise<ConnectedPostgresPool> {
+  if (typeof connectionString !== 'string' || connectionString.length === 0) {
+    throw new Error('connectPostgresPool: a non-empty connection string is required');
+  }
+  const mod = (await import(PG_DRIVER_MODULE)) as unknown as {
+    default?: { Pool?: new (config: Record<string, unknown>) => ConnectedPostgresPool };
+    Pool?: new (config: Record<string, unknown>) => ConnectedPostgresPool;
+  };
+  const Pool = mod.Pool ?? mod.default?.Pool;
+  if (Pool === undefined) {
+    throw new Error('connectPostgresPool: the pg driver module did not export Pool');
+  }
+  const config: Record<string, unknown> = { connectionString };
+  if (options.ssl !== undefined) config['ssl'] = options.ssl;
+  if (options.max !== undefined) config['max'] = options.max;
+  if (options.idleTimeoutMillis !== undefined) config['idleTimeoutMillis'] = options.idleTimeoutMillis;
+  if (options.connectionTimeoutMillis !== undefined) config['connectionTimeoutMillis'] = options.connectionTimeoutMillis;
+  return new Pool(config);
+}
