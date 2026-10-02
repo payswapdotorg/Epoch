@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "releaseId": "epoch-clients-v1.0.0",
   "version": "1.0.0",
-  "sourceCommit": "714900d56f24885096e548b3074df97a981b97a6",
+  "sourceCommit": "3670b3cb318cdbed0c59189369be8f7ad76b1e0c",
   "description": "The client release identity record set (W050): every artifact records source commit, version/profile, target platform and checksum (spec/productization-architecture.md). Config-delivered platforms declare their environment gaps \u2014 never silent.",
   "clients": [
     {
@@ -18,7 +18,7 @@
           "apps/web/vitest.config.mts",
           "apps/web/playwright.config.ts"
         ],
-        "definitionTreeSha": "a49aeb6d806bddd9ad860c6cdfc485fd49fcf37c",
+        "definitionTreeSha": "3026409c2db9304f48ce791c214437c15a9ddc05",
         "checksums": {
           "apps/web/package.json": "44f71369454f2a11b9927f6b87dff1868ae817693e7842a0585a4510012080ac",
           "apps/web/next.config.ts": "b9ed807b06d018a3b190914e965247d2999d38e2dcbfea85f11eb4845c9a9132",
@@ -46,9 +46,9 @@
           "apps/desktop/src-tauri/Cargo.toml",
           "apps/desktop/tsconfig.json"
         ],
-        "definitionTreeSha": "ecc27fb6b7dd38490a1e707f5fde939960880011",
+        "definitionTreeSha": "57c9ebad92aed9218c2422a0547f9d91675328d1",
         "checksums": {
-          "apps/desktop/package.json": "a3a4a8d8e2b7f333359cd4ab55393a6b9a77ea1735740f6e4eecaf1b7fdad022",
+          "apps/desktop/package.json": "4eb2ebfc9fc43f519e5bde933cd73fcecf87c2132ea6d9b4791c3ccedbb6f625",
           "apps/desktop/src-tauri/tauri.conf.json": "79d64b54d5d47d39ee59ae582110d80186bfdeb078a34ef9de6e7786c10d67e9",
           "apps/desktop/src-tauri/Cargo.toml": "38aafe55f158fbbf30939b6a53ca2006d3261e4313b3a2ab90de0ec783e79642",
           "apps/desktop/tsconfig.json": "b0144421b233bc84ff97e3569622029e9d77d780c7a8e6f124db19302fd2ed65"
@@ -73,9 +73,9 @@
           "apps/desktop/src-tauri/Cargo.toml",
           "apps/desktop/tsconfig.json"
         ],
-        "definitionTreeSha": "ecc27fb6b7dd38490a1e707f5fde939960880011",
+        "definitionTreeSha": "57c9ebad92aed9218c2422a0547f9d91675328d1",
         "checksums": {
-          "apps/desktop/package.json": "a3a4a8d8e2b7f333359cd4ab55393a6b9a77ea1735740f6e4eecaf1b7fdad022",
+          "apps/desktop/package.json": "4eb2ebfc9fc43f519e5bde933cd73fcecf87c2132ea6d9b4791c3ccedbb6f625",
           "apps/desktop/src-tauri/tauri.conf.json": "79d64b54d5d47d39ee59ae582110d80186bfdeb078a34ef9de6e7786c10d67e9",
           "apps/desktop/src-tauri/Cargo.toml": "38aafe55f158fbbf30939b6a53ca2006d3261e4313b3a2ab90de0ec783e79642",
           "apps/desktop/tsconfig.json": "b0144421b233bc84ff97e3569622029e9d77d780c7a8e6f124db19302fd2ed65"
@@ -100,9 +100,9 @@
           "apps/desktop/src-tauri/Cargo.toml",
           "apps/desktop/tsconfig.json"
         ],
-        "definitionTreeSha": "ecc27fb6b7dd38490a1e707f5fde939960880011",
+        "definitionTreeSha": "57c9ebad92aed9218c2422a0547f9d91675328d1",
         "checksums": {
-          "apps/desktop/package.json": "a3a4a8d8e2b7f333359cd4ab55393a6b9a77ea1735740f6e4eecaf1b7fdad022",
+          "apps/desktop/package.json": "4eb2ebfc9fc43f519e5bde933cd73fcecf87c2132ea6d9b4791c3ccedbb6f625",
           "apps/desktop/src-tauri/tauri.conf.json": "79d64b54d5d47d39ee59ae582110d80186bfdeb078a34ef9de6e7786c10d67e9",
           "apps/desktop/src-tauri/Cargo.toml": "38aafe55f158fbbf30939b6a53ca2006d3261e4313b3a2ab90de0ec783e79642",
           "apps/desktop/tsconfig.json": "b0144421b233bc84ff97e3569622029e9d77d780c7a8e6f124db19302fd2ed65"

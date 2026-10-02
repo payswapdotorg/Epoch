@@ -16,20 +16,21 @@ function validationIssuesOf(error: ShellError): readonly ShellIssue[] {
 }
 
 describe('shell route registry', () => {
-  it('validates the built-in descriptors (home + 10 lifecycle stages)', () => {
+  it('validates the built-in descriptors (home + world + 10 lifecycle stages)', () => {
     for (const route of builtInRoutes()) {
       const result = validateRouteDescriptor(route);
       expect(result.ok, route.routeId).toBe(true);
     }
   });
 
-  it('builds the built-in registry: deterministic order (home first, then lifecycle)', () => {
+  it('builds the built-in registry: deterministic order (home, then the world workspace, then lifecycle)', () => {
     const registry = createRouteRegistry(builtInRoutes());
     expect(registry.ok).toBe(true);
     if (!registry.ok) return;
     const ids = registry.value.listRoutes().map((route) => route.routeId);
     expect(ids).toEqual([
       'route:home',
+      'route:world',
       'route:understand',
       'route:decide',
       'route:plan',
@@ -43,6 +44,7 @@ describe('shell route registry', () => {
     ]);
     // Resolve by id, by path, and by stage.
     expect(registry.value.resolve('route:home').ok).toBe(true);
+    expect(registry.value.resolvePath('/world').ok).toBe(true);
     expect(registry.value.resolvePath('/learn').ok).toBe(true);
     const stage = registry.value.resolveStage('verify');
     expect(stage.ok).toBe(true);
@@ -64,12 +66,14 @@ describe('shell route registry', () => {
     }
   });
 
-  it('sortRoutes / routeSortKey: home sorts before stages; stages in canonical order', () => {
-    // home (stage undefined) sorts with stage index -1 => prefix '-1'.
+  it('sortRoutes / routeSortKey: home and world sort before stages; stages in canonical order', () => {
+    // home + world (stage undefined) sort with stage index -1 => prefix '-1';
+    // the route-id tiebreak keeps home before world (deterministic).
     expect(routeSortKey(builtInRoutes()[0]).startsWith('-1')).toBe(true);
     const sorted = sortRoutes([...builtInRoutes()].reverse());
     expect(sorted[0].routeId).toBe('route:home');
-    expect(sorted[1].routeId).toBe('route:understand');
+    expect(sorted[1].routeId).toBe('route:world');
+    expect(sorted[2].routeId).toBe('route:understand');
     expect(sorted[sorted.length - 1].routeId).toBe('route:learn');
   });
 

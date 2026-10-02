@@ -63,3 +63,51 @@ export {
   MountEnvelopeSummaryView,
 } from './components/EnvelopeSummaryView';
 export { WorldErrorNotice } from './components/WorldErrorNotice';
+
+// W057 — the interactive world WORKSPACE (the primary problem-solving surface).
+export type {
+  ControlInvocationPayloadInput,
+  DriverResult,
+  EffectEntryInput,
+  InspectViewModelInput,
+  JournalEntryInput,
+  NavigationGestureInput,
+  NavigationKeyInput,
+  NavigationKindInput,
+  NavigationStateInput,
+  RendererChoiceInput,
+  RendererSurfaceViewModelInput,
+  SemanticLayerInput,
+  SwitchSummaryInput,
+  TimelineViewModelInput,
+  ViewportAgentInput,
+  ViewportEntityInput,
+  ViewportInputOutcomeInput,
+  ViewportOverlayInput,
+  ViewportViewModelInput,
+  WorldToolInput,
+  WorldWorkspaceDriver,
+  WorkspaceControlInput,
+  WorkspaceViewModelInput,
+} from './workspace-contracts';
+export {
+  classifyDrag,
+  createWorkspaceHandlers,
+  dragToGesture,
+  isNavigationKey,
+  normalizePointer,
+  DRAG_SENSITIVITY,
+} from './workspace-handlers';
+export type { WorkspaceHandlers } from './workspace-handlers';
+export { WorldWorkspace } from './components/WorldWorkspace';
+export { WorldViewport } from './components/WorldViewport';
+export {
+  WorldControlsPanel,
+  WorldInspectPanel,
+  WorldIntentJournal,
+  WorldLayerPanel,
+  WorldPresencePanel,
+  WorldRendererBar,
+  WorldTimelineBar,
+  WorldToolRail,
+} from './components/WorldWorkspacePanels';

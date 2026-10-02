@@ -18,8 +18,10 @@ import { validateTenantContext } from './tenancy';
 describe('shell reference bootstrap', () => {
   it('the built-in descriptors validate against their own registries (positive)', () => {
     const shell = createReferenceShell();
-    expect(shell.routes.listRoutes()).toHaveLength(11);
+    // W057: home + the world workspace route + the 10 lifecycle stages.
+    expect(shell.routes.listRoutes()).toHaveLength(12);
     expect(shell.routes.resolve('route:home').ok).toBe(true);
+    expect(shell.routes.resolve('route:world').ok).toBe(true);
     expect(shell.mounts.listMounts()).toHaveLength(7);
   });
 

@@ -45,7 +45,9 @@ export function ProductWorkspace({ domain, onDomainChange }: ProductWorkspacePro
   const [appMeta, setAppMeta] = useState<HostAppMeta | null>(null);
   const [authBusy, setAuthBusy] = useState(false);
   const [authError, setAuthError] = useState<UiActionError | null>(null);
-  const [section, setSection] = useState<SectionId>('j01');
+  // W057: the interactive world is the DEFAULT (primary) surface; the
+  // journey sections (lifecycle/project context) are secondary context.
+  const [section, setSection] = useState<SectionId>('world');
   const composedRef = useRef<ProductRoot | null>(null);
   const nonceCounter = useRef(0);
   const { compact } = useViewport();

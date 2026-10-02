@@ -47,10 +47,25 @@ export function stagePath(stage: NavigatorStage): string {
 /** The permission every navigator stage route requires. */
 const STAGE_PERMISSIONS: readonly ShellPermission[] = ['navigator:read'];
 
-/** The built-in route descriptors: home first, then the lifecycle stages. */
+/**
+ * The WORLD route descriptor (W057): the interactive spatial world — the
+ * PRIMARY Epoch problem-solving workspace. A non-lifecycle route (no
+ * navigator stage, like the home route); the lifecycle stage routes
+ * remain secondary context surfaces around it.
+ */
+export const WORLD_ROUTE: RouteDescriptor = {
+  schemaVersion: SHELL_RECORD_VERSION,
+  routeId: 'route:world',
+  path: '/world',
+  title: 'World',
+  requiredPermissions: STAGE_PERMISSIONS,
+};
+
+/** The built-in route descriptors: home, the world workspace, then the lifecycle stages. */
 export function builtInRoutes(): readonly RouteDescriptor[] {
   return [
     HOME_ROUTE,
+    WORLD_ROUTE,
     ...(
       [
         'understand',
