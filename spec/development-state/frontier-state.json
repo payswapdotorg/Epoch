@@ -1,9 +1,7 @@
 {
   "program": "ACR-007 / X2.0",
   "eligible": [],
-  "inFlight": [
-    "W061"
-  ],
+  "inFlight": [],
   "blocked": [],
   "maxConcurrentWorkers": 3
 }

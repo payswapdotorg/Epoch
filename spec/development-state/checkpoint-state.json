@@ -1,10 +1,10 @@
 {
-  "baselineSha": "c5d98ccff4fa7fdb4086b392337ed449e25398a8",
-  "status": "ACR007_W060_COMPLETE",
-  "next": "W061 (final closure) in flight.",
+  "baselineSha": "7dad912d8fef9d4fa1cfcf50d18ccac2fb7024bd",
+  "status": "ACR007_PROGRAM_COMPLETE",
+  "next": "NONE — the frontier is EMPTY. Post-program work requires a new ACR per spec/architecture-lock.md (the standing operator actions are unchanged: provider credentials for the ACR-006 post-credential deployment verification; a Blender binary + the env-gated live battery for the W060/W061 NOT-VERIFIED-live legs).",
   "verification": "W051-W055 all 7-gate green. Final TL report: ACR-006 STATUS: COMPLETE-AT-CREDENTIAL-BOUNDARY (engineering complete; live deployment pending operator credentials \u2014 never claimed as deployed). W051 \u2705 (PR #117) W052 \u2705 (PR #122; the journey harness + local production evidence; TL-completion deviation recorded) W053 \u2705 (PR #121; Upstash LIVE-verified; nine negative tests) W054 \u2705 (PR #120) W055 \u2705 (F-1 closed + regression-pinned; journey consolidation; S1-S19 review; CI deployment-config gate). PUBLIC WEB URL: NONE YET (operator credentials required \u2014 never fabricated). DATABASE Neon: code+real-engine VERIFIED / live NOT-VERIFIED. OBJECT STORAGE R2: SigV4-vector+doubles VERIFIED / live NOT-VERIFIED. CACHE Upstash: LIVE-VERIFIED (trial). EXTERNAL ACQUISITION Apify: doubles VERIFIED / live NOT-VERIFIED. PUBLIC JOURNEYS: 13/18 PASS (local production build), 2 covered by the W047/W050 suites, 3 NOT-RUNNABLE-at-boundary (P13/P14-restart/P16-deployed with honest dispositions). P0: 0. P1: 0. P2: 3 closed (D-1, F-1, W053-L1). FREE-TIER GUARDRAILS: VERIFIED (spec/free-tier-infrastructure.md). ROLLBACK: documented + VERIFIED at the procedure level (platform rollback re-verifies live). FINAL FRONTIER: EMPTY. NEXT ACTION: OPERATOR CREDENTIALS (then the post-credential procedure); NEW ACR for any new program.",
-  "lastMergeSha": "c5d98ccff4fa7fdb4086b392337ed449e25398a8",
-  "lastAction": "W055 closure executing (this advance): the F-1 fix, journey consolidation, the security review, the CI deployment-config gate, final state reconciliation.",
+  "lastMergeSha": "7dad912d8fef9d4fa1cfcf50d18ccac2fb7024bd",
+  "lastAction": "W061 final closure executing (this branch): the real renderers behind the interactive world, the 18-leg browser closure battery over real software GL, the engine-pair + degradation batteries, the W016 marker-time repro, the X-06 re-stamp, and the program-closure records.",
   "checkpoints": [
     {
       "date": "2026-10-02",
@@ -44,6 +44,15 @@
       "status": "W060_COMPLETE_W061_AUTHORIZED",
       "next": "W061 (Multi-Renderer Integration & Interactive World Closure, serialized, FINAL) dispatched after this foundation pass.",
       "verification": "W060 PR #136 7-gate ALL-GREEN (49 files; gltf 84/84; blender 40+3 live-gated skips; end-to-end glTF->binding->real Three.js session proof; Blender argv-array boundary with doubles + env-gated live test; GPL/CC-BY license records; honest NOT-VERIFIED-live Blender). Foundation pass: adapters/foundations/* glob + lockfile registration (@epoch/adapter-foundation-gltf, @epoch/adapter-renderer-blender + capability-registry edge); frozen install verified. TL ratified the gltf interchange-bridge surface interpretation. Open ledger into W061: W016 marker-time lexicographic ordering defect (W057 advisory 3) \u2014 fix in W061 scope if justified; direct Three<->Babylon cross-battery; /world App Router page; browser E2E closure."
+    },
+    {
+      "date": "2026-10-02",
+      "type": "PROGRAM-COMPLETE",
+      "baselineSha": "7dad912d8fef9d4fa1cfcf50d18ccac2fb7024bd",
+      "workOrder": "W061",
+      "status": "W061_COMPLETE_ACR007_CLOSED",
+      "next": "NONE \u2014 program 61/61; frontier EMPTY; a new program requires a new ACR.",
+      "verification": "W061 (PR on work/W061-multi-renderer-closure, base main@7dad912) closes ACR-007: the interactive world is the real cross-client experience. (1) the web /world host + the desktop world host register the REAL engines (Three.js first, Babylon.js second, the reference adapter as declared fallback) behind the frozen W056 seam, with the browser-gl injection seams and the world-runtime spatial presentation projection. (2) The 18-leg closure battery GREEN in a REAL browser over real software GL (SwiftShader ANGLE, production build, free port 3210, Playwright 1.63): 3 passed / 2 honest skips \u2014 legs 1-13+15 through both real engines (enter, real GL render with the renderer string asserted, orbit/pan/zoom, select/inspect through the real hit-test surfaces, isolate/reveal, the four-pick measure cadence, annotate, follow-agent, replay/seek, branch/simulate, switch Three->Babylon and back with digest/tenant continuity), leg 16 the forced no-GL degradation to the declared reference fallback (still interactive), legs 17-18 the real Action-Gateway approval + state/evidence verification, leg 14 honestly NOT-RUNNABLE (bindAsset adapter-seam-scoped in the frozen contract v1.1.0 + no Blender binary; the path proven at qa/foundation-renderers 84/84+15). (3) The direct Three<->Babylon engine-pair battery + the forced degradation/failure/fallback ladder (qa/rendering, riding the fabric pipeline 36/36). (4) Two P1 bring-up defects fixed with the full discipline chain (viewport-controls z-index interception; stale GL-liveness probes), regression-pinned by the battery. (5) The W016 marker-time P2 ledgered with the precise repro (qa/world-experience known-issue battery \u2014 advisory-only, the W016 package is not the W061 surface; a numeric-aware comparator is a future-ACR disposition). (6) The X-06 release manifest re-stamped with W050's deterministic generator (the legitimate apps/web + apps/desktop dependency additions; the W057-precedent sanctioned mechanical touch, disclosed in the PR). (7) The final journey record (docs/journeys/interactive-world.md) + the renderer-program closure record (docs/rendering/closure.md). HONEST LIMITATIONS: Blender real binary NOT-VERIFIED-live (env-gated); leg-14 in-page path contract-blocked (frozen v1.1.0 scope); SwiftShader is software GL \u2014 no GPU run claimed anywhere. NOT-VERIFIED-live (carried from ACR-006): the public deployment still awaits operator credentials."
     }
   ]
 }
