@@ -1,0 +1,35 @@
+{
+  "name": "@epoch/adapter-renderer-babylonjs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Babylon.js embedded interactive renderer adapter (W059, ACR-007/X2.0) — the SECOND interchangeable interactive renderer behind the FROZEN W056 RendererAdapter seam (@epoch/renderer-fabric) and contracts/renderers v1.1.0: mounts the canonical W016 world scene projection into a real Babylon.js scene graph (every Babylon mesh/node carries its semantic entity id; provider-native state is disposable), hit-tests raw pointer input through Babylon picking into semantic entity ids and normalizes to the EXISTING W016 world-interaction intent vocabulary (select/inspect/isolate/hide/measure/annotate/zoom — never a parallel vocabulary), presents ArcRotate/pan/zoom camera semantics from the portable camera grammar (presentation-only interpolation), applies typed W056 degradations (reduced-fidelity/static-frame/wireframe — declared only), represents scene agents visibly, captures portable session snapshots for switching, restores all four portable view-state fields, enforces the content-addressed asset-binding trust discipline, and disposes safely (scene.dispose() + engine.dispose(); disposed sessions refuse everything typed). The GL-dependent path (WebGL engine creation over a canvas) is INJECTED (BabylonEngineHost): the deterministic core (scene-graph mapping, semantic picking, input normalization, degradation, snapshot/restore, disposal) runs fully headless in CI over @babylonjs/core's NullEngine (Node 22, zero GPU); the browser host (webCanvasEngineHost) is exported for the web/Tauri surface and closes with W061. NO durable mutation, NO Babylon editor/playground UI — the visible surface is Epoch's viewport. Babylon.js is a capability behind the adapter, never authority (spec/capability-foundation-policy.md).",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p ../../../qa/renderer-conformance/babylonjs/tsconfig.json",
+    "lint": "eslint . && node scripts/link-qa-battery.mjs && cd ../../../qa/renderer-conformance/babylonjs && eslint . --config eslint.config.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@babylonjs/core": "catalog:",
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "@epoch/renderer-fabric": "workspace:*",
+    "@epoch/renderer-runtime": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/world-experience": "workspace:*"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
