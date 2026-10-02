@@ -1,6 +1,6 @@
 # W061 — Multi-Renderer Integration & Interactive World Closure
 
-Status: STAGED
+Status: AUTHORIZED
 Wave: ACR-007 / serialized closure
 Depends On: W060
 Worker Count: 1

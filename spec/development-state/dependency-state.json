@@ -1,14 +1,12 @@
 {
   "version": "X2.0",
-  "completed": 59,
-  "completedThrough": "W059",
+  "completed": 60,
+  "completedThrough": "W060",
   "active": [
-    "W060"
-  ],
-  "eligible": [],
-  "blocked": [
     "W061"
   ],
+  "eligible": [],
+  "blocked": [],
   "dependencyProgram": {
     "W056": [
       "ACR-006/W055"
@@ -34,10 +32,8 @@
   "concurrency": {
     "maxWorkers": 3,
     "current": [
-      "W060"
-    ],
-    "next": [
       "W061"
-    ]
+    ],
+    "next": []
   }
 }
