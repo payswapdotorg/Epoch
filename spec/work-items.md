@@ -173,3 +173,20 @@ W061 is serialized last.
 The central acceptance object is a real interactive spatial world, not a table/status substitute. At least two concrete renderers must mount the same canonical fixture and support the shared interaction battery; renderer switching must preserve semantic identity and digest; at least one external foundation path must operate behind the Epoch-owned surface.
 
 The detailed acceptance contracts live in `spec/architecture-change-requests/ACR-007-interactive-world-renderer-fabric.md` and each W056-W061 Work Order file.
+
+
+# ACR-008 Marker-Time Defect Closure Work Orders
+
+ACR-008 is APPROVED and is the active defect-closure program after ACR-007/W061.
+
+| ID | Scope | Depends | Owned surfaces |
+|---|---|---|---|
+| W062 | Marker-Time Ordering Defect Closure (fix -> rerun -> close) | ACR-007/W061 | packages/world-experience/src/timeline.ts, packages/world-experience/test/* (comparator regression only), qa/world-experience/w016-marker-time-known-issue.test.ts, docs/journeys/interactive-world.md, spec/PROJECT-STATE.md, spec/development-state/*, AI_CONTINUATION.md |
+
+## ACR-008 concurrency
+
+W062 is the single serialized work order. No concurrent wave.
+
+## ACR-008 completion invariant
+
+The central acceptance object is the closed defect with the full public discipline chain: the numeric comparator lands, the pinned known-issue battery flips into the regression record (ascending admits, descending refuses, the wrong-end-bound consequences disappear), the same-digit-width control and every same-width consumer stay green unchanged, and the defect ledger records fix -> rerun -> close with exact evidence. The detailed acceptance contract lives in `spec/architecture-change-requests/ACR-008-marker-time-comparator.md` and `spec/work-orders/W062-marker-time-comparator.md`.

@@ -135,3 +135,20 @@ All renderer implementations consume the same canonical World Experience project
 ## Product invariant
 
 Interactive-world completion requires a real renderer surface and real user interaction. Tables, scene summaries and status panels are supporting projections, not substitutes for the world.
+
+
+# ACR-008 Marker-Time Defect Closure Graph
+
+ACR-007/W061 -> W062
+
+## Safe concurrency
+
+W062 is the single serialized work order (single worker). No concurrent wave.
+
+## Surface discipline
+
+W062 owns the marker-time comparator seam (`packages/world-experience/src/timeline.ts`), the flipped W016 regression record, and the defect-ledger closure. No other surface is touched.
+
+## Defect-closure invariant
+
+The fix restores ALREADY-SPECIFIED behavior (numeric `(atMs, markerId)` ascending). No semantic change, no contract bump, no second comparator. The pinned battery flips FOR THE BETTER and nothing else changes behavior.

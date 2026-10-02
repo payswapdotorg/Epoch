@@ -121,3 +121,13 @@ Binding implementation: W056 -> (W057|W058|W059) -> W060 -> W061.
 3. ACR-007 is **EFFECTIVE**. Its implementation entry point is W056 (Renderer Fabric & Multi-Renderer Switching Contract), defined in `spec/work-orders/W056-renderer-fabric-foundation.md` with its dependency (ACR-006/W055) complete. Frontier update: W056 ELIGIBLE.
 4. After W056 merges, the first concurrent wave is W057 | W058 | W059 (pairwise-disjoint ownership surfaces, max three workers). W060 is serialized after all three; W061 is the serialized closure.
 5. The ACR-007 non-negotiables are binding: World Model remains semantic authority; renderer sessions are non-authoritative; renderer switching preserves canonical world identity/digest; at least two real interactive renderers; at least one external foundation path; no vendor UI as the primary Epoch surface.
+
+## ACR-008 — Marker-Time Ordering Defect Closure
+
+ACR-008 is APPROVED (2026-10-02). It is a defect-closure program: it introduces NO architecture change, NO new semantic subsystem, and NO lock transition. The E1.0/X2.0 numbered invariants above remain binding and unchanged.
+
+It closes the ledgered W016 marker-time P2 defect (observed W057; recorded in docs/journeys/interactive-world.md; reproduced in qa/world-experience/w016-marker-time-known-issue.test.ts): `packages/world-experience/src/timeline.ts` compares `${atMs}\u0000${markerId}` STRING keys, so mixed-digit-width marker times mis-sort lexicographically — numerically ascending timelines are refused, numerically descending timelines are admitted with a wrong timeline end bound.
+
+The binding fix restores the ALREADY-SPECIFIED numeric `(atMs, markerId)` ordering (numeric atMs; lexicographic markerId tie-break; duplicate-free unchanged). No schema/contract version bump. The pinned known-issue battery flips by design into the regression battery; the defect-ledger entry closes with the fix -> rerun -> close chain.
+
+Binding implementation: W062 (single work order, single worker, serialized), `spec/work-orders/W062-marker-time-comparator.md`, depends on ACR-007/W061 (complete). After W062 merges, ACR-008 closes and the frontier returns to EMPTY; any further program again requires a new ACR.
