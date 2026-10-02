@@ -31,6 +31,16 @@ the glTF 2.0 asset/interchange bridge (W060 —
 [blender.md](./blender.md), [gltf.md](./gltf.md)). Current per-backend
 status: [renderer-matrix.md](./renderer-matrix.md).
 
+## Program closure (W061)
+
+The multi-renderer program is CLOSED: the interactive world is the real
+cross-client experience with both real engines live behind the frozen
+seam, verified in a real browser over real software GL (SwiftShader ANGLE
+— honestly presented as software rasterization). The full closure record —
+the final matrix, the software-GL evidence statement, the 18-leg E2E
+battery summary — is [closure.md](./closure.md). Post-program renderer
+work requires a new ACR.
+
 ## Selection
 
 Renderer selection is capability-driven from task/scene/device/fidelity requirements and user preference. `Auto` is allowed.
