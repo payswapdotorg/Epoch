@@ -1,11 +1,12 @@
 # Epoch Project State — CURRENT STATUS
 
-> **Authoritative current state (2026-09-29).** The historical wave notes below are retained for forensic history only and must not be read as current authorization.
+> **Authoritative current state (2026-10-02).** The historical wave notes below are retained for forensic history only and must not be read as current authorization.
 
-Architecture: E1.0/X1.0 with ACR-001/002/003/004 effective; ACR-005 productization program effective.
+Architecture: E1.0/X1.0 with ACR-001/002/003/004/005 effective.
 Work Order schema: WO2.0.
 Default branch: main.
-Current main baseline before ACR-005 program: 6912e4af4bab7a77e43d835b6bfc573aacee81f6.
+Historical main baseline before ACR-005 program: 6912e4af4bab7a77e43d835b6bfc573aacee81f6.
+Current main HEAD: 598210a2aed97c7a971c2bbdc2341133a987b137.
 W001-W050: COMPLETE (50/50). ROADMAP COMPLETE — the ACR-005 productization program is finished; post-program work requires a new ACR per the architecture lock.
 Current frontier: EMPTY (program complete).
 W050 complete (2026-10-01): PR #113 squash-merged -> 4ae6545e (worker-equivalent head 153382b0, definitions commit 907b8fca, dispatch base 39cc9c84 = verified main HEAD). 7-gate ALL PASS: scope 19/19 owned (apps/web wiring + qa/cross-platform + release/clients + docs; apps/desktop + apps/mobile untouched — no repair needed); token audit 0; governance+boundary PASS; independent battery reproduction 245/245 at a fresh clone (exact match); CI 4/4 green (both contexts); report verified; dependency-baseline guard clean. DEVIATION RECORDED: executed by the Tech Lead directly (the 2026-10-01T13:36Z sandbox reset destroyed the worker-dispatch infrastructure; every verification gate stayed real). Delivers: the cross-platform journey harness (X-01 digest continuity / X-02 cross-device sessions / X-03 capture continuity / X-04 approval continuity / X-05 offline no-drift / X-06 release identity — 9/9 tests, 8/8 records), the six-platform client release identity manifest (release/clients, honest build statuses), journey closure (cross-platform.md + the consolidated defect ledger: 15 program defects all CLOSED, 0 unresolved P0/P1, release gate PASS), the client release process docs. No lockfile reconcile needed (no dependency changes).
@@ -17,9 +18,9 @@ W050 realized that closure: ROADMAP COMPLETE 50/50 (this advance). Post-program 
 Maximum concurrent workers: 3.
 
 Current client reality:
-- Web: canonical Next.js/React shell and existing projection surfaces; W047 turns this into the finished product.
-- Desktop: W017 typed reference host only; W048 adds the Tauri 2 native product for Linux/Windows/macOS.
-- Mobile: W018 typed reference host only; W049 adds the Expo/React Native Android/iOS product.
+- Web: canonical Next.js/React product; W047 productization and J01-J12 browser journey validation are complete.
+- Desktop: Tauri 2 native product for Linux/Windows/macOS is implemented and journey-validated; packaged artifacts remain config-delivered where the required native host toolchain was unavailable.
+- Mobile: Expo/React Native Android/iOS product is implemented and journey-validated; APK/AAB/iOS packaging remains config-delivered where required mobile build toolchains were unavailable.
 
 ACR-005 repository contracts:
 - spec/architecture-change-requests/ACR-005-productization-native-clients.md
