@@ -1,0 +1,32 @@
+{
+  "name": "@epoch/adapter-foundation-gltf",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch glTF 2.0 asset bridge (W060, ACR-007/X2.0) — the validated translation boundary that turns UNTRUSTED glTF/GLB bytes into content-addressed renderer-asset bindings for the frozen W056 fabric seam: pure-code parsing (zero external dependencies, zero I/O — embedded data-URI buffers and GLB BIN chunks only; external resource URIs are a typed refusal, acquisition is the host's concern), strict glTF 2.0 core-subset structural validation (asset/scenes/nodes/meshes/primitives/accessors/bufferViews/buffers/materials; indices, bounds, byte offsets, component types, declared POSITION min/max, finite-float scans, DAG-cycle detection, depth caps, extensionsRequired refusal — sparse accessors and non-triangle draw modes are typed unsupported-feature refusals), deterministic normalization into the neutral GltfAsset projection (per-primitive vertex/triangle accounting, local + scene-transformed bounds via TRS/matrix composition, material summary, non-authoritative label suggestions) whose canonical JSON digest CONTENT-ADDRESSES the validated asset, and the RendererAssetBinding factory (tenant-scoped, trust-gated: only explicitly validated assets bind; untrusted bindings never mount) plus the neutral MeshBinding projection for W016 mesh representation records. glTF files never become Epoch semantic authority (capability-foundation policy CF1.0 §5: provider-native files are source artifacts; the validated projection is the only thing Epoch adopts).",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "link-local": "node scripts/link-local.mjs",
+    "typecheck": "node scripts/link-local.mjs && tsc --noEmit -p tsconfig.json && tsc --noEmit -p ../../../qa/foundation-renderers/tsconfig.json",
+    "lint": "node scripts/link-local.mjs && eslint . && cd ../../../qa/foundation-renderers && eslint . --config eslint.config.mjs",
+    "test": "node scripts/link-local.mjs && vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "@epoch/renderer-runtime": "workspace:*"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -25,6 +25,12 @@ shared conformance fixture. Implementation guide for adapter authors:
 | Assimp | asset normalization | behind adapter |
 | OpenUSD / glTF | scene/asset interchange | behind adapter |
 
+Delivered so far: Three.js (W058 — [threejs.md](./threejs.md)), Babylon.js
+(W059 — [babylonjs.md](./babylonjs.md)), the Blender offscreen sidecar and
+the glTF 2.0 asset/interchange bridge (W060 —
+[blender.md](./blender.md), [gltf.md](./gltf.md)). Current per-backend
+status: [renderer-matrix.md](./renderer-matrix.md).
+
 ## Selection
 
 Renderer selection is capability-driven from task/scene/device/fidelity requirements and user preference. `Auto` is allowed.

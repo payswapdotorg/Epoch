@@ -9,16 +9,17 @@
 
 ## External/specialized foundations
 
-| Backend | Role | Host mode | Program |
-|---|---|---|---|
-| Blender | high-fidelity/offscreen rendering + asset workflow | Epoch-controlled sidecar | W060 |
-| FreeCAD | precision CAD | adapter/specialized surface | W060 candidate |
-| Assimp | asset import normalization | library adapter | W060 candidate |
-| OpenUSD | rich scene interchange/composition | interchange adapter | W060 candidate |
-| Godot | interactive game runtime | native adapter candidate | future |
-| O3DE | interactive 3D/runtime | native adapter candidate | future |
-| ParaView | scientific/result visualization | specialized adapter candidate | future |
-| CesiumJS | geospatial/3D Tiles | specialized adapter candidate | future |
+| Backend | Role | Host mode | Program | Status |
+|---|---|---|---|---|
+| Blender | high-fidelity/offscreen rendering + asset workflow | Epoch-controlled sidecar (separate executable; typed process boundary) | W060 | delivered (`@epoch/adapter-renderer-blender`; live-binary battery env-gated, NOT-VERIFIED-live) |
+| glTF 2.0 | asset/scene interchange: validate → normalize → content-addressed bindings | interchange bridge behind the W056 seam | W060 | delivered (`@epoch/adapter-foundation-gltf`) |
+| FreeCAD | precision CAD | adapter/specialized surface | future | candidate (no concrete W060 use case demanded it) |
+| Assimp | asset import normalization | library adapter | future | candidate (the glTF bridge covers the present interchange need) |
+| OpenUSD | rich scene interchange/composition | interchange adapter | future | candidate (adopt when richer composition is justified) |
+| Godot | interactive game runtime | native adapter candidate | future | not adopted (no concrete capability gap; W060 restriction) |
+| O3DE | interactive 3D/runtime | native adapter candidate | future | not adopted (no concrete capability gap; W060 restriction) |
+| ParaView | scientific/result visualization | specialized adapter candidate | future | candidate |
+| CesiumJS | geospatial/3D Tiles | specialized adapter candidate | future | candidate |
 
 ## Selection contract
 
@@ -33,7 +34,8 @@ License facts are inputs to integration review and must be re-verified at the ex
 - Three.js — MIT.
 - Babylon.js — Apache-2.0.
 - Godot — MIT.
-- Blender — GPL.
+- Blender — GPL-2.0-or-later (separate-executable posture; the full record and distribution obligations are in [blender.md](./blender.md)).
 - OpenUSD — TOST.
+- glTF 2.0 specification — CC-BY-4.0 (Khronos; no Khronos text/code embedded — see [gltf.md](./gltf.md)).
 
 The capability-foundation and fork gates remain binding.

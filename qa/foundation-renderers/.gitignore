@@ -1,0 +1,10 @@
+# W060 — the foundation-renderers battery's runtime-only link state.
+# This directory is NOT a pnpm workspace package (pnpm-workspace.yaml is
+# frozen), so the glTF bridge package's link script (the W060 chain root)
+# creates node_modules -> ../../../adapters/foundations/gltf/node_modules
+# at test time (idempotent; see
+# adapters/foundations/gltf/scripts/link-local.mjs).
+# The parent harness's `node_modules` pattern (no trailing slash) covers
+# this symlink at any depth; this entry is defensive documentation so the
+# link state is never committed.
+node_modules
