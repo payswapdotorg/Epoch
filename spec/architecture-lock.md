@@ -89,3 +89,27 @@ Binding rules added by ACR-006:
 - Deployment URLs/identifiers are recorded only after verification; never fabricated.
 
 Binding implementation: W051 (serialized foundation) → W052/W053/W054 (concurrent, pairwise-disjoint) → W055 (serialized closure). See spec/architecture-change-requests/ACR-006-public-deployment.md and the ACR-006 sections of spec/work-items.md and spec/dependency-graph.md.
+
+
+## ACR-007 — Interactive World Runtime & Multi-Renderer Fabric
+
+ACR-007 is APPROVED_STAGED (2026-10-02). It targets X2.0 and activates after ACR-006/W055 completion plus a recorded lock transition.
+
+It introduces no semantic authority. It concretizes the existing Experience/Renderer capability boundary so Epoch can use interchangeable rendering foundations without exposing their applications as the primary product surface.
+
+Binding rules:
+
+- the World Model remains semantic authority;
+- World Experience remains a projection;
+- Renderer Fabric/session state is ephemeral and non-authoritative;
+- renderer switching reconstructs presentation from canonical Epoch projection data;
+- canonical world identity/digest, tenant, semantic focus/layers and portable presentation state survive switching;
+- renderer input becomes existing typed Epoch intents;
+- Action Gateway and Verification/Evidence authorities remain unchanged;
+- external foundations are provider capabilities behind adapters;
+- no vendor editor UI is required for the core user workflow;
+- renderer-specific scene graphs/caches/handles are never semantic state.
+
+Initial interactive backends: Three.js and Babylon.js embedded in the Epoch-owned surface. Blender is an external sidecar/high-fidelity capability. Godot/O3DE and other specialized foundations remain candidate capabilities subject to the existing capability-foundation/fork gates.
+
+Binding implementation: W056 -> (W057|W058|W059) -> W060 -> W061.
