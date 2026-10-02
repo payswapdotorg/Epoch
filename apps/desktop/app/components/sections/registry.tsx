@@ -9,6 +9,7 @@ import { J06RealizeSection } from './j06-realize-section';
 import { J07OfflineSection } from './j07-offline-section';
 import { J08HandoffSection } from './j08-handoff-section';
 import { J12RelaunchSection } from './j12-relaunch-section';
+import { WorldSection } from './world-section';
 import type { WorkspaceContext } from './section-props';
 
 /**
@@ -16,7 +17,7 @@ import type { WorkspaceContext } from './section-props';
  * main-pane screens. Every section drives the SAME product methods the
  * journey runner drives — one code path, visible.
  */
-export type SectionId = 'j01' | 'j02' | 'j04' | 'j05' | 'j06' | 'j07' | 'j08' | 'j12';
+export type SectionId = 'world' | 'j01' | 'j02' | 'j04' | 'j05' | 'j06' | 'j07' | 'j08' | 'j12';
 
 export interface SectionDescriptor {
   readonly id: SectionId;
@@ -28,6 +29,15 @@ export interface SectionDescriptor {
 }
 
 export const SECTIONS: readonly SectionDescriptor[] = [
+  {
+    id: 'world',
+    journey: 'W',
+    label: 'World',
+    title: 'The interactive world',
+    summary:
+      'The PRIMARY problem-solving workspace (W057): the spatial world through the renderer fabric — pick, inspect, isolate, measure, annotate, follow, replay, branch/simulate, switch renderers. The journey sections are secondary context.',
+    render: () => <WorldSection />,
+  },
   {
     id: 'j01',
     journey: 'J01',

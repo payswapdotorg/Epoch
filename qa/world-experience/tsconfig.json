@@ -1,0 +1,50 @@
+{
+  "//": "W057 — the world-experience harness's OWN type-checked validation path (the W048/W050/W056 cold-checkout doctrine). qa/world-experience is NOT a pnpm workspace package (pnpm-workspace.yaml is frozen), so these files have no node_modules chain of their own. @epoch/world-runtime's `typecheck` script invokes this config; NOTHING here depends on the qa/world-experience/node_modules symlink (created at test time by the runtime's vitest globalSetup): every bare import the harness files make DIRECTLY is mapped to its real location, and every product module is imported RELATIVELY so each file resolves its own dependencies through its own package's node_modules (real install state, never generated state). The web-feature imports (apps/web/src/features/world) resolve react/react-dom through apps/web's node_modules exactly as they do in the web app's own tests. A fresh checkout type-checks cold.",
+  "extends": "../../packages/tsconfig/app.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": false,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "../../packages/world-runtime/node_modules/@types",
+      "../../apps/web/node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "vitest": [
+        "../../packages/world-runtime/node_modules/vitest/dist/index.d.ts"
+      ],
+      "react": [
+        "../../apps/web/node_modules/@types/react"
+      ],
+      "react-dom/server": [
+        "../../apps/web/node_modules/@types/react-dom/server"
+      ],
+      "@epoch/world-contracts": [
+        "../../contracts/world/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

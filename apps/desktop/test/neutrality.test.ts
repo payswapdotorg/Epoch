@@ -168,21 +168,28 @@ describe('desktop provider neutrality (lock rule 13)', () => {
     };
     // The W017 library pin (src/index.ts + the reference host) plus the
     // W048 product pin: the gateway vocabulary, the composition
-    // authorities (embedded mode), the webview vendor trio, and zod.
+    // authorities (embedded mode), the webview vendor trio, and zod —
+    // plus the W057 world-host wiring pin (the interactive world
+    // composes the real experience-layer stack: the fabric, the world
+    // runtime, the canonical projection, the capability registry).
     expect(Object.keys(manifest.dependencies ?? {}).sort()).toEqual([
       '@epoch/action-gateway',
       '@epoch/agent-protocol',
       '@epoch/application-gateway',
       '@epoch/authentication',
+      '@epoch/capability-registry',
       '@epoch/client-runtime',
       '@epoch/event-log',
       '@epoch/evidence',
       '@epoch/experience-protocol',
       '@epoch/object-storage',
       '@epoch/persistence',
+      '@epoch/renderer-fabric',
       '@epoch/renderer-runtime',
       '@epoch/tenancy',
+      '@epoch/world-experience',
       '@epoch/world-model',
+      '@epoch/world-runtime',
       '@tauri-apps/api',
       'next',
       'react',

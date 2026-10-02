@@ -1,0 +1,35 @@
+{
+  "name": "@epoch/world-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Interactive World Runtime (W057, ACR-007/X2.0) — the host-side runtime that drives the Renderer Fabric so the spatial world is the PRIMARY Epoch problem-solving workspace. Owns the wall-clock host loop (the fabric core stays virtual-time-only; the runtime is the only wall-clock reader and derives virtual times from it), the ephemeral navigation/camera presentation state, semantic layer derivation, host-originated typed world-interaction intents (the EXISTING @epoch/world-experience vocabulary, never a parallel one), raw viewport-input normalization through the REAL RendererFabric seam (@epoch/renderer-fabric), canonical-projection remounts after every scene revision (the W016 pure store + reducer, never a second semantic store), renderer selection/health/fallback orchestration, and the pure workspace view models any app surface (web feature, desktop host, harnesses) renders. Zero engine imports, zero GPU code, zero UI-framework dependencies.",
+  "epoch": {
+    "layer": "experience"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p ../../qa/world-experience/tsconfig.json",
+    "lint": "eslint . && node scripts/link-world-harness.mjs && cd ../../qa/world-experience && eslint . --config eslint.config.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/agent-protocol": "workspace:*",
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "@epoch/renderer-fabric": "workspace:*",
+    "@epoch/renderer-runtime": "workspace:*",
+    "@epoch/world-experience": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -63,3 +63,59 @@ When the app shell (W014) wires features, it should:
 No route changes, no app-shell changes, no global provider changes were
 made by this module. No imports from or references to the marketplace
 (W023) or agents (W015) feature modules.
+
+## W057 — the interactive world WORKSPACE (the primary surface)
+
+W057 extends this module from a projection library into the interactive
+world WORKSPACE — the game-like engineering surface where the spatial
+world is the PRIMARY problem-solving view:
+
+- `workspace-contracts.ts` — the WORKSPACE DRIVER + view-model contracts:
+  structural mirrors of the exact `@epoch/world-runtime` public surface
+  (`WorldWorkspaceRuntime` satisfies `WorldWorkspaceDriver` as-is; pinned
+  by qa/world-experience). The module still imports no workspace package
+  (the frozen-manifest constraint above still binds).
+- `workspace-handlers.ts` — the pure event→command wiring
+  (`createWorkspaceHandlers`): pointer/wheel input forwards into the
+  driver's fabric seam (semantic picking), drags/keys drive the
+  presentation-only navigation, and every panel action issues the
+  driver's typed-intent command. `normalizePointer` maps viewport pixels
+  into the normalized [0,1] pointer space.
+- `components/WorldWorkspace.tsx` — the workspace shell: the central
+  VIEWPORT is the primary region (top-left, largest), with the tool rail,
+  inspect, layers, presence, renderer selector, controls
+  (branch/simulate/annotation composer), timeline, and intent journal as
+  SECONDARY context surfaces.
+- `components/WorldViewport.tsx` — the renderer-agnostic viewport: a
+  structured spatial projection (SVG) of the canonical scene entities the
+  active presenter presents (the contract-only reference presenter by
+  default; W058/W059 real engines mount behind the same seam). Focus
+  rings, isolation frames, hidden ghosts, measurement lines, annotation
+  pins, agent presence chips, the navigation HUD, and the renderer
+  health/fallback banner all render from the view model — never from
+  renderer internals.
+- `components/WorldWorkspacePanels.tsx` — the secondary panels (pure).
+- `workspace.test.tsx` — the feature battery: primary-surface structure,
+  canonical-data rendering, and the full handler→driver command wiring.
+
+### Wiring contract (W057)
+
+The desktop host binds the REAL runtime directly (`apps/desktop`,
+`@epoch/world-runtime` + `@epoch/renderer-fabric` behind its world
+section). The WEB app binds it when its manifest unfreezes:
+
+```tsx
+const driver = new WorldWorkspaceRuntime({
+  slug, fabric, scene, ontology, device,
+  clock: new SystemHostClock(),
+  scheduler: new TimeoutFrameScheduler(),
+  rendererPreference: ['rr-...', 'rr-...'],
+});
+await driver.open();
+driver.startHostLoop();
+render(<WorldWorkspace driver={driver} />);
+```
+
+The shell's world route/mount (src/shell, W057's limited surface) carries
+the typed route + feature descriptors; the app-owner wave adds the App
+Router page that renders this component (one thin segment).
