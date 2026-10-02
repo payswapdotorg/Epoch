@@ -1,15 +1,14 @@
 {
   "version": "X2.0",
-  "completed": 55,
-  "completedThrough": "W055",
-  "active": [],
-  "eligible": [
-    "W056"
-  ],
-  "blocked": [
+  "completed": 56,
+  "completedThrough": "W056",
+  "active": [
     "W057",
     "W058",
-    "W059",
+    "W059"
+  ],
+  "eligible": [],
+  "blocked": [
     "W060",
     "W061"
   ],
@@ -37,11 +36,13 @@
   },
   "concurrency": {
     "maxWorkers": 3,
-    "current": [],
-    "next": [
+    "current": [
       "W057",
       "W058",
       "W059"
+    ],
+    "next": [
+      "W060"
     ]
   }
 }
