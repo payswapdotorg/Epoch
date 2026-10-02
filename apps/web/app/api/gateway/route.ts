@@ -23,6 +23,7 @@ import { NextResponse } from 'next/server';
 import { gatewayError } from '@epoch/client-runtime';
 import type { GatewayRequestEnvelope } from '@epoch/client-runtime';
 import { getProductRuntime } from '@/server/product-runtime';
+import { clientIpOf, getProductionBindings } from '@/server/production-binding';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -47,6 +48,45 @@ function tenantOf(body: unknown): { readonly ok: true; readonly tenantId: string
 }
 
 export async function POST(request: Request): Promise<NextResponse> {
+  // Transport-level request guard (W051, ACR-006): the client-keyed
+  // (IP) fixed-window budget — abuse control BEFORE anything else. A
+  // denial is the typed `transient`/`gateway-overloaded` envelope with
+  // HTTP 429 (retryable with backoff). This never weakens the session /
+  // tenant / authorization gates below.
+  const bindings = await getProductionBindings();
+  const ipDecision = await bindings.ipGuard.check({
+    operation: 'gateway',
+    tenantId: null,
+    sessionId: null,
+    clientKey: clientIpOf(request),
+    correlationId: 'corr:unattributed',
+    nowEpochMs: Date.now(),
+  });
+  if (!ipDecision.allowed) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: gatewayError({
+          class: 'transient',
+          code: 'gateway-overloaded',
+          message: 'rate limit exceeded: retry after the indicated delay',
+          operation: 'gateway',
+          correlationId: 'corr:unattributed',
+          details: {
+            rateLimit: {
+              guardId: bindings.ipGuard.guardId,
+              limit: ipDecision.limit,
+              remaining: ipDecision.remaining,
+              retryAfterMs: ipDecision.retryAfterMs,
+              degraded: ipDecision.degraded,
+            },
+          },
+        }),
+      },
+      { status: 429, headers: { 'retry-after': String(Math.ceil(ipDecision.retryAfterMs / 1000)) } },
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();
@@ -63,6 +103,24 @@ export async function POST(request: Request): Promise<NextResponse> {
         }),
       },
       { status: 400 },
+    );
+  }
+  // Request-size limit (W051, ACR-006 S10): reject oversized payloads
+  // before JSON parsing work (the gateway envelopes are small).
+  const contentLength = Number.parseInt(request.headers.get('content-length') ?? '0', 10);
+  if (Number.isFinite(contentLength) && contentLength > 1_048_576) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: gatewayError({
+          class: 'validation',
+          code: 'request-envelope-malformed',
+          message: 'the request body exceeds the 1 MiB gateway limit',
+          operation: 'gateway',
+          correlationId: 'corr:unattributed',
+        }),
+      },
+      { status: 413 },
     );
   }
   const runtime = await getProductRuntime();

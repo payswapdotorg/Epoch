@@ -20,6 +20,8 @@ Establish the stable production deployment seams and contracts that W052 (web/Ve
 - adapters/s3-object-store/* (package skeleton + port re-export + README contract ONLY; implementation is W053)
 - adapters/upstash-redis/* (package skeleton + port re-export + README contract ONLY; implementation is W053)
 - apps/web/src/server/production-env.ts, apps/web/src/server/production-binding.ts (+ tests)
+- apps/web/src/server/product-runtime.ts (the gateway construction seam: binds production persistence/object-store/guards — amended 2026-10-02, documented in the W051 PR)
+- apps/web/app/api/gateway/route.ts (the transport-level IP guard + request-size limit — amended 2026-10-02, documented in the W051 PR)
 - apps/web/app/api/healthz/route.ts, apps/web/app/api/readyz/route.ts (+ tests)
 - apps/web/.env.example (placeholders only)
 - apps/web/vercel.json (deployment manifest, placeholders/framework config)
@@ -32,8 +34,8 @@ Do not: modify kernel packages' semantic behavior; implement provider adapters (
 1. Provider-neutral deployment contracts as spec documents (the six spec files above), including the verified free-tier cost-control contract with official sources.
 2. The typed production environment contract (production-env.ts): profile detection, variable validation, placeholder-only template, fail-safe precedence (security gates fail closed; optional capabilities degrade gracefully; production profile refuses to boot with ephemeral persistence).
 3. The RequestGuard port (fixed-window rate limiting) in services/application-gateway with an in-memory reference implementation and tests; wired as an option at the gateway boundary (no provider semantics in the port).
-4. The production binding layer (production-binding.ts): environment-driven construction of the gateway runtime (PG wire via bindPgPool when EPOCH_DATABASE_URL is present; in-memory fallback otherwise with explicit degraded flags), health/readyz endpoints exposing binding state without secret leakage.
-5. Adapter package skeletons for s3-object-store and upstash-redis (manifests with layer `service`, port re-exports from the frozen SPIs, README implementation contracts for W053) — compiling, tested where meaningful, no stubbed-out fake implementations.
+4. The production binding layer (production-binding.ts): environment-driven construction of the gateway runtime (PG via connectPostgresPool + bindPgPool when EPOCH_DATABASE_URL is present; in-memory fallback otherwise with explicit degraded flags), integrated into the product runtime's gateway construction seam; health/readyz endpoints exposing binding state without secret leakage; the transport-level IP guard + 1 MiB request-size limit wired at the gateway route.
+5. The provider adapter packages DELIVERED AS REAL IMPLEMENTATIONS (amended 2026-10-02 — the binding layer must actually bind; the ACR's "contract skeletons only if W053 owns implementations" conditional resolved in favor of W051 implementing, W053 connecting/verifying): adapters/s3-object-store (the frozen ObjectStore SPI over any S3-compatible endpoint; AWS SigV4 via node:crypto, pinned by the official AWS documentation signature vector) and adapters/upstash-redis (the RequestGuard port over the Upstash REST API; one atomic EVAL per check; epoch-anchored windows aligned with the in-memory reference). Both zero-new-dependency, fully double-tested. W053 then owns: live provider connections, the nine mandatory negative tests against real/degraded backends, provisioning guides, production hardening.
 6. vercel.json + .env.example with placeholders only; deployment manifest validated by CI (schema check).
 7. State manifests updated to ACR-006 program state (W051 active -> complete at merge; W052/W053/W054 eligible; W055 blocked).
 
