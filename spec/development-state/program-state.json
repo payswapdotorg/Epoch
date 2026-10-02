@@ -5,7 +5,7 @@
   "defaultBranch": "main",
   "maxConcurrentWorkers": 3,
   "active": [
-    "W060"
+    "W061"
   ],
   "completed": [
     "W001",
@@ -66,7 +66,8 @@
     "W056",
     "W057",
     "W058",
-    "W059"
+    "W059",
+    "W060"
   ],
   "blocked": [],
   "lastMergeSha": "598210a2aed97c7a971c2bbdc2341133a987b137",
