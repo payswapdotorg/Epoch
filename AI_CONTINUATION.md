@@ -4,7 +4,7 @@ Fresh-session rule: recover project state from repository state and live GitHub 
 
 ## Current authoritative baseline
 
-- main baseline: the ACR-005 productization program is COMPLETE (W001-W050, 50/50; W050 merged as 4ae6545e via PR #113 + this governance advance)
+- main state: ACR-005 productization is COMPLETE (W001-W050, 50/50; W050 merged as 4ae6545e via PR #113 + governance advance 598210a2; current main HEAD is e31c97a50a711ea34a8632a556cf3d31f0168b01)
 - architecture: E1.0/X1.0 with ACR-001/002/003/004/005 effective
 - frontier: EMPTY — no active, eligible or blocked work orders
 - max concurrent workers: 3 (moot — program complete)
