@@ -1,0 +1,26 @@
+{
+  "//": "W059 — the Babylon.js conformance battery's OWN type-checked validation path (the W056 cold-checkout doctrine: qa/renderer-conformance is NOT a pnpm workspace package, so these files have no node_modules chain of their own; the ADAPTER package's `typecheck` script invokes this config; NOTHING here depends on the qa/renderer-conformance/babylonjs/node_modules symlink (created at test time by the adapter package's vitest globalSetup): every bare import the battery files make DIRECTLY is mapped to its real location, and every product module is imported RELATIVELY so each file resolves its own dependencies through its own package's node_modules (real install state, never generated state). A fresh checkout type-checks cold.",
+  "extends": "../../../packages/tsconfig/library.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "lib": ["ES2022", "DOM"],
+    "typeRoots": [
+      "../../../adapters/renderers/babylonjs/node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "vitest": [
+        "../../../adapters/renderers/babylonjs/node_modules/vitest/dist/index.d.ts"
+      ],
+      "@epoch/world-contracts": [
+        "../../../contracts/world/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
