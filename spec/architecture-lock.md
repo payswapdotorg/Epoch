@@ -113,3 +113,11 @@ Binding rules:
 Initial interactive backends: Three.js and Babylon.js embedded in the Epoch-owned surface. Blender is an external sidecar/high-fidelity capability. Godot/O3DE and other specialized foundations remain candidate capabilities subject to the existing capability-foundation/fork gates.
 
 Binding implementation: W056 -> (W057|W058|W059) -> W060 -> W061.
+
+### Lock transition — recorded 2026-10-02 (Tech Lead, X2.0 activation)
+
+1. ACR-006/W055 is COMPLETE at the credential boundary (final merge bd6bdbe; engineering complete, live deployment pending operator credentials — honestly recorded, never fabricated as deployed).
+2. The staged-successor gate in `spec/development-state/staged-successor.json` is satisfied: the Tech Lead records the **X2.0 lock transition**. The experience version is X2.0 from this transition forward. The E1.0/X1.0 numbered invariants above remain binding — ACR-007 extends them and introduces no second authority.
+3. ACR-007 is **EFFECTIVE**. Its implementation entry point is W056 (Renderer Fabric & Multi-Renderer Switching Contract), defined in `spec/work-orders/W056-renderer-fabric-foundation.md` with its dependency (ACR-006/W055) complete. Frontier update: W056 ELIGIBLE.
+4. After W056 merges, the first concurrent wave is W057 | W058 | W059 (pairwise-disjoint ownership surfaces, max three workers). W060 is serialized after all three; W061 is the serialized closure.
+5. The ACR-007 non-negotiables are binding: World Model remains semantic authority; renderer sessions are non-authoritative; renderer switching preserves canonical world identity/digest; at least two real interactive renderers; at least one external foundation path; no vendor UI as the primary Epoch surface.

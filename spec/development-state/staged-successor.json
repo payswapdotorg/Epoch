@@ -1,20 +1,40 @@
 {
   "schemaVersion": 1,
-  "status": "APPROVED_STAGED",
+  "status": "ACTIVATED",
   "program": "ACR-007 / X2.0",
   "approvedDate": "2026-10-02",
-  "blockedUntil": "ACR-006/W055 complete",
-  "currentProgramRemainsAuthoritative": true,
-  "nextFrontier": ["W056"],
+  "blockedUntil": null,
+  "currentProgramRemainsAuthoritative": false,
+  "nextFrontier": [
+    "W056"
+  ],
   "dependencyProgram": {
-    "W056": ["ACR-006/W055"],
-    "W057": ["W056"],
-    "W058": ["W056"],
-    "W059": ["W056"],
-    "W060": ["W057", "W058", "W059"],
-    "W061": ["W060"]
+    "W056": [
+      "ACR-006/W055"
+    ],
+    "W057": [
+      "W056"
+    ],
+    "W058": [
+      "W056"
+    ],
+    "W059": [
+      "W056"
+    ],
+    "W060": [
+      "W057",
+      "W058",
+      "W059"
+    ],
+    "W061": [
+      "W060"
+    ]
   },
-  "firstConcurrentWaveAfterW056": ["W057", "W058", "W059"],
+  "firstConcurrentWaveAfterW056": [
+    "W057",
+    "W058",
+    "W059"
+  ],
   "requiredTransition": "Tech Lead records X2.0 lock transition and promotes W056 only after ACR-006/W055 closes.",
   "nonNegotiables": [
     "World Model remains semantic authority",
@@ -23,5 +43,7 @@
     "at least two real interactive renderers",
     "at least one external foundation path",
     "no vendor UI as primary Epoch surface"
-  ]
+  ],
+  "activatedDate": "2026-10-02",
+  "activationRecord": "ACR-006/W055 closed at bd6bdbe (credential boundary). Tech Lead recorded the X2.0 lock transition on governance/acr007-activation and promoted W056 to ELIGIBLE. First concurrent wave after W056: W057 | W058 | W059."
 }

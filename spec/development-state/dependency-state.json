@@ -1,32 +1,47 @@
 {
-  "version": "WO2.0",
+  "version": "X2.0",
   "completed": 55,
   "completedThrough": "W055",
   "active": [],
-  "eligible": [],
-  "blocked": [],
+  "eligible": [
+    "W056"
+  ],
+  "blocked": [
+    "W057",
+    "W058",
+    "W059",
+    "W060",
+    "W061"
+  ],
   "dependencyProgram": {
-    "W051": [
-      "ACR-006"
+    "W056": [
+      "ACR-006/W055"
     ],
-    "W052": [
-      "W051"
+    "W057": [
+      "W056"
     ],
-    "W053": [
-      "W051"
+    "W058": [
+      "W056"
     ],
-    "W054": [
-      "W051"
+    "W059": [
+      "W056"
     ],
-    "W055": [
-      "W052",
-      "W053",
-      "W054"
+    "W060": [
+      "W057",
+      "W058",
+      "W059"
+    ],
+    "W061": [
+      "W060"
     ]
   },
   "concurrency": {
     "maxWorkers": 3,
     "current": [],
-    "next": []
+    "next": [
+      "W057",
+      "W058",
+      "W059"
+    ]
   }
 }

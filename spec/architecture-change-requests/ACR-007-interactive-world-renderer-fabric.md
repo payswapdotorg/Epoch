@@ -1,8 +1,8 @@
 # ACR-007 — Interactive World Runtime & Multi-Renderer Fabric
 
-**Status:** APPROVED_STAGED  
+**Status:** EFFECTIVE (X2.0 lock transition recorded 2026-10-02)  
 **Approved:** 2026-10-02  
-**Activation:** after ACR-006/W055 completion and an X2.0 lock transition  
+**Activation:** EFFECTIVE — the X2.0 lock transition was recorded 2026-10-02 after ACR-006/W055 closed at the credential boundary (bd6bdbe)  
 **Target experience version:** X2.0  
 **Work Orders:** W056-W061
 
