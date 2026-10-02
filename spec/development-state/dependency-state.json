@@ -3,30 +3,39 @@
   "completed": 50,
   "completedThrough": "W050",
   "active": [],
-  "eligible": [],
-  "blocked": [],
+  "eligible": [
+    "W051"
+  ],
+  "blocked": [
+    "W052",
+    "W053",
+    "W054",
+    "W055"
+  ],
   "dependencyProgram": {
-    "W046": [
-      "W001-W045"
+    "W051": [
+      "ACR-006"
     ],
-    "W047": [
-      "W046"
+    "W052": [
+      "W051"
     ],
-    "W048": [
-      "W046"
+    "W053": [
+      "W051"
     ],
-    "W049": [
-      "W046"
+    "W054": [
+      "W051"
     ],
-    "W050": [
-      "W047",
-      "W048",
-      "W049"
+    "W055": [
+      "W052",
+      "W053",
+      "W054"
     ]
   },
   "concurrency": {
     "maxWorkers": 3,
     "current": [],
-    "next": []
+    "next": [
+      "W051"
+    ]
   }
 }

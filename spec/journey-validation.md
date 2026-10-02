@@ -47,3 +47,34 @@ Observe -> record -> reproduce -> regression test -> fix -> rerun affected journ
 
 ## Release gate
 All required journeys pass; no unresolved P0/P1; every P2 has disposition/evidence; install/launch/relaunch/update passes; cross-device state is consistent.
+
+# Production journeys (ACR-006)
+
+The ACR-006 public deployment program adds the production journey set P01-P18. These are executed against the ACTUAL publicly deployed product (real public URL, HTTPS, production profile) — never from unit tests alone, never from a local dev build. The standard defect loop applies: observe → record → reproduce → regression test → fix → rerun → close.
+
+Journey records follow the same record contract as J01-J12 (journey_id, platform=web-production, persona, product_version, source_commit, environment=production + public URL, fixture_id, preconditions, actions, expected/observed outcomes, evidence, defect/severity, fix commit/PR, regression test, rerun result, disposition). Screenshots or machine-readable traces are recorded where appropriate.
+
+| ID | Journey |
+|---|---|
+| P01 | Public onboarding: anonymous visitor reaches the public URL over HTTPS, selects domain/persona, signs in, enters a working session. |
+| P02 | Sign-in/session: session issue through the gateway; session valid across requests; sign-out. |
+| P03 | Create/select tenant + project (the demo tenants' projects; selection, not creation — new tenant creation is out of ACR-006 scope). |
+| P04 | Understand/reconstruct: world view over the deployed system. |
+| P05 | Capability discovery through the deployed discovery surface. |
+| P06 | Decide/approve: alternatives, constraints, Action Gateway approval. |
+| P07 | Plan/acquire: Program of Work/BOQ + acquisition flow. |
+| P08 | Realize/observe/verify: realization + observation + verification + forecast. |
+| P09 | Offline/reconnect where the client permits (web client's offline queue behavior). |
+| P10 | Cross-device handoff (web↔web session/state continuity where the client permits). |
+| P11 | Agent supervision/intervention. |
+| P12 | Recovery: network/session/input/action/connector/evidence failure recovery against the deployed system. |
+| P13 | Public release/update path: deployment update (new commit → new deployment → still healthy). |
+| P14 | Production persistence: authoritative state survives application/deployment restart. |
+| P15 | Object/evidence upload + retrieval through the deployed system (digest-verified round trip). |
+| P16 | Provider degradation/recovery: a provider dependency failing → typed degradation surfaced → recovery. |
+| P17 | Rate-limit behavior: exceeding the configured budget → typed rate-limit response, no crash. |
+| P18 | Tenant isolation: cross-tenant access attempts fail closed over the public endpoint. |
+
+Severity and disposition rules follow the J01-J12 contract (P0/P1 must be zero at closure; every P2 needs disposition). Journeys that require provider credentials not yet available are recorded with honest NOT-RUNNABLE-at-boundary dispositions rather than fabricated passes.
+
+W052 owns the production web journey evidence (docs/journeys/production-web.md); W055 consolidates (docs/journeys/production.md).

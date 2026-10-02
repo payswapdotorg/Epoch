@@ -74,3 +74,18 @@ Binding implementation: W046-W050. W046 freezes shared client/runtime contracts;
 Platform technologies are adapters, not semantic authorities: Next.js/React remains the canonical web client; Tauri 2 hosts desktop; Expo/React Native hosts mobile. E1.0/X1.0 authority invariants remain binding.
 
 A client cache/queue is projection/replay state only. A UI/native host may not become a second World, Solution, Delivery, Verification or Learning authority. Journey closure requires a built/running artifact plus reproduce -> regression test -> fix -> rerun evidence.
+
+## ACR-006 — Public Deployment, Free-Tier Infrastructure & Production Operations
+
+ACR-006 is EFFECTIVE (2026-10-02, operator directive). It introduces NO semantic authority and no lock transition: E1.0/X1.0 invariants remain binding. It authorizes the public deployment program W051-W055 that makes the completed product (W001-W050) publicly deployable and actually accessible over the internet on free-tier infrastructure (Vercel/Neon/Cloudflare R2/Upstash/Apify as infrastructure adapters behind provider-neutral ports).
+
+Binding rules added by ACR-006:
+
+- No provider becomes a semantic authority. Neon = persistence implementation; R2 = object-byte implementation; Upstash = ephemeral cache/rate-limit implementation; Apify = external-source acquisition adapter; Vercel = runtime host.
+- Redis never holds authoritative durable state; R2 stores bytes, not semantic truth; Apify output is untrusted adapter input with provenance.
+- The Application Gateway remains the only client-facing boundary; the public web deployment binds it in-process; no second backend.
+- Zero new runtime dependencies; production environment contract with placeholders only; no secret values in Git.
+- Production profile fails closed on missing durable persistence; security gates never fail open; optional capabilities degrade gracefully.
+- Deployment URLs/identifiers are recorded only after verification; never fabricated.
+
+Binding implementation: W051 (serialized foundation) → W052/W053/W054 (concurrent, pairwise-disjoint) → W055 (serialized closure). See spec/architecture-change-requests/ACR-006-public-deployment.md and the ACR-006 sections of spec/work-items.md and spec/dependency-graph.md.

@@ -2,33 +2,34 @@
 
 ## Mission
 
-Epoch's ACR-005 productization program is complete. The repository remains the sole durable source of truth for future architecture and implementation.
+Epoch's ACR-005 productization program is complete (W001-W050, 50/50). ACR-006 (Public Deployment, Free-Tier Infrastructure & Production Operations) is now EFFECTIVE: take the completed product and make it publicly deployable and actually accessible over the internet on free-tier infrastructure, preserving the authority model. The repository remains the sole durable source of truth for future architecture and implementation.
 
 ## Current verified state
 
-- Architecture: E1.0/X1.0 with ACR-001/002/003/004/005 effective.
+- Architecture: E1.0/X1.0 with ACR-001/002/003/004/005/006 effective (ACR-006 adds no semantic authority).
 - Work Order schema: WO2.0.
 - W001-W050: COMPLETE (50/50).
-- Completion anchor: W050 + governance advance `598210a2aed97c7a971c2bbdc2341133a987b137`; later commits are state/handoff cleanup only.
-- Frontier: EMPTY.
-- Open PRs: none.
-- Post-program work: a NEW Architecture Change Request is required before any new Work Order is authorized.
+- ACR-005 completion anchor: W050 + governance advance `598210a2aed97c7a971c2bbdc2341133a987b137`; state-cleanup baseline at ACR-006 approval: `d77915ee8b0cbd596ed84be6b6ac2cc414afe962`.
+- Frontier: eligible=[W051]; blocked=[W052, W053, W054, W055].
+- Dispatch: W051 (serialized Tech Lead foundation) -> W052/W053/W054 concurrent (max 3, pairwise-disjoint) -> W055 (serialized closure).
+- Credential boundary: real provider provisioning (Vercel/Neon/R2/Upstash/Apify) requires operator-owned credentials; record VERIFIED/NOT-VERIFIED honestly; never fabricate deployment URLs.
 
 ## Read first
 
 1. AGENTS.md
-2. spec/architecture-lock.md
-3. spec/PROJECT-STATE.md
-4. spec/development-state/program-state.json
-5. spec/development-state/frontier-state.json
-6. spec/development-state/dependency-state.json
-7. spec/development-state/checkpoint-state.json
-8. spec/work-items.md
-9. spec/dependency-graph.md
-10. spec/productization-architecture.md
-11. spec/journey-validation.md
-12. release/clients/release-manifest.json
-13. live GitHub state
+2. spec/architecture-lock.md (ACR-006 section)
+3. spec/architecture-change-requests/ACR-006-public-deployment.md
+4. spec/PROJECT-STATE.md
+5. spec/development-state/program-state.json
+6. spec/development-state/frontier-state.json
+7. spec/development-state/dependency-state.json
+8. spec/development-state/checkpoint-state.json
+9. spec/work-items.md (ACR-006 section)
+10. spec/dependency-graph.md (ACR-006 section)
+11. spec/journey-validation.md (production journeys P01-P18)
+12. spec/productization-architecture.md
+13. release/clients/release-manifest.json
+14. live GitHub state
 
 ## Product reality
 
