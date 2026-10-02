@@ -1,7 +1,7 @@
 {
   "baselineSha": "8f5eead1d952004e9ef751d765162cacb3358be4",
   "status": "ACR008_W062_COMPLETE",
-  "next": "NONE — the frontier returns to EMPTY at merge. ACR-008 closes with W062; any further program again requires a new ACR per spec/architecture-lock.md (the standing operator actions are unchanged: provider credentials for the ACR-006 post-credential deployment verification; a Blender binary + the env-gated live battery for the W060/W061 NOT-VERIFIED-live legs).",
+  "next": "NONE \u2014 the frontier returns to EMPTY at merge. ACR-008 closes with W062; any further program again requires a new ACR per spec/architecture-lock.md (the standing operator actions are unchanged: provider credentials for the ACR-006 post-credential deployment verification; a Blender binary + the env-gated live battery for the W060/W061 NOT-VERIFIED-live legs).",
   "verification": "ACR-008 activation verified against main@0c17f6e: ACR-007 closed complete (W001-W061, 61/61; PRs #129-#139 all merged; frontier EMPTY; no open PRs; no new operator directives). The W016 marker-time P2 defect is ledgered with the precise pinned repro (qa/world-experience/w016-marker-time-known-issue.test.ts, green while the defect stands, designed to flip). The disposition 'the comparator fix is a future-ACR disposition' was recorded at the ACR-007/W061 closure; the operator's standing continuation directive authorizes it as ACR-008 (defect closure; no architecture change; no lock transition). W062 delivered on work/W062-marker-time-comparator (base main@8f5eead): the numeric comparator + the flipped regression record + the focused comparator regression + the closed defect ledger; all verification green (world-experience typecheck+lint+268/268 incl. the 5 new ordering tests; world-runtime 70/70 incl. the flipped record; the qa harness cold typecheck; root governance+boundary PASS).",
   "lastMergeSha": "8f5eead1d952004e9ef751d765162cacb3358be4",
   "lastAction": "W062 defect closure executing (this branch): the numeric (atMs, markerId) comparator, the battery flip, the comparator regression, and the defect-ledger close.",
@@ -68,8 +68,43 @@
       "baselineSha": "8f5eead1d952004e9ef751d765162cacb3358be4",
       "workOrder": "W062",
       "status": "W062_COMPLETE_ACR008_CLOSES_AT_MERGE",
-      "next": "NONE — the single serialized work order of ACR-008 is delivered; the frontier returns to EMPTY at merge; a new program requires a new ACR.",
-      "verification": "W062 (branch work/W062-marker-time-comparator, base main@8f5eead) closes the ledgered W016 marker-time P2 with the full discipline chain. (1) THE FIX: packages/world-experience/src/timeline.ts — the SceneTimelineSchema superRefine comparator now compares atMs NUMERICALLY (schema-validated non-negative integers) with the lexicographic markerId tie-break; strictly-ascending duplicate-free pairs unchanged (equal pairs still duplicate-refused); no schema/contract version bump, no second comparator, no reordering of any other validation, zero new dependencies, root manifests/lockfiles untouched. (2) THE FLIP: qa/world-experience/w016-marker-time-known-issue.test.ts (file path stable) re-recorded from the KNOWN-ISSUE pin to the closed-defect regression record — the numerically ascending mixed-width case (5000 then 12000) ADMITS with timelineEndMs == 12000 and the in-track 8000ms position validating; the mirrored descending case (12000 then 5000) is REFUSED with the typed malformed-record admission error at timeline.markers, and the honest re-authoring of the same marker set admits with the CORRECT 12000 end bound (the wrong 5000 bound is unreachable); the same-digit-width control (5000 then 9000) stays green. (3) THE COMPARATOR REGRESSION: packages/world-experience/test/timeline-ordering.test.ts (5 tests, additive): mixed-width ascending admits (500 -> 5000 -> 12000), mixed-width descending refused, duplicate refused, markerId tie-break ordering (ascending admits / descending refuses), same-width control. (4) THE LEDGER: docs/journeys/interactive-world.md — the W016 entry carries observed -> recorded -> reproduced -> FIXED -> RERUN -> CLOSED with the exact evidence. VERIFICATION (recorded honestly): packages/world-experience typecheck PASS + lint PASS + 268/268 (263 baseline + 5 new); packages/world-runtime battery 70/70 (51 runtime + 19 qa/world-experience incl. the flipped W016 record) + the qa harness cold typecheck PASS; root `corepack pnpm run check` (governance + boundary) PASS. UNCHANGED by design: the same-digit-width workaround consumers (the qa harness fixtures, the W061 leg battery) stay green UNCHANGED."
+      "next": "NONE \u2014 the single serialized work order of ACR-008 is delivered; the frontier returns to EMPTY at merge; a new program requires a new ACR.",
+      "verification": "W062 (branch work/W062-marker-time-comparator, base main@8f5eead) closes the ledgered W016 marker-time P2 with the full discipline chain. (1) THE FIX: packages/world-experience/src/timeline.ts \u2014 the SceneTimelineSchema superRefine comparator now compares atMs NUMERICALLY (schema-validated non-negative integers) with the lexicographic markerId tie-break; strictly-ascending duplicate-free pairs unchanged (equal pairs still duplicate-refused); no schema/contract version bump, no second comparator, no reordering of any other validation, zero new dependencies, root manifests/lockfiles untouched. (2) THE FLIP: qa/world-experience/w016-marker-time-known-issue.test.ts (file path stable) re-recorded from the KNOWN-ISSUE pin to the closed-defect regression record \u2014 the numerically ascending mixed-width case (5000 then 12000) ADMITS with timelineEndMs == 12000 and the in-track 8000ms position validating; the mirrored descending case (12000 then 5000) is REFUSED with the typed malformed-record admission error at timeline.markers, and the honest re-authoring of the same marker set admits with the CORRECT 12000 end bound (the wrong 5000 bound is unreachable); the same-digit-width control (5000 then 9000) stays green. (3) THE COMPARATOR REGRESSION: packages/world-experience/test/timeline-ordering.test.ts (5 tests, additive): mixed-width ascending admits (500 -> 5000 -> 12000), mixed-width descending refused, duplicate refused, markerId tie-break ordering (ascending admits / descending refuses), same-width control. (4) THE LEDGER: docs/journeys/interactive-world.md \u2014 the W016 entry carries observed -> recorded -> reproduced -> FIXED -> RERUN -> CLOSED with the exact evidence. VERIFICATION (recorded honestly): packages/world-experience typecheck PASS + lint PASS + 268/268 (263 baseline + 5 new); packages/world-runtime battery 70/70 (51 runtime + 19 qa/world-experience incl. the flipped W016 record) + the qa harness cold typecheck PASS; root `corepack pnpm run check` (governance + boundary) PASS. UNCHANGED by design: the same-digit-width workaround consumers (the qa harness fixtures, the W061 leg battery) stay green UNCHANGED."
     }
-  ]
+  ],
+  "w063": {
+    "status": "COMPLETE",
+    "completedAt": "2026-10-02",
+    "delivery": {
+      "linux": {
+        "artifacts": [
+          "Epoch_1.0.0_amd64.deb (sha256 7308ec7a...)",
+          "Epoch-x86_64.AppImage (sha256 0fbafa72...)"
+        ],
+        "status": "built-in-sandbox",
+        "launch": "verified to the spawn boundary under Xvfb; WebProcess EGL display boundary declared"
+      },
+      "windows": {
+        "artifacts": [
+          "Epoch_1.0.0_x64-setup.exe (sha256 4f739387...)"
+        ],
+        "status": "built-in-sandbox-cross",
+        "deviations": "enumerated in the manifest; canonical msvc recipe delivered as a dispatch workflow; unsigned (no certificate)"
+      },
+      "macos": {
+        "artifacts": [],
+        "status": "ci-recipe-delivered",
+        "recipe": ".github/workflows/release-desktop-native.yml (macos-14 dmg+app at the committed profile)"
+      }
+    },
+    "defects": {
+      "closed": [
+        "D-1 (lib.rs Default derive)",
+        "D-2 (dangling prefix dev symlinks)",
+        "D-3 (linuxdeploy gtk plugin prefix-path cp)",
+        "D-4 (AppImage libEGL closure)"
+      ],
+      "unresolved": 0
+    }
+  }
 }

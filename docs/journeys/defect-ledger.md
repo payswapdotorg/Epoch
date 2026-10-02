@@ -82,3 +82,19 @@ harness's own bring-up corrections were harness-side; recorded in
   (X-01/X-02/X-03) and the outcome level (X-05).
 
 **ROADMAP GATE: PASS — the program closes at 50/50.**
+
+---
+
+# W063 ledger entries (the desktop installable-artifacts program)
+
+| Defect | Severity | Reproduction | Fix | Rerun | Status |
+|---|---|---|---|---|---|
+| D-1: unused `#[derive(Default)]` on `DurableState` (src-tauri/src/lib.rs) required `DurableStore: Default` — unimplementable honestly; the FIRST full compile of the host (the packaged build never ran in W048 — config-delivered) | P2 (blocks every packaged build) | `cargo build --release` in src-tauri: E0277 the trait bound `DurableStore: Default` is not satisfied | derive removed; `setup()` constructs explicitly (the only path) — semantics unchanged | full build green through link, both platforms | CLOSED |
+| D-2: prefix dev `.so` symlinks dangling (runtime targets live in system-installed packages skipped from the download) — lld "unable to find library -lgtk-3/-lgdk-3/-latk-1.0" | P2 (blocks the linux link) | link stage of `tauri build` | 26 symlinks repaired to real files (identical Debian bits) | link green | CLOSED |
+| D-3: the linuxdeploy gtk plugin derives source paths from pkg-config (prefix) but `cp`s them RELATIVE to `ldd`'s system libdir — mangled `../../../prefix/...` paths; bundle fails | P2 (blocks AppImage) | bundling stage of `tauri build --bundles appimage` | W063 never-fatal gtk module installer + custom AppRun (documented in desktop-linux.md) | AppImage packed + launch-verified | CLOSED |
+| D-4: AppImage runtime missed libEGL (deploy ldd closure gap) | P2 (blocks launch) | packaged launch: libEGL.so.1 not found | closure-completion pass (patchelf $ORIGIN); the thin-webkit design decision recorded | launches (spawn boundary) | CLOSED |
+
+W063 verdict: 0 unresolved P0/P1; every P2 fixed -> rerun -> closed above. The windows
+deviations (profile relax, rlib-only desktop link, gnu target) are BUILD-LOCAL ONLY
+constraints with the canonical recipe delivered — recorded as deviations, not defects,
+because the committed tree is unaffected and the repair path exists and runs.

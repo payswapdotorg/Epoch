@@ -147,3 +147,13 @@ The completion oracle remains:
 
 `Git + CI + product/journey evidence, not chat.`
 
+
+## W063 addendum (ACR-009 — the desktop installable artifacts)
+
+The release identity rule you own now carries REAL desktop artifacts: linux built-in-sandbox
+(AppImage + deb), windows built-in-sandbox-cross (mingw-w64 gnu; deviations enumerated; canonical
+msvc recipe delivered), macos ci-recipe-delivered (the dispatch workflow; never a fabricated DMG).
+Regeneration stays deterministic at the delivery head; the canonical recipes live in
+`.github/workflows/release-desktop-native.yml` and are NOT the release gate. The first packaged
+builds closed D-1..D-4 (docs/journeys/defect-ledger.md). Platform toolchains remain adapters,
+never authorities (lock rule 13) — everything here is packaging evidence and release identity.

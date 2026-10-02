@@ -75,3 +75,25 @@ binary or executes a build — the record set is DATA. The typed
 readiness MODEL of the kernel program remains `release/` (W035), and
 the deployment authority remains the W033 model; this process binds
 client artifact identity only.
+
+---
+
+## W063 — the desktop installable-artifact stamp
+
+The W050 process above remains binding. W063 re-stamps the desktop records with the REAL
+artifacts. The per-platform recipes:
+
+- **Linux** (built-in-sandbox): rustup stable + the 300-deb user-space prefix (the recipe is
+  recorded verbatim in `docs/journeys/desktop-linux.md`); the deb via the tauri-bundler internal
+  path; the AppImage via linuxdeploy with the W063 never-fatal gtk module installer + the custom
+  AppRun hook wrapper. The AppImage bundles the full stack EXCEPT the webkit pair (the
+  process/library coherence contract; the deb's Depends is the same contract).
+- **Windows** (built-in-sandbox-cross): mingw-w64 gnu (gcc 14-win32); every build-local deviation
+  enumerated in the manifest + `docs/journeys/desktop-windows.md`; the makensis bridge recorded
+  there; UNSIGNED honestly. The CANONICAL msvc recipe: the windows-latest job of
+  `.github/workflows/release-desktop-native.yml`.
+- **macOS** (ci-recipe-delivered): the macos-14 job of the same workflow; Linux cannot produce a
+  DMG (hard platform boundary).
+
+Regeneration: `python3 release/clients/generate-manifest.py <head> --out release/clients/release-manifest.json`.
+The two-commit stamp (definitions H1, then the manifest regenerated at H1) remains the W050 rule.
