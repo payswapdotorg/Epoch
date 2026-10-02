@@ -1,17 +1,10 @@
 {
   "version": "WO2.0",
-  "completed": 45,
-  "completedThrough": "W045",
-  "active": [
-    "W046"
-  ],
+  "completed": 50,
+  "completedThrough": "W050",
+  "active": [],
   "eligible": [],
-  "blocked": [
-    "W047",
-    "W048",
-    "W049",
-    "W050"
-  ],
+  "blocked": [],
   "dependencyProgram": {
     "W046": [
       "W001-W045"
@@ -33,13 +26,7 @@
   },
   "concurrency": {
     "maxWorkers": 3,
-    "current": [
-      "W046"
-    ],
-    "next": [
-      "W047",
-      "W048",
-      "W049"
-    ]
+    "current": [],
+    "next": []
   }
 }
