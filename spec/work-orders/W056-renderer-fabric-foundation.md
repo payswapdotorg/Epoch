@@ -1,7 +1,9 @@
 # W056 — Renderer Fabric & Multi-Renderer Switching Contract
 
-**Depends:** ACR-006/W055 complete  
-**Concurrency:** serialized, 1 worker
+Status: AUTHORIZED
+Wave: ACR-007 / renderer fabric foundation (serialized)
+Depends On: ACR-006/W055 complete (X2.0 lock transition recorded)
+Worker Count: 1
 
 **Owned surfaces**
 - `contracts/renderers/*`

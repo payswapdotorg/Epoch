@@ -1,7 +1,9 @@
 # W059 — Babylon.js Embedded Interactive Renderer
 
-**Depends:** W056  
-**Concurrency:** one of W057/W058/W059
+Status: STAGED
+Wave: ACR-007 / first concurrent wave (one of W057|W058|W059)
+Depends On: W056
+Worker Count: 1
 
 **Owned surfaces**
 - `adapters/renderers/babylonjs/*`

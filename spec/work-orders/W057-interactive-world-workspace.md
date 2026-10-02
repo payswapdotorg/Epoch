@@ -1,7 +1,9 @@
 # W057 — Interactive World Workspace & Game-like Engineering UX
 
-**Depends:** W056  
-**Concurrency:** one of W057/W058/W059
+Status: STAGED
+Wave: ACR-007 / first concurrent wave (one of W057|W058|W059)
+Depends On: W056
+Worker Count: 1
 
 **Owned surfaces**
 - `packages/world-runtime/*`

@@ -1,7 +1,9 @@
 # W061 — Multi-Renderer Integration & Interactive World Closure
 
-**Depends:** W060  
-**Concurrency:** serialized, 1 worker
+Status: STAGED
+Wave: ACR-007 / serialized closure
+Depends On: W060
+Worker Count: 1
 
 **Owned surfaces**
 - `apps/web/*`

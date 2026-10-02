@@ -1,7 +1,9 @@
 # W060 — Foundation Renderer & Asset Bridges
 
-**Depends:** W057, W058, W059  
-**Concurrency:** serialized, 1 worker
+Status: STAGED
+Wave: ACR-007 / foundation bridges (serialized after the wave)
+Depends On: W057, W058, W059
+Worker Count: 1
 
 **Owned surfaces**
 - `adapters/renderers/blender/*`
