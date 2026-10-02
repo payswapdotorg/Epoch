@@ -80,3 +80,27 @@ W046 freezes the Application Gateway/client-runtime contract before W047-W049. W
 ## Journey invariant
 
 A client Work Order closes only after real-product journey evidence passes and discovered P0/P1 defects are fixed and rerun. W050 closes cross-platform/release defects.
+
+# ACR-006 Public Deployment Graph
+
+W001-W050 (complete) -> ACR-006 -> W051
+W051 -> W052/W053/W054
+W052 + W053 + W054 -> W055
+
+## Safe concurrency
+
+W052 | W053 | W054 (pairwise-disjoint: web product vs infrastructure adapters vs acquisition adapter + discovery wiring)
+
+W055 is serialized after all three.
+
+## No-rebase invariant
+
+W051 freezes the production environment contract, the RequestGuard port, the adapter package skeletons and the apps/web production binding files before the concurrent wave begins. W052/W053/W054 never edit each other's surfaces or the W051-frozen files. Root manifests/lockfiles are untouched by the entire program (zero-new-dependency rule); any exception is a serialized Tech Lead foundation change.
+
+## Journey invariant
+
+W052 executes the production web journeys against the real deployed site (P01-P18 per spec/journey-validation.md); W055 consolidates and closes. A green source suite alone does not close a deployment work order — the observe → record → reproduce → regression test → fix → rerun loop applies against the deployed product.
+
+## Credential-boundary invariant
+
+Real provider provisioning (Vercel/Neon/R2/Upstash/Apify accounts) requires operator-owned credentials. Work orders deliver all engineering up to that boundary, record honest VERIFIED/NOT-VERIFIED states, and never claim deployment without a real public endpoint.

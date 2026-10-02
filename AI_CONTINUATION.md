@@ -4,29 +4,29 @@ Fresh-session rule: recover project state from repository state and live GitHub 
 
 ## Current authoritative baseline
 
-- main state: ACR-005 productization is COMPLETE (W001-W050, 50/50; W050 merged as 4ae6545e via PR #113 + governance advance 598210a2; later commits are state/handoff cleanup only)
-- architecture: E1.0/X1.0 with ACR-001/002/003/004/005 effective
-- frontier: EMPTY — no active, eligible or blocked work orders
-- max concurrent workers: 3 (moot — program complete)
-- current work: NONE. Post-program work requires a NEW ACR per spec/architecture-lock.md; until one is approved and recorded, there is nothing to dispatch.
+- main state: ACR-005 productization is COMPLETE (W001-W050, 50/50; W050 merged as 4ae6545e via PR #113 + governance advance 598210a2; later commits are state/handoff cleanup only). ACR-006 (Public Deployment, Free-Tier Infrastructure & Production Operations) is now EFFECTIVE (operator directive 2026-10-02): the completed product is being made publicly deployable and actually accessible over the internet on free-tier infrastructure.
+- architecture: E1.0/X1.0 with ACR-001/002/003/004/005/006 effective (ACR-006 adds NO semantic authority — deployment/operations only)
+- frontier: eligible=[W051]; blocked=[W052,W053,W054,W055]
+- max concurrent workers: 3 (W051 is serialized Tech Lead foundation work; then W052/W053/W054 run concurrently, pairwise-disjoint; W055 is serialized closure)
+- current work: ACR-006 program W051-W055. See spec/architecture-change-requests/ACR-006-public-deployment.md and the ACR-006 sections of spec/work-items.md + spec/dependency-graph.md.
 
 ## Recovery reading order
 
 1. AGENTS.md
 2. spec/architecture-lock.md
-3. spec/architecture-change-requests/ACR-005-productization-native-clients.md
-4. spec/productization-architecture.md
-5. spec/journey-validation.md
+3. spec/architecture-change-requests/ACR-006-public-deployment.md
+4. spec/deployment-architecture.md, spec/production-environment.md, spec/free-tier-infrastructure.md (W051 deliverables)
+5. spec/journey-validation.md (J01-J12 + production P01-P18)
 6. spec/PROJECT-STATE.md
-7. spec/work-items.md
-8. spec/dependency-graph.md
+7. spec/work-items.md (ACR-006 section)
+8. spec/dependency-graph.md (ACR-006 section)
 9. spec/worker-runbook.md
 10. assigned Work Order
 11. live GitHub state
 
 ## Dispatch
 
-NONE — the roadmap is complete (50/50). A future program requires a new ACR (spec/architecture-change-requests/) with its own Work Order table before anything becomes dispatchable.
+W051 (production deployment foundation) is ELIGIBLE — dispatch as the sole serialized worker (Tech Lead foundation work). After W051 merges + state reconciliation: dispatch W052/W053/W054 concurrently (max 3, pairwise-disjoint). After all three merge: W055 (serialized closure).
 
 One Work Order = one branch = one PR. Workers never merge. Maximum three concurrent workers. Concurrent surfaces must be pairwise-disjoint. Root manifests/lockfiles are serial Tech Lead work.
 

@@ -59,5 +59,5 @@
   ],
   "blocked": [],
   "lastMergeSha": "598210a2aed97c7a971c2bbdc2341133a987b137",
-  "lastAction": "ACR-005 COMPLETE: W001-W050 all complete; ROADMAP COMPLETE 50/50. Frontier is empty. Post-program implementation requires a new ACR + Work Order program."
+  "lastAction": "ACR-006 (Public Deployment, Free-Tier Infrastructure & Production Operations) EFFECTIVE; W051 AUTHORIZED as the sole serialized foundation worker. After W051 merge + Tech Lead reconciliation, W052/W053/W054 unlock concurrently (pairwise-disjoint surfaces); W055 unlocks after all three."
 }

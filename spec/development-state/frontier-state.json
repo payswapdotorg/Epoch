@@ -1,7 +1,14 @@
 {
-  "program": "ACR-005 / WO2.0",
-  "eligible": [],
+  "program": "ACR-006 / WO2.0",
+  "eligible": [
+    "W051"
+  ],
   "inFlight": [],
-  "blocked": [],
+  "blocked": [
+    "W052",
+    "W053",
+    "W054",
+    "W055"
+  ],
   "maxConcurrentWorkers": 3
 }

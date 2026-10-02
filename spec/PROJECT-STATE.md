@@ -2,13 +2,16 @@
 
 > **Authoritative current state (2026-10-02).** The historical wave notes below are retained for forensic history only and must not be read as current authorization.
 
-Architecture: E1.0/X1.0 with ACR-001/002/003/004/005 effective.
+Architecture: E1.0/X1.0 with ACR-001/002/003/004/005/006 effective (ACR-006 adds no semantic authority — public deployment/operations only).
 Work Order schema: WO2.0.
 Default branch: main.
 Historical main baseline before ACR-005 program: 6912e4af4bab7a77e43d835b6bfc573aacee81f6.
-ACR-005 completion anchor: 598210a2aed97c7a971c2bbdc2341133a987b137; subsequent commits are state/handoff cleanup only.
-W001-W050: COMPLETE (50/50). ROADMAP COMPLETE — the ACR-005 productization program is finished; post-program work requires a new ACR per the architecture lock.
-Current frontier: EMPTY (program complete).
+ACR-005 completion anchor: 598210a2aed97c7a971c2bbdc2341133a987b137; state-cleanup main baseline at ACR-006 approval: d77915ee8b0cbd596ed84be6b6ac2cc414afe962.
+W001-W050: COMPLETE (50/50) — the ACR-005 productization program is finished.
+ACR-006 (Public Deployment, Free-Tier Infrastructure & Production Operations) EFFECTIVE (2026-10-02, operator directive): the completed product is made publicly deployable and actually accessible over the internet on free-tier infrastructure (Vercel/Neon/R2/Upstash/Apify as adapters; no provider becomes semantic authority).
+Current frontier: eligible=[W051] (production deployment foundation; Tech Lead serialized); blocked=[W052,W053,W054,W055]. After W051 merges: W052/W053/W054 concurrently (pairwise-disjoint), then W055 serialized closure.
+ACR-006 program contracts: spec/architecture-change-requests/ACR-006-public-deployment.md; the ACR-006 sections of spec/work-items.md + spec/dependency-graph.md + spec/architecture-lock.md; production journeys P01-P18 in spec/journey-validation.md. W051 delivers the six production spec documents (deployment-architecture, production-environment, free-tier-infrastructure, production-security, production-operations, production-rollback).
+Credential boundary (honest rule): real provider provisioning requires operator-owned accounts/credentials (not present in the repository or sandbox); work orders deliver all engineering to that boundary and record VERIFIED/NOT-VERIFIED honestly; deployment URLs/identifiers are recorded only after verification.
 W050 complete (2026-10-01): PR #113 squash-merged -> 4ae6545e (worker-equivalent head 153382b0, definitions commit 907b8fca, dispatch base 39cc9c84 = verified main HEAD). 7-gate ALL PASS: scope 19/19 owned (apps/web wiring + qa/cross-platform + release/clients + docs; apps/desktop + apps/mobile untouched — no repair needed); token audit 0; governance+boundary PASS; independent battery reproduction 245/245 at a fresh clone (exact match); CI 4/4 green (both contexts); report verified; dependency-baseline guard clean. DEVIATION RECORDED: executed by the Tech Lead directly (the 2026-10-01T13:36Z sandbox reset destroyed the worker-dispatch infrastructure; every verification gate stayed real). Delivers: the cross-platform journey harness (X-01 digest continuity / X-02 cross-device sessions / X-03 capture continuity / X-04 approval continuity / X-05 offline no-drift / X-06 release identity — 9/9 tests, 8/8 records), the six-platform client release identity manifest (release/clients, honest build statuses), journey closure (cross-platform.md + the consolidated defect ledger: 15 program defects all CLOSED, 0 unresolved P0/P1, release gate PASS), the client release process docs. No lockfile reconcile needed (no dependency changes).
 W046 complete (2026-09-30): PR #100 -> a4990a6b + reconcile PR #101 -> 648f1f5b; dispatch base for the client wave = 648f1f5b.
 W049 complete (2026-09-30): PR #104 -> 19cc2fbb + reconcile PR #105 -> 821156d3.

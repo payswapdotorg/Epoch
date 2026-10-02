@@ -119,3 +119,28 @@ For W047-W050, source-level CI is necessary but insufficient: the worker must bu
 ## Dependency/reconciliation rule
 
 Workers do not modify shared root manifests/lockfiles in parallel. The Tech Lead serializes dependency-intake and lockfile reconciliation after merges.
+
+# ACR-006 Public Deployment Work Orders
+
+The ACR-005 productization program is complete (W001-W050, 50/50). ACR-006 (Public Deployment, Free-Tier Infrastructure & Production Operations) establishes W051-W055: making the completed product publicly deployable and actually accessible over the internet on free-tier infrastructure, with no new semantic authority.
+
+| ID | Scope | Depends | Owned surfaces |
+|---|---|---|---|
+| W051 | Production deployment foundation: environment contract, provider-neutral deployment contracts, health/readiness, bootstrap/migration contract, deployment manifests + env templates (placeholders only), cost guardrails, observability contract, freeze seams (RequestGuard port; adapter skeletons) | ACR-006 | spec/deployment-architecture.md, spec/production-environment.md, spec/free-tier-infrastructure.md, spec/production-security.md, spec/production-operations.md, spec/production-rollback.md, docs/deployment/*, services/application-gateway/src/rate-limit.ts, adapters/s3-object-store/*, adapters/upstash-redis/*, apps/web/src/server/production-*.ts, apps/web/app/api/healthz/*, apps/web/app/api/readyz/*, apps/web/.env.example, apps/web/vercel.json, spec/development-state/*, spec/PROJECT-STATE.md, AI_CONTINUATION.md, docs/LLM-ARCHITECT-HANDOFF.md |
+| W052 | Public web + Vercel production deployment: real public environment, production env vars, public URL, health/readiness + auth/session + API routing + tenant-boundary validation, real browser journeys against the deployed site | W051 | apps/web/* EXCEPT the W051-frozen files (apps/web/src/server/production-*.ts, apps/web/app/api/healthz/*, apps/web/app/api/readyz/*, apps/web/.env.example, apps/web/vercel.json — read-only for W052), docs/journeys/production-web.md, docs/deployment/vercel-setup.md |
+| W053 | Neon + R2 + Upstash production infrastructure: S3-compatible object-store adapter + Upstash rate-limit adapter implementations against the W051-frozen ports, Neon connection + migrations + tenant isolation + evidence flow verification, mandatory negative tests, reproducible setup docs | W051 | adapters/s3-object-store/src/*, adapters/upstash-redis/src/*, packages/persistence/src/postgres/* (production hardening only if strictly required), docs/operations/infrastructure.md, docs/deployment/neon-r2-upstash-setup.md |
+| W054 | External acquisition + Apify + production operations: Apify adapter behind the W045 DiscoverySourceAdapter seam, quota-guarded scheduler trigger, provenance preservation, untrusted-input discipline, graceful degradation, operational runbooks | W051 | adapters/apify/*, services/capability-discovery/src/* (production scheduler trigger + quota guard only), ops/src/runbooks/*, docs/operations/acquisition.md |
+| W055 | Serialized production closure: topology + parity + integration verification, security/rate-limit/migration/cost reviews, recovery + rollback testing, consolidated public journeys, production release identity, documentation/state reconciliation | W052, W053, W054 | cross-cutting serialized: spec/journey-validation.md, spec/PROJECT-STATE.md, spec/development-state/*, AI_CONTINUATION.md, docs/LLM-ARCHITECT-HANDOFF.md, README.md, docs/journeys/production.md, release/clients/release-manifest.json, .github/workflows/* (deployment-config validation), docs/deployment/*, docs/operations/* |
+
+## ACR-006 concurrency
+
+Only W051 is initially authorized (Tech Lead serialized foundation). After W051 merges and state is reconciled, W052/W053/W054 may run concurrently because their surfaces are pairwise disjoint: W052 owns apps/web (minus the W051-frozen files), W053 owns the infrastructure adapter implementations, W054 owns the acquisition adapter + capability-discovery production wiring. W055 is serialized after all three.
+
+## ACR-006 deployment invariants
+
+- Zero new runtime dependencies (frozen catalog); providers speak REST over fetch; SigV4 via node:crypto; Neon over the existing pg pin.
+- No secret values in Git — placeholders only; provider credentials only in the deployment platform's secure environment.
+- The Application Gateway remains the ONLY client-facing boundary; apps/web binds it in-process; no second backend.
+- Redis is non-authoritative (rate-limit/cache acceleration only); R2 stores bytes, not semantic truth; Apify output is untrusted adapter input with provenance.
+- Production profile fails closed on missing durable persistence; optional capabilities degrade gracefully; security gates never fail open.
+- Honest-blocking rule: real provider provisioning requires operator-owned credentials; work orders record VERIFIED/NOT-VERIFIED honestly and never fabricate deployment URLs or identifiers.
