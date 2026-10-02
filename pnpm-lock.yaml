@@ -2356,6 +2356,46 @@ importers:
         specifier: 'catalog:'
         version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
 
+  packages/renderer-fabric:
+    dependencies:
+      '@epoch/agent-protocol':
+        specifier: workspace:*
+        version: link:../agent-protocol
+      '@epoch/capability-registry':
+        specifier: workspace:*
+        version: link:../capability-registry
+      '@epoch/experience-protocol':
+        specifier: workspace:*
+        version: link:../experience-protocol
+      '@epoch/renderer-runtime':
+        specifier: workspace:*
+        version: link:../renderer-runtime
+      '@epoch/world-experience':
+        specifier: workspace:*
+        version: link:../world-experience
+      zod:
+        specifier: 'catalog:'
+        version: 4.6.5
+    devDependencies:
+      '@epoch/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@epoch/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.4
+      eslint:
+        specifier: 'catalog:'
+        version: 10.11.0(jiti@2.7.0)
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 5.0.1(@types/node@22.20.4)(vite@8.3.0(@types/node@22.20.4)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
+
   packages/renderer-runtime:
     dependencies:
       '@epoch/agent-protocol':

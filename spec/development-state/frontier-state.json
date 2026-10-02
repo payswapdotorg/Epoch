@@ -1,13 +1,12 @@
 {
   "program": "ACR-007 / X2.0",
-  "eligible": [
-    "W056"
-  ],
-  "inFlight": [],
-  "blocked": [
+  "eligible": [],
+  "inFlight": [
     "W057",
     "W058",
-    "W059",
+    "W059"
+  ],
+  "blocked": [
     "W060",
     "W061"
   ],
