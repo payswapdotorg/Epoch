@@ -44,7 +44,7 @@ const OPTIONS = {
 };
 
 describe('UpstashRestGuard (the REST port + epoch-anchored windows)', () => {
-  it('issues exactly ONE REST call per check with bearer auth + the atomic Lua script', async () => {
+  it('issues exactly ONE REST call per check with bearer auth + the atomic Lua script (body-style, live-verified form)', async () => {
     const seen: Array<{ readonly url: string; readonly init: RequestInit }> = [];
     const guard = new UpstashRestGuard({
       ...OPTIONS,
@@ -53,16 +53,20 @@ describe('UpstashRestGuard (the REST port + epoch-anchored windows)', () => {
     const decision = await guard.check(context());
     expect(decision).toEqual({ allowed: true, limit: 2, remaining: 1, retryAfterMs: 0, degraded: false });
     expect(seen.length).toBe(1);
-    expect(seen[0]!.url).toBe('https://example.upstash.io/eval');
+    // BODY-STYLE REST: the command array is POSTed to the REST ROOT (a
+    // path-style `/eval` + body form is IGNORED by real Upstash — the
+    // W053 live-verification finding).
+    expect(seen[0]!.url).toBe('https://example.upstash.io');
     const init = seen[0]!.init;
     expect((init.headers as Record<string, string>)['Authorization']).toBe('Bearer secret-token');
     const body = JSON.parse(String(init.body)) as unknown[];
-    expect(body[0]).toBe(RATE_LIMIT_LUA);
-    expect(body[1]).toBe('1');
+    expect(body[0]).toBe('EVAL');
+    expect(body[1]).toBe(RATE_LIMIT_LUA);
+    expect(body[2]).toBe('1');
     // Epoch-anchored key: the canonical fixedWindowKey derivation.
-    expect(body[2]).toBe('ratelimit:tenant:tenant:nordstrand:16');
+    expect(body[3]).toBe('ratelimit:tenant:tenant:nordstrand:16');
     // TTL outlives the window (2x), bounded key lifetime.
-    expect(body[3]).toBe('120');
+    expect(body[4]).toBe('120');
   });
 
   it('denies beyond the limit with the epoch-anchored retryAfter', async () => {
@@ -121,6 +125,48 @@ describe('UpstashRestGuard (the REST port + epoch-anchored windows)', () => {
     expect(decision.allowed).toBe(true);
   });
 
+  it('NEGATIVE: a NON-JSON response body (HTML error page) resolves per the policy, never throws', async () => {
+    const guard = new UpstashRestGuard({
+      ...OPTIONS,
+      fetchImpl: (async () =>
+        new Response('<html><body><h1>502 Bad Gateway</h1></body></html>', {
+          status: 200,
+          headers: { 'content-type': 'text/html' },
+        })) as typeof fetch,
+    });
+    const decision = await guard.check(context());
+    // fail-open default: allow + degraded (the JSON parse failure resolved
+    // by the declared policy — the adapter never propagates the throw).
+    expect(decision).toEqual({ allowed: true, limit: 2, remaining: 2, retryAfterMs: 0, degraded: true });
+  });
+
+  it('NEGATIVE: an INVALID TOKEN (401 Unauthorized) resolves per the policy (fail-open degraded / fail-closed deny)', async () => {
+    const unauthorized = (async () =>
+      new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'content-type': 'application/json' },
+      })) as typeof fetch;
+    const open = new UpstashRestGuard({ ...OPTIONS, fetchImpl: unauthorized });
+    const openDecision = await open.check(context());
+    expect(openDecision.allowed).toBe(true);
+    expect(openDecision.degraded).toBe(true);
+    const closed = new UpstashRestGuard({ ...OPTIONS, failurePolicy: 'fail-closed', fetchImpl: unauthorized });
+    const closedDecision = await closed.check(context());
+    expect(closedDecision.allowed).toBe(false);
+    expect(closedDecision.degraded).toBe(true);
+    expect(closedDecision.retryAfterMs).toBeGreaterThan(0);
+  });
+
+  it('NEGATIVE: a result that is not a number (malformed eval payload) is a typed failure', async () => {
+    const guard = new UpstashRestGuard({
+      ...OPTIONS,
+      fetchImpl: scriptedFetch([{ ok: true, status: 200, body: { result: 'not-a-number' } }]),
+    });
+    const decision = await guard.check(context());
+    expect(decision.degraded).toBe(true);
+    expect(decision.allowed).toBe(true);
+  });
+
   it('validates its configuration (fail-fast, no network)', () => {
     expect(() => new UpstashRestGuard({ ...OPTIONS, limit: 0 })).toThrow();
     expect(() => new UpstashRestGuard({ ...OPTIONS, restUrl: 'ftp://x' })).toThrow();
@@ -136,6 +182,6 @@ describe('UpstashRestGuard (the REST port + epoch-anchored windows)', () => {
     });
     await guard.check(context({ sessionId: null }));
     const body = JSON.parse(String(seen[0]!.init.body)) as unknown[];
-    expect(body[2]).toBe('ratelimit:session:anonymous:16');
+    expect(body[3]).toBe('ratelimit:session:anonymous:16');
   });
 });
