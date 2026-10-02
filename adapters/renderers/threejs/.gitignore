@@ -1,0 +1,12 @@
+# W058 — the Three.js renderer adapter's local (pre-registration) link state.
+#
+# adapters/renderers/threejs is a NESTED package path that the frozen
+# pnpm-workspace.yaml glob ("adapters/*") does not match, so until the Tech
+# Lead's registration pass adds the glob entry, scripts/link-local.mjs
+# builds a gitignored local node_modules (workspace-package symlinks + the
+# catalog-pinned three staged from the registry) plus a .local-stage tree.
+# Post-registration pnpm owns node_modules directly and none of this exists.
+# Nothing here is ever committed.
+node_modules
+.local-stage
+*.tsbuildinfo

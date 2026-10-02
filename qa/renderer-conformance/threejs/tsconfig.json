@@ -1,0 +1,25 @@
+{
+  "//": "W058 — the Three.js conformance battery's OWN type-checked validation path (the W056 qa/renderer-conformance doctrine, verbatim). qa/renderer-conformance/threejs is NOT a pnpm workspace package (pnpm-workspace.yaml is frozen), so these files have no pnpm-owned node_modules. The battery rides @epoch/adapter-renderer-threejs's pipeline: its `typecheck` script invokes this config; its vitest include runs the battery; its link script creates the battery's node_modules symlink at test time. NOTHING here depends on that symlink: every bare import the battery files make DIRECTLY is mapped to a REAL install location ('vitest' -> the fabric package's install, the same pinned catalog version), and every product module (the fabric, the runtime, world-experience, the agent protocol, the shared fixture, and the Three.js adapter itself) is imported RELATIVELY so each file resolves its own dependencies through its own package's node_modules (the adapter's local link state pre-registration; pnpm's own chain post-registration). A fresh checkout type-checks cold after the adapter's `link-local` script builds its link state.",
+  "extends": "../../../packages/tsconfig/library.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "typeRoots": [
+      "../../../packages/renderer-fabric/node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "vitest": [
+        "../../../packages/renderer-fabric/node_modules/vitest/dist/index.d.ts"
+      ],
+      "@epoch/world-contracts": [
+        "../../../contracts/world/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
