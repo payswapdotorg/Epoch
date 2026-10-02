@@ -6,9 +6,10 @@ Fresh-session rule: recover project state from repository state and live GitHub 
 
 - main state: ACR-005 productization is COMPLETE (W001-W050, 50/50; W050 merged as 4ae6545e via PR #113 + governance advance 598210a2; later commits are state/handoff cleanup only). ACR-006 (Public Deployment, Free-Tier Infrastructure & Production Operations) is now EFFECTIVE (operator directive 2026-10-02): the completed product is being made publicly deployable and actually accessible over the internet on free-tier infrastructure.
 - architecture: E1.0/X1.0 with ACR-001/002/003/004/005/006 effective (ACR-006 adds NO semantic authority — deployment/operations only)
-- frontier: eligible=[W051]; blocked=[W052,W053,W054,W055]
-- max concurrent workers: 3 (W051 is serialized Tech Lead foundation work; then W052/W053/W054 run concurrently, pairwise-disjoint; W055 is serialized closure)
-- current work: ACR-006 program W051-W055. See spec/architecture-change-requests/ACR-006-public-deployment.md and the ACR-006 sections of spec/work-items.md + spec/dependency-graph.md.
+- frontier: eligible=[W052,W053,W054]; blocked=[W055]
+- max concurrent workers: 3 — the concurrent wave is AUTHORIZED (pairwise-disjoint: W052 apps/web product+Vercel | W053 infrastructure live verification | W054 Apify acquisition + ops)
+- current work: ACR-006 program. W051 COMPLETE (PR #117 -> 9dff75e + pg intake #116 -> 2b3ab89 + lockfile reconcile #118 -> 2e4aafd): the six production specs, the RequestGuard port + adapters (S3/Upstash, real implementations), the production binding layer, health/readyz, vercel.json, the verified free-tier cost contract. W055 unlocks after W052+W053+W054 merge.
+- credential boundary: NO provider credentials exist (Vercel/Neon/R2/Upstash/Apify are operator input); work orders deliver to the boundary and record VERIFIED/NOT-VERIFIED honestly; never fabricate deployment URLs.
 
 ## Recovery reading order
 
@@ -26,7 +27,7 @@ Fresh-session rule: recover project state from repository state and live GitHub 
 
 ## Dispatch
 
-W051 (production deployment foundation) is ELIGIBLE — dispatch as the sole serialized worker (Tech Lead foundation work). After W051 merges + state reconciliation: dispatch W052/W053/W054 concurrently (max 3, pairwise-disjoint). After all three merge: W055 (serialized closure).
+W052/W053/W054 are ELIGIBLE concurrently (max 3 workers, pairwise-disjoint surfaces). After all three merge + Tech Lead reconciliation: W055 (serialized closure).
 
 One Work Order = one branch = one PR. Workers never merge. Maximum three concurrent workers. Concurrent surfaces must be pairwise-disjoint. Root manifests/lockfiles are serial Tech Lead work.
 
