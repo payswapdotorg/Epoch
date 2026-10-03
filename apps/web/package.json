@@ -45,6 +45,7 @@
     "@epoch/world-model": "workspace:*",
     "@epoch/world-runtime": "workspace:*",
     "next": "catalog:",
+    "pg": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "three": "catalog:"

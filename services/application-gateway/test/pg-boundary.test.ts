@@ -58,7 +58,16 @@ describe('the pg import boundary (W046 acceptance 5: service-layer only)', () =>
     expect(violations, `driver imports outside the service layer: ${violations.join(', ')}`).toEqual([]);
   });
 
-  it('manifest-level: no package outside services/application-gateway declares pg/pglite dependencies', () => {
+  it('manifest-level: no package outside services/application-gateway declares pg/pglite dependencies (the one documented deployment-importer exception)', () => {
+    // ACR-006 post-credential deployment exception (2026-10-03): apps/web —
+    // the DEPLOYMENT IMPORTER — declares the pg dependency because the
+    // bundled server resolves the frozen service-layer dynamic import
+    // (import(PG_DRIVER_MODULE), kept external per this boundary) against
+    // node_modules at RUNTIME from the deployment root. It is a resolution
+    // wiring declaration ONLY: no apps/web source imports pg (the source
+    // scan above still enforces that), and the driver still binds ONLY at
+    // the service-layer seam. Every other manifest keeps the strict rule.
+    const DEPLOYMENT_IMPORTER_EXCEPTIONS = new Set(['apps/web/package.json']);
     const violations: string[] = [];
     for (const tree of ['packages', 'apps', 'adapters', 'packs', 'runtimes']) {
       walkSources(path.join(REPO_ROOT, tree), () => undefined);
@@ -71,11 +80,13 @@ describe('the pg import boundary (W046 acceptance 5: service-layer only)', () =>
       ...listManifests(path.join(REPO_ROOT, 'runtimes')),
     ];
     for (const manifest of manifests) {
+      const rel = path.relative(REPO_ROOT, manifest);
       const parsed = JSON.parse(readFileSync(manifest, 'utf8')) as Record<string, Record<string, string>>;
       const deps = { ...(parsed.dependencies ?? {}), ...(parsed.devDependencies ?? {}), ...(parsed.optionalDependencies ?? {}) };
       for (const name of Object.keys(deps)) {
         if (name === 'pg' || name === '@electric-sql/pglite' || name === '@types/pg') {
-          violations.push(`${path.relative(REPO_ROOT, manifest)} declares ${name}`);
+          if (DEPLOYMENT_IMPORTER_EXCEPTIONS.has(rel) && name === 'pg') continue;
+          violations.push(`${rel} declares ${name}`);
         }
       }
     }

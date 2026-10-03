@@ -111,6 +111,16 @@ describe('shell provider neutrality', () => {
       } else if (dep === 'three') {
         // The W061 GL-seam exception: catalog-pinned, never a version literal.
         expect(manifest.dependencies?.[dep]).toBe('catalog:');
+      } else if (dep === 'pg') {
+        // The ACR-006 post-credential deployment-importer exception
+        // (2026-10-03): the DEPLOYMENT root declares the pg driver so the
+        // bundled server can resolve the frozen service-layer dynamic
+        // import (import(PG_DRIVER_MODULE), external per the W046 pin-5
+        // boundary) from node_modules at runtime. Catalog-pinned, never a
+        // version literal; NO shell source imports pg (the pg-boundary
+        // battery enforces that); the driver binds only at the
+        // service-layer seam — the pin's substance holds.
+        expect(manifest.dependencies?.[dep]).toBe('catalog:');
       } else {
         expect(['next', 'react', 'react-dom']).toContain(dep);
       }
