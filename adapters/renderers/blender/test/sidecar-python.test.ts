@@ -43,20 +43,46 @@
  * fix unmasked them; their producing paths are Blender-only, so the
  * emitted source is the CI-executable pin and the live battery is the
  * behavioral one.
+ *
+ * THE STUB BLOCK (the W068 re-dispatch strengthening): the ok render/export
+ * paths are ALSO executed behaviorally in CI against the minimal honest
+ * bpy/mathutils PYTHON STUB (test/doubles/python-stub/ — the committed Node
+ * CLI double's pattern applied one level deeper: real python3 process, real
+ * workspace files, real digests; the stub identifies itself as
+ * "4.2.11-epoch-python-stub" and renders deterministic labeled byte
+ * artifacts, never pixels). The stub legs drive the FULL success paths
+ * (prologue → job read → build_scene → render/export → report write) and
+ * validate the reports through the adapter's OWN strict parser
+ * (parseJobReport) with the artifact digests RE-COMPUTED
+ * (readVerifiedArtifact) — closing the static-only gap disclosed above:
+ * a shape regression in the success reports now fails the STANDARD
+ * battery, not just the env-gated live run. Injected ONLY via PYTHONPATH
+ * by these legs (the unstubbed legs run with PYTHONPATH scrubbed, so no
+ * ambient bpy can satisfy them).
  */
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
-import { BLENDER_SIDECAR_PYTHON_DIGEST, BlenderSidecarClient, digestOfBytes } from '../src/jobs';
+import { fileURLToPath } from 'node:url';
+import { BLENDER_SIDECAR_PYTHON_DIGEST, BlenderSidecarClient, digestOfBytes, parseJobReport } from '../src/jobs';
 import { BLENDER_SIDECAR_PYTHON } from '../src/sidecar';
+import { BlenderWorkspace } from '../src/workspace';
+import { resolveBlenderLimits } from '../src/version';
 
 /**
  * The python3 program this battery executes (the only allowed runtime —
  * preinstalled on the CI image exactly like the governance check's python3).
  */
 const PYTHON3 = 'python3';
+
+/** The bpy/mathutils stub directory (PYTHONPATH-injected by the stub legs only). */
+const STUB_DIR = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  'doubles',
+  'python-stub',
+);
 
 const workspaces: string[] = [];
 afterEach(() => {
@@ -79,11 +105,25 @@ function stagedSidecar(): { dir: string; script: string } {
 /** One completed python3 run of the sidecar (argv array ONLY — never a shell). */
 type SidecarRun = { status: number | null; stdout: string; stderr: string };
 
-function runSidecar(script: string, args: readonly string[]): SidecarRun {
+function runSidecar(
+  script: string,
+  args: readonly string[],
+  options: { pythonPath?: string } = {},
+): SidecarRun {
+  // Hermetic by construction: the unstubbed legs run with PYTHONPATH
+  // scrubbed (no ambient bpy can satisfy them); the stub legs set it to
+  // the committed stub directory exactly.
+  const env: NodeJS.ProcessEnv = { ...process.env };
+  if (options.pythonPath === undefined) {
+    delete env.PYTHONPATH;
+  } else {
+    env.PYTHONPATH = options.pythonPath;
+  }
   const run = spawnSync(PYTHON3, [script, ...args], {
     encoding: 'utf8',
     timeout: 30_000,
     shell: false,
+    env,
   });
   if (run.error !== undefined) {
     throw new Error(`the guard runtime "${PYTHON3}" could not execute the staged sidecar: ${run.error.message}`);
@@ -283,5 +323,119 @@ describe('the sidecar-python execution guard (python3; the W064 failure class pi
     expect(versionFields!).toHaveLength(3);
     expect(BLENDER_SIDECAR_PYTHON).toContain('"fileName": job_id + "-image"');
     expect(BLENDER_SIDECAR_PYTHON).toContain('"fileName": job_id + "-glb"');
+  });
+});
+
+describe('the ok render/export paths executed against the bpy python stub (the behavioral success-shape pin)', () => {
+  // The minimal honest bpy/mathutils doubles (test/doubles/python-stub/)
+  // let the STANDARD battery EXECUTE the success paths the static pin above
+  // can only read: prologue → job read → build_scene (the epochEntityId
+  // provenance stamping included) → the render/export → the success report
+  // write — and then validate that report through the ADAPTER'S OWN strict
+  // parser with the artifact digest RE-COMPUTED, exactly as runJob does
+  // live. The stub identifies itself ("4.2.11-epoch-python-stub") and
+  // writes deterministic labeled byte artifacts, never pixels — the same
+  // honesty rules as the committed Node CLI double.
+
+  it('renders the ok report end-to-end and it passes the adapter\'s own strict parser with the artifact digest re-computed', () => {
+    const { dir, script } = stagedSidecar();
+    const jobId = 'guard-stub-render-1';
+    // The artifact path follows the adapter's own derivation so the
+    // workspace verification below resolves it exactly as runJob would.
+    const artifactPath = path.join(dir, `${jobId}-image.png`);
+    const jobPath = writeJob(dir, `${jobId}.job.json`, {
+      jobId,
+      jobKind: 'render-offscene',
+      scene: guardScene(),
+      output: { path: artifactPath, width: 320, height: 240 },
+    });
+    const reportPath = path.join(dir, `${jobId}-report.json`);
+    const run = runSidecar(script, ['--', jobPath, reportPath], { pythonPath: STUB_DIR });
+
+    expect(run.status).toBe(0);
+    expect(run.stderr).not.toContain('Traceback');
+    const parsed = parseJobReport(readReport(reportPath), { jobId, jobKind: 'render-offscene' });
+    expect(parsed.ok).toBe(true);
+    if (!parsed.ok) return;
+    expect(parsed.value.blenderVersion).toBe('4.2.11-epoch-python-stub');
+    expect(parsed.value.entityCount).toBe(1);
+    expect(parsed.value.image?.fileName).toBe(`${jobId}-image`);
+    // The adapter's own verification discipline: the artifact is re-read
+    // through the scoped workspace and its digest RE-COMPUTED (the
+    // sidecar's self-report is never trusted).
+    const workspace = new BlenderWorkspace(dir, resolveBlenderLimits());
+    const verified = workspace.readVerifiedArtifact(
+      parsed.value.image!.fileName,
+      '.png',
+      parsed.value.image!,
+      digestOfBytes,
+    );
+    expect(verified.ok).toBe(true);
+    if (!verified.ok) return;
+    // The stub's honest labeled artifact (never pixels) — and the semantic
+    // provenance stamping (epochEntityId) actually ran through build_scene.
+    const text = Buffer.from(verified.value).toString('utf8');
+    expect(text).toContain('epoch-python-stub-image');
+    expect(text).toContain('we-guard-slab');
+  });
+
+  it('exports the ok report end-to-end and it passes the adapter\'s own strict parser with the artifact digest re-computed', () => {
+    const { dir, script } = stagedSidecar();
+    const jobId = 'guard-stub-export-1';
+    const artifactPath = path.join(dir, `${jobId}-glb.glb`);
+    const jobPath = writeJob(dir, `${jobId}.job.json`, {
+      jobId,
+      jobKind: 'export-gltf',
+      scene: guardScene(),
+      output: { path: artifactPath, width: 320, height: 240 },
+    });
+    const reportPath = path.join(dir, `${jobId}-report.json`);
+    const run = runSidecar(script, ['--', jobPath, reportPath], { pythonPath: STUB_DIR });
+
+    expect(run.status).toBe(0);
+    expect(run.stderr).not.toContain('Traceback');
+    const parsed = parseJobReport(readReport(reportPath), { jobId, jobKind: 'export-gltf' });
+    expect(parsed.ok).toBe(true);
+    if (!parsed.ok) return;
+    expect(parsed.value.blenderVersion).toBe('4.2.11-epoch-python-stub');
+    expect(parsed.value.entityCount).toBe(1);
+    expect(parsed.value.glb?.fileName).toBe(`${jobId}-glb`);
+    const workspace = new BlenderWorkspace(dir, resolveBlenderLimits());
+    const verified = workspace.readVerifiedArtifact(
+      parsed.value.glb!.fileName,
+      '.glb',
+      parsed.value.glb!,
+      digestOfBytes,
+    );
+    expect(verified.ok).toBe(true);
+    if (!verified.ok) return;
+    // GLB magic + the stub's honest label.
+    expect(verified.value[0]).toBe(0x67);
+    expect(Buffer.from(verified.value).toString('utf8')).toContain('epoch-python-stub-glb');
+  });
+
+  it('leaves exactly the declared files behind (the two-path workspace discipline)', () => {
+    // The sidecar touches ONLY the two paths it was given plus the declared
+    // artifact: after the ok stub render the workspace holds exactly the
+    // staged sidecar, the job spec, the report, and the artifact.
+    const { dir, script } = stagedSidecar();
+    const jobId = 'guard-stub-render-2';
+    const artifactPath = path.join(dir, `${jobId}-image.png`);
+    const jobPath = writeJob(dir, `${jobId}.job.json`, {
+      jobId,
+      jobKind: 'render-offscene',
+      scene: guardScene(),
+      output: { path: artifactPath, width: 320, height: 240 },
+    });
+    const reportPath = path.join(dir, `${jobId}-report.json`);
+    const run = runSidecar(script, ['--', jobPath, reportPath], { pythonPath: STUB_DIR });
+
+    expect(run.status).toBe(0);
+    expect(readdirSync(dir).sort()).toEqual([
+      'blender-sidecar.py',
+      `${jobId}-image.png`,
+      `${jobId}-report.json`,
+      `${jobId}.job.json`,
+    ]);
   });
 });
