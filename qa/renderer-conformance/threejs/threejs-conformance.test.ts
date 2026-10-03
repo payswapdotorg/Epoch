@@ -331,14 +331,14 @@ describe('W058 three.js renderer conformance — the shared canonical fixture (p
             CLOCK.firstInput,
             hint === undefined
               ? undefined
-              : { id: hint, version: '1.0.0' },
+              : { id: hint, version: '1.1.0' },
           ),
         );
         expect(threeReceipt.outcome).toBe('normalized');
         expect(threeReceipt.hitEntityId).toBe(entityId);
         expect(threeReceipt.intent).toEqual({
           id: `epoch.world.interaction.${kind}`,
-          version: '1.0.0',
+          version: '1.1.0',
         });
         expect(threeReceipt.intentPayloadDigest).toMatch(/^[0-9a-f]{64}$/);
 
@@ -354,7 +354,7 @@ describe('W058 three.js renderer conformance — the shared canonical fixture (p
             `rin-w058-${kind}-${suffix}`,
             referenceX,
             CLOCK.firstInput,
-            hint === undefined ? undefined : { id: hint, version: '1.0.0' },
+            hint === undefined ? undefined : { id: hint, version: '1.1.0' },
           ),
         );
         expect(referenceReceipt.outcome).toBe('normalized');
@@ -386,7 +386,7 @@ describe('W058 three.js renderer conformance — the shared canonical fixture (p
           anchorPointer.x,
           anchorPointer.y,
           CLOCK.firstInput,
-          { id: 'epoch.world.interaction.measure', version: '1.0.0' },
+          { id: 'epoch.world.interaction.measure', version: '1.1.0' },
         ),
       );
       expect(anchored.outcome).toBe('no-target');
@@ -404,13 +404,13 @@ describe('W058 three.js renderer conformance — the shared canonical fixture (p
           completePointer.x,
           completePointer.y,
           CLOCK.secondInput,
-          { id: 'epoch.world.interaction.measure', version: '1.0.0' },
+          { id: 'epoch.world.interaction.measure', version: '1.1.0' },
         ),
       );
       expect(threeMeasure.outcome).toBe('normalized');
       expect(threeMeasure.intent).toEqual({
         id: 'epoch.world.interaction.measure',
-        version: '1.0.0',
+        version: '1.1.0',
       });
 
       // The reference's single-click measure pairs the SAME two entities.
@@ -422,7 +422,7 @@ describe('W058 three.js renderer conformance — the shared canonical fixture (p
           `rin-w058-measure-${suffix}`,
           (index + 0.5) / PRESENTED_ENTITY_IDS.length,
           CLOCK.secondInput,
-          { id: 'epoch.world.interaction.measure', version: '1.0.0' },
+          { id: 'epoch.world.interaction.measure', version: '1.1.0' },
         ),
       );
       expect(referenceMeasure.outcome).toBe('normalized');
@@ -441,7 +441,7 @@ describe('W058 three.js renderer conformance — the shared canonical fixture (p
       'fx-conformance-1',
       wheelInput('fx-conformance-1', 'rin-w058-zoom-in-1', -120, CLOCK.firstInput),
     );
-    expect(threeZoomIn.intent).toEqual({ id: 'epoch.world.interaction.zoom', version: '1.0.0' });
+    expect(threeZoomIn.intent).toEqual({ id: 'epoch.world.interaction.zoom', version: '1.1.0' });
     expect(threeZoomIn.intentPayloadDigest).toBe(referenceZoomIn.intentPayloadDigest);
     const threeZoomOut = await normalized(
       fabric,
@@ -470,7 +470,7 @@ describe('W058 three.js renderer conformance — the shared canonical fixture (p
         annotatePointer.x,
         annotatePointer.y,
         CLOCK.firstInput,
-        { id: 'epoch.world.interaction.annotate', version: '1.0.0' },
+        { id: 'epoch.world.interaction.annotate', version: '1.1.0' },
       ),
     );
     const referenceAnnotate = await normalized(
@@ -481,14 +481,14 @@ describe('W058 three.js renderer conformance — the shared canonical fixture (p
         'rin-w058-annotate-1',
         (2 + 0.5) / PRESENTED_ENTITY_IDS.length,
         CLOCK.firstInput,
-        { id: 'epoch.world.interaction.annotate', version: '1.0.0' },
+        { id: 'epoch.world.interaction.annotate', version: '1.1.0' },
       ),
     );
     expect(threeAnnotate.hitEntityId).toBe(ENTITY_IDS[2]);
     expect(referenceAnnotate.hitEntityId).toBe(ENTITY_IDS[2]);
     expect(threeAnnotate.intent).toEqual({
       id: 'epoch.world.interaction.annotate',
-      version: '1.0.0',
+      version: '1.1.0',
     });
     expect(referenceAnnotate.intent).toEqual(threeAnnotate.intent);
     // The payload DIGESTS differ (each affordance authors its own text) —
@@ -506,7 +506,7 @@ describe('W058 three.js renderer conformance — the shared canonical fixture (p
     expect(follow.outcome).toBe('normalized');
     expect(follow.intent).toEqual({
       id: 'epoch.world.interaction.follow-agent',
-      version: '1.0.0',
+      version: '1.1.0',
     });
 
     // Keyboard input through the REAL fabric: space pauses the playing
@@ -520,7 +520,7 @@ describe('W058 three.js renderer conformance — the shared canonical fixture (p
       THREE_SESSION,
       keyDownAt(THREE_SESSION, 'rin-w058-pause-1', ' ', CLOCK.firstInput),
     );
-    expect(pause.intent).toEqual({ id: 'epoch.world.interaction.pause', version: '1.0.0' });
+    expect(pause.intent).toEqual({ id: 'epoch.world.interaction.pause', version: '1.1.0' });
     const adapterSession = three.adapterSessionOf(THREE_SESSION)!;
     const restored = await three.restoreViewState(adapterSession, {
       ...fixtureViewState(),
@@ -532,13 +532,13 @@ describe('W058 three.js renderer conformance — the shared canonical fixture (p
       THREE_SESSION,
       keyDownAt(THREE_SESSION, 'rin-w058-resume-1', ' ', CLOCK.secondInput),
     );
-    expect(resume.intent).toEqual({ id: 'epoch.world.interaction.resume', version: '1.0.0' });
+    expect(resume.intent).toEqual({ id: 'epoch.world.interaction.resume', version: '1.1.0' });
     const replay = await normalized(
       fabric,
       THREE_SESSION,
       keyDownAt(THREE_SESSION, 'rin-w058-replay-1', 'r', CLOCK.secondInput),
     );
-    expect(replay.intent).toEqual({ id: 'epoch.world.interaction.replay', version: '1.0.0' });
+    expect(replay.intent).toEqual({ id: 'epoch.world.interaction.replay', version: '1.1.0' });
 
     // Non-activating input is a typed no-target receipt, never a failure.
     const hover = await normalized(fabric, THREE_SESSION, {

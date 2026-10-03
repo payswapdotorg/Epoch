@@ -200,7 +200,7 @@ describe('W059 Babylon.js conformance — the shared fixture (positive)', () => 
       expect(receipt.value.hitEntityId).toBe(entityId);
       expect(receipt.value.intent).toEqual({
         id: 'epoch.world.interaction.select',
-        version: '1.0.0',
+        version: '1.1.0',
       });
       expect(receipt.value.intentPayloadDigest).toMatch(/^[0-9a-f]{64}$/);
       expect(receipt.value.admissionDigest).toMatch(/^[0-9a-f]{64}$/);
@@ -213,7 +213,7 @@ describe('W059 Babylon.js conformance — the shared fixture (positive)', () => 
     );
     expect(zoom.ok).toBe(true);
     if (zoom.ok) {
-      expect(zoom.value.intent).toEqual({ id: 'epoch.world.interaction.zoom', version: '1.0.0' });
+      expect(zoom.value.intent).toEqual({ id: 'epoch.world.interaction.zoom', version: '1.1.0' });
     }
 
     // Non-activating input is a typed no-target receipt, never a failure.
