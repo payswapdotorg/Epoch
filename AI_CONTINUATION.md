@@ -29,7 +29,7 @@ Fresh-session rule: recover project state from repository state and live GitHub 
 
 ## Dispatch
 
-ACR-010 (the in-page foundation asset path) is ACTIVE: W065 (fabric asset-binding contract v1.2.0, frozen-first) + W066 (the bind interaction kind) ELIGIBLE concurrently — pairwise-disjoint; W067 (the in-page closure: runtime + hosts + the leg-14 battery + records) READY_AFTER both. W064 (the Blender live-battery verification closure — the standing operator action, docs-only surfaces) is IN FLIGHT concurrently. Standing operator inputs remain: provider credentials (Vercel/Neon/R2/Apify) for the ACR-006 post-credential deployment verification; GPU rasterization is impossible in this sandbox (honest permanent NOT-VERIFIED).
+ACR-010 (the in-page foundation asset path) is ACTIVE: W065 MERGED at cc3b044 (PR #147 — the fabric asset-binding contract v1.2.0); W066 (the bind interaction kind) IN FLIGHT; W067 (the in-page closure: runtime + hosts + the leg-14 battery + records) READY_AFTER W066. ACR-011 (the Blender sidecar arity defect closure) is ACTIVE: W068 ELIGIBLE (concurrent with W066/W067 on disjoint surfaces) — the require() arity fix + the CI-executable sidecar-Python guard + the env-gated live re-run + the ledger closure. Standing operator inputs remain: provider credentials (Vercel/Neon/R2/Apify) for the ACR-006 post-credential deployment verification; GPU rasterization is impossible in this sandbox (honest permanent NOT-VERIFIED).
 
 One Work Order = one branch = one PR. Workers never merge. Maximum three concurrent workers. Concurrent surfaces must be pairwise-disjoint. Root manifests/lockfiles are serial Tech Lead work.
 
