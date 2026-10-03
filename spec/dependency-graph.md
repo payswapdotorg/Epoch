@@ -185,3 +185,20 @@ W065 is the ONLY order that writes the renderer contract surface (frozen-first; 
 ## Binding-invariance discipline
 
 Binding is presentation: the sealed, content-addressed, tenant-scoped binding reference flows intent -> admission -> runtime -> fabric -> adapter seam; the canonical world digest and the presented semantic entity ids are UNCHANGED; durable semantic state is never mutated (the qa/foundation-renderers negative battery stays green untouched); untrusted bytes remain typed refusals everywhere.
+
+
+# ACR-011 Blender Sidecar Arity Defect Closure Graph
+
+W064 (PR #148) -> W068
+
+## Safe concurrency
+
+W068 (adapters/renderers/blender) is pairwise-disjoint with the ACR-010 remainder: W066 (packages/world-experience, in flight) and W067 (packages/world-runtime + apps, pending). All three may never exceed the three-worker cap together with anything else.
+
+## Surface discipline
+
+W068 owns the blender adapter package (the sidecar emit + its tests + the digest pin) and its three record files. It touches NO contract, NO fabric, NO world-experience/world-runtime/host surface, NO governance state. The re-stamp of BLENDER_SIDECAR_PYTHON_DIGEST is the sanctioned mechanical-touch pattern.
+
+## Defect-closure invariant
+
+The fix restores ALREADY-SPECIFIED behavior (the five-argument require()). No semantic change, no contract bump, no second validator. The pinned live battery flips FOR THE BETTER (2 failed -> 3 passed) and the double-mode baseline stays green unchanged.

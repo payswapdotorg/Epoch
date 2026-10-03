@@ -5,7 +5,8 @@
   "defaultBranch": "main",
   "maxConcurrentWorkers": 3,
   "active": [
-    "W066"
+    "W066",
+    "W068"
   ],
   "completed": [
     "W001",
@@ -76,5 +77,5 @@
   ],
   "blocked": [],
   "lastMergeSha": "220e99fe20cc064c945833c8a66d84ddc8baba05",
-  "lastAction": "ACR-010 WAVE 1 LANDED (TL merges 2026-10-03): W065 MERGED at cc3b044 (PR #147 \u2014 the Fabric Asset-Binding Contract v1.2.0: the frozen-first additive bump, the fabric-level bindSessionAsset operation over the UNCHANGED adapter seam, the typed digest-addressed tenant-scoped receipt, the parity pins, 51/51 renderer-fabric battery + 227/227 renderer-runtime untouched-green; one disclosed owned-surface deviation accepted by the TL: packages/renderer-runtime/src/version.ts \u2014 the manifest contractVersion emission source, a required mechanical consequence the work order's surface list missed; full CI 6/6). W064 MERGED at 220e99f (PR #148 \u2014 the Blender live-battery verification closure: the official Blender 4.2.11 LTS supplied at an ephemeral path, the env-gated live battery RAN \u2014 probe PASS, render/export FAILED-live on the REAL sidecar require() arity defect, ledgered OPEN in the defect ledger with the full discipline chain (observed -> recorded -> reproduced two ways -> NOT FIXED, remediation is TL scope); CI evidence remains the committed double (40 passed + 3 env-gated skips, no regression); docs-only, 4 owned files). W066 (the bind interaction kind) IN FLIGHT (session live in the replay). W067 (the in-page closure) READY_AFTER W066. The sidecar arity defect closure is the next TL authorization (a defect-closure order; surfaces adapters/renderers/blender)."
+  "lastAction": "ACR-011 ACTIVATED (TL governance, operator standing continuation directive 2026-10-03): the Blender sidecar arity defect-closure program \u2014 W068 (the require() arity fix + the CI-executable sidecar-Python guard + the env-gated live re-run + the ledger closure) ELIGIBLE, concurrent with ACR-010's W066 (in flight) on pairwise-disjoint surfaces; W067 READY_AFTER W066. Prior action: ACR-010 wave 1 landed \u2014 W065 at cc3b044 (PR #147, the fabric asset-binding contract v1.2.0) + W064 at 220e99f (PR #148, the Blender live-battery FAILED-live record with the sidecar defect ledgered OPEN \u2014 the defect ACR-011 now closes)."
 }

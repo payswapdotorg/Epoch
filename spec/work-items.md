@@ -226,3 +226,20 @@ W065 + W066 are ELIGIBLE concurrently (pairwise-disjoint surfaces: contracts/ren
 ## ACR-010 completion invariant
 
 The leg-14 verdict flips from the honest NOT-RUNNABLE skip to PASS with exact evidence: the in-page path (import -> validate/seal -> typed `bind` -> fabric-level binding -> receipt + digest-addressed ledger) runs on web + desktop through the REAL seam; the presented semantic entity ids and the canonical world digest are UNCHANGED by the binding (pinned); untrusted bytes remain typed refusals; the Blender-live variant and GPU stay honestly recorded as env-gated/impossible. The detailed acceptance contract lives in `spec/architecture-change-requests/ACR-010-in-page-foundation-asset-path.md` and the W065-W067 Work Order files.
+
+
+# ACR-011 Blender Sidecar Arity Defect Closure Work Orders
+
+ACR-011 is APPROVED (2026-10-03, operator standing continuation directive) and is the active defect-closure program after the W064 live-battery finding (PR #148, merged 220e99f). It closes the ledgered sidecar `require()` arity defect: fix -> CI-executable sidecar-Python guard -> env-gated live re-run -> ledger closure. No architecture change, no lock transition, no contract bump.
+
+| ID | Scope | Depends | Owned surfaces |
+|---|---|---|---|
+| W068 | Blender Sidecar Arity Defect Closure (the require() arity fix + the CI-executable sidecar-Python guard + the env-gated live re-run + the ledger closure) | — (ACR-011 activation) | adapters/renderers/blender/*, docs/journeys/interactive-world.md (defect-ledger entry only), docs/rendering/blender.md (live re-run record only), spec/PROJECT-STATE.md (W068 record only) |
+
+## ACR-011 concurrency
+
+W068 is the single serialized defect-closure order. It runs CONCURRENT with the ACR-010 remainder on pairwise-disjoint surfaces (adapters/renderers/blender vs packages/world-experience [W066, in flight] vs packages/world-runtime + apps [W067, pending]).
+
+## ACR-011 completion invariant
+
+The defect-ledger entry closes with the full public discipline chain: the arity fix lands (the BLENDER_SIDECAR_PYTHON_DIGEST re-stamp disclosed), the CI-executable sidecar-Python guard proves the failure class can never return silently (runs in the standard battery with no Blender binary), the env-gated live battery flips to 3 passed against the official Blender 4.2.11 (or the honest NOT-RUNNABLE live disposition with the fix+guard landed), and the ledger records fix -> rerun -> close with exact evidence. The detailed acceptance contract lives in spec/architecture-change-requests/ACR-011-blender-sidecar-arity-defect-closure.md and spec/work-orders/W068-blender-sidecar-arity-defect-closure.md.
