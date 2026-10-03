@@ -23,12 +23,19 @@ const nextConfig: NextConfig = {
   // live as unresolvable store siblings (found live on the production
   // boots: 'Cannot find module pg' then 'Cannot find module pg-types').
   // Every runtime-reachable file lands at a resolvable lambda path.
+  // W069 completes the closure deterministically: xtend (required by
+  // postgres-interval, found live on the production readyz) and split2
+  // (required by pgpass, discovered by the W069 closure walk) — the
+  // pg-boundary guard test walks the manifest closure and pins every
+  // member to this exact list.
   outputFileTracingIncludes: {
     '/api/**': [
       './node_modules/pg/**/*',
       './node_modules/pg-*/**/*',
       './node_modules/pgpass/**/*',
       './node_modules/postgres-*/**/*',
+      './node_modules/split2/**/*',
+      './node_modules/xtend/**/*',
     ],
   },
 };
