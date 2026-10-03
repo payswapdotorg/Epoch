@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "releaseId": "epoch-clients-v1.0.0",
   "version": "1.0.0",
-  "sourceCommit": "fe835828a04c18dc6bea07b16e0632006ae9cfdc",
+  "sourceCommit": "483222d9f0037901b33fc8b5924480f49a087352",
   "description": "The client release identity record set (W050; re-stamped by W063 with the real desktop installable artifacts: linux built-in-sandbox, windows built-in-sandbox-cross, macos ci-recipe-delivered). Every artifact records source commit, version/profile, target platform and checksum (spec/productization-architecture.md). Gaps and deviations are declared \u2014 never silent.",
   "clients": [
     {
