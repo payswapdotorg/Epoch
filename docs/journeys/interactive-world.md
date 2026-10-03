@@ -78,6 +78,7 @@ point; the battery starts its own production server on the free port 3210.
 | W016 marker-time ordering compared `${atMs}\0${markerId}` LEXICOGRAPHICALLY: mixed-width times (5000 vs 12000) failed admission — numerically ASCENDING timelines were refused, and the mirrored numerically DESCENDING order was admitted with a WRONG timeline end bound | P2 (the W057-discovered defect) | observed (W057 journey bring-up) → recorded (the W057 defect table + the harness README advisory) → reproduced precisely at the REAL W016 surface (`admitWorldScene`) in `qa/world-experience/w016-marker-time-known-issue.test.ts` (3 tests, pinned green while the defect stood so the fix must FLIP them) → FIXED at W062/ACR-008 (`packages/world-experience/src/timeline.ts`: the comparator inside the same `.superRefine` now compares `atMs` NUMERICALLY with the lexicographic `markerId` tie-break — the already-specified intent; strictly-ascending duplicate-free pairs unchanged; no schema/contract version bump, no second comparator) → RERUN green (the flipped battery: the ascending mixed-width case ADMITS with `timelineEndMs` == 12000 and the in-track 8000ms position validating; the mirrored descending case is REFUSED with the typed `malformed-record` admission error at `timeline.markers`; the same-digit-width control stays green — the world-runtime battery 70/70 including the flipped record) → CLOSED | the flipped regression record `qa/world-experience/w016-marker-time-known-issue.test.ts` (3 tests, file path stable) + the focused comparator regression `packages/world-experience/test/timeline-ordering.test.ts` (5 tests: mixed-width ascending admits, mixed-width descending refused, duplicate refused, markerId tie-break ordering, same-width control) | CLOSED at W062 (ACR-008) |
 | (W057, carried in the closure record) hiding the layer of the FOCUSED entity killed the renderer session | high (W057) | fixed at W057 (`portableViewStateOf` carries the focus MINUS the hidden set) | `packages/world-runtime/test/workspace-runtime.test.ts` | CLOSED at W057 |
 | (W057) the W050 release-identity checksums pinned the pre-W057 desktop `package.json` | medium (W057) | fixed at W057 by the sanctioned manifest re-stamp; re-stamped again at W061 (see below) | the X-06 cross-platform battery | CLOSED at W061 (re-stamp disclosed in the PR) |
+| The pinned Blender sidecar script's argv-validation prologue called `require(condition, report_path, job_id, error_code, message)` with only 4 positional arguments (staged sidecar lines 79/81): EVERY real-Blender sidecar job (`render-offscene` and `export-gltf` alike) died with `TypeError: require() missing 1 required positional argument: 'message'` before reading the job spec or writing any report; Blender 4.2.11 printed the traceback to stderr but EXITED 0, so the typed boundary returned the `report-missing` (ENOENT) failure wrapped as `session-failed` at the seam | P1 (the W064 live-battery finding, 2026-10-03 — both the render and export live legs fail against the REAL official binary; the probe leg passes; the double-mode CI battery is UNAFFECTED because the committed double re-implements the job protocol in JavaScript and never executes the sidecar Python) | observed (the W064 live run: `2 failed | 1 passed | 1 skipped` — the version probe PASS, the render FAIL at `live-blender.test.ts:95`, the export FAIL at `live-blender.test.ts:139`) → recorded (this ledger + the W064 live-run record in docs/rendering/blender.md) → reproduced precisely TWO ways (a persistent-workspace diagnostic run of the same adapter path printing the typed `report-missing` ENOENT failures; a manual `blender --background --factory-startup --python <staged sidecar> -- <job.json> <report.json>` invocation of the exact staged files — exit code 0, the TypeError traceback on stderr, NO report file; the staged sidecar digested to the pinned `BLENDER_SIDECAR_PYTHON_DIGEST` `c52801e2…`) → NOT FIXED (W064 is the docs-only verification closure; remediation scope is the Tech Lead's per the work order) | the env-gated live battery itself (`adapters/renderers/blender`: `EPOCH_BLENDER_LIVE=1 EPOCH_BLENDER_PATH=<official 4.2.11> corepack pnpm run test:live` — flips green when fixed); a CI-executable sidecar-Python execution/arity check is remediation scope for the TL | OPEN (recorded at W064, 2026-10-03) |
 
 ## Evidence set
 
@@ -114,10 +115,24 @@ REAL web/desktop presenters, and (legs 1-13, 15-18) a REAL Chromium over
 REAL software GL with both real engines live.
 
 **NOT-VERIFIED-live (recorded honestly, never fabricated):**
-- the Blender REAL binary — the live battery is env-gated
-  (`EPOCH_BLENDER_LIVE=1` + `EPOCH_BLENDER_PATH`); no Blender binary
-  exists in this sandbox (CI-verified evidence is the committed Node CLI
-  double — a real subprocess boundary, doubled engine);
+- the Blender REAL binary — **RAN-live at W064 (2026-10-03) and
+  FAILED-live honestly**: the official Blender 4.2.11 LTS
+  (operator-supplied binary, never bundled; source URL + sha256 + the
+  full live-run record in docs/rendering/blender.md) was supplied to the
+  env-gated battery with the result `2 failed | 1 passed | 1 skipped`:
+  the version probe PASSES (the live evidence line `[live] probe:
+  Blender 4.2.11 (separate-process sidecar)…`); the offscreen Cycles
+  render and the glTF/GLB export FAIL on a REAL sidecar defect — the
+  pinned sidecar script's argv-validation `require()` calls pass 4 of
+  5 required positional arguments, so every real-Blender sidecar job
+  dies with `TypeError: require() missing 1 required positional
+  argument: 'message'` before writing any report (Blender 4.2.11
+  exits 0; the adapter returns the typed `report-missing` failure) —
+  ledgered in the defect ledger below (OPEN; remediation is Tech Lead
+  scope — W064 is docs-only). CI-verified evidence remains the
+  committed Node CLI double (a real subprocess boundary, doubled
+  engine — 40 passed + 3 env-gated skips, no regression; the live run
+  is NEVER claimed as CI evidence);
 - any leg-14 in-page path — blocked on the frozen contract's
   adapter-seam-scoped `bindAsset` (a fabric-level orchestration would be a
   contract change for a future ACR, per the W060 advisory);
