@@ -99,9 +99,9 @@ def build_scene(entities, camera_spec):
 
 def main():
     argv = sys.argv
-    require("--" in argv, "", "sidecar-error", "the sidecar requires Blender's -- separator")
+    require("--" in argv, "", "", "sidecar-error", "the sidecar requires Blender's -- separator")
     args = argv[argv.index("--") + 1:]
-    require(len(args) == 2, "", "sidecar-error", "the sidecar takes exactly two paths after --")
+    require(len(args) == 2, "", "", "sidecar-error", "the sidecar takes exactly two paths after --")
     job_path, report_path = args
     try:
         with open(job_path, "r", encoding="utf-8") as handle:
@@ -149,8 +149,9 @@ def main():
                     "ok": True,
                     "jobId": job_id,
                     "jobKind": "render-offscene",
+                    "blenderVersion": bpy.app.version_string,
                     "entityCount": len(entities),
-                    "image": file_info(output["path"]),
+                    "image": {"fileName": job_id + "-image", **file_info(output["path"])},
                 },
             )
         elif job_kind == "export-gltf":
@@ -170,8 +171,9 @@ def main():
                     "ok": True,
                     "jobId": job_id,
                     "jobKind": "export-gltf",
+                    "blenderVersion": bpy.app.version_string,
                     "entityCount": len(entities),
-                    "glb": file_info(output["path"]),
+                    "glb": {"fileName": job_id + "-glb", **file_info(output["path"])},
                 },
             )
         else:
