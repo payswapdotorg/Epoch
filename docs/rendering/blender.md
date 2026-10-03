@@ -114,6 +114,79 @@ render of the shared canonical fixture (PNG artifact,
 digest-addressed), and a REAL glTF/GLB export whose bytes validate
 through the same bridge protocol.
 
+**RAN-live at W064 (2026-10-03) — FAILED-live, honestly recorded.** The
+standing operator action was executed: an operator-supplied OFFICIAL
+binary (the operator-supplied-binary pattern — never bundled, never
+committed; it lived at an ephemeral non-repo path and was deleted after
+the session). This is LIVE operator-supplied-binary evidence, NOT CI
+evidence — CI still runs the committed double (which stayed green; see
+the regression check below).
+
+- **Binary (exact identity):** Blender 4.2.11 LTS, build hash
+  `327de7628803`, built 2025-06-17 — official source
+  `https://download.blender.org/release/Blender4.2/blender-4.2.11-linux-x64.tar.xz`,
+  tarball sha256
+  `7f084fd57f1351bcae3434fc5450643547e4ad3d69cd93d4dd14a784203ee2ec`
+  (352,118,380 bytes, matching the official directory listing; Blender
+  publishes no sha256 sidecar for 4.2.11). No extra system libraries
+  were required (sandbox glibc 2.41 ≥ 2.28; the binary ran clean).
+- **Commands (exactly as run):**
+
+  ```bash
+  cd /tmp
+  curl -L -o blender-4.2.11-linux-x64.tar.xz \
+    https://download.blender.org/release/Blender4.2/blender-4.2.11-linux-x64.tar.xz
+  sha256sum blender-4.2.11-linux-x64.tar.xz   # recorded above
+  tar -xf blender-4.2.11-linux-x64.tar.xz && rm blender-4.2.11-linux-x64.tar.xz
+  /tmp/blender-4.2.11-linux-x64/blender --version   # "Blender 4.2.11 LTS"
+  # repo root (the W064 frozen path — clean, working tree untouched):
+  corepack pnpm install --frozen-lockfile
+  cd adapters/renderers/blender
+  EPOCH_BLENDER_LIVE=1 EPOCH_BLENDER_PATH=/tmp/blender-4.2.11-linux-x64/blender \
+    corepack pnpm run test:live
+  ```
+
+- **Per-live-test results (3 live tests):**
+  - `probes the real Blender version` — **PASS** (110ms). Live evidence
+    line: `[live] probe: Blender 4.2.11 (separate-process sidecar)
+    producing stills for a "desktop" device session`.
+  - `renders the canonical fixture offscreen through real Cycles` —
+    **FAIL** (483ms) at `live-blender.test.ts:95` (`frame.ok` false;
+    no PNG artifact was produced).
+  - `exports a real GLB of the canonical fixture` — **FAIL** (456ms) at
+    `live-blender.test.ts:139` (`prepared.ok` false; no GLB).
+  Battery summary: `2 failed | 1 passed | 1 skipped (4)`.
+- **Root cause (reproduced two ways; the full defect entry lives in the
+  docs/journeys/interactive-world.md defect ledger):** the pinned
+  sidecar script's argv-validation prologue calls `require(...)` with
+  only 4 of its 5 required positional arguments (staged sidecar lines
+  79/81 against the 5-parameter definition), so EVERY real-Blender
+  sidecar job (`render-offscene` and `export-gltf` alike) dies with
+  `TypeError: require() missing 1 required positional argument:
+  'message'` before reading the job spec or writing any report.
+  Blender 4.2.11 prints the traceback to stderr but EXITS 0 (uncaught
+  `--python` script exceptions do not set this revision's exit code),
+  so the typed boundary sees a clean exit, advances to the report
+  read, and returns the typed `report-missing` failure (wrapped
+  `session-failed` at the seam):
+  `reading "…-report.json" failed: ENOENT: no such file or directory`.
+  The committed Node CLI double re-implements the job protocol in
+  JavaScript and never executes the sidecar Python, so CI structurally
+  cannot catch sidecar-Python defects — exactly the gap this live
+  battery exists to close (and it did: the staged sidecar digested to
+  the pinned `BLENDER_SIDECAR_PYTHON_DIGEST`
+  `c52801e25a7369d4f7232554a68d9090177e931aabcd77e5ca1359149d7250f3`).
+- **Regression check (the default double mode, same package, no env):**
+  `corepack pnpm test` — **40 passed | 3 skipped (43)**, exactly the
+  recorded baseline. With the env set the 3 live tests run instead of
+  skipping: `2 failed | 40 passed | 1 skipped (43)`.
+- **Disposition:** the render/export legs remain NOT-VERIFIED-live
+  until the ledgered sidecar defect is remediated (Tech Lead scope;
+  W064 is docs-only — no code changes) and a clean live rerun is
+  recorded here. No Blender bytes or live-run artifacts are committed
+  anywhere (the battery cleans its own workspace; the reproduction
+  used an ephemeral /tmp workspace that is not part of the tree).
+
 ## Package conventions
 
 Per `adapters/s3-object-store` (epoch layer metadata `experience`,
@@ -184,9 +257,14 @@ adapter.
 
 ## Known limitations (honest)
 
-- **No live-binary evidence at delivery.** All CI evidence is the
-  committed double (real boundary, doubled engine); the real-binary
-  battery is env-gated and NOT-VERIFIED-live (see above).
+- **Live-binary evidence exists but is FAILED-live (W064, 2026-10-03).**
+  The live battery ran against the official Blender 4.2.11 and found a
+  REAL sidecar defect — 1/3 live tests pass (the probe); the render and
+  export legs fail and remain NOT-VERIFIED-live until the ledgered
+  defect is remediated (Tech Lead scope) and a clean live rerun is
+  recorded (see the W064 live-run record above). All CI evidence
+  remains the committed double (real boundary, doubled engine —
+  40 passed + 3 env-gated skips, no regression).
 - **The double's render is not pixels.** The double's "image" artifact is
   a deterministic labeled byte artifact — honest CI evidence of the
   BOUNDARY (digest verification, evidence typing), not of Blender's
