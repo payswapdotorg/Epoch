@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "releaseId": "epoch-clients-v1.0.0",
   "version": "1.0.0",
-  "sourceCommit": "4c9d8aedb9d3fb74ab3d2353faed1421f158fded",
+  "sourceCommit": "7388fa386b21729fdd8528ce872ea8773ad4e592",
   "description": "The client release identity record set (W050; re-stamped by W063 with the real desktop installable artifacts: linux built-in-sandbox, windows built-in-sandbox-cross, macos ci-recipe-delivered). Every artifact records source commit, version/profile, target platform and checksum (spec/productization-architecture.md). Gaps and deviations are declared \u2014 never silent.",
   "clients": [
     {
@@ -18,9 +18,9 @@
           "apps/web/vitest.config.mts",
           "apps/web/playwright.config.ts"
         ],
-        "definitionTreeSha": "6a79f2430af6e74ae91205f0321a487aeff53770",
+        "definitionTreeSha": "35cde3e0ca1ed3e7bf5e9efe7d91325bddab5d89",
         "checksums": {
-          "apps/web/package.json": "b5fcc8946c541f26f005051c1f3c7bfd41dd6000945f86bc029815bed2ae9973",
+          "apps/web/package.json": "dd3b69bdb057577936adac4eb890a9a5bfce7b0d67b809306cc38232bb606691",
           "apps/web/next.config.ts": "b9ed807b06d018a3b190914e965247d2999d38e2dcbfea85f11eb4845c9a9132",
           "apps/web/tsconfig.json": "f35c6b95fd13351b89e5c8582f421dadc8fdaac2760fdc85b64321cd9618ad31",
           "apps/web/vitest.config.mts": "60ad3eba277fe30a5ea08e98fda20d85b21e2e8f83cbccb7f2e2b240217af66f",
@@ -47,7 +47,7 @@
           "apps/desktop/src-tauri/Cargo.lock",
           "apps/desktop/tsconfig.json"
         ],
-        "definitionTreeSha": "c2da7198e427fa75768a57f0b0542a53bcde73a7",
+        "definitionTreeSha": "9b21e2f7eba313f7c59bc02fb06dfecdcdf21e06",
         "checksums": {
           "apps/desktop/package.json": "0f93c2ba28be055faa5405edf7342f15107e4eeb08e0bdc656ff588133ff7118",
           "apps/desktop/src-tauri/tauri.conf.json": "79d64b54d5d47d39ee59ae582110d80186bfdeb078a34ef9de6e7786c10d67e9",
@@ -91,7 +91,7 @@
           "apps/desktop/src-tauri/Cargo.lock",
           "apps/desktop/tsconfig.json"
         ],
-        "definitionTreeSha": "c2da7198e427fa75768a57f0b0542a53bcde73a7",
+        "definitionTreeSha": "9b21e2f7eba313f7c59bc02fb06dfecdcdf21e06",
         "checksums": {
           "apps/desktop/package.json": "0f93c2ba28be055faa5405edf7342f15107e4eeb08e0bdc656ff588133ff7118",
           "apps/desktop/src-tauri/tauri.conf.json": "79d64b54d5d47d39ee59ae582110d80186bfdeb078a34ef9de6e7786c10d67e9",
@@ -136,7 +136,7 @@
           "apps/desktop/src-tauri/Cargo.lock",
           "apps/desktop/tsconfig.json"
         ],
-        "definitionTreeSha": "c2da7198e427fa75768a57f0b0542a53bcde73a7",
+        "definitionTreeSha": "9b21e2f7eba313f7c59bc02fb06dfecdcdf21e06",
         "checksums": {
           "apps/desktop/package.json": "0f93c2ba28be055faa5405edf7342f15107e4eeb08e0bdc656ff588133ff7118",
           "apps/desktop/src-tauri/tauri.conf.json": "79d64b54d5d47d39ee59ae582110d80186bfdeb078a34ef9de6e7786c10d67e9",
