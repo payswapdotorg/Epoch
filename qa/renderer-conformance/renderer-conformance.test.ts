@@ -138,7 +138,7 @@ describe('W056 renderer conformance — the shared fixture (positive)', () => {
     expect(receipt.value.hitEntityId).toBe(expectedHit);
     expect(receipt.value.intent).toEqual({
       id: 'epoch.world.interaction.select',
-      version: '1.0.0',
+      version: '1.1.0',
     });
     // Every normalized intent links its W013 admission (evidence chain).
     expect(receipt.value.admissionDigest).toMatch(/^[0-9a-f]{64}$/);
@@ -158,7 +158,7 @@ describe('W056 renderer conformance — the shared fixture (positive)', () => {
     if (zoom.ok) {
       expect(zoom.value.intent).toEqual({
         id: 'epoch.world.interaction.zoom',
-        version: '1.0.0',
+        version: '1.1.0',
       });
     }
 
