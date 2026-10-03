@@ -17,7 +17,17 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   outputFileTracingIncludes: {
-    '/api/**': ['./node_modules/pg/**/*'],
+    '/api/**': [
+      // The driver itself (symlink path) + its FULL pnpm-store dependency
+      // closure: in the pnpm isolated layout pg's transitive runtime deps
+      // (pg-connection-string, pg-pool, pg-protocol, pg-types, pgpass,
+      // pg-cloudflare) live as SIBLINGS under .pnpm/pg@*/node_modules/ —
+      // invisible to the tracer exactly like the driver (found live on the
+      // first production boot: "Cannot find module 'pg-types'" from
+      // pg/lib/defaults.js inside the lambda).
+      './node_modules/pg/**/*',
+      './node_modules/.pnpm/pg@*/node_modules/**/*',
+    ],
   },
 };
 
