@@ -31,10 +31,8 @@ Implementation complete + verification green + evidence complete + Architect app
 Architect findings are fixed on the same branch/PR with regression evidence. Do not open replacement PRs for the same Work Order.
 
 
-## Active program: ACR-008 (X2.0 defect closure)
+## Active program: ACR-010 (in-page foundation asset path)
 
-ACR-008 — Marker-Time Ordering Defect Closure is ACTIVE at `spec/architecture-change-requests/ACR-008-marker-time-comparator.md`.
+ACR-010 — In-Page Foundation Asset Path (Fabric-Level Asset Binding) is ACTIVE at `spec/architecture-change-requests/ACR-010-in-page-foundation-asset-path.md`, activated 2026-10-03 under the operator standing continuation directive (the frontier was EMPTY at the W063 merge, 12b5f22). It delivers the ledgered leg-14 disposition (the W060 advisory): the fabric-level asset-binding orchestration (RendererAdapter contract v1.1.0 -> v1.2.0, additive), the `bind` interaction kind, and the in-page external foundation path with the leg-14 battery closure. NO semantic-authority change, NO lock transition; E1.0/X2.0 invariants remain binding; binding is presentation (the sealed, content-addressed, tenant-scoped binding reference flows intent -> admission -> runtime -> fabric -> the UNCHANGED adapter seam).
 
-ACR-007 closed complete (W001-W061, 61/61; frontier EMPTY; f7ca304 + the 0c17f6e reconcile). The operator's standing continuation directive authorizes the ledgered "future-ACR" disposition: the W016 marker-time P2 defect closure. ACR-008 is a defect-closure program — NO architecture change, NO lock transition; E1.0/X2.0 invariants remain binding.
-
-W062 is the single serialized work order (single worker): the numeric `(atMs, markerId)` comparator in `packages/world-experience/src/timeline.ts`, the pinned known-issue battery flip, and the defect-ledger closure. After W062 merges, ACR-008 closes and the frontier returns to EMPTY; any further program again requires a new ACR. The standing operator inputs remain: provider credentials (Vercel/Neon/R2/Upstash/Apify) for the ACR-006 live deployment verification; a Blender binary for the env-gated live legs.
+W065 (the frozen contract bump + the fabric operation) + W066 (the bind kind) run CONCURRENTLY (pairwise-disjoint); W067 (runtime + hosts + the leg-14 closure) follows both. W064 (the Blender live-battery verification closure, docs-only) runs concurrently. The standing operator inputs remain: provider credentials (Vercel/Neon/R2/Upstash/Apify) for the ACR-006 live deployment verification; GPU rasterization is impossible in this sandbox.

@@ -25,8 +25,20 @@ import { z } from 'zod';
  * (byte-compatible); the fabric contract concepts (capability sets,
  * sessions, portable snapshots, switching, envelopes, failures, health,
  * asset bindings, conformance results) were added on top.
+ *
+ * W065 (ACR-010) bumped 1.1.0 -> 1.2.0 ADDITIVELY: the emitted schema
+ * surface is UNCHANGED (every dataType and schema file is byte-identical
+ * to the v1.1.0 emission); the addition is the fabric-level
+ * session-asset-binding operation surface, declared at
+ * contracts/renderers/fabric-operations.d.ts and implemented by
+ * @epoch/renderer-fabric (parity-pinned in contracts/renderers/parity.ts),
+ * composing the UNCHANGED optional adapter-seam `bindAsset`. Only this
+ * version pin moves — the mechanical consequence of the manifest bump
+ * (this constant is the emission source of the manifest's
+ * contractVersion); no runtime schema, validator, or admission behavior
+ * changed.
  */
-export const RENDERER_CONTRACT_VERSION = '1.1.0' as const;
+export const RENDERER_CONTRACT_VERSION = '1.2.0' as const;
 
 /** Protocol version carried by every serialized renderer document. */
 export const RENDERER_PROTOCOL_VERSION = '1.0.0' as const;

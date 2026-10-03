@@ -9,10 +9,13 @@
  * - THE ADAPTER SEAM (`RendererAdapter`): the typed interface W058
  *   (embedded interactive renderer), W059 (a second one), and W060
  *   (external/specialized foundations) implement behind the frozen
- *   contracts/renderers v1.1.0 contract. Engines receive ONLY typed
- *   inputs (the canonical W016 world scene projection, its compiled W011
- *   graphs, W013 admission receipts) and hold ONLY opaque provider-native
- *   state (never semantic state).
+ *   contracts/renderers v1.2.0 contract (the v1.1.0 surface unchanged —
+ *   the v1.2.0 addition is the fabric-level session-asset-binding
+ *   operation below, composing the UNCHANGED optional adapter-seam
+ *   `bindAsset`). Engines receive ONLY typed inputs (the canonical W016
+ *   world scene projection, its compiled W011 graphs, W013 admission
+ *   receipts) and hold ONLY opaque provider-native state (never semantic
+ *   state).
  * - CAPABILITY-REGISTRY INTEGRATION: renderer adapters register as
  *   `visualization`-category capability manifests honoring the
  *   `epoch.renderers` contract at the frozen version, through the REAL
@@ -35,6 +38,12 @@
  *   W016 world-interaction intent vocabulary (hit-test -> semantic entity
  *   id -> typed intent -> W016 admission -> W013 admission); adapters are
  *   never trusted (the Dynamic UI law is re-enforced at the boundary).
+ * - SESSION-ASSET BINDING (W065, contract v1.2.0): the fabric-level
+ *   `bindSessionAsset` operation composes the EXISTING adapter-seam
+ *   `bindAsset` (UNCHANGED) into a typed, digest-addressed,
+ *   tenant-scoped receipt — session resolution, tenant-scope verification,
+ *   adapter capability/asset-kind check, seam application; every failure
+ *   path is a typed refusal with no partial application.
  *
  * Runtime dependencies are exactly @epoch/agent-protocol (digest
  * machinery), @epoch/capability-registry (renderer capability
@@ -87,6 +96,23 @@ export {
   type SwitchOutcome,
   type SwitchMountInput,
 } from './fabric';
+
+// The W065 session-asset-binding operation surface (contract v1.2.0,
+// additive — declarations at contracts/renderers/fabric-operations.d.ts,
+// parity-pinned by contracts/renderers/parity.ts).
+export {
+  RENDERER_ASSET_BINDING_DECLINED_REASON,
+  RENDERER_ASSET_BINDING_OUTCOMES,
+  RENDERER_ASSET_BINDING_RECEIPT_SCHEMA_NAME,
+  RendererAssetBindingOutcomeSchema,
+  RendererAssetBindingReceiptContentSchema,
+  RendererAssetBindingReceiptSchema,
+  sealRendererAssetBindingReceipt,
+  type BindSessionAssetInput,
+  type RendererAssetBindingOutcome,
+  type RendererAssetBindingReceipt,
+  type RendererAssetBindingReceiptContent,
+} from './session-asset-binding';
 
 // The contract-only reference adapter (the seam template; zero engines).
 export {

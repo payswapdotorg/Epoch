@@ -4,7 +4,11 @@
   "workOrderVersion": "WO2.0",
   "defaultBranch": "main",
   "maxConcurrentWorkers": 3,
-  "active": [],
+  "active": [
+    "W064",
+    "W065",
+    "W066"
+  ],
   "completed": [
     "W001",
     "W002",
@@ -72,5 +76,5 @@
   ],
   "blocked": [],
   "lastMergeSha": "8f5eead1d952004e9ef751d765162cacb3358be4",
-  "lastAction": "ACR-008 W062 COMPLETE (defect closure executing on this branch, base main@8f5eead): the W016 marker-time P2 defect is CLOSED with the full discipline chain \u2014 the SceneTimelineSchema superRefine comparator in packages/world-experience/src/timeline.ts now compares atMs NUMERICALLY with the lexicographic markerId tie-break (the already-specified intent; strictly-ascending duplicate-free pairs unchanged; no schema/contract version bump, no second comparator, zero new dependencies); the pinned known-issue battery flipped into the closed-defect regression record (qa/world-experience/w016-marker-time-known-issue.test.ts: ascending mixed-width ADMITS with timelineEndMs 12000 and the in-track 8000ms position validating; the mirrored descending REFUSED with the typed admission error; the same-width control green \u2014 file path stable); the focused comparator regression added at the schema seam (packages/world-experience/test/timeline-ordering.test.ts, 5 tests); the defect-ledger entry closed in docs/journeys/interactive-world.md (fix -> rerun -> close with the exact evidence). Verification: world-experience typecheck+lint+268/268; world-runtime battery 70/70 (incl. the flipped record) + the qa harness cold typecheck; root governance+boundary PASS. ACR-008 closes at merge; frontier EMPTY; any further program again requires a new ACR. Standing operator inputs unchanged: provider credentials for the ACR-006 live deployment verification; a Blender binary for the env-gated live legs."
+  "lastAction": "ACR-010 ACTIVATED (TL governance, operator standing continuation directive 2026-10-03; frontier was EMPTY at the W063 merge 12b5f22): the in-page foundation asset path program \u2014 W065 (RendererAdapter contract v1.1.0->v1.2.0 additive: the fabric-level bindSessionAsset operation + the typed digest-addressed receipt; frozen-first, the ONLY contract-surface writer) and W066 (the bind interaction kind: closed-vocabulary extension + the binding-requested effect + the world-digest/no-durable-mutation invariance pins) ELIGIBLE concurrently (pairwise-disjoint); W067 (the runtime application + the web/desktop host affordances + the leg-14 battery closure + the records) READY_AFTER both. W064 (the Blender 4.2.11 live-battery verification closure, docs-only surfaces) dispatched 00:57Z and runs concurrently. No semantic-authority change, no lock transition: E1.0/X2.0 invariants remain binding; binding is presentation; the glTF bridge trust gate is consumed, not modified. Standing operator inputs unchanged: provider credentials for the ACR-006 live deployment verification (vault wiped in the 5th reset); GPU rasterization impossible in this sandbox."
 }

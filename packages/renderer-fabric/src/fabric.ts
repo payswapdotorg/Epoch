@@ -32,6 +32,7 @@ import { canonicalDigest, type JsonValue } from '@epoch/agent-protocol';
 import type { CapabilityRegistry } from '@epoch/capability-registry';
 import {
   DeviceSessionSnapshotSchema,
+  RendererAssetBindingSchema,
   RendererInputEnvelopeSchema,
   admitInvocation,
   bindRendererSession,
@@ -69,6 +70,13 @@ import {
   type WorldScene,
 } from '@epoch/world-experience';
 import { RendererAdapterRegistry } from './registry';
+import {
+  RENDERER_ASSET_BINDING_DECLINED_REASON,
+  RENDERER_ASSET_BINDING_RECEIPT_SCHEMA_NAME,
+  sealRendererAssetBindingReceipt,
+  type BindSessionAssetInput,
+  type RendererAssetBindingReceipt,
+} from './session-asset-binding';
 import type {
   RendererAdapter,
   RendererAdapterSession,
@@ -718,6 +726,156 @@ export class RendererFabric {
     return {
       ok: true,
       value: { ...content, digest: canonicalDigest(content as unknown as JsonValue) },
+    };
+  }
+
+  // -------------------------------------------------------------------------
+  // session-asset binding (W065, contract v1.2.0)
+  // -------------------------------------------------------------------------
+
+  /**
+   * Bind one SEALED, content-addressed, tenant-scoped asset binding onto a
+   * live session — the fabric-level orchestration of the EXISTING (and
+   * UNCHANGED) adapter-seam `bindAsset` (ACR-010):
+   *
+   * 1. session resolution (unknown/disposed sessions are typed refusals);
+   * 2. sealed-record validation + record/target consistency (the binding
+   *    addresses THIS session) + tenant-scope verification (R12);
+   * 3. adapter capability/asset-kind check — the presenting renderer must
+   *    DECLARE the binding's asset kind (the W008 permission pattern);
+   * 4. adapter-seam application through `bindAsset` (the trust gate —
+   *    untrusted assets never mount — is the SEAM's, unchanged);
+   * 5. the sealed, digest-addressed, tenant-scoped receipt (applied or
+   *    declined).
+   *
+   * Failure paths are typed refusals, never raw throws, with NO partial
+   * application: on any refusal the session record is untouched. A soft
+   * adapter decline (`bound: false`) is NOT a failure — it is the
+   * `declined` receipt outcome. The receipt is evidence, never authority:
+   * an asset binding is presentation (the digest-addressed bound-asset
+   * ledger it feeds is host-owned experience state), and no W013
+   * invocation is admitted (there is no hosting-surface invocation kind
+   * for asset binding — the operation is fabric-level by design).
+   */
+  async bindSessionAsset(
+    input: BindSessionAssetInput,
+  ): Promise<FabricResult<RendererAssetBindingReceipt>> {
+    const live = this.sessions.get(input.sessionId);
+    if (live === undefined) {
+      return unknownSession(input.sessionId);
+    }
+    const { record, adapter, adapterSession } = live;
+    if (record.state === 'disposed') {
+      return disposedSession(input.sessionId);
+    }
+
+    // The sealed binding is validated as a record (schema + consistency):
+    // anything malformed is a typed invalid-fabric-record refusal, never a
+    // raw throw, and nothing is applied.
+    const parsed = RendererAssetBindingSchema.safeParse(input.binding);
+    if (!parsed.success) {
+      return {
+        ok: false,
+        error: {
+          code: 'invalid-fabric-record',
+          message: 'the sealed asset binding failed schema validation',
+          issues: parsed.error.issues.map((issue) => ({
+            path:
+              issue.path.length === 0
+                ? 'binding'
+                : `binding.${issue.path.map(String).join('.')}`,
+            message: issue.message,
+          })),
+        },
+      };
+    }
+    const binding = parsed.data;
+
+    // Record/target consistency: the sealed binding addresses THIS session.
+    if (binding.fabricSessionId !== input.sessionId) {
+      return {
+        ok: false,
+        error: {
+          code: 'invalid-fabric-record',
+          message: `the sealed asset binding addresses fabric session "${binding.fabricSessionId}" but the operation targets "${input.sessionId}"`,
+          issues: [
+            {
+              path: 'binding.fabricSessionId',
+              message: `expected "${input.sessionId}"`,
+            },
+          ],
+        },
+      };
+    }
+
+    // Tenant-scope verification (R12): the binding's tenant must be the
+    // tenant the session presents.
+    const tenant = record.worldProjection.tenantScope.tenantId;
+    if (binding.tenantScope.tenantId !== tenant) {
+      return {
+        ok: false,
+        error: {
+          code: 'cross-tenant-denied',
+          message: `the asset binding belongs to tenant "${binding.tenantScope.tenantId}" but the session presents tenant "${tenant}"`,
+          expectedTenantId: tenant,
+          encounteredTenantId: binding.tenantScope.tenantId,
+        },
+      };
+    }
+
+    // Adapter capability/asset-kind check: the presenting renderer must
+    // DECLARE the binding's asset kind — anything not declared is denied.
+    if (!record.capabilities.assetKinds.includes(binding.assetKind)) {
+      return {
+        ok: false,
+        error: {
+          code: 'asset-rejected',
+          message: `renderer "${record.rendererId}" does not bind "${binding.assetKind}" assets`,
+          assetDigest: binding.assetDigest,
+          reason: 'undeclared asset kind',
+        },
+      };
+    }
+
+    // The optional seam: an adapter that does not implement bindAsset
+    // cannot serve the operation — typed, never a silent no-op.
+    if (adapter.bindAsset === undefined) {
+      return {
+        ok: false,
+        error: {
+          code: 'adapter-unavailable',
+          message: `renderer "${record.rendererId}" does not implement the optional bindAsset seam — session-asset binding is unavailable on this adapter`,
+          rendererId: record.rendererId,
+          reason: 'optional seam absent',
+        },
+      };
+    }
+
+    // Adapter-seam application (the v1.1.0 seam, UNCHANGED): an adapter
+    // refusal (ok: false — e.g. the trust gate refusing an untrusted
+    // binding) propagates VERBATIM; a soft decline (bound: false) is the
+    // `declined` receipt outcome, not a failure.
+    const bound = await adapter.bindAsset(adapterSession, binding);
+    if (!bound.ok) {
+      return bound;
+    }
+
+    return {
+      ok: true,
+      value: sealRendererAssetBindingReceipt({
+        schema: RENDERER_ASSET_BINDING_RECEIPT_SCHEMA_NAME,
+        fabricProtocolVersion: '1.0.0',
+        fabricSessionId: input.sessionId,
+        rendererId: record.rendererId,
+        tenantScope: binding.tenantScope,
+        bindingId: binding.bindingId,
+        bindingDigest: binding.digest,
+        assetDigest: binding.assetDigest,
+        assetKind: binding.assetKind,
+        outcome: bound.value.bound ? 'applied' : 'declined',
+        reason: bound.value.bound ? undefined : RENDERER_ASSET_BINDING_DECLINED_REASON,
+        atMs: input.atMs,
+      }),
     };
   }
 

@@ -1,6 +1,6 @@
 {
   "contract": "epoch/renderers",
-  "contractVersion": "1.1.0",
+  "contractVersion": "1.2.0",
   "protocolVersion": "1.0.0",
   "fabricProtocolVersion": "1.0.0",
   "description": "Typed, versioned, provider-neutral renderer contract (W013 hosting surface + W056 fabric): abstract renderer descriptors (kind, capabilities, budgets), device-session snapshots over the W011 device vocabulary, negotiated bindings, invocation envelopes, and content-addressed receipts (W013, unchanged); plus the fabric concepts (W056, additive): renderer capability sets, ephemeral sessions, portable view-state snapshots, switch requests/receipts, frame/input envelopes, intent receipts, typed failures, health, asset bindings, and conformance results. TypeScript declarations in index.d.ts; JSON Schema projection under schemas/.",

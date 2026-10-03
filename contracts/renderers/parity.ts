@@ -12,6 +12,12 @@
  */
 import type * as contracts from './index';
 import type * as impl from '@epoch/renderer-runtime';
+// W065 (contract v1.2.0, additive): the fabric-level operation surface is
+// implemented by @epoch/renderer-fabric, so its parity home imports the
+// fabric's public API (type-only; the assertions live in the W065 section
+// at the end of this file).
+import type * as fabric from '../../packages/renderer-fabric/src/index';
+import type * as operations from './fabric-operations';
 
 /** Strictest type identity: distinguishes optionality, readonly, unions. */
 type Equals<A, B> =
@@ -306,4 +312,36 @@ export type RendererConformanceResultContentParity = Expect<
 >;
 export type RendererConformanceResultParity = Expect<
   Equals<contracts.RendererConformanceResult, impl.RendererConformanceResult>
+>;
+
+// ---------------------------------------------------------------------------
+// W065 — the fabric-level session-asset-binding operation (contract v1.2.0,
+// additive). The operation surface is implemented by @epoch/renderer-fabric
+// (the orchestration layer), NOT by @epoch/renderer-runtime: the receipt is
+// a fabric-level orchestration document composed over the UNCHANGED
+// adapter-seam bindAsset, so it is deliberately not part of the runtime's
+// emitted schema surface. The assertions below pin the v1.2.0 declarations
+// (./fabric-operations) against the fabric's public API exactly as the
+// sections above pin the v1.1.0 declarations against the runtime — the
+// same compile-time identity discipline, one layer up.
+// ---------------------------------------------------------------------------
+
+/** The fabric's bindSessionAsset input IS the declared operation input. */
+export type BindSessionAssetInputParity = Expect<
+  Equals<operations.BindSessionAssetInput, fabric.BindSessionAssetInput>
+>;
+
+/** The fabric's applied/declined outcome IS the declared outcome. */
+export type RendererAssetBindingOutcomeParity = Expect<
+  Equals<operations.RendererAssetBindingOutcome, fabric.RendererAssetBindingOutcome>
+>;
+
+/** The fabric's receipt content IS the declared receipt content. */
+export type RendererAssetBindingReceiptContentParity = Expect<
+  Equals<operations.RendererAssetBindingReceiptContent, fabric.RendererAssetBindingReceiptContent>
+>;
+
+/** The fabric's sealed receipt IS the declared sealed receipt. */
+export type RendererAssetBindingReceiptParity = Expect<
+  Equals<operations.RendererAssetBindingReceipt, fabric.RendererAssetBindingReceipt>
 >;
