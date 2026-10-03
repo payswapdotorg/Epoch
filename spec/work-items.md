@@ -206,3 +206,22 @@ W063 is the single serialized work order. No concurrent wave.
 ## ACR-009 completion invariant
 
 Every desktop platform carries its most complete honestly-verifiable artifact in `release/clients/release-manifest.json` (file, bytes, sha256, producedBy; `deviations` declared); the committed tree carries NO build-local adaptations; every defect closed with the public discipline chain (D-1..D-4 in the defect ledger); the canonical recipes exist as a dispatch workflow that is not the release gate. The detailed acceptance contract lives in `spec/architecture-change-requests/ACR-009-desktop-installable-artifacts.md`.
+
+
+# ACR-010 In-Page Foundation Asset Path Work Orders
+
+ACR-010 is APPROVED (2026-10-03, operator standing continuation directive; the frontier was EMPTY at the W063 merge) and is the active program after ACR-009/W063. It delivers the ledgered leg-14 disposition (the W060 advisory): the fabric-level asset-binding orchestration (RendererAdapter contract v1.1.0 -> v1.2.0, additive), the `bind` interaction kind, and the in-page external foundation path with the leg-14 battery closure. No semantic-authority change, no lock transition; E1.0/X2.0 invariants remain binding.
+
+| ID | Scope | Depends | Owned surfaces |
+|---|---|---|---|
+| W065 | Fabric Asset-Binding Contract v1.2.0 (frozen-first contract bump + the fabric-level `bindSessionAsset` operation + the typed receipt) | — (ACR-010 activation) | contracts/renderers/*, packages/renderer-fabric/* |
+| W066 | The `bind` interaction kind (closed-vocabulary extension + the typed admission path + the `binding-requested` effect + the invariance pins) | — (ACR-010 activation) | packages/world-experience/* |
+| W067 | In-Page Foundation Path Closure (runtime application + the web/desktop host affordances + the leg-14 battery + the closure records) | W065, W066 | packages/world-runtime/*, apps/web/src/features/world/*, apps/web/e2e/*, apps/desktop/* (world section), docs/journeys/interactive-world.md, docs/rendering/closure.md |
+
+## ACR-010 concurrency
+
+W065 + W066 are ELIGIBLE concurrently (pairwise-disjoint surfaces: contracts/renderers + packages/renderer-fabric vs packages/world-experience). W064 (the Blender live-battery verification closure, docs-only surfaces) may run concurrently with both. W067 is serialized after W065 + W066 (it composes their seams). Maximum three concurrent workers respected.
+
+## ACR-010 completion invariant
+
+The leg-14 verdict flips from the honest NOT-RUNNABLE skip to PASS with exact evidence: the in-page path (import -> validate/seal -> typed `bind` -> fabric-level binding -> receipt + digest-addressed ledger) runs on web + desktop through the REAL seam; the presented semantic entity ids and the canonical world digest are UNCHANGED by the binding (pinned); untrusted bytes remain typed refusals; the Blender-live variant and GPU stay honestly recorded as env-gated/impossible. The detailed acceptance contract lives in `spec/architecture-change-requests/ACR-010-in-page-foundation-asset-path.md` and the W065-W067 Work Order files.
