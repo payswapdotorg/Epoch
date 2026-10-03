@@ -1,7 +1,11 @@
 {
-  "program": "ACR-009 / release identity",
-  "eligible": [],
+  "program": "ACR-010 / in-page foundation asset path",
+  "eligible": [
+    "W065",
+    "W066"
+  ],
   "inFlight": [],
   "blocked": [],
-  "maxConcurrentWorkers": 3
+  "maxConcurrentWorkers": 3,
+  "notes": "W067 READY_AFTER W065+W066. W064 (Blender live-battery verification closure, docs-only) runs concurrently \u2014 its surfaces are disjoint from the wave. Activation 2026-10-03 under the operator standing continuation directive; the frontier was EMPTY at the W063 merge (12b5f22)."
 }

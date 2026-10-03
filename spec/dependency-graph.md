@@ -164,3 +164,24 @@ W063 owns the desktop src-tauri host (the D-1 fix + the Cargo.lock pin), the new
 ## Release-honesty invariant
 
 The statuses are the contract: `built-in-sandbox` / `built-in-sandbox-cross` / `ci-recipe-delivered` only, each with evidence and declared deviations; never a fabricated launch, a fabricated signature, or a fabricated DMG. The standard ci.yml battery remains the sole release gate.
+
+
+# ACR-010 In-Page Foundation Asset Path Graph
+
+ACR-009/W063 -> (W065 + W066, concurrent) -> W067
+
+W064 (the Blender live-battery verification closure, docs-only) runs concurrently with the wave.
+
+## Safe concurrency
+
+- W065 + W066: pairwise-disjoint (contracts/renderers + packages/renderer-fabric vs packages/world-experience).
+- W064 + W065 + W066: W064's surfaces are docs-only and disjoint from both.
+- W067: serialized after W065 + W066 (composes the frozen contract seam + the vocabulary seam).
+
+## Surface discipline
+
+W065 is the ONLY order that writes the renderer contract surface (frozen-first; no parallel contract writes). W066 owns the closed vocabulary extension. W067 owns the runtime application + host composition + battery + closure records; it writes NO adapter packages (the adapter seam is already implemented and proven) and NO governance state (the Tech Lead advances it at merge). The glTF bridge (adapters/foundations/gltf) is UNTOUCHED by all three (its trust gate is consumed, not modified).
+
+## Binding-invariance discipline
+
+Binding is presentation: the sealed, content-addressed, tenant-scoped binding reference flows intent -> admission -> runtime -> fabric -> adapter seam; the canonical world digest and the presented semantic entity ids are UNCHANGED; durable semantic state is never mutated (the qa/foundation-renderers negative battery stays green untouched); untrusted bytes remain typed refusals everywhere.
