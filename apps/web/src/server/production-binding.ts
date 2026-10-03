@@ -48,6 +48,14 @@ import {
   type RedactedEnvironment,
 } from './production-env';
 
+// The static driver anchor (ACR-006 post-credential deployment fix): with the
+// deployment platform keeping pg external, this makes the file tracer carry
+// the driver's full require tree into the serverless function — the frozen
+// seam's dynamic expression import is invisible to the tracer (found live at
+// the first production boot). Pools are still created ONLY by
+// connectPostgresPool at the service-layer seam.
+import { PG_DRIVER_POOL_CTOR } from '@epoch/application-gateway';
+
 /** The bound infrastructure of one deployment (values server-side only). */
 export interface ProductionBindings {
   readonly environment: ProductionEnvironment;
@@ -207,6 +215,12 @@ async function buildBindings(environment: ProductionEnvironment): Promise<Produc
  * so dev-server reloads and serverless invocations reuse the pool and
  * stores). Boot-blocking configuration throws here (fail-closed).
  */
+// The anchor liveness guard: keeps the static require in the traced module
+// graph (never a construction — the seam owns all pool creation).
+if (typeof PG_DRIVER_POOL_CTOR !== 'function') {
+  throw new Error('pg driver anchor missing: the driver Pool constructor did not resolve');
+}
+
 export async function getProductionBindings(): Promise<ProductionBindings> {
   const cached = globalThis.__epoch_web_production_bindings__;
   if (cached !== undefined) return cached;

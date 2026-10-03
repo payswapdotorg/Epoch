@@ -63,6 +63,7 @@ export {
   bindPgliteEngine,
   connectPostgresPool,
 } from './postgres-binding';
+export { PG_DRIVER_POOL_CTOR } from './pg-driver-anchor';
 export type {
   ConnectPostgresPoolOptions,
   ConnectedPostgresPool,
