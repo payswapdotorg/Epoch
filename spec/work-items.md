@@ -214,6 +214,7 @@ ACR-010 is APPROVED (2026-10-03, operator standing continuation directive; the f
 
 | ID | Scope | Depends | Owned surfaces |
 |---|---|---|---|
+| W064 | Blender Live-Battery Verification Closure (the standing operator action: official 4.2.11 binary + the env-gated live battery + honest records; docs-only) | — (main 12b5f22) | docs/rendering/blender.md, docs/journeys/interactive-world.md, AI_CONTINUATION.md, spec/PROJECT-STATE.md |
 | W065 | Fabric Asset-Binding Contract v1.2.0 (frozen-first contract bump + the fabric-level `bindSessionAsset` operation + the typed receipt) | — (ACR-010 activation) | contracts/renderers/*, packages/renderer-fabric/* |
 | W066 | The `bind` interaction kind (closed-vocabulary extension + the typed admission path + the `binding-requested` effect + the invariance pins) | — (ACR-010 activation) | packages/world-experience/* |
 | W067 | In-Page Foundation Path Closure (runtime application + the web/desktop host affordances + the leg-14 battery + the closure records) | W065, W066 | packages/world-runtime/*, apps/web/src/features/world/*, apps/web/e2e/*, apps/desktop/* (world section), docs/journeys/interactive-world.md, docs/rendering/closure.md |

@@ -1,5 +1,7 @@
 # Work Order W066 — The Bind Interaction Kind (ACR-010)
 
+Worker Count: 1
+
 One Work Order = one branch = one PR. Workers never merge.
 
 ## Scope

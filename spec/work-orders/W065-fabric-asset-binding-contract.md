@@ -1,5 +1,7 @@
 # Work Order W065 — Fabric Asset-Binding Contract v1.2.0 (ACR-010)
 
+Worker Count: 1
+
 One Work Order = one branch = one PR. Workers never merge.
 
 ## Scope
