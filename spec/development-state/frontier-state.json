@@ -1,12 +1,10 @@
 {
-  "program": "ACR-010 / in-page foundation asset path + ACR-011 / sidecar defect closure",
+  "program": "ACR-010 / in-page foundation asset path (final order)",
   "eligible": [
-    "W068"
+    "W067"
   ],
-  "inFlight": [
-    "W066"
-  ],
+  "inFlight": [],
   "blocked": [],
   "maxConcurrentWorkers": 3,
-  "notes": "W064 + W065 MERGED. W066 (the bind kind) in flight. W067 (the in-page closure) READY_AFTER W066. W068 (the ACR-011 sidecar arity defect closure) ELIGIBLE \u2014 concurrent with W066/W067 on disjoint surfaces; respect the three-worker cap."
+  "notes": "W064/W065/W066/W068 ALL MERGED. ACR-011 CLOSED (W068 1/1). W067 (the in-page closure) ELIGIBLE \u2014 the single remaining ACR-010 order (deps W065+W066 merged). After W067: ACR-010 closes; the frontier returns to the standing operator-gated items (credentials; GPU impossible)."
 }
