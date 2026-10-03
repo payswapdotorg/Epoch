@@ -1,10 +1,8 @@
 {
-  "program": "ACR-010 / in-page foundation asset path (final order)",
-  "eligible": [
-    "W067"
-  ],
+  "program": "none (ACR-010 + ACR-011 both CLOSED; standing operator-gated items only)",
+  "eligible": [],
   "inFlight": [],
   "blocked": [],
   "maxConcurrentWorkers": 3,
-  "notes": "W064/W065/W066/W068 ALL MERGED. ACR-011 CLOSED (W068 1/1). W067 (the in-page closure) ELIGIBLE \u2014 the single remaining ACR-010 order (deps W065+W066 merged). After W067: ACR-010 closes; the frontier returns to the standing operator-gated items (credentials; GPU impossible)."
+  "notes": "EMPTY at the W067 merge + the foundation reconcile (fffd897). W001-W068 COMPLETE (68/68). Post-program work requires a NEW ACR per spec/architecture-lock.md. Standing operator-gated items (honest, never fabricated): provider credentials (Vercel/Neon/R2/Apify) for the ACR-006 post-credential deployment verification; GPU rasterization impossible in this sandbox."
 }
