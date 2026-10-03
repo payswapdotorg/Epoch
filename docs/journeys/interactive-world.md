@@ -7,7 +7,12 @@ REAL browser E2E battery over real software GL.
 Product version: ACR-007 / X2.0 closed (W061 — multi-renderer interactive
 world closure); the W016 marker-time P2 defect-ledger entry below is
 CLOSED at W062 (ACR-008 — the defect-closure program; this file is the
-ledger of record).
+ledger of record). **Leg 14 of this battery — the external foundation
+path in-page — was the honest NOT-RUNNABLE skip of the W061 record until
+ACR-010/W067 delivered the fabric-level session-asset operation (W065),
+the `bind` interaction kind (W066), and the in-page composition (W067);
+the verdict is flipped to PASS below and the NOT-VERIFIED-live ledger is
+updated accordingly.**
 Source commit: this branch (`work/W061-multi-renderer-closure`), the
 save-point chain `a9e743f` (web /world host + desktop real-renderer
 registration) → `21b7d49` (qa/rendering engine-pair + degradation ladder) →
@@ -59,15 +64,20 @@ required to work the problem; no vendor UI is required for any leg.
 | 11 | branch/simulate | PASS | leg 11 — the scene controls issue the typed `branch`/`simulate` intents; their request effects await their authorities; the scene is NOT mutated |
 | 12 | switch Three.js → Babylon.js without leaving Epoch | PASS | leg 12 — the direct switch with world digest + tenant continuity (asserted), the Babylon GL surface live at its first session, the switch receipt surfaced, and a semantic pick through the REAL Babylon `scene.pick` on the switched session |
 | 13 | switch back | PASS | leg 13 — the reverse switch with the same invariants; a semantic pick through the real Three.js Raycaster after the round trip |
-| 14 | exercise the external foundation path without separate vendor UI | NOT-RUNNABLE (honest) | the recorded skip test in `j13-world.spec.ts` carries the exact reasons: (1) `bindAsset` is adapter-seam-scoped in the frozen RendererAdapter contract v1.1.0 (the W060 advisory: a fabric-level asset-binding orchestration would be a CONTRACT CHANGE), so the `/world` host composition exposes no in-page path to the glTF bridge; (2) the Blender real-binary battery is env-gated and NO Blender binary exists in this sandbox. The path IS proven at its real surface: `qa/foundation-renderers` (glTF → validate → binding → `bindAsset` on a REAL Three.js adapter session + the Blender-double subprocess round-trip — 84/84 + the 15-test battery). Closing commands: `EPOCH_BLENDER_LIVE=1 EPOCH_BLENDER_PATH=<blender> corepack pnpm --filter @epoch/adapter-renderer-blender test` and `corepack pnpm --filter @epoch/adapter-foundation-gltf test` |
+| 14 | exercise the external foundation path without separate vendor UI | PASS (REAL since W067/ACR-010) | `j13-world.spec.ts` leg 14 — the IN-PAGE path through the page's OWN Epoch-owned import affordance (no vendor UI): a canonical glTF GLB upload (the file input; bytes byte-identical to the bridge battery's fixture — pinned digest `9cfd1b40…`) → the in-page interchange bridge (validate → normalize → content-address → seal — the W060 trust gate running IN THE BROWSER through the runtime's default bridge) → the typed `bind` intent (W066) → the `binding-requested` effect → `RendererFabric.bindSessionAsset` (W065) on the LIVE Three.js session. Asserted: the digest-addressed registry entry; the ledger entry keyed by the asset digest with the sealed binding digest + receipt digest (both 64-hex); the typed receipt in the journal; the `binding-requested` effect; the presented semantic entity ids UNCHANGED (`data-entity-ids` before/after); the canonical world digest UNCHANGED; the world still fully interactive (a real pick resolves through the live Raycaster); the malformed-bytes upload refused typed at the gate (journal-recorded, nothing registered). Shot `leg14-foundation-bind.png`. The Blender-live variant (sidecar export over the official Blender 4.2.11 → UNTRUSTED re-entry → validated binding → in-page bind, with the digest continuity across the process seam) RAN-LIVE GREEN at W067 — honestly env-gated (`EPOCH_BLENDER_LIVE=1` + `EPOCH_BLENDER_PATH`), never claimed as CI. Shot `leg14-blender-live.png` |
 | 15 | verify world digest/entity continuity | PASS | asserted inside legs 12/13 (the digest before each switch equals the digest after; entity picks resolve through each engine's own hit-test surface) and pinned deterministically by `qa/rendering/engine-pair.test.ts` (digest/tenant/portable-state continuity across the direct cross-engine switch) |
-| 16 | force renderer degradation/failure and verify declared fallback | PASS | `apps/web/e2e/j13-world-degradation.spec.ts` (the `chromium-no-gl` project — WebGL disabled at launch, the forced condition asserted REAL: no WebGL context exists): both engine probes honestly report `false`, the session stays healthy on the real adapters' declared headless cores, the declared fallback surface is the contract-only reference projection (`data-spatial-overlay=reference`) drawing every visible entity, and the degraded world stays fully interactive (a real pick resolves through the headless hit-test core). The fabric-level forced ladder (declared degradations, undeclared typed refusals, ordered fallback, abort-with-retention) is pinned deterministically by `qa/rendering/degradation-fallback.test.ts`. Shot `leg16-degraded-reference.png` |
+| 16 | force renderer degradation/failure and verify declared fallback | PASS | `apps/web/e2e/j13-world-degradation.spec.ts` (the `chromium-no-gl` project — WebGL disabled at launch, the forced condition asserted REAL: no WebGL context exists): both engine probes honestly report `false`, the session stays healthy on the real adapters' declared headless cores, the declared fallback surface is the contract-only reference projection (`data-spatial-overlay=reference`) drawing every visible entity, and the degraded world stays fully interactive (a real pick resolves through the headless hit-test core). The fabric-level forced ladder (declared degradations, undeclared typed refusals, ordered fallback, abort-with-retention) is pinned deterministically by `qa/rendering/degradation-fallback.test.ts`. Shot `leg16-degraded-reference.png`. **W067 extends the degradation battery with the in-page foundation path on the no-GL/reference fallback** (the second test of the spec): the degraded world still imports + binds in page — the binding APPLIES through the active presenter's HEADLESS core (three.js; receipt + digest-addressed ledger asserted) and re-applies through the declared reference fallback presenter's OWN bindAsset seam (`rr-web-reference`, declared asset-bindable at W067, mirroring the desktop full reference) — the world digest + entity ids UNCHANGED throughout, the reference presenter healthy. Shots `leg16-degraded-foundation-bind.png` + `leg16-degraded-reference-bind.png` |
 | 17 | approve an actual action through the Action Gateway | PASS | `j13-world.spec.ts` test 2 — the real decision surface: seal → constraint evaluate → chain validate → baseline approve → submit (`awaiting-approval`) → APPROVE → execute, all through the REAL Action Gateway (Epoch's only execution path). Shot `leg17-18-action-gateway.png` |
 | 18 | verify resulting state/evidence in Epoch | PASS | same test — the executed action's terminal status re-resolves from the authoritative action stream on the Developers surface (`executed` in the action-status table) |
 
-E2E result (recorded): **3 passed / 2 honest skips** (the leg-14 skip and
-the degradation-leg project scoping), 23.9s total at the c90badb save
-point; the battery starts its own production server on the free port 3210.
+E2E result (recorded): **6 passed / 2 honest skips** (the two project-scoping
+skips: the degradation spec's legs belong to the `chromium-no-gl` project,
+the main-battery legs to `chromium`), 25.8s total at the W067 head — the
+battery starts its own production server on the free port 3210. With the
+live env vars set (`EPOCH_BLENDER_LIVE=1` + `EPOCH_BLENDER_PATH` pointing
+at the official Blender 4.2.11 at a NON-REPO path), the env-gated
+Blender-live variant of leg 14 runs as the 6th passing test — recorded as
+live operator-supplied-binary evidence, never as CI.
 
 ## Defect ledger (the discipline chain: observe → record → reproduce → regression-test → fix → rerun → close)
 
@@ -101,8 +111,16 @@ point; the battery starts its own production server on the free port 3210.
   `corepack pnpm --filter @epoch/world-runtime test`.
 - **Host batteries:** `apps/web/src/features/world/host/world-engines.test.ts`
   (4 — the real-engine headless battery) + `world-host.test.tsx` (3) + the
-  W057 feature/route batteries; `apps/desktop/test/world-host.test.ts`
-  (3 — re-pinned to the REAL adapters) inside the 192-test desktop suite.
+  workspace feature battery (12, incl. the W067 foundation-panel tests) +
+  the W057 feature/route batteries; `apps/desktop/test/world-host.test.ts`
+  (6 — the W061 wiring tests + the W067 in-page foundation-path extension)
+  inside the 195-test desktop suite.
+- **The in-page foundation path (W067):** the world-runtime session-asset
+  battery `packages/world-runtime/test/session-assets.test.ts` (12 — the
+  canonical applied path, determinism, the typed refusals at the gate and
+  the seam, the soft decline, session-rotation continuity) inside the
+  82-test world-runtime battery (`corepack pnpm --filter @epoch/world-runtime
+  test`).
 - **Scoped frozen baselines (regression):** renderer-fabric pipeline 36/36
   (the 27-test W056 baseline + the 9-test W061 qa/rendering battery riding
   it), renderer-runtime 227/227, threejs adapter 58/58, babylonjs adapter
@@ -112,8 +130,13 @@ point; the battery starts its own production server on the free port 3210.
 
 **Test-proven (deterministic + real browser):** the complete 18-leg loop
 above — through the REAL fabric seam, the REAL W016 admission/reducer, the
-REAL web/desktop presenters, and (legs 1-13, 15-18) a REAL Chromium over
-REAL software GL with both real engines live.
+REAL web/desktop presenters, and (legs 1-18, leg 14 REAL since W067) a REAL
+Chromium over REAL software GL with both real engines live. The in-page
+foundation path is additionally pinned deterministically by the world-runtime
+session-asset battery (12 tests: the applied/declined/refused paths, the
+no-mutation + digest invariance pins, session-rotation continuity, the
+reference-seam refusal) and mirrored in the desktop world-host battery (3
+new tests over the REAL Three.js headless presenter + the reference seam).
 
 **NOT-VERIFIED-live (recorded honestly, never fabricated):**
 - the Blender REAL binary — **RAN-live at W064 (2026-10-03), FAILED-live
@@ -128,13 +151,18 @@ REAL software GL with both real engines live.
   digest-addressed GLB) — after closing BOTH defects (the ledgered arity
   crash AND the second, masked report-shape defect the re-run unmasked;
   both rows below CLOSED with the full fix → rerun → close chains).
+  **W067 adds the LIVE IN-PAGE closure**: the leg-14 Blender-live variant
+  (sidecar export → UNTRUSTED re-entry → validated binding → in-page
+  bind, over the same byte-identical official 4.2.11 binary — tarball
+  sha256 `7f084fd5…`, re-verified at the W067 run) RAN-LIVE GREEN in the
+  browser battery with the digest continuity across the process seam
+  asserted (the boundary-verified export digest === the page-bound asset
+  digest). The live legs remain env-gated evidence (operator-supplied
+  binary at an ephemeral non-repo path; never claimed as CI);
   CI-verified evidence remains the committed Node CLI double (a real
   subprocess boundary, doubled engine — 48 passed + 3 env-gated skips
   after the W068 sidecar-Python execution guard, no regression; the
   live run is NEVER claimed as CI evidence);
-- any leg-14 in-page path — blocked on the frozen contract's
-  adapter-seam-scoped `bindAsset` (a fabric-level orchestration would be a
-  contract change for a future ACR, per the W060 advisory);
 - GPU rasterization — SwiftShader ANGLE is REAL browser GL but
   software-rasterized; no GPU exists in this sandbox and no run here is
   presented as one.
@@ -143,10 +171,16 @@ REAL software GL with both real engines live.
 
 ```
 # the deterministic batteries
-corepack pnpm --filter @epoch/world-runtime test        # 70/70 (51 runtime + 19 qa/world-experience)
+corepack pnpm --filter @epoch/world-runtime test        # 82/82 (51 runtime + 19 qa/world-experience + 12 W067 session-asset)
 corepack pnpm --filter @epoch/renderer-fabric test      # 36/36 (incl. the 9-test qa/rendering battery)
+corepack pnpm --filter @epoch/desktop test              # 195/195 (incl. the 3-test W067 world-host extension)
 # the browser closure battery (production build on the free port 3210)
 cd apps/web && npx playwright test --config playwright.world.config.ts
+# the env-gated Blender-live variant (operator-supplied official binary at a
+# non-repo path; the run book links the sidecar adapter into apps/web's
+# node_modules for the live run)
+cd apps/web && EPOCH_BLENDER_LIVE=1 EPOCH_BLENDER_PATH=/path/to/blender-4.2.11-linux-x64/blender \
+  npx playwright test --config playwright.world.config.ts -g "Blender-live"
 ```
 
 Result: all listed batteries green on this branch (see the PR body for the

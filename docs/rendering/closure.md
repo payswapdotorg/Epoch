@@ -76,16 +76,33 @@ NOT-VERIFIED-live and is recorded as such — never fabricated.
   their headless cores, the session stays healthy, the declared fallback
   (the contract-only reference projection) presents the world, and the
   degraded world stays fully interactive.
-- **Leg 14** — honestly NOT-RUNNABLE (the recorded skip): `bindAsset` is
-  adapter-seam-scoped in the frozen RendererAdapter contract v1.1.0 (a
-  fabric-level asset-binding orchestration would be a contract change —
-  the W060 advisory), and no Blender binary exists in this sandbox. The
-  external foundation path is proven at its real surface by
-  `qa/foundation-renderers` (84/84 + the 15-test battery: glTF → validate
-  → binding → `bindAsset` on a REAL Three.js adapter session + the
-  Blender-double subprocess round-trip) and the adapter suites.
+- **Leg 14** — **REAL since W067 (ACR-010) — the verdict flip of this
+  record**: the in-page foundation path through the page's OWN Epoch-owned
+  import affordance (a plain file input; NO vendor UI): glTF/GLB upload →
+  the in-page interchange bridge (validate → normalize → content-address →
+  seal — the W060 trust gate running IN THE BROWSER) → the typed `bind`
+  intent (W066) → the `binding-requested` effect →
+  `RendererFabric.bindSessionAsset` (W065, contract v1.2.0) on the LIVE
+  session. Asserted in the battery: the digest-addressed registry entry;
+  the bound-asset ledger keyed by the asset digest (the sealed binding
+  digest + the receipt digest); the typed receipt in the journal; the
+  presented semantic entity ids UNCHANGED; the canonical world digest
+  UNCHANGED; the malformed upload refused typed at the gate. The
+  **Blender-live variant** (sidecar export over the official Blender
+  4.2.11 → UNTRUSTED re-entry → validated binding → in-page bind, with the
+  digest continuity across the process seam asserted) RAN-LIVE GREEN at
+  W067 — honestly env-gated (`EPOCH_BLENDER_LIVE=1` + `EPOCH_BLENDER_PATH`),
+  never claimed as CI. The degradation-path leg (the same spec's
+  `chromium-no-gl` project) proves the path stays live on the no-GL
+  fallback: the binding applies through the headless presenter AND through
+  the reference fallback presenter's own bindAsset seam. The W061-era
+  NOT-RUNNABLE record (the adapter-seam-scoped `bindAsset` + the missing
+  Blender binary) is superseded by this flip.
 
 Result at the c90badb save point: **3 passed / 2 honest skips, 23.9s**.
+Result at the W067 head (ACR-010 closure): **6 passed / 2 project-scoping
+skips, 25.8s** — leg 14 REAL, the Blender-live variant green in the live
+run (env-gated), the degradation foundation leg green in `chromium-no-gl`.
 
 The deterministic engine batteries behind it: `qa/rendering`
 (`engine-pair.test.ts` — the direct Three⇄Babylon cross-switch over the
@@ -112,3 +129,77 @@ browser), and the World Model remains the only semantic authority
 (pinned by the invariant batteries of every wave). Post-program renderer
 work (a fabric-level asset-binding orchestration, the W016
 numeric-comparator fix, additional foundations) requires a new ACR.
+
+## ACR-010 — the In-Page Foundation Asset Path: the program closure record (W067)
+
+**CLOSED at W067 (2026-10-03).** The three additive surfaces of the ACR all
+landed, no break anywhere:
+
+1. **W065 (PR #147, cc3b044)** — the RendererAdapter contract v1.1.0 →
+   **v1.2.0** (additive): the fabric-level
+   `bindSessionAsset(input: { sessionId, binding, atMs }) →
+   FabricResult<RendererAssetBindingReceipt>` orchestration composing the
+   UNCHANGED adapter-seam `bindAsset` (session resolution → tenant-scope
+   verification → capability/asset-kind check → seam application → the
+   digest-addressed, tenant-scoped applied/declined receipt; every failure
+   a typed refusal with no partial application). protocolVersion and
+   fabricProtocolVersion UNCHANGED.
+2. **W066 (PR #149, c6216cb)** — the `bind` interaction kind joins the
+   closed world-interaction vocabulary (`WORLD_INTERACTION_KINDS`;
+   `WORLD_INTENT_TYPE_VERSION` 1.0.0 → 1.1.0, additive): the intent payload
+   carries a VALIDATED binding REFERENCE (the sealed binding's content
+   address + tenant scope — never untrusted raw bytes); the reducer emits
+   the effect-only `binding-requested` record; world-digest invariance and
+   the no-durable-mutation discipline pinned by the negative battery.
+3. **W067 (this record)** — the in-page composition: the world runtime
+   applies the `binding-requested` effect through the W065 operation
+   (`importFoundationAsset` — the interchange bridge's trust gate with the
+   digest-addressed registry; `bindFoundationAsset` — the session-addressed
+   sealed binding through the bridge's trust-gated factory, the typed bind
+   intent, the effect, the fabric operation, the receipt + the
+   digest-addressed bound-asset ledger); the web `/world` host and the
+   desktop world section expose the Epoch-owned import affordance (a plain
+   file input — NO vendor UI) presenting the receipt + the ledger; leg 14
+   of the j13-world battery is REAL (the glTF-bridge path, the env-gated
+   Blender-live variant RAN-LIVE GREEN, and the degradation-path leg on
+   the no-GL/reference fallback).
+
+**Composition note (disclosed):** the web host's manifest is frozen to the
+W067 surface set, so the registered glTF interchange bridge is reachable
+for the in-page path through the ONE new workspace-package edge
+(`@epoch/world-runtime` → `@epoch/adapter-foundation-gltf`, `workspace:*`,
+zero external dependencies — exactly the ACR's "W065/W066/W067 use only
+registered workspace packages" sanction; no root manifest/lockfile change,
+no external dependency). The runtime's public seam stays neutral
+(`FoundationAssetBridge` — an injectable validate/seal interface); the
+concrete bridge is confined to one composition module
+(`src/foundation-bridge.ts`). The web fixture's reference fallback
+presenter is declared asset-bindable (`assetKinds: ['mesh']`) at W067,
+matching the desktop full reference and the qa harness fixture, so the
+declared fallback surface keeps the in-page path live without GL.
+
+**Invariants held (nothing weakened):** only sealed, content-addressed,
+tenant-scoped bindings are bindable — the trust gate stays in the bridge
+(`admitGltfAsset`/`gltfRendererAssetBinding`, unchanged; the
+qa/foundation-renderers negative battery green untouched); untrusted bytes
+remain typed refusals at every seam; binding is presentation — the World
+Model, Action Gateway, Constraint Engine, and Verification planes are
+untouched, the canonical world digest and the presented semantic entity
+ids are UNCHANGED by any binding (pinned deterministically and in the
+browser); the bound-asset ledger is digest-addressed in-memory experience
+state, never a second semantic store.
+
+**Evidence set (W067):** the world-runtime battery 82/82 (12 new session-
+asset tests), the desktop suite 195/195 (3 new world-host tests), the web
+feature batteries green (12 workspace tests incl. the foundation panel),
+the j13-world battery 6 passed / 2 project-scoping skips with the
+Blender-live variant green in the live run over the official Blender
+4.2.11 (byte-identical tarball to the W068 record, sha256 `7f084fd5…`,
+re-verified), and the journey record
+([../journeys/interactive-world.md](../journeys/interactive-world.md))
+carrying the flipped leg-14 verdict + the updated NOT-VERIFIED-live ledger.
+
+**Honest boundaries (unchanged):** the Blender-live legs remain env-gated
+live evidence (operator-supplied binary at an ephemeral non-repo path;
+never claimed as CI); GPU rasterization remains impossible in this sandbox
+and no run here is claimed as one.
