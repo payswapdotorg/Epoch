@@ -8,7 +8,8 @@
     "layer": "service"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./pg-driver-anchor": "./src/pg-driver-anchor.ts"
   },
   "scripts": {
     "test": "vitest run",

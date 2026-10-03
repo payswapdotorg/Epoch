@@ -16,18 +16,17 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // The driver stays EXTERNAL (never bundled): the static anchor import
+  // (services/application-gateway pg-driver-anchor -> apps/web
+  // production-binding) then emits a real static driver require in the
+  // server bundle, which the file tracer FOLLOWS — carrying the driver's
+  // full transitive module tree (pg-types and friends) into the lambda. The
+  // explicit include below is the belt-and-suspenders for the driver itself
+  // (the frozen seam's dynamic expression import remains invisible to the
+  // tracer).
+  serverExternalPackages: ['pg'],
   outputFileTracingIncludes: {
-    '/api/**': [
-      // The driver itself (symlink path) + its FULL pnpm-store dependency
-      // closure: in the pnpm isolated layout pg's transitive runtime deps
-      // (pg-connection-string, pg-pool, pg-protocol, pg-types, pgpass,
-      // pg-cloudflare) live as SIBLINGS under .pnpm/pg@*/node_modules/ —
-      // invisible to the tracer exactly like the driver (found live on the
-      // first production boot: "Cannot find module 'pg-types'" from
-      // pg/lib/defaults.js inside the lambda).
-      './node_modules/pg/**/*',
-      './node_modules/.pnpm/pg@*/node_modules/**/*',
-    ],
+    '/api/**': ['./node_modules/pg/**/*'],
   },
 };
 
