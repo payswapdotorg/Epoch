@@ -72,11 +72,16 @@ describe('the pg import boundary (W046 acceptance 5: service-layer only)', () =>
     // itself: resolution wiring for the frozen seam's dynamic import — the
     // pnpm isolated layout places these as store siblings that no lambda
     // path can resolve; declared at the deployment importer so every
-    // runtime-reachable file lands at a resolvable path).
+    // runtime-reachable file lands at a resolvable path). W069 completes
+    // the set: xtend (postgres-interval's parser dep — the live /api/readyz
+    // 503: 'Cannot find module xtend/mutable') and split2 (pgpass's parser
+    // dep — discovered by the W069 deterministic closure walk below; same
+    // flattened-closure reason, disclosed in the W069 commit body).
     const CLOSURE_EXCEPTIONS = new Set([
       'pg-connection-string', 'pg-pool', 'pg-protocol', 'pg-types',
       'pgpass', 'pg-cloudflare', 'pg-int8', 'postgres-array',
       'postgres-bytea', 'postgres-date', 'postgres-interval',
+      'xtend', 'split2',
     ]);
     const violations: string[] = [];
     for (const tree of ['packages', 'apps', 'adapters', 'packs', 'runtimes']) {
@@ -171,6 +176,104 @@ describe('the pg import boundary (W046 acceptance 5: service-layer only)', () =>
     for (const testCase of cases) {
       await expect(testCase.run()).resolves.toBeUndefined();
     }
+  });
+});
+
+// THE W069 CLASS-CLOSING GUARD: the eighth live-only defect of the
+// ACR-006 credential-boundary class (pg -> pg-types -> postgres-interval
+// -> xtend/mutable dead with MODULE_NOT_FOUND in the serverless lambda)
+// closed DETERMINISTICALLY: the guard walks the driver's FULL runtime
+// dependency closure from the deployment root's own copy of pg and pins
+// every reached member to (i) the importer declaration, (ii) the flattened
+// root presence, (iii) the lambda trace force-include. The next missing
+// driver-tree package is a red test HERE — never a production readyz 503.
+describe("the driver's runtime closure at the deployment root (W069)", () => {
+  it("the driver's FULL runtime closure is complete at the deployment root (the deterministic W069 guard)", () => {
+    const DEPLOYMENT_ROOT = path.join(REPO_ROOT, 'apps', 'web', 'node_modules');
+
+    // The exact closure pg@8.23.0 resolves to at the flattened deployment
+    // root — pinned by NAME so any change in the driver's dependency tree
+    // (a version bump adding a dep, a new transitive member) flips this
+    // test red locally before it can ship. W069 discovered the 14th
+    // member — split2, pgpass's parser dependency — which the 13-name
+    // model missed (pgpass@1.0.5 declares "split2": "^4.1.0" and
+    // requires it eagerly at module load; pg loads pgpass lazily inside
+    // _getPassword, so the hole was invisible until the walk ran).
+    const EXPECTED_CLOSURE = [
+      'pg', 'pg-connection-string', 'pg-pool', 'pg-protocol', 'pg-types',
+      'pgpass', 'pg-cloudflare', 'pg-int8', 'postgres-array',
+      'postgres-bytea', 'postgres-date', 'postgres-interval',
+      'xtend', 'split2',
+    ].sort();
+
+    // (i) the deployment importer's declaration set (apps/web/package.json).
+    const importer = JSON.parse(
+      readFileSync(path.join(REPO_ROOT, 'apps', 'web', 'package.json'), 'utf8'),
+    ) as { dependencies?: Record<string, string> };
+    const declared = importer.dependencies ?? {};
+
+    // (iii) the lambda trace force-include patterns, read from the
+    // committed config. The glob semantics of these specific patterns
+    // ('./node_modules/<name-or-prefix>/**/*') is a prefix/dir match on
+    // the package name — a faithful implementation of exactly the
+    // patterns the config commits.
+    const configSource = readFileSync(path.join(REPO_ROOT, 'apps', 'web', 'next.config.ts'), 'utf8');
+    const patternDirs = [...configSource.matchAll(/'(\.\/node_modules\/[^']+)\/\*\*\/\*'/g)].map(
+      (match) => match[1]!,
+    );
+    expect(patternDirs.length).toBeGreaterThan(0);
+    const traced = (name: string): boolean =>
+      patternDirs.some((dir) => {
+        const pattern = dir.slice('./node_modules/'.length);
+        return pattern.endsWith('*') ? name.startsWith(pattern.slice(0, -1)) : name === pattern;
+      });
+
+    // (b) walk the FULL runtime dependency closure starting from the
+    // deployment root's own copy of pg: every dependencies +
+    // optionalDependencies edge of every reached package resolves AT THE
+    // DEPLOYMENT ROOT (apps/web/node_modules/<name> — the flattened
+    // layout the lambda resolves against; NOT a nested node_modules
+    // walk — the pnpm store siblings do not exist in the lambda).
+    // peerDependencies are excluded by the same rule (pg-native is a
+    // peer of pg, never installed, never reached).
+    const reached = new Set<string>(['pg']);
+    const queue: string[] = ['pg'];
+    while (queue.length > 0) {
+      const name = queue.shift()!;
+      const manifestPath = path.join(DEPLOYMENT_ROOT, name, 'package.json');
+      if (!existsSync(manifestPath)) continue; // presence is asserted below
+      const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as {
+        dependencies?: Record<string, string>;
+        optionalDependencies?: Record<string, string>;
+      };
+      for (const dep of Object.keys({ ...manifest.dependencies, ...manifest.optionalDependencies })) {
+        if (!reached.has(dep)) {
+          reached.add(dep);
+          queue.push(dep);
+        }
+      }
+    }
+
+    // The reached closure is EXACTLY the pinned expected set — no more
+    // (undisclosed store siblings), no less (missing members).
+    expect([...reached].sort()).toEqual(EXPECTED_CLOSURE);
+
+    // (c) EVERY reached package: (i) declared at the deployment importer,
+    // (ii) present at the flattened deployment root, (iii) matched by at
+    // least one outputFileTracingIncludes '/api/**' pattern. One
+    // consolidated assertion so the failure message names every hole at
+    // once (the deterministic red-on-main evidence).
+    const undeclared: string[] = [];
+    const missingAtRoot: string[] = [];
+    const untraced: string[] = [];
+    for (const name of [...reached].sort()) {
+      if (!(name in declared)) undeclared.push(name);
+      if (!existsSync(path.join(DEPLOYMENT_ROOT, name))) missingAtRoot.push(name);
+      if (!traced(name)) untraced.push(name);
+    }
+    expect(
+      `closure incomplete: undeclared=[${undeclared.join(', ')}] missing-at-root=[${missingAtRoot.join(', ')}] untraced=[${untraced.join(', ')}]`,
+    ).toBe('closure incomplete: undeclared=[] missing-at-root=[] untraced=[]');
   });
 });
 

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "releaseId": "epoch-clients-v1.0.0",
   "version": "1.0.0",
-  "sourceCommit": "5b05350b5ed477a66a5a4740ca55ca8a7cc72e46",
+  "sourceCommit": "77dbb0b9b2551cd3426002fc962767b31d677c8b",
   "description": "The client release identity record set (W050; re-stamped by W063 with the real desktop installable artifacts: linux built-in-sandbox, windows built-in-sandbox-cross, macos ci-recipe-delivered). Every artifact records source commit, version/profile, target platform and checksum (spec/productization-architecture.md). Gaps and deviations are declared \u2014 never silent.",
   "clients": [
     {
@@ -18,10 +18,10 @@
           "apps/web/vitest.config.mts",
           "apps/web/playwright.config.ts"
         ],
-        "definitionTreeSha": "9db2f525ede9530f60643a21f8f836c5235030bd",
+        "definitionTreeSha": "bc375b127c4d846cee6f33488603fa9f835a305d",
         "checksums": {
-          "apps/web/package.json": "32b9f4da5f61d2d001841c19f3fafbf96fd2252eeceb07a23dd88099ae3208e2",
-          "apps/web/next.config.ts": "add6c97a04038faf1ec00c06289cd298d5175ffeffcb60fc999207f633fdbd87",
+          "apps/web/package.json": "acb03c1a2794d1843a29a5b70c283ce179a58fd53858923fc236358dd02a0b10",
+          "apps/web/next.config.ts": "d4c0f5c2bae475938025a9facb6d1a8e6b4d6018bc3ddab0a39fb3d9a0bab6b3",
           "apps/web/tsconfig.json": "f35c6b95fd13351b89e5c8582f421dadc8fdaac2760fdc85b64321cd9618ad31",
           "apps/web/vitest.config.mts": "60ad3eba277fe30a5ea08e98fda20d85b21e2e8f83cbccb7f2e2b240217af66f",
           "apps/web/playwright.config.ts": "cad7f4eb764c8e26d0f0dc0b24d1c6126a32685c7fe935460d61c517a50a2515"

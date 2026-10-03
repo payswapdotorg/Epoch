@@ -59,7 +59,9 @@
     "postgres-interval": "1.2.0",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "three": "catalog:"
+    "split2": "4.2.0",
+    "three": "catalog:",
+    "xtend": "4.0.2"
   },
   "devDependencies": {
     "@epoch/eslint-config": "workspace:*",
