@@ -5,8 +5,6 @@
   "defaultBranch": "main",
   "maxConcurrentWorkers": 3,
   "active": [
-    "W064",
-    "W065",
     "W066"
   ],
   "completed": [
@@ -72,9 +70,11 @@
     "W060",
     "W061",
     "W062",
-    "W063"
+    "W063",
+    "W064",
+    "W065"
   ],
   "blocked": [],
-  "lastMergeSha": "8f5eead1d952004e9ef751d765162cacb3358be4",
-  "lastAction": "ACR-010 ACTIVATED (TL governance, operator standing continuation directive 2026-10-03; frontier was EMPTY at the W063 merge 12b5f22): the in-page foundation asset path program \u2014 W065 (RendererAdapter contract v1.1.0->v1.2.0 additive: the fabric-level bindSessionAsset operation + the typed digest-addressed receipt; frozen-first, the ONLY contract-surface writer) and W066 (the bind interaction kind: closed-vocabulary extension + the binding-requested effect + the world-digest/no-durable-mutation invariance pins) ELIGIBLE concurrently (pairwise-disjoint); W067 (the runtime application + the web/desktop host affordances + the leg-14 battery closure + the records) READY_AFTER both. W064 (the Blender 4.2.11 live-battery verification closure, docs-only surfaces) dispatched 00:57Z and runs concurrently. No semantic-authority change, no lock transition: E1.0/X2.0 invariants remain binding; binding is presentation; the glTF bridge trust gate is consumed, not modified. Standing operator inputs unchanged: provider credentials for the ACR-006 live deployment verification (vault wiped in the 5th reset); GPU rasterization impossible in this sandbox."
+  "lastMergeSha": "220e99fe20cc064c945833c8a66d84ddc8baba05",
+  "lastAction": "ACR-010 WAVE 1 LANDED (TL merges 2026-10-03): W065 MERGED at cc3b044 (PR #147 \u2014 the Fabric Asset-Binding Contract v1.2.0: the frozen-first additive bump, the fabric-level bindSessionAsset operation over the UNCHANGED adapter seam, the typed digest-addressed tenant-scoped receipt, the parity pins, 51/51 renderer-fabric battery + 227/227 renderer-runtime untouched-green; one disclosed owned-surface deviation accepted by the TL: packages/renderer-runtime/src/version.ts \u2014 the manifest contractVersion emission source, a required mechanical consequence the work order's surface list missed; full CI 6/6). W064 MERGED at 220e99f (PR #148 \u2014 the Blender live-battery verification closure: the official Blender 4.2.11 LTS supplied at an ephemeral path, the env-gated live battery RAN \u2014 probe PASS, render/export FAILED-live on the REAL sidecar require() arity defect, ledgered OPEN in the defect ledger with the full discipline chain (observed -> recorded -> reproduced two ways -> NOT FIXED, remediation is TL scope); CI evidence remains the committed double (40 passed + 3 env-gated skips, no regression); docs-only, 4 owned files). W066 (the bind interaction kind) IN FLIGHT (session live in the replay). W067 (the in-page closure) READY_AFTER W066. The sidecar arity defect closure is the next TL authorization (a defect-closure order; surfaces adapters/renderers/blender)."
 }

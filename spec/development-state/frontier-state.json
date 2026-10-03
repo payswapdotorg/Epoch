@@ -1,11 +1,10 @@
 {
   "program": "ACR-010 / in-page foundation asset path",
-  "eligible": [
-    "W065",
+  "eligible": [],
+  "inFlight": [
     "W066"
   ],
-  "inFlight": [],
   "blocked": [],
   "maxConcurrentWorkers": 3,
-  "notes": "W067 READY_AFTER W065+W066. W064 (Blender live-battery verification closure, docs-only) runs concurrently \u2014 its surfaces are disjoint from the wave. Activation 2026-10-03 under the operator standing continuation directive; the frontier was EMPTY at the W063 merge (12b5f22)."
+  "notes": "W064 + W065 MERGED (PR #148 / PR #147). W066 (the bind interaction kind) in flight. W067 (the in-page closure: runtime + hosts + the leg-14 battery + records) becomes ELIGIBLE when W066 merges. The W064 live battery found the sidecar require() arity defect (ledgered OPEN) \u2014 its closure is a separate serialized defect-closure order (TL authorization pending)."
 }
