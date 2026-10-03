@@ -63,6 +63,37 @@ describe('signS3Request (the AWS SigV4 signer)', () => {
     };
     expect(signS3Request(input).authorization).toBe(signS3Request(input).authorization);
   });
+
+  it('constructs the x-amz-date header in the exact SigV4 wire format (single trailing Z)', async () => {
+    // ACR-006 post-credential live regression: the s3() construction site
+    // appended a second Z to the ISO string ("…T010203ZZ") — every real
+    // S3/R2 endpoint rejects that with SignatureDoesNotMatch (found live
+    // against R2; the AWS vector test above passes an explicit amzDate and
+    // never covered the construction). This pins the EMITTED header of a
+    // real request through the store's own clock.
+    const seen: string[] = [];
+    const fetchImpl = (async (_url: string | URL | Request, init?: RequestInit) => {
+      const headers = init?.headers as Record<string, string>;
+      seen.push(String(headers['x-amz-date']));
+      return new Response(new Uint8Array(0), { status: 200 });
+    }) as unknown as typeof fetch;
+    const store = createS3ObjectStore({ ...CONFIG, fetchImpl, clock: FIXED_CLOCK });
+    const outcome = await store.put(new Uint8Array(3), {
+      schemaVersion: 1,
+      kind: 'evidence-artifact',
+      tenantId: 'tenant:t',
+      label: 'regression',
+      storedAt: '2026-10-02T01:02:03.000Z',
+    });
+    expect(outcome.ok).toBe(true);
+    expect(seen.length).toBeGreaterThan(0);
+    for (const date of seen) {
+      // Exactly the SigV4 wire format: YYYYMMDD'T'HHMMSS'Z' — one Z.
+      expect(date).toMatch(/^\d{8}T\d{6}Z$/);
+      expect(date.endsWith('ZZ')).toBe(false);
+    }
+    expect(seen[0]).toBe('20261002T010203Z');
+  });
 });
 
 /** An in-bucket S3 fetch double (path-style; stores bytes + meta by URL). */

@@ -409,7 +409,13 @@ export class S3ObjectStore implements ObjectStore {
     const payload = (body ?? new Uint8Array(0)) as Uint8Array<ArrayBuffer>;
     const payloadSha256 = sha256Hex(payload);
     const now = this.clock();
-    const amzDate = `${now.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')}Z`;
+    // ACR-006 post-credential live fix (the W053 live-only-defect precedent):
+    // toISOString() already ends with Z — the previous template appended a
+    // second one ("…T010203ZZ"), which real S3/R2 endpoints reject with
+    // SignatureDoesNotMatch (verified live against R2 at the first
+    // production-profile boot; the pinned AWS vector passes an explicit
+    // amzDate, so the construction site was never covered). Single-Z format.
+    const amzDate = now.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
     const extraHeaders: Record<string, string> =
       contentType !== undefined && method === 'PUT' ? { 'content-type': contentType } : {};
     const signed = signS3Request({

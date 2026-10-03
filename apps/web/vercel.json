@@ -3,8 +3,7 @@
   "framework": "nextjs",
   "installCommand": "corepack enable pnpm && pnpm install",
   "buildCommand": "pnpm --filter @epoch/web build",
-  "outputDirectory": "apps/web/.next",
-  "rootDirectory": ".",
+  "outputDirectory": ".next",
   "github": {
     "silent": true
   },

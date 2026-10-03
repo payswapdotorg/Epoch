@@ -109,7 +109,14 @@ jobs:
           import json, sys
           manifest = json.load(open('apps/web/vercel.json'))
           assert manifest.get('framework') == 'nextjs', 'framework must be nextjs'
-          assert manifest.get('outputDirectory') == 'apps/web/.next', 'outputDirectory must be apps/web/.next'
+          # ACR-006 post-credential live correction: the deployment root is
+          # apps/web (the Vercel project Root Directory — the only root where
+          # Next.js detection works for this workspace layout); the manifest
+          # therefore must NOT carry a rootDirectory key (rejected by the
+          # deployment validation as redundant inside its own deployment
+          # root) and outputDirectory is DEPLOYMENT-ROOT-relative ('.next').
+          assert 'rootDirectory' not in manifest, 'rootDirectory must NOT appear inside apps/web/vercel.json (the deployment root is apps/web)'
+          assert manifest.get('outputDirectory') == '.next', 'outputDirectory must be .next (deployment-root-relative)'
           assert 'pnpm' in manifest.get('installCommand', ''), 'installCommand must use pnpm'
           assert '@epoch/web' in manifest.get('buildCommand', ''), 'buildCommand must build @epoch/web'
           headers = manifest.get('headers', [])
