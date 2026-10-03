@@ -96,6 +96,10 @@ export function WorldWorkspace({
       data-workspace="world"
       data-world-digest={current.viewport.worldDigest}
       data-active-tool={current.viewport.activeTool}
+      data-entity-ids={current.viewport.entities.map((entity) => entity.entityId).sort().join(',')}
+      data-bound-assets={[...new Set(current.sessionAssets.ledger.map((entry) => entry.assetDigest))]
+        .sort()
+        .join(',')}
       style={{
         display: 'grid',
         gridTemplateColumns: 'minmax(0, 1fr) 320px',

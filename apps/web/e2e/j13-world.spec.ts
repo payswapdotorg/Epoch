@@ -37,8 +37,11 @@
  * 11  branch/simulate                       (step: leg 11)
  * 12  switch Three.js -> Babylon.js         (step: leg 12)
  * 13  switch back                           (step: leg 13)
- * 14  external foundation path              (NOT-RUNNABLE — the recorded
- *     skip test below carries the exact reason + closing commands)
+ * 14  external foundation path IN PAGE     (the glTF-bridge leg — REAL
+ *     since W067/ACR-010: in-page import -> bridge validate/seal -> the
+ *     typed bind -> the receipt + the digest-addressed ledger; the
+ *     Blender-live variant rides the env-gated official binary, honestly
+ *     skipped without EPOCH_BLENDER_LIVE=1 + EPOCH_BLENDER_PATH)
  * 15  verify world digest/entity continuity (steps: legs 12/13/15)
  * 16  force renderer degradation/failure    (j13-world-degradation.spec.ts
  *     — the no-GL project; the fabric-level forced ladder is pinned by
@@ -47,8 +50,10 @@
  * 18  verify resulting state/evidence in Epoch               (test 2)
  */
 import { test, expect, type Page } from '@playwright/test';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { createRequire } from 'node:module';
 import {
   THREE_RENDERER_ID,
   ThreeJsRendererAdapter,
@@ -59,10 +64,14 @@ import {
   BabylonRendererAdapter,
   nullEngineHost,
 } from '@epoch/adapter-renderer-babylonjs';
+import { RendererFabric, rendererCapabilityManifestOf } from '@epoch/renderer-fabric';
+import { sealCapabilityManifest } from '@epoch/capability-registry';
+import type { PortableViewState } from '@epoch/renderer-runtime';
 import {
   ManualHostClock,
   ManualFrameScheduler,
   WorldWorkspaceRuntime,
+  spatialPresentationOf,
 } from '@epoch/world-runtime';
 import {
   AGENT_IDS,
@@ -75,6 +84,148 @@ import {
   buildWorldFabric,
 } from '../src/features/world/host/world-fixture';
 import { signIn } from './helpers';
+
+// ---------------------------------------------------------------------------
+// The canonical glTF fixture (leg 14): byte-identical to the glTF bridge
+// battery's canonical GLB (adapters/foundations/gltf/test/helpers.ts) — the
+// pinned SHA-256 below proves the byte-identity. Constructed inline so this
+// battery never reaches into another package's test tree.
+// ---------------------------------------------------------------------------
+
+const CANONICAL_FIXTURE_DIGEST =
+  '9cfd1b40cadefd283a5048301bd3c449f4dfe057095e11479bc9df45202ad556' as const;
+
+/** The canonical fixture triangle: (0,0,0), (1,0,0), (0,1,0) — little-endian floats. */
+const TRIANGLE_FLOATS: readonly number[] = [0, 0, 0, 1, 0, 0, 0, 1, 0];
+
+/** The canonical fixture GLB (JSON + 36-byte BIN of the triangle positions). */
+function canonicalFixtureGlb(): Uint8Array {
+  const floats = new Uint8Array(36);
+  const floatView = new DataView(floats.buffer, floats.byteOffset, floats.byteLength);
+  TRIANGLE_FLOATS.forEach((value, index) => floatView.setFloat32(index * 4, value, true));
+  const json = {
+    asset: { version: '2.0', generator: 'epoch-gltf-fixture/1' },
+    scene: 0,
+    scenes: [{ name: 'Fixture scene', nodes: [0] }],
+    nodes: [{ name: 'Fixture node', mesh: 0, translation: [1, 0, 0] }],
+    meshes: [
+      { name: 'Fixture mesh', primitives: [{ attributes: { POSITION: 0 }, material: 0 }] },
+    ],
+    materials: [
+      { name: 'Fixture material', pbrMetallicRoughness: { baseColorFactor: [0.8, 0.4, 0.2, 1] } },
+    ],
+    accessors: [
+      { bufferView: 0, componentType: 5126, count: 3, type: 'VEC3', min: [0, 0, 0], max: [1, 1, 0] },
+    ],
+    bufferViews: [{ buffer: 0, byteOffset: 0, byteLength: 36 }],
+    buffers: [{ byteLength: 36 }],
+  };
+  const jsonBytes = new TextEncoder().encode(JSON.stringify(json));
+  const jsonPadding = (4 - (jsonBytes.length % 4)) % 4;
+  const binPadding = (4 - (floats.length % 4)) % 4;
+  const jsonChunkLength = jsonBytes.length + jsonPadding;
+  const binChunkLength = floats.length + binPadding;
+  const total = 12 + 8 + jsonChunkLength + 8 + binChunkLength;
+  const out = new Uint8Array(total);
+  const view = new DataView(out.buffer, out.byteOffset, out.byteLength);
+  view.setUint32(0, 0x46546c67, true); // 'glTF'
+  view.setUint32(4, 2, true);
+  view.setUint32(8, total, true);
+  view.setUint32(12, jsonChunkLength, true);
+  view.setUint32(16, 0x4e4f534a, true); // 'JSON'
+  out.set(jsonBytes, 20);
+  for (let i = 0; i < jsonPadding; i += 1) out[20 + jsonBytes.length + i] = 0x20;
+  const binHeader = 20 + jsonChunkLength;
+  view.setUint32(binHeader, binChunkLength, true);
+  view.setUint32(binHeader + 4, 0x004e4942, true); // 'BIN\0'
+  out.set(floats, binHeader + 8);
+  return out;
+}
+
+// ---------------------------------------------------------------------------
+// The Blender-live sidecar helpers (leg 14, env-gated). The sidecar adapter
+// package is NOT a declared dependency of apps/web (its manifest is frozen
+// to this Work Order's surface), so the live run links it into the run
+// node_modules (the PR run book) and the adapter loads through a
+// RUNTIME-RESOLVED specifier — the env-gated body is the only code path
+// that ever evaluates it (CI skips this leg before reaching the import).
+// ---------------------------------------------------------------------------
+
+/** The sidecar adapter's bare specifier (resolved ONLY in the env-gated live run). */
+const BLENDER_ADAPTER_SPECIFIER: string = '@epoch/adapter-renderer-blender';
+
+/** The structural shape of the sidecar adapter module this battery drives. */
+interface BlenderAdapterModule {
+  readonly BlenderSidecarRendererAdapter: new (options: {
+    readonly blenderPath: string;
+    readonly workspaceDir: string;
+  }) => {
+    identity(): {
+      readonly capabilityId: string;
+      readonly rendererId: string;
+      readonly displayName: string;
+    };
+    descriptor(): Parameters<typeof rendererCapabilityManifestOf>[0]['descriptor'];
+    capabilities(): Parameters<typeof rendererCapabilityManifestOf>[0]['capabilities'];
+    adapterSessionOf(fabricSessionId: string): { readonly fabricSessionId: string } | undefined;
+    prepareGltfAsset(
+      session: { readonly fabricSessionId: string },
+      input: { readonly atMs: number },
+    ): Promise<
+      | {
+          readonly ok: true;
+          readonly value: {
+            readonly glbDigest: string;
+            readonly glbBytes: number;
+            readonly glbBytesData: Uint8Array;
+          };
+        }
+      | { readonly ok: false; readonly error: { readonly message: string } }
+    >;
+  };
+}
+
+/** The fixture track position (the web world fixture's timeline head). */
+const TRACK_POSITION_AT_MS = 1_500;
+
+/** A minimal valid portable view state for the sidecar session mount. */
+function sidecarViewState(): PortableViewState {
+  return {
+    focusedEntityIds: [ENTITY_IDS.riser],
+    layerVisibility: [],
+    timelinePosition: { atMs: TRACK_POSITION_AT_MS, frameIndex: 45, paused: false },
+    camera: { mode: 'orbit', position: [30, 22, 30], target: [4, 3, 0] },
+    hiddenEntityIds: [],
+  };
+}
+
+/** Register the sidecar adapter with a fabric through the REAL registry. */
+function registerSidecarRenderer(
+  fabric: RendererFabric,
+  blender: InstanceType<BlenderAdapterModule['BlenderSidecarRendererAdapter']>,
+): void {
+  const identity = blender.identity();
+  const manifest = rendererCapabilityManifestOf({
+    capabilityId: identity.capabilityId,
+    version: '1.0.0',
+    descriptor: blender.descriptor(),
+    capabilities: blender.capabilities(),
+    displayName: identity.displayName,
+    description: 'The env-gated live sidecar export of the leg-14 Blender variant.',
+  });
+  const sealed = sealCapabilityManifest(manifest);
+  if (!sealed.ok) {
+    throw new Error(`the sidecar manifest failed to seal: ${sealed.error.message}`);
+  }
+  const registered = fabric.adapters.register({
+    manifest: sealed.value.manifest,
+    digest: sealed.value.digest,
+    adapter: blender as never,
+  });
+  if (!registered.ok) {
+    throw new Error(`the sidecar renderer failed to register: ${registered.error.message}`);
+  }
+}
 
 /** Where the visual evidence lands (gitignored run artifacts; the
  * committed evidence is this spec + the journey record). */
@@ -571,21 +722,196 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
     await page.screenshot({ path: join(SHOT_DIR, 'leg17-18-action-gateway.png'), fullPage: true });
   });
 
-  test('leg 14 — the external foundation path (Blender sidecar / glTF bridge) without separate vendor UI', () => {
-    test.skip(
-      true,
-      [
-        'NOT-RUNNABLE in this sandbox browser battery (recorded honestly):',
-        '(1) the /world host composition exposes no asset-binding surface — bindAsset is adapter-seam-scoped',
-        'in the frozen RendererAdapter contract v1.1.0 (the W060 advisory: a fabric-level asset-binding',
-        'orchestration would be a contract change), so there is no in-page path to the glTF bridge;',
-        '(2) the Blender real-binary battery is env-gated and NO Blender binary exists in this sandbox.',
-        'The path IS proven at its real surface: qa/foundation-renderers (glTF -> validate -> binding ->',
-        'bindAsset on a REAL Three.js adapter session + the Blender-double subprocess round-trip, 84/84',
-        '+ 15 battery) and the adapter suites. Closing commands:',
-        '`EPOCH_BLENDER_LIVE=1 EPOCH_BLENDER_PATH=<blender> corepack pnpm --filter @epoch/adapter-renderer-blender test`',
-        'and `corepack pnpm --filter @epoch/adapter-foundation-gltf test`.',
-      ].join(' '),
+  test('leg 14 — the external foundation path IN PAGE: glTF bridge -> typed bind -> the digest-addressed ledger (no vendor UI)', async ({
+    page,
+  }) => {
+    test.setTimeout(300_000);
+    // The glTF-bridge path (no Blender needed): the canonical fixture GLB
+    // (byte-identical to the bridge battery's — the pinned digest proves
+    // it) goes through the page's OWN import affordance: the file input ->
+    // the runtime's interchange bridge (validate -> normalize ->
+    // content-address: the W060 trust gate, IN PAGE) -> the digest-addressed
+    // registry -> the typed `bind` intent (W066) -> the binding-requested
+    // effect -> the W065 fabric operation on the LIVE session -> the
+    // receipt + the digest-addressed bound-asset ledger.
+    const fixturePath = join(tmpdir(), 'epoch-j13-leg14-canonical.glb');
+    writeFileSync(fixturePath, Buffer.from(canonicalFixtureGlb()));
+    const malformedPath = join(tmpdir(), 'epoch-j13-leg14-malformed.bin');
+    writeFileSync(malformedPath, Buffer.from('this is definitely not a glTF container', 'utf8'));
+
+    await page.goto('/world');
+    await expect(page.locator('[data-world-host="web"]')).toHaveAttribute(
+      'data-world-phase',
+      'ready',
     );
+    const workspace = page.locator('[data-workspace="world"]');
+    const digestBefore = await worldDigest(page);
+    const entityIdsBefore = await workspace.getAttribute('data-entity-ids');
+    expect(entityIdsBefore).toContain(ENTITY_IDS.riser);
+
+    // The trust gate first (honest): malformed bytes are the bridge's TYPED
+    // refusal — nothing registers, nothing binds, the session stays healthy.
+    await page.setInputFiles('[data-testid="foundation-import-input"]', malformedPath);
+    await expect(
+      page
+        .locator(
+          '[data-panel="journal"] li[data-journal-entry="import-asset"][data-journal-outcome="rejected"]',
+        )
+        .first(),
+    ).toBeVisible();
+    await expect(page.locator('[data-imported-asset]')).toHaveCount(0);
+
+    // The canonical import -> the typed bind (one in-page flow).
+    await page.setInputFiles('[data-testid="foundation-import-input"]', fixturePath);
+    // The digest-addressed registry entry (the RAW-byte content address).
+    await expect(
+      page.locator(`[data-imported-asset="${CANONICAL_FIXTURE_DIGEST}"]`),
+    ).toBeVisible();
+    // The sealed binding digest + the receipt in the digest-addressed ledger.
+    const ledgerEntry = page.locator(
+      `li[data-bound-asset="${CANONICAL_FIXTURE_DIGEST}"][data-outcome="applied"]`,
+    );
+    await expect(ledgerEntry).toBeVisible();
+    const bindingDigest = await ledgerEntry.getAttribute('data-binding-digest');
+    expect(bindingDigest).toMatch(/^[0-9a-f]{64}$/);
+    const receiptDigest = await ledgerEntry.getAttribute('data-receipt-digest');
+    expect(receiptDigest).toMatch(/^[0-9a-f]{64}$/);
+    await expect(ledgerEntry).toContainText(THREE_RENDERER_ID);
+    // The ledger's digest-addressed key is surfaced on the workspace root.
+    await expect(workspace).toHaveAttribute(
+      'data-bound-assets',
+      CANONICAL_FIXTURE_DIGEST,
+    );
+    // The typed receipt in the journal: the bind intent, applied, with the
+    // receipt evidence in the entry detail.
+    const bindJournal = page.locator(
+      '[data-panel="journal"] li[data-journal-entry="bind"][data-journal-outcome="applied"]',
+    );
+    await expect(bindJournal.first()).toBeVisible();
+    await expect(bindJournal.first()).toContainText(receiptDigest?.slice(0, 12) ?? '');
+    // The binding-requested effect awaits its authority routing (the
+    // experience-scoped request, never executed by the UI).
+    await expect(
+      page.locator('[data-panel="journal"] li[data-effect="binding-requested"]').first(),
+    ).toBeVisible();
+    // The presented semantic entity ids are UNCHANGED (binding is
+    // presentation, never a semantic write).
+    expect(await workspace.getAttribute('data-entity-ids')).toBe(entityIdsBefore);
+    // The canonical world digest is UNCHANGED.
+    expect(await worldDigest(page)).toBe(digestBefore);
+    // The presented world stays fully interactive through the live engine
+    // seam (the same derived-pointer basis as the pick legs — the panel
+    // resolves through the REAL Three.js Raycaster after the binding).
+    await selectTool(page);
+    await clickEntityPointer(page, 'three', ENTITY_IDS.panel);
+    await expectJournal(page, 'select', 'applied');
+    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.panel);
+    await page.screenshot({ path: join(SHOT_DIR, 'leg14-foundation-bind.png'), fullPage: true });
+  });
+
+  test('leg 14 (Blender-live variant) — sidecar export -> UNTRUSTED re-entry -> validated binding -> in-page bind', async ({
+    page,
+  }) => {
+    // Honestly env-gated (the W064/W068 method): the official Blender binary
+    // is operator-supplied at an ephemeral NON-REPO path; without
+    // EPOCH_BLENDER_LIVE=1 + EPOCH_BLENDER_PATH this leg is an honest skip,
+    // never fabricated. The sidecar defects are CLOSED at W068 (the live
+    // battery is green against the official 4.2.11).
+    test.skip(
+      process.env.EPOCH_BLENDER_LIVE !== '1' || !process.env.EPOCH_BLENDER_PATH,
+      'the Blender-live variant requires the official binary (EPOCH_BLENDER_LIVE=1 + EPOCH_BLENDER_PATH; the W064/W068 method — download.blender.org/release/Blender4.2/blender-4.2.11-linux-x64.tar.xz to a non-repo path, sha256 7f084fd57f1351bcae3434fc5450643547e4ad3d69cd93d4dd14a784203ee2ec). The sidecar adapter is linked into the run node_modules for the live run (see the PR run book); CI skips this leg honestly.',
+    );
+    test.setTimeout(600_000);
+    // NODE side: the REAL sidecar boundary over the REAL official binary —
+    // mount the canonical world, export the GLB through the typed process
+    // boundary (the boundary re-computes the artifact digest; the provider's
+    // self-report is never trusted). The adapter loads through the CJS
+    // pipeline (createRequire from this spec's location over the
+    // runtime-resolved specifier) so its own source imports link exactly as
+    // they do in its own battery.
+    const nodeRequire = createRequire(join(process.cwd(), 'e2e', 'j13-world.spec.ts'));
+    const blenderModule = nodeRequire(BLENDER_ADAPTER_SPECIFIER) as BlenderAdapterModule;
+    const workspaceDir = mkdtempSync(join(tmpdir(), 'epoch-j13-blender-live-'));
+    const blender = new blenderModule.BlenderSidecarRendererAdapter({
+      blenderPath: process.env.EPOCH_BLENDER_PATH as string,
+      workspaceDir,
+    });
+    const fabric = new RendererFabric();
+    registerSidecarRenderer(fabric, blender);
+    const sidecarSessionId = 'fx-j13-blender-live-export';
+    // The SPATIAL PRESENTATION PROJECTION (the derived canonical revision
+    // the world runtime presents — host-chrome kinds stay with the host);
+    // the batch sidecar hosts only the spatial kinds, and the session's
+    // world projection must address the exact mounted revision.
+    const sidecarScene = spatialPresentationOf(SCENE);
+    const created = await fabric.createSession({
+      rendererId: blender.identity().rendererId,
+      device: DEVICE,
+      worldProjection: {
+        sceneId: sidecarScene.sceneId,
+        worldDigest: sidecarScene.digest,
+        tenantScope: sidecarScene.tenantScope,
+      },
+      viewState: sidecarViewState(),
+      fabricSessionId: sidecarSessionId,
+      atMs: 0,
+      expectedTenantId: TENANT,
+    });
+    if (!created.ok) {
+      throw new Error(`the sidecar session failed: ${created.error.message}`);
+    }
+    const mounted = await fabric.mountScene(sidecarSessionId, {
+      scene: sidecarScene,
+      ontology: ONTOLOGY,
+      atMs: 1,
+      expectedTenantId: TENANT,
+    });
+    if (!mounted.ok) {
+      throw new Error(`the sidecar mount failed: ${mounted.error.message}`);
+    }
+    const adapterSession = blender.adapterSessionOf(sidecarSessionId);
+    if (adapterSession === undefined) {
+      throw new Error('no sidecar adapter session');
+    }
+    const prepared = await blender.prepareGltfAsset(adapterSession, { atMs: 2 });
+    if (!prepared.ok) {
+      throw new Error(`the sidecar export failed: ${prepared.error.message}`);
+    }
+    // The boundary's VERIFIED digest of the exported GLB (untrusted bytes
+    // until the in-page bridge re-validates them).
+    const exportedDigest = prepared.value.glbDigest;
+    const exportedPath = join(workspaceDir, 'leg14-blender-live-export.glb');
+    writeFileSync(exportedPath, Buffer.from(prepared.value.glbBytesData));
+
+    // PAGE side: the UNTRUSTED exported bytes re-enter through the SAME
+    // in-page path (the page's bridge validates -> content-addresses ->
+    // seals -> the typed bind) — no vendor UI anywhere in the loop.
+    await page.goto('/world');
+    await expect(page.locator('[data-world-host="web"]')).toHaveAttribute(
+      'data-world-phase',
+      'ready',
+    );
+    const digestBefore = await worldDigest(page);
+    await page.setInputFiles('[data-testid="foundation-import-input"]', exportedPath);
+    const ledgerEntry = page.locator(
+      `li[data-bound-asset="${exportedDigest}"][data-outcome="applied"]`,
+    );
+    await expect(ledgerEntry).toBeVisible();
+    // DIGEST CONTINUITY ACROSS THE PROCESS SEAM: the asset digest the PAGE's
+    // bridge computed equals the digest the boundary verified — the bytes
+    // that left the sidecar are the bytes Epoch validated, and the ledger is
+    // keyed by that content address.
+    const bindingDigest = await ledgerEntry.getAttribute('data-binding-digest');
+    expect(bindingDigest).toMatch(/^[0-9a-f]{64}$/);
+    await expect(
+      page
+        .locator('[data-panel="journal"] li[data-journal-entry="bind"][data-journal-outcome="applied"]')
+        .first(),
+    ).toBeVisible();
+    // The canonical world digest is UNCHANGED by the whole round trip.
+    expect(await worldDigest(page)).toBe(digestBefore);
+    await page.screenshot({ path: join(SHOT_DIR, 'leg14-blender-live.png'), fullPage: true });
+    // Cleanup the ephemeral workspace (never committed, never in-repo).
+    rmSync(workspaceDir, { recursive: true, force: true });
   });
 });

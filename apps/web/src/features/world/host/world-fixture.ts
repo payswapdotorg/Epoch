@@ -369,7 +369,13 @@ const REFERENCE_CAPABILITIES: RendererCapabilitySet = {
   snapshotCapture: true,
   degradation: ['none', 'reduced-fidelity', 'static-frame', 'wireframe'],
   portableViewState: ['camera', 'focused-entities', 'layer-visibility', 'timeline-position'],
-  assetKinds: [],
+  // W067 (ACR-010): the declared fallback presenter is ASSET-BINDABLE — the
+  // reference adapter's own bindAsset seam applies sealed mesh bindings
+  // (the same composition as the desktop full reference and the
+  // qa/world-experience harness fixture). The in-page foundation path
+  // stays live on the no-GL fallback surface (binding is presentation
+  // state, never pixels).
+  assetKinds: ['mesh'],
 };
 
 /** The W013 renderer ids of the REAL engine adapters (re-exported for hosts). */
