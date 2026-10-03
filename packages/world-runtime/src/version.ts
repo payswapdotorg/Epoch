@@ -72,3 +72,17 @@ export const MAX_JOURNAL_ENTRIES = 256;
 
 /** The maximum effect entries the runtime retains (bounded memory). */
 export const MAX_EFFECT_ENTRIES = 128;
+
+/**
+ * The maximum imported foundation assets the runtime retains in its
+ * digest-addressed registry (W067, ACR-010 — bounded memory; the registry
+ * is in-memory EPHEMERAL experience state, never persisted).
+ */
+export const MAX_IMPORTED_ASSETS = 64;
+
+/**
+ * The maximum bound-asset ledger entries the runtime retains (W067,
+ * ACR-010 — the digest-addressed evidence log of binding applications;
+ * bounded like the journal, oldest-first trim).
+ */
+export const MAX_BOUND_ASSETS = 128;

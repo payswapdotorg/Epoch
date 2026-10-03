@@ -222,7 +222,8 @@ export interface EffectEntryInput {
     | { readonly effect: 'change-requested'; readonly entityId: string; readonly propertyPath: string }
     | { readonly effect: 'connect-requested'; readonly fromEntityId: string; readonly toEntityId: string }
     | { readonly effect: 'disconnect-requested'; readonly fromEntityId: string; readonly toEntityId: string }
-    | { readonly effect: 'branch-requested'; readonly atMs: number };
+    | { readonly effect: 'branch-requested'; readonly atMs: number }
+    | { readonly effect: 'binding-requested'; readonly bindingDigest: string; readonly tenantId: string };
 }
 
 /** One scene-control entry (branch/simulation entry points, R30). */
@@ -231,6 +232,45 @@ export interface WorkspaceControlInput {
   readonly controlKind: string;
   readonly label: string;
   readonly intentId: string;
+}
+
+// ---------------------------------------------------------------------------
+// Mirrored session-asset records (world-runtime session-assets.ts, W067).
+// ---------------------------------------------------------------------------
+
+/** One imported foundation asset of the digest-addressed registry (W067). */
+export interface SessionAssetEntryInput {
+  /** The content address of the RAW asset bytes (the registry key). */
+  readonly assetDigest: string;
+  readonly assetKind: string;
+  readonly byteSize: number;
+  readonly label: string | null;
+  readonly vertexCount: number | null;
+  readonly triangleCount: number | null;
+  readonly importedAtMs: number;
+}
+
+/** One bound-asset ledger entry (digest-addressed binding evidence, W067). */
+export interface BoundAssetEntryInput {
+  /** The bound asset's content digest — the digest-addressed LEDGER KEY. */
+  readonly assetDigest: string;
+  /** The sealed binding's content address (the bind intent's reference). */
+  readonly bindingDigest: string;
+  readonly bindingId: string;
+  readonly assetKind: string;
+  readonly outcome: 'applied' | 'declined';
+  readonly reason: string | null;
+  /** The sealed receipt's content address (the typed evidence). */
+  readonly receiptDigest: string;
+  readonly rendererId: string;
+  readonly fabricSessionId: string;
+  readonly atMs: number;
+}
+
+/** The foundation-asset surface of the workspace view model (W067). */
+export interface SessionAssetsViewModelInput {
+  readonly imported: readonly SessionAssetEntryInput[];
+  readonly ledger: readonly BoundAssetEntryInput[];
 }
 
 /** The full workspace view model. */
@@ -243,6 +283,8 @@ export interface WorkspaceViewModelInput {
   readonly journal: readonly JournalEntryInput[];
   readonly effects: readonly EffectEntryInput[];
   readonly controls: readonly WorkspaceControlInput[];
+  /** The foundation-asset surface (W067): the import registry + the bound-asset ledger. */
+  readonly sessionAssets: SessionAssetsViewModelInput;
   readonly sceneUsage: {
     readonly entityCount: number;
     readonly focusedCount: number;
@@ -343,4 +385,21 @@ export interface WorldWorkspaceDriver {
   ): Promise<DriverResult<boolean>>;
   /** Switch the renderer (the REAL fabric switching invariant + fallback). */
   selectRenderer(rendererId: string): Promise<DriverResult<SwitchSummaryInput>>;
+  /**
+   * Import one UNTRUSTED foundation-asset byte stream through the
+   * interchange bridge's trust gate (W067: validate → normalize →
+   * content-address); the validated admission registers digest-addressed.
+   * A malformed/untrusted stream is the bridge's typed refusal.
+   */
+  importFoundationAsset(
+    bytes: Uint8Array,
+    input?: { readonly fileName?: string | undefined } | undefined,
+  ): DriverResult<SessionAssetEntryInput>;
+  /**
+   * Bind one imported foundation asset onto the LIVE session (W067): the
+   * typed `bind` intent → the `binding-requested` effect → the fabric
+   * session-asset operation. Returns the digest-addressed ledger entry
+   * (applied/declined) or the typed refusal; every outcome is journaled.
+   */
+  bindFoundationAsset(assetDigest: string): Promise<DriverResult<BoundAssetEntryInput>>;
 }

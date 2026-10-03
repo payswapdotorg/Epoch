@@ -54,6 +54,8 @@ export {
   NAVIGATION_KEYS,
   MAX_JOURNAL_ENTRIES,
   MAX_EFFECT_ENTRIES,
+  MAX_IMPORTED_ASSETS,
+  MAX_BOUND_ASSETS,
 } from './version';
 export type { WorldTool, NavigationKind, NavigationKey } from './version';
 
@@ -97,6 +99,7 @@ export {
   intentHintOfTool,
   intentForControl,
   buildAnnotateIntent,
+  buildBindIntent,
   buildBranchIntent,
   buildFilterIntent,
   buildFollowAgentIntent,
@@ -109,6 +112,21 @@ export {
   buildSimulateIntent,
 } from './intents';
 export type { RuntimeResult, IntentBuilderInput } from './intents';
+
+// The in-page foundation path (W067, ACR-010): the neutral interchange
+// seam + the default registered glTF bridge + the view-model records.
+export {
+  DEFAULT_FOUNDATION_BRIDGE_ID,
+  defaultFoundationBridge,
+} from './foundation-bridge';
+export type {
+  FoundationAssetAdmission,
+  FoundationAssetBridge,
+  FoundationBindingSealInput,
+  SessionAssetEntry,
+  BoundAssetEntry,
+  SessionAssetsViewModel,
+} from './session-assets';
 
 // The workspace view models (pure, presenter-agnostic).
 export {

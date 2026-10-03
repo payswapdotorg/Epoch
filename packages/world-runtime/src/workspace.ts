@@ -96,6 +96,7 @@ import type { ProjectedImage } from './view-models';
 import { deriveLayers, type SemanticLayer } from './layers';
 import {
   buildAnnotateIntent,
+  buildBindIntent,
   buildFollowAgentIntent,
   buildHideIntent,
   buildMeasureIntent,
@@ -123,10 +124,20 @@ import {
 } from './view-models';
 import {
   MAX_EFFECT_ENTRIES,
+  MAX_IMPORTED_ASSETS,
   MAX_JOURNAL_ENTRIES,
+  MAX_BOUND_ASSETS,
   type NavigationKey,
   type WorldTool,
 } from './version';
+import { defaultFoundationBridge } from './foundation-bridge';
+import type {
+  FoundationAssetAdmission,
+  FoundationAssetBridge,
+  BoundAssetEntry,
+  SessionAssetEntry,
+} from './session-assets';
+import type { RendererAssetBindingReceipt } from '@epoch/renderer-fabric';
 
 /** The construction input of one workspace runtime. */
 export interface WorldWorkspaceInput {
@@ -149,6 +160,13 @@ export interface WorldWorkspaceInput {
    * the rest are the fallback chain for switches and failures.
    */
   readonly rendererPreference: readonly string[];
+  /**
+   * The foundation-asset bridge of the in-page import path (W067,
+   * ACR-010). Defaults to the registered glTF 2.0 interchange adapter;
+   * inject a custom bridge to replace the interchange format behind the
+   * neutral seam (lock rule 13 — the format is replaceable).
+   */
+  readonly foundationBridge?: FoundationAssetBridge | undefined;
 }
 
 /** The outcome of one viewport input through the fabric seam. */
@@ -236,6 +254,12 @@ export class WorldWorkspaceRuntime {
   private onViewModel: ((viewModel: WorkspaceViewModel) => void) | null = null;
   private onEffect: ((effect: WorldIntentEffect) => void) | null = null;
   private disposed = false;
+  // The in-page foundation path (W067, ACR-010): the digest-addressed
+  // import registry + the bound-asset ledger (in-memory EPHEMERAL
+  // experience state — never persisted, never a second semantic store).
+  private readonly foundationBridge: FoundationAssetBridge;
+  private readonly importedAssets = new Map<string, FoundationAssetAdmission & { importedAtMs: number; fileName: string | null }>();
+  private readonly assetLedger: BoundAssetEntry[] = [];
 
   constructor(input: WorldWorkspaceInput) {
     this.input = input;
@@ -244,6 +268,7 @@ export class WorldWorkspaceRuntime {
     this.navigation = navigationFromCamera(input.scene.camera);
     this.presentationAtMs = input.scene.timeline.position.atMs;
     this.loop = new HostLoop(input.clock, input.scheduler);
+    this.foundationBridge = input.foundationBridge ?? defaultFoundationBridge;
   }
 
   // -------------------------------------------------------------------------
@@ -810,6 +835,224 @@ export class WorldWorkspaceRuntime {
   }
 
   // -------------------------------------------------------------------------
+  // The in-page foundation path (W067, ACR-010): import + bind.
+  // -------------------------------------------------------------------------
+
+  /**
+   * Import one UNTRUSTED foundation-asset byte stream through the
+   * interchange bridge's trust gate (validate → normalize →
+   * content-address): the validated admission is registered in the
+   * runtime's digest-addressed import registry (in-memory experience
+   * state), ready to bind onto the live session.
+   *
+   * The trust gate is NOT here — it is the bridge's (the default is the
+   * registered glTF 2.0 interchange adapter; its typed refusal propagates
+   * VERBATIM, so malformed or untrusted input is an honest typed refusal,
+   * never a parse and never a partial registration). The registry is
+   * tenant-scoped by construction: the binding this admission will seal
+   * carries the SCENE's tenant scope (R12), and the asset facts are
+   * content-addressed by the RAW-byte digest (the identity that survives
+   * every session rotation).
+   */
+  importFoundationAsset(
+    bytes: Uint8Array,
+    input?: { readonly fileName?: string | undefined },
+  ): RuntimeResult<SessionAssetEntry> {
+    if (this.disposed) {
+      return { ok: false, error: { code: 'session-disposed', message: 'the workspace runtime is disposed' } };
+    }
+    const atMs = this.nowMs();
+    const admitted = this.foundationBridge.admit(bytes);
+    if (!admitted.ok) {
+      // The bridge's typed refusal, journal-recorded (honest evidence of
+      // the gate refusing untrusted bytes — the session stays healthy).
+      this.pushJournal({
+        atMs,
+        source: 'workspace-command',
+        intentKind: 'import-asset',
+        controlIntentId: 'epoch.workspace.foundation-import',
+        outcome: 'rejected',
+        detail: `${admitted.error.code}: ${admitted.error.message}`,
+      });
+      this.notify();
+      return admitted;
+    }
+    const admission = admitted.value;
+    const fileName = input?.fileName ?? null;
+    // Idempotent registration: the same content address re-registers the
+    // same admission (the newest import time + file name win; the token is
+    // the SAME bridge's admission for the same bytes).
+    this.importedAssets.set(admission.assetDigest, {
+      ...admission,
+      label: admission.label ?? fileName,
+      importedAtMs: atMs,
+      fileName,
+    });
+    if (this.importedAssets.size > MAX_IMPORTED_ASSETS) {
+      const oldest = this.importedAssets.keys().next().value;
+      if (oldest !== undefined) {
+        this.importedAssets.delete(oldest);
+      }
+    }
+    const entry = this.sessionAssetEntryOf(admission.assetDigest);
+    if (entry === null) {
+      return { ok: false, error: { code: 'internal-error', message: 'the imported asset vanished from the registry' } };
+    }
+    this.pushJournal({
+      atMs,
+      source: 'workspace-command',
+      intentKind: 'import-asset',
+      controlIntentId: 'epoch.workspace.foundation-import',
+      outcome: 'normalized',
+      detail: `asset ${admission.assetDigest.slice(0, 12)}… (${admission.assetKind}, ${admission.byteSize} bytes) admitted through the interchange bridge`,
+    });
+    this.notify();
+    return { ok: true, value: entry };
+  }
+
+  /**
+   * Bind one imported foundation asset onto the LIVE session — the W067
+   * runtime application of the W066 `binding-requested` effect through the
+   * W065 fabric operation:
+   *
+   * 1. resolve the digest-addressed registry entry (typed unknown-asset
+   *    refusal otherwise);
+   * 2. require a live session (typed unknown-session refusal otherwise);
+   * 3. SEAL the session-addressed binding through the admitting bridge's
+   *    trust-gated factory (the binding addresses THIS live session; the
+   *    bind intent references the sealed binding's content address);
+   * 4. build + admit the typed `bind` intent (the W066 canonical
+   *    admission) and apply it through the W016 reducer — effect-only: the
+   *    scene revision, the store, and the canonical world digest are
+   *    UNCHANGED; the experience-scoped `binding-requested` effect is
+   *    surfaced like every other request effect;
+   * 5. apply the effect through `RendererFabric.bindSessionAsset` (the
+   *    W065 orchestration over the UNCHANGED adapter seam): an
+   *    applied/declined receipt lands in the digest-addressed bound-asset
+   *    ledger + the journal; a typed fabric refusal (undeclared asset
+   *    kind, seam absent, ...) is journal-recorded and returned — the
+   *    session stays healthy (no partial application, by construction).
+   */
+  async bindFoundationAsset(
+    assetDigest: string,
+  ): Promise<RuntimeResult<BoundAssetEntry>> {
+    const atMs = this.nowMs();
+    const fabricSessionId = this.requireSession();
+    if (fabricSessionId === null) {
+      return { ok: false, error: { code: 'unknown-session', message: 'no renderer session is open' } };
+    }
+    const registered = this.importedAssets.get(assetDigest);
+    if (registered === undefined) {
+      this.pushJournal({
+        atMs,
+        source: 'workspace-command',
+        intentKind: 'bind',
+        controlIntentId: 'epoch.world.interaction.bind',
+        outcome: 'rejected',
+        detail: `unknown asset ${assetDigest.slice(0, 12)}… (import it first)`,
+      });
+      this.notify();
+      return {
+        ok: false,
+        error: {
+          code: 'unknown-asset',
+          message: `no imported foundation asset with digest ${assetDigest.slice(0, 12)}… exists in this workspace`,
+        },
+      };
+    }
+    const scene = this.currentScene();
+    // The deterministic binding id (content-derived; stable per asset+slug).
+    const bindingId = this.bindingIdOf(assetDigest);
+    const binding = this.foundationBridge.bindingOf(registered, {
+      bindingId,
+      fabricSessionId,
+      tenantScope: scene.tenantScope,
+      boundAtMs: atMs,
+    });
+    // The typed bind intent: the VALIDATED binding REFERENCE (the sealed
+    // binding's content address + the scene's tenant scope — never bytes).
+    const intent = buildBindIntent({
+      invocationId: this.ids.invocationId(),
+      bindingDigest: binding.digest,
+      tenantScope: scene.tenantScope,
+    });
+    if (!intent.ok) {
+      return intent;
+    }
+    const applied = await this.applyIntent(intent.value, atMs, 'workspace-command');
+    if (!applied.ok) {
+      // The reducer refused (typed semantic rejection — journaled inside
+      // applyIntent); nothing was applied anywhere.
+      return applied;
+    }
+    // The binding-requested effect is surfaced (applyIntent pushed it);
+    // apply it through the W065 fabric operation on the live session.
+    const bound = await this.input.fabric.bindSessionAsset({
+      sessionId: fabricSessionId,
+      binding,
+      atMs,
+    });
+    if (!bound.ok) {
+      // A typed fabric refusal (e.g. the presenting renderer does not
+      // declare the asset kind): journal-recorded, session healthy, no
+      // partial application. The bind intent itself was admitted — the
+      // journal records the honest two-phase outcome.
+      this.pushJournal({
+        atMs,
+        source: 'workspace-command',
+        intentKind: 'bind',
+        controlIntentId: 'epoch.world.interaction.bind',
+        outcome: 'rejected',
+        detail: `asset ${assetDigest.slice(0, 12)}… refused by the fabric (${bound.error.code}): ${bound.error.message}`,
+      });
+      this.notify();
+      return { ok: false, error: { code: bound.error.code, message: bound.error.message } };
+    }
+    const receipt: RendererAssetBindingReceipt = bound.value;
+    const entry: BoundAssetEntry = {
+      assetDigest: receipt.assetDigest,
+      bindingDigest: receipt.bindingDigest,
+      bindingId: receipt.bindingId,
+      assetKind: receipt.assetKind,
+      outcome: receipt.outcome,
+      reason: receipt.reason ?? null,
+      receiptDigest: receipt.digest,
+      rendererId: receipt.rendererId,
+      fabricSessionId: receipt.fabricSessionId,
+      atMs,
+    };
+    this.assetLedger.push(entry);
+    if (this.assetLedger.length > MAX_BOUND_ASSETS) {
+      this.assetLedger.splice(0, this.assetLedger.length - MAX_BOUND_ASSETS);
+    }
+    this.pushJournal({
+      atMs,
+      source: 'workspace-command',
+      intentKind: 'bind',
+      controlIntentId: 'epoch.world.interaction.bind',
+      outcome: receipt.outcome === 'applied' ? 'applied' : 'normalized',
+      detail:
+        receipt.outcome === 'applied'
+          ? `asset ${receipt.assetDigest.slice(0, 12)}… bound on ${receipt.rendererId} (binding ${receipt.bindingDigest.slice(0, 12)}…, receipt ${receipt.digest.slice(0, 12)}…)`
+          : `asset ${receipt.assetDigest.slice(0, 12)}… declined by ${receipt.rendererId} (${receipt.reason ?? 'no reason'}) — receipt ${receipt.digest.slice(0, 12)}…`,
+    });
+    this.notify();
+    return { ok: true, value: entry };
+  }
+
+  /** The digest-addressed bound-asset ledger (newest first; evidence view). */
+  boundAssetLedger(): readonly BoundAssetEntry[] {
+    return [...this.assetLedger].reverse();
+  }
+
+  /** The digest-addressed import registry entries (newest first). */
+  importedAssetEntries(): readonly SessionAssetEntry[] {
+    return [...this.importedAssets.values()]
+      .map((asset) => this.toSessionAssetEntry(asset))
+      .sort((a, b) => b.importedAtMs - a.importedAtMs);
+  }
+
+  // -------------------------------------------------------------------------
   // Renderer selection, health, and fallback (Epoch-owned chrome).
   // -------------------------------------------------------------------------
 
@@ -972,6 +1215,10 @@ export class WorldWorkspaceRuntime {
       journal: [...this.journal],
       effects: [...this.effects],
       controls: projectControls(scene),
+      sessionAssets: {
+        imported: this.importedAssetEntries(),
+        ledger: this.boundAssetLedger(),
+      },
       sceneUsage: sceneUsageOf(scene),
     };
   }
@@ -982,6 +1229,40 @@ export class WorldWorkspaceRuntime {
 
   private requireSession(): string | null {
     return this.fabricSessionId;
+  }
+
+  /** Project one registered import into its view-model entry. */
+  private toSessionAssetEntry(
+    asset: FoundationAssetAdmission & { importedAtMs: number; fileName: string | null },
+  ): SessionAssetEntry {
+    return {
+      assetDigest: asset.assetDigest,
+      assetKind: asset.assetKind,
+      byteSize: asset.byteSize,
+      label: asset.label ?? asset.fileName,
+      vertexCount: asset.vertexCount,
+      triangleCount: asset.triangleCount,
+      importedAtMs: asset.importedAtMs,
+    };
+  }
+
+  /** The view-model entry of one registered import (by digest), or null. */
+  private sessionAssetEntryOf(assetDigest: string): SessionAssetEntry | null {
+    const asset = this.importedAssets.get(assetDigest);
+    return asset === undefined ? null : this.toSessionAssetEntry(asset);
+  }
+
+  /**
+   * The deterministic binding id of one imported asset ("rab-" + the
+   * sanitized slug + the digest prefix — the contracts/renderers grammar).
+   */
+  private bindingIdOf(assetDigest: string): string {
+    const slug = this.input.slug
+      .toLowerCase()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 40);
+    return `rab-${slug || 'asset'}-${assetDigest.slice(0, 8)}`;
   }
 
   private nowMs(): number {

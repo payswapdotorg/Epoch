@@ -115,6 +115,17 @@ export interface WorkspaceHandlers {
   ): void;
   /** Switch the renderer. */
   onRendererSelect(rendererId: string): void;
+  /**
+   * Import one UNTRUSTED foundation-asset stream (W067) and bind it onto
+   * the live session in the canonical flow: the interchange bridge's trust
+   * gate (validate → normalize → content-address) → the digest-addressed
+   * registry → the typed `bind` intent → the fabric session-asset
+   * operation → the receipt + the bound-asset ledger. Every typed refusal
+   * surfaces through the driver's own view model — nothing throws.
+   */
+  onFoundationImport(file: { readonly bytes: Uint8Array; readonly fileName?: string | undefined }): void;
+  /** Re-bind one already-imported foundation asset (e.g. after a switch). */
+  onFoundationBind(assetDigest: string): void;
 }
 
 /**
@@ -200,6 +211,21 @@ export function createWorkspaceHandlers(
     },
     onRendererSelect: (rendererId) => {
       fire(() => driver.selectRenderer(rendererId));
+    },
+    onFoundationImport: (file) => {
+      // The canonical in-page flow (W067): trust-gate admission first (a
+      // typed refusal stops the flow — nothing registers, nothing binds),
+      // then the typed bind onto the live session. Both results surface
+      // through the driver's view model (registry + ledger + journal).
+      const imported = driver.importFoundationAsset(file.bytes, { fileName: file.fileName });
+      if (!imported.ok) {
+        settle();
+        return;
+      }
+      fire(() => driver.bindFoundationAsset(imported.value.assetDigest));
+    },
+    onFoundationBind: (assetDigest) => {
+      fire(() => driver.bindFoundationAsset(assetDigest));
     },
   };
 }

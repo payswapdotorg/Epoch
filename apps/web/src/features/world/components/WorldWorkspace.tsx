@@ -27,6 +27,7 @@ import { createWorkspaceHandlers } from '../workspace-handlers';
 import { WorldViewport } from './WorldViewport';
 import {
   WorldControlsPanel,
+  WorldFoundationPanel,
   WorldInspectPanel,
   WorldIntentJournal,
   WorldLayerPanel,
@@ -124,6 +125,7 @@ export function WorldWorkspace({
           />
           <WorldIntentJournal viewModel={current} />
         </div>
+        <WorldFoundationPanel sessionAssets={current.sessionAssets} handlers={handlers} />
       </div>
 
       {/* SECONDARY CONTEXT SURFACES. */}

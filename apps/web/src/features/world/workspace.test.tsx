@@ -153,6 +153,52 @@ class ScriptedDriver implements WorldWorkspaceDriver {
       },
     };
   }
+
+  importFoundationAsset(
+    bytes: Uint8Array,
+    input?: { readonly fileName?: string | undefined } | undefined,
+  ): { ok: true; value: import('./workspace-contracts').SessionAssetEntryInput } | { ok: false; error: { code: string; message: string } } {
+    this.commands.push({ kind: 'importFoundationAsset', payload: [bytes, input] });
+    if (bytes.length === 0) {
+      return { ok: false, error: { code: 'input-empty', message: 'the imported foundation asset is empty (zero bytes)' } };
+    }
+    const assetDigest = 'e'.repeat(64);
+    const entry: import('./workspace-contracts').SessionAssetEntryInput = {
+      assetDigest,
+      assetKind: 'mesh',
+      byteSize: bytes.length,
+      label: input?.fileName ?? 'scripted-asset.glb',
+      vertexCount: 3,
+      triangleCount: 1,
+      importedAtMs: 1_500,
+    };
+    this.view = {
+      ...this.view,
+      sessionAssets: { ...this.view.sessionAssets, imported: [entry] },
+    };
+    return { ok: true, value: entry };
+  }
+
+  async bindFoundationAsset(assetDigest: string): Promise<{ ok: true; value: import('./workspace-contracts').BoundAssetEntryInput } | { ok: false; error: { code: string; message: string } }> {
+    this.commands.push({ kind: 'bindFoundationAsset', payload: [assetDigest] });
+    const entry: import('./workspace-contracts').BoundAssetEntryInput = {
+      assetDigest,
+      bindingDigest: 'f'.repeat(64),
+      bindingId: 'rab-scripted-asset',
+      assetKind: 'mesh',
+      outcome: 'applied',
+      reason: null,
+      receiptDigest: '9'.repeat(64),
+      rendererId: this.view.renderers.activeRendererId,
+      fabricSessionId: 'fx-scripted-1',
+      atMs: 1_600,
+    };
+    this.view = {
+      ...this.view,
+      sessionAssets: { ...this.view.sessionAssets, ledger: [entry] },
+    };
+    return { ok: true, value: entry };
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -337,6 +383,10 @@ function scriptedViewModel(): WorkspaceViewModelInput {
         intentId: 'epoch.world.interaction.simulate',
       },
     ],
+    sessionAssets: {
+      imported: [],
+      ledger: [],
+    },
     sceneUsage: {
       entityCount: 3,
       focusedCount: 1,
@@ -393,6 +443,52 @@ describe('the world workspace component (W057)', () => {
     const html = renderToStaticMarkup(createElement(WorldWorkspace, { driver: new ScriptedDriver(scriptedViewModel()) }));
     expect(html).toContain('data-entity-state="offscreen"');
     expect(html).toContain('(outside view)');
+  });
+
+  it('renders the foundation-asset surface (W067): the import affordance + the digest-addressed bound-asset ledger', async () => {
+    const driver = new ScriptedDriver(scriptedViewModel());
+    // The canonical in-page flow through the handlers: the file bytes go
+    // through the driver's trust gate, then the typed bind.
+    const handlers = createWorkspaceHandlers(driver);
+    handlers.onFoundationImport({ bytes: new Uint8Array(64), fileName: 'riser-caps.glb' });
+    await flush();
+    expect(driver.commands.map((command) => command.kind)).toEqual([
+      'importFoundationAsset',
+      'bindFoundationAsset',
+    ]);
+    // The registered asset + the applied ledger entry render (the
+    // digest-addressed evidence surfaces, Epoch-owned chrome).
+    const html = renderToStaticMarkup(createElement(WorldWorkspace, { driver }));
+    expect(html).toContain('data-panel="foundation"');
+    expect(html).toContain('data-testid="foundation-import-input"');
+    expect(html).toContain(`data-imported-asset="${'e'.repeat(64)}"`);
+    expect(html).toContain(`data-bound-asset="${'e'.repeat(64)}"`);
+    expect(html).toContain('data-outcome="applied"');
+    expect(html).toContain(`data-binding-digest="${'f'.repeat(64)}"`);
+    expect(html).toContain(`data-receipt-digest="${'9'.repeat(64)}"`);
+    expect(html).toContain('Bound-asset ledger');
+  });
+
+  it('a refused import never reaches the bind (the trust gate stops the flow)', async () => {
+    const driver = new ScriptedDriver(scriptedViewModel());
+    const handlers = createWorkspaceHandlers(driver);
+    handlers.onFoundationImport({ bytes: new Uint8Array(0), fileName: 'empty.glb' });
+    await flush();
+    expect(driver.commands.map((command) => command.kind)).toEqual(['importFoundationAsset']);
+  });
+
+  it('re-binding an imported asset is a standalone driver command', async () => {
+    const driver = new ScriptedDriver(scriptedViewModel());
+    const handlers = createWorkspaceHandlers(driver);
+    handlers.onFoundationImport({ bytes: new Uint8Array(64), fileName: 'riser-caps.glb' });
+    await flush();
+    handlers.onFoundationBind('e'.repeat(64));
+    await flush();
+    expect(driver.commands.map((command) => command.kind)).toEqual([
+      'importFoundationAsset',
+      'bindFoundationAsset',
+      'bindFoundationAsset',
+    ]);
   });
 });
 
