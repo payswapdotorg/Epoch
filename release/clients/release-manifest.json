@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "releaseId": "epoch-clients-v1.0.0",
   "version": "1.0.0",
-  "sourceCommit": "e666a9459dbb59a1eb7d62289f68996928aebb9e",
+  "sourceCommit": "16c8b840d45a4798ea349372b24801d4f6d46ebb",
   "description": "The client release identity record set (W050; re-stamped by W063 with the real desktop installable artifacts: linux built-in-sandbox, windows built-in-sandbox-cross, macos ci-recipe-delivered). Every artifact records source commit, version/profile, target platform and checksum (spec/productization-architecture.md). Gaps and deviations are declared \u2014 never silent.",
   "clients": [
     {
@@ -18,7 +18,7 @@
           "apps/web/vitest.config.mts",
           "apps/web/playwright.config.ts"
         ],
-        "definitionTreeSha": "7583e15191ae7bafdd6a5466f2984d13c6535724",
+        "definitionTreeSha": "9db2f525ede9530f60643a21f8f836c5235030bd",
         "checksums": {
           "apps/web/package.json": "dd3b69bdb057577936adac4eb890a9a5bfce7b0d67b809306cc38232bb606691",
           "apps/web/next.config.ts": "765f09939622c9112c2cf809fb95086ec622490c258a05c0cf903fafa441dc39",
