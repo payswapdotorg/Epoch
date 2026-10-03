@@ -54,7 +54,7 @@ import {
 // seam's dynamic expression import is invisible to the tracer (found live at
 // the first production boot). Pools are still created ONLY by
 // connectPostgresPool at the service-layer seam.
-import { PG_DRIVER_POOL_CTOR } from '@epoch/application-gateway';
+import { PG_DRIVER_POOL_CTOR } from '@epoch/application-gateway/pg-driver-anchor';
 
 /** The bound infrastructure of one deployment (values server-side only). */
 export interface ProductionBindings {
