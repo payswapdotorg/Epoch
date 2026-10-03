@@ -253,6 +253,33 @@ export function buildSimulateIntent(
 }
 
 // ---------------------------------------------------------------------------
+// Foundation-asset binding (W066's `bind` kind — the validated reference).
+// ---------------------------------------------------------------------------
+
+/**
+ * Build the typed bind intent of one VALIDATED foundation asset (W066,
+ * ACR-010): the payload carries the sealed binding's content address plus
+ * the owning tenant scope — a VALIDATED binding REFERENCE only, never
+ * untrusted raw bytes (the trust gate stays upstream in the foundation
+ * bridge; the reducer emits the effect-only `binding-requested` record).
+ */
+export function buildBindIntent(
+  input: IntentBuilderInput & {
+    readonly bindingDigest: string;
+    readonly tenantScope: WorldScene['tenantScope'];
+  },
+): RuntimeResult<WorldInteractionIntent> {
+  return admitBuilt({
+    schema: 'epoch.world-intent',
+    intentVersion: 1,
+    kind: 'bind',
+    intentId: input.invocationId,
+    bindingDigest: input.bindingDigest,
+    tenantScope: input.tenantScope,
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Scene-control mapping (the candidate/action controls, R30).
 // ---------------------------------------------------------------------------
 

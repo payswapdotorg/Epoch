@@ -10,7 +10,16 @@
 // cores here (the Three.js adapter without a GL surface, the Babylon.js
 // adapter over the NullEngine host — the section injects the webview GL
 // surfaces in the browser; the W061 browser E2E covers the live-GL legs).
+//
+// W067 (ACR-010): the battery EXTENSION mirrors the web in-page foundation
+// path over the same wiring — the imported glTF bytes through the runtime's
+// interchange bridge (the W060 trust gate), the typed bind intent, the
+// binding-requested effect, the W065 fabric operation onto the LIVE session
+// (the REAL Three.js headless presenter first, then the contract-only
+// reference seam), the digest-addressed bound-asset ledger, and the typed
+// refusals (malformed bytes at the gate; the undeclared-kind presenter).
 import { describe, expect, it } from 'vitest';
+import { createHash } from 'node:crypto';
 import {
   ManualHostClock,
   ManualFrameScheduler,
@@ -40,6 +49,57 @@ import {
   buildWorldFabric,
   DEVICE,
 } from '../app/components/world-host/world-fixture';
+
+/**
+ * The canonical glTF fixture (byte-identical to the glTF bridge battery's —
+ * the pinned digest proves it; see adapters/foundations/gltf/test/helpers.ts).
+ * Constructed inline so this battery never reaches into another package's
+ * test tree.
+ */
+const TRIANGLE_FLOATS: readonly number[] = [0, 0, 0, 1, 0, 0, 0, 1, 0];
+
+const CANONICAL_GLB_DIGEST = '9cfd1b40cadefd283a5048301bd3c449f4dfe057095e11479bc9df45202ad556' as const;
+
+function canonicalGlbBytes(): Uint8Array {
+  const floats = new Uint8Array(36);
+  const floatView = new DataView(floats.buffer, floats.byteOffset, floats.byteLength);
+  TRIANGLE_FLOATS.forEach((value, index) => floatView.setFloat32(index * 4, value, true));
+  const json = {
+    asset: { version: '2.0', generator: 'epoch-gltf-fixture/1' },
+    scene: 0,
+    scenes: [{ name: 'Fixture scene', nodes: [0] }],
+    nodes: [{ name: 'Fixture node', mesh: 0, translation: [1, 0, 0] }],
+    meshes: [{ name: 'Fixture mesh', primitives: [{ attributes: { POSITION: 0 }, material: 0 }] }],
+    materials: [
+      { name: 'Fixture material', pbrMetallicRoughness: { baseColorFactor: [0.8, 0.4, 0.2, 1] } },
+    ],
+    accessors: [
+      { bufferView: 0, componentType: 5126, count: 3, type: 'VEC3', min: [0, 0, 0], max: [1, 1, 0] },
+    ],
+    bufferViews: [{ buffer: 0, byteOffset: 0, byteLength: 36 }],
+    buffers: [{ byteLength: 36 }],
+  };
+  const jsonBytes = new TextEncoder().encode(JSON.stringify(json));
+  const jsonPadding = (4 - (jsonBytes.length % 4)) % 4;
+  const binPadding = (4 - (floats.length % 4)) % 4;
+  const jsonChunkLength = jsonBytes.length + jsonPadding;
+  const binChunkLength = floats.length + binPadding;
+  const total = 12 + 8 + jsonChunkLength + 8 + binChunkLength;
+  const out = new Uint8Array(total);
+  const view = new DataView(out.buffer, out.byteOffset, out.byteLength);
+  view.setUint32(0, 0x46546c67, true);
+  view.setUint32(4, 2, true);
+  view.setUint32(8, total, true);
+  view.setUint32(12, jsonChunkLength, true);
+  view.setUint32(16, 0x4e4f534a, true);
+  out.set(jsonBytes, 20);
+  for (let i = 0; i < jsonPadding; i += 1) out[20 + jsonBytes.length + i] = 0x20;
+  const binHeader = 20 + jsonChunkLength;
+  view.setUint32(binHeader, binChunkLength, true);
+  view.setUint32(binHeader + 4, 0x004e4942, true);
+  out.set(floats, binHeader + 8);
+  return out;
+}
 
 /**
  * The pointer position at which one entity projects under the ACTIVE
@@ -247,6 +307,126 @@ describe('the desktop world host (W061 wiring — the REAL renderers)', () => {
       // The canonical revision itself never changed (switching is
       // non-semantic by construction).
       expect(runtime.currentScene().digest).toBe(canonicalDigest);
+    } finally {
+      await runtime.close();
+    }
+  });
+
+  it('W067: imports a glTF in-page through the trust gate and binds it on the LIVE three.js session (the web path mirrored)', async () => {
+    const { runtime } = await openWorldHost();
+    try {
+      // The fixture is byte-identical to the bridge battery's canonical GLB.
+      const bytes = canonicalGlbBytes();
+      expect(createHash('sha256').update(bytes).digest('hex')).toBe(CANONICAL_GLB_DIGEST);
+      // The section's import affordance: the raw bytes through the
+      // runtime's interchange bridge (validate → normalize → content-address).
+      const imported = runtime.importFoundationAsset(bytes, { fileName: 'riser-cap.glb' });
+      expect(imported.ok, JSON.stringify(imported)).toBe(true);
+      if (!imported.ok) return;
+      expect(imported.value.assetDigest).toBe(CANONICAL_GLB_DIGEST);
+      expect(imported.value.assetKind).toBe('mesh');
+      expect(imported.value.vertexCount).toBe(3);
+      expect(imported.value.triangleCount).toBe(1);
+      // The typed bind onto the LIVE session (the REAL Three.js headless
+      // presenter first — its declared asset kinds include mesh).
+      const digestBefore = runtime.currentScene().digest;
+      const entitiesBefore = runtime.viewModel().viewport.entities.map((entity) => entity.entityId);
+      const bound = await runtime.bindFoundationAsset(imported.value.assetDigest);
+      expect(bound.ok, JSON.stringify(bound)).toBe(true);
+      if (!bound.ok) return;
+      expect(bound.value.outcome).toBe('applied');
+      expect(bound.value.rendererId).toBe(THREE_RENDERER_ID);
+      expect(bound.value.assetDigest).toBe(CANONICAL_GLB_DIGEST);
+      expect(bound.value.bindingDigest).toMatch(/^[0-9a-f]{64}$/);
+      expect(bound.value.receiptDigest).toMatch(/^[0-9a-f]{64}$/);
+      // The digest-addressed ledger + the journal + the effect surface.
+      const view = runtime.viewModel();
+      expect(view.sessionAssets.ledger.map((entry) => entry.assetDigest)).toEqual([
+        CANONICAL_GLB_DIGEST,
+      ]);
+      expect(view.sessionAssets.imported[0]?.label).toBe('Fixture mesh');
+      expect(
+        view.journal.some((entry) => entry.intentKind === 'bind' && entry.outcome === 'applied'),
+      ).toBe(true);
+      expect(
+        view.effects.some(
+          (entry) =>
+            entry.effect.effect === 'binding-requested' &&
+            entry.effect.bindingDigest === bound.value.bindingDigest,
+        ),
+      ).toBe(true);
+      // The canonical world is UNCHANGED (binding is presentation).
+      expect(runtime.currentScene().digest).toBe(digestBefore);
+      expect(view.viewport.worldDigest).toBe(digestBefore);
+      expect(view.viewport.entities.map((entity) => entity.entityId)).toEqual(entitiesBefore);
+    } finally {
+      await runtime.close();
+    }
+  });
+
+  it('W067: the contract-only reference presenter binds the same asset on its own seam (the fallback chain, digest-addressed continuity)', async () => {
+    const { runtime } = await openWorldHost();
+    try {
+      const imported = runtime.importFoundationAsset(canonicalGlbBytes(), { fileName: 'riser-cap.glb' });
+      expect(imported.ok).toBe(true);
+      if (!imported.ok) return;
+      // The desktop FULL reference presenter DECLARES mesh assets: the
+      // binding applies through the reference adapter's own bindAsset seam.
+      const switched = await runtime.selectRenderer(FULL_RENDERER_ID);
+      expect(switched.ok).toBe(true);
+      const bound = await runtime.bindFoundationAsset(imported.value.assetDigest);
+      expect(bound.ok, JSON.stringify(bound)).toBe(true);
+      if (!bound.ok) return;
+      expect(bound.value.outcome).toBe('applied');
+      expect(bound.value.rendererId).toBe(FULL_RENDERER_ID);
+      expect(bound.value.fabricSessionId).toBe(runtime.session()?.fabricSessionId);
+      // The ledger's continuity key is the ASSET digest (same asset, new
+      // session, new session-addressed binding).
+      const ledger = runtime.viewModel().sessionAssets.ledger;
+      expect(ledger).toHaveLength(1);
+      expect(ledger[0]?.assetDigest).toBe(CANONICAL_GLB_DIGEST);
+    } finally {
+      await runtime.close();
+    }
+  });
+
+  it('W067: the typed refusals surface honestly (the bridge gate + the undeclared-kind presenter; the session stays healthy)', async () => {
+    const { runtime } = await openWorldHost();
+    try {
+      // Malformed bytes are the bridge's typed refusal — nothing registers.
+      const garbage = new TextEncoder().encode('not a gltf container');
+      const refused = runtime.importFoundationAsset(garbage, { fileName: 'garbage.bin' });
+      expect(refused.ok).toBe(false);
+      expect(runtime.viewModel().sessionAssets.imported).toHaveLength(0);
+      // The canonical fixture imports cleanly, but the REDUCED reference
+      // presenter declares ZERO asset kinds: the fabric refuses typed
+      // (the W065 capability check — the reference adapter's seam).
+      const imported = runtime.importFoundationAsset(canonicalGlbBytes(), { fileName: 'ok.glb' });
+      expect(imported.ok).toBe(true);
+      if (!imported.ok) return;
+      const switched = await runtime.selectRenderer(REDUCED_RENDERER_ID);
+      expect(switched.ok).toBe(true);
+      const bound = await runtime.bindFoundationAsset(imported.value.assetDigest);
+      expect(bound.ok).toBe(false);
+      if (!bound.ok) {
+        expect(bound.error.code).toBe('asset-rejected');
+      }
+      // No partial application: the ledger stays empty, the journal records
+      // the rejection, the session stays healthy on the fallback presenter.
+      expect(runtime.viewModel().sessionAssets.ledger).toHaveLength(0);
+      expect(
+        runtime.viewModel().journal.some(
+          (entry) => entry.intentKind === 'bind' && entry.outcome === 'rejected',
+        ),
+      ).toBe(true);
+      expect(runtime.viewModel().renderers.health.state).toBe('healthy');
+      expect(runtime.session()?.state).toBe('active');
+      // An unknown digest is the typed unknown-asset refusal.
+      const unknown = await runtime.bindFoundationAsset('b'.repeat(64));
+      expect(unknown.ok).toBe(false);
+      if (!unknown.ok) {
+        expect(unknown.error.code).toBe('unknown-asset');
+      }
     } finally {
       await runtime.close();
     }

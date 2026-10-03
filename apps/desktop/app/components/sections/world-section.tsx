@@ -163,6 +163,26 @@ export function WorldSection(): ReactNode {
       });
   }, []);
 
+  /**
+   * The in-page foundation path (W067, ACR-010): the imported file's raw
+   * bytes go through the runtime's interchange bridge IN THE WEBVIEW (the
+   * trust gate: validate → normalize → content-address — the registered
+   * glTF bridge, no vendor UI), then the typed `bind` intent applies the
+   * binding onto the live session through the fabric operation. Every
+   * typed refusal surfaces through the view model (registry, ledger,
+   * journal) — nothing throws.
+   */
+  const onFoundationImport = useCallback((file: { bytes: Uint8Array; fileName: string }): void => {
+    const runtime = runtimeRef.current;
+    if (runtime === null) return;
+    const imported = runtime.importFoundationAsset(file.bytes, { fileName: file.fileName });
+    if (!imported.ok) {
+      setView(runtime.viewModel());
+      return;
+    }
+    command(() => runtime.bindFoundationAsset(imported.value.assetDigest));
+  }, [command]);
+
   const fire = (): void => {
     const runtime = runtimeRef.current;
     if (runtime !== null) setView(runtime.viewModel());
@@ -692,6 +712,95 @@ export function WorldSection(): ReactNode {
             >
               Annotate
             </ActionButton>
+          </div>
+        </Panel>
+
+        <Panel title="Foundation assets" hint="Import a glTF/GLB in-page (no vendor UI): validate → content-address → the typed bind intent.">
+          <div style={{ display: 'flex', gap: SPACE.sm, alignItems: 'center', flexWrap: 'wrap' }}>
+            <input
+              data-testid="desktop-world-foundation-input"
+              type="file"
+              accept=".gltf,.glb,model/gltf-binary,model/gltf+json"
+              aria-label="Import a glTF/GLB foundation asset"
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                if (file === undefined || file === null) return;
+                void file.arrayBuffer().then((buffer) => {
+                  onFoundationImport({ bytes: new Uint8Array(buffer), fileName: file.name });
+                });
+                event.target.value = '';
+              }}
+              style={{
+                fontSize: TYPE.sizeSm,
+                maxWidth: 260,
+                fontFamily: FONTS.sans,
+                color: COLORS.text,
+              }}
+            />
+            <span style={{ fontSize: TYPE.sizeXs, color: COLORS.textMuted }}>
+              Only sealed, content-addressed, tenant-scoped bindings are bindable.
+            </span>
+          </div>
+          {view.sessionAssets.imported.length === 0 ? (
+            <span style={{ fontSize: TYPE.sizeSm, color: COLORS.textMuted }}>
+              No foundation assets imported yet.
+            </span>
+          ) : (
+            <div style={{ display: 'grid', gap: SPACE.xs, marginTop: SPACE.sm }}>
+              {view.sessionAssets.imported.map((asset) => (
+                <div
+                  key={asset.assetDigest}
+                  data-testid="desktop-world-imported-asset"
+                  data-asset-digest={asset.assetDigest}
+                  style={{ display: 'flex', gap: SPACE.sm, alignItems: 'center' }}
+                >
+                  <Mono>{asset.assetDigest.slice(0, 16)}…</Mono>
+                  <span style={{ fontSize: TYPE.sizeSm, flex: 1 }}>
+                    {asset.label ?? 'imported asset'} <Badge tone="mono">{asset.assetKind}</Badge>{' '}
+                    <small>
+                      {asset.byteSize} bytes
+                      {asset.vertexCount !== null && asset.triangleCount !== null
+                        ? ` · ${asset.vertexCount} vertices · ${asset.triangleCount} triangles`
+                        : ''}
+                    </small>
+                  </span>
+                  <ActionButton onClick={() => command(() => runtime.bindFoundationAsset(asset.assetDigest))}>
+                    Bind
+                  </ActionButton>
+                </div>
+              ))}
+            </div>
+          )}
+          <div style={{ display: 'grid', gap: SPACE.xs, marginTop: SPACE.md }}>
+            <span style={{ fontSize: TYPE.sizeXs, color: COLORS.textSecondary, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              Bound-asset ledger (digest-addressed)
+            </span>
+            {view.sessionAssets.ledger.length === 0 ? (
+              <span style={{ fontSize: TYPE.sizeSm, color: COLORS.textMuted }}>
+                No bindings applied yet — the ledger is experience state, never semantic authority.
+              </span>
+            ) : (
+              view.sessionAssets.ledger.map((entry, index) => (
+                <div
+                  key={`${entry.receiptDigest}-${index}`}
+                  data-testid="desktop-world-bound-asset"
+                  data-asset-digest={entry.assetDigest}
+                  data-outcome={entry.outcome}
+                  data-binding-digest={entry.bindingDigest}
+                  data-receipt-digest={entry.receiptDigest}
+                  style={{ display: 'grid', gap: 2 }}
+                >
+                  <span style={{ fontSize: TYPE.sizeSm }}>
+                    <strong>{entry.outcome}</strong> · {entry.assetKind} on {entry.rendererId}
+                    {entry.reason !== null ? ` (${entry.reason})` : ''}
+                  </span>
+                  <span style={{ fontSize: TYPE.sizeXs, color: COLORS.textMuted, fontFamily: FONTS.mono }}>
+                    asset {entry.assetDigest.slice(0, 16)}… · binding {entry.bindingDigest.slice(0, 16)}… · receipt{' '}
+                    {entry.receiptDigest.slice(0, 16)}…
+                  </span>
+                </div>
+              ))
+            )}
           </div>
         </Panel>
 

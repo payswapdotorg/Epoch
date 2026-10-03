@@ -16,6 +16,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@epoch/adapter-foundation-gltf": "workspace:*",
     "@epoch/agent-protocol": "workspace:*",
     "@epoch/capability-registry": "workspace:*",
     "@epoch/experience-protocol": "workspace:*",

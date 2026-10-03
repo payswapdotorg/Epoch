@@ -24,6 +24,7 @@ import { computeSceneUsage } from '@epoch/world-experience';
 import type { NavigationState } from './navigation';
 import type { SemanticLayer } from './layers';
 import type { WorldTool } from './version';
+import type { SessionAssetsViewModel } from './session-assets';
 
 // ---------------------------------------------------------------------------
 // Viewport projection.
@@ -183,6 +184,8 @@ export interface WorkspaceViewModel {
   readonly journal: readonly JournalEntry[];
   readonly effects: readonly EffectEntry[];
   readonly controls: readonly WorkspaceControl[];
+  /** The foundation-asset surface (W067): the import registry + the bound-asset ledger. */
+  readonly sessionAssets: SessionAssetsViewModel;
   readonly sceneUsage: {
     readonly entityCount: number;
     readonly focusedCount: number;

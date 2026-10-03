@@ -470,6 +470,128 @@ export function WorldControlsPanel({
 }
 
 // ---------------------------------------------------------------------------
+// The foundation-asset panel (W067: the in-page import affordance — no
+// vendor UI; the interchange bridge's trust gate, the typed bind intent,
+// and the digest-addressed bound-asset ledger).
+// ---------------------------------------------------------------------------
+
+/** The foundation panel props. */
+export interface WorldFoundationPanelProps {
+  readonly sessionAssets: WorkspaceViewModelInput['sessionAssets'];
+  readonly handlers: WorkspaceHandlers;
+}
+
+/**
+ * The foundation-asset panel: the Epoch-owned import affordance (a plain
+ * file input → the interchange bridge validate/normalize/content-address →
+ * the typed bind intent) + the digest-addressed bound-asset ledger. No
+ * vendor UI: the bridge is composed behind the runtime's neutral seam.
+ */
+export function WorldFoundationPanel({
+  sessionAssets,
+  handlers,
+}: WorldFoundationPanelProps): ReactNode {
+  return (
+    <div data-panel="foundation" style={PANEL_STYLE}>
+      <h3 style={TITLE_STYLE}>Foundation assets — import &amp; bind</h3>
+      <form
+        data-foundation-import=""
+        style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}
+      >
+        <input
+          data-testid="foundation-import-input"
+          type="file"
+          accept=".gltf,.glb,model/gltf-binary,model/gltf+json"
+          aria-label="Import a glTF/GLB foundation asset"
+          style={{ fontSize: 11, maxWidth: 240 }}
+          onChange={(event) => {
+            const file = event.target.files?.[0];
+            if (file === undefined || file === null) return;
+            // The trust gate runs IN PAGE (the runtime's interchange
+            // bridge): the raw bytes cross no other boundary.
+            void file.arrayBuffer().then((buffer) => {
+              handlers.onFoundationImport({
+                bytes: new Uint8Array(buffer),
+                fileName: file.name,
+              });
+            });
+            // Allow re-importing the same file (the change event must
+            // re-fire for identical selections).
+            event.target.value = '';
+          }}
+        />
+        <span style={{ fontSize: 11, color: '#a8a29e' }}>
+          glTF/GLB → validate → content-address → typed bind intent
+        </span>
+      </form>
+      {sessionAssets.imported.length === 0 ? (
+        <p style={{ margin: '10px 0 0', fontSize: 12, color: '#a8a29e' }}>
+          No foundation assets imported yet.
+        </p>
+      ) : (
+        <ul style={{ ...LIST_STYLE, marginTop: 8 }}>
+          {sessionAssets.imported.map((asset) => (
+            <li
+              key={asset.assetDigest}
+              data-imported-asset={asset.assetDigest}
+              data-asset-kind={asset.assetKind}
+            >
+              <code style={{ fontSize: 11 }}>{shortDigest(asset.assetDigest)}</code>{' '}
+              <small>
+                {asset.label ?? 'imported asset'} · {asset.assetKind} · {asset.byteSize} bytes
+                {asset.vertexCount !== null && asset.triangleCount !== null
+                  ? ` · ${asset.vertexCount} vertices · ${asset.triangleCount} triangles`
+                  : ''}
+              </small>{' '}
+              <button
+                type="button"
+                data-testid={`foundation-bind-${asset.assetDigest.slice(0, 12)}`}
+                style={BUTTON_STYLE}
+                onClick={() => handlers.onFoundationBind(asset.assetDigest)}
+              >
+                Bind
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <h3 style={{ ...TITLE_STYLE, marginTop: 12 }}>Bound-asset ledger</h3>
+      {sessionAssets.ledger.length === 0 ? (
+        <p style={{ margin: 0, fontSize: 12, color: '#a8a29e' }}>
+          No bindings applied yet — the ledger is digest-addressed experience state, never semantic authority.
+        </p>
+      ) : (
+        <ul style={LIST_STYLE}>
+          {sessionAssets.ledger.map((entry, index) => (
+            <li
+              key={`${entry.receiptDigest}-${index}`}
+              data-bound-asset={entry.assetDigest}
+              data-outcome={entry.outcome}
+              data-binding-digest={entry.bindingDigest}
+              data-receipt-digest={entry.receiptDigest}
+              data-binding-id={entry.bindingId}
+              data-renderer-id={entry.rendererId}
+            >
+              <strong>{entry.outcome}</strong>{' '}
+              <code style={{ fontSize: 11 }}>{shortDigest(entry.assetDigest)}</code>{' '}
+              <small>
+                {entry.assetKind} on {entry.rendererId}
+                {entry.reason !== null ? ` (${entry.reason})` : ''} · binding{' '}
+                <code style={{ fontSize: 11 }}>{shortDigest(entry.bindingDigest)}</code> · receipt{' '}
+                <code style={{ fontSize: 11 }}>{shortDigest(entry.receiptDigest)}</code>
+              </small>
+            </li>
+          ))}
+        </ul>
+      )}
+      <p style={{ margin: '8px 0 0', fontSize: 11, color: '#a8a29e' }}>
+        Only sealed, content-addressed, tenant-scoped bindings are bindable — the trust gate stays in the interchange bridge.
+      </p>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // The intent journal (typed-intent evidence + surfaced effects).
 // ---------------------------------------------------------------------------
 
@@ -528,5 +650,7 @@ function describeEffect(effect: EffectEntryInput['effect']): string {
       return `disconnect ${effect.fromEntityId} → ${effect.toEntityId}`;
     case 'branch-requested':
       return `branch at ${(effect.atMs / 1000).toFixed(1)}s (branch authority)`;
+    case 'binding-requested':
+      return `bind asset binding ${effect.bindingDigest.slice(0, 12)}… (tenant ${effect.tenantId}) — presentation binding through the fabric`;
   }
 }

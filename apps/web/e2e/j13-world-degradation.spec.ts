@@ -12,6 +12,13 @@
  * workspace stays fully interactive — a blank square must never be
  * presented as a world).
  *
+ * W067 (ACR-010) extends the degradation battery with the IN-PAGE
+ * FOUNDATION PATH on the no-GL/reference fallback: the import affordance
+ * + the typed bind stay live on the degraded surface (binding is
+ * presentation state, never pixels) — the active presenter's headless
+ * core applies the sealed mesh binding, and the declared reference
+ * fallback presenter applies it through its own bindAsset seam.
+ *
  * The fabric-level forced ladder (declared degradations, undeclared typed
  * refusals, probe-incompatible primary completing through the ordered
  * fallback on the other real engine, forced mount failure with the source
@@ -20,7 +27,8 @@
  * presentation-level degradation the user actually sees.
  */
 import { test, expect } from '@playwright/test';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
   THREE_RENDERER_ID,
@@ -46,6 +54,56 @@ import {
 } from '../src/features/world/host/world-fixture';
 
 const SHOT_DIR = join(process.cwd(), 'e2e-results', 'world-legs');
+
+// The canonical glTF fixture (byte-identical to the glTF bridge battery's —
+// see adapters/foundations/gltf/test/helpers.ts; constructed inline so this
+// battery never reaches into another package's test tree).
+const CANONICAL_FIXTURE_DIGEST =
+  '9cfd1b40cadefd283a5048301bd3c449f4dfe057095e11479bc9df45202ad556' as const;
+const TRIANGLE_FLOATS: readonly number[] = [0, 0, 0, 1, 0, 0, 0, 1, 0];
+
+function canonicalFixtureGlb(): Uint8Array {
+  const floats = new Uint8Array(36);
+  const floatView = new DataView(floats.buffer, floats.byteOffset, floats.byteLength);
+  TRIANGLE_FLOATS.forEach((value, index) => floatView.setFloat32(index * 4, value, true));
+  const json = {
+    asset: { version: '2.0', generator: 'epoch-gltf-fixture/1' },
+    scene: 0,
+    scenes: [{ name: 'Fixture scene', nodes: [0] }],
+    nodes: [{ name: 'Fixture node', mesh: 0, translation: [1, 0, 0] }],
+    meshes: [
+      { name: 'Fixture mesh', primitives: [{ attributes: { POSITION: 0 }, material: 0 }] },
+    ],
+    materials: [
+      { name: 'Fixture material', pbrMetallicRoughness: { baseColorFactor: [0.8, 0.4, 0.2, 1] } },
+    ],
+    accessors: [
+      { bufferView: 0, componentType: 5126, count: 3, type: 'VEC3', min: [0, 0, 0], max: [1, 1, 0] },
+    ],
+    bufferViews: [{ buffer: 0, byteOffset: 0, byteLength: 36 }],
+    buffers: [{ byteLength: 36 }],
+  };
+  const jsonBytes = new TextEncoder().encode(JSON.stringify(json));
+  const jsonPadding = (4 - (jsonBytes.length % 4)) % 4;
+  const binPadding = (4 - (floats.length % 4)) % 4;
+  const jsonChunkLength = jsonBytes.length + jsonPadding;
+  const binChunkLength = floats.length + binPadding;
+  const total = 12 + 8 + jsonChunkLength + 8 + binChunkLength;
+  const out = new Uint8Array(total);
+  const view = new DataView(out.buffer, out.byteOffset, out.byteLength);
+  view.setUint32(0, 0x46546c67, true);
+  view.setUint32(4, 2, true);
+  view.setUint32(8, total, true);
+  view.setUint32(12, jsonChunkLength, true);
+  view.setUint32(16, 0x4e4f534a, true);
+  out.set(jsonBytes, 20);
+  for (let i = 0; i < jsonPadding; i += 1) out[20 + jsonBytes.length + i] = 0x20;
+  const binHeader = 20 + jsonChunkLength;
+  view.setUint32(binHeader, binChunkLength, true);
+  view.setUint32(binHeader + 4, 0x004e4942, true);
+  out.set(floats, binHeader + 8);
+  return out;
+}
 
 test.beforeAll(async () => {
   mkdirSync(SHOT_DIR, { recursive: true });
@@ -138,6 +196,101 @@ test.describe('J13 leg 16 — forced degradation (no usable GL context)', () => 
         .first(),
     ).toBeVisible();
     await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.panel);
+  });
+
+  test('W067 — the in-page foundation path on the no-GL/reference fallback: the degraded world still imports and binds', async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      testInfo.project.name !== 'chromium-no-gl',
+      'this leg runs only in the chromium-no-gl project (WebGL disabled at launch)',
+    );
+    test.setTimeout(240_000);
+
+    await page.goto('/world');
+    await expect(page.locator('[data-world-host="web"]')).toHaveAttribute(
+      'data-world-phase',
+      'ready',
+    );
+    const workspace = page.locator('[data-workspace="world"]');
+    const digestBefore = await workspace.getAttribute('data-world-digest');
+    const entityIdsBefore = await workspace.getAttribute('data-entity-ids');
+    const fixturePath = join(tmpdir(), 'epoch-j13-degradation-leg14.glb');
+    writeFileSync(fixturePath, Buffer.from(canonicalFixtureGlb()));
+
+    // The degraded world (no GL, headless three.js core presenting, the
+    // reference projection as the spatial overlay) still runs the FULL
+    // in-page path: import -> the in-page trust gate -> the typed bind.
+    await page.setInputFiles('[data-testid="foundation-import-input"]', fixturePath);
+    const ledgerEntry = page.locator(
+      `li[data-bound-asset="${CANONICAL_FIXTURE_DIGEST}"][data-outcome="applied"]`,
+    );
+    await expect(ledgerEntry).toBeVisible();
+    const bindingDigest = await ledgerEntry.getAttribute('data-binding-digest');
+    expect(bindingDigest).toMatch(/^[0-9a-f]{64}$/);
+    const receiptDigest = await ledgerEntry.getAttribute('data-receipt-digest');
+    expect(receiptDigest).toMatch(/^[0-9a-f]{64}$/);
+    // The binding applied through the ACTIVE presenter's HEADLESS core
+    // (three.js — its declared asset kinds include mesh; the GPU upload is
+    // the browser path, the binding record is presentation state).
+    await expect(ledgerEntry).toContainText(THREE_RENDERER_ID);
+    // The typed receipt in the journal + the binding-requested effect.
+    await expect(
+      page
+        .locator(
+          '[data-panel="journal"] li[data-journal-entry="bind"][data-journal-outcome="applied"]',
+        )
+        .first(),
+    ).toBeVisible();
+    await expect(
+      page.locator('[data-panel="journal"] li[data-effect="binding-requested"]').first(),
+    ).toBeVisible();
+    // The canonical world digest + the presented semantic entity ids are
+    // UNCHANGED by the binding (binding is presentation, never semantic).
+    expect(await workspace.getAttribute('data-world-digest')).toBe(digestBefore);
+    expect(await workspace.getAttribute('data-entity-ids')).toBe(entityIdsBefore);
+    await page.screenshot({
+      path: join(SHOT_DIR, 'leg16-degraded-foundation-bind.png'),
+      fullPage: true,
+    });
+
+    // The declared fallback presenter's OWN seam: switch the degraded world
+    // to the reference renderer (rr-web-reference — W067 declares it
+    // asset-bindable, mirroring the desktop full reference) and re-bind the
+    // SAME digest-addressed asset on the fresh session.
+    await page.locator('[data-renderer-choice="rr-web-reference"]').click();
+    await expect(page.locator('[data-engine-stage]')).toHaveAttribute(
+      'data-active-renderer',
+      'rr-web-reference',
+    );
+    await page.getByTestId(`foundation-bind-${CANONICAL_FIXTURE_DIGEST.slice(0, 12)}`).click();
+    const referenceEntry = page.locator(
+      `li[data-bound-asset="${CANONICAL_FIXTURE_DIGEST}"][data-outcome="applied"]`,
+    );
+    await expect(referenceEntry.first()).toBeVisible();
+    // The newest ledger entry applied through the REFERENCE adapter's own
+    // bindAsset seam (the reference presenter's evidence).
+    await expect(
+      page
+        .locator(
+          `[data-panel="journal"] li[data-journal-entry="bind"][data-journal-outcome="applied"]`,
+        )
+        .first(),
+    ).toContainText('receipt');
+    await expect(referenceEntry.first()).toContainText('rr-web-reference');
+    // The ledger is keyed by the SAME asset digest (two applications, one
+    // digest-addressed identity) and the world digest is still unchanged.
+    await expect(workspace).toHaveAttribute(
+      'data-bound-assets',
+      CANONICAL_FIXTURE_DIGEST,
+    );
+    expect(await workspace.getAttribute('data-world-digest')).toBe(digestBefore);
+    // The reference presenter stays healthy (binding is not a failure mode).
+    await expect(page.getByTestId('renderer-health')).toContainText('healthy');
+    await page.screenshot({
+      path: join(SHOT_DIR, 'leg16-degraded-reference-bind.png'),
+      fullPage: true,
+    });
   });
 });
 
