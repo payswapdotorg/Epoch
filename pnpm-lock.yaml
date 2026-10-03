@@ -3061,6 +3061,9 @@ importers:
 
   packages/world-runtime:
     dependencies:
+      '@epoch/adapter-foundation-gltf':
+        specifier: workspace:*
+        version: link:../../adapters/foundations/gltf
       '@epoch/agent-protocol':
         specifier: workspace:*
         version: link:../agent-protocol
