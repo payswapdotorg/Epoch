@@ -121,6 +121,13 @@ describe('shell provider neutrality', () => {
         // battery enforces that); the driver binds only at the
         // service-layer seam — the pin's substance holds.
         expect(manifest.dependencies?.[dep]).toBe('catalog:');
+      } else if (/^pg-/.test(dep) || dep === 'pgpass' || /^postgres-/.test(dep)) {
+        // The flattened runtime closure of the driver (same exception,
+        // second leg): exact pins resolved from the driver's own manifest —
+        // the pnpm isolated layout places these as store siblings no lambda
+        // path can resolve; declaring them at the deployment importer puts
+        // every runtime-reachable file at a resolvable path. Never a range.
+        expect(manifest.dependencies?.[dep]).toMatch(/^\d+\.\d+\.\d+$/);
       } else {
         expect(['next', 'react', 'react-dom']).toContain(dep);
       }

@@ -68,6 +68,16 @@ describe('the pg import boundary (W046 acceptance 5: service-layer only)', () =>
     // scan above still enforces that), and the driver still binds ONLY at
     // the service-layer seam. Every other manifest keeps the strict rule.
     const DEPLOYMENT_IMPORTER_EXCEPTIONS = new Set(['apps/web/package.json']);
+    // The flattened runtime closure of the driver (same rationale as pg
+    // itself: resolution wiring for the frozen seam's dynamic import — the
+    // pnpm isolated layout places these as store siblings that no lambda
+    // path can resolve; declared at the deployment importer so every
+    // runtime-reachable file lands at a resolvable path).
+    const CLOSURE_EXCEPTIONS = new Set([
+      'pg-connection-string', 'pg-pool', 'pg-protocol', 'pg-types',
+      'pgpass', 'pg-cloudflare', 'pg-int8', 'postgres-array',
+      'postgres-bytea', 'postgres-date', 'postgres-interval',
+    ]);
     const violations: string[] = [];
     for (const tree of ['packages', 'apps', 'adapters', 'packs', 'runtimes']) {
       walkSources(path.join(REPO_ROOT, tree), () => undefined);
@@ -85,7 +95,7 @@ describe('the pg import boundary (W046 acceptance 5: service-layer only)', () =>
       const deps = { ...(parsed.dependencies ?? {}), ...(parsed.devDependencies ?? {}), ...(parsed.optionalDependencies ?? {}) };
       for (const name of Object.keys(deps)) {
         if (name === 'pg' || name === '@electric-sql/pglite' || name === '@types/pg') {
-          if (DEPLOYMENT_IMPORTER_EXCEPTIONS.has(rel) && name === 'pg') continue;
+          if (DEPLOYMENT_IMPORTER_EXCEPTIONS.has(rel) && (name === 'pg' || CLOSURE_EXCEPTIONS.has(name))) continue;
           violations.push(`${rel} declares ${name}`);
         }
       }

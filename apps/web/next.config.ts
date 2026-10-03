@@ -16,17 +16,20 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // The driver stays EXTERNAL (never bundled): the static anchor import
-  // (services/application-gateway pg-driver-anchor -> apps/web
-  // production-binding) then emits a real static driver require in the
-  // server bundle, which the file tracer FOLLOWS — carrying the driver's
-  // full transitive module tree (pg-types and friends) into the lambda. The
-  // explicit include below is the belt-and-suspenders for the driver itself
-  // (the frozen seam's dynamic expression import remains invisible to the
-  // tracer).
-  serverExternalPackages: ['pg'],
+  // The driver's FULL runtime closure is declared as direct dependencies
+  // (flattened at this app's node_modules root) and force-included: the
+  // frozen seam's dynamic expression import is invisible to the file
+  // tracer, and in the pnpm isolated layout the closure would otherwise
+  // live as unresolvable store siblings (found live on the production
+  // boots: 'Cannot find module pg' then 'Cannot find module pg-types').
+  // Every runtime-reachable file lands at a resolvable lambda path.
   outputFileTracingIncludes: {
-    '/api/**': ['./node_modules/pg/**/*'],
+    '/api/**': [
+      './node_modules/pg/**/*',
+      './node_modules/pg-*/**/*',
+      './node_modules/pgpass/**/*',
+      './node_modules/postgres-*/**/*',
+    ],
   },
 };
 
