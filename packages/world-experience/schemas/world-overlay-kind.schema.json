@@ -14,5 +14,5 @@
       "description": "Visual overlay kind of a world scene: highlight, annotation, measurement, or state overlay."
     }
   },
-  "$id": "urn:epoch:world-experience:world-overlay-kind:1.0.0"
+  "$id": "urn:epoch:world-experience:world-overlay-kind:1.1.0"
 }

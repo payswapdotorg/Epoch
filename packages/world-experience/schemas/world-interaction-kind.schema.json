@@ -6,6 +6,7 @@
       "type": "string",
       "enum": [
         "annotate",
+        "bind",
         "branch",
         "change",
         "compare",
@@ -29,8 +30,8 @@
         "zoom"
       ],
       "title": "WorldInteractionKind",
-      "description": "One world-subset universal interaction (select, inspect, measure, move, rotate, zoom, isolate, hide, show, compare, annotate, simulate, change, connect, disconnect, filter, query, branch, replay, pause, resume, follow-agent)."
+      "description": "One world-subset universal interaction (select, inspect, measure, move, rotate, zoom, isolate, hide, show, compare, annotate, bind, simulate, change, connect, disconnect, filter, query, branch, replay, pause, resume, follow-agent)."
     }
   },
-  "$id": "urn:epoch:world-experience:world-interaction-kind:1.0.0"
+  "$id": "urn:epoch:world-experience:world-interaction-kind:1.1.0"
 }

@@ -12,5 +12,5 @@
       "description": "Kind of an explicit camera transition: cut (instant) or smooth (interpolated)."
     }
   },
-  "$id": "urn:epoch:world-experience:world-camera-transition-kind:1.0.0"
+  "$id": "urn:epoch:world-experience:world-camera-transition-kind:1.1.0"
 }

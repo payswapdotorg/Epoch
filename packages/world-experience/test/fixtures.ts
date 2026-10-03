@@ -337,6 +337,15 @@ export function sceneContent(): WorldSceneContent {
 // Intent fixtures (one per kind — the full world subset).
 // ---------------------------------------------------------------------------
 
+/**
+ * A deterministic VALIDATED binding reference for the `bind` intent
+ * fixtures (W066, ACR-010): the sealed binding's content address plus its
+ * owning tenant scope — the same tenant as the reference scene fixture
+ * (TENANT_A), so the fixture admits through the reducer's cross-tenant
+ * gate. NEVER raw bytes: the reference is typed data only.
+ */
+export const BINDING_DIGEST: Sha256Hex = DIGEST_A;
+
 export function intentFixtures(): WorldInteractionIntent[] {
   return [
     { schema: 'epoch.world-intent', intentVersion: 1, kind: 'select', intentId: 'intent-select-1', entityId: 'wall-north-1' },
@@ -361,6 +370,7 @@ export function intentFixtures(): WorldInteractionIntent[] {
     { schema: 'epoch.world-intent', intentVersion: 1, kind: 'pause', intentId: 'intent-pause-1' },
     { schema: 'epoch.world-intent', intentVersion: 1, kind: 'resume', intentId: 'intent-resume-1' },
     { schema: 'epoch.world-intent', intentVersion: 1, kind: 'follow-agent', intentId: 'intent-follow-1', agentId: 'agent:planner-1' },
+    { schema: 'epoch.world-intent', intentVersion: 1, kind: 'bind', intentId: 'intent-bind-1', bindingDigest: BINDING_DIGEST, tenantScope: deepClone(TENANT_SCOPE) },
   ] as unknown as WorldInteractionIntent[];
 }
 

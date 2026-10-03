@@ -18,5 +18,5 @@
       "description": "A camera zoom step: a strictly positive multiplicative factor."
     }
   },
-  "$id": "urn:epoch:world-experience:camera-zoom:1.0.0"
+  "$id": "urn:epoch:world-experience:camera-zoom:1.1.0"
 }

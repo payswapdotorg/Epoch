@@ -69,10 +69,13 @@
         },
         {
           "$ref": "#/$defs/FollowAgentIntent"
+        },
+        {
+          "$ref": "#/$defs/BindIntent"
         }
       ],
       "title": "WorldInteractionIntent",
-      "description": "One world-subset interaction intent: typed, versioned data (never executable UI code) covering select/inspect/measure/move/rotate/zoom/isolate/hide/show/compare/annotate/simulate/change/connect/disconnect/filter/query/branch/replay/pause/resume/follow-agent."
+      "description": "One world-subset interaction intent: typed, versioned data (never executable UI code) covering select/inspect/measure/move/rotate/zoom/isolate/hide/show/compare/annotate/bind/simulate/change/connect/disconnect/filter/query/branch/replay/pause/resume/follow-agent. The bind payload is a validated binding reference (sealed binding content address + tenant scope), never untrusted raw bytes."
     },
     "SelectIntent": {
       "type": "object",
@@ -945,7 +948,63 @@
       "pattern": "^agent:[a-z0-9][a-z0-9-]{0,62}$",
       "title": "AgentId",
       "description": "Registered agent identifier: \"agent:\" followed by a lowercase slug."
+    },
+    "BindIntent": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "epoch.world-intent"
+        },
+        "intentVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "kind": {
+          "type": "string",
+          "const": "bind"
+        },
+        "intentId": {
+          "$ref": "#/$defs/WorldInvocationId"
+        },
+        "bindingDigest": {
+          "$ref": "#/$defs/Sha256Hex"
+        },
+        "tenantScope": {
+          "$ref": "#/$defs/TenantScope"
+        }
+      },
+      "required": [
+        "schema",
+        "intentVersion",
+        "kind",
+        "intentId",
+        "bindingDigest",
+        "tenantScope"
+      ],
+      "additionalProperties": false,
+      "title": "BindIntent"
+    },
+    "TenantScope": {
+      "type": "object",
+      "properties": {
+        "tenantId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        },
+        "projectId": {
+          "$ref": "#/$defs/OpaqueScopeId"
+        }
+      },
+      "required": [
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "TenantScope",
+      "description": "Tenant scoping of an experience document: owning tenant, optional workspace and project narrowing."
     }
   },
-  "$id": "urn:epoch:world-experience:world-interaction-intent:1.0.0"
+  "$id": "urn:epoch:world-experience:world-interaction-intent:1.1.0"
 }

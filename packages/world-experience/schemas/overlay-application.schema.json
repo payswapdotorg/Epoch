@@ -29,5 +29,5 @@
       "description": "Visual-overlay identifier: \"ovl-\" followed by a lowercase slug."
     }
   },
-  "$id": "urn:epoch:world-experience:overlay-application:1.0.0"
+  "$id": "urn:epoch:world-experience:overlay-application:1.1.0"
 }

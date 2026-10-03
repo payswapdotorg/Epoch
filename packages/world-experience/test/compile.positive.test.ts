@@ -253,7 +253,7 @@ describe('scene compilation (positive)', () => {
         invocationId: `w016-intent-${intent.kind}`,
         rendererSessionId: 'rs-world-alpha',
         modality: 'pointer',
-        intent: { id: `epoch.world.interaction.${intent.kind}`, version: '1.0.0' },
+        intent: { id: `epoch.world.interaction.${intent.kind}`, version: '1.1.0' },
       });
     }
   });

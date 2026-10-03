@@ -21,8 +21,12 @@
  */
 import { z } from 'zod';
 
-/** Version of the published world-experience contract surface (schemas/ + types). */
-export const WORLD_EXPERIENCE_CONTRACT_VERSION = '1.0.0' as const;
+/** Version of the published world-experience contract surface (schemas/ + types).
+ *\n * 1.1.0 (W066, ACR-010 — additive): the `bind` interaction kind joins the
+ * closed vocabulary (the in-package contract semver moves minor for the
+ * additive kind; the package.json `version` field is NOT the vehicle — the
+ * private workspace packages carry 0.0.0 per house convention). */
+export const WORLD_EXPERIENCE_CONTRACT_VERSION = '1.1.0' as const;
 
 /** Protocol version carried by every serialized world document. */
 export const WORLD_EXPERIENCE_PROTOCOL_VERSION = '1.0.0' as const;
@@ -140,9 +144,18 @@ export const WorldExperienceErrorCodeSchema = z
  * reject, execute, take-control, release-control) belong to the action and
  * collaboration surfaces, NOT to the world subset, and are therefore
  * absent here by design.
+ *
+ * `bind` (W066, ACR-010 — the only additive kind of the 1.1.0 surface):
+ * requests the presentation-scoped binding of a VALIDATED foundation asset
+ * to the live session. The intent payload carries a typed binding REFERENCE
+ * (the sealed binding's content address + tenant scope — never untrusted
+ * raw bytes; the trust gate stays upstream in the foundation bridge), and
+ * the effect is the experience-scoped `binding-requested` record — never a
+ * semantic write, never a durable mutation.
  */
 export const WORLD_INTERACTION_KINDS = [
   'annotate',
+  'bind',
   'branch',
   'change',
   'compare',
@@ -173,7 +186,7 @@ export const WorldInteractionKindSchema = z.enum(WORLD_INTERACTION_KINDS).meta({
   id: 'WorldInteractionKind',
   title: 'WorldInteractionKind',
   description:
-    'One world-subset universal interaction (select, inspect, measure, move, rotate, zoom, isolate, hide, show, compare, annotate, simulate, change, connect, disconnect, filter, query, branch, replay, pause, resume, follow-agent).',
+    'One world-subset universal interaction (select, inspect, measure, move, rotate, zoom, isolate, hide, show, compare, annotate, bind, simulate, change, connect, disconnect, filter, query, branch, replay, pause, resume, follow-agent).',
 });
 
 /**
@@ -184,8 +197,11 @@ export const WorldInteractionKindSchema = z.enum(WORLD_INTERACTION_KINDS).meta({
  */
 export const WORLD_INTENT_TYPE_NAMESPACE = 'epoch.world.interaction' as const;
 
-/** Semver-core version of the world interaction ControlIntent bridge. */
-export const WORLD_INTENT_TYPE_VERSION = '1.0.0' as const;
+/** Semver-core version of the world interaction ControlIntent bridge.
+ *
+ * 1.1.0 (W066, ACR-010 — additive): the `bind` kind joins the bridge's
+ * qualified-id namespace; every pre-existing kind id is unchanged. */
+export const WORLD_INTENT_TYPE_VERSION = '1.1.0' as const;
 
 /**
  * The domain visual ontology record kinds (spec/experience-architecture

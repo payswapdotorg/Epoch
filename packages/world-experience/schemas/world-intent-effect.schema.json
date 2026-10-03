@@ -30,10 +30,13 @@
         },
         {
           "$ref": "#/$defs/BranchRequestedEffect"
+        },
+        {
+          "$ref": "#/$defs/BindingRequestedEffect"
         }
       ],
       "title": "WorldIntentEffect",
-      "description": "One typed host-side effect of a semantic world intent: the request this layer forwards to the proper authority (never executed here)."
+      "description": "One typed host-side effect of a semantic world intent: the request this layer forwards to the proper authority (never executed here). The binding-requested effect carries the validated binding reference (sealed binding content address + owning tenant) for the host to apply through the fabric — experience-scoped presentation, never a semantic write."
     },
     "InspectRequestedEffect": {
       "type": "object",
@@ -244,7 +247,32 @@
       ],
       "additionalProperties": false,
       "title": "BranchRequestedEffect"
+    },
+    "BindingRequestedEffect": {
+      "type": "object",
+      "properties": {
+        "effect": {
+          "type": "string",
+          "const": "binding-requested"
+        },
+        "bindingDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "tenantId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "effect",
+        "bindingDigest",
+        "tenantId"
+      ],
+      "additionalProperties": false,
+      "title": "BindingRequestedEffect"
     }
   },
-  "$id": "urn:epoch:world-experience:world-intent-effect:1.0.0"
+  "$id": "urn:epoch:world-experience:world-intent-effect:1.1.0"
 }

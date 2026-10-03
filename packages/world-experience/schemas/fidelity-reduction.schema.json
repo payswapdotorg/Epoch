@@ -49,5 +49,5 @@
       "description": "One explicit fidelity reduction: aspect, typed reason, encountered vs retained counts (never silent degradation)."
     }
   },
-  "$id": "urn:epoch:world-experience:fidelity-reduction:1.0.0"
+  "$id": "urn:epoch:world-experience:fidelity-reduction:1.1.0"
 }

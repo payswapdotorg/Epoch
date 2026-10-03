@@ -10,5 +10,5 @@
       "description": "Opaque world-entity identity (mirrored shared grammar; canonical home @epoch/world-model): 1..256 chars, caller-assigned."
     }
   },
-  "$id": "urn:epoch:world-experience:world-entity-id:1.0.0"
+  "$id": "urn:epoch:world-experience:world-entity-id:1.1.0"
 }

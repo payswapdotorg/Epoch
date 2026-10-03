@@ -54,5 +54,5 @@
       "description": "Kind of a timeline marker (event, phase boundary, replay cursor, branch point)."
     }
   },
-  "$id": "urn:epoch:world-experience:scene-timeline-marker:1.0.0"
+  "$id": "urn:epoch:world-experience:scene-timeline-marker:1.1.0"
 }

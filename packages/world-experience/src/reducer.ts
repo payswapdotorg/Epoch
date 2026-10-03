@@ -15,6 +15,14 @@
  *   simulation fabric for simulate, the world model for queries and
  *   measurements) — this layer is a projection, not an executor.
  *
+ * `bind` (W066, ACR-010) is effect-only in the same discipline: it never
+ * awaits a semantic authority and never mutates durable semantic state —
+ * the scene revision, the store state, and the canonical world digest are
+ * all UNCHANGED by an admitted bind; the only output is the
+ * experience-scoped `binding-requested` effect for the host to apply
+ * through the fabric (W067). A binding reference outside the scene's
+ * owning tenant is a typed cross-tenant refusal (R12), never applied.
+ *
  * Every entity/agent/evidence reference an intent carries must resolve
  * within the scene (typed unknown-scene-reference /
  * unknown-evidence-reference rejections); replay/branch positions must be
@@ -41,6 +49,7 @@ import {
   type WorldSceneStoreState,
 } from './scene';
 import {
+  crossTenantDeniedError,
   invalidReplayPositionError,
   unknownEvidenceReferenceError,
   unknownSceneReferenceError,
@@ -114,12 +123,19 @@ export const WorldIntentEffectSchema = z
         atMs: z.number().int().nonnegative(),
       })
       .meta({ id: 'BranchRequestedEffect', title: 'BranchRequestedEffect' }),
+    z
+      .strictObject({
+        effect: z.literal('binding-requested'),
+        bindingDigest: z.string().regex(/^[0-9a-f]{64}$/),
+        tenantId: z.string().min(1).max(128),
+      })
+      .meta({ id: 'BindingRequestedEffect', title: 'BindingRequestedEffect' }),
   ])
   .meta({
     id: 'WorldIntentEffect',
     title: 'WorldIntentEffect',
     description:
-      'One typed host-side effect of a semantic world intent: the request this layer forwards to the proper authority (never executed here).',
+      'One typed host-side effect of a semantic world intent: the request this layer forwards to the proper authority (never executed here). The binding-requested effect carries the validated binding reference (sealed binding content address + owning tenant) for the host to apply through the fabric — experience-scoped presentation, never a semantic write.',
   });
 
 /** One typed host-side effect. */
@@ -275,6 +291,34 @@ export function applyWorldIntent(
         };
       }
       effects.push({ effect: 'branch-requested', atMs: intent.atMs });
+      return unchanged(state, scene, effects);
+    }
+    case 'bind': {
+      // R12 at the admission seam: the validated binding reference must
+      // belong to the scene's owning tenant — a binding reference outside
+      // the owning tenant is a typed cross-tenant refusal, never applied.
+      // (The digest-addressed binding itself resolves downstream, never
+      // here: this layer holds no binding registry and never becomes a
+      // second authority.)
+      if (intent.tenantScope.tenantId !== scene.tenantScope.tenantId) {
+        return {
+          ok: false,
+          error: crossTenantDeniedError(
+            ['tenantScope', 'tenantId'],
+            scene.tenantScope.tenantId,
+            intent.tenantScope.tenantId,
+          ),
+        };
+      }
+      // Effect-only: the experience-scoped binding request. The scene
+      // revision, the store state, and the canonical world digest are all
+      // UNCHANGED (pinned by the W066 invariance battery) — binding is
+      // presentation, never a durable semantic mutation.
+      effects.push({
+        effect: 'binding-requested',
+        bindingDigest: intent.bindingDigest,
+        tenantId: intent.tenantScope.tenantId,
+      });
       return unchanged(state, scene, effects);
     }
     default:

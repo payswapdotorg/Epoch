@@ -295,6 +295,7 @@ export {
 } from './intent';
 export type {
   WorldInteractionIntent,
+  BindIntent,
   ExecutableUiViolation,
 } from './intent';
 

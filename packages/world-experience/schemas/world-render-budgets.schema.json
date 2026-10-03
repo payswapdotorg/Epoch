@@ -35,5 +35,5 @@
       "description": "Renderer budgets a world-scene compilation enforces (mirrored shared record; canonical home @epoch/renderer-runtime)."
     }
   },
-  "$id": "urn:epoch:world-experience:world-render-budgets:1.0.0"
+  "$id": "urn:epoch:world-experience:world-render-budgets:1.1.0"
 }
