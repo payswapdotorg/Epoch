@@ -146,7 +146,15 @@ export async function connectPostgresPool(
   if (typeof connectionString !== 'string' || connectionString.length === 0) {
     throw new Error('connectPostgresPool: a non-empty connection string is required');
   }
-  const mod = (await import(PG_DRIVER_MODULE)) as unknown as {
+  // ACR-006 post-credential deployment fix: webpack cannot statically resolve
+  // an expression-request dynamic import, so it replaces this call with a
+  // throwing "Cannot find module" stub in the app's server bundle (verified
+  // live: the bundled chunk emitted the stub; the driver was never loaded).
+  // /* webpackIgnore: true */ keeps this a REAL runtime dynamic import that
+  // Node resolves against node_modules (the deployment importer declares the
+  // pg dependency). Zero semantic change: same module, same seam, same
+  // boundary (the driver still binds ONLY here).
+  const mod = (await import(/* webpackIgnore: true */ PG_DRIVER_MODULE)) as unknown as {
     default?: { Pool?: new (config: Record<string, unknown>) => ConnectedPostgresPool };
     Pool?: new (config: Record<string, unknown>) => ConnectedPostgresPool;
   };
