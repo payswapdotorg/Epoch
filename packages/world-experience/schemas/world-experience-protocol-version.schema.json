@@ -9,5 +9,5 @@
       "description": "Exact world-experience protocol version admitted by this release (\"1.0.0\")."
     }
   },
-  "$id": "urn:epoch:world-experience:world-experience-protocol-version:1.0.0"
+  "$id": "urn:epoch:world-experience:world-experience-protocol-version:1.1.0"
 }

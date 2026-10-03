@@ -9,5 +9,5 @@
       "description": "World-scene identifier: \"wsc-\" followed by a lowercase slug."
     }
   },
-  "$id": "urn:epoch:world-experience:world-scene-id:1.0.0"
+  "$id": "urn:epoch:world-experience:world-scene-id:1.1.0"
 }

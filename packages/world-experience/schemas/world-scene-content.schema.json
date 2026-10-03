@@ -1058,5 +1058,5 @@
       "description": "Typed UI intent a control emits: qualified id plus semver core (shape-compatible with the action-protocol ActionTypeReference)."
     }
   },
-  "$id": "urn:epoch:world-experience:world-scene-content:1.0.0"
+  "$id": "urn:epoch:world-experience:world-scene-content:1.1.0"
 }

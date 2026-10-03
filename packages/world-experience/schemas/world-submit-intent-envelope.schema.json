@@ -80,5 +80,5 @@
       "description": "Renderer-session identifier (mirrored shared grammar; canonical home @epoch/renderer-runtime): \"rs-\" + lowercase slug."
     }
   },
-  "$id": "urn:epoch:world-experience:world-submit-intent-envelope:1.0.0"
+  "$id": "urn:epoch:world-experience:world-submit-intent-envelope:1.1.0"
 }

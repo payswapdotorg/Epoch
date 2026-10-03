@@ -9,5 +9,5 @@
       "description": "Opaque invocation identifier (shared message-id grammar), unique within the caller scope."
     }
   },
-  "$id": "urn:epoch:world-experience:world-invocation-id:1.0.0"
+  "$id": "urn:epoch:world-experience:world-invocation-id:1.1.0"
 }

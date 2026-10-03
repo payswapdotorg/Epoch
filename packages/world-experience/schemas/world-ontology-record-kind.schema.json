@@ -16,5 +16,5 @@
       "description": "One domain visual ontology record kind: 2D symbols, 3D representations, materials/textures, state overlays, animations, interaction affordances."
     }
   },
-  "$id": "urn:epoch:world-experience:world-ontology-record-kind:1.0.0"
+  "$id": "urn:epoch:world-experience:world-ontology-record-kind:1.1.0"
 }

@@ -211,5 +211,5 @@
       "title": "OrbitCamera"
     }
   },
-  "$id": "urn:epoch:world-experience:camera-state:1.0.0"
+  "$id": "urn:epoch:world-experience:camera-state:1.1.0"
 }

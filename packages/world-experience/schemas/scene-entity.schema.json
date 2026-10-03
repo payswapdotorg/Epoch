@@ -121,5 +121,5 @@
       "description": "Finite orientation quaternion (x, y, z, w); neutral math, renderer-normalized."
     }
   },
-  "$id": "urn:epoch:world-experience:scene-entity:1.0.0"
+  "$id": "urn:epoch:world-experience:scene-entity:1.1.0"
 }

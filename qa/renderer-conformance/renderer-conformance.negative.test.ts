@@ -222,7 +222,7 @@ describe('W056 renderer conformance — typed failures, degradation, fallback (n
     if (measured.ok) {
       expect(measured.value.intent).toEqual({
         id: 'epoch.world.interaction.measure',
-        version: '1.0.0',
+        version: '1.1.0',
       });
     }
   });

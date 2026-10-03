@@ -15,5 +15,5 @@
       "description": "Typed device-adaptation fidelity level: desktop (full), web (normal), mobile (field), low (2D/reduced), remote (optional)."
     }
   },
-  "$id": "urn:epoch:world-experience:world-fidelity-level:1.0.0"
+  "$id": "urn:epoch:world-experience:world-fidelity-level:1.1.0"
 }

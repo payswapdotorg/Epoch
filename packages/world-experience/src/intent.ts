@@ -3,12 +3,21 @@
  * typed, versioned, discriminated unions covering the universal
  * interactions whose home is the interactive world view: select, inspect,
  * measure, move, rotate, zoom, isolate, hide, show, compare, annotate,
- * simulate, change, connect, disconnect, filter, query, branch, replay,
- * pause, resume, follow-agent.
+ * bind, simulate, change, connect, disconnect, filter, query, branch,
+ * replay, pause, resume, follow-agent.
  *
  * The action/collaboration interactions (approve, reject, execute,
  * take-control, release-control) belong to the action and collaboration
  * surfaces and are deliberately absent from this subset.
+ *
+ * The `bind` payload (W066, ACR-010) is a VALIDATED binding REFERENCE — the
+ * sealed binding's content address plus its tenant scope — NEVER untrusted
+ * raw bytes: only a foundation bridge that has validated, normalized,
+ * content-addressed, and sealed an asset can produce the reference, so the
+ * trust gate stays upstream (validate → normalize → content-address →
+ * seal). Admission here is typed and structural: a malformed reference
+ * (wrong digest grammar, missing tenant scope, unknown/vendor fields) is a
+ * typed `invalid-intent` refusal, never a parse.
  *
  * Dynamic UI law (binding): intents are TYPED DATA, never arbitrary
  * executable UI code. Admission enforces this with a dedicated
@@ -45,10 +54,12 @@ import {
   WorldEntityIdSchema,
   WorldInvocationIdSchema,
   OpaqueScopeIdSchema,
+  TenantScopeSchema,
   WorldVirtualTimeMsSchema,
   type WorldEntityId,
   type WorldInvocationId,
   type OpaqueScopeId,
+  type TenantScope,
 } from './primitives';
 import {
   executableUiRejectedError,
@@ -306,6 +317,34 @@ const FollowAgentIntentSchema = z
   })
   .meta({ id: 'FollowAgentIntent', title: 'FollowAgentIntent' });
 
+// ---------------------------------------------------------------------------
+// The `bind` payload (W066, ACR-010): a VALIDATED binding REFERENCE.
+// ---------------------------------------------------------------------------
+
+/**
+ * The typed binding reference of one `bind` intent: the sealed binding's
+ * content address (the SHA-256 digest of the sealed, validated binding
+ * record — `bindingDigest`, the digest-addressed identity downstream
+ * resolves) plus the binding's owning tenant scope (R12). NEVER untrusted
+ * raw bytes: the foundation bridge's trust gate (validate → normalize →
+ * content-address → seal) runs upstream, so this layer only ever sees a
+ * typed, structurally-validated reference. Malformed references are typed
+ * `invalid-intent` refusals at the schema gate below.
+ */
+const BindIntentSchema = z
+  .strictObject({
+    schema: z.literal(WORLD_INTENT_SCHEMA_NAME),
+    intentVersion: z.literal(WORLD_INTENT_VERSION),
+    kind: z.literal('bind'),
+    intentId: WorldInvocationIdSchema,
+    bindingDigest: Sha256HexSchema,
+    tenantScope: TenantScopeSchema,
+  })
+  .meta({ id: 'BindIntent', title: 'BindIntent' });
+
+/** One world `bind` intent (a validated binding reference). */
+export type BindIntent = z.infer<typeof BindIntentSchema>;
+
 /** The world interaction-intent union (discriminated on `kind`). */
 export const WorldInteractionIntentSchema = z
   .discriminatedUnion('kind', [
@@ -331,12 +370,13 @@ export const WorldInteractionIntentSchema = z
     PauseIntentSchema,
     ResumeIntentSchema,
     FollowAgentIntentSchema,
+    BindIntentSchema,
   ])
   .meta({
     id: 'WorldInteractionIntent',
     title: 'WorldInteractionIntent',
     description:
-      'One world-subset interaction intent: typed, versioned data (never executable UI code) covering select/inspect/measure/move/rotate/zoom/isolate/hide/show/compare/annotate/simulate/change/connect/disconnect/filter/query/branch/replay/pause/resume/follow-agent.',
+      'One world-subset interaction intent: typed, versioned data (never executable UI code) covering select/inspect/measure/move/rotate/zoom/isolate/hide/show/compare/annotate/bind/simulate/change/connect/disconnect/filter/query/branch/replay/pause/resume/follow-agent. The bind payload is a validated binding reference (sealed binding content address + tenant scope), never untrusted raw bytes.',
   });
 
 /** One world interaction intent. */
@@ -510,4 +550,5 @@ export type IntentQuaternion = Quaternion;
 export type IntentEntityId = WorldEntityId;
 export type IntentAgentId = AgentId;
 export type IntentScopeId = OpaqueScopeId;
+export type IntentTenantScope = TenantScope;
 export type IntentId = WorldInvocationId;

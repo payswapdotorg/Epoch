@@ -13,5 +13,5 @@
       "description": "Camera mode of a world scene: orbit, free, or follow-agent."
     }
   },
-  "$id": "urn:epoch:world-experience:world-camera-mode:1.0.0"
+  "$id": "urn:epoch:world-experience:world-camera-mode:1.1.0"
 }

@@ -219,7 +219,7 @@ describe('the W061 engine pair — direct Three.js ⇄ Babylon.js over the share
       expect(threePick.hitEntityId).toBe(ENTITY_IDS[2]!);
       expect(threePick.intent).toEqual({
         id: 'epoch.world.interaction.select',
-        version: '1.0.0',
+        version: '1.1.0',
       });
       expect(threePick.intentPayloadDigest).toMatch(/^[0-9a-f]{64}$/);
 
@@ -331,7 +331,7 @@ describe('the W061 engine pair — direct Three.js ⇄ Babylon.js over the share
       );
       expect(zoomIn.intent).toEqual({
         id: 'epoch.world.interaction.zoom',
-        version: '1.0.0',
+        version: '1.1.0',
       });
       expect(zoomIn.intentPayloadDigest).toMatch(/^[0-9a-f]{64}$/);
 

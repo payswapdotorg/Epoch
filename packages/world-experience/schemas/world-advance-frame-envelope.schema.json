@@ -65,5 +65,5 @@
       "description": "Virtual time in non-negative integer milliseconds (caller-supplied; never a wall clock)."
     }
   },
-  "$id": "urn:epoch:world-experience:world-advance-frame-envelope:1.0.0"
+  "$id": "urn:epoch:world-experience:world-advance-frame-envelope:1.1.0"
 }

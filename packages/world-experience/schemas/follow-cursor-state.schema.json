@@ -54,5 +54,5 @@
       "description": "Finite 3-component numeric vector (x, y, z)."
     }
   },
-  "$id": "urn:epoch:world-experience:follow-cursor-state:1.0.0"
+  "$id": "urn:epoch:world-experience:follow-cursor-state:1.1.0"
 }

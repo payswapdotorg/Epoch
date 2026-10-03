@@ -45,7 +45,7 @@ describe('packages/world-experience/schemas drift', () => {
       if (rel === 'manifest.json') continue;
       const parsed = JSON.parse(content) as { $schema?: string; $id?: string };
       expect(parsed.$schema, rel).toBe('https://json-schema.org/draft/2020-12/schema');
-      expect(parsed.$id, rel).toMatch(/^urn:epoch:world-experience:[a-z0-9-]+:1\.0\.0$/);
+      expect(parsed.$id, rel).toMatch(/^urn:epoch:world-experience:[a-z0-9-]+:1\.1\.0$/);
     }
   });
 
