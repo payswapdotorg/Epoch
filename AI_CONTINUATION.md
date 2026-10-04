@@ -90,3 +90,5 @@ Git + CI + journey evidence, not chat, is the completion oracle.
 
 
 Historical recovery notes from earlier waves remain in PROJECT-STATE.md and Git history.
+
+- 2026-10-04 W071 MERGED (44ba045): the frozen construction-solution fixture contract is live; W072+W073 in flight on disjoint surfaces. PAT-less rail active (PAT dead; Composio MCP + tmpfiles relay).

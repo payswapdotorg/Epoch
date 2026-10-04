@@ -1,3 +1,10 @@
+
+## ACR-012 progress (2026-10-04)
+
+- **W071 MERGED** (squash 44ba045, PR #167 — relay-delivered worker bundle, landed via the PAT-less Composio rail after CI green): `packages/construction-world-fixture` (18 files — entities 34 across the six construction systems, layers, 8-phase timeline via the existing W016 marker vocabulary, 3 solution variants, per-layer BOQ rollups, constraints incl. the hidden legacy-conduit MEP clash, ≥2 spatial agents, renderer-neutral geometry, deterministic digest, real W016 admission + headless RendererFabric build) + `qa/construction-solution` battery (15/15). The frozen public API is the W072/W073 compilation contract.
+- **W072 (web) + W073 (desktop) IN FLIGHT in parallel** (pairwise-disjoint: apps/web + qa/web vs apps/desktop + qa/desktop), both branching from 44ba045.
+- Delivery rail: the GitHub PAT died 2026-10-04 ~12:28Z; all repo writes now go through the Composio MCP connection (github_anesis-gray) + tmpfiles.org patch relay (workers upload format-patch bundles; TL applies, CI-gates, merges).
+
 # Epoch Project State — CURRENT STATUS
 
 > **Authoritative current state (2026-10-02).** The historical wave notes below are retained for forensic history only and must not be read as current authorization.

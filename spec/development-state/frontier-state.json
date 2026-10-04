@@ -1,8 +1,9 @@
 {
-  "program": "ACR-012 Construction Solution Explorer (EFFECTIVE 2026-10-04, operator directive): the product-surface program making the construction solution world the primary problem-solving experience on web + desktop. W071 (shared fixture) IN FLIGHT — serialized first, freezes the W072/W073 contract; W072 (web workspace) + W073 (desktop workspace) ELIGIBLE at the W071 merge, pairwise-disjoint, max concurrent 3. Mobile OUT OF SCOPE. Deadline 2026-10-05 00:00 (operator).",
+  "program": "ACR-012 Construction Solution Explorer (EFFECTIVE 2026-10-04): W071 MERGED (44ba045, PR #167 — the frozen construction-solution fixture contract: 34 entities across 6 systems, six layers, 8-phase timeline, 3 variants, per-layer BOQ, constraints incl. the hidden MEP clash, real W016 admission + RendererFabric headless build). W072 (web workspace) + W073 (desktop workspace) IN FLIGHT in parallel on pairwise-disjoint surfaces; both compile against the frozen fixture API. Mobile OUT OF SCOPE. Deadline 2026-10-05 00:00 (operator).",
   "eligible": 0,
   "inFlight": [
-    "W071"
+    "W072",
+    "W073"
   ],
   "blocked": [],
   "maxConcurrentWorkers": 3,
