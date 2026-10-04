@@ -1,8 +1,8 @@
 {
-  "program": "none (ACR-010 + ACR-011 both CLOSED; standing operator-gated items only)",
+  "program": "none (ACR-006 DEPLOYED-LIVE 2026-10-03 + ACR-010 + ACR-011 all CLOSED; the ACR-006 operator-credential item RESOLVED \u2014 no operator-credential gate remains; the GPU boundary stays)",
   "eligible": [],
   "inFlight": [],
   "blocked": [],
   "maxConcurrentWorkers": 3,
-  "notes": "EMPTY at the W067 merge + the foundation reconcile (fffd897). W001-W068 COMPLETE (68/68). Post-program work requires a NEW ACR per spec/architecture-lock.md. Standing operator-gated items (honest, never fabricated): provider credentials (Vercel/Neon/R2/Apify) for the ACR-006 post-credential deployment verification; GPU rasterization impossible in this sandbox."
+  "notes": "EMPTY at the W067 merge + the foundation reconcile (fffd897). W001-W070 COMPLETE (70/70 \u2014 W069 the eighth live-only deployment defect closed [PR #160 -> a269f829] + W070 the ACR-006 DEPLOYED-LIVE records closure). The ACR-006 post-credential verification EXECUTED 2026-10-03: DEPLOYED-LIVE at https://epoch-ekonplacidegmailcoms-projects.vercel.app (production deployment dpl_A5cnn9G7Vig1cEDR from main@a269f829; the deployed-URL battery 22/22 legs GREEN; all four provider bindings live \u2014 postgres/s3/upstash/apify, degraded:[]). Post-program work requires a NEW ACR per spec/architecture-lock.md. Standing items (honest, never fabricated): the ACR-006 operator-credential gate RESOLVED (executed 2026-10-03 \u2014 the credentials were provided and the verification procedure ran to completion); GPU rasterization impossible in this sandbox (the browser batteries run REAL software GL via SwiftShader ANGLE \u2014 honest permanent NOT-VERIFIED)."
 }

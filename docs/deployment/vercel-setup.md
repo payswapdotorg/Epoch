@@ -4,17 +4,26 @@ The reproducible procedure for deploying `apps/web` — the Epoch web product wi
 the Application Gateway bound in-process — to Vercel from this repository, and
 for validating the public deployment with the production journey harness.
 
-**Honest status (do not trust claims without evidence):** NOT-DEPLOYED. No
-Vercel credentials exist in the working environment (the ACR-006
-honest-blocking rule). This runbook is verified up to the credential boundary:
-the build configuration is the committed `apps/web/vercel.json` (W051-frozen),
-its install/build commands were executed successfully in this repository
-checkout, and the production journey harness
-(`apps/web/qa/production/`) passed against a real local production build
-(`next build` + `next start`, preview profile — see
-[docs/journeys/production-web.md](../journeys/production-web.md)). The public
-URL, deployment identifiers and live journey results enter this document ONLY
-after the operator executes the steps below against a real Vercel account.
+**Honest status (do not trust claims without evidence):** DEPLOYED-LIVE
+(verified 2026-10-03). The public URL is
+https://epoch-ekonplacidegmailcoms-projects.vercel.app — publicly reachable
+(the project's SSO deployment protection was removed 2026-10-03 so the
+production alias serves anonymously); the production deployment is
+`dpl_A5cnn9G7Vig1cEDR`, READY, from `main@a269f829` (the W069 merge, PR
+#160; target=production, region iad1). Verified live over HTTPS, anonymously:
+`/api/healthz` → `200 {"ok":true,"profile":"production"}` and
+`/api/readyz` → `200` with `ready:true`, ALL FOUR real provider bindings live
+(persistence `postgres`, objectStore `s3`, rateLimit `upstash`, acquisition
+`apify`) and `degraded:[]`. The full live record — the 22/22 deployed-URL
+journey battery + the eight live-only deployment defects (all fixed +
+regression-pinned) + the provider identity record incl. the honest Upstash
+URL deviation — is in
+[docs/journeys/production-web.md](../journeys/production-web.md) and
+[docs/journeys/production.md](../journeys/production.md). The procedure
+below remains the operator runbook that produced this deployment (the build
+configuration is the committed `apps/web/vercel.json`, W051-frozen; the
+production journey harness `apps/web/qa/production/` is the same harness
+that ran against the deployed URL).
 
 **What the operator must provide (the credential boundary):**
 
@@ -242,8 +251,9 @@ program takes.**
 
 ## 8. What this runbook intentionally does NOT contain
 
-- No real credentials, URLs of provisioned resources, or deployment IDs (they
-  do not exist yet; they are recorded only after live verification).
+- No credentials or secret values (never — the recorded URL + deployment ID
+  above are the live-verified public identifiers, entered only after live
+  verification).
 - No provider provisioning steps (W053's
   [neon-r2-upstash-setup.md](./neon-r2-upstash-setup.md)) and no acquisition
   operations (W054's [docs/operations/acquisition.md](../operations/acquisition.md)).
