@@ -1,0 +1,60 @@
+{
+  "//": "W071 — the construction-solution harness's OWN type-checked validation path (the W048/W050/W056 cold-checkout doctrine). qa/construction-solution is NOT a pnpm workspace package (pnpm-workspace.yaml is frozen), so these files have no node_modules chain of their own. @epoch/construction-world-fixture's `typecheck` script invokes this config; NOTHING here depends on the qa/construction-solution/node_modules symlink (created at test time by the package's vitest globalSetup): every bare import the harness files make DIRECTLY is mapped to its real location, and every product module is imported either by package name (when the harness exercises the public API) or RELATIVELY (when the harness exercises the package's own source). A fresh checkout type-checks cold.",
+  "extends": "../../packages/tsconfig/app.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": false,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "../../packages/construction-world-fixture/node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "vitest": [
+        "../../packages/construction-world-fixture/node_modules/vitest/dist/index.d.ts"
+      ],
+      "@epoch/construction-world-fixture": [
+        "../../packages/construction-world-fixture/src/index.ts"
+      ],
+      "@epoch/world-experience": [
+        "../../packages/world-experience/src/index.ts"
+      ],
+      "@epoch/renderer-fabric": [
+        "../../packages/renderer-fabric/src/index.ts"
+      ],
+      "@epoch/renderer-runtime": [
+        "../../packages/renderer-runtime/src/index.ts"
+      ],
+      "@epoch/capability-registry": [
+        "../../packages/capability-registry/src/index.ts"
+      ],
+      "@epoch/experience-protocol": [
+        "../../packages/experience-protocol/src/index.ts"
+      ],
+      "@epoch/world-contracts": [
+        "../../contracts/world/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

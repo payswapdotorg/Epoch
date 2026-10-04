@@ -1,0 +1,39 @@
+{
+  "name": "@epoch/construction-world-fixture",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Epoch Construction Solution World Fixture (W071, ACR-012) — the SHARED, deterministic, content-addressed construction-solution fixture package both hosts (W072 web, W073 desktop) consume: ONE believable small building/site solution (SITE/FOUNDATION/STRUCTURE/ENVELOPE/MEP/FINISHES) composed as a canonical W016 WorldScene admitted + sealed through the REAL world-experience admission, with every visible component an Epoch semantic entity (entityId, entityType, label, material+grade, dimensions, quantity+unit, phase, status, cost reference, constraints), renderer-neutral geometry/projection data per entity, the six construction layers, the phase timeline (site->excavation->foundation->structure->walls->roof->mep->finishes) over the EXISTING world-experience timeline/marker semantics, >=2 spatial agents, THREE solution variants (Current/Alt A/Alt B with world deltas + cost/days/risk) via existing branch/simulation concepts, per-layer BOQ rollups + line items referencing existing construction-pack/solution-delivery structures, >=5 constraint/finding records (OK and WARN incl. one MEP clash) with entity refs, and a deterministic factory createConstructionSolutionFixture() + typed exports (the FROZEN public API W072/W073 compile against). Renderer registrations follow the W061 pattern (real Three.js + Babylon.js + reference fallback via the real RendererFabric). Deterministic: fixed seeds, no network, identical digests across runs.",
+  "epoch": {
+    "layer": "service"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p ../../qa/construction-solution/tsconfig.json",
+    "lint": "eslint . && node scripts/link-construction-harness.mjs && cd ../../qa/construction-solution && eslint . --config eslint.config.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@epoch/capability-registry": "workspace:*",
+    "@epoch/experience-protocol": "workspace:*",
+    "@epoch/pack-construction": "workspace:*",
+    "@epoch/renderer-fabric": "workspace:*",
+    "@epoch/renderer-runtime": "workspace:*",
+    "@epoch/solution-delivery": "workspace:*",
+    "@epoch/world-experience": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@epoch/adapter-renderer-babylonjs": "workspace:*",
+    "@epoch/adapter-renderer-threejs": "workspace:*",
+    "@epoch/eslint-config": "workspace:*",
+    "@epoch/tsconfig": "workspace:*",
+    "@epoch/world-runtime": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
