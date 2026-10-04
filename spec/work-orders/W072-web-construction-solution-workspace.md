@@ -1,6 +1,7 @@
 # Work Order W072 — Web Construction Solution Workspace (ACR-012)
 
-Worker Count: 1 (parallel with W073 — pairwise-disjoint surfaces)
+Worker Count: 1
+W072 runs after W071 merges; concurrent with W073 on disjoint surfaces.
 
 One Work Order = one branch = one PR. Workers never merge.
 
