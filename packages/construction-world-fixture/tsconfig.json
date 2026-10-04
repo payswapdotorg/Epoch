@@ -1,0 +1,12 @@
+{
+  "//": "W071 — the construction-world-fixture package's typecheck path. The package consumes the frozen experience/kernel/pack contracts as-is (no new authority, no contract bumps). The QA harness at ../../qa/construction-solution is type-checked through its OWN tsconfig (the W057 cold-checkout doctrine).",
+  "extends": "../../packages/tsconfig/library.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "lib": ["ES2022", "DOM"],
+    "paths": {
+      "@epoch/world-contracts": ["../../contracts/world/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts", "vitest.config.mts"]
+}
