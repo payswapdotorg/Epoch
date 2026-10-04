@@ -5,7 +5,8 @@
   "defaultBranch": "main",
   "maxConcurrentWorkers": 3,
   "active": [
-    "W071"
+    "W072",
+    "W073"
   ],
   "completed": [
     "W001",
@@ -77,9 +78,10 @@
     "W067",
     "W068",
     "W069",
-    "W070"
+    "W070",
+    "W071"
   ],
   "blocked": [],
   "lastMergeSha": "a269f82935b6",
-  "lastAction": "ACR-006 post-credential verification EXECUTED + COMPLETE (2026-10-03): W069 (the pg driver closure's xtend/split2 miss \u2014 the eighth live-only deployment defect, closed by the deterministic closure-complete guard [walks the driver's full 14-package runtime closure from the deployment root; red-on-main evidence: closure incomplete: undeclared=[split2, xtend] missing-at-root=[split2, xtend] untraced=[split2, xtend]]; branch work/foundation-pg-xtend-closure @ bfcaebd, PR #160 MERGED -> main@a269f829 after full CI green both contexts; the disclosed+approved split2 completion; the *.nft.json lambda-trace proof \u2014 all 14 closure roots traced) + W070 (the ACR-006 DEPLOYED-LIVE honest-status flips across the records \u2014 docs + state files only, no code). ACR-006: COMPLETE-DEPLOYED-LIVE \u2014 https://epoch-ekonplacidegmailcoms-projects.vercel.app (production deployment dpl_A5cnn9G7Vig1cEDR, READY, from main@a269f829, target=production, region iad1; publicly reachable, SSO protection removed): /api/healthz + /api/readyz 200 over HTTPS with ALL FOUR real provider bindings live (postgres/s3/upstash/apify), degraded:[]; the deployed-URL battery 22/22 legs GREEN (the P17-window contamination + the P18 post-window rerun disclosed in docs/journeys/production-web.md); the Upstash URL deviation recorded (meet-ewe-145933 stale/deleted -> polished-yeti-167554, keyspace-inspected co-tenant-safe: 70 keys, all aise:*, ZERO ratelimit:* collisions); the live-only defect chain #1-#8 all fixed + regression-pinned. W001-W070 COMPLETE (70/70). The frontier is EMPTY; the standing GPU boundary stays (GPU rasterization impossible in this sandbox \u2014 honest permanent NOT-VERIFIED)."
+  "lastAction": "ACR-006 post-credential verification EXECUTED + COMPLETE (2026-10-03): W069 (the pg driver closure's xtend/split2 miss — the eighth live-only deployment defect, closed by the deterministic closure-complete guard [walks the driver's full 14-package runtime closure from the deployment root; red-on-main evidence: closure incomplete: undeclared=[split2, xtend] missing-at-root=[split2, xtend] untraced=[split2, xtend]]; branch work/foundation-pg-xtend-closure @ bfcaebd, PR #160 MERGED -> main@a269f829 after full CI green both contexts; the disclosed+approved split2 completion; the *.nft.json lambda-trace proof — all 14 closure roots traced) + W070 (the ACR-006 DEPLOYED-LIVE honest-status flips across the records — docs + state files only, no code). ACR-006: COMPLETE-DEPLOYED-LIVE — https://epoch-ekonplacidegmailcoms-projects.vercel.app (production deployment dpl_A5cnn9G7Vig1cEDR, READY, from main@a269f829, target=production, region iad1; publicly reachable, SSO protection removed): /api/healthz + /api/readyz 200 over HTTPS with ALL FOUR real provider bindings live (postgres/s3/upstash/apify), degraded:[]; the deployed-URL battery 22/22 legs GREEN (the P17-window contamination + the P18 post-window rerun disclosed in docs/journeys/production-web.md); the Upstash URL deviation recorded (meet-ewe-145933 stale/deleted -> polished-yeti-167554, keyspace-inspected co-tenant-safe: 70 keys, all aise:*, ZERO ratelimit:* collisions); the live-only defect chain #1-#8 all fixed + regression-pinned. W001-W070 COMPLETE (70/70). The frontier is EMPTY; the standing GPU boundary stays (GPU rasterization impossible in this sandbox — honest permanent NOT-VERIFIED)."
 }
