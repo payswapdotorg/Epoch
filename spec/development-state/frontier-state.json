@@ -1,8 +1,10 @@
 {
-  "program": "ACR-012 Construction Solution Explorer (EFFECTIVE 2026-10-04, operator directive): the product-surface program making the construction solution world the primary problem-solving experience on web + desktop. W071 (shared fixture) IN FLIGHT \u2014 serialized first, freezes the W072/W073 contract; W072 (web workspace) + W073 (desktop workspace) ELIGIBLE at the W071 merge, pairwise-disjoint, max concurrent 3. Mobile OUT OF SCOPE. Deadline 2026-10-05 00:00 (operator).",
+  "program": "ACR-012 Construction Solution Explorer (EFFECTIVE 2026-10-04, operator directive): the product-surface program making the construction solution world the primary problem-solving experience on web + desktop. W071 (shared fixture) IN FLIGHT — serialized first, freezes the W072/W073 contract; W072 (web workspace) + W073 (desktop workspace) ELIGIBLE at the W071 merge, pairwise-disjoint, max concurrent 3. Mobile OUT OF SCOPE. Deadline 2026-10-05 00:00 (operator).",
   "eligible": 0,
-  "inFlight": 1,
+  "inFlight": [
+    "W071"
+  ],
   "blocked": [],
   "maxConcurrentWorkers": 3,
-  "notes": "W001-W070 COMPLETE (70/70 \u2014 all prior ACRs closed; ACR-006 DEPLOYED-LIVE). ACR-012 activation 2026-10-04: W071 dispatched first (alone on its surface); W072+W073 dispatch in parallel at the W071 merge. The GPU boundary stays honest (NOT-VERIFIED in this sandbox; browser batteries run REAL software GL via SwiftShader ANGLE)."
+  "notes": "W001-W070 COMPLETE (70/70 — all prior ACRs closed; ACR-006 DEPLOYED-LIVE). ACR-012 activation 2026-10-04: W071 dispatched first (alone on its surface); W072+W073 dispatch in parallel at the W071 merge. The GPU boundary stays honest (NOT-VERIFIED in this sandbox; browser batteries run REAL software GL via SwiftShader ANGLE)."
 }

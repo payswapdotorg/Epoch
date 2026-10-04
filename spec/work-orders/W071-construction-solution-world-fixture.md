@@ -1,6 +1,7 @@
 # Work Order W071 — Construction Solution World Fixture (ACR-012)
 
-Worker Count: 1 — runs ALONE (freezes the contract W072/W073 consume)
+Worker Count: 1
+W071 runs ALONE first — it freezes the contract W072/W073 consume.
 
 One Work Order = one branch = one PR. Workers never merge.
 

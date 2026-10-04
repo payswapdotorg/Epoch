@@ -243,3 +243,22 @@ W068 is the single serialized defect-closure order. It runs CONCURRENT with the 
 ## ACR-011 completion invariant
 
 The defect-ledger entry closes with the full public discipline chain: the arity fix lands (the BLENDER_SIDECAR_PYTHON_DIGEST re-stamp disclosed), the CI-executable sidecar-Python guard proves the failure class can never return silently (runs in the standard battery with no Blender binary), the env-gated live battery flips to 3 passed against the official Blender 4.2.11 (or the honest NOT-RUNNABLE live disposition with the fix+guard landed), and the ledger records fix -> rerun -> close with exact evidence. The detailed acceptance contract lives in spec/architecture-change-requests/ACR-011-blender-sidecar-arity-defect-closure.md and spec/work-orders/W068-blender-sidecar-arity-defect-closure.md.
+
+
+# ACR-012 Construction Solution Explorer Work Orders
+
+ACR-012 is EFFECTIVE (2026-10-04, operator directive) and is the active product-surface program after ACR-011: the construction solution world becomes the primary problem-solving experience on web + desktop (spatially dominated workspace, real construction systems, engineering inspector/BOQ/constraints, solution variants, visible agents, construction timeline). Mobile is OUT OF SCOPE. The activation record is `spec/architecture-change-requests/ACR-012-construction-solution-explorer.md`.
+
+| ID | Scope | Depends | Owned surfaces |
+|---|---|---|---|
+| W071 | Construction Solution World Fixture (shared deterministic fixture package + verification battery; freezes the W072/W073 consumption contract) | — (ACR-012 activation) | packages/construction-world-fixture/*, qa/construction-solution/*, root manifests/pnpm-lock.yaml ONLY to register the new package (disclosed in the PR) |
+| W072 | Web Construction Solution Workspace (the /world spatially dominated construction explorer) | W071 (frozen fixture API) | apps/web/src/features/world/*, apps/web/src/shell/* additive-only, apps/web/src/product/* additive-only, apps/web/src/client/* additive-only, apps/web/src/shared/* additive-only, apps/web/src/server/* additive-only, qa/web/* |
+| W073 | Desktop Construction Solution Workspace (the default construction explorer surface) | W071 (frozen fixture API) | apps/desktop/app/*, apps/desktop/src/*, apps/desktop/test/*, apps/desktop/scripts/*, apps/desktop/package.json ONLY required deps (disclosed), qa/desktop/* |
+
+## ACR-012 concurrency
+
+W071 is serialized first (it freezes the fixture contract W072/W073 compile against). W072 + W073 become ELIGIBLE together at the W071 merge — pairwise-disjoint surfaces (apps/web/* + qa/web/* vs apps/desktop/* + qa/desktop/*), max concurrent 3.
+
+## ACR-012 completion invariant
+
+The program completes when a user can open the construction solution on web and desktop and solve the solution through the spatial world: real building/site geometry across the six construction layers rendered by BOTH Three.js and Babylon.js (switching preserves the semantic world), plan/3D/section navigation, selection to canonical semantic ids, engineering inspector/BOQ/constraint projections, solution variants that CHANGE the world representation, visible agents with followable work, and the construction timeline — all through the EXISTING typed Epoch world/timeline/interaction contracts (no second semantic authority). The detailed acceptance contract lives in `spec/architecture-change-requests/ACR-012-construction-solution-explorer.md` and the W071-W073 Work Order files.
