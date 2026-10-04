@@ -1,31 +1,108 @@
 # Journey W052 — Production Web (public deployment program, ACR-006)
 
-Platform: web-production (HTTP surface of the deployed application) — **local production build** (this record's environment below)
+Platform: web-production (HTTP surface of the deployed application) — **DEPLOYED-LIVE** (the 2026-10-03 deployed-URL record below; the W052 **local production build** phase record follows and is kept as the historical provenance of this journey harness)
 Persona: delivery lead / chief engineer (construction `tenant:nordstrand`), tech lead (software `tenant:lightspeed`) — the fixture principals, selected at the public entry
 Product version: `@epoch/web` (apps/web, Next.js App Router production build; Application Gateway bound in-process — the only client-facing mutation/read path)
 Source commit: dispatch base `0feac24135e5666f399a1fd93ef7912124aeba88` on branch `work/W052-public-web-vercel-deployment` (final head SHA stated in the W052 PR)
 Environment: **preview-local-production-build** — `next build` + `next start` (port 3155), `EPOCH_DEPLOYMENT_PROFILE=preview` (in-memory bindings, degradation surfaced; the production profile without provider credentials fails closed BY DESIGN — spec/production-environment.md). Phase B restart adds `EPOCH_RATE_LIMIT_IP_REQUESTS_PER_WINDOW=3`.
 Fixture: `epoch-fixture-construction-v1.0.0` (`tenant:nordstrand`), `epoch-fixture-software-v1.0.0` (`tenant:lightspeed`) — boot-verified against `qa/fixtures/registry.json`
 
-## HONEST DEPLOYMENT STATUS: NOT-DEPLOYED (awaiting Vercel credentials)
+## HONEST DEPLOYMENT STATUS: DEPLOYED-LIVE (verified 2026-10-03)
 
-No Vercel credentials exist in the working environment (the ACR-006
-honest-blocking rule). **No public URL exists; nothing in this record is a
-claim about a deployed site.** What this record evidences:
+The operator credentials were provided 2026-10-03 and the ACR-006
+post-credential deployment verification **EXECUTED and is COMPLETE**. The
+former "NOT-DEPLOYED (awaiting Vercel credentials)" status that stood here was
+the truth until then (the ACR-006 honest-blocking rule; the W052 local-phase
+evidence below). What this record now carries, every value live-verified:
 
-1. the reusable production journey harness
-   (`apps/web/qa/production/`) — every journey below is executable against
-   ANY deployment origin by setting `EPOCH_PRODUCTION_BASE_URL`;
-2. the journeys executed against the closest honest approximation available
-   without credentials: a REAL production build of `apps/web`
-   (`next build`, served by `next start`), driven exclusively through its
-   public HTTP surface (`/api/gateway`, `/api/product/authenticate`,
-   `/api/product/bootstrap`, `/api/healthz`, `/api/readyz`) — no direct
-   kernel access, no privileged probes;
-3. everything that remains gated on the real deployment (per journey, below).
+1. **the PUBLIC URL (the acceptance surface):**
+   https://epoch-ekonplacidegmailcoms-projects.vercel.app — publicly
+   reachable; the project's SSO deployment protection was removed 2026-10-03
+   so the production alias serves anonymously;
+2. **the deployment identity:** production deployment `dpl_A5cnn9G7Vig1cEDR`,
+   READY, from `main@a269f829` (the W069 merge, PR #160), target=production,
+   region iad1. Predecessor chain that proved the surface:
+   `dpl_Hqiz9Z7Qdb3jeRKXBgaLXh1q2b4z` (READY, main@77dbb0b9),
+   `dpl_Bwj4BDT5uMY69sdFzwUhPVz2wEsf` (READY, 2a1382f). Earlier production
+   attempts errored and were fixed (the live-only defect chain below);
+3. **the live health/readiness payloads (over HTTPS, anonymous):**
+   `GET /api/healthz` → `200 {"ok":true,"profile":"production"}`;
+   `GET /api/readyz` → `200 {"ok":true,"ready":true,"profile":"production","bindings":{"persistence":{"configured":true,"kind":"postgres"},"objectStore":{"configured":true,"kind":"s3"},"rateLimit":{"configured":true,"kind":"upstash"},"acquisition":{"configured":true,"kind":"apify"}},"degraded":[],"issues":[],"criticalIssues":[]}`
+   — ALL FOUR real provider bindings live, zero degradation;
+4. the deployed-URL journey battery: **22/22 legs GREEN** (the table below,
+   with the P17-window contamination + the P18 rerun disclosed exactly as it
+   happened);
+5. the live-only defect chain #1-#8 (the program defect ledger below) —
+   every deployment defect found on a REAL deployment, fixed and
+   regression-pinned.
 
-The complete deployment procedure (operator-ready) is
-[docs/deployment/vercel-setup.md](../deployment/vercel-setup.md).
+The complete deployment procedure (the operator runbook that produced this
+deployment) is
+[docs/deployment/vercel-setup.md](../deployment/vercel-setup.md); the
+consolidated closure roll-up + the provider identity record live in
+[production.md](./production.md).
+
+## The deployed-URL battery (executed 2026-10-03, by the TL against the public URL): 22/22 legs GREEN
+
+| Journey (deployed URL) | Result | Note |
+|---|---|---|
+| Health/readiness (W051 contract) | **PASS** | the live payloads above (`healthz` `{"ok":true,"profile":"production"}`; `readyz` ready:true, all four bindings, `degraded:[]`) |
+| P01 public onboarding | **PASS** | — |
+| P02 sign-in/session | **PASS** | — |
+| P03 tenant/project selection | **PASS** | — |
+| P04 understand/reconstruct | **PASS** | — |
+| P05 capability discovery | **PASS** | — |
+| P06 decide/approve | **PASS** | — |
+| P07 plan/acquire | **PASS** | — |
+| P08 realize/observe/verify | **PASS** | — |
+| P09 offline/reconnect | **NOT-RUNNABLE** (unchanged disposition) | the client offline-queue is a browser-client behavior — covered by the W047 browser suite |
+| P10 cross-device handoff | **NOT-RUNNABLE** (unchanged disposition) | cross-device handoff is a browser-client behavior — covered by the W047 browser suite |
+| P11 agent supervision | **PASS** | — |
+| P12 recovery | **PASS** | — |
+| P13 release/update | **NOT-RUNNABLE-at-HTTP-boundary** (unchanged disposition) | requires provider-side deployment events |
+| P14 production persistence | **PASS** | persistence over the live postgres binding (the provider identity record in [production.md](./production.md)) |
+| P15 object/evidence upload+retrieval | **PASS** | the R2-backed byte round trip (put/get + P15 evidence upload/retrieval GREEN) |
+| P16 provider degradation | **NOT-RUNNABLE-at-HTTP-boundary** (unchanged disposition) | requires provider-side events |
+| P17 rate-limit behavior | **PASS** | the typed transient 429 at exactly the configured budget — the LIVE Upstash guard working |
+| P18 tenant isolation | **PASS** | 4/4 legs on the post-window rerun (the first-run note below) |
+
+Run facts (disclosed exactly as they happened): 22/22 legs GREEN. First run
+19 passed / 3 failed — all three failures were P17-window contamination
+(P17's hammer by design exhausts the 120-request/60s IP budget; the P18 legs
+immediately after received the typed gateway-overloaded 429 envelope with
+rateLimit `{guardId:"ip", limit:120, remaining:0}`). P17 itself PASSED (the
+typed transient 429 at exactly the configured budget — the LIVE Upstash guard
+working). P18 rerun after the 60s window reset: 4/4 PASSED. P09/P10 (client
+offline-queue + cross-device handoff) and P13/P16 (release-update +
+provider-degradation) remain the documented NOT-RUNNABLE-at-HTTP-boundary
+dispositions (covered by the W047 browser suite / require provider-side
+events).
+
+## The live-only defect chain (the program defect ledger)
+
+Every defect below was found on a REAL deployment (never in the sandbox/CI
+environment — that is what made each one live-only), and every one is fixed +
+regression-pinned:
+
+| # | The live-only defect | The fix + the regression pin | Delivered by |
+|---|---|---|---|
+| 1 | `vercel.json` rootDirectory/outputDirectory — Vercel Next.js detection fails from the repo root; the redundant key rejected from `apps/web` | the corrected deployment-root configuration | PR #155/#156 |
+| 2 | `adapters/renderers/threejs` never declared `@epoch/experience-protocol` (masked by link-local resolution in sandbox/CI) | the missing declaration | #156 |
+| 3 | webpack replaced the pg driver dynamic import with a throwing stub | `/* webpackIgnore: true */` + the `apps/web` pg declaration + `outputFileTracingIncludes` | #155/#156 |
+| 4 | the S3 adapter signed every request with a double-Z `x-amz-date` (`...T010203ZZ`) — every real R2 request 403 `SignatureDoesNotMatch` | the date-format fix; the regression test pinning `^\d{8}T\d{6}Z$` | PR #155 |
+| 5 | pg's pnpm-store siblings unresolvable in the lambda | the flattened-closure approach | #157/#158 |
+| 6/#7 | the trace-anchor iterations — store paths unresolvable | flattened direct declarations | #158/#159 |
+| 8 | `xtend`/`mutable` + `split2` missing from the flattened driver closure — the live `readyz` 503 | fixed by W069 with the CLASS-CLOSING deterministic guard test (walks the driver's full 14-package runtime closure from the deployment root; asserts declared + flattened + traced for every member; red-on-main evidence: `closure incomplete: undeclared=[split2, xtend] missing-at-root=[split2, xtend] untraced=[split2, xtend]`) | PR #160, main@a269f829 |
+
+## The W052 local-production-build phase (the historical provenance record)
+
+Everything from here to the end of this document is the W052 execution record
+against the local production build (`next build` + `next start`, preview
+profile) — kept verbatim as the historical provenance of this journey
+harness and of every "PASS" it established before the deployed-URL run. The
+2026-10-03 deployed-URL verdicts live in the tables above (P14's postgres
+persistence + P15's R2 round trip GREEN live; P09/P10/P13/P16 remain the
+documented NOT-RUNNABLE-at-HTTP-boundary dispositions).
 
 ## Preconditions
 
@@ -105,10 +182,11 @@ run, not committed — 102 entries).
 Result: **PASS (local production build)** — 22/22 journey tests green across
 the two phases (P17 in its dedicated tiny-budget phase); the standard
 hermetic battery remains green with the suite skipped (no `BASE_URL`).
-Notes: every "PASS" above is a claim about the LOCAL production build only;
-the deployed-URL reruns are pending operator credentials and will be recorded
-here by the TL/W055 using the same harness
-(`EPOCH_PRODUCTION_BASE_URL=https://<project>.vercel.app npx vitest run qa/production`).
+Notes: every "PASS" below is a claim about the LOCAL production build only;
+the deployed-URL reruns EXECUTED 2026-10-03 (the record above: 22/22 legs
+GREEN against https://epoch-ekonplacidegmailcoms-projects.vercel.app with
+the same harness,
+`EPOCH_PRODUCTION_BASE_URL=https://epoch-ekonplacidegmailcoms-projects.vercel.app npx vitest run qa/production`).
 
 ## Dispositions
 
