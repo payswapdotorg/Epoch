@@ -1,1 +1,47 @@
-ewogICJ2ZXJzaW9uIjogIlgyLjAiLAogICJjb21wbGV0ZWQiOiA3MywKICAiY29tcGxldGVkVGhyb3VnaCI6ICJXMDczIiwKICAiYWN0aXZlIjogW10sCiAgImVsaWdpYmxlIjogW10sCiAgImJsb2NrZWQiOiBbXSwKICAiZGVwZW5kZW5jeVByb2dyYW0iOiB7CiAgICAiVzA1NiI6IFsKICAgICAgIkFDUi0wMDYvVzA1NSIKICAgIF0sCiAgICAiVzA1NyI6IFsKICAgICAgIlcwNTYiCiAgICBdLAogICAgIlcwNTgiOiBbCiAgICAgICJXMDU2IgogICAgXSwKICAgICJXMDU5IjogWwogICAgICAiVzA1NiIKICAgIF0sCiAgICAiVzA2MCI6IFsKICAgICAgIlcwNTciLAogICAgICAiVzA1OCIsCiAgICAgICJXMDU5IgogICAgXSwKICAgICJXMDYxIjogWwogICAgICAiVzA2MCIKICAgIF0sCiAgICAiVzA2MiI6IFsKICAgICAgIkFDUi0wMDcvVzA2MSIKICAgIF0sCiAgICAiVzA3MSI6IFsKICAgICAgIkFDUi0wMTIgYWN0aXZhdGlvbiIKICAgIF0sCiAgICAiVzA3MiI6IFsKICAgICAgIlcwNzEgKGZyb3plbiBmaXh0dXJlIEFQSSkiCiAgICBdLAogICAgIlcwNzMiOiBbCiAgICAgICJXMDcxIChmcm96ZW4gZml4dHVyZSBBUEkpIgogICAgXQogIH0sCiAgImNvbmN1cnJlbmN5IjogewogICAgIm1heFdvcmtlcnMiOiAzLAogICAgImN1cnJlbnQiOiBbXSwKICAgICJuZXh0IjogW10KICB9Cn0K
+{
+  "version": "X2.0",
+  "completed": 73,
+  "completedThrough": "W073",
+  "active": [],
+  "eligible": [],
+  "blocked": [],
+  "dependencyProgram": {
+    "W056": [
+      "ACR-006/W055"
+    ],
+    "W057": [
+      "W056"
+    ],
+    "W058": [
+      "W056"
+    ],
+    "W059": [
+      "W056"
+    ],
+    "W060": [
+      "W057",
+      "W058",
+      "W059"
+    ],
+    "W061": [
+      "W060"
+    ],
+    "W062": [
+      "ACR-007/W061"
+    ],
+    "W071": [
+      "ACR-012 activation"
+    ],
+    "W072": [
+      "W071 (frozen fixture API)"
+    ],
+    "W073": [
+      "W071 (frozen fixture API)"
+    ]
+  },
+  "concurrency": {
+    "maxWorkers": 3,
+    "current": [],
+    "next": []
+  }
+}
