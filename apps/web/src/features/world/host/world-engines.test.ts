@@ -158,20 +158,20 @@ describe('the web world host — the REAL renderers behind the /world route (hea
     const { runtime, three, babylon } = await openEngineWorkspace();
     try {
       // Pick a DIFFERENT entity than the focused one so the select intent
-      // produces a NEW canonical revision (focus moves riser -> panel).
-      const pointer = pointerAt(runtime, three, babylon, ENTITY_IDS.panel);
+      // produces a NEW canonical revision (focus moves COL-04 -> staging).
+      const pointer = pointerAt(runtime, three, babylon, ENTITY_IDS.siteStaging);
       const picked = await runtime.dispatchPointerDown(pointer);
       expect(picked.ok).toBe(true);
       if (picked.ok) {
-        expect(picked.value.receipt.hitEntityId).toBe(ENTITY_IDS.panel);
+        expect(picked.value.receipt.hitEntityId).toBe(ENTITY_IDS.siteStaging);
         expect(picked.value.receipt.intent?.id).toBe('epoch.world.interaction.select');
         expect(picked.value.receipt.outcome).toBe('normalized');
         expect(picked.value.applied).toBe(true);
       }
       // The canonical revision now focuses the picked entity.
-      expect(runtime.currentScene().focusedEntityIds).toEqual([ENTITY_IDS.panel]);
-      expect(runtime.viewModel().inspect.entityId).toBe(ENTITY_IDS.panel);
-      expect(runtime.viewModel().inspect.label).toBe('Main distribution panel MD-2');
+      expect(runtime.currentScene().focusedEntityIds).toEqual([ENTITY_IDS.siteStaging]);
+      expect(runtime.viewModel().inspect.entityId).toBe(ENTITY_IDS.siteStaging);
+      expect(runtime.viewModel().inspect.label).toBe('Staging / laydown yard');
     } finally {
       await runtime.close();
     }
@@ -181,10 +181,10 @@ describe('the web world host — the REAL renderers behind the /world route (hea
     const { runtime, three, babylon } = await openEngineWorkspace();
     try {
       // Semantic pick on the REAL three.js presenter first (the focus moves
-      // to the panel — a new canonical revision presented on a fresh
+      // to the staging yard — a new canonical revision presented on a fresh
       // session; the digest below is read AFTER it).
       const pickedOnThree = await runtime.dispatchPointerDown(
-        pointerAt(runtime, three, babylon, ENTITY_IDS.panel),
+        pointerAt(runtime, three, babylon, ENTITY_IDS.siteStaging),
       );
       expect(pickedOnThree.ok && pickedOnThree.value.applied).toBe(true);
       const presentationDigest = spatialPresentationOf(runtime.currentScene()).digest;
@@ -211,23 +211,27 @@ describe('the web world host — the REAL renderers behind the /world route (hea
       const adapterSession = babylon.adapterSessionOf(babylonSession?.fabricSessionId ?? '');
       expect(adapterSession).toBeDefined();
       const presentedOnBabylon = babylon.presentedEntityIds(adapterSession!);
-      expect(presentedOnBabylon).toContain(ENTITY_IDS.panel);
-      expect(presentedOnBabylon).toContain(ENTITY_IDS.riser);
-      expect(presentedOnBabylon).not.toContain(ENTITY_IDS.legacyDuct);
+      expect(presentedOnBabylon).toContain(ENTITY_IDS.siteStaging);
+      expect(presentedOnBabylon).toContain(ENTITY_IDS.hvacUnit);
+      expect(presentedOnBabylon).not.toContain(ENTITY_IDS.legacyConduit);
       // Semantic picking through the REAL Babylon scene.pick on the
-      // switched session (a different entity — the riser).
+      // switched session (a different entity — the roof beam grid). The
+      // beam self-picks through the adapter's own projected-position basis
+      // under the restored camera (empirically isolated per entity — the
+      // construction fixture's dense interior occludes most projected
+      // centers through the building; the beam's cut face is unoccluded).
       const pickedOnBabylon = await runtime.dispatchPointerDown(
-        pointerAt(runtime, three, babylon, ENTITY_IDS.riser),
+        pointerAt(runtime, three, babylon, ENTITY_IDS.beam02),
       );
       expect(pickedOnBabylon.ok).toBe(true);
       if (pickedOnBabylon.ok) {
-        expect(pickedOnBabylon.value.receipt.hitEntityId).toBe(ENTITY_IDS.riser);
+        expect(pickedOnBabylon.value.receipt.hitEntityId).toBe(ENTITY_IDS.beam02);
         expect(pickedOnBabylon.value.receipt.intent?.id).toBe('epoch.world.interaction.select');
       }
 
-      // The riser pick created a NEW canonical revision (focus moved) — the
+      // The beam pick created a NEW canonical revision (focus moved) — the
       // projection digest of the CURRENT revision is the switch anchor now.
-      const canonicalDigestAfterRiserPick = runtime.currentScene().digest;
+      const canonicalDigestAfterBeamPick = runtime.currentScene().digest;
       const presentationDigestAfterPick = spatialPresentationOf(
         runtime.currentScene(),
       ).digest;
@@ -243,15 +247,15 @@ describe('the web world host — the REAL renderers behind the /world route (hea
       }
       expect(runtime.session()?.rendererId).toBe(THREE_RENDERER_ID);
       // The canonical revision survived the round trip (only focus moved —
-      // the panel/riser picks were select intents; the entities, overlays
+      // the staging/beam picks were select intents; the entities, overlays
       // and timeline of the original revision are untouched).
       expect(runtime.currentScene().entities.map((entity) => entity.entityId).sort()).toEqual(
         SCENE.entities.map((entity) => entity.entityId).sort(),
       );
       // And the switch-back touched nothing canonical: the digest read
-      // right after the riser pick (the last intent) still identifies the
+      // right after the beam pick (the last intent) still identifies the
       // revision — switching is non-semantic by construction.
-      expect(runtime.currentScene().digest).toBe(canonicalDigestAfterRiserPick);
+      expect(runtime.currentScene().digest).toBe(canonicalDigestAfterBeamPick);
     } finally {
       await runtime.close();
     }

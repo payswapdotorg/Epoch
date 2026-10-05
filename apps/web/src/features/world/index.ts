@@ -105,18 +105,66 @@ export {
 } from './workspace-handlers';
 export type { WorkspaceHandlers } from './workspace-handlers';
 export { WorldWorkspace } from './components/WorldWorkspace';
-export { WorldViewport } from './components/WorldViewport';
-export type { WorldViewportProps } from './components/WorldViewport';
+
+// W072 — the CONSTRUCTION SOLUTION EXPLORER surface (ACR-012): the
+// world-dominant workspace's construction chrome (top bar, left navigator,
+// the three-presentation viewport, the right engineering inspector) + the
+// pure construction projection model over the frozen W071 fixture.
+export { ConstructionTopBar } from './components/ConstructionTopBar';
 export {
-  WorldControlsPanel,
-  WorldInspectPanel,
+  ConstructionNavigator,
+  navigatorAgentsOf,
+  type NavigatorAgent,
+} from './components/ConstructionNavigator';
+export {
+  ConstructionViewport,
+  type ViewportAgentEntry,
+} from './components/ConstructionViewport';
+export {
+  ConstructionInspector,
+  type InspectorAgent,
+} from './components/ConstructionInspector';
+export {
   WorldIntentJournal,
-  WorldLayerPanel,
-  WorldPresencePanel,
-  WorldRendererBar,
-  WorldTimelineBar,
-  WorldToolRail,
+  WorldFoundationPanel,
 } from './components/WorldWorkspacePanels';
+export {
+  BOQ_ROLLUPS,
+  BOQ_TOTAL,
+  CONSTRUCTION_FIXTURE,
+  EMPTY_CROSS_HIGHLIGHT,
+  SOLUTION_AGENTS,
+  SOLUTION_BRANCH_PHASE,
+  SOLUTION_IDENTITY,
+  SOLUTION_LAYERS,
+  SOLUTION_PHASES,
+  SOLUTION_SIMULATE_CONTROL,
+  SOLUTION_VARIANT_IDS_ORDERED,
+  boqEstimate,
+  boqLineOf,
+  boqLinesOf,
+  crossHighlightActive,
+  crossHighlightFromAgent,
+  crossHighlightFromBoqLine,
+  crossHighlightFromConstraint,
+  crossHighlightFromEntity,
+  entityEvidenceOf,
+  formatEur,
+  highlightEntityIdsOf,
+  isolatedLayerIdOf,
+  phaseAt,
+  presentedConstraints,
+  presentedEntities,
+  sectionCutRangeOf,
+  variantOf,
+  type CrossHighlight,
+  type EntityEvidence,
+  type PresentedConstructionEntity,
+  type SectionCutRange,
+  type SolutionVariantId,
+  type SolutionViewMode,
+} from './construction-solution';
+export { CS, CS_TYPE, FONTS, LAYER_COLORS, STATUS_COLORS, layerColorOf } from './construction-tokens';
 
 // W061 — the REAL world host: the runtime composition (the REAL engines
 // behind the REAL fabric) + the browser GL surface seam of the /world route.
@@ -125,6 +173,7 @@ export {
   ENGINE_CANVAS_SIZE,
   webBabylonEngineHost,
   webThreeSurfaceFactory,
+  type CanvasSource,
   type SurfaceProbe,
 } from './host/browser-gl';
 export {

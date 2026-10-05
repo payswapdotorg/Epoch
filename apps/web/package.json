@@ -29,6 +29,7 @@
     "@epoch/authorization": "workspace:*",
     "@epoch/capability-registry": "workspace:*",
     "@epoch/client-runtime": "workspace:*",
+    "@epoch/construction-world-fixture": "workspace:*",
     "@epoch/event-log": "workspace:*",
     "@epoch/evidence": "workspace:*",
     "@epoch/identity": "workspace:*",

@@ -33,3 +33,18 @@ P2 (material impairment with workaround) / P3 (polish).
 
 - The W046 `world.entities` service passes the type filter under a key the kernel ignores (the filter is silently dropped). The web product compensates with a client-side presentation projection (documented in `understand.tsx`); the seam fix belongs to the service owner.
 - Playwright's `reuseExistingServer: true` means a battery re-run against an already-running 3100 server reuses accumulated in-memory authoritative state (sessions, actions). The specs are written to be robust to this (status assertions are order-scoped, not global) — recorded as a deliberate harness property, not a defect.
+
+## W072 — Construction solution workspace (apps/web/src/features/world)
+
+| ID | Journey | Severity | Defect (observed) | Root cause | Fix | Regression test | Status |
+|---|---|---|---|---|---|---|---|
+| W072-1 | J14 | P2 | Default `/world` workspace grew content-driven to 1004px — page scroll, the timeline HUD below the fold at BOTH canonical sizes | the workspace block had no definite height: rail/HUD content drove minHeight beyond the viewport | structural: definite height `calc(100vh − 156px)` + overflow hidden + internally-scrolling rails + viewport-PROPORTIONAL rails (navigator ~11% / inspector ~15%, min-clamped 170/234) | j14 dominance + no-scroll assertions | CLOSED (`502f379`) |
+| W072-2 | J14 | P2 | 2px page scroll at the battery canvas (scrollHeight 722 vs innerHeight 720) | the definite-height slack subtracted 156px but the shell's ACTUAL chrome is 158px (140px above + 18px status footer) — `502f379` had the slack wrong by the 2px status-footer border box | `WorldWorkspace.tsx` 156 → 158 (the code's own stated intent: the DEFAULT state never scrolls the page) | j14 no-scroll at 1280×720 (scrollHeight == innerHeight, measured) | CLOSED (`b307248`) |
+| W072-3 | J12 | P3 (environment constraint — not a product defect) | The j12 update-phase inner `next build` kernel-OOMs on this 4G sandbox: blocked in full-suite invocations at phase A (3 dmesg-evidenced kills) and, with the sandbox replay stack live, in isolated invocations too at the delivery head (type-check worker peak 1.28GB RSS, dmesg-evidenced ×2); a failed inner build also corrupts `.next/BUILD_ID`, poisoning the next webServer start (rebuild between invocations) | the 4G RAM ceiling vs the build's type-check peak; the operator-directed live replay stack holds ~0.8G | j12 runs ISOLATED with the suite webServer pre-satisfied — verified GREEN in 1.3m at the phase-A closure head `52680dd` (stack down); product delta since = one CSS constant (`b307248`) + test-only files (`c929bbc`) + the harness port (`b294597`); the type coverage itself verified green standalone (`pnpm --filter web typecheck` PASS at the delivery head) | j12 (green isolated at `52680dd`; blocked-only-by-memory at the delivery head, honestly recorded here) | OPEN (environment-constrained) |
+
+### W072 dispositions
+
+- **P0/P1**: none found in the W072 scope.
+- **P2**: 2 (W072-1, W072-2); both fixed with live regression coverage in the final green battery.
+- **P3**: 1 environment constraint (W072-3) — the defect is the sandbox memory ceiling, not the work.
+- Advisory: j07 flaked once mid-suite under full-battery load at the delivery head (queue-state-pill not found within 15s) and passed green isolated immediately after (2.4s) — the known invocation-sensitivity pattern from phase A ("verified green across rerun invocations"); recorded as a harness property under load, no product change.

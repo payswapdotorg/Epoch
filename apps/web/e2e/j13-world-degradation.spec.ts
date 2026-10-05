@@ -48,6 +48,7 @@ import {
   DEVICE,
   ENTITY_IDS,
   ONTOLOGY,
+  REFERENCE_RENDERER_ID,
   RENDERER_PREFERENCE,
   SCENE,
   buildWorldFabric,
@@ -157,14 +158,17 @@ test.describe('J13 leg 16 — forced degradation (no usable GL context)', () => 
       'false',
     );
     // The reference projection really draws the world: every visible
-    // fixture entity presents as a positioned glyph.
+    // fixture entity presents as a positioned glyph (the construction
+    // fixture's representative surface entities — the staging yard, the
+    // roof-top HVAC unit, the roof cladding, the front door, the focused
+    // COL-04 and the ground slab).
     for (const entityId of [
-      ENTITY_IDS.slab,
-      ENTITY_IDS.frame,
-      ENTITY_IDS.panel,
-      ENTITY_IDS.riser,
-      ENTITY_IDS.hoist,
-      ENTITY_IDS.staging,
+      ENTITY_IDS.siteStaging,
+      ENTITY_IDS.hvacUnit,
+      ENTITY_IDS.roofCladding,
+      ENTITY_IDS.doorFront,
+      ENTITY_IDS.column04,
+      ENTITY_IDS.groundSlab,
     ]) {
       await expect(
         page.locator(`[data-viewport-entity="${entityId}"]`),
@@ -176,7 +180,7 @@ test.describe('J13 leg 16 — forced degradation (no usable GL context)', () => 
     // picking runs through the real adapter's headless hit-test core (the
     // pointer derived from the adapter's own projection — same honest
     // basis as the GL journey).
-    const pointer = await deriveHeadlessThreePointer(ENTITY_IDS.panel);
+    const pointer = await deriveHeadlessThreePointer(ENTITY_IDS.siteStaging);
     const box = await (async () => {
       const stageElement = page.locator('[data-engine-stage]');
       await stageElement.scrollIntoViewIfNeeded();
@@ -195,7 +199,7 @@ test.describe('J13 leg 16 — forced degradation (no usable GL context)', () => 
         )
         .first(),
     ).toBeVisible();
-    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.panel);
+    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.siteStaging);
   });
 
   test('W067 — the in-page foundation path on the no-GL/reference fallback: the degraded world still imports and binds', async ({
@@ -255,13 +259,14 @@ test.describe('J13 leg 16 — forced degradation (no usable GL context)', () => 
     });
 
     // The declared fallback presenter's OWN seam: switch the degraded world
-    // to the reference renderer (rr-web-reference — W067 declares it
-    // asset-bindable, mirroring the desktop full reference) and re-bind the
-    // SAME digest-addressed asset on the fresh session.
-    await page.locator('[data-renderer-choice="rr-web-reference"]').click();
+    // to the reference renderer (the construction fixture's reference id —
+    // W067 declares it asset-bindable, mirroring the desktop full
+    // reference) and re-bind the SAME digest-addressed asset on the fresh
+    // session.
+    await page.locator(`[data-renderer-choice="${REFERENCE_RENDERER_ID}"]`).click();
     await expect(page.locator('[data-engine-stage]')).toHaveAttribute(
       'data-active-renderer',
-      'rr-web-reference',
+      REFERENCE_RENDERER_ID,
     );
     await page.getByTestId(`foundation-bind-${CANONICAL_FIXTURE_DIGEST.slice(0, 12)}`).click();
     const referenceEntry = page.locator(
@@ -277,7 +282,7 @@ test.describe('J13 leg 16 — forced degradation (no usable GL context)', () => 
         )
         .first(),
     ).toContainText('receipt');
-    await expect(referenceEntry.first()).toContainText('rr-web-reference');
+    await expect(referenceEntry.first()).toContainText(REFERENCE_RENDERER_ID);
     // The ledger is keyed by the SAME asset digest (two applications, one
     // digest-addressed identity) and the world digest is still unchanged.
     await expect(workspace).toHaveAttribute(

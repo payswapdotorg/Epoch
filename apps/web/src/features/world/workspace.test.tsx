@@ -401,29 +401,37 @@ function scriptedViewModel(): WorkspaceViewModelInput {
 // The tests.
 // ---------------------------------------------------------------------------
 
-describe('the world workspace component (W057)', () => {
-  it('renders the VIEWPORT as the primary surface with the secondary context panels', () => {
+describe('the world workspace component (W057 → W072 construction solution explorer)', () => {
+  it('renders the WORLD VIEWPORT as the primary surface flanked by the secondary rails', () => {
     const html = renderToStaticMarkup(createElement(WorldWorkspace, { driver: new ScriptedDriver(scriptedViewModel()) }));
-    // The primary surface is the viewport (first, largest region).
+    // The construction workspace row: LEFT navigator rail, the PRIMARY world
+    // viewport (the dominant spatial surface), RIGHT inspector rail.
+    const navigatorIndex = html.indexOf('data-panel="navigator"');
     const primaryIndex = html.indexOf('data-workspace-primary');
     const viewportIndex = html.indexOf('data-viewport="world"');
-    const secondaryIndex = html.indexOf('data-workspace-secondary');
+    const inspectorIndex = html.indexOf('data-panel="inspector"');
+    expect(navigatorIndex).toBeGreaterThan(-1);
     expect(primaryIndex).toBeGreaterThan(-1);
-    expect(viewportIndex).toBeGreaterThan(primaryIndex);
-    expect(secondaryIndex).toBeGreaterThan(viewportIndex);
+    expect(viewportIndex).toBeGreaterThan(-1);
+    // The primary marker sits ON the viewport's own element (adjacent
+    // attributes of the same <section data-viewport="world">).
+    expect(Math.abs(viewportIndex - primaryIndex)).toBeLessThan(200);
+    expect(inspectorIndex).toBeGreaterThan(viewportIndex);
+    expect(html.indexOf('data-workspace-secondary', navigatorIndex)).toBeGreaterThan(-1);
+    expect(html.indexOf('data-workspace-secondary', inspectorIndex)).toBeGreaterThan(-1);
     // The spatial projection renders the canonical entities + overlays.
     expect(html).toContain('data-viewport-entity="we-site-frame"');
     expect(html).toContain('data-entity-state="focused"');
     expect(html).toContain('data-viewport-overlay="ovl-measure-scripted"');
     expect(html).toContain('data-viewport-overlay="ovl-annot-scripted"');
     expect(html).toContain('Verify the frame anchor');
-    // Agent presence is visible in the world.
+    // Agent presence is visible (the navigator presence panel).
     expect(html).toContain('data-presence-agent="agent:scripted-surveyor"');
     // The inspect panel shows CANONICAL entity data.
     expect(html).toContain('data-inspect="entityId"');
     expect(html).toContain('we-site-frame');
     // Layers, timeline, renderers, controls, journal render.
-    expect(html).toContain('data-layer="lyr-site"');
+    expect(html).toContain('data-testid="cs-layer-lyr-site"');
     expect(html).toContain('data-testid="timeline-position"');
     expect(html).toContain('data-renderer-choice="rr-scripted-reduced"');
     expect(html).toContain('data-scene-control="ctl-branch-here"');
@@ -443,6 +451,7 @@ describe('the world workspace component (W057)', () => {
     const html = renderToStaticMarkup(createElement(WorldWorkspace, { driver: new ScriptedDriver(scriptedViewModel()) }));
     expect(html).toContain('data-entity-state="offscreen"');
     expect(html).toContain('(outside view)');
+    expect(html).toContain('data-viewport-offscreen-rail');
   });
 
   it('renders the foundation-asset surface (W067): the import affordance + the digest-addressed bound-asset ledger', async () => {

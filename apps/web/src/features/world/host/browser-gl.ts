@@ -48,6 +48,17 @@ export interface SurfaceProbe {
   glActive: boolean;
 }
 
+/**
+ * The LATE-RESOLVED canvas source of one injected surface (the W072 fix):
+ * the host reads the CURRENT canvas at the moment the adapter first mounts
+ * its session (the factory/engine call), NEVER at composition time. React
+ * legitimately re-creates DOM subtrees across phase transitions; an
+ * eagerly-captured canvas would leave the engines rendering into a detached
+ * canvas while the visible one stays blank. The getter keeps the binding
+ * pointed at whatever canvas is live when the engine binds.
+ */
+export type CanvasSource = () => HTMLCanvasElement | null;
+
 /** The pixel source of one Three.js surface (the declared capture path). */
 function threePixelSource(renderer: WebGLRenderer): { mediaType: string; bytes: Uint8Array } {
   const dataUrl = renderer.domElement.toDataURL('image/png');
@@ -62,15 +73,18 @@ function threePixelSource(renderer: WebGLRenderer): { mediaType: string; bytes: 
 
 /**
  * The Three.js GL surface factory over one Epoch-owned canvas, with its
- * live outcome probe. The factory resolves null (headless) when the browser
+ * live outcome probe. The canvas is resolved through a {@link CanvasSource}
+ * at the adapter's first session mount (see the type's doc); the factory
+ * resolves null (headless) when the source yields no canvas or the browser
  * provides no usable WebGL context — the adapter's documented headless
  * degradation.
  */
 export function webThreeSurfaceFactory(
-  canvas: HTMLCanvasElement | null,
+  canvasOf: CanvasSource,
 ): { readonly factory: ThreeGlSurfaceFactory; readonly probe: SurfaceProbe } {
   const probe: SurfaceProbe = { glActive: false };
   const factory: ThreeGlSurfaceFactory = () => {
+    const canvas = canvasOf();
     if (canvas === null) {
       return null;
     }
@@ -83,6 +97,14 @@ export function webThreeSurfaceFactory(
       });
       renderer.setPixelRatio(1);
       renderer.setSize(ENGINE_CANVAS_SIZE, ENGINE_CANVAS_SIZE, false);
+      // The presentation ground: the host-owned warm paper tone of the
+      // world viewport (the same ground the plan/section presentations
+      // draw). The engine's default clear is opaque black, which would
+      // swallow the unlit PBR silhouettes of the W058 scene graph (the
+      // three.js adapter declares no lights — the honest adapter-owned
+      // lighting gap recorded in the W072 defect ledger); against the
+      // paper ground the real geometry reads as architectural massing.
+      renderer.setClearColor('#ddd7cb', 1);
       probe.glActive = true;
       return { renderer, pixelSource: threePixelSource };
     } catch {
@@ -99,30 +121,37 @@ export function webThreeSurfaceFactory(
  * The defensive Babylon.js engine host over one Epoch-owned canvas, with
  * its live outcome probe: the real browser `Engine` (with the browser
  * frame-capture path) when construction succeeds, else the deterministic
- * NullEngine host — never a throw through the fabric.
+ * NullEngine host — never a throw through the fabric. The canvas is
+ * resolved through a {@link CanvasSource} at the adapter's first session
+ * mount (the same late-binding discipline as the Three.js surface).
  */
 export function webBabylonEngineHost(
-  canvas: HTMLCanvasElement | null,
+  canvasOf: CanvasSource,
 ): { readonly host: BabylonEngineHost; readonly probe: SurfaceProbe } {
   const probe: SurfaceProbe = { glActive: false };
-  if (canvas === null) {
-    return { host: nullEngineHost(), probe };
-  }
-  const browser = webCanvasEngineHost(canvas, { deterministicLockStep: false });
   const headless = nullEngineHost();
   let live = false;
+  let browser: ReturnType<typeof webCanvasEngineHost> | null = null;
   const host: BabylonEngineHost = {
     name: 'babylonjs-web-canvas-defensive',
     get canRender(): boolean {
       return live;
     },
     async createEngine() {
+      const canvas = canvasOf();
+      if (canvas === null) {
+        live = false;
+        probe.glActive = false;
+        return headless.createEngine();
+      }
       try {
+        browser = webCanvasEngineHost(canvas, { deterministicLockStep: false });
         const engine = await browser.createEngine();
         live = true;
         probe.glActive = true;
         return engine;
       } catch {
+        browser = null;
         live = false;
         probe.glActive = false;
         return headless.createEngine();
@@ -132,7 +161,7 @@ export function webBabylonEngineHost(
       scene.render();
     },
     async captureFrame(input: BabylonCaptureInput): Promise<BabylonFrameCapture> {
-      if (!live) {
+      if (!live || browser === null) {
         throw new Error(
           'the defensive web host has no live GL engine (headless fallback) — frame capture is unavailable',
         );
