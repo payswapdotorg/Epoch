@@ -1,8 +1,9 @@
-// W061 — the WEB WORLD HOST surface tests (Node, react-dom/server): the
-// composing phase renders without any browser API (the engine composition
-// happens ONLY in the client mount effect — SSR-safe by construction), the
-// browser GL surface seam degrades typed, and the `/world` App Router page
-// composes the host per the repo's page conventions.
+// W061 → W072 — the WEB WORLD HOST surface tests (Node, react-dom/server):
+// the composing phase renders without ANY engine state (the engine
+// composition happens ONLY in the client mount effect — SSR-safe by
+// construction), the browser GL surface seam degrades typed, and the
+// `/world` App Router page composes the host per the repo's page
+// conventions.
 import { describe, expect, it } from 'vitest';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -17,26 +18,31 @@ import { worldMetadata } from '../../../shell/world-mount';
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..', '..', '..', '..');
 
 describe('the web world host surface', () => {
-  it('renders the composing phase server-side with the engine canvases present (SSR composes no engine state)', () => {
+  it('renders the composing phase server-side with NO engine state at all (SSR composes nothing; the engine canvases mount in the stable client tree after the runtime exists — the W072 late-binding fix)', () => {
     const html = renderToStaticMarkup(createElement(WorldWorkspaceHost));
     expect(html).toContain('data-world-host="web"');
     expect(html).toContain('data-world-phase="composing"');
-    // The two Epoch-owned engine canvases are in the tree from the start
-    // (the client effect binds the GL surfaces to them); no engine state,
-    // no GL construction, has run at this point.
-    expect(html).toContain('data-engine-canvas="rr-threejs"');
-    expect(html).toContain('data-engine-canvas="rr-babylonjs-embedded"');
-    expect(html).toContain('data-engine-stage');
-    expect(html).toContain('Presenting the canonical fixture problem');
+    // The pre-composition shell carries NO engine DOM (the stable tree that
+    // mounts the stage + canvases renders on the client only, after the
+    // runtime has been composed — the GL surfaces then bind lazily to the
+    // canvases of THAT tree at the session's first mount).
+    expect(html).toContain('Presenting the construction solution world');
+    expect(html).not.toContain('data-engine-canvas');
+    expect(html).not.toContain('data-engine-stage');
+    expect(html).not.toContain('data-world-digest');
   });
 
-  it('the browser GL surface seam degrades typed without a canvas (headless cores, never fabricated pixels)', () => {
-    const three = webThreeSurfaceFactory(null);
+  it('the browser GL surface seam degrades typed without a canvas (headless cores, never fabricated pixels) — the late-resolved CanvasSource reads the canvas only at the session mount', async () => {
+    const three = webThreeSurfaceFactory(() => null);
     expect(three.factory({} as never)).toBeNull();
     expect(three.probe.glActive).toBe(false);
-    const babylon = webBabylonEngineHost(null);
-    expect(babylon.host.name).toBe('babylonjs-null-engine');
+    const babylon = webBabylonEngineHost(() => null);
     expect(babylon.host.canRender).toBe(false);
+    expect(babylon.probe.glActive).toBe(false);
+    // The defensive host still constructs headless engines on demand (the
+    // documented degradation — never a throw through the fabric).
+    const engine = await babylon.host.createEngine();
+    expect(typeof engine).toBe('object');
     expect(babylon.probe.glActive).toBe(false);
   });
 

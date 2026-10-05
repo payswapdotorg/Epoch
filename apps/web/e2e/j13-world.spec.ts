@@ -1,7 +1,14 @@
 /**
- * J13 — The interactive world closure battery (W061, ACR-007): the 18-leg
+ * J13 — The interactive world closure battery (W061, ACR-007; evolved at
+ * W072/ACR-012 to the CONSTRUCTION SOLUTION fixture): the 18-leg
  * acceptance battery of the multi-renderer program, driven against the
  * REAL `/world` page in a REAL browser.
+ *
+ * W072 note: `/world` presents the frozen W071 construction solution
+ * fixture (Pioneer Block-A — the same world the desktop presents) through
+ * the construction solution workspace; this battery keeps every leg of
+ * the W061 closure over that world (the same 18-leg discipline, the
+ * construction fixture's entities/agents/markers/controls/track).
  *
  * Environment (recorded exactly, never fabricated): the production build
  * (`next build` + `next start -p 3210`, the free private port of the W061
@@ -75,12 +82,16 @@ import {
 } from '@epoch/world-runtime';
 import {
   AGENT_IDS,
+  CONTROL_IDS,
   DEVICE,
   ENTITY_IDS,
+  MARKER_IDS,
   ONTOLOGY,
+  REFERENCE_RENDERER_ID,
   RENDERER_PREFERENCE,
   SCENE,
   TENANT,
+  TRACK,
   buildWorldFabric,
 } from '../src/features/world/host/world-fixture';
 import { signIn } from './helpers';
@@ -186,15 +197,15 @@ interface BlenderAdapterModule {
 }
 
 /** The fixture track position (the web world fixture's timeline head). */
-const TRACK_POSITION_AT_MS = 1_500;
+const TRACK_POSITION_AT_MS = TRACK.positionAtMs;
 
 /** A minimal valid portable view state for the sidecar session mount. */
 function sidecarViewState(): PortableViewState {
   return {
-    focusedEntityIds: [ENTITY_IDS.riser],
+    focusedEntityIds: [ENTITY_IDS.column04],
     layerVisibility: [],
-    timelinePosition: { atMs: TRACK_POSITION_AT_MS, frameIndex: 45, paused: false },
-    camera: { mode: 'orbit', position: [30, 22, 30], target: [4, 3, 0] },
+    timelinePosition: { atMs: TRACK_POSITION_AT_MS, frameIndex: 6, paused: false },
+    camera: { mode: 'orbit', position: [18, 12, 18], target: [0, 1.5, 0] },
     hiddenEntityIds: [],
   };
 }
@@ -234,14 +245,25 @@ const SHOT_DIR = join(process.cwd(), 'e2e-results', 'world-legs');
 /** One engine's derived entity-pointer map (normalized [0,1] viewport space). */
 type PointerMap = Record<string, { readonly x: number; readonly y: number }>;
 
-/** The visible fixture entities whose projections the battery targets. */
+/** The visible fixture entities whose projections the battery targets.
+ *
+ * The honest occlusion discipline: every listed entity is UNOCCLUDED
+ * under the construction fixture's canonical camera ([18, 12, 18] target
+ * [0, 1.5, 0]) — the ray to the entity's projected position hits THAT
+ * entity first through the REAL Three.js hit test (the staging yard is
+ * outside the building; the HVAC unit sits on the roof above every
+ * envelope surface; the roof cladding is the topmost surface; the front
+ * door protrudes through the south wall face). The Babylon leg (leg 12)
+ * targets the roof beam grid instead — the one interior element that
+ * self-picks through the Babylon adapter's own projected-position basis
+ * (the dense construction interior occludes most other projected centers
+ * through the building shell). */
 const PICKABLE_ENTITY_IDS: readonly string[] = [
-  ENTITY_IDS.slab,
-  ENTITY_IDS.frame,
-  ENTITY_IDS.panel,
-  ENTITY_IDS.riser,
-  ENTITY_IDS.hoist,
-  ENTITY_IDS.staging,
+  ENTITY_IDS.siteStaging,
+  ENTITY_IDS.hvacUnit,
+  ENTITY_IDS.roofCladding,
+  ENTITY_IDS.doorFront,
+  ENTITY_IDS.beam02,
 ];
 
 /**
@@ -256,8 +278,15 @@ async function deriveEnginePointers(): Promise<{
   readonly three: PointerMap;
   readonly babylon: PointerMap;
 }> {
+  // The Babylon shadow host pins the SQUARE viewport (1024×1024 — aspect 1):
+  // the live engine stage presents both adapters under aspect 1 (the W061
+  // square-stage doctrine), so the derived normalized pointers transfer to
+  // the live browser sessions exactly. The Three.js headless core already
+  // presents under aspect 1.
   const three = new ThreeJsRendererAdapter();
-  const babylon = new BabylonRendererAdapter({ host: nullEngineHost() });
+  const babylon = new BabylonRendererAdapter({
+    host: nullEngineHost({ width: 1024, height: 1024 }),
+  });
   const { fabric } = buildWorldFabric({ three, babylon });
   const runtime = new WorldWorkspaceRuntime({
     slug: 'j13-shadow',
@@ -410,7 +439,7 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
     );
     // The workspace banner names the REAL fixture problem + tenant + digest.
     await expect(page.locator('[data-viewport-world-digest]')).toContainText(
-      'Riverside plant-room riser coordination',
+      'Construction solution — Pioneer Block-A',
     );
     await expect(page.locator('[data-viewport-world-digest]')).toContainText(TENANT);
     // The canonical digest is the sealed fixture digest (the shadow derives
@@ -423,7 +452,7 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
       'data-active-renderer',
       THREE_RENDERER_ID,
     );
-    for (const choice of [THREE_RENDERER_ID, BABYLONJS_RENDERER_ID, 'rr-web-reference']) {
+    for (const choice of [THREE_RENDERER_ID, BABYLONJS_RENDERER_ID, REFERENCE_RENDERER_ID]) {
       await expect(page.locator(`[data-renderer-choice="${choice}"]`)).toBeVisible();
     }
     await expect(
@@ -465,23 +494,23 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
     await page.screenshot({ path: join(SHOT_DIR, 'leg02-render-three.png'), fullPage: true });
 
     // -- Leg 4: select a semantic entity (the fabric seam hit-test). -------
-    await clickEntityPointer(page, 'three', ENTITY_IDS.panel);
+    await clickEntityPointer(page, 'three', ENTITY_IDS.siteStaging);
     await expectJournal(page, 'select', 'applied');
-    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.panel);
+    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.siteStaging);
     await expect(page.locator('[data-inspect="label"]')).toContainText(
-      'Main distribution panel MD-2',
+      'Staging / laydown yard',
     );
 
     // -- Leg 5: inspect it (the typed inspect intent + its effect). --------
     await page.locator('[data-tool="inspect"]').click();
-    await clickEntityPointer(page, 'three', ENTITY_IDS.riser);
+    await clickEntityPointer(page, 'three', ENTITY_IDS.hvacUnit);
     // Effect-only intent: the receipt is admitted (journal 'normalized') and
     // the inspect-requested EFFECT awaits its authority (the world model).
     await expectJournal(page, 'inspect', 'normalized');
     await expect(
       page.locator('[data-panel="journal"] li[data-effect="inspect-requested"]').first(),
     ).toBeVisible();
-    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.riser);
+    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.hvacUnit);
 
     // -- Leg 6: isolate/reveal a layer (the typed filter + show intents). --
     await selectTool(page);
@@ -490,14 +519,14 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
     // The other layers' entities left the world (honest spatial proof: the
     // staging entity's projected position now hits NOTHING through the real
     // engine seam — invisible entities never hit).
-    await clickEntityPointer(page, 'three', ENTITY_IDS.staging);
+    await clickEntityPointer(page, 'three', ENTITY_IDS.siteStaging);
     await expectJournal(page, 'select', 'no-target');
     // Reveal restores the world (the show intent).
     await page.getByTestId('layers-reveal-all').click();
     await expectJournal(page, 'show', 'applied');
-    await clickEntityPointer(page, 'three', ENTITY_IDS.staging);
+    await clickEntityPointer(page, 'three', ENTITY_IDS.siteStaging);
     await expectJournal(page, 'select', 'applied');
-    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.staging);
+    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.siteStaging);
 
     // -- Leg 7: measure (the stateful cadence over the REAL affordance). --
     // The documented four-pick cycle (the desktop world-host battery + the
@@ -508,14 +537,14 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
     // compose cycle (the fourth pick).
     await page.locator('[data-tool="measure"]').click();
     // Pick 1: the adapter's measurement anchor (typed no-target receipt).
-    await clickEntityPointer(page, 'three', ENTITY_IDS.panel);
+    await clickEntityPointer(page, 'three', ENTITY_IDS.siteStaging);
     await expect(
       page
         .locator('[data-panel="journal"] li[data-journal-entry="measure"]')
         .first(),
     ).toContainText('measurement anchor set');
     // Pick 2: the runtime's two-pick composition ARMS (typed no-apply).
-    await clickEntityPointer(page, 'three', ENTITY_IDS.riser);
+    await clickEntityPointer(page, 'three', ENTITY_IDS.hvacUnit);
     await expect(
       page
         .locator('[data-panel="journal"] li[data-journal-entry="measure"]')
@@ -524,7 +553,7 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
     // Pick 3: the adapter's SECOND anchor cycle (the first compose reset
     // its anchor — this re-anchors on the second entity; the same typed
     // anchor-set receipt, now the THIRD measure journal entry).
-    await clickEntityPointer(page, 'three', ENTITY_IDS.riser);
+    await clickEntityPointer(page, 'three', ENTITY_IDS.hvacUnit);
     await expect(
       page.locator('[data-panel="journal"] li[data-journal-entry="measure"]'),
     ).toHaveCount(3);
@@ -536,7 +565,7 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
     // Pick 4: the composed typed measure intent (effect-only: the
     // measure-requested effect awaits its authority — FOUR measure journal
     // entries now, the newest the applied receipt).
-    await clickEntityPointer(page, 'three', ENTITY_IDS.panel);
+    await clickEntityPointer(page, 'three', ENTITY_IDS.siteStaging);
     await expect(
       page.locator('[data-panel="journal"] li[data-journal-entry="measure"]'),
     ).toHaveCount(4);
@@ -555,7 +584,7 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
     expect(await worldDigest(page)).not.toBe(digestBeforeAnnotation);
 
     // -- Leg 10: replay/seek (the typed replay intent + transport). --------
-    await expect(page.locator('[data-marker="mrk-web-branch"]')).toBeVisible();
+    await expect(page.locator(`[data-marker="${MARKER_IDS.branch}"]`)).toBeVisible();
     const track = page.getByTestId('timeline-track');
     const trackBox = await track.boundingBox();
     expect(trackBox).not.toBeNull();
@@ -563,7 +592,7 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
       (trackBox?.x ?? 0) + (trackBox?.width ?? 1) * 0.6,
       (trackBox?.y ?? 0) + (trackBox?.height ?? 1) / 2,
     );
-    await expect(page.getByTestId('timeline-position')).toHaveText('5.4s / 9.0s');
+    await expect(page.getByTestId('timeline-position')).toHaveText('9.6s / 16.0s');
     await expectJournal(page, 'replay', 'applied');
     await page.getByTestId('timeline-pause').click();
     await expect(page.getByTestId('timeline-paused')).toBeVisible();
@@ -573,11 +602,11 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
     await expectJournal(page, 'resume', 'applied');
 
     // -- Leg 11: branch/simulate (typed entry, effects await authority). ---
-    await page.locator(`[data-scene-control="ctl-web-branch-delivery"]`).click();
+    await page.locator(`[data-scene-control="${CONTROL_IDS.branch}"]`).click();
     await expect(
       page.locator('[data-panel="journal"] li[data-effect="branch-requested"]').first(),
     ).toBeVisible();
-    await page.locator(`[data-scene-control="ctl-web-simulate-sequence"]`).click();
+    await page.locator(`[data-scene-control="${CONTROL_IDS.simulate}"]`).click();
     await expect(
       page.locator('[data-panel="journal"] li[data-effect="simulate-requested"]').first(),
     ).toBeVisible();
@@ -609,11 +638,13 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
       'Last switch receipt',
     );
     // Semantic picking through the REAL Babylon scene.pick (entity
-    // continuity on the switched session — the riser).
+    // continuity on the switched session — the roof beam grid, the interior
+    // element whose projected-position basis self-picks under the restored
+    // camera; see PICKABLE_ENTITY_IDS above).
     await selectTool(page);
-    await clickEntityPointer(page, 'babylon', ENTITY_IDS.riser);
+    await clickEntityPointer(page, 'babylon', ENTITY_IDS.beam02);
     await expectJournal(page, 'select', 'applied');
-    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.riser);
+    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.beam02);
     await page.screenshot({ path: join(SHOT_DIR, 'leg12-babylon.png'), fullPage: true });
 
     // -- Leg 13: switch back (the reverse direction, same invariants). ----
@@ -629,10 +660,10 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
     );
     expect(await worldDigest(page)).toBe(digestBeforeSwitchBack);
     // Leg 15 (Three side): the same world is interactive through the real
-    // Three.js Raycaster again (the panel picks after the round trip).
-    await clickEntityPointer(page, 'three', ENTITY_IDS.panel);
+    // Three.js Raycaster again (the staging yard picks after the round trip).
+    await clickEntityPointer(page, 'three', ENTITY_IDS.siteStaging);
     await expectJournal(page, 'select', 'applied');
-    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.panel);
+    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.siteStaging);
     await page.screenshot({ path: join(SHOT_DIR, 'leg13-back-to-three.png'), fullPage: true });
 
     // -- Leg 3: orbit/move/zoom (presentation navigation + the typed zoom).
@@ -661,17 +692,17 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
     // -- Leg 9: see and follow an agent (visible presence). ----------------
     const presence = page.locator('[data-panel="presence"]');
     await expect(
-      presence.locator(`li[data-presence-agent="${AGENT_IDS.surveyor}"]`),
+      presence.locator(`li[data-presence-agent="${AGENT_IDS.structuralEngineer}"]`),
     ).toBeVisible();
     await expect(
-      presence.locator(`li[data-presence-agent="${AGENT_IDS.coordinator}"]`),
+      presence.locator(`li[data-presence-agent="${AGENT_IDS.siteCoordinator}"]`),
     ).toBeVisible();
-    await page.getByTestId(`follow-${AGENT_IDS.surveyor}`).click();
+    await page.getByTestId(`follow-${AGENT_IDS.structuralEngineer}`).click();
     await expectJournal(page, 'follow-agent', 'applied');
     // The camera record switched to the agent (the HUD names the mode).
     await expect(page.locator('[data-viewport-hud]')).toContainText('follow-agent');
     await expect(
-      presence.locator(`li[data-presence-agent="${AGENT_IDS.surveyor}"]`),
+      presence.locator(`li[data-presence-agent="${AGENT_IDS.structuralEngineer}"]`),
     ).toHaveAttribute('data-agent-followed', 'true');
     await page.screenshot({ path: join(SHOT_DIR, 'leg09-follow-agent.png'), fullPage: true });
   });
@@ -747,7 +778,7 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
     const workspace = page.locator('[data-workspace="world"]');
     const digestBefore = await worldDigest(page);
     const entityIdsBefore = await workspace.getAttribute('data-entity-ids');
-    expect(entityIdsBefore).toContain(ENTITY_IDS.riser);
+    expect(entityIdsBefore).toContain(ENTITY_IDS.siteStaging);
 
     // The trust gate first (honest): malformed bytes are the bridge's TYPED
     // refusal — nothing registers, nothing binds, the session stays healthy.
@@ -800,12 +831,12 @@ test.describe('J13 the interactive world (W061 closure battery)', () => {
     // The canonical world digest is UNCHANGED.
     expect(await worldDigest(page)).toBe(digestBefore);
     // The presented world stays fully interactive through the live engine
-    // seam (the same derived-pointer basis as the pick legs — the panel
-    // resolves through the REAL Three.js Raycaster after the binding).
+    // seam (the same derived-pointer basis as the pick legs — the staging
+    // yard resolves through the REAL Three.js Raycaster after the binding).
     await selectTool(page);
-    await clickEntityPointer(page, 'three', ENTITY_IDS.panel);
+    await clickEntityPointer(page, 'three', ENTITY_IDS.siteStaging);
     await expectJournal(page, 'select', 'applied');
-    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.panel);
+    await expect(page.locator('[data-inspect="entityId"]')).toHaveText(ENTITY_IDS.siteStaging);
     await page.screenshot({ path: join(SHOT_DIR, 'leg14-foundation-bind.png'), fullPage: true });
   });
 

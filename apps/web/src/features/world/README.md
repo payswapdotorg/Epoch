@@ -64,45 +64,69 @@ No route changes, no app-shell changes, no global provider changes were
 made by this module. No imports from or references to the marketplace
 (W023) or agents (W015) feature modules.
 
-## W057 — the interactive world WORKSPACE (the primary surface)
+## W057 → W072 — the interactive world WORKSPACE → the CONSTRUCTION SOLUTION EXPLORER
 
-W057 extends this module from a projection library into the interactive
-world WORKSPACE — the game-like engineering surface where the spatial
-world is the PRIMARY problem-solving view:
+W057 turned this module into the interactive world WORKSPACE; W072
+(ACR-012) evolves it into the CONSTRUCTION SOLUTION EXPLORER — the
+spatially dominated engineering workspace of `/world` (the world viewport
+occupies 60–75% of the main surface) over the frozen W071
+`@epoch/construction-world-fixture` (Pioneer Block-A):
 
 - `workspace-contracts.ts` — the WORKSPACE DRIVER + view-model contracts:
   structural mirrors of the exact `@epoch/world-runtime` public surface
   (`WorldWorkspaceRuntime` satisfies `WorldWorkspaceDriver` as-is; pinned
   by qa/world-experience). The module still imports no workspace package
-  (the frozen-manifest constraint above still binds).
+  (the frozen-manifest constraint above still binds — the fixture package
+  is a W072-declared manifest addition).
 - `workspace-handlers.ts` — the pure event→command wiring
   (`createWorkspaceHandlers`): pointer/wheel input forwards into the
   driver's fabric seam (semantic picking), drags/keys drive the
   presentation-only navigation, and every panel action issues the
   driver's typed-intent command. `normalizePointer` maps viewport pixels
   into the normalized [0,1] pointer space.
-- `components/WorldWorkspace.tsx` — the workspace shell: the central
-  VIEWPORT is the primary region (top-left, largest), with the tool rail,
-  inspect, layers, presence, renderer selector, controls
-  (branch/simulate/annotation composer), timeline, and intent journal as
-  SECONDARY context surfaces.
-- `components/WorldViewport.tsx` — the renderer-agnostic viewport: a
-  structured spatial projection (SVG) of the canonical scene entities the
-  active presenter presents (the contract-only reference presenter by
-  default; W058/W059 real engines mount behind the same seam). Focus
-  rings, isolation frames, hidden ghosts, measurement lines, annotation
-  pins, agent presence chips, the navigation HUD, and the renderer
-  health/fallback banner all render from the view model — never from
-  renderer internals.
-- `components/WorldWorkspacePanels.tsx` — the secondary panels (pure).
-- `workspace.test.tsx` — the feature battery: primary-surface structure,
-  canonical-data rendering, and the full handler→driver command wiring.
+- `construction-solution.ts` — the pure, React-free projection of the
+  FROZEN W071 fixture: the presented world under one solution variant
+  (fixture deltas applied — never a second ledger), the true top-down
+  PLAN projector, the SECTION cutaway projector + the live cut state, the
+  agent movement interpolation, the BOQ/cost + constraints/findings
+  projections, and the bidirectional BOQ ↔ world CROSS-SELECTION model.
+- `construction-tokens.ts` — the warm-neutral design-language tokens
+  (palette, layer colors, compact type scale) of the construction
+  workspace.
+- `components/WorldWorkspace.tsx` — the construction workspace shell: the
+  compact solution/context bar (top), the LEFT construction navigator, the
+  PRIMARY world viewport (three presentations of the same world: 3D /
+  plan / section), the RIGHT engineering inspector + BOQ/cost +
+  constraints + variants — with the view controls, live metrics, the
+  programme timeline scrubber and the tool/measure state as floating
+  HUDs OVER the world canvas.
+- `components/ConstructionTopBar.tsx` / `ConstructionNavigator.tsx` /
+  `ConstructionViewport.tsx` / `ConstructionInspector.tsx` — the four
+  construction chrome surfaces (pure components over the driver's view
+  model + the construction projection; every interaction routes through
+  the EXISTING typed Epoch interaction path — no renderer-local semantic
+  authority).
+- `components/WorldWorkspacePanels.tsx` — the long-lived secondary
+  evidence panels (the typed-intent journal + the W067 foundation-asset
+  surface) composed into the rails.
+- `workspace.test.tsx` + `construction-solution.test.tsx` — the feature
+  battery: primary-surface structure, canonical-data rendering, the full
+  handler→driver command wiring, and the construction projection + panel
+  wiring (selection, cross-highlight, variants, timeline phases).
+- `host/world-fixture.ts` — the CONSTRUCTION FIXTURE SEAM: every value
+  re-exported from the frozen W071 package (the W061 host/battery import
+  surface kept stable while the values became the construction
+  fixture's).
+- `host/world-host.tsx` — the REAL composition: `WorldWorkspaceRuntime`
+  over the REAL fabric (Three.js + Babylon.js + the reference fallback)
+  with the honest typed-pick helper for host-surface selections.
 
-### Wiring contract (W057)
+### Wiring contract (W057 → W072)
 
 The desktop host binds the REAL runtime directly (`apps/desktop`,
 `@epoch/world-runtime` + `@epoch/renderer-fabric` behind its world
-section). The WEB app binds it when its manifest unfreezes:
+section — the SAME construction fixture, W073). The web `/world` route
+binds it through `host/world-host.tsx` (W061 → W072):
 
 ```tsx
 const driver = new WorldWorkspaceRuntime({

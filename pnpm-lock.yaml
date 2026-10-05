@@ -868,6 +868,9 @@ importers:
       '@epoch/client-runtime':
         specifier: workspace:*
         version: link:../../packages/client-runtime
+      '@epoch/construction-world-fixture':
+        specifier: workspace:*
+        version: link:../../packages/construction-world-fixture
       '@epoch/event-log':
         specifier: workspace:*
         version: link:../../packages/event-log

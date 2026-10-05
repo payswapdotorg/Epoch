@@ -26,16 +26,17 @@ export default defineConfig({
   ],
   use: {
     ...devices['Desktop Chrome'],
-    baseURL: 'http://localhost:3100',
+    baseURL: 'http://localhost:3210',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'off',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   outputDir: 'e2e-results/artifacts',
+  // port law: 3100 is reserved for the sandbox replay stack — the battery serves on 3210
   webServer: {
-    command: 'npx next start -p 3100',
-    url: 'http://localhost:3100',
+    command: 'npx next start -p 3210',
+    url: 'http://localhost:3210',
     reuseExistingServer: true,
     timeout: 120_000,
     cwd: __dirname,
