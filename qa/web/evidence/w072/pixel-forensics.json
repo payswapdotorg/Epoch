@@ -1,0 +1,186 @@
+{
+  "1280x720": {
+    "size": "1280x720",
+    "png": "1280x720",
+    "card": {
+      "x0": 186,
+      "x1": 1030,
+      "y0": 163,
+      "y1": 670,
+      "w": 844,
+      "h": 507
+    },
+    "verify": {
+      "x0": {
+        "png": 186,
+        "dom": 186,
+        "ok": true,
+        "coverage": 0.992
+      },
+      "x1": {
+        "png": 1030,
+        "dom": 1030,
+        "ok": true,
+        "coverage": 0.992
+      },
+      "y0": {
+        "png": 163,
+        "dom": 163,
+        "ok": true,
+        "coverage": 0.995
+      },
+      "y1": {
+        "png": 670,
+        "dom": 670,
+        "ok": true,
+        "coverage": 0.995
+      }
+    },
+    "rowAreaPx": 669440,
+    "renderedShareOfRow": 0.6392029158699809,
+    "domShareOfRow": 0.6392029158699809,
+    "domShareOfWorkspace": 0.5948454181494662,
+    "domShareOfWindow": 0.4643098958333333,
+    "cardDistinctColors": 1461,
+    "cardContentShare": 0.15937960624524705,
+    "cardMassingShare": 0.0633256034474665
+  },
+  "1440x900": {
+    "size": "1440x900",
+    "png": "1440x900",
+    "card": {
+      "x0": 186,
+      "x1": 1190,
+      "y0": 163,
+      "y1": 850,
+      "w": 1004,
+      "h": 687
+    },
+    "verify": {
+      "x0": {
+        "png": 186,
+        "dom": 186,
+        "ok": true,
+        "coverage": 0.994
+      },
+      "x1": {
+        "png": 1190,
+        "dom": 1190,
+        "ok": true,
+        "coverage": 0.994
+      },
+      "y0": {
+        "png": 163,
+        "dom": 163,
+        "ok": true,
+        "coverage": 0.996
+      },
+      "y1": {
+        "png": 850,
+        "dom": 850,
+        "ok": true,
+        "coverage": 0.996
+      }
+    },
+    "rowAreaPx": 1012320,
+    "renderedShareOfRow": 0.6813537221431958,
+    "domShareOfRow": 0.6813537221431958,
+    "domShareOfWorkspace": 0.6455413297394429,
+    "domShareOfWindow": 0.5322129629629629,
+    "cardDistinctColors": 1734,
+    "cardContentShare": 0.14072147250688127,
+    "cardMassingShare": 0.062237041951083254
+  },
+  "1680x1000": {
+    "size": "1680x1000",
+    "png": "1680x1000",
+    "card": {
+      "x0": 199,
+      "x1": 1414,
+      "y0": 163,
+      "y1": 950,
+      "w": 1215,
+      "h": 787
+    },
+    "verify": {
+      "x0": {
+        "png": 199,
+        "dom": 199,
+        "ok": true,
+        "coverage": 0.995
+      },
+      "x1": {
+        "png": 1414,
+        "dom": 1414.4,
+        "ok": true,
+        "coverage": 0.995
+      },
+      "y0": {
+        "png": 163,
+        "dom": 163,
+        "ok": true,
+        "coverage": 0.997
+      },
+      "y1": {
+        "png": 950,
+        "dom": 950,
+        "ok": true,
+        "coverage": 0.997
+      }
+    },
+    "rowAreaPx": 1349040,
+    "renderedShareOfRow": 0.7088040384273261,
+    "domShareOfRow": 0.709022805105853,
+    "domShareOfWorkspace": 0.6761820813539192,
+    "domShareOfWindow": 0.5693453125,
+    "cardDistinctColors": 1273,
+    "cardContentShare": 0.11745915967654716,
+    "cardMassingShare": 0.04840055166400476
+  },
+  "1920x1080": {
+    "size": "1920x1080",
+    "png": "1920x1080",
+    "card": {
+      "x0": 225,
+      "x1": 1618,
+      "y0": 163,
+      "y1": 1030,
+      "w": 1393,
+      "h": 867
+    },
+    "verify": {
+      "x0": {
+        "png": 225,
+        "dom": 225.4,
+        "ok": true,
+        "coverage": 0.995
+      },
+      "x1": {
+        "png": 1618,
+        "dom": 1618.4,
+        "ok": true,
+        "coverage": 0.995
+      },
+      "y0": {
+        "png": 163,
+        "dom": 163,
+        "ok": true,
+        "coverage": 0.997
+      },
+      "y1": {
+        "png": 1030,
+        "dom": 1030,
+        "ok": true,
+        "coverage": 0.997
+      }
+    },
+    "rowAreaPx": 1695360,
+    "renderedShareOfRow": 0.7123743629671574,
+    "domShareOfRow": 0.7123583818481031,
+    "domShareOfWorkspace": 0.6822260858697126,
+    "domShareOfWindow": 0.5824189362702547,
+    "cardDistinctColors": 1285,
+    "cardContentShare": 0.1044736003822569,
+    "cardMassingShare": 0.03902869581375594
+  }
+}

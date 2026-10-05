@@ -1,0 +1,337 @@
+{
+  "1680x1000": {
+    "window": {
+      "innerWidth": 1680,
+      "innerHeight": 1000,
+      "scrollHeight": 1000,
+      "dpr": 1
+    },
+    "rects": {
+      "topbar": {
+        "x": 0,
+        "y": 116,
+        "width": 1680,
+        "height": 39
+      },
+      "workspace": {
+        "x": 0,
+        "y": 116,
+        "width": 1680,
+        "height": 842
+      },
+      "row": {
+        "x": 0,
+        "y": 155,
+        "width": 1680,
+        "height": 803
+      },
+      "navigator": {
+        "x": 8,
+        "y": 163,
+        "width": 183,
+        "height": 787
+      },
+      "viewport": {
+        "x": 199,
+        "y": 163,
+        "width": 1215.4,
+        "height": 787
+      },
+      "inspector": {
+        "x": 1422.4,
+        "y": 163,
+        "width": 249.6,
+        "height": 787
+      },
+      "engineCanvas": {
+        "x": 446.7,
+        "y": 196.5,
+        "width": 720,
+        "height": 720
+      }
+    },
+    "shares": {
+      "viewportShareOfRow": 0.709022805105853,
+      "viewportShareOfWorkspace": 0.6761820813539192,
+      "viewportShareOfWindow": 0.5693453125,
+      "navigatorShareOfRow": 0.10677636967769673,
+      "inspectorShareOfRow": 0.1456074551162308
+    },
+    "chrome": {
+      "aboveWorkspace": 116,
+      "workspaceBottomToWindowBottom": 42,
+      "horizontalChrome": 32
+    },
+    "structure": {
+      "navigatorFlanksLeft": true,
+      "inspectorFlanksRight": true,
+      "hudsFloatOverCanvas": true,
+      "noPageScroll": true
+    },
+    "glForensics": {
+      "three": {
+        "distinct": 54,
+        "nonGroundShare": 0.06865547839506173
+      },
+      "babylon": {
+        "distinct": 30,
+        "spread": 204
+      },
+      "rendererString": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "threeAfterRendererRoundTrip": {
+        "distinct": 54,
+        "nonGroundShare": 0.06865547839506173
+      },
+      "threeAfterDrawingSetRoundTrip": {
+        "distinct": 67,
+        "nonGroundShare": 0.06852430555555555
+      }
+    }
+  },
+  "capturedAt": "2026-10-05T16:11:00.688Z",
+  "1280x720": {
+    "window": {
+      "innerWidth": 1280,
+      "innerHeight": 720,
+      "scrollHeight": 720,
+      "dpr": 1
+    },
+    "rects": {
+      "topbar": {
+        "x": 0,
+        "y": 116,
+        "width": 1280,
+        "height": 39
+      },
+      "workspace": {
+        "x": 0,
+        "y": 116,
+        "width": 1280,
+        "height": 562
+      },
+      "row": {
+        "x": 0,
+        "y": 155,
+        "width": 1280,
+        "height": 523
+      },
+      "navigator": {
+        "x": 8,
+        "y": 163,
+        "width": 170,
+        "height": 507
+      },
+      "viewport": {
+        "x": 186,
+        "y": 163,
+        "width": 844,
+        "height": 507
+      },
+      "inspector": {
+        "x": 1038,
+        "y": 163,
+        "width": 234,
+        "height": 507
+      },
+      "engineCanvas": {
+        "x": 355.5,
+        "y": 164,
+        "width": 505,
+        "height": 505
+      }
+    },
+    "shares": {
+      "viewportShareOfRow": 0.6392029158699809,
+      "viewportShareOfWorkspace": 0.5948454181494662,
+      "viewportShareOfWindow": 0.4643098958333333,
+      "navigatorShareOfRow": 0.12874940248565966,
+      "inspectorShareOfRow": 0.1772197657743786
+    },
+    "chrome": {
+      "aboveWorkspace": 116,
+      "workspaceBottomToWindowBottom": 42,
+      "horizontalChrome": 32
+    },
+    "structure": {
+      "navigatorFlanksLeft": true,
+      "inspectorFlanksRight": true,
+      "hudsFloatOverCanvas": true,
+      "noPageScroll": true
+    },
+    "glForensics": {
+      "three": {
+        "distinct": 54,
+        "nonGroundShare": 0.06865547839506173
+      },
+      "babylon": {
+        "distinct": 30,
+        "spread": 204
+      },
+      "rendererString": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "threeAfterRendererRoundTrip": {
+        "distinct": 54,
+        "nonGroundShare": 0.06865547839506173
+      },
+      "threeAfterDrawingSetRoundTrip": {
+        "distinct": 67,
+        "nonGroundShare": 0.06852430555555555
+      }
+    }
+  },
+  "1440x900": {
+    "window": {
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollHeight": 900,
+      "dpr": 1
+    },
+    "rects": {
+      "topbar": {
+        "x": 0,
+        "y": 116,
+        "width": 1440,
+        "height": 39
+      },
+      "workspace": {
+        "x": 0,
+        "y": 116,
+        "width": 1440,
+        "height": 742
+      },
+      "row": {
+        "x": 0,
+        "y": 155,
+        "width": 1440,
+        "height": 703
+      },
+      "navigator": {
+        "x": 8,
+        "y": 163,
+        "width": 170,
+        "height": 687
+      },
+      "viewport": {
+        "x": 186,
+        "y": 163,
+        "width": 1004,
+        "height": 687
+      },
+      "inspector": {
+        "x": 1198,
+        "y": 163,
+        "width": 234,
+        "height": 687
+      },
+      "engineCanvas": {
+        "x": 345.5,
+        "y": 164,
+        "width": 685,
+        "height": 685
+      }
+    },
+    "shares": {
+      "viewportShareOfRow": 0.6813537221431958,
+      "viewportShareOfWorkspace": 0.6455413297394429,
+      "viewportShareOfWindow": 0.5322129629629629,
+      "navigatorShareOfRow": 0.11536865813181603,
+      "inspectorShareOfRow": 0.15880156472261736
+    },
+    "chrome": {
+      "aboveWorkspace": 116,
+      "workspaceBottomToWindowBottom": 42,
+      "horizontalChrome": 32
+    },
+    "structure": {
+      "navigatorFlanksLeft": true,
+      "inspectorFlanksRight": true,
+      "hudsFloatOverCanvas": true,
+      "noPageScroll": true
+    },
+    "glForensics": {
+      "three": {
+        "distinct": 54,
+        "nonGroundShare": 0.06865547839506173
+      },
+      "babylon": null,
+      "rendererString": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+    }
+  },
+  "1920x1080": {
+    "window": {
+      "innerWidth": 1920,
+      "innerHeight": 1080,
+      "scrollHeight": 1080,
+      "dpr": 1
+    },
+    "rects": {
+      "topbar": {
+        "x": 0,
+        "y": 116,
+        "width": 1920,
+        "height": 39
+      },
+      "workspace": {
+        "x": 0,
+        "y": 116,
+        "width": 1920,
+        "height": 922
+      },
+      "row": {
+        "x": 0,
+        "y": 155,
+        "width": 1920,
+        "height": 883
+      },
+      "navigator": {
+        "x": 8,
+        "y": 163,
+        "width": 209.4,
+        "height": 867
+      },
+      "viewport": {
+        "x": 225.4,
+        "y": 163,
+        "width": 1393,
+        "height": 867
+      },
+      "inspector": {
+        "x": 1626.4,
+        "y": 163,
+        "width": 285.6,
+        "height": 867
+      },
+      "engineCanvas": {
+        "x": 561.9,
+        "y": 236.5,
+        "width": 720,
+        "height": 720
+      }
+    },
+    "shares": {
+      "viewportShareOfRow": 0.7123583818481031,
+      "viewportShareOfWorkspace": 0.6822260858697126,
+      "viewportShareOfWindow": 0.5824189362702547,
+      "navigatorShareOfRow": 0.10710545990232163,
+      "inspectorShareOfRow": 0.1460514470377973
+    },
+    "chrome": {
+      "aboveWorkspace": 116,
+      "workspaceBottomToWindowBottom": 42,
+      "horizontalChrome": 32
+    },
+    "structure": {
+      "navigatorFlanksLeft": true,
+      "inspectorFlanksRight": true,
+      "hudsFloatOverCanvas": true,
+      "noPageScroll": true
+    },
+    "glForensics": {
+      "three": {
+        "distinct": 54,
+        "nonGroundShare": 0.06865547839506173
+      },
+      "babylon": null,
+      "rendererString": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+    }
+  }
+}
