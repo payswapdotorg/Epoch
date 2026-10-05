@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Epoch desktop client: the W017 typed reference host (window/session model, host-shell IPC envelopes, experience mounting, offline/session caches \u2014 pure typed data) TURNED INTO the native desktop product by W048: a Tauri 2 application around the W017 experience surface with a typed IPC/envelope bridge over the frozen 32-operation Application Gateway vocabulary (@epoch/client-runtime), platform-safe session storage, durable offline queue + projection cache through the client-runtime seams, an embedded fixture-backed Application Gateway binding for packaged local validation plus a remote HTTP transport for deployed gateways, and per-OS packaging configs (Linux AppImage+deb, Windows NSIS, macOS DMG/app). The library surface (src/index.ts) keeps the W017 runtime pin; src/native/** is the W048 native adapter zone (lock rule 13: platform toolchains are adapters, never semantic authorities).",
+  "description": "Epoch desktop client: the W017 typed reference host (window/session model, host-shell IPC envelopes, experience mounting, offline/session caches — pure typed data) TURNED INTO the native desktop product by W048: a Tauri 2 application around the W017 experience surface with a typed IPC/envelope bridge over the frozen 32-operation Application Gateway vocabulary (@epoch/client-runtime), platform-safe session storage, durable offline queue + projection cache through the client-runtime seams, an embedded fixture-backed Application Gateway binding for packaged local validation plus a remote HTTP transport for deployed gateways, and per-OS packaging configs (Linux AppImage+deb, Windows NSIS, macOS DMG/app). The library surface (src/index.ts) keeps the W017 runtime pin; src/native/** is the W048 native adapter zone (lock rule 13: platform toolchains are adapters, never semantic authorities).",
   "epoch": {
     "layer": "app"
   },
@@ -27,7 +27,7 @@
     "icons": "node scripts/generate-icons.mjs",
     "sync-fixtures": "node scripts/sync-fixtures.mjs",
     "audit:toolchain": "node scripts/check-toolchain.mjs",
-    "desktop:journeys": "vitest run ../../qa/desktop/journeys/desktop-journeys.test.ts",
+    "desktop:journeys": "vitest run ../../qa/desktop/journeys/",
     "e2e:web": "node scripts/link-qa-harness.mjs && playwright test -c ../../qa/desktop/e2e/playwright.config.ts",
     "e2e:tauri": "node scripts/link-qa-harness.mjs && wdio run ../../qa/desktop/wdio.desktop.conf.ts"
   },
@@ -40,6 +40,7 @@
     "@epoch/authentication": "workspace:*",
     "@epoch/capability-registry": "workspace:*",
     "@epoch/client-runtime": "workspace:*",
+    "@epoch/construction-world-fixture": "workspace:*",
     "@epoch/event-log": "workspace:*",
     "@epoch/evidence": "workspace:*",
     "@epoch/experience-protocol": "workspace:*",

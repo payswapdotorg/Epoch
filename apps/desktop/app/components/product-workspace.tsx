@@ -8,6 +8,7 @@ import type { ProductRoot } from './product-root';
 import { SECTIONS } from './sections/registry';
 import type { SectionId } from './sections/registry';
 import type { WorkspaceContext } from './sections/section-props';
+import { SolutionWorkspace } from './construction/solution-workspace';
 import { SessionBar } from './session-bar';
 import { StatusStrip } from './status-strip';
 import { ActionButton, ErrorCard, GuidanceCard, Spinner } from './ui-kit';
@@ -45,9 +46,12 @@ export function ProductWorkspace({ domain, onDomainChange }: ProductWorkspacePro
   const [appMeta, setAppMeta] = useState<HostAppMeta | null>(null);
   const [authBusy, setAuthBusy] = useState(false);
   const [authError, setAuthError] = useState<UiActionError | null>(null);
-  // W057: the interactive world is the DEFAULT (primary) surface; the
-  // journey sections (lifecycle/project context) are secondary context.
-  const [section, setSection] = useState<SectionId>('world');
+  // W073 (ACR-012): the CONSTRUCTION SOLUTION world is the DEFAULT
+  // problem-solving surface — the product opens into the construction
+  // world (full-bleed workspace, no journey rail); the lifecycle /
+  // administration sections (and the W057 reference world) are demoted to
+  // the workspace bar's compact secondary navigation.
+  const [section, setSection] = useState<SectionId>('solution');
   const composedRef = useRef<ProductRoot | null>(null);
   const nonceCounter = useRef(0);
   const { compact } = useViewport();
@@ -195,6 +199,53 @@ export function ProductWorkspace({ domain, onDomainChange }: ProductWorkspacePro
   }
 
   const authenticated = sessionBar !== null && sessionBar.state === 'active';
+
+  // W073: the solution section renders FULL-BLEED — its own construction
+  // workspace (left construction-layers navigator, the dominant world
+  // viewport, the right engineering inspector) with the lifecycle /
+  // administration sections demoted to the workspace bar's secondary
+  // links. Every other section keeps the classic rail layout (the rail's
+  // first entry returns to the construction solution).
+  if (section === 'solution') {
+    return (
+      <FrameShell>
+        <SessionBar
+          domain={domain}
+          onDomainChange={onDomainChange}
+          sessionBar={sessionBar}
+          composing={compose.phase !== 'ready'}
+          authBusy={authBusy}
+          onAuthenticate={() => void authenticate()}
+          onSignOut={() => void signOut()}
+        />
+        {authError !== null ? (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: SPACE.md,
+              padding: `${SPACE.md}px ${SPACE.xl}px`,
+              borderBottom: `1px solid ${COLORS.border}`,
+            }}
+          >
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <ErrorCard error={authError} />
+            </div>
+            <ActionButton onClick={() => setAuthError(null)}>Dismiss</ActionButton>
+          </div>
+        ) : null}
+        <SolutionWorkspace
+          authenticated={authenticated}
+          lifecycleSections={SECTIONS.filter((descriptor) => descriptor.id !== 'solution').map(
+            (descriptor) => ({ id: descriptor.id, label: descriptor.label }),
+          )}
+          onOpenSection={(id) => setSection(id as SectionId)}
+        />
+        <StatusStrip hostKind={root.host.kind} fixtureId={root.bundle.fixtureId} appMeta={appMeta} />
+      </FrameShell>
+    );
+  }
+
   const ctx: WorkspaceContext = {
     product: root.product,
     binding: root.binding,

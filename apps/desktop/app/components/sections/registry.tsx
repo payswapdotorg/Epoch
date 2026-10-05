@@ -16,8 +16,18 @@ import type { WorkspaceContext } from './section-props';
  * The journey section registry (W048): the left-rail navigation and the
  * main-pane screens. Every section drives the SAME product methods the
  * journey runner drives — one code path, visible.
+ *
+ * W073 (ACR-012): the CONSTRUCTION SOLUTION world is the FIRST section
+ * and the product's DEFAULT surface (`solution`); the W057 plant-room
+ * world host stays available as the reference world; the lifecycle /
+ * administration journey sections are secondary context. When the
+ * solution section is active the classic rail is REPLACED by the
+ * full-bleed construction workspace (its own left construction-layers
+ * navigator + right engineering inspector + floating HUDs) with the
+ * lifecycle sections demoted to the compact secondary links in its
+ * solution bar (see product-workspace.tsx).
  */
-export type SectionId = 'world' | 'j01' | 'j02' | 'j04' | 'j05' | 'j06' | 'j07' | 'j08' | 'j12';
+export type SectionId = 'solution' | 'world' | 'j01' | 'j02' | 'j04' | 'j05' | 'j06' | 'j07' | 'j08' | 'j12';
 
 export interface SectionDescriptor {
   readonly id: SectionId;
@@ -30,12 +40,21 @@ export interface SectionDescriptor {
 
 export const SECTIONS: readonly SectionDescriptor[] = [
   {
+    id: 'solution',
+    journey: 'CS',
+    label: 'Solution',
+    title: 'The construction solution world',
+    summary:
+      'The DEFAULT problem-solving surface (W073, ACR-012): the frozen construction-solution fixture as a spatially dominated engineering world — construction layers, plan/3D/section, inspector, BOQ/cost, constraints, agents, the 8-phase programme timeline and solution variants over the REAL Three.js + Babylon.js renderers.',
+    render: () => null, // The solution surface composes its own workspace (product-workspace renders it full-bleed).
+  },
+  {
     id: 'world',
     journey: 'W',
     label: 'World',
-    title: 'The interactive world',
+    title: 'The interactive world (reference)',
     summary:
-      'The PRIMARY problem-solving workspace (W057): the spatial world through the renderer fabric — pick, inspect, isolate, measure, annotate, follow, replay, branch/simulate, switch renderers. The journey sections are secondary context.',
+      'The W057 plant-room world host — the reference spatial workspace through the renderer fabric. Superseded as the default surface by the construction solution world; kept as the reference composition.',
     render: () => <WorldSection />,
   },
   {

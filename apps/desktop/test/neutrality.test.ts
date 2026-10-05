@@ -179,7 +179,10 @@ describe('desktop provider neutrality (lock rule 13)', () => {
     // (app/components/world-host/browser-gl.ts) constructs the viewport
     // renderer over. The Babylon engine enters through the ADAPTER's
     // exported host factories (no @babylonjs/core import at the app
-    // layer); replaceable presentation capabilities, never authority.
+    // layer); replaceable presentation capabilities, never authority —
+    // and the W073 construction-solution pin: the FROZEN W071
+    // construction-world-fixture (the default problem-solving surface's
+    // composition input; consumed, never modified).
     expect(Object.keys(manifest.dependencies ?? {}).sort()).toEqual([
       '@epoch/action-gateway',
       '@epoch/adapter-renderer-babylonjs',
@@ -189,6 +192,7 @@ describe('desktop provider neutrality (lock rule 13)', () => {
       '@epoch/authentication',
       '@epoch/capability-registry',
       '@epoch/client-runtime',
+      '@epoch/construction-world-fixture',
       '@epoch/event-log',
       '@epoch/evidence',
       '@epoch/experience-protocol',

@@ -1,0 +1,41 @@
+# W073 — native toolchain audit (the honest environment record)
+
+Captured verbatim from `pnpm --filter @epoch/desktop audit:toolchain`
+(apps/desktop/scripts/check-toolchain.mjs — the W048 audit script) on this
+machine, at the W073 chunk-3 delivery (branch
+work/w073-desktop-construction-solution-workspace).
+
+The script never fails the build: a missing toolchain is an ENVIRONMENT
+GAP, recorded here and in every construction journey record
+(qa/desktop/journeys/records/construction-journey-records.json — the
+`environment` + `evidence` fields) — never a silent claim that a packaged
+binary ran. Same convention as docs/journeys/desktop-linux.md.
+
+--- BEGIN VERBATIM OUTPUT ---
+
+> @epoch/desktop@1.0.0 audit:toolchain /home/z/workspace/w073/apps/desktop
+> node scripts/check-toolchain.mjs
+
+[toolchain-audit] W048 native packaging prerequisites on this machine:
+  ✓ node: v24.21.0
+  ✓ pnpm: 10.34.5
+  ✗ cargo: ABSENT
+  ✗ rustc: ABSENT
+  ✗ webkit2gtk-4.1: ABSENT
+  ✗ libayatana-appindicator3-1: ABSENT
+
+[toolchain-audit] linux native build (AppImage/deb): NOT AVAILABLE (environment gap — config-level delivery, recorded honestly)
+[toolchain-audit] windows NSIS + macOS DMG: cross-OS targets (configs committed; build requires the target OS runner)
+[toolchain-audit] gap detail: cargo/rustc/webkit2gtk-4.1 unavailable in this environment — the src-tauri configuration, command surface and packaging matrix are delivered config-complete and validated structurally (see qa/desktop + docs/journeys/desktop-linux.md)
+
+--- END VERBATIM OUTPUT ---
+
+Consequence for W073: NO Tauri legs are possible in this environment (no
+`pnpm tauri:dev`, no `tauri:build`, no packaged-binary install/launch
+journeys). The desktop construction solution is delivered + verified
+through the headless product-logic harnesses (apps/desktop/test +
+qa/desktop/journeys — both the W048 product journeys and the W073
+construction journeys) and the committed src-tauri configs stay
+config-complete + structurally pinned. Live-GL/visible-UI evidence is
+chunk-4 work (component-mount screenshots per the WO visual-acceptance
+section).

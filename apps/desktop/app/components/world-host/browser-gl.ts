@@ -41,9 +41,15 @@ function threePixelSource(renderer: WebGLRenderer): { mediaType: string; bytes: 
   return { mediaType: 'image/png', bytes };
 }
 
-/** The Three.js GL surface factory over one Epoch-owned canvas (+ probe). */
+/**
+ * The Three.js GL surface factory over one Epoch-owned canvas (+ probe).
+ * The optional `size` parameter lets a host present a larger deterministic
+ * canvas (the W073 construction world presents 960px; the default stays
+ * the W061 720px square).
+ */
 export function webThreeSurfaceFactory(
   canvas: HTMLCanvasElement | null,
+  size: number = ENGINE_CANVAS_SIZE,
 ): { readonly factory: ThreeGlSurfaceFactory; readonly probe: SurfaceProbe } {
   const probe: SurfaceProbe = { glActive: false };
   const factory: ThreeGlSurfaceFactory = () => {
@@ -58,7 +64,7 @@ export function webThreeSurfaceFactory(
         alpha: false,
       });
       renderer.setPixelRatio(1);
-      renderer.setSize(ENGINE_CANVAS_SIZE, ENGINE_CANVAS_SIZE, false);
+      renderer.setSize(size, size, false);
       probe.glActive = true;
       return { renderer, pixelSource: threePixelSource };
     } catch {

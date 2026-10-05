@@ -1,0 +1,737 @@
+{
+  "description": "W073 desktop construction solution journey records (headless product-logic runs over the construction solution composition — the frozen W071 fixture behind the REAL runtime + engines)",
+  "records": [
+    {
+      "journeyId": "CJ01",
+      "platform": "linux",
+      "persona": "delivery lead (desktop construction solution user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "1f3fe819441bb850ad4030df0fb49f48c23ef7df",
+      "environment": "Node/vitest headless product-logic run: the construction solution workspace composition (the frozen W071 fixture behind the REAL @epoch/world-runtime WorldWorkspaceRuntime + the REAL RendererFabric with the REAL Three.js/Babylon.js headless engine cores and the reference fallback — the exact composition the DEFAULT desktop surface mounts), driven through the same typed interaction surface the workspace UI issues; native Tauri shell NOT covered: cargo/rustc/webkit2gtk-4.1 ABSENT (qa/desktop/evidence/w073/toolchain-audit.txt)",
+      "fixtureId": "epoch-construction-world-fixture-v1.0.0",
+      "preconditions": [
+        "the frozen W071 construction-solution fixture (deterministic, content-addressed)",
+        "the REAL WorldWorkspaceRuntime over the REAL RendererFabric (Three.js + Babylon.js headless cores + reference fallback)"
+      ],
+      "actions": [
+        "open the default surface (runtime.open over the frozen fixture)",
+        "read the viewport view model (scene identity + digest)",
+        "count the immediately-visible entities",
+        "read the renderer selector choices",
+        "read the six construction layers",
+        "read the focused entity evidence"
+      ],
+      "expectedOutcome": "the product opens into the construction solution world: canonical scene + digest, 33/34 entities visible, both engines + fallback offered, six layers, focused-entity evidence at arrival",
+      "observedOutcome": "cj01-1-open=pass, cj01-2-world-first=pass, cj01-3-building-visible=pass, cj01-4-renderer-chain=pass, cj01-5-layers=pass, cj01-6-arrival-selection=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/construction-journey-records.json#journey-cj01",
+        "qa/desktop/evidence/w073/toolchain-audit.txt (native toolchain audit: cargo/rustc/webkit2gtk-4.1 ABSENT — no packaged-binary legs)"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "qa/desktop/journeys/construction-journeys.test.ts (CJ01)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Default-surface arrival — the world presents first) — headless product-logic run over the construction solution composition; native shell + live GL not covered (see environment)",
+      "steps": [
+        {
+          "stepId": "cj01-1-open",
+          "action": "runtime.open (the composition the DEFAULT surface mounts)",
+          "expected": "the construction world opens with the fixture-preferred renderer presenting",
+          "observed": "renderer=rr-threejs",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj01-2-world-first",
+          "action": "the default surface presents the WORLD (no lifecycle/administration front)",
+          "expected": "the viewport view model carries the canonical scene identity + digest (spatial world first)",
+          "observed": "scene=wsc-construction-solution-pioneer-block-a digest=9a14b4e6da10… entities=34",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj01-3-building-visible",
+          "action": "immediate visibility",
+          "expected": "the building/site is visible immediately (all but the hidden legacy conduit — the deliberate clash risk)",
+          "observed": "visible=33/34 (hidden: cs-mep-legacy-conduit-l2)",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj01-4-renderer-chain",
+          "action": "the Epoch-owned renderer selector",
+          "expected": "both real engines + the reference fallback are offered (the fixture chain)",
+          "observed": "choices=rr-babylonjs-embedded,rr-construction-solution-reference,rr-threejs",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj01-5-layers",
+          "action": "the construction layers navigator data",
+          "expected": "the six construction layers present with the fixture entity records",
+          "observed": "layers=lyr-envelope,lyr-finishes,lyr-foundation,lyr-mep,lyr-site,lyr-structure",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj01-6-arrival-selection",
+          "action": "the arrival selection (the fixture focused entity)",
+          "expected": "the inspector carries the focused entity's §9 evidence from arrival (working agents included)",
+          "observed": "focused=COL-04 agents=agent:cs-structural-engineer",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "CJ02",
+      "platform": "linux",
+      "persona": "delivery lead (desktop construction solution user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "1f3fe819441bb850ad4030df0fb49f48c23ef7df",
+      "environment": "Node/vitest headless product-logic run: the construction solution workspace composition (the frozen W071 fixture behind the REAL @epoch/world-runtime WorldWorkspaceRuntime + the REAL RendererFabric with the REAL Three.js/Babylon.js headless engine cores and the reference fallback — the exact composition the DEFAULT desktop surface mounts), driven through the same typed interaction surface the workspace UI issues; native Tauri shell NOT covered: cargo/rustc/webkit2gtk-4.1 ABSENT (qa/desktop/evidence/w073/toolchain-audit.txt)",
+      "fixtureId": "epoch-construction-world-fixture-v1.0.0",
+      "preconditions": [
+        "the frozen W071 construction-solution fixture (deterministic, content-addressed)",
+        "the REAL WorldWorkspaceRuntime over the REAL RendererFabric (Three.js + Babylon.js headless cores + reference fallback)"
+      ],
+      "actions": [
+        "toggle the finishes layer",
+        "derive the isolation (none)",
+        "isolate the MEP layer",
+        "derive the isolation (lyr-mep)",
+        "reveal all layers"
+      ],
+      "expectedOutcome": "layer toggles hide only their own entities; isolation keeps ONE layer (returning the hidden clash conduit) and is derivable; reveal-all restores the shared world",
+      "observedOutcome": "cj02-1-toggle-layer=pass, cj02-2-hide-is-not-isolation=pass, cj02-3-isolate-mep=pass, cj02-4-derived-isolation=pass, cj02-5-reveal-all=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/construction-journey-records.json#journey-cj02",
+        "qa/desktop/evidence/w073/toolchain-audit.txt (native toolchain audit: cargo/rustc/webkit2gtk-4.1 ABSENT — no packaged-binary legs)"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "qa/desktop/journeys/construction-journeys.test.ts (CJ02)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Layer navigation + isolation (the typed filter path)) — headless product-logic run over the construction solution composition; native shell + live GL not covered (see environment)",
+      "steps": [
+        {
+          "stepId": "cj02-1-toggle-layer",
+          "action": "toggleLayer (the typed filter intent)",
+          "expected": "toggling one layer hides only its entities",
+          "observed": "finishesVisible=false structureVisible=true",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj02-2-hide-is-not-isolation",
+          "action": "isolatedLayerIdOf (the derived isolation)",
+          "expected": "a plain hide is NOT an isolation",
+          "observed": "isolated=null",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj02-3-isolate-mep",
+          "action": "isolateLayer (the typed isolate intent)",
+          "expected": "isolating the MEP layer returns the hidden legacy conduit to the world and hides every other layer (the spatial clash discovery)",
+          "observed": "ok=true conduitVisible=true stagingVisible=false",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj02-4-derived-isolation",
+          "action": "isolatedLayerIdOf over the live runtime",
+          "expected": "the derived isolation is the isolated layer id",
+          "observed": "isolated=lyr-mep",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj02-5-reveal-all",
+          "action": "revealAllLayers",
+          "expected": "reveal-all issues the typed show intent for EVERY entity — the once-hidden clash conduit, already returned to the world by the isolation, stays discovered (34 visible, no isolation)",
+          "observed": "visible=34 isolated=null",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "CJ03",
+      "platform": "linux",
+      "persona": "delivery lead (desktop construction solution user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "1f3fe819441bb850ad4030df0fb49f48c23ef7df",
+      "environment": "Node/vitest headless product-logic run: the construction solution workspace composition (the frozen W071 fixture behind the REAL @epoch/world-runtime WorldWorkspaceRuntime + the REAL RendererFabric with the REAL Three.js/Babylon.js headless engine cores and the reference fallback — the exact composition the DEFAULT desktop surface mounts), driven through the same typed interaction surface the workspace UI issues; native Tauri shell NOT covered: cargo/rustc/webkit2gtk-4.1 ABSENT (qa/desktop/evidence/w073/toolchain-audit.txt)",
+      "fixtureId": "epoch-construction-world-fixture-v1.0.0",
+      "preconditions": [
+        "the frozen W071 construction-solution fixture (deterministic, content-addressed)",
+        "the REAL WorldWorkspaceRuntime over the REAL RendererFabric (Three.js + Babylon.js headless cores + reference fallback)"
+      ],
+      "actions": [
+        "pick the staging yard through the real raycaster",
+        "read the canonical inspect identity",
+        "read the §9 evidence trail of the selection",
+        "read the duct finding citations",
+        "probe an unknown entity"
+      ],
+      "expectedOutcome": "a world pick returns the canonical semantic identity through the typed select intent; the inspector renders the §9 evidence trail (BOQ line, layer, phase, agents, finding citations); unknown ids are honestly null",
+      "observedOutcome": "cj03-1-pick=pass, cj03-2-canonical-id=pass, cj03-3-evidence-trail=pass, cj03-4-finding-citations=pass, cj03-5-unknown-honesty=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/construction-journey-records.json#journey-cj03",
+        "qa/desktop/evidence/w073/toolchain-audit.txt (native toolchain audit: cargo/rustc/webkit2gtk-4.1 ABSENT — no packaged-binary legs)"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "qa/desktop/journeys/construction-journeys.test.ts (CJ03)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Selection → inspector evidence trail (the canonical identity)) — headless product-logic run over the construction solution composition; native shell + live GL not covered (see environment)",
+      "steps": [
+        {
+          "stepId": "cj03-1-pick",
+          "action": "dispatchPointerDown (the REAL Three.js raycaster pick)",
+          "expected": "the pick returns the canonical semantic entity receipt (typed select intent, applied)",
+          "observed": "hit=cs-site-staging-yard intent=epoch.world.interaction.select",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj03-2-canonical-id",
+          "action": "the inspect projection",
+          "expected": "the canonical semantic entityId lands the inspector (never a renderer-local id)",
+          "observed": "entityId=cs-site-staging-yard entityType=site:staging",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj03-3-evidence-trail",
+          "action": "entityEvidenceOf (the §9 engineering evidence)",
+          "expected": "the selected entity carries its BOQ line + layer + phase + working agents",
+          "observed": "lines=1 layer=lyr-site phase=phase-site agents=agent:cs-site-coordinator",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj03-4-finding-citations",
+          "action": "entityEvidenceOf (finding citations)",
+          "expected": "the evidence trail cites the findings naming the entity (the MEP clash for the duct)",
+          "observed": "findings=W071-finding-002",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj03-5-unknown-honesty",
+          "action": "entityEvidenceOf (unknown entity)",
+          "expected": "an unknown entity projects to null (never a fabricated record)",
+          "observed": "evidence=null",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "CJ04",
+      "platform": "linux",
+      "persona": "delivery lead (desktop construction solution user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "1f3fe819441bb850ad4030df0fb49f48c23ef7df",
+      "environment": "Node/vitest headless product-logic run: the construction solution workspace composition (the frozen W071 fixture behind the REAL @epoch/world-runtime WorldWorkspaceRuntime + the REAL RendererFabric with the REAL Three.js/Babylon.js headless engine cores and the reference fallback — the exact composition the DEFAULT desktop surface mounts), driven through the same typed interaction surface the workspace UI issues; native Tauri shell NOT covered: cargo/rustc/webkit2gtk-4.1 ABSENT (qa/desktop/evidence/w073/toolchain-audit.txt)",
+      "fixtureId": "epoch-construction-world-fixture-v1.0.0",
+      "preconditions": [
+        "the frozen W071 construction-solution fixture (deterministic, content-addressed)",
+        "the REAL WorldWorkspaceRuntime over the REAL RendererFabric (Three.js + Babylon.js headless cores + reference fallback)"
+      ],
+      "actions": [
+        "select the duct BOQ line (BOQ → world)",
+        "select the duct world entity (world → BOQ)",
+        "verify the 1:1 identity map over every baseline entity",
+        "verify the persistent value semantics",
+        "inspect the structural engineer (agent → current work)"
+      ],
+      "expectedOutcome": "BOQ line → world entity and world entity → BOQ line resolve the SAME identity (1:1 over the baseline); the cross-highlight persists across view modes; agent current-work rides the same channel",
+      "observedOutcome": "cj04-1-boq-to-world=pass, cj04-2-world-to-boq=pass, cj04-3-one-identity=pass, cj04-4-persistence=pass, cj04-5-agent-rides-channel=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/construction-journey-records.json#journey-cj04",
+        "qa/desktop/evidence/w073/toolchain-audit.txt (native toolchain audit: cargo/rustc/webkit2gtk-4.1 ABSENT — no packaged-binary legs)"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "qa/desktop/journeys/construction-journeys.test.ts (CJ04)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (BOQ ↔ world bidirectional cross-selection (persistent one identity)) — headless product-logic run over the construction solution composition; native shell + live GL not covered (see environment)",
+      "steps": [
+        {
+          "stepId": "cj04-1-boq-to-world",
+          "action": "crossHighlightFromBoqLine (BOQ → world)",
+          "expected": "selecting a BOQ line highlights ITS world entity",
+          "observed": "source=boq entities=cs-mep-hvac-duct",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj04-2-world-to-boq",
+          "action": "crossHighlightFromEntity (world → BOQ)",
+          "expected": "selecting a world entity highlights its BOQ line(s)",
+          "observed": "source=world lines=line:cs-hvac-duct",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj04-3-one-identity",
+          "action": "the 1:1 identity map (every line ↔ every entity)",
+          "expected": "both directions resolve ONE identity set; every baseline entity carries its BOQ line",
+          "observed": "baselineEntities=34 everyEntityHasLine=true",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj04-4-persistence",
+          "action": "the cross-highlight value state",
+          "expected": "the cross-selection is a VALUE the workspace holds across view-mode changes (persistent until cleared/replaced; the empty state is inactive)",
+          "observed": "active=true emptyActive=false viewportSet=cs-mep-hvac-duct",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj04-5-agent-rides-channel",
+          "action": "crossHighlightFromAgent (agent current-work)",
+          "expected": "inspecting an agent cross-highlights its current-work element + the element BOQ line (the same channel)",
+          "observed": "source=agent entities=COL-04 lines=line:cs-column-04",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "CJ05",
+      "platform": "linux",
+      "persona": "delivery lead (desktop construction solution user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "1f3fe819441bb850ad4030df0fb49f48c23ef7df",
+      "environment": "Node/vitest headless product-logic run: the construction solution workspace composition (the frozen W071 fixture behind the REAL @epoch/world-runtime WorldWorkspaceRuntime + the REAL RendererFabric with the REAL Three.js/Babylon.js headless engine cores and the reference fallback — the exact composition the DEFAULT desktop surface mounts), driven through the same typed interaction surface the workspace UI issues; native Tauri shell NOT covered: cargo/rustc/webkit2gtk-4.1 ABSENT (qa/desktop/evidence/w073/toolchain-audit.txt)",
+      "fixtureId": "epoch-construction-world-fixture-v1.0.0",
+      "preconditions": [
+        "the frozen W071 construction-solution fixture (deterministic, content-addressed)",
+        "the REAL WorldWorkspaceRuntime over the REAL RendererFabric (Three.js + Babylon.js headless cores + reference fallback)"
+      ],
+      "actions": [
+        "scrub to the structure phase",
+        "read the phase-gated metrics",
+        "scrub to the track end",
+        "verify the frozen fixture timeline"
+      ],
+      "expectedOutcome": "the programme timeline scrubs through the typed transport: the active phase advances, the phase-gated built count grows (14 at structure → 34 at the end), and the frozen fixture is never mutated",
+      "observedOutcome": "cj05-1-scrub-structure=pass, cj05-2-built-grows=pass, cj05-3-scrub-end=pass, cj05-4-fixture-frozen=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/construction-journey-records.json#journey-cj05",
+        "qa/desktop/evidence/w073/toolchain-audit.txt (native toolchain audit: cargo/rustc/webkit2gtk-4.1 ABSENT — no packaged-binary legs)"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "qa/desktop/journeys/construction-journeys.test.ts (CJ05)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Timeline scrubbing alters the presented world) — headless product-logic run over the construction solution composition; native shell + live GL not covered (see environment)",
+      "steps": [
+        {
+          "stepId": "cj05-1-scrub-structure",
+          "action": "scrubTimeline (the typed timeline transport)",
+          "expected": "scrubbing to the structure phase advances the presented position + active phase",
+          "observed": "ok=true position=6000 phase=phase-structure",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj05-2-built-grows",
+          "action": "solutionMetrics (the phase-gated built count)",
+          "expected": "the world visibly changes: the built count covers the phases completed so far (future work unbuilt)",
+          "observed": "built=14/14 mepBuilt=false",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj05-3-scrub-end",
+          "action": "scrubTimeline to the track end",
+          "expected": "at the track end every entity is built (the finishes phase)",
+          "observed": "phase=phase-finishes built=34",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj05-4-fixture-frozen",
+          "action": "the frozen scene object",
+          "expected": "the FROZEN fixture timeline is never mutated by the scrub",
+          "observed": "fixturePosition=2000",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "CJ06",
+      "platform": "linux",
+      "persona": "delivery lead (desktop construction solution user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "1f3fe819441bb850ad4030df0fb49f48c23ef7df",
+      "environment": "Node/vitest headless product-logic run: the construction solution workspace composition (the frozen W071 fixture behind the REAL @epoch/world-runtime WorldWorkspaceRuntime + the REAL RendererFabric with the REAL Three.js/Babylon.js headless engine cores and the reference fallback — the exact composition the DEFAULT desktop surface mounts), driven through the same typed interaction surface the workspace UI issues; native Tauri shell NOT covered: cargo/rustc/webkit2gtk-4.1 ABSENT (qa/desktop/evidence/w073/toolchain-audit.txt)",
+      "fixtureId": "epoch-construction-world-fixture-v1.0.0",
+      "preconditions": [
+        "the frozen W071 construction-solution fixture (deterministic, content-addressed)",
+        "the REAL WorldWorkspaceRuntime over the REAL RendererFabric (Three.js + Babylon.js headless cores + reference fallback)"
+      ],
+      "actions": [
+        "issue the typed branch intent at the programme branch point",
+        "verify the canonical digest is unchanged",
+        "present Alt A (the reroute + removal)",
+        "present Alt B (the added interior AHU)",
+        "read the variant cost/days/risk metrics"
+      ],
+      "expectedOutcome": "Current/Alt A/Alt B each re-present the world through their fixture deltas (removals, reroutes, additions) while the canonical digest stays intact; cost/days/risk present per variant",
+      "observedOutcome": "cj06-1-typed-branch=pass, cj06-2-canonical-intact=pass, cj06-3-alt-a-world=pass, cj06-4-alt-b-world=pass, cj06-5-cost-days-risk=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/construction-journey-records.json#journey-cj06",
+        "qa/desktop/evidence/w073/toolchain-audit.txt (native toolchain audit: cargo/rustc/webkit2gtk-4.1 ABSENT — no packaged-binary legs)"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "qa/desktop/journeys/construction-journeys.test.ts (CJ06)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Variant switching changes the world representation) — headless product-logic run over the construction solution composition; native shell + live GL not covered (see environment)",
+      "steps": [
+        {
+          "stepId": "cj06-1-typed-branch",
+          "action": "invokeControl (the typed branch intent at the fixture branch point)",
+          "expected": "selecting a variant issues the branch request effect at the branch point",
+          "observed": "ok=true effect=branch-requested atMs=8000",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj06-2-canonical-intact",
+          "action": "currentScene().digest",
+          "expected": "the canonical world is NOT mutated (a variant is a proposed branch, not an applied one)",
+          "observed": "digest=9a14b4e6da10… unchanged=true",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj06-3-alt-a-world",
+          "action": "presentedEntities (Alt A)",
+          "expected": "Alt A CHANGES THE WORLD: the legacy conduit is removed, the duct rerouted (+0.5m Z, +1.0m run)",
+          "observed": "conduit=removed duct=changed bboxX=5 dz=0.5 deltas=2c/1r/0a",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj06-4-alt-b-world",
+          "action": "presentedEntities (Alt B)",
+          "expected": "Alt B adds the interior AHU (35 entities) and downsizes the roof unit",
+          "observed": "count=35 ahu=added@lyr-mep unit=changed bboxX=0.6000000000000001",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj06-5-cost-days-risk",
+          "action": "solutionMetrics (the variant comparison)",
+          "expected": "each variant presents its frozen cost/days/risk (Current 41000/60/medium, Alt A 43000/58/low)",
+          "observed": "current=41000.00/60/medium altA=43000.00/58/low",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "CJ07",
+      "platform": "linux",
+      "persona": "delivery lead (desktop construction solution user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "1f3fe819441bb850ad4030df0fb49f48c23ef7df",
+      "environment": "Node/vitest headless product-logic run: the construction solution workspace composition (the frozen W071 fixture behind the REAL @epoch/world-runtime WorldWorkspaceRuntime + the REAL RendererFabric with the REAL Three.js/Babylon.js headless engine cores and the reference fallback — the exact composition the DEFAULT desktop surface mounts), driven through the same typed interaction surface the workspace UI issues; native Tauri shell NOT covered: cargo/rustc/webkit2gtk-4.1 ABSENT (qa/desktop/evidence/w073/toolchain-audit.txt)",
+      "fixtureId": "epoch-construction-world-fixture-v1.0.0",
+      "preconditions": [
+        "the frozen W071 construction-solution fixture (deterministic, content-addressed)",
+        "the REAL WorldWorkspaceRuntime over the REAL RendererFabric (Three.js + Babylon.js headless cores + reference fallback)"
+      ],
+      "actions": [
+        "read the visible agents",
+        "follow the structural engineer",
+        "inspect the current-work highlight + reverse lookup",
+        "merge the highlight sets",
+        "interpolate the movement script"
+      ],
+      "expectedOutcome": "two agents present in the world with deterministic movement scripts; follow is typed; the current-work element highlights through the cross-channel and merges with any BOQ/world cross-selection",
+      "observedOutcome": "cj07-1-two-agents-visible=pass, cj07-2-follow=pass, cj07-3-current-work=pass, cj07-4-highlight-merge=pass, cj07-5-movement-script=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/construction-journey-records.json#journey-cj07",
+        "qa/desktop/evidence/w073/toolchain-audit.txt (native toolchain audit: cargo/rustc/webkit2gtk-4.1 ABSENT — no packaged-binary legs)"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "qa/desktop/journeys/construction-journeys.test.ts (CJ07)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Agents visible + current-work highlight) — headless product-logic run over the construction solution composition; native shell + live GL not covered (see environment)",
+      "steps": [
+        {
+          "stepId": "cj07-1-two-agents-visible",
+          "action": "the viewport agents",
+          "expected": "≥2 agents are visible in the world (the fixture agent set)",
+          "observed": "agents=agent:cs-site-coordinator,agent:cs-structural-engineer",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj07-2-follow",
+          "action": "followAgent (the typed follow intent)",
+          "expected": "following the structural engineer sets the canonical followed agent",
+          "observed": "ok=true followed=agent:cs-structural-engineer",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj07-3-current-work",
+          "action": "crossHighlightFromAgent + agentsWorkingOn",
+          "expected": "the agent current-work highlight lands the engineer's element (COL-04); the reverse lookup finds the engineer on it",
+          "observed": "work=COL-04 reverse=agent:cs-structural-engineer",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj07-4-highlight-merge",
+          "action": "highlightEntityIdsOf (the viewport highlight set)",
+          "expected": "the cross-highlight + the inspected agent current-work merge into ONE viewport highlight set (regardless of the view mode)",
+          "observed": "set=COL-04,cs-mep-hvac-duct",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj07-5-movement-script",
+          "action": "agentPositionAt (the deterministic movement script)",
+          "expected": "the agents move along their deterministic fixture scripts (waypoint at t=0, midway at t=1s)",
+          "observed": "t0=-4,0,-3 t1s=0,0,-3",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "CJ08",
+      "platform": "linux",
+      "persona": "delivery lead (desktop construction solution user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "1f3fe819441bb850ad4030df0fb49f48c23ef7df",
+      "environment": "Node/vitest headless product-logic run: the construction solution workspace composition (the frozen W071 fixture behind the REAL @epoch/world-runtime WorldWorkspaceRuntime + the REAL RendererFabric with the REAL Three.js/Babylon.js headless engine cores and the reference fallback — the exact composition the DEFAULT desktop surface mounts), driven through the same typed interaction surface the workspace UI issues; native Tauri shell NOT covered: cargo/rustc/webkit2gtk-4.1 ABSENT (qa/desktop/evidence/w073/toolchain-audit.txt)",
+      "fixtureId": "epoch-construction-world-fixture-v1.0.0",
+      "preconditions": [
+        "the frozen W071 construction-solution fixture (deterministic, content-addressed)",
+        "the REAL WorldWorkspaceRuntime over the REAL RendererFabric (Three.js + Babylon.js headless cores + reference fallback)"
+      ],
+      "actions": [
+        "project the top-down plan + hit-test a column footprint",
+        "read the default section cut (the MEP clash zone)",
+        "move the cut to the west column line + hit-test",
+        "verify the snap/clamp + the shared cut state"
+      ],
+      "expectedOutcome": "the true top-down plan hit-tests its footprints; the default section cut exposes the internal MEP systems; moving the cut re-projects the section (columns at the west line); ONE cut state drives the plan A–A line and the section together",
+      "observedOutcome": "cj08-1-plan-topdown=pass, cj08-2-section-default=pass, cj08-3-section-moved=pass, cj08-4-cut-state=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/construction-journey-records.json#journey-cj08",
+        "qa/desktop/evidence/w073/toolchain-audit.txt (native toolchain audit: cargo/rustc/webkit2gtk-4.1 ABSENT — no packaged-binary legs)"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "qa/desktop/journeys/construction-journeys.test.ts (CJ08)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Plan + section cut interaction) — headless product-logic run over the construction solution composition; native shell + live GL not covered (see environment)",
+      "steps": [
+        {
+          "stepId": "cj08-1-plan-topdown",
+          "action": "planProjectorFor + planEntityAt (the true top-down plan)",
+          "expected": "the plan spans the lot and hit-tests the presented footprints (smallest-first)",
+          "observed": "span=30.4x18.4m hit=COL-01",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj08-2-section-default",
+          "action": "sectionEntitiesOf (the default cutaway)",
+          "expected": "the default section cut exposes the internal MEP systems (not the columns)",
+          "observed": "cut=2 duct=true conduit=true column01=false",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj08-3-section-moved",
+          "action": "sectionEntitiesOf at the moved cut (the cut-plane interaction)",
+          "expected": "moving the cut to the west column line exposes the columns instead of the MEP run",
+          "observed": "column01=true slab=true duct=false hit=COL-01",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj08-4-cut-state",
+          "action": "clampSectionCut + planCutLineOf (ONE cut state)",
+          "expected": "cut adjustments snap (0.25m) + clamp to the building range; the plan A–A line and the section re-project from the SAME cut",
+          "observed": "snap=1.25 clampMin=true clampMax=true cutLineX=-4 xPx=true",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "CJ09",
+      "platform": "linux",
+      "persona": "delivery lead (desktop construction solution user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "1f3fe819441bb850ad4030df0fb49f48c23ef7df",
+      "environment": "Node/vitest headless product-logic run: the construction solution workspace composition (the frozen W071 fixture behind the REAL @epoch/world-runtime WorldWorkspaceRuntime + the REAL RendererFabric with the REAL Three.js/Babylon.js headless engine cores and the reference fallback — the exact composition the DEFAULT desktop surface mounts), driven through the same typed interaction surface the workspace UI issues; native Tauri shell NOT covered: cargo/rustc/webkit2gtk-4.1 ABSENT (qa/desktop/evidence/w073/toolchain-audit.txt)",
+      "fixtureId": "epoch-construction-world-fixture-v1.0.0",
+      "preconditions": [
+        "the frozen W071 construction-solution fixture (deterministic, content-addressed)",
+        "the REAL WorldWorkspaceRuntime over the REAL RendererFabric (Three.js + Babylon.js headless cores + reference fallback)"
+      ],
+      "actions": [
+        "arm the measure tool + anchor the adapter measurement",
+        "orbit to an unoccluded viewpoint + re-present",
+        "complete the measurement (the declared overlay applies)",
+        "compose an annotation",
+        "verify the frozen fixture"
+      ],
+      "expectedOutcome": "the stateful two-click measurement applies the fixture-declared span overlay (COL-01 ↔ COL-02) through the typed measure intent; annotation composes through the typed annotate intent; the frozen fixture is never mutated",
+      "observedOutcome": "cj09-1-measure=pass, cj09-2-annotate=pass, cj09-3-fixture-frozen=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/construction-journey-records.json#journey-cj09",
+        "qa/desktop/evidence/w073/toolchain-audit.txt (native toolchain audit: cargo/rustc/webkit2gtk-4.1 ABSENT — no packaged-binary legs)"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "qa/desktop/journeys/construction-journeys.test.ts (CJ09)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Measure + annotate (the typed overlay flows)) — headless product-logic run over the construction solution composition; native shell + live GL not covered (see environment)",
+      "steps": [
+        {
+          "stepId": "cj09-1-measure",
+          "action": "the two-click measurement (the typed measure intent)",
+          "expected": "measuring the column-to-column span applies the fixture-declared overlay",
+          "observed": "ok=true intent=epoch.world.interaction.measure overlay=ovl-cs-measure-structure-span",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj09-2-annotate",
+          "action": "composeAnnotation (the typed annotate intent)",
+          "expected": "annotating composes the annotation overlay on the selected entity",
+          "observed": "ok=true annotation=true",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj09-3-fixture-frozen",
+          "action": "the frozen scene object",
+          "expected": "the FROZEN fixture focus + timeline are never mutated by the overlays",
+          "observed": "focus=COL-04 timeline=2000",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "CJ10",
+      "platform": "linux",
+      "persona": "delivery lead (desktop construction solution user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "1f3fe819441bb850ad4030df0fb49f48c23ef7df",
+      "environment": "Node/vitest headless product-logic run: the construction solution workspace composition (the frozen W071 fixture behind the REAL @epoch/world-runtime WorldWorkspaceRuntime + the REAL RendererFabric with the REAL Three.js/Babylon.js headless engine cores and the reference fallback — the exact composition the DEFAULT desktop surface mounts), driven through the same typed interaction surface the workspace UI issues; native Tauri shell NOT covered: cargo/rustc/webkit2gtk-4.1 ABSENT (qa/desktop/evidence/w073/toolchain-audit.txt)",
+      "fixtureId": "epoch-construction-world-fixture-v1.0.0",
+      "preconditions": [
+        "the frozen W071 construction-solution fixture (deterministic, content-addressed)",
+        "the REAL WorldWorkspaceRuntime over the REAL RendererFabric (Three.js + Babylon.js headless cores + reference fallback)"
+      ],
+      "actions": [
+        "read the findings surface (Current + Alt B)",
+        "select the MEP clash finding (spatial focus)",
+        "reveal the hidden owning layer through the typed show intent",
+        "compare the clash resolution across the variants"
+      ],
+      "expectedOutcome": "the findings surface presents every fixture finding + variant notes; selecting the MEP clash focuses its three elements; the hidden-owning-layer reveal makes the clash discoverable IN the world; Alt A resolves it",
+      "observedOutcome": "cj10-1-findings-presented=pass, cj10-2-clash-focus=pass, cj10-3-hidden-reveal=pass, cj10-4-variant-resolution=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/construction-journey-records.json#journey-cj10",
+        "qa/desktop/evidence/w073/toolchain-audit.txt (native toolchain audit: cargo/rustc/webkit2gtk-4.1 ABSENT — no packaged-binary legs)"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "qa/desktop/journeys/construction-journeys.test.ts (CJ10)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (Constraints incl. the MEP clash discovery) — headless product-logic run over the construction solution composition; native shell + live GL not covered (see environment)",
+      "steps": [
+        {
+          "stepId": "cj10-1-findings-presented",
+          "action": "presentedConstraints (the findings surface)",
+          "expected": "the fixture findings present (6) plus the variant-level notes (Current 2, Alt B 3)",
+          "observed": "current=8 variantNotes=2 altB=9",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj10-2-clash-focus",
+          "action": "crossHighlightFromConstraint (finding → spatial focus)",
+          "expected": "selecting the MEP clash finding focuses its three elements + their BOQ lines in the world",
+          "observed": "entities=3 lines=3 source=constraint",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj10-3-hidden-reveal",
+          "action": "the constraint-focus reveal (the typed show intent)",
+          "expected": "when none of the finding's elements is visible, revealing the owning layer makes them findable IN the world (the hidden legacy conduit included)",
+          "observed": "noneVisible=true owning=lyr-mep revealed=true",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj10-4-variant-resolution",
+          "action": "the clash resolution under the variants",
+          "expected": "the MEP clash is unresolved in Current and RESOLVED by Alt A (the variant comparison solves the finding through the world)",
+          "observed": "current=false altA=true",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    },
+    {
+      "journeyId": "CJ11",
+      "platform": "linux",
+      "persona": "delivery lead (desktop construction solution user)",
+      "productVersion": "1.0.0",
+      "sourceCommit": "1f3fe819441bb850ad4030df0fb49f48c23ef7df",
+      "environment": "Node/vitest headless product-logic run: the construction solution workspace composition (the frozen W071 fixture behind the REAL @epoch/world-runtime WorldWorkspaceRuntime + the REAL RendererFabric with the REAL Three.js/Babylon.js headless engine cores and the reference fallback — the exact composition the DEFAULT desktop surface mounts), driven through the same typed interaction surface the workspace UI issues; native Tauri shell NOT covered: cargo/rustc/webkit2gtk-4.1 ABSENT (qa/desktop/evidence/w073/toolchain-audit.txt)",
+      "fixtureId": "epoch-construction-world-fixture-v1.0.0",
+      "preconditions": [
+        "the frozen W071 construction-solution fixture (deterministic, content-addressed)",
+        "the REAL WorldWorkspaceRuntime over the REAL RendererFabric (Three.js + Babylon.js headless cores + reference fallback)"
+      ],
+      "actions": [
+        "read the surfaced affordance (the fixture-declared control)",
+        "invoke the typed simulate control (the workspace button channel)",
+        "read the simulate-requested effect receipt",
+        "verify the canonical digest + journal"
+      ],
+      "expectedOutcome": "the variants/compare area surfaces the fixture-declared simulate control; invoking it through the typed channel records the simulate-requested effect with the programme scenario reference while the canonical world stays intact",
+      "observedOutcome": "cj11-1-affordance-projection=pass, cj11-2-typed-invoke=pass, cj11-3-effect-receipt=pass, cj11-4-effect-only=pass",
+      "evidence": [
+        "qa/desktop/journeys/records/construction-journey-records.json#journey-cj11",
+        "qa/desktop/evidence/w073/toolchain-audit.txt (native toolchain audit: cargo/rustc/webkit2gtk-4.1 ABSENT — no packaged-binary legs)"
+      ],
+      "defect": null,
+      "severity": null,
+      "fixCommit": null,
+      "regressionTest": "qa/desktop/journeys/construction-journeys.test.ts (CJ11)",
+      "rerunResult": "n/a (first run in this branch)",
+      "disposition": "PASS (The programme-simulation affordance (the typed simulate control)) — headless product-logic run over the construction solution composition; native shell + live GL not covered (see environment)",
+      "steps": [
+        {
+          "stepId": "cj11-1-affordance-projection",
+          "action": "SOLUTION_SIMULATE_CONTROL (the surfaced affordance)",
+          "expected": "the variants-area affordance is EXACTLY the fixture-declared control (id + label + intent — a projection, no new semantics)",
+          "observed": "controlId=ctl-cs-simulate-programme label=\"Simulate programme\" intent=epoch.world.interaction.simulate",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj11-2-typed-invoke",
+          "action": "invokeControl (the workspace button channel)",
+          "expected": "the simulate control invokes through the typed control path (the same channel the inspector button issues)",
+          "observed": "ok=true applied=false",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj11-3-effect-receipt",
+          "action": "the simulate-requested effect",
+          "expected": "the typed effect records the programme scenario reference (the receipt the affordance renders)",
+          "observed": "effect=simulate-requested scenario=scope-epoch-pioneer-block-a",
+          "result": "pass"
+        },
+        {
+          "stepId": "cj11-4-effect-only",
+          "action": "the canonical world + journal",
+          "expected": "simulate is EFFECT-ONLY: the canonical digest is unchanged and the journal carries the typed control intent",
+          "observed": "digestUnchanged=true journaled=true",
+          "result": "pass"
+        }
+      ],
+      "overall": "pass"
+    }
+  ]
+}
